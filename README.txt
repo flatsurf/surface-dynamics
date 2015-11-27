@@ -30,7 +30,7 @@ Install flatsurf by typing the following in a terminal window
 Versions
 --------
 
-flatsurf 0.2 was released on 2015-11-15
+flatsurf 0.2 was released on 2015-11-15.
 
 flatsurf 0.1 was released on 2015-07-30.
 It should work on Sage version 6.0 or later.
