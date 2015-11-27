@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# This file build the spkg from the code contained in flatsurf
+# the version numbered is read from the file flatsurf/package-version.txt
+
+cd ../
+
+VERSION=$(cat flatsurf/package-version.txt)
+GIT_DIR=flatsurf
+TARGET_DIR=flatsurf-$VERSION
+PACKAGE_NAME=flatsurf-$VERSION.spkg
+
+cp -R $GIT_DIR $TARGET_DIR
+
+tar cf $PACKAGE_NAME $TARGET_DIR --exclude="*.pyc" --exclude="make_package" --exclude=".git" --exclude=".gitignore"
+
+rm -rf $TARGET_DIR
