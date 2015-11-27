@@ -1,0 +1,11 @@
+= Surface dynamics =
+
+== Description ==
+
+A library for dynamics on surfaces. Currently, it contains
+ - translation surfaces (e.g. origamis)
+ - interval exchange transformations
+
+This is mainly developed by Vincent Delecroix (vincent.delecroix@labri.fr)
+with contributions from Samuel Lelievre (samuel.lelievre@math.u-psud.fr).
+
