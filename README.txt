@@ -77,5 +77,5 @@ sage: for o in q: print o, "\n"
 Contact
 -------
 
-Your comments are welcome: vincent.delecroix@labri.fr
+Your comments and help are welcome: vincent.delecroix@labri.fr
 For problems with Mac OS X: samuel.lelievre@gmail.com

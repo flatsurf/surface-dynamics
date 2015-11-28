@@ -1,0 +1,27 @@
+- affine group of an origami
+
+- representation of the affine group in homology. Together with
+nice examples
+ -> Wollmilchsau
+ -> other cyclic covers
+
+- sparse permutation to encode origamis
+
+- include Charles Fougeron code about Lyapunov exponents
+
+- generic flat and translation surfaces (built from a triangulation or more
+  generally a decomposition into convex polygons).
+   - nice plot of trajectory
+   - billiards (and parking garage) unfolding
+   - unfolding of conical surfaces
+  (look also at Ronen Mukamel code)
+
+- Delaunay Lp-triangulations (for flat surfaces)
+
+- SL(2,R) orbit closures (using Delaunay L-infinity triangulation)
+   - volume computation (needs non-trivial integration)
+
+- include Alex Eskin code about computing cylinder decomposition
+  (it might actually be good to reimplement it using Ferenczi generalized diagonal changes)
+
+- include Michael Boshernitzan algorithm to check for minimality
