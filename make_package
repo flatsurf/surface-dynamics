@@ -1,16 +1,23 @@
 #!/usr/bin/env bash
 # This file build the spkg from the code contained in flatsurf
-# the version numbered is read from the file flatsurf/package-version.txt
+# the version numbered is read from the file src/package-version.txt
 
-cd ../
-
-VERSION=$(cat flatsurf/package-version.txt)
+VERSION=$(cat src/package-version.txt)
 GIT_DIR=flatsurf
-TARGET_DIR=flatsurf-$VERSION
-PACKAGE_NAME=flatsurf-$VERSION.spkg
+TARGET_DIR=${GIT_DIR}-${VERSION}
+PACKAGE_NAME=${TARGET_DIR}.spkg
 
-cp -R $GIT_DIR $TARGET_DIR
+# move one step back
+cd ..
 
-tar cf $PACKAGE_NAME $TARGET_DIR --exclude="*.pyc" --exclude="make_package" --exclude=".git" --exclude=".gitignore"
+# copy the repo
+cp -R ${GIT_DIR} ${TARGET_DIR}
 
-rm -rf $TARGET_DIR
+# add version information into the sources
+echo "version='${VERSION}'" >> ${TARGET_DIR}/src/surface_dynamics/__init__.py
+
+# make the package
+tar cf ${PACKAGE_NAME} ${TARGET_DIR} --exclude="*.pyc" --exclude="make_package" --exclude=".git" --exclude=".gitignore"
+
+# remove the copied repo
+rm -rf ${TARGET_DIR}

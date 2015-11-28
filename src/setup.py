@@ -10,11 +10,13 @@ import os
 
 Cython.Compiler.Options.old_style_globals = True
 
-
 from sage.env import SAGE_LOCAL, SAGE_SRC
 
+with open("package-version.txt") as f:
+    version = f.read()
+
 setup(name='surface_dynamics',
-      version='0.1',
+      version=version,
       description="Dynamics on surfaces",
       author='Vincent Delecroix',
       author_email='vincent.delecroix@labri.fr',
