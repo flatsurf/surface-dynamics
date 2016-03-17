@@ -2888,6 +2888,23 @@ cdef class Origami_dense_pyx(object):
 
         return cyls
 
+    def num_cylinders(self):
+        r"""
+        Return the number of cylinders of this origami.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+
+            sage: Origami('(1,2)','(1,3)').num_cylinders()
+            2
+            sage: origamis.Stair(5).num_cylinders()
+            3
+            sage: Origami('(1,2)','(1)(2)').num_cylinders()
+            1
+        """
+        return len(self.cylinder_decomposition())
+
     def cylinder_diagram(self, data=False):
         r"""
         Returns the cylinder diagram corresponding to the horizontal direction.
