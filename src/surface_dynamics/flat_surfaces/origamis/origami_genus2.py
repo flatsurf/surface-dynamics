@@ -12,7 +12,7 @@ REFERENCES:
 from origami import Origami
 from sage.combinat.partition import Partitions,OrderedPartitions
 from sage.combinat.permutation import CyclicPermutationsOfPartition
-from sage.rings.arith import gcd,divisors
+from sage.arith.misc import gcd,divisors
 from sage.rings.integer import Integer
 
 ################

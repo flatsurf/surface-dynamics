@@ -364,7 +364,7 @@ class OrigamiGenerators():
             H_3(4)^hyp
         """
         from sage.rings.arith import is_prime
-        from sage.rings.finite_rings.constructor import GF
+        from sage.rings.finite_rings.finite_field_constructor import GF
         from sage.groups.matrix_gps.linear import GL
         from sage.modules.free_module import VectorSpace
 

@@ -74,7 +74,7 @@ They can also be built from separatrix diagram::
 from sage.structure.sage_object import SageObject
 
 import itertools
-import sage.rings.arith as arith
+import sage.arith.misc as arith
 from sage.rings.integer import Integer
 
 from sage.graphs.digraph import DiGraph
