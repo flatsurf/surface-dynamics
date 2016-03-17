@@ -25,3 +25,11 @@ nice examples
   (it might actually be good to reimplement it using Ferenczi generalized diagonal changes)
 
 - include Michael Boshernitzan algorithm to check for minimality
+
+- interface with Snappy (i.e. mapping torus)
+
+- implement an algorithm to enumerate pseudo-Anosov in a fixed stratum ordered by length
+
+- interval exchanges in the non-orientable case
+    - minimal component of the Rauzy diagram
+    - orientation cover
