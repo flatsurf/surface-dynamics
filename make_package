@@ -15,9 +15,10 @@ cp -R ${GIT_DIR} ${TARGET_DIR}
 
 # add version information into the sources
 echo "version='${VERSION}'" >> ${TARGET_DIR}/src/surface_dynamics/__init__.py
+sed -i s/{VERSION}/${VERSION}/g ${TARGET_DIR}/README.txt
 
 # make the package
-tar cf ${PACKAGE_NAME} ${TARGET_DIR} --exclude="*.pyc" --exclude="make_package" --exclude=".git" --exclude=".gitignore"
+tar cf ${PACKAGE_NAME} ${TARGET_DIR} --exclude="*.pyc" --exclude="make_package" --exclude=".git" --exclude=".gitignore" --exclude="doc" --exclude=".*.swp"
 
 # remove the copied repo
 rm -rf ${TARGET_DIR}

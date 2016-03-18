@@ -23,12 +23,14 @@ Installation
 
 Install flatsurf by typing the following in a terminal window
 
-    $ sage -p http://www.labri.fr/perso/vdelecro/flatsurf-0.2.spkg
+    $ sage -p http://www.labri.fr/perso/vdelecro/flatsurf-{VERSION}.spkg
 
 (provided the command "sage" calls your version of Sage).
 
 Versions
 --------
+
+flatsurf 0.3 is in version beta
 
 flatsurf 0.2 was released on 2015-11-15.
 
