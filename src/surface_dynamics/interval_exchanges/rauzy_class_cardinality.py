@@ -36,7 +36,7 @@ from sage.misc.cachefunc import cached_function
 from sage.rings.integer import Integer
 
 from sage.combinat.partition import Partition
-from sage.rings.arith import factorial, binomial
+from sage.arith.all import factorial, binomial
 
 #########################
 # PROFILES AND MARKINGS #

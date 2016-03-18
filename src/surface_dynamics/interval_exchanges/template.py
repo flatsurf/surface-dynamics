@@ -84,16 +84,17 @@ def interval_conversion(interval=None):
     if isinstance(interval, (int,Integer)):
         if interval != 0 and interval != 1:
             raise ValueError("interval must be 0 or 1")
-        return interval
+        else:
+            return interval
 
-    if isinstance(interval,str):
-        if interval == '':
-            raise ValueError("the interval can not be the empty string")
-        if 'top'.startswith(interval): return 0
-        if 'bottom'.startswith(interval): return 1
-        raise ValueError("'%s' can not be converted to interval" %(interval))
+    elif isinstance(interval,str):
+        if not interval: raise ValueError("the interval can not be the empty string")
+        elif 'top'.startswith(interval): return 0
+        elif 'bottom'.startswith(interval): return 1
+        else: raise ValueError("'%s' can not be converted to interval" %(interval))
 
-    raise TypeError("'%s' is not an admissible type" %(str(interval)))
+    else:
+        raise TypeError("'%s' is not an admissible type" %(str(interval)))
 
 def side_conversion(side=None):
     r"""
@@ -136,22 +137,22 @@ def side_conversion(side=None):
         ...
         ValueError: 'top' can not be converted to a side
     """
-    if side is None: return -1
-
-    if isinstance(side,str):
-        if side == '':
-            raise ValueError("no empty string for side")
-        if 'left'.startswith(side): return 0
-        if 'right'.startswith(side): return -1
-        raise ValueError("'%s' can not be converted to a side" %(side))
-
-    if isinstance(side, (int,Integer)):
-        if side != 0 and side != 1 and side != -1:
-            raise ValueError("side must be 0 or 1")
-        if side == 0: return 0
+    if side is None:
         return -1
 
-    raise TypeError("'%s' is not an admissible type" %(str(side)))
+    elif isinstance(side,str):
+        if not side: raise ValueError("no empty string for side")
+        if 'left'.startswith(side): return 0
+        elif 'right'.startswith(side): return -1
+        raise ValueError("'%s' can not be converted to a side" %(side))
+
+    elif isinstance(side, (int,Integer)):
+        if side == 0: return 0
+        elif side == 1 or side == -1: return -1
+        else: raise ValueError("side must be 0 or 1")
+
+    else:
+        raise TypeError("'%s' is not an admissible type" %(str(side)))
 
 #
 # NICE PRINTING OF FLIPS
@@ -342,19 +343,18 @@ class Permutation(SageObject):
             sage: p is q
             False
         """
-        q = self.__class__()
+        q = self.__class__.__new__(self.__class__)
 
-        q._hash = self._hash
-        q._twin = [copy(self._twin[0]), copy(self._twin[1])]
+        q._twin = [self._twin[0][:], self._twin[1][:]]
         q._alphabet = self._alphabet
         q._repr_type = self._repr_type
         q._repr_options = self._repr_options
 
         if self._labels is not None:
-            q._labels = [copy(self._labels[0]), copy(self._labels[1])]
+            q._labels = [self._labels[0][:], self._labels[1][:]]
 
         if self._flips is not None:
-            q._flips = [copy(self._flips[0]), copy(self._flips[1])]
+            q._flips = [self._flips[0][:], self._flips[1][:]]
 
         return q
 
@@ -1284,7 +1284,7 @@ class PermutationIET(Permutation):
 
     def has_rauzy_move(self, winner, side='right'):
         r"""
-        Tests if the permutation is rauzy_movable on the left.
+        Test if a Rauzy move can be performed on this permutation.
 
         EXAMPLES::
 
@@ -4063,7 +4063,7 @@ class RauzyDiagram(SageObject):
                 sage: g = r.path(p, 0, 1, 0); g
                 Path of length 3 in a Rauzy diagram
 
-            Check for :trac:`8388`::
+            Check for trac ticket 8388::
 
                 sage: loads(dumps(g)) == g
                 True
@@ -4075,7 +4075,7 @@ class RauzyDiagram(SageObject):
 
             start = data[0]
             if start not in self._parent:
-                raise ValueError, "Starting point not in this Rauzy diagram"
+                raise ValueError("Starting point not in this Rauzy diagram")
 
             self._start = self._parent._permutation_to_vertex(start)
 
@@ -4088,10 +4088,10 @@ class RauzyDiagram(SageObject):
                     i = self._parent.edge_types_index(i)
 
                 if i < 0 or i > n:
-                    raise ValueError, "indices must be integer between 0 and %d" %(n)
+                    raise ValueError("indices must be integer between 0 and %d"%(n))
                 neighbours = self._parent._succ[cur_vertex]
                 if neighbours[i] is None:
-                    raise ValueError, "Invalid path"
+                    raise ValueError("Invalid path")
 
                 cur_vertex = neighbours[i]
                 self._edge_types.append(i)
