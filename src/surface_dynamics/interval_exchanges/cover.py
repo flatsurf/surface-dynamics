@@ -252,7 +252,6 @@ class PermutationCover(SageObject):
         m,d = mean_and_std_dev(res[0])
         lexp = m
 
-        print dimensions
         if verbose:
             from math import log, floor, sqrt
             output_file.write("sample of %d experiments\n"%nb_experiments)
