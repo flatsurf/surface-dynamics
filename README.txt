@@ -25,7 +25,14 @@ Install flatsurf by typing the following in a terminal window
 
     $ sage -p http://www.labri.fr/perso/vdelecro/flatsurf-{VERSION}.spkg
 
-(provided the command "sage" calls your version of Sage).
+(provided the command "sage" calls your version of Sage). You can also
+download the last version of the source code with git
+
+    $ git clone https://daemon@git.math.cnrs.fr/anon/plm/delecroix/flatsurf
+
+or
+
+    $ git clone https://github.com/videlec/flatsurf-package.git
 
 Versions
 --------
