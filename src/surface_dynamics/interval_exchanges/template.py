@@ -315,12 +315,42 @@ class Permutation(SageObject):
 
             sage: p == iet.GeneralizedPermutation(p.str())
             True
-
         """
         l = self.list()
-        s0 =  ' '.join(map(str,l[0]))
-        s1 = ' '.join(map(str,l[1]))
-        return s0 + sep + s1
+        s = []
+        s.append(' '.join(map(str,l[0])))
+        s.append(' '.join(map(str,l[1])))
+        return sep.join(s)
+ 
+    def to_old(self):
+        twin = self.twin_list()
+        labels = self.list()
+        letters = set((label,j) for label in self.letters() for j in xrange(2))
+        label_to_twins = dict((label,[]) for label in self.letters())
+               # position of each label
+        twin_to_index = [] # list of lists of {0,1} of the same size as self.
+                           # Each pairs of letters is exactly mapped to a 0 and
+                           # a 1 in a canonic way which is compatible with
+                           # label_to_twins.
+        for i in xrange(2):
+            twin_to_index.append([])
+            line = labels[i]
+            for p in xrange(len(line)):
+                if len(label_to_twins[line[p]]) and i==label_to_twins[line[p]][0][0]:
+                    twin_to_index[-1].append(0)
+                else:
+                    twin_to_index[-1].append(1)
+                label_to_twins[line[p]].append((i,p))
+
+        def change(x,index):
+            return "Interval('%s',%i)"%(str(x), 1 if index else -1)
+
+        for i in range(2):
+            for j in range(len(labels[i])):
+                labels[i][j] = change(labels[i][j], twin_to_index[i][j])
+
+        s = "intervals = [[" + ', '.join(labels[0]) + "], [" + ', '.join(labels[1]) +"]]"        
+        print s
 
     def __copy__(self) :
         r"""
@@ -913,6 +943,53 @@ class Permutation(SageObject):
 
         return singularities
 
+
+    def cover(self, permutations, as_tuple=False):
+        from cover import PermutationCover
+        if not as_tuple:
+            from sage.groups.perm_gps.permgroup_element import PermutationGroupElement
+            permutations = [PermutationGroupElement(p,check=True) for p in permutations]
+            permutations = [[i-1 for i in p.domain()] for p in permutations]
+
+            d = max(len(p) for p in permutations)
+
+            for p in permutations: p.extend(xrange(len(p),d))
+
+        else:
+            d = len(permutations[0])
+
+        return PermutationCover(self, d, permutations)
+
+    def label_double(self, label):
+        r"""
+        Test if the given label appears two times one the same line
+
+        EXAMPLES:
+        
+            sage: p1 = iet.Permutation('1 2 3', '3 1 2', reduced=True)
+            sage: p1.double()
+            False
+            sage: p2 = iet.GeneralizedPermutation('g o o', 'd d g', reduced=True)
+            sage: p2.double()
+            True
+        """
+        def double_line(i):
+            k = 0
+            while k < len(self[i]) and self[i][k] <> label:
+                k += 1
+            for aux in xrange(k + 1, len(self[i])):
+                if self[i][aux] == label:
+                    return True
+            return False
+
+        return double_line(0) or double_line(1)
+
+    def orientable_cover(self):
+        permut_cover = [[1,0] if self.label_double(a) else [0,1] for a in self.alphabet()]
+        return self.cover(permut_cover, as_tuple=True)
+
+
+
 class PermutationIET(Permutation):
     def _init_twin(self, a):
         r"""
@@ -1344,6 +1421,7 @@ class PermutationIET(Permutation):
             return map(self._alphabet.unrank, sorted(self._labels[0]))
         else:
             return map(self._alphabet.unrank, range(len(self)))
+
 
 class PermutationLI(Permutation):
     def _init_twin(self, a):

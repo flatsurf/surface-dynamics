@@ -38,7 +38,15 @@ setup(name='surface_dynamics',
                       SAGE_SRC,
                       os.path.join(SAGE_SRC, 'sage', 'ext')
                       ],
-    )], 
+                ),
+        Extension('surface_dynamics.interval_exchanges.lyapunov_exponents',
+            sources = ['surface_dynamics/interval_exchanges/lyapunov_exponents/lyapunov_exponents.pyx', 
+                'surface_dynamics/interval_exchanges/lyapunov_exponents/generalized_permutation.c',
+                'surface_dynamics/interval_exchanges/lyapunov_exponents/lin_alg.c',
+                'surface_dynamics/interval_exchanges/lyapunov_exponents/quad_cover.c',
+                'surface_dynamics/interval_exchanges/lyapunov_exponents/random.c',
+                'surface_dynamics/interval_exchanges/lyapunov_exponents/permutation.c',],
+            depends = ['surface_dynamics/interval_exchanges/lyapunov_exponents/lyapunov_exponents.h'])
+        ], 
       cmdclass = {'build_ext': build_ext}
 )
-

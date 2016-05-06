@@ -1653,6 +1653,9 @@ class AbelianStratumComponent(StratumComponent):
             return [tcurve for tcurve in tcurves if tcurve.origami().is_primitive()]
         return tcurves
 
+    def lyapunov_exponents(self, **kargs):
+        return(self.permutation_representative(reduced=False).lyapunov_exponents_H_plus(**kargs))
+
 
 ASC = AbelianStratumComponent
 

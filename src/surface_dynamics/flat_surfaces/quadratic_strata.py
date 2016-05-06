@@ -867,6 +867,33 @@ class QuadraticStratumComponent(StratumComponent):
 
             return CylinderDiagram([(c0_bot[::-1],c0_top),(c1_bot,c1_top[::-1])])
 
+    def lyapunov_exponents_H_plus(self, **kargs):
+        r"""
+        Compute the H^+ Lyapunov exponents.
+
+        EXAMPLES::
+            sage: R = QuadraticStratum([3,3,3,-1]).regular_component()
+            sage: R.lyapunov_exponents_H_plus()
+            [0.9996553085103, 0.0007776980910571506, 0.00022201024035355403]
+
+        """
+        return(self.permutation_representative(reduced=False).lyapunov_exponents_H_plus(**kargs))
+
+    def lyapunov_exponents(self, **kargs):
+        r"""
+        Compute the H^+ Lyapunov exponents.
+
+        EXAMPLES::
+            sage: R = QuadraticStratum([3,3,3,-1]).regular_component()
+            sage: R.lyapunov_exponents_H_plus()
+            [0.9996553085103, 0.0007776980910571506, 0.00022201024035355403]
+
+        """
+        perm = self.permutation_representative(reduced=False).orientable_cover()
+        return(perm.lyapunov_exponents_H_plus(**kargs))
+
+
+
 QSC = QuadraticStratumComponent
 
 class GenusZeroQuadraticStratumComponent(QSC):
