@@ -1006,6 +1006,11 @@ class AbelianStratumComponent(StratumComponent):
         p.alphabet(alphabet)
         return p
 
+    def lyapunov_exponents(self, **kargs):
+        perm = self.permutation_representative(reduced=False)
+        return(perm.lyapunov_exponents_H_plus(**kargs))
+
+
     def random_standard_permutation(self, nsteps=64):
         r"""
         Perform a random walk on rauzy diagram stopped on a standard permutation.
