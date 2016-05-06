@@ -322,36 +322,6 @@ class Permutation(SageObject):
         s.append(' '.join(map(str,l[1])))
         return sep.join(s)
  
-    def to_old(self):
-        twin = self.twin_list()
-        labels = self.list()
-        letters = set((label,j) for label in self.letters() for j in xrange(2))
-        label_to_twins = dict((label,[]) for label in self.letters())
-               # position of each label
-        twin_to_index = [] # list of lists of {0,1} of the same size as self.
-                           # Each pairs of letters is exactly mapped to a 0 and
-                           # a 1 in a canonic way which is compatible with
-                           # label_to_twins.
-        for i in xrange(2):
-            twin_to_index.append([])
-            line = labels[i]
-            for p in xrange(len(line)):
-                if len(label_to_twins[line[p]]) and i==label_to_twins[line[p]][0][0]:
-                    twin_to_index[-1].append(0)
-                else:
-                    twin_to_index[-1].append(1)
-                label_to_twins[line[p]].append((i,p))
-
-        def change(x,index):
-            return "Interval('%s',%i)"%(str(x), 1 if index else -1)
-
-        for i in range(2):
-            for j in range(len(labels[i])):
-                labels[i][j] = change(labels[i][j], twin_to_index[i][j])
-
-        s = "intervals = [[" + ', '.join(labels[0]) + "], [" + ', '.join(labels[1]) +"]]"        
-        print s
-
     def __copy__(self) :
         r"""
         Returns a copy of self.
@@ -943,9 +913,27 @@ class Permutation(SageObject):
 
         return singularities
 
-
     def cover(self, permutations, as_tuple=False):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+            sage: p = iet.Permutation('a b', 'b a')
+            sage: p.cover(['(1,2)', '(1,3)'])
+            Covering of degree 3 of the permutation:
+            a b
+            b a
+
+            sage: p.cover([[1,0,2], [2,1,0]], as_tuple=True)
+            Covering of degree 3 of the permutation:
+            a b
+            b a
+        """
         from cover import PermutationCover
+
+        if len(permutations) != len(self):
+            raise ValueError
+
         if not as_tuple:
             from sage.groups.perm_gps.permgroup_element import PermutationGroupElement
             permutations = [PermutationGroupElement(p,check=True) for p in permutations]
@@ -960,35 +948,26 @@ class Permutation(SageObject):
 
         return PermutationCover(self, d, permutations)
 
-    def label_double(self, label):
+    def orientation_cover(self):
         r"""
-        Test if the given label appears two times one the same line
+        EXAMPLES::
 
-        EXAMPLES:
-        
-            sage: p1 = iet.Permutation('1 2 3', '3 1 2', reduced=True)
-            sage: p1.double()
-            False
-            sage: p2 = iet.GeneralizedPermutation('g o o', 'd d g', reduced=True)
-            sage: p2.double()
-            True
+            sage: from surface_dynamics.all import *
+            sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
+            sage: c = p.orientation_cover()
+            sage: c
+            Covering of degree 2 of the permutation:
+            a a b
+            b c c
+            sage: c.cover_stratum()
+            H_1(0^4)
         """
-        def double_line(i):
-            k = 0
-            while k < len(self[i]) and self[i][k] <> label:
-                k += 1
-            for aux in xrange(k + 1, len(self[i])):
-                if self[i][aux] == label:
-                    return True
-            return False
-
-        return double_line(0) or double_line(1)
-
-    def orientable_cover(self):
-        permut_cover = [[1,0] if self.label_double(a) else [0,1] for a in self.alphabet()]
+        rank = self.alphabet().rank
+        p0 = set(map(rank, self[0]))
+        p1 = set(map(rank, self[1]))
+        inv_letters = p0.symmetric_difference(p1)
+        permut_cover = [[1,0] if i in inv_letters else [0,1] for i in range(len(self.alphabet()))]
         return self.cover(permut_cover, as_tuple=True)
-
-
 
 class PermutationIET(Permutation):
     def _init_twin(self, a):

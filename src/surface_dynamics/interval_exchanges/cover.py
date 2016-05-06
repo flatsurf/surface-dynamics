@@ -1,3 +1,7 @@
+r"""
+Cover of permutations
+"""
+
 from sage.structure.sage_object import SageObject
 
 from sage.misc.cachefunc import cached_method
@@ -5,8 +9,6 @@ from sage.interfaces.gap import gap
 from sage.rings.integer import Integer
 from sage.matrix.constructor import Matrix, identity_matrix
 
-import time
-import surface_dynamics.interval_exchanges.lyapunov_exponents as lyapunov_exponents  # the cython bindings
 
 from sage.rings.universal_cyclotomic_field import UniversalCyclotomicField
 UCF = UniversalCyclotomicField()
@@ -17,13 +19,9 @@ from labelled import mean_and_std_dev
 
 class PermutationCover(SageObject):
     r"""
-    Template for finite covers of permutations.
+    Finite cover of a permutation
 
-    .. warning::
-
-        Internal class! Do not use directly!
-
-    has three attributes
+    Has three attributes
 
     - ``_base`` -- base permutation
 
@@ -40,6 +38,9 @@ class PermutationCover(SageObject):
         self._degree_cover = degree
         self._permut_cover = copy(permut)
 
+        if not self._base.is_irreducible():
+            raise ValueError("the base must be irreducible")
+
     def __repr__(self):
         r"""
         A representation of the generalized permutation cover.
@@ -55,10 +56,10 @@ class PermutationCover(SageObject):
 
         EXAMPLES::
 
-            sage: import interval_exchanges.constructors as iet
+            sage: from surface_dynamics.all import *
             sage: p1 = iet.Permutation('a b c', 'c b a')
             sage: p1.cover(['(1,2)', '(1,3)', '(2,3)'])
-            Covering of degree 3
+            Covering of degree 3 of the permutation:
             a b c
             c b a
         """
@@ -73,23 +74,8 @@ class PermutationCover(SageObject):
         q = PermutationCover(self._base.__copy__(), self._degree_cover, copy(self._permut_cover))
         return(q)
 
-    def __len__(self):
-        return(len(self._base))
-
-    def length_top(self):
-        return(self._base.length_top)
-
-    def length_bottom(self):
-        return(self._base.length_bottom)
-
-    def length(self, interval=None):
-        return(self._base.length(interval))
-
-    def alphabet(self):
-        return(self._base._alphabet)
-
     def covering_data(self, label, permutation=True):
-        alphabet = self.alphabet()
+        alphabet = self._base.alphabet()
         perm = self._permut_cover[alphabet.rank(label)]
         perm = [i+1 for i in perm]
         if permutation:
@@ -99,49 +85,133 @@ class PermutationCover(SageObject):
             return(perm)
 
     def profile(self):
+        r"""
+        Return the profile of the surface.
+
+        Return the list of angles of singularities in the surface divided by pi.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+            sage: p = iet.Permutation('a b', 'b a')
+            sage: p.cover(['(1,2)', '(1,3)']).profile()
+            [6]
+            sage: p.cover(['(1,2,3)','(1,4)']).profile()
+            [6, 2]
+            sage: p.cover(['(1,2,3)(4,5,6)','(1,4,7)(2,5)(3,6)']).profile()
+            [6, 2, 2, 2, 2]
+
+            sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
+            sage: p.cover(['(1,2)', '()', '(1,2)']).profile()
+            [2, 2, 2, 2]
+        """
         from sage.combinat.partition import Partition
         from sage.combinat.permutation import Permutations
 
         s = []
 
-        base_diagram = self._base.interval_diagram(sign=True)
+        base_diagram = self._base.interval_diagram(sign=True,glue_ends=True)
+        p_id = Permutations(self._degree_cover).identity()
         for orbit in base_diagram:
-            from sage.combinat.permutation import Permutation
-            p = Permutations(self._degree_cover).identity()
-            orbit_flat = []
+            flat_orbit = []
             for x in orbit:
-                if type(x[0])==tuple:
-                    orbit_flat += list(x)
+                if isinstance(x[0], tuple):
+                    flat_orbit.extend(x)
                 else:
-                    orbit_flat.append(x)
-            for l in orbit_flat:
-                lab, sign = l
-                p = p*(self.covering_data(lab) if sign else self.covering_data(lab).inverse())
+                    flat_orbit.append(x)
+            p = p_id
+            for lab,sign in flat_orbit:
+                q = self.covering_data(lab)
+                if sign: q = q.inverse()
+                p = p*q
             for c in p.cycle_type():
                s.append(len(orbit)*c)
 
         return Partition(sorted(s,reverse=True))
 
+    def is_orientable(self):
+        r"""
+        Test whether the covering has an orientable foliation.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+            sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
+            sage: from itertools import product
+            sage: it = iter(product(('()', '(1,2)'), repeat=3))
+            sage: it.next()
+            ('()', '()', '()')
+
+            sage: for cov in it:
+            ....:     c = p.cover(cov)
+            ....:     print cov, c.is_orientable()
+            ('()', '()', '(1,2)') False
+            ('()', '(1,2)', '()') False
+            ('()', '(1,2)', '(1,2)') False
+            ('(1,2)', '()', '()') False
+            ('(1,2)', '()', '(1,2)') True
+            ('(1,2)', '(1,2)', '()') False
+            ('(1,2)', '(1,2)', '(1,2)') False
+        """
+        from surface_dynamics.interval_exchanges.template import PermutationIET
+        if isinstance(self._base, PermutationIET):
+            return True
+        elif any(x%2 for x in self.profile()):
+            return False
+        else:
+            # here we should really unfold the holonomy
+            # i.e. try to orient each copy with pm 1
+            signs = [+1] + [None] * (self._degree_cover - 1)
+            todo = [0]
+            A = self._base.alphabet()
+            p0 = set(map(A.rank, self._base[0]))
+            p1 = set(map(A.rank, self._base[1]))
+            inv_letters = p0.symmetric_difference(p1)
+            while todo:
+                i = todo.pop()
+                s = signs[i]
+                assert s is not None
+                for j in inv_letters:
+                    ii = self._permut_cover[j][i]
+                    if signs[ii] is None:
+                        signs[ii] = -s
+                        todo.append(ii)
+                    elif signs[ii] != -s:
+                        return False
+            return True
+
     def cover_stratum(self):
-        from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
-        if self._base.is_irreducible():
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+            sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
+            sage: p.cover(['(1,2)', '()', '(1,2)']).cover_stratum()
+            H_1(0^4)
+            sage: p.cover(['(1,2)', '(1,2)', '(1,2)']).cover_stratum()
+            Q_0(0^2, -1^4)
+        """
+        if self.is_orientable():
+            from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum
+            return AbelianStratum([(x-2)/2 for x in self.profile()])
+        else:
+            from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
             return QuadraticStratum([x-2 for x in self.profile()])
-        raise ValueError("stratum is well defined only for irreducible permutations")
 
     def cover_genus(self):
         p = self.profile()
         return Integer((sum(p)-2*len(p))/4+1)
 
     def base_stratum(self):
-        return(self._base.stratum())
+        return self._base.stratum()
 
     def base_genus(self):
-        return(self._base.genus())
+        return self._base.genus()
 
     def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=100,
                                   nb_iterations=32768, return_speed=False, 
                                   verbose=False, output_file=None, lengths=None, 
-                                  isotopic_decomposition=False):
+                                  isotypic_decomposition=False):
         r"""
         Compute the H^+ Lyapunov exponents in  the covering locus.
 
@@ -174,6 +244,9 @@ class PermutationCover(SageObject):
         EXAMPLES::
         sage:
         """
+        import surface_dynamics.interval_exchanges.lyapunov_exponents as lyapunov_exponents
+        import time
+
         n = len(self)
 
         if nb_vectors is None:
@@ -210,10 +283,11 @@ class PermutationCover(SageObject):
         gp, twin = range(2*n), range(2*n)
 
         base_twin = self._base._twin
+        alphabet = self._base.alphabet()
 
         for i in range(2):
             for j in range(len(self[i])):
-                gp[convert((i,j))] = int(self.alphabet().rank(self[i][j]))
+                gp[convert((i,j))] = int(alphabet.rank(self[i][j]))
                 if isinstance(base_twin[i][j], int):
                        twin[convert((i,j))] = int(convert((1-i, base_twin[i][j])))
                 else:
@@ -225,16 +299,16 @@ class PermutationCover(SageObject):
 
         projections = None
         dimensions=None
-        if sigma and isotopic_decomposition:
+        if sigma and isotypic_decomposition:
             from sage.rings.all import CC
             from sage.functions.other import real
 
             size_of_matrix = len(self.cover_generators())
             projections = range(size_of_matrix**2 * self.n_characters())
-            if isotopic_decomposition:
+            if isotypic_decomposition:
                 dimensions = range(self.n_characters())
                 for i_char in xrange(self.n_characters()):
-                    M = self.isotopic_projection_matrix(i_char)
+                    M = self.isotypic_projection_matrix(i_char)
                     dimensions[i_char] = M.rank()
                     for i in xrange(size_of_matrix):
                         for j in xrange(size_of_matrix):
@@ -244,7 +318,7 @@ class PermutationCover(SageObject):
         res = lyapunov_exponents.lyapunov_exponents_H_plus_cover(
             gp, int(k), twin, sigma, int(len(sigma)/n), 
             nb_vectors, nb_experiments, nb_iterations,
-            projections, isotopic_decomposition, dimensions=dimensions)
+            projections, isotypic_decomposition, dimensions=dimensions)
         t1 = time.time()
 
         res_final = []
@@ -263,7 +337,7 @@ class PermutationCover(SageObject):
             output_file.write("Lexp Rauzy-Zorich: %f (std. dev. = %f, conf. rad. 0.01 = %f)\n"%(
                     m,d, 2.576*d/sqrt(nb_experiments)))
 
-        if isotopic_decomposition:
+        if isotypic_decomposition:
             i_0 = 1
             for i_char in xrange(self.n_characters()):
                 res_int = []
@@ -345,18 +419,22 @@ class PermutationCover(SageObject):
         return Integer(self._characters()[4])
 
     def cover_generators(self):
-        return([(d,a) for d in range(1, self._degree_cover+1) for a in self.alphabet()])
+        alphabet = self._base.alphabet()
+        return([(d,a) for d in range(1, self._degree_cover+1) for a in alphabet])
 
-    def isotopic_projection_matrix(self, i_character):
+    def isotypic_projection_matrix(self, i_character):
         r"""
-        Return the projection matrix to the isotopic space of the \chi_i character
-        recall the formula :
-        p_i_character (d, a) = \sum_{t \in G} char_i(t).conjugate (galois_group_permutation(t)(d), a)
+        Return the projection matrix to the isotypic space of the \chi_i
+        character recall the formula :
+
+        .. MATH::
+
+            p_i_character (d, a) = \sum_{t \in G} char_i(t).conjugate (galois_group_permutation(t)(d), a)
         """
         res = [[0 for _ in self.cover_generators()] for _ in self.cover_generators()]
         char = self.character_table()[i_character]
         coeff = self.character_degree()[i_character]/self.galois_group_order()
-        alphabet = self.alphabet()
+        alphabet = self._base.alphabet()
         for d, a in self.cover_generators():
             for t in range(self.galois_group_order()):
                 i = (d - 1)*len(alphabet) + alphabet.rank(a)
