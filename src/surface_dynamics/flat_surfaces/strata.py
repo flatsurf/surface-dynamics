@@ -543,6 +543,20 @@ class StratumComponent(SageObject):
         """
         return self._stratum
 
+    def genus(self):
+        r"""
+        Return genus of the corresponding stratum
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+
+            sage: a = AbelianStratum(4,4)
+            sage: a.one_component().genus()
+            5
+        """
+        return self._stratum.genus()
+
     def __eq__(self,other):
         r"""
         Equality test

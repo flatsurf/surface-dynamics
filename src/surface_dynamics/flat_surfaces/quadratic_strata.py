@@ -889,7 +889,7 @@ class QuadraticStratumComponent(StratumComponent):
             [0.9996553085103, 0.0007776980910571506, 0.00022201024035355403]
 
         """
-        perm = self.permutation_representative(reduced=False).orientable_cover()
+        perm = self.permutation_representative(reduced=False).orientation_cover()
         return(perm.lyapunov_exponents_H_plus(**kargs))
 
 

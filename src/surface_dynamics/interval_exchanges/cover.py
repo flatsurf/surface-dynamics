@@ -180,15 +180,17 @@ class PermutationCover(SageObject):
                         return False
             return True
 
-    def cover_stratum(self):
+    def stratum(self):
         r"""
+        Stratum of the covering translation surface
+        
         EXAMPLES::
 
             sage: from surface_dynamics.all import *
             sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
-            sage: p.cover(['(1,2)', '()', '(1,2)']).cover_stratum()
+            sage: p.cover(['(1,2)', '()', '(1,2)']).stratum()
             H_1(0^4)
-            sage: p.cover(['(1,2)', '(1,2)', '(1,2)']).cover_stratum()
+            sage: p.cover(['(1,2)', '(1,2)', '(1,2)']).stratum()
             Q_0(0^2, -1^4)
         """
         if self.is_orientable():
@@ -198,7 +200,27 @@ class PermutationCover(SageObject):
             from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
             return QuadraticStratum([x-2 for x in self.profile()])
 
-    def cover_genus(self):
+    def genus(self):
+        r"""
+        Genus of the covering translation surface
+
+        EXAMPLES::
+            sage: from surface_dynamics.all import *
+            sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
+            sage: p.cover(['(1,2)', '()', '(1,2)']).genus()
+            1
+            sage: p.cover(['(1,2)', '(1,2)', '(1,2)']).genus()
+            0
+
+        TESTS::
+            sage: from surface_dynamics.all import *
+            sage: o = AbelianStratum([1,2,3,4]).one_component().one_origami()
+            sage: o.genus() == AbelianStratum([1,2,3,4]).genus()
+            sage: qc = QuadraticStratum([1,2,3,4,-1,-1]).one_component()
+            sage: p = qc.permutation_representative()
+            sage: p.orientation_cover().genus == qc.orientation_cover_component().genus()
+
+        """
         p = self.profile()
         return Integer((sum(p)-2*len(p))/4+1)
 
@@ -363,7 +385,7 @@ class PermutationCover(SageObject):
 
 
     @cached_method
-    def galois_group(self):
+    def automorphism_group(self):
         r"""
         Return the galois group of the cover 
         """
@@ -387,7 +409,7 @@ class PermutationCover(SageObject):
             - perm : table s.t. perm[g] give the permutation associated to the group element g on the cover
             - n_cha : number of characters
         """
-        G = self.galois_group()
+        G = self.automorphism_group()
         G_order, T = gap.Order(G)._sage_(), gap.CharacterTable(G)
         irr_characters = gap.Irr(T)
         n_cha = len(irr_characters)
@@ -408,10 +430,10 @@ class PermutationCover(SageObject):
     def character_degree(self):
         return self._characters()[1]
 
-    def galois_group_order(self):
+    def automorphism_group_order(self):
         return Integer(self._characters()[2])
 
-    def galois_group_permutation(self):
+    def automorphism_group_permutation(self):
         return self._characters()[3]
 
     def n_characters(self):
@@ -428,15 +450,15 @@ class PermutationCover(SageObject):
 
         .. MATH::
 
-            p_i_character (d, a) = \sum_{t \in G} char_i(t).conjugate (galois_group_permutation(t)(d), a)
+            p_i_character (d, a) = \sum_{t \in G} char_i(t).conjugate (automorphism_group_permutation(t)(d), a)
         """
         res = [[0 for _ in self.cover_generators()] for _ in self.cover_generators()]
         char = self.character_table()[i_character]
-        coeff = self.character_degree()[i_character]/self.galois_group_order()
+        coeff = self.character_degree()[i_character]/self.automorphism_group_order()
         alphabet = self._base.alphabet()
         for d, a in self.cover_generators():
-            for t in range(self.galois_group_order()):
+            for t in range(self.automorphism_group_order()):
                 i = (d - 1)*len(alphabet) + alphabet.rank(a)
-                j = int(self.galois_group_permutation()[t][d-1])*len(alphabet) + alphabet.rank(a)
+                j = int(self.automorphism_group_permutation()[t][d-1])*len(alphabet) + alphabet.rank(a)
                 res[i][j] += coeff*char[t]
         return Matrix(res)
