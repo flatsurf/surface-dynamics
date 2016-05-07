@@ -453,7 +453,7 @@ inline void project_isotopic(quad_cover *qcc, size_t nb_char, size_t* dimensions
     So the product is
     M*v(lab_i, deg_i) = sum (lab_j, deg_j)  M[(lab_i, deg_i),(lab_j, deg_j)] * v[lab_j, deg_j]
 
-    We project the dimension[0] first vector with M_0
+    We project the dimension[0] first vectors with M_0
     Then the dimension[1] next with M_1 and so on
 
     v_k[lab_i, deg_i] = labels[lab_i].v[ k + nb_vector * deg_i]

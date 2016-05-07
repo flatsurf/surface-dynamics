@@ -97,6 +97,12 @@ void randomize_length_quad_cover(quad_cover * qcc);
 
 void lyapunov_exponents_H_plus(quad_cover *qcc, double *theta, size_t nb_induction);
 void lyapunov_exponents_isotopic(quad_cover *qcc, double *theta, size_t nb_induction, size_t nb_char, size_t *dimensions, double* projections);
+/* Projections are applied with a left product to vectors.
+   The set of matrice is expected to be a list with the following form :
+       M_(i_char)[(lab_i, deg_i), (lab_j, deg_j)] = projections [i_char*(size_of_matrix**2) + (deg_i*nb_labels + lab_i)*size_of_matrix + (deg_j*nb_labels + lab_j)]
+   and the vectors
+       v_k[lab_i, deg_i] = labels[lab_i].v[ k + nb_vector * deg_i]*/
+
 void top_lyapunov_exponents_H_plus(quad_cover *qcc, double *theta, size_t nb_iterations);
 
 /* one step of Rauzy induction with Zorich acceleration */

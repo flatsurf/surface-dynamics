@@ -74,15 +74,39 @@ class PermutationCover(SageObject):
         q = PermutationCover(self._base.__copy__(), self._degree_cover, copy(self._permut_cover))
         return(q)
 
-    def covering_data(self, label, permutation=True):
+    def covering_data(self, label, list=False):
+        r"""
+        Returns the permutation associated to a label.
+
+        INPUT:
+
+        - ``label`` - label you are looking at
+
+        - ``list`` - boolen (default: False) - wether or not retourning as a list or sage Permutation
+
+        EXEMPLES::
+            sage: from surface_dynamics.all import *
+
+            sage: p = QuadraticStratum([1,1,-1,-1]).components()[0].permutation_representative()
+            sage: pc = p.orientation_cover()
+            sage: pc
+            Covering of degree 2 of the permutation:
+            0 1 2 3 3
+            2 1 4 4 0
+
+            sage: pc.covering_data(1)
+            [1, 2]
+            sage: pc.covering_data(3)[2, 1]
+
+        """
         alphabet = self._base.alphabet()
         perm = self._permut_cover[alphabet.rank(label)]
         perm = [i+1 for i in perm]
-        if permutation:
+        if list:
+            return(perm)
+        else:
             from sage.combinat.permutation import Permutation
             return Permutation(perm)
-        else:
-            return(perm)
 
     def profile(self):
         r"""
@@ -272,7 +296,7 @@ class PermutationCover(SageObject):
         n = len(self)
 
         if nb_vectors is None:
-            nb_vectors = self.cover_genus()
+            nb_vectors = self.genus()
 
         if output_file is None:
             from sys import stdout
@@ -401,19 +425,28 @@ class PermutationCover(SageObject):
         r"""
         We want to decompose homology space with the observation that it gives a representation of the galois group.
         
-        RETURN
-            - character: table of character, character[i][g] give the value of the i-th character on g
+        .. warning::
+
+        Internal class! Do not use directly!
+        
+        OUPUT:
+        
+        - tuple -- composed of 5 elements which will be gien by 5 cached functions:
+
+            - character_table: table of character, character[i][g] give the value of the i-th character on g
             g is given by a number
             - character_degree: list of degree of every character
-            - g : Order of the group
-            - perm : table s.t. perm[g] give the permutation associated to the group element g on the cover
-            - n_cha : number of characters
+            - autmorphism_group_order : Order of the group
+            - automorphism_group_permutation : table s.t. perm[g] give the permutation associated to the group element g on the cover
+            - n_characters : number of characters
+
+
         """
         G = self.automorphism_group()
         G_order, T = gap.Order(G)._sage_(), gap.CharacterTable(G)
         irr_characters = gap.Irr(T)
-        n_cha = len(irr_characters)
-        character = [[UCF(irr_characters[i][j]._sage_()) for j in range(1, G_order + 1)] for i in range(1, n_cha + 1)]
+        n_characters = len(irr_characters)
+        character_table = [[UCF(irr_characters[i][j]._sage_()) for j in range(1, G_order + 1)] for i in range(1, n_characters + 1)]
         character_degree = [gap.Degree(irr_characters[i])._sage_() for i in range(1, n_cha + 1)]
         gap_size_centralizers = gap.SizesCentralizers(T)
         gap_orders = gap.OrdersClassRepresentatives(T)
@@ -421,16 +454,28 @@ class PermutationCover(SageObject):
         perm = [list(gap.ListPerm(elements_group[i], self._degree_cover)) 
                 for i in range(1, G_order + 1)]
        
-        #identity assures that the permutation has the right size
-        return(character, character_degree, G_order, map(lambda x: [i-1 for i in x], perm), n_cha)
+        return(character, character_degree, G_order, map(lambda x: [i-1 for i in x], perm), n_characters)
 
     def character_table(self):
+        r"""
+        Table of characters. 
+
+        character_table()[i][g] give the value of the i-th character on g.
+        the g-th element of the group is a permutation given by the list
+        automorphism_group_permutation
+        """
         return self._characters()[0]
 
     def character_degree(self):
+        r"""
+        List of degrees for every character.
+        """
         return self._characters()[1]
 
     def automorphism_group_order(self):
+        r"""
+        Order of the automorphism group.
+        """
         return Integer(self._characters()[2])
 
     def automorphism_group_permutation(self):
