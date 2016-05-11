@@ -495,11 +495,16 @@ class PermutationCover(SageObject):
     def isotypic_projection_matrix(self, i_character):
         r"""
         Return the projection matrix to the isotypic space of the \chi_i
-        character recall the formula :
+        character recall the formula of Theorem 8 in [Ser]:
 
         .. MATH::
 
             p_i_character (d, a) = \sum_{t \in G} char_i(t).conjugate (automorphism_group_permutation(t)(d), a)
+
+        REFERENCES:
+        
+        .. [Ser] J.-P. Serre, "Représentation des groupes finis."
+        
         """
         res = [[0 for _ in self.cover_generators()] for _ in self.cover_generators()]
         char = self.character_table()[i_character]
