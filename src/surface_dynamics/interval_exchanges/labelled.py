@@ -74,7 +74,7 @@ TESTS::
     sage: g.is_loop()
     True
     sage: g.is_full()
-    Trueyap
+    True
     sage: s1 = g.orbit_substitution()
     sage: print s1
     a->adbd, b->adbdbd, c->adccd, d->adcd
@@ -529,7 +529,12 @@ class LabelledPermutation(SageObject):
           standard output.
 
         EXAMPLES::
-        sage:
+
+            sage: from surface_dynamics.all import *
+            sage: q = QuadraticStratum([1,1,-1,-1]).one_component()
+            sage: p = q.permutation_representative().orientation_cover()
+            sage: p.lyapunov_exponents_H_plus()
+            [1.0000942602778726, 0.6638418945275006, 0.3305485865942756]
         """
         n = len(self)
 
@@ -547,7 +552,6 @@ class LabelledPermutation(SageObject):
             sigma = map(lambda x : sigma[self._alphabet.unrank(x)], range(n))
         if isinstance(sigma, list) and isinstance(sigma[0], list):
             sigma = reduce(lambda x,y: x+y, sigma)
-
 
         nb_vectors = int(nb_vectors)
         nb_experiments = int(nb_experiments)
@@ -579,7 +583,7 @@ class LabelledPermutation(SageObject):
                        twin[convert((i,j))] = int(convert(self._twin[i][j]))
 
 
-        if lengths != None:
+        if lengths is not None:
             lengths = map(int, lengths)
         sigma = map(int, sigma)
 

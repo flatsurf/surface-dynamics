@@ -959,7 +959,7 @@ class Permutation(SageObject):
             Covering of degree 2 of the permutation:
             a a b
             b c c
-            sage: c.cover_stratum()
+            sage: c.stratum()
             H_1(0^4)
         """
         rank = self.alphabet().rank

@@ -9,11 +9,6 @@ from sage.interfaces.gap import gap
 from sage.rings.integer import Integer
 from sage.matrix.constructor import Matrix, identity_matrix
 
-
-from sage.rings.universal_cyclotomic_field import UniversalCyclotomicField
-UCF = UniversalCyclotomicField()
-
-
 from copy import copy
 from labelled import mean_and_std_dev
 
@@ -40,6 +35,9 @@ class PermutationCover(SageObject):
 
         if not self._base.is_irreducible():
             raise ValueError("the base must be irreducible")
+
+    def __len__(self):
+        return(len(self._base))
 
     def __repr__(self):
         r"""
@@ -84,7 +82,8 @@ class PermutationCover(SageObject):
 
         - ``list`` - boolen (default: False) - wether or not retourning as a list or sage Permutation
 
-        EXEMPLES::
+        EXAMPLES::
+
             sage: from surface_dynamics.all import *
 
             sage: p = QuadraticStratum([1,1,-1,-1]).components()[0].permutation_representative()
@@ -96,7 +95,8 @@ class PermutationCover(SageObject):
 
             sage: pc.covering_data(1)
             [1, 2]
-            sage: pc.covering_data(3)[2, 1]
+            sage: pc.covering_data(3)
+            [2, 1]
 
         """
         alphabet = self._base.alphabet()
@@ -229,6 +229,7 @@ class PermutationCover(SageObject):
         Genus of the covering translation surface
 
         EXAMPLES::
+
             sage: from surface_dynamics.all import *
             sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
             sage: p.cover(['(1,2)', '()', '(1,2)']).genus()
@@ -237,16 +238,17 @@ class PermutationCover(SageObject):
             0
 
         TESTS::
+
             sage: from surface_dynamics.all import *
             sage: o = AbelianStratum([1,2,3,4]).one_component().one_origami()
-            sage: o.genus() == AbelianStratum([1,2,3,4]).genus()
+            sage: assert(o.genus() == AbelianStratum([1,2,3,4]).genus())
             sage: qc = QuadraticStratum([1,2,3,4,-1,-1]).one_component()
             sage: p = qc.permutation_representative()
-            sage: p.orientation_cover().genus == qc.orientation_cover_component().genus()
-
+            sage: assert(p.orientation_cover().genus() == qc.orientation_cover_component().genus())
         """
         p = self.profile()
         return Integer((sum(p)-2*len(p))/4+1)
+
 
     def base_stratum(self):
         return self._base.stratum()
@@ -442,19 +444,21 @@ class PermutationCover(SageObject):
 
 
         """
+        from sage.rings.universal_cyclotomic_field import UniversalCyclotomicField
+        UCF = UniversalCyclotomicField()
         G = self.automorphism_group()
         G_order, T = gap.Order(G)._sage_(), gap.CharacterTable(G)
         irr_characters = gap.Irr(T)
         n_characters = len(irr_characters)
         character_table = [[UCF(irr_characters[i][j]._sage_()) for j in range(1, G_order + 1)] for i in range(1, n_characters + 1)]
-        character_degree = [gap.Degree(irr_characters[i])._sage_() for i in range(1, n_cha + 1)]
+        character_degree = [gap.Degree(irr_characters[i])._sage_() for i in range(1, n_characters + 1)]
         gap_size_centralizers = gap.SizesCentralizers(T)
         gap_orders = gap.OrdersClassRepresentatives(T)
         elements_group = gap.Elements(G)
         perm = [list(gap.ListPerm(elements_group[i], self._degree_cover)) 
                 for i in range(1, G_order + 1)]
        
-        return(character, character_degree, G_order, map(lambda x: [i-1 for i in x], perm), n_characters)
+        return(character_table, character_degree, G_order, map(lambda x: [i-1 for i in x], perm), n_characters)
 
     def character_table(self):
         r"""

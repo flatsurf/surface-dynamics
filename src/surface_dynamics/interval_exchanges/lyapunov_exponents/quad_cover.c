@@ -676,6 +676,7 @@ void lyapunov_exponents_H_plus(quad_cover *qcc, double *theta, size_t nb_iterati
   for(i=0; i < nb_iterations; ++i)
     {
       rauzy_induction_H_plus_quad_cover(qcc);
+
       if(qcc->length < 0.001)
 	{
 	  theta[0] -= logl(qcc->length);
@@ -714,7 +715,7 @@ void lyapunov_exponents_isotopic(quad_cover *qcc, double *theta, size_t nb_itera
   for(i=0; i < nb_iterations; ++i)
     {
       rauzy_induction_H_plus_quad_cover(qcc);
-      
+
       if(qcc->length < 0.001)
 	{
 	  theta[0] -= logl(qcc->length);

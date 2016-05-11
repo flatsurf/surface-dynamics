@@ -45,11 +45,10 @@ cdef extern from "lyapunov_exponents.h":
 
 def lyapunov_exponents_H_plus_cover(
     gp, k, twin, sigma, degree,
-    nb_vectors, nb_experiments, nb_iterations, lengths = None, nb_char = 0, 
-    dimensions = None, projections = None, isotopic_decomposition = False):
+    nb_vectors, nb_experiments, nb_iterations, lengths=None, nb_char=0, 
+    dimensions=None, projections=None, isotopic_decomposition=False):
     r"""
-    Compute the Lyapunov exponents of the H^+ part of the KZ-cocycle for
-    covering locii.
+    Compute the Lyapunov exponents of the H^+ part of the KZ-cocycle for covering locii.
 
     We assume that all the inputs are clean. If not, it may cause some SEGFAULT
     which would interrupt python!
@@ -101,15 +100,17 @@ def lyapunov_exponents_H_plus_cover(
             tab[j] = sigma[j + degree * i]
         s[i] = tab
 
-    if dimensions != None :
+    if dimensions is not None :
         nb_vectors = sum(dimensions)
 
-    theta = <double *> malloc((nb_vectors+1) * sizeof(double))
+    nn = int(nb_vectors) + 1 # We add one to keep track of the length of the geodesic
+
+    theta = <double *> malloc(nn * sizeof(double))
 
     gp_c = new_generalized_permutation(p, t, k, n)
     qcc = <quad_cover *> new_quad_cover(gp_c, s, degree, nb_vectors)
 
-    if lengths == None:
+    if lengths is None:
        set_random_lengths_quad_cover(qcc)
     else:
         l = <long double *> malloc(n * sizeof(long double))	
@@ -122,8 +123,7 @@ def lyapunov_exponents_H_plus_cover(
     free(p)
     free(t)
 
-
-    res = [[] for _ in xrange(nb_vectors+1)]
+    res = [[] for _ in xrange(nn)]
 
     c_isnan, c_isinf, tot_isnan, tot_isinf = 0, 0, 0, 0
 
@@ -137,7 +137,6 @@ def lyapunov_exponents_H_plus_cover(
             else:
                 for j in xrange(2):
                     res[j].append(theta[j])
-
     else:
         init_GS(nb_vectors)
         for i in xrange(nb_experiments):
@@ -152,16 +151,13 @@ def lyapunov_exponents_H_plus_cover(
                 lyapunov_exponents_isotopic(qcc, theta, nb_iterations, nc, dim, proj)
                 free(dim)
                 free(proj)
-
             else:
                 lyapunov_exponents_H_plus(qcc, theta, nb_iterations)
                 
-            if   len(filter(isnan, [theta[i] for i in range(nb_vectors+1)])) > 0:
-                c_isnan  += 1
-            elif len(filter(isinf, [theta[i] for i in range(nb_vectors+1)])) > 0:
-                c_isinf  += 1
+            if any(isnan(theta[i]) for i in xrange(nn)): c_isnan  += 1
+            elif any(isinf(theta[i]) for i in xrange(nn)): c_isinf  += 1
             else:
-                for j in xrange(nb_vectors+1):
+                for j in xrange(nn):
                     res[j].append(theta[j])
             if (i == nb_experiments-1) and (c_isnan + c_isinf < 9*nb_experiments/10):
                 i = nb_experiments - (c_isnan+c_isinf) - 1
