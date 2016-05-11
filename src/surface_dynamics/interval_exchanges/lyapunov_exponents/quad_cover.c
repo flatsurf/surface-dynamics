@@ -701,7 +701,7 @@ void lyapunov_exponents_H_plus(quad_cover *qcc, double *theta, size_t nb_iterati
 void lyapunov_exponents_isotopic(quad_cover *qcc, double *theta, size_t nb_iterations, size_t nb_char, size_t* dimensions, double *proj)
 {
   size_t i,nb_ren=0;
-  
+
   set_random_lengths_quad_cover(qcc);
   set_random_vectors(qcc);
   
@@ -723,6 +723,7 @@ void lyapunov_exponents_isotopic(quad_cover *qcc, double *theta, size_t nb_itera
 	  
 	  orthogonalize_iso(qcc, theta, nb_char, dimensions);
 	  project_isotopic(qcc, nb_char, dimensions, proj);
+         
 	  
 	  if((nb_ren+1) % 500 == 0)  // a bit of salt
 	    {
