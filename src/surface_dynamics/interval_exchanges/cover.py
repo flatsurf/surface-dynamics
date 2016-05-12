@@ -258,9 +258,8 @@ class PermutationCover(SageObject):
         return self._base.genus()
 
     def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=100,
-                                  nb_iterations=32768, return_speed=False, 
-                                  verbose=False, output_file=None, lengths=None, 
-                                  isotypic_decomposition=False):
+                                  nb_iterations=32768, lengths=None, output_file=None, 
+                                  return_speed=False, isotypic_decomposition=False, verbose=False):
         r"""
         Compute the H^+ Lyapunov exponents in  the covering locus.
 
@@ -282,13 +281,23 @@ class PermutationCover(SageObject):
            which is rather small but provide a good compromise between speed and
            quality of approximation.
 
-        - ``verbose`` -- if ``True`` provide additional informations rather than
-          returning only the Lyapunov exponents (i.e. ellapsed time, confidence
-          intervals, ...)
+        - ``lengths`` -- specify some lengths for the iet you want to start with.
+        None by default will imply random lengths.
 
         - ``output_file`` -- if provided (as a file object or a string) output
           the additional information in the given file rather than on the
           standard output.
+
+        - ``return_speed`` -- wether or not return the lyapunov exponents list
+        in a pair with the speed of the geodesic.
+
+        - ``isotypic_decomposition`` -- whether or not decompose the space
+        into isotypic subspaces for the cover automorphism.
+
+        - ``verbose`` -- if ``True`` provide additional informations rather than
+          returning only the Lyapunov exponents (i.e. ellapsed time, confidence
+          intervals, ...)
+
 
         EXAMPLES::
         sage:
@@ -363,9 +372,8 @@ class PermutationCover(SageObject):
 
         t0 = time.time()
         res = lyapunov_exponents.lyapunov_exponents_H_plus_cover(
-            gp, k, twin, sigma, int(len(sigma)/n), 
-            nb_vectors, nb_experiments, nb_iterations, None, #random lengths
-            dimensions, projections)
+            gp, k, twin, sigma, nb_experiments, nb_iterations, 
+            dimensions, projections, None, verbose) #No lengths for random length
         t1 = time.time()
 
         res_final = []

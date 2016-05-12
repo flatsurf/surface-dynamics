@@ -44,9 +44,9 @@ cdef extern from "lyapunov_exponents.h":
     void top_lyapunov_exponents_H_plus(quad_cover *qcc, double *theta, size_t nb_iterations)
 
 def lyapunov_exponents_H_plus_cover(
-    gp, k, twin, sigma, degree,
-    nb_vectors, nb_experiments, nb_iterations, lengths, 
-    dimensions, projections):
+    gp, k, twin, sigma,
+    nb_experiments, nb_iterations,
+    dimensions, projections, lengths, verbose):
     r"""
     Compute the Lyapunov exponents of the H^+ part of the KZ-cocycle for covering locii.
 
@@ -57,30 +57,33 @@ def lyapunov_exponents_H_plus_cover(
 
     - ``gp`` -- a generalized permutation given as a list of integers
 
-    - ``twin`` -- the twin data of the gp
-
     - ``k`` -- the length of the top interval
 
-    - ``sigma`` -- covering data
+    - ``twin`` -- the twin data of the gp
 
-    - ``nb_vectors`` -- the number of vectors to use
+    - ``sigma`` -- covering data
 
     - ``nb_experiments`` -- number of experimets
 
     - ``nb_iterations`` -- the number of iterations of the Rauzy-Zorich
       induction to perform
 
-    - ``verbose`` -- if ``True`` print additional information concerning the
-      mean and standard deviation
-
-    - ``dimensions`` -- number of vectors in each isotypic component
+    - ``dimensions`` -- number of vectors we want for each component
 
     - ``projections`` -- isotypic projection matrices
+
+    - ``verbose`` -- if ``True`` print additional information concerning the
+      mean and standard deviation
     """
+    if not projections and len(dimensions)>1:
+        print "Warning, you are computing lyapunov exponents on several
+        familly of vectors whitout any projections"
+
     cdef int *p, *t   # permutation, twin, sigma
     cdef size_t **s
     cdef size_t *tab
     cdef size_t nc = len(dimensions) if dimensions else 0
+    cdef size_t degree = int(len(sigma))/gp.n if sigma else 1
     cdef size_t i, j, nn
     cdef size_t *dim
     cdef generalized_permutation *gp_c
@@ -156,6 +159,7 @@ def lyapunov_exponents_H_plus_cover(
 
             for i in range(nb_experiments):
                 lyapunov_exponents_isotopic(qcc, theta, nb_iterations, nc, dim, proj)
+                #cleaning some experiments which return NaN or inf as a lyapunov exponent
                 if any(isnan(theta[j]) or isinf(theta[j]) for j in xrange(nn)):
                     print [theta[j] for j in range(nn)], " contains NaN of Inf"
                     nan_or_inf  += 1
