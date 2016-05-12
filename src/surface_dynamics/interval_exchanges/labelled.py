@@ -531,10 +531,14 @@ class LabelledPermutation(SageObject):
         EXAMPLES::
 
             sage: from surface_dynamics.all import *
+            sage: QuadraticStratum([1,1,-1,-1]).one_component().lyapunov_exponents_H_plus() #abs tol .1
+            [2./3]
+
+            sage: from surface_dynamics.all import *
             sage: q = QuadraticStratum([1,1,-1,-1]).one_component()
             sage: p = q.permutation_representative().orientation_cover()
-            sage: p.lyapunov_exponents_H_plus()
-            [1.0000942602778726, 0.6638418945275006, 0.3305485865942756]
+            sage: p.lyapunov_exponents_H_plus() #abs tol .1
+            [1., 2./3, 1./3]
         """
         n = len(self)
 
@@ -593,9 +597,9 @@ class LabelledPermutation(SageObject):
 
         t0 = time.time()
         res = lyapunov_exponents.lyapunov_exponents_H_plus_cover(
-            gp, int(k), twin, sigma, int(len(sigma)/n), 
-            nb_vectors, nb_experiments, nb_iterations,
-            projections, isotopic_decomposition)
+            gp, int(k), twin, sigma, 
+            nb_experiments, nb_iterations,
+            [nb_vectors], projections, None, verbose)
         t1 = time.time()
 
         res_final = []

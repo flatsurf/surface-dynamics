@@ -138,13 +138,12 @@ def lyapunov_exponents_H_plus_cover(
     if nb_vectors == 1:
         for i in xrange(nb_experiments):
             top_lyapunov_exponents_H_plus(qcc, theta, nb_iterations)
-            if isnan(theta[0]) or isnan(theta[1]):
-                c_isnan  += 1
-            elif isinf(theta[0]) or isinf(theta[1]):
-                c_isinf  += 1
+            if any(isnan(theta[j]) or isinf(theta[j]) for j in xrange(nn)):
+                print [theta[j] for j in range(nn)], "Warning: contains NaN of Inf"
+                nan_or_inf  += 1
             else:
-                for j in xrange(2):
-                    res[j].append(theta[j])
+                for j in xrange(nn):
+                    res[j].append(theta[j]) 
     else:
         init_GS(nb_vectors)
 
@@ -161,7 +160,7 @@ def lyapunov_exponents_H_plus_cover(
                 lyapunov_exponents_isotopic(qcc, theta, nb_iterations, nc, dim, proj)
                 #cleaning some experiments which return NaN or inf as a lyapunov exponent
                 if any(isnan(theta[j]) or isinf(theta[j]) for j in xrange(nn)):
-                    print [theta[j] for j in range(nn)], " contains NaN of Inf"
+                    print [theta[j] for j in range(nn)], "Warning: contains NaN of Inf"
                     nan_or_inf  += 1
                 else:
                     for j in xrange(nn):
@@ -173,7 +172,7 @@ def lyapunov_exponents_H_plus_cover(
             for i in range(nb_experiments):
                 lyapunov_exponents_H_plus(qcc, theta, nb_iterations)
                 if any(isnan(theta[j]) or isinf(theta[j]) for j in xrange(nn)):
-                    print [theta[j] for j in range(nn)], " contains NaN of Inf"
+                    print [theta[j] for j in range(nn)], "Warning: contains NaN of Inf"
                     nan_or_inf  += 1
                 else:
                     for j in xrange(nn):

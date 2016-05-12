@@ -73,7 +73,7 @@ class PermutationCover(SageObject):
         q = PermutationCover(self._base.__copy__(), self._degree_cover, copy(self._permut_cover))
         return(q)
 
-    def covering_data(self, label, list=False):
+    def covering_data(self, label, list=True):
         r"""
         Returns the permutation associated to a label.
 
@@ -81,7 +81,7 @@ class PermutationCover(SageObject):
 
         - ``label`` - label you are looking at
 
-        - ``list`` - boolen (default: False) - wether or not retourning as a list or sage Permutation
+        - ``list`` - boolen (default: True) - wether or not retourning as a list or sage Permutation
 
         EXAMPLES::
 
@@ -96,7 +96,7 @@ class PermutationCover(SageObject):
 
             sage: pc.covering_data(1)
             [1, 2]
-            sage: pc.covering_data(3)
+            sage: pc.covering_data(3, list=False)
             [2, 1]
 
         """
@@ -108,6 +108,61 @@ class PermutationCover(SageObject):
         else:
             from sage.combinat.permutation import Permutation
             return Permutation(perm)
+
+    def interval_diagram(self, glue_ends=True, sign=False):
+        base_diagram = self._base.interval_diagram(glue_ends=False, sign = True)
+        singularities= []
+
+        alphabet = self._base.alphabet()
+        perm = lambda label : self._permut_cover[alphabet.rank(label)]
+
+        for orbit in base_diagram:
+            init_label = orbit[0][0]
+            cover_copies = set(range(self._degree_cover))
+            while cover_copies:
+                d_init = cover_copies.pop()
+                d = d_init
+                singularity = []
+                for base_singularity in orbit:
+                    label, j = base_singularity
+                    singularity.append((label, j, d) if sign else (label, d))
+                    d = perm(label).index(d) if j else perm(label)[d]
+                while d != d_init:
+                    cover_copies.remove(d)
+                    for base_singularity in orbit:
+                        label, j = base_singularity
+                        singularity.append((label, j, d) if sign else (label, d))
+                        d = perm(label).index(d) if j else perm(label)[d]
+                        # let us remind the convention that covering data is permutation
+                        # for path going through label with a 0 number in the canonical
+                        # orientation
+
+                singularities.append(singularity)
+
+        return singularities
+
+    def homology_matrix(self):
+        r"""
+        Return proejction matrix from the left from relative to absolute homology space.
+        """
+        singularities = self.interval_diagram(glue_ends=False, sign=True)
+        nb_sing = len(singularities)
+        borders = []
+        for d in range(self._degree_cover):
+            for a in self._base.alphabet():
+                border_side = [0 for _ in xrange(nb_sing)]
+                i = 0
+                while i < nb_sing and not any((a,0,d) == sing for sing in singularities[i]):
+                    i += 1
+                border_side[i] = 1
+                j = 0
+                while j < nb_sing and not any((a,1,d) == sing for sing in singularities[j]):
+                    j += 1
+                border_side[j] = -1
+                if i == j and i < nb_sing: border_side[j] = 0
+                borders.append(border_side)
+        return(Matrix(borders).left_kernel().matrix())
+                
 
     def profile(self):
         r"""
@@ -146,7 +201,7 @@ class PermutationCover(SageObject):
                     flat_orbit.append(x)
             p = p_id
             for lab,sign in flat_orbit:
-                q = self.covering_data(lab)
+                q = self.covering_data(lab, list=False)
                 if sign: q = q.inverse()
                 p = p*q
             for c in p.cycle_type():
@@ -300,7 +355,16 @@ class PermutationCover(SageObject):
 
 
         EXAMPLES::
-        sage:
+
+            sage: from surface_dynamics.all import *
+            sage: QuadraticStratum([1,1,-1,-1]).one_component().lyapunov_exponents_H_plus() #abs tol .1
+            [2./3]
+
+            sage: from surface_dynamics.all import *
+            sage: q = QuadraticStratum([1,1,-1,-1]).one_component()
+            sage: p = q.permutation_representative(reduced=False).orientation_cover()
+            sage: p.lyapunov_exponents_H_plus(isotypic_decomposition=True) # abs tol .1
+            [[1., 1./3], [2./3]]
         """
         import surface_dynamics.interval_exchanges.lyapunov_exponents as lyapunov_exponents
         import time
@@ -364,7 +428,8 @@ class PermutationCover(SageObject):
             dimensions = range(self.n_characters())
             for i_char in xrange(self.n_characters()):
                 M = self.isotypic_projection_matrix(i_char)
-                dimensions[i_char] = M.rank()//2
+                H = self.homology_matrix()
+                dimensions[i_char] = (H*M).rank()//2
                 for i in xrange(size_of_matrix):
                     for j in xrange(size_of_matrix):
                         projections [i_char * (size_of_matrix**2) + i * size_of_matrix + j] = float(real(CC(M[j][i])))
