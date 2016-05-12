@@ -175,7 +175,7 @@ void orthogonalize_GS(quad_cover *qcc, double *theta)
 				vv[i + qcc->nb_vectors * k] -= c * vv[ii + qcc->nb_vectors*k];
 
 				if ( i + qcc->nb_vectors * k < 0 || i + qcc->nb_vectors * k >= qcc->nb_vectors*qcc->degree)
-				  printf("NO : %i,  %i, %i\n", i, k, i + qcc->nb_vectors * k);
+				  printf("NO : %zu,  %zu, %zu\n", i, k, i + qcc->nb_vectors * k);
 
 				/* normalize v_(i-1) */
 				vv[(i-1) + qcc->nb_vectors*k] /= norm;
@@ -207,7 +207,7 @@ void orthogonalize_GS(quad_cover *qcc, double *theta)
 				vv[i + qcc->nb_vectors*k] -= scal_new[ii] * vv[ii + qcc->nb_vectors*k];
 
 				if ( i + qcc->nb_vectors * k < 0 || i + qcc->nb_vectors * k >= qcc->nb_vectors*qcc->degree)
-				  printf("NO : %i,  %i, %i\n", i, k, i + qcc->nb_vectors * k);
+				  printf("NO : %zu,  %zu, %zu\n", i, k, i + qcc->nb_vectors * k);
 			vv[i + qcc->nb_vectors*k] -= c * vv[i-1 + qcc->nb_vectors*k];
 
 			vv[i-1 + qcc->nb_vectors * k] /= norm;
@@ -408,7 +408,7 @@ void check_orthogonality_iso(quad_cover *qcc, size_t nb_char, size_t* dimensions
 	  sum_dimensions += dimensions[i_char];
 
 	if (sum_dimensions != qcc->nb_vectors) {
-	  fprintf(stderr, "Wrong isotopic decomposition : dimensions doesn't match\nSum of isotopic dimensions : %i,   nb_vectors : %i",
+	  fprintf(stderr, "Wrong isotopic decomposition : dimensions doesn't match\nSum of isotopic dimensions : %zu,   nb_vectors : %zu",
 		  sum_dimensions, qcc->nb_vectors);
 	  exit(EXIT_FAILURE);
 	}
@@ -485,7 +485,7 @@ inline void project_isotopic(quad_cover *qcc, size_t nb_char, size_t* dimensions
 		  * (qcc->labels)[lab_j].v[sum_dimensions + i_vec + qcc->nb_vectors * deg_j];
 	    (qcc->v_buffer)[lab_i + qcc->nb_labels * deg_i] = res;
 	    if (lab_i + qcc->nb_labels * deg_i >= qcc->nb_labels * qcc->degree || lab_i + qcc->nb_labels * deg_i < 0)
-	      printf("ind : %i, max : %i\n", lab_i + qcc->nb_labels * deg_i, qcc->nb_labels * qcc->degree);
+	      printf("ind : %zu, max : %zu\n", lab_i + qcc->nb_labels * deg_i, qcc->nb_labels * qcc->degree);
 	  }
 
       for(lab_i=0; lab_i < qcc->nb_labels; ++lab_i)
@@ -494,31 +494,6 @@ inline void project_isotopic(quad_cover *qcc, size_t nb_char, size_t* dimensions
     }
     sum_dimensions += dimensions[i_char];
   }
-}
-
-
-void check_projection(quad_cover *qcc, size_t nb_char, size_t* dimensions, double* projections)
-{
-
-  size_t i_vec, lab, deg;
-  double buffer[qcc->nb_vectors * qcc->nb_labels * qcc->degree];
-
-  project_isotopic(qcc, nb_char, dimensions, projections);
-
-  for(i_vec=0; i_vec<qcc->nb_vectors; ++i_vec)
-    for(lab=0; lab < qcc->nb_labels; ++lab)
-      for(deg=0; deg < qcc->degree; ++deg)
-	buffer[i_vec + (lab + deg * qcc->nb_labels) * qcc->nb_vectors] = (qcc->labels)[lab].v[i_vec + qcc->nb_vectors * deg];
-
-  project_isotopic(qcc, nb_char, dimensions, projections);
-
-  for(i_vec=0; i_vec<qcc->nb_vectors; ++i_vec)
-    for(lab=0; lab < qcc->nb_labels; ++lab)
-      for(deg=0; deg < qcc->degree; ++deg)
-	if (buffer[i_vec + (lab + deg * qcc->nb_labels) * qcc->nb_vectors] - (qcc->labels)[lab].v[i_vec + qcc->nb_vectors * deg] > 0x40000000000) {
-	  fprintf(stderr, "calling GS with nb_vectors < 2 is not possible.\n");
-	  exit(EXIT_FAILURE);
-	}
 }
 
 

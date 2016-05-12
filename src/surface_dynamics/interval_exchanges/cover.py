@@ -1,3 +1,4 @@
+#encoding: utf-8
 r"""
 Cover of permutations
 """
@@ -306,8 +307,8 @@ class PermutationCover(SageObject):
         elif isinstance(output_file, str):
             output_file = open(output_file, "w")
 
-        sigma = self._permut_cover
-        sigma = reduce(lambda x,y: x+y, sigma)
+        sigma = sum(self._permut_cover, [])
+        sigma = map(int, sigma)
 
         nb_vectors = int(nb_vectors)
         nb_experiments = int(nb_experiments)
@@ -324,7 +325,7 @@ class PermutationCover(SageObject):
         if len(sigma) %n != 0 : raise ValueError("you must give a permutation for each interval")
         
         #Translate our structure to the C structure"
-        k = len(self[0])
+        k = int(len(self[0]))
         def convert((i,j)):
             return(j + i*k)
 
@@ -343,30 +344,28 @@ class PermutationCover(SageObject):
 
         if lengths != None:
             lengths = map(int, lengths)
-        sigma = map(int, sigma)
 
         projections = None
         dimensions=None
-        if sigma and isotypic_decomposition:
+        if isotypic_decomposition:
             from sage.rings.all import CC
             from sage.functions.other import real
 
             size_of_matrix = len(self.cover_generators())
             projections = range(size_of_matrix**2 * self.n_characters())
-            if isotypic_decomposition:
-                dimensions = range(self.n_characters())
-                for i_char in xrange(self.n_characters()):
-                    M = self.isotypic_projection_matrix(i_char)
-                    dimensions[i_char] = M.rank()
-                    for i in xrange(size_of_matrix):
-                        for j in xrange(size_of_matrix):
-                            projections [i_char * (size_of_matrix**2) + i * size_of_matrix + j] = float(real(CC(M[j][i])))
+            dimensions = range(self.n_characters())
+            for i_char in xrange(self.n_characters()):
+                M = self.isotypic_projection_matrix(i_char)
+                dimensions[i_char] = M.rank()//2
+                for i in xrange(size_of_matrix):
+                    for j in xrange(size_of_matrix):
+                        projections [i_char * (size_of_matrix**2) + i * size_of_matrix + j] = float(real(CC(M[j][i])))
 
         t0 = time.time()
         res = lyapunov_exponents.lyapunov_exponents_H_plus_cover(
-            gp, int(k), twin, sigma, int(len(sigma)/n), 
-            nb_vectors, nb_experiments, nb_iterations,
-            projections, isotypic_decomposition, dimensions=dimensions)
+            gp, k, twin, sigma, int(len(sigma)/n), 
+            nb_vectors, nb_experiments, nb_iterations, None, #random lengths
+            dimensions, projections)
         t1 = time.time()
 
         res_final = []

@@ -4,7 +4,7 @@ void print_permutation(size_t *sigma, size_t degree)
 {
   size_t i;
   for(i=0; i < degree; ++i)
-    printf(" %i", sigma[i] + 1);
+    printf(" %zu", sigma[i] + 1);
   printf("\n");
 }
 
@@ -22,7 +22,7 @@ int check_permutation(size_t *sigma, size_t degree)
 	    {
 	      if(seen)
 		{
-		  fprintf(stderr, "%i appears twice in the permutation", i);
+		  fprintf(stderr, "%zu appears twice in the permutation", i);
 		  return 1;
 		}
 	    }
@@ -31,7 +31,7 @@ int check_permutation(size_t *sigma, size_t degree)
 	  ++j;
 	}
       if(!seen){
-	fprintf(stderr, "%i doesn't appear in the permutation", i);
+	fprintf(stderr, "%zu doesn't appear in the permutation", i);
 	return 1;
       }
     }
@@ -39,7 +39,7 @@ int check_permutation(size_t *sigma, size_t degree)
     {
       if(sigma[i] >= degree || sigma[i] < 0)
 	{
-	  fprintf(stderr, "%i is not between 0 and %i", i, degree);
+	  fprintf(stderr, "%zu is not between 0 and %zu", i, degree);
 	  return 1;
 	}
     }

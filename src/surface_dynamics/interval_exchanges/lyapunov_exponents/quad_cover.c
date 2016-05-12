@@ -506,7 +506,7 @@ void rauzy_induction_H_plus_quad_cover(quad_cover *qcc)
     permutation(0,qcc->perm_two, qcc->degree);}
 
   if (debug_){
-    printf("win :%i, %Lf      los :%i, %Lf\ndiff : %Lf\n", win->lab - qcc->labels, win->lab->length, los->lab - qcc->labels, los->lab->length, win->lab->length - los->lab->length);
+    printf("win :%zu, %Lf      los :%zu, %Lf\ndiff : %Lf\n", win->lab - qcc->labels, win->lab->length, los->lab - qcc->labels, los->lab->length, win->lab->length - los->lab->length);
   }
   if (debug){
     printf("perm:\n");
@@ -691,6 +691,9 @@ void lyapunov_exponents_H_plus(quad_cover *qcc, double *theta, size_t nb_iterati
 	  
 	  nb_ren += 1;
 	}
+      theta[0] -= logl(qcc->length);
+      renormalize_length_quad_cover(qcc);
+      orthogonalize_GS(qcc, theta);
     }
   
   for(i=1; i<qcc->nb_vectors+1; i++) theta[i] /= (2*theta[0]);
@@ -700,7 +703,8 @@ void lyapunov_exponents_H_plus(quad_cover *qcc, double *theta, size_t nb_iterati
 
 void lyapunov_exponents_isotopic(quad_cover *qcc, double *theta, size_t nb_iterations, size_t nb_char, size_t* dimensions, double *proj)
 {
-  size_t i,nb_ren=0;
+  size_t i,j,nb_ren=0;
+  double buffer;
 
   set_random_lengths_quad_cover(qcc);
   set_random_vectors(qcc);
@@ -723,16 +727,19 @@ void lyapunov_exponents_isotopic(quad_cover *qcc, double *theta, size_t nb_itera
 	  
 	  orthogonalize_iso(qcc, theta, nb_char, dimensions);
 	  project_isotopic(qcc, nb_char, dimensions, proj);
-         
 	  
 	  if((nb_ren+1) % 500 == 0)  // a bit of salt
 	    {
 	      qcc->top->lab->length += ((long double) (.5-drand())) / 0x40000000000;
 	      qcc->bot->lab->length += ((long double) (.5-drand())) / 0x40000000000;
 	    }
-	  
+          
 	  nb_ren += 1;
 	}
+      theta[0] -= logl(qcc->length);
+      renormalize_length_quad_cover(qcc);
+      orthogonalize_iso(qcc, theta, nb_char, dimensions);
+      project_isotopic(qcc, nb_char, dimensions, proj);
     }
 
   for(i=1; i<qcc->nb_vectors+1; i++) theta[i] /= (2*theta[0]);

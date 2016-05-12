@@ -45,8 +45,8 @@ cdef extern from "lyapunov_exponents.h":
 
 def lyapunov_exponents_H_plus_cover(
     gp, k, twin, sigma, degree,
-    nb_vectors, nb_experiments, nb_iterations, lengths=None, nb_char=0, 
-    dimensions=None, projections=None, isotopic_decomposition=False):
+    nb_vectors, nb_experiments, nb_iterations, lengths, 
+    dimensions, projections):
     r"""
     Compute the Lyapunov exponents of the H^+ part of the KZ-cocycle for covering locii.
 
@@ -72,11 +72,16 @@ def lyapunov_exponents_H_plus_cover(
 
     - ``verbose`` -- if ``True`` print additional information concerning the
       mean and standard deviation
+
+    - ``dimensions`` -- number of vectors in each isotypic component
+
+    - ``projections`` -- isotypic projection matrices
     """
     cdef int *p, *t   # permutation, twin, sigma
     cdef size_t **s
     cdef size_t *tab
-    cdef size_t nc
+    cdef size_t nc = len(dimensions) if dimensions else 0
+    cdef size_t i, j, nn
     cdef size_t *dim
     cdef generalized_permutation *gp_c
     cdef quad_cover *qcc
@@ -90,11 +95,11 @@ def lyapunov_exponents_H_plus_cover(
     t = <int *> malloc(2*n * sizeof(int))
     s = <size_t **> malloc(n * sizeof(size_t*))
 
-    for i from 0 <= i < 2*n:
+    for i in range(2*n):
         p[i] = gp[i]
         t[i] = twin[i]
     
-    for i from 0 <= i < n:
+    for i in range(n):
         tab = <size_t *> malloc(degree * sizeof(size_t))
         for j from 0 <= j < degree:
             tab[j] = sigma[j + degree * i]
@@ -123,9 +128,9 @@ def lyapunov_exponents_H_plus_cover(
     free(p)
     free(t)
 
-    res = [[] for _ in xrange(nn)]
+    res = [[] for _ in range(nn)]
 
-    c_isnan, c_isinf, tot_isnan, tot_isinf = 0, 0, 0, 0
+    nan_or_inf, tot_isnan, tot_isinf = 0, 0, 0
 
     if nb_vectors == 1:
         for i in xrange(nb_experiments):
@@ -139,38 +144,36 @@ def lyapunov_exponents_H_plus_cover(
                     res[j].append(theta[j])
     else:
         init_GS(nb_vectors)
-        for i in xrange(nb_experiments):
-            if projections and isotopic_decomposition:
-                dim = <size_t *> malloc(int(nb_char) * sizeof(size_t))
-                nc = nb_char
-                for i from 0 <= i < nb_char:
-                    dim[i] = int(dimensions[i])
-                proj = <double *> malloc((n * degree)**2 * nb_char * sizeof(double))
-                for i from 0 <= i < (n * degree)**2 * nb_char:
-                    proj[i] = <double> projections[i]
-                lyapunov_exponents_isotopic(qcc, theta, nb_iterations, nc, dim, proj)
-                free(dim)
-                free(proj)
-            else:
-                lyapunov_exponents_H_plus(qcc, theta, nb_iterations)
-                
-            if any(isnan(theta[i]) for i in xrange(nn)): c_isnan  += 1
-            elif any(isinf(theta[i]) for i in xrange(nn)): c_isinf  += 1
-            else:
-                for j in xrange(nn):
-                    res[j].append(theta[j])
-            if (i == nb_experiments-1) and (c_isnan + c_isinf < 9*nb_experiments/10):
-                i = nb_experiments - (c_isnan+c_isinf) - 1
-                tot_isnan += c_isnan
-                tot_isinf += c_isinf
-                c_isnan, c_isinf = 0, 0
 
-    if tot_isnan > 0:
-        print("Warning, " + str(tot_isnan) + " NaN results in the experiments")
-    if tot_isinf > 0:
-        print("Warning, " + str(tot_isinf) + " infinity results in the experiments")
-    if (c_isnan + c_isinf >= 9*nb_experiments/10):
-        raise NameError('too much NaN or inf results')
+        if projections:
+            dim = <size_t *> malloc(nc * sizeof(size_t))
+            for i from 0 <= i < nc:
+                dim[i] = int(dimensions[i])
+
+            proj = <double *> malloc((n * degree)**2 * nc * sizeof(double))
+            for i from 0 <= i < (n * degree)**2 * nc:
+                 proj[i] = <double> projections[i]
+
+            for i in range(nb_experiments):
+                lyapunov_exponents_isotopic(qcc, theta, nb_iterations, nc, dim, proj)
+                if any(isnan(theta[j]) or isinf(theta[j]) for j in xrange(nn)):
+                    print [theta[j] for j in range(nn)], " contains NaN of Inf"
+                    nan_or_inf  += 1
+                else:
+                    for j in xrange(nn):
+                        res[j].append(theta[j])
+            free(proj)
+            free(dim)
+
+        else:
+            for i in range(nb_experiments):
+                lyapunov_exponents_H_plus(qcc, theta, nb_iterations)
+                if any(isnan(theta[j]) or isinf(theta[j]) for j in xrange(nn)):
+                    print [theta[j] for j in range(nn)], " contains NaN of Inf"
+                    nan_or_inf  += 1
+                else:
+                    for j in xrange(nn):
+                        res[j].append(theta[j])            
 
     for i in xrange(n):
         free(s[i])
@@ -179,5 +182,8 @@ def lyapunov_exponents_H_plus_cover(
     free_quad_cover(&qcc)
     free_GS()
     free(theta)
+
+    if nan_or_inf > .1 * nb_experiments:
+        raise RuntimeError('too many NaN or Inf: got %d among %d experiments'%(nan_or_inf, nb_experiments))
 
     return res
