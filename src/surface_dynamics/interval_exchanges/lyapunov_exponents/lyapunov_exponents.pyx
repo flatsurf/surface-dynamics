@@ -76,14 +76,15 @@ def lyapunov_exponents_H_plus_cover(
       mean and standard deviation
     """
     if not projections and len(dimensions)>1:
-        print "Warning, you are computing lyapunov exponents on several
-        familly of vectors whitout any projections"
+        print "Warning, you are computing lyapunov exponents on several familly of vectors whitout any projections"
+
+    n = int(len(gp))/2
 
     cdef int *p, *t   # permutation, twin, sigma
     cdef size_t **s
     cdef size_t *tab
     cdef size_t nc = len(dimensions) if dimensions else 0
-    cdef size_t degree = int(len(sigma))/gp.n if sigma else 1
+    cdef size_t degree = int(len(sigma))/n if sigma else 1
     cdef size_t i, j, nn
     cdef size_t *dim
     cdef generalized_permutation *gp_c
@@ -91,7 +92,6 @@ def lyapunov_exponents_H_plus_cover(
     cdef double * theta
     cdef double *proj
 
-    n = len(gp)//2
 
     # convert the data of into C values
     p = <int *> malloc(2*n * sizeof(int))

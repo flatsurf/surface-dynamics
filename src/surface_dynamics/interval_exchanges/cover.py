@@ -292,7 +292,7 @@ class PermutationCover(SageObject):
         in a pair with the speed of the geodesic.
 
         - ``isotypic_decomposition`` -- whether or not decompose the space
-        into isotypic subspaces for the cover automorphism.
+        into isotypic subspaces for the cover automorphisms.
 
         - ``verbose`` -- if ``True`` provide additional informations rather than
           returning only the Lyapunov exponents (i.e. ellapsed time, confidence
@@ -318,7 +318,6 @@ class PermutationCover(SageObject):
 
         sigma = sum(self._permut_cover, [])
         sigma = map(int, sigma)
-
         nb_vectors = int(nb_vectors)
         nb_experiments = int(nb_experiments)
         nb_iterations = int(nb_iterations)
@@ -355,7 +354,7 @@ class PermutationCover(SageObject):
             lengths = map(int, lengths)
 
         projections = None
-        dimensions=None
+        dimensions=[nb_vectors]
         if isotypic_decomposition:
             from sage.rings.all import CC
             from sage.functions.other import real
