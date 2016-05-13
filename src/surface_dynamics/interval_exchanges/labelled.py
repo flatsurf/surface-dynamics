@@ -498,7 +498,7 @@ class LabelledPermutation(SageObject):
     def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=100,
                                   nb_iterations=32768, return_speed=False, 
                                   verbose=False, output_file=None, lengths=None, 
-                                  sigma=None, isotopic_decomposition=False):
+                                  sigma=None, isotypic_decomposition=False):
         r"""
         Compute the H^+ Lyapunov exponents in  the covering locus.
 
@@ -592,8 +592,8 @@ class LabelledPermutation(SageObject):
         sigma = map(int, sigma)
 
         projections = None
-        if sigma and isotopic_decomposition:
-            projections = [self.isotopic_projection_matrix(i) for i in range(self.n_characters())]
+        if sigma and isotypic_decomposition:
+            projections = [self.isotypic_projection_matrix(i) for i in range(self.n_characters())]
 
         t0 = time.time()
         res = lyapunov_exponents.lyapunov_exponents_H_plus_cover(

@@ -408,7 +408,7 @@ void check_orthogonality_iso(quad_cover *qcc, size_t nb_char, size_t* dimensions
 	  sum_dimensions += dimensions[i_char];
 
 	if (sum_dimensions != qcc->nb_vectors) {
-	  fprintf(stderr, "Wrong isotopic decomposition : dimensions doesn't match\nSum of isotopic dimensions : %zu,   nb_vectors : %zu",
+	  fprintf(stderr, "Wrong isotypic decomposition : dimensions doesn't match\nSum of isotypic dimensions : %zu,   nb_vectors : %zu",
 		  sum_dimensions, qcc->nb_vectors);
 	  exit(EXIT_FAILURE);
 	}
@@ -444,7 +444,7 @@ void check_orthogonality_iso(quad_cover *qcc, size_t nb_char, size_t* dimensions
 }
 
 
-inline void project_isotopic(quad_cover *qcc, size_t nb_char, size_t* dimensions, double* projections)
+inline void project_isotypic(quad_cover *qcc, size_t nb_char, size_t* dimensions, double* projections)
 {
   /*
     We compute the product of the the nb_char matrices of projection, of size : size_of_matrix = nb_labels*degree

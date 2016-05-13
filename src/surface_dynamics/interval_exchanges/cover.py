@@ -529,7 +529,6 @@ class PermutationCover(SageObject):
                 for i in range(1, G_order + 1)]
 
         #extract real characters
-        print character_table
         real_character_table = []
         i = 0
         while i < n_characters:
