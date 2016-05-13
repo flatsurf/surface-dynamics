@@ -123,12 +123,7 @@ class PermutationCover(SageObject):
                 d_init = cover_copies.pop()
                 d = d_init
                 singularity = []
-                for base_singularity in orbit:
-                    label, j = base_singularity
-                    singularity.append((label, j, d) if sign else (label, d))
-                    d = perm(label).index(d) if j else perm(label)[d]
-                while d != d_init:
-                    cover_copies.remove(d)
+                while True:
                     for base_singularity in orbit:
                         label, j = base_singularity
                         singularity.append((label, j, d) if sign else (label, d))
@@ -136,6 +131,8 @@ class PermutationCover(SageObject):
                         # let us remind the convention that covering data is permutation
                         # for path going through label with a 0 number in the canonical
                         # orientation
+                    if d == d_init: break
+                    else: cover_copies.remove(d) 
 
                 singularities.append(singularity)
 
@@ -490,7 +487,7 @@ class PermutationCover(SageObject):
         perm = map(lambda p : "PermList( %s )"%(str(p)), perm)
 
         G = gap("Centralizer(SymmetricGroup(%s), "%self._degree_cover 
-                + "Group([" + ' ,'.join(perm) + "]))") 
+                + "Group([" + ', '.join(perm) + "]))") 
         return G
 
     @cached_method
@@ -506,11 +503,13 @@ class PermutationCover(SageObject):
         
         - tuple -- composed of 5 elements which will be gien by 5 cached functions:
 
-            - character_table: table of character, character[i][g] give the value of the i-th character on g
+            - character_table: table of character, character[i][g] give the value of 
+            the i-th character on g
             g is given by a number
             - character_degree: list of degree of every character
             - autmorphism_group_order : Order of the group
-            - automorphism_group_permutation : table s.t. perm[g] give the permutation associated to the group element g on the cover
+            - automorphism_group_permutation : table s.t. perm[g] give the permutation 
+            associated to the group element g on the cover
             - n_characters : number of characters
 
 
@@ -521,15 +520,31 @@ class PermutationCover(SageObject):
         G_order, T = gap.Order(G)._sage_(), gap.CharacterTable(G)
         irr_characters = gap.Irr(T)
         n_characters = len(irr_characters)
-        character_table = [[UCF(irr_characters[i][j]._sage_()) for j in range(1, G_order + 1)] for i in range(1, n_characters + 1)]
-        character_degree = [gap.Degree(irr_characters[i])._sage_() for i in range(1, n_characters + 1)]
+        character_table = [[UCF(irr_characters[i][j]._sage_()) for j in xrange(1, G_order + 1)] for i in xrange(1, n_characters + 1)]
+        character_degree = [gap.Degree(irr_characters[i])._sage_() for i in xrange(1, n_characters + 1)]
         gap_size_centralizers = gap.SizesCentralizers(T)
         gap_orders = gap.OrdersClassRepresentatives(T)
         elements_group = gap.Elements(G)
         perm = [list(gap.ListPerm(elements_group[i], self._degree_cover)) 
                 for i in range(1, G_order + 1)]
-       
-        return(character_table, character_degree, G_order, map(lambda x: [i-1 for i in x], perm), n_characters)
+
+        #extract real characters
+        print character_table
+        real_character_table = []
+        i = 0
+        while i < n_characters:
+            chi = character_table[i]
+            if any(not x.is_real() for x in chi):
+                assert chi == map(lambda z: z.conjugate(), character_table[i+1])
+                real_character_table.append([chi[j] + chi[j].conjugate() for j in xrange(n_characters)])
+                i += 1
+            else:
+                real_character_table.append(chi)
+            i += 1
+
+        n_real_characters = len(real_character_table)
+
+        return(real_character_table, character_degree, G_order, map(lambda x: [i-1 for i in x], perm), n_real_characters)
 
     def character_table(self):
         r"""
