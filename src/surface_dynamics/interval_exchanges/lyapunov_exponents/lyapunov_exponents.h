@@ -105,7 +105,7 @@ void renormalize_length_quad_cover(quad_cover * qcc);
 void randomize_length_quad_cover(quad_cover * qcc);
 
 void lyapunov_exponents_H_plus(quad_cover *qcc, double *theta, size_t nb_induction);
-void lyapunov_exponents_isotopic(quad_cover *qcc, double *theta, size_t nb_induction, size_t nb_char, size_t *dimensions, double* projections);
+void lyapunov_exponents_isotypic(quad_cover *qcc, double *theta, size_t nb_induction, size_t nb_char, size_t *dimensions, double* projections);
 /* Projections are applied with a left product to vectors.
    The set of matrice is expected to be a list with the following form :
        M_(i_char)[(lab_i, deg_i), (lab_j, deg_j)] = projections [i_char*(size_of_matrix**2) + (deg_i*nb_labels + lab_i)*size_of_matrix + (deg_j*nb_labels + lab_j)]
@@ -133,7 +133,7 @@ void orthogonalize_iso(quad_cover * qcc, double * theta, size_t nb_char, size_t*
 void check_orthogonality(quad_cover * qcc);
 void check_orthogonality_iso(quad_cover *qcc, size_t nb_char, size_t* dimensions);
 
-inline void project_isotopic(quad_cover *qcc, size_t nb_char, size_t* dimension, double* projections);
+inline void project_isotypic(quad_cover *qcc, size_t nb_char, size_t* dimension, double* projections);
 void check_projection(quad_cover *qcc, size_t nb_char, size_t* dimension, double* projections);
 
 inline double max_norm(quad_cover *qcc);

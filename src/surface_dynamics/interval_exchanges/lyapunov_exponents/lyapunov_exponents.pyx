@@ -40,7 +40,7 @@ cdef extern from "lyapunov_exponents.h":
     #void orthogonalize_GS(quad_cover * qcc, double * theta)
 
     void lyapunov_exponents_H_plus(quad_cover *qcc, double *theta, size_t nb_induction)
-    void lyapunov_exponents_isotopic(quad_cover *qcc, double *theta, size_t nb_induction, size_t nb_char, size_t *dimensions, double *proj)
+    void lyapunov_exponents_isotypic(quad_cover *qcc, double *theta, size_t nb_induction, size_t nb_char, size_t *dimensions, double *proj)
     void top_lyapunov_exponents_H_plus(quad_cover *qcc, double *theta, size_t nb_iterations)
 
 def lyapunov_exponents_H_plus_cover(
@@ -157,7 +157,7 @@ def lyapunov_exponents_H_plus_cover(
                  proj[i] = <double> projections[i]
 
             for i in range(nb_experiments):
-                lyapunov_exponents_isotopic(qcc, theta, nb_iterations, nc, dim, proj)
+                lyapunov_exponents_isotypic(qcc, theta, nb_iterations, nc, dim, proj)
                 #cleaning some experiments which return NaN or inf as a lyapunov exponent
                 if any(isnan(theta[j]) or isinf(theta[j]) for j in xrange(nn)):
                     print [theta[j] for j in range(nn)], "Warning: contains NaN of Inf"

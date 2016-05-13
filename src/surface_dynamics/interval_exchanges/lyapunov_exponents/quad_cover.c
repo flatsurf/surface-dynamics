@@ -701,7 +701,7 @@ void lyapunov_exponents_H_plus(quad_cover *qcc, double *theta, size_t nb_iterati
 }
 
 
-void lyapunov_exponents_isotopic(quad_cover *qcc, double *theta, size_t nb_iterations, size_t nb_char, size_t* dimensions, double *proj)
+void lyapunov_exponents_isotypic(quad_cover *qcc, double *theta, size_t nb_iterations, size_t nb_char, size_t* dimensions, double *proj)
 {
   size_t i,j,nb_ren=0;
   double buffer;
@@ -710,7 +710,7 @@ void lyapunov_exponents_isotopic(quad_cover *qcc, double *theta, size_t nb_itera
   set_random_vectors(qcc);
   
   
-  project_isotopic(qcc, nb_char, dimensions, proj);
+  project_isotypic(qcc, nb_char, dimensions, proj);
   orthogonalize_iso(qcc, theta, nb_char, dimensions);		
   check_orthogonality_iso(qcc, nb_char, dimensions);
   
@@ -726,7 +726,7 @@ void lyapunov_exponents_isotopic(quad_cover *qcc, double *theta, size_t nb_itera
 	  renormalize_length_quad_cover(qcc);
 	  
 	  orthogonalize_iso(qcc, theta, nb_char, dimensions);
-	  project_isotopic(qcc, nb_char, dimensions, proj);
+	  project_isotypic(qcc, nb_char, dimensions, proj);
 	  
 	  if((nb_ren+1) % 500 == 0)  // a bit of salt
 	    {
@@ -739,7 +739,7 @@ void lyapunov_exponents_isotopic(quad_cover *qcc, double *theta, size_t nb_itera
       theta[0] -= logl(qcc->length);
       renormalize_length_quad_cover(qcc);
       orthogonalize_iso(qcc, theta, nb_char, dimensions);
-      project_isotopic(qcc, nb_char, dimensions, proj);
+      project_isotypic(qcc, nb_char, dimensions, proj);
     }
 
   for(i=1; i<qcc->nb_vectors+1; i++) theta[i] /= (2*theta[0]);
