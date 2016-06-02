@@ -869,32 +869,39 @@ class QuadraticStratumComponent(StratumComponent):
 
     def lyapunov_exponents_H_plus(self, **kargs):
         r"""
-        Compute the H^+ Lyapunov exponents.
+        Compute the H^+ part of Lyapunov exponents spectrum.
 
         EXAMPLES::
 
+            sage: from surface_dynamics.all import *
             sage: R = QuadraticStratum([3,3,3,-1]).regular_component()
-            sage: R.lyapunov_exponents_H_plus()
-            [0.9996553085103, 0.0007776980910571506, 0.00022201024035355403]
+            sage: R.lyapunov_exponents_H_plus() # abs tol .01
+            [0.59995541909558, 0.40396239348610125, 0.20351443734981095]
 
         """
         return(self.permutation_representative(reduced=False).lyapunov_exponents_H_plus(**kargs))
 
     def lyapunov_exponents(self, **kargs):
         r"""
-        Compute the H^+ Lyapunov exponents.
+        Compute the all the Lyapunov exponents.
 
         EXAMPLES::
 
+            sage: from surface_dynamics.all import *
             sage: R = QuadraticStratum([3,3,3,-1]).regular_component()
-            sage: R.lyapunov_exponents_H_plus()
-            [0.9996553085103, 0.0007776980910571506, 0.00022201024035355403]
+            sage: R.lyapunov_exponents() # abs tol .01
+            [1.0042029874815872,
+            0.6001065825147999,
+            0.40316380987190165,
+            0.3301506894685491,
+            0.2042487557305612,
+            0.1881923173595571,
+            0.08311579750620597]
+
 
         """
         perm = self.permutation_representative(reduced=False).orientation_cover()
         return(perm.lyapunov_exponents_H_plus(**kargs))
-
-
 
 QSC = QuadraticStratumComponent
 
