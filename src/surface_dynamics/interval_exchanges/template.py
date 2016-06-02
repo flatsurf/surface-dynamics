@@ -790,6 +790,71 @@ class Permutation(SageObject):
 
         return res
 
+    def _twins_and_orientation(self):
+        r"""
+        Internal function for convenience. 
+        Give the position of the two intervals corresponding to a label, and the orientation
+        given by convention to an interval.
+
+        The convention choosen for the orientation of the interval is the following.
+        We choose the clockwise orientation for every interval to be positive on
+        the corresponding flat surface. The first interval we meet at the top will
+        get positive orientation, and the other negative.
+        At the bottom, any interval which also appears at the top has to be of negative
+        orientation. If both intervals appears, the first that we meet when we browse
+        from left to right the intervals, will get the positive orientation
+        (i.e. it will head to the left).
+        For convenience here positive orientation corresponds to 0, and negative to 1.
+        
+        OUTPUT::
+            - label_to_twins -- dictionary which associate to any label a list of the position
+            of the intervals underlying this label in the permutation
+
+            - twin_to_index -- list with the same size that the permutation, which to each position
+            returns the orientation given as a convention to the interval.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+
+            sage: p = iet.GeneralizedPermutation('d a a b b','c c d')
+            sage: orientation = p._twins_and_orientation()[1]
+            sage: orientation[0][0]
+            0
+            sage: orientation[0][1]
+            0
+            sage: orientation[0][2]
+            1
+            sage: orientation[1][0]
+            0
+            sage: orientation[1][1]
+            1
+            sage: orientation[1][2]
+            1
+
+            sage: label_to_twins = p._twins_and_orientation()[0]
+            sage: label_to_twins['d']
+            [(0,0),(1,2)]
+            sage: label_to_twins['c']
+            [(1,0),(1,1)]
+        """
+        labels = self.list()
+        letters = set((label,j) for label in self.letters() for j in xrange(2))
+        label_to_twins = dict((label,[]) for label in self.letters())
+               # position of each label
+        twin_to_index = [] # list of lists of {0,1} of the same size as self.
+                           # Each pairs of letters is exactly mapped to a 0 and
+                           # a 1 in a canonic way which is compatible with
+                           # label_to_twins.
+        for i in xrange(2):
+            twin_to_index.append([])
+            line = labels[i]
+            for p in xrange(len(line)):
+                twin_to_index[-1].append(len(label_to_twins[line[p]]))
+                label_to_twins[line[p]].append((i,p))
+
+        return (label_to_twins, twin_to_index)
+
     def interval_diagram(self, glue_ends=True, sign=False):
         r"""
         Return the interval diagram of self
@@ -831,18 +896,7 @@ class Permutation(SageObject):
         twin = self.twin_list()
         labels = self.list()
         letters = set((label,j) for label in self.letters() for j in xrange(2))
-        label_to_twins = dict((label,[]) for label in self.letters())
-               # position of each label
-        twin_to_index = [] # list of lists of {0,1} of the same size as self.
-                           # Each pairs of letters is exactly mapped to a 0 and
-                           # a 1 in a canonic way which is compatible with
-                           # label_to_twins.
-        for i in xrange(2):
-            twin_to_index.append([])
-            line = labels[i]
-            for p in xrange(len(line)):
-                twin_to_index[-1].append(len(label_to_twins[line[p]]))
-                label_to_twins[line[p]].append((i,p))
+        label_to_twins, twin_to_index = self._twins_and_orientation()
         m0 = len(labels[0])
         m1 = len(labels[1])
 
