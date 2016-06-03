@@ -364,37 +364,37 @@ class PermutationCover(SageObject):
 
         INPUT:
  
-        - ``nb_vectors`` -- the number of exponents to compute. The number of
-          vectors must not exceed the dimension of the space!
+             - ``nb_vectors`` -- the number of exponents to compute. The number of
+             vectors must not exceed the dimension of the space!
 
-         - ``nb_experiments`` -- the number of experiments to perform. It might
-           be around 100 (default value) in order that the estimation of
-           confidence interval is accurate enough.
+             - ``nb_experiments`` -- the number of experiments to perform. It might
+             be around 100 (default value) in order that the estimation of
+             confidence interval is accurate enough.
 
-         - ``nb_iterations`` -- the number of iteration of the Rauzy-Zorich
-           algorithm to perform for each experiments. The default is 2^15=32768
-           which is rather small but provide a good compromise between speed and
-           quality of approximation.
+             - ``nb_iterations`` -- the number of iteration of the Rauzy-Zorich
+             algorithm to perform for each experiments. The default is 2^15=32768
+             which is rather small but provide a good compromise between speed and
+             quality of approximation.
 
-        - ``lengths`` -- specify some lengths for the iet you want to start with.
-        None by default will imply random lengths.
+             - ``lengths`` -- specify some lengths for the iet you want to start with.
+             None by default will imply random lengths.
 
-        - ``output_file`` -- if provided (as a file object or a string) output
-          the additional information in the given file rather than on the
-          standard output.
+             - ``output_file`` -- if provided (as a file object or a string) output
+             the additional information in the given file rather than on the
+             standard output.
 
-        - ``return_speed`` -- wether or not return the lyapunov exponents list
-        in a pair with the speed of the geodesic.
+             - ``return_speed`` -- wether or not return the lyapunov exponents list
+             in a pair with the speed of the geodesic.
 
-        - ``isotypic_decomposition`` -- whether or not decompose the space
-        into isotypic subspaces for the cover automorphisms.
+             - ``isotypic_decomposition`` -- whether or not decompose the space
+             into isotypic subspaces for the cover automorphisms.
 
-        - ``return_char`` -- whether or not return the character corresponding to
-        the isotypic component.
+             - ``return_char`` -- whether or not return the character corresponding to
+             the isotypic component.
 
-        - ``verbose`` -- if ``True`` provide additional informations rather than
-          returning only the Lyapunov exponents (i.e. ellapsed time, confidence
-          intervals, ...)
+             - ``verbose`` -- if ``True`` provide additional informations rather than
+             returning only the Lyapunov exponents (i.e. ellapsed time, confidence
+             intervals, ...)
 
 
         EXAMPLES::
