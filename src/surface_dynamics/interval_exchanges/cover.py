@@ -1,3 +1,5 @@
+# coding: utf8
+
 from sage.structure.sage_object import SageObject
 
 from sage.misc.cachefunc import cached_method
@@ -587,8 +589,6 @@ class PermutationCover(SageObject):
             - automorphism_group_permutation : table s.t. perm[g] give the permutation 
             associated to the group element g on the cover
             - n_characters : number of characters
-
-
         """
         from sage.rings.universal_cyclotomic_field import UniversalCyclotomicField
         UCF = UniversalCyclotomicField()
@@ -686,7 +686,6 @@ class PermutationCover(SageObject):
         REFERENCES::
         
         .. [Ser] J.-P. Serre, "Représentation des groupes finis."
-        
         """
         res = [[0 for _ in self.rel_homology_generator()] for _ in self.rel_homology_generator()]
         char = self.character_table()[i_character]
