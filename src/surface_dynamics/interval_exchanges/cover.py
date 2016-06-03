@@ -492,6 +492,7 @@ class PermutationCover(SageObject):
         projections = None
         dimensions=[nb_vectors]
         if isotypic_decomposition:
+            if verbose: print "Looking for isotypic decomposition"
             from sage.rings.all import CC
             from sage.functions.other import real
 
@@ -508,6 +509,7 @@ class PermutationCover(SageObject):
                 for i in xrange(size_of_matrix):
                     for j in xrange(size_of_matrix):
                         projections [i_char * (size_of_matrix**2) + i * size_of_matrix + j] = float(real(CC(M[j][i])))
+            if verbose: print "Computing Lyapunov exponents"
 
         t0 = time.time()
         res = lyapunov_exponents.lyapunov_exponents_H_plus_cover(
