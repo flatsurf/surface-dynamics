@@ -3,7 +3,7 @@
 from sage.structure.sage_object import SageObject
 
 from sage.misc.cachefunc import cached_method
-from sage.interfaces.gap import gap
+from sage.libs.gap.libgap import libgap
 from sage.rings.integer import Integer
 from sage.matrix.constructor import Matrix, identity_matrix
 
@@ -563,11 +563,11 @@ class PermutationCover(SageObject):
         r"""
         Return the galois group of the cover 
         """
-        perm = map(lambda p : [i+1 for i in p], self._permut_cover)
-        perm = map(lambda p : "PermList( %s )"%(str(p)), perm)
+        perm = map(lambda p : libgap.PermList([i+1 for i in p]), self._permut_cover)
+        perm = libgap.Group(perm)
 
-        G = gap("Centralizer(SymmetricGroup(%s), "%self._degree_cover 
-                + "Group([" + ', '.join(perm) + "]));") 
+        G = libgap.Centralizer(SymmetricGroup(self._degree_cover), perm)
+
         return G
 
     @cached_method
@@ -595,15 +595,15 @@ class PermutationCover(SageObject):
         from sage.rings.universal_cyclotomic_field import UniversalCyclotomicField
         UCF = UniversalCyclotomicField()
         G = self.automorphism_group()
-        G_order, T = gap.Order(G)._sage_(), gap.CharacterTable(G)
-        irr_characters = gap.Irr(T)
+        G_order, T = libgap.Order(G)._sage_(), libgap.CharacterTable(G)
+        irr_characters = libgap.Irr(T)
         n_characters = len(irr_characters)
         character_set = set([tuple(UCF(irr_characters[i][j]._sage_()) for j in xrange(1, G_order + 1)) for i in xrange(1, n_characters + 1)])
-        character_degree = [gap.Degree(irr_characters[i])._sage_() for i in xrange(1, n_characters + 1)]
-        gap_size_centralizers = gap.SizesCentralizers(T)
-        gap_orders = gap.OrdersClassRepresentatives(T)
-        elements_group = gap.Elements(G)
-        perm = [list(gap.ListPerm(elements_group[i], self._degree_cover)) 
+        character_degree = [libgap.Degree(irr_characters[i])._sage_() for i in xrange(1, n_characters + 1)]
+        gap_size_centralizers = libgap.SizesCentralizers(T)
+        gap_orders = libgap.OrdersClassRepresentatives(T)
+        elements_group = libgap.Elements(G)
+        perm = [list(libgap.ListPerm(elements_group[i], self._degree_cover)) 
                 for i in range(1, G_order + 1)]
 
         #extract real characters
