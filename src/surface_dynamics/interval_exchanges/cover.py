@@ -458,7 +458,7 @@ class PermutationCover(SageObject):
         nb_iterations = int(nb_iterations)
 
         if verbose:
-            output_file.write("Stratum : " + str(self.cover_stratum()))
+            output_file.write("Stratum : " + str(self.stratum()))
             output_file.write("\n")
 
         if nb_vectors < 0 :     raise ValueError("the number of vectors must be positive")
