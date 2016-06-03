@@ -422,7 +422,7 @@ class PermutationCover(SageObject):
 
             sage: p = iet.GeneralizedPermutation('c a a', 'b b c')
             sage: def cyclic(n,a): return([(i+a)%n + 1 for i in range(n)])
-            sage: def cyclic_cover(n, a, b): return(p.cover([Permutation(cyclic(n,a+b)), Permutation(cyclic(5,a)), Permutation(cyclic(5, b))]))
+            sage: def cyclic_cover(n, a, b): return(p.cover([Permutation(cyclic(n,a+b)), Permutation(cyclic(n,a)), Permutation(cyclic(n, b))]))
             sage: c = cyclic_cover(5,1,1)
             sage: c.lyapunov_exponents_H_plus(isotypic_decomposition=True) # abs rel 0.1
             [[0.0, 0.0],
