@@ -24,7 +24,6 @@ cdef extern from "lyapunov_exponents.h":
 
     void free_generalized_permutation(generalized_permutation ** gp)
     void free_quad_cover(quad_cover ** qcc)
-
     # print
     #void print_generalized_permutation(generalized_permutation * p)
     void print_quad_cover(quad_cover * qcc)

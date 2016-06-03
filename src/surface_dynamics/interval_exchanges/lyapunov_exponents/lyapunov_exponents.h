@@ -76,7 +76,7 @@ typedef struct{
   size_t *perm_buffer, *perm_one, *perm_two;
 } quad_cover;
 
-/*The convention for orientation of path around given by polygonal representation
+/*The convention for orientation of path around is given by polygonal representation
 of the suspension surface is always pointing in the clockwise direction.
 We fix the orientation of the top intervals to be 1 for the first we meet
 and then -1.
