@@ -4,6 +4,7 @@ from sage.structure.sage_object import SageObject
 
 from sage.misc.cachefunc import cached_method
 from sage.libs.gap.libgap import libgap
+from sage.interfaces.gap import gap
 from sage.rings.integer import Integer
 from sage.matrix.constructor import Matrix, identity_matrix
 
@@ -566,7 +567,7 @@ class PermutationCover(SageObject):
         perm = map(lambda p : libgap.PermList([i+1 for i in p]), self._permut_cover)
         perm = libgap.Group(perm)
 
-        G = libgap.Centralizer(SymmetricGroup(self._degree_cover), perm)
+        G = libgap.Centralizer(libgap.SymmetricGroup(self._degree_cover), perm)
 
         return G
 
@@ -595,16 +596,15 @@ class PermutationCover(SageObject):
         from sage.rings.universal_cyclotomic_field import UniversalCyclotomicField
         UCF = UniversalCyclotomicField()
         G = self.automorphism_group()
-        G_order, T = libgap.Order(G)._sage_(), libgap.CharacterTable(G)
+        G_order, T = int(libgap.Order(G)), libgap.CharacterTable(G)
         irr_characters = libgap.Irr(T)
         n_characters = len(irr_characters)
-        character_set = set([tuple(UCF(irr_characters[i][j]._sage_()) for j in xrange(1, G_order + 1)) for i in xrange(1, n_characters + 1)])
-        character_degree = [libgap.Degree(irr_characters[i])._sage_() for i in xrange(1, n_characters + 1)]
-        gap_size_centralizers = libgap.SizesCentralizers(T)
-        gap_orders = libgap.OrdersClassRepresentatives(T)
+        character_set = set([tuple(UCF(gap(irr_characters[i])[j]._sage_()) for j in xrange(1, G_order + 1)) for i in xrange(n_characters)])
+        #with libgap irreducible characters can't be accessed by __get_item__()
+        character_degree = [int(libgap.Degree(irr_characters[i])) for i in xrange(n_characters)]
         elements_group = libgap.Elements(G)
-        perm = [list(libgap.ListPerm(elements_group[i], self._degree_cover)) 
-                for i in range(1, G_order + 1)]
+        perm = [list(gap(libgap.ListPerm(elements_group[i], self._degree_cover))) 
+                for i in range(G_order)]
 
         #extract real characters
         real_character_table = []
@@ -676,6 +676,7 @@ class PermutationCover(SageObject):
         n = len(self._base.alphabet())
         return(d*n + self._base.alphabet().rank(a))
 
+    @cached_method
     def isotypic_projection_matrix(self, i_character):
         r"""
         Return the projection matrix to the isotypic space of the \chi_i
