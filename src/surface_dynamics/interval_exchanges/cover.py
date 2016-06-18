@@ -14,12 +14,12 @@ from labelled import mean_and_std_dev
 class PermutationCover(SageObject):
     r"""
     Finite cover of a flat surface corresponding to a Permutation.
-    To define this cover, we copy d times a simply connected fondamental 
-    domain of the given flat surface, and we need to describe the action of 
+    To define this cover, we copy d times a simply connected fondamental
+    domain of the given flat surface, and we need to describe the action of
     the fundamental group on these copies.
 
-    To do so, we associated to each interval on the base surface 
-    an orientation and for the permutation of the copies of the 
+    To do so, we associated to each interval on the base surface
+    an orientation and for the permutation of the copies of the
     fondamental domain given by the path crossing positively the oriented
     interval.
 
@@ -154,7 +154,7 @@ class PermutationCover(SageObject):
                         # for path going through label with a 0 number in the canonical
                         # orientation
                     if d == d_init: break
-                    else: cover_copies.remove(d) 
+                    else: cover_copies.remove(d)
 
                 singularities.append(singularity)
 
@@ -300,7 +300,7 @@ class PermutationCover(SageObject):
     def stratum(self):
         r"""
         Stratum of the covering translation surface
-        
+
         EXAMPLES::
 
             sage: from surface_dynamics.all import *
@@ -356,7 +356,7 @@ class PermutationCover(SageObject):
         return self._base.genus()
 
     def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=100,
-                                  nb_iterations=32768, lengths=None, output_file=None, 
+                                  nb_iterations=32768, lengths=None, output_file=None,
                                   return_speed=False, isotypic_decomposition=False, return_char=False, verbose=False):
         r"""
         Compute the H^+ Lyapunov exponents in  the covering locus.
@@ -366,7 +366,7 @@ class PermutationCover(SageObject):
         provided but genus is 1).
 
         INPUT:
- 
+
              - ``nb_vectors`` -- the number of exponents to compute. The number of
              vectors must not exceed the dimension of the space!
 
@@ -467,7 +467,7 @@ class PermutationCover(SageObject):
         if nb_experiments <= 0: raise ValueError("the number of experiments must be positive")
         if nb_iterations <= 0 : raise ValueError("the number of iterations must be positive")
         if len(sigma) %n != 0 : raise ValueError("you must give a permutation for each interval")
-        
+
         #Translate our structure to the C structure"
         k = int(len(self[0]))
         def convert((i,j)):
@@ -514,7 +514,7 @@ class PermutationCover(SageObject):
 
         t0 = time.time()
         res = lyapunov_exponents.lyapunov_exponents_H_plus_cover(
-            gp, k, twin, sigma, nb_experiments, nb_iterations, 
+            gp, k, twin, sigma, nb_experiments, nb_iterations,
             dimensions, projections, None, verbose) #No lengths for random length
         t1 = time.time()
 
@@ -562,7 +562,7 @@ class PermutationCover(SageObject):
     @cached_method
     def automorphism_group(self):
         r"""
-        Return the galois group of the cover 
+        Return the galois group of the cover
         """
         perm = map(lambda p : libgap.PermList([i+1 for i in p]), self._permut_cover)
         perm = libgap.Group(perm)
@@ -575,35 +575,36 @@ class PermutationCover(SageObject):
     def _characters(self):
         r"""
         We want to decompose homology space with the observation that it gives a representation of the galois group.
-        
+
+
         .. warning::
 
         Internal class! Do not use directly!
-        
+
         OUPUT:
-        
+
             - tuple -- composed of 5 elements which will be gien by 5 cached functions:
 
-            - character_table: table of character, character[i][g] give the value of 
+            - character_table: table of character, character[i][g] give the value of
             the i-th character on g
             g is given by a number
             - character_degree: list of degree of every character
             - autmorphism_group_order : Order of the group
-            - automorphism_group_permutation : table s.t. perm[g] give the permutation 
+            - automorphism_group_permutation : table s.t. perm[g] give the permutation
             associated to the group element g on the cover
             - n_characters : number of characters
         """
         from sage.rings.universal_cyclotomic_field import UniversalCyclotomicField
+
         UCF = UniversalCyclotomicField()
         G = self.automorphism_group()
         G_order, T = int(libgap.Order(G)), libgap.CharacterTable(G)
         irr_characters = libgap.Irr(T)
         n_characters = len(irr_characters)
-        character_set = set([tuple(UCF(gap(irr_characters[i])[j]._sage_()) for j in xrange(1, G_order + 1)) for i in xrange(n_characters)])
-        #with libgap irreducible characters can't be accessed by __get_item__()
+        character_set = set([tuple(UCF(irr_characters[i][j]) for j in xrange(G_order)) for i in xrange(n_characters)])
         character_degree = [int(libgap.Degree(irr_characters[i])) for i in xrange(n_characters)]
         elements_group = libgap.Elements(G)
-        perm = [list(gap(libgap.ListPerm(elements_group[i], self._degree_cover))) 
+        perm = [list(libgap.ListPerm(elements_group[i], self._degree_cover))
                 for i in range(G_order)]
 
         #extract real characters
@@ -625,7 +626,7 @@ class PermutationCover(SageObject):
 
     def character_table(self):
         r"""
-        Table of characters. 
+        Table of characters.
 
         character_table()[i][g] give the value of the i-th character on g.
         the g-th element of the group is a permutation given by the list
@@ -687,7 +688,7 @@ class PermutationCover(SageObject):
             p_i_character (d, a) = \sum_{t \in G} char_i(t).conjugate (automorphism_group_permutation(t)(d), a)
 
         REFERENCES::
-        
+
         .. [Ser] J.-P. Serre, "Représentation des groupes finis."
         """
         res = [[0 for _ in self.rel_homology_generator()] for _ in self.rel_homology_generator()]
