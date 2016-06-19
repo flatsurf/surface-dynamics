@@ -120,26 +120,6 @@ from template import FlippedPermutationIET, FlippedPermutationLI
 from template import RauzyDiagram, FlippedRauzyDiagram
 from template import interval_conversion, side_conversion
 
-def mean_and_std_dev(l):
-    r"""
-    Return the mean and standard deviation of the floatting point numbers in
-    the list l.
-
-    The implementation is very naive and should not be used for large list
-    (>1000) of numbers.
-
-    .. NOTE::
-    mean and std are implemented in Sage but are quite buggy!
-    """
-    from math import sqrt
-    m = sum(l) / len(l)
-    if len(l) == 1:
-        d = 0
-    else:
-        d = sum((x-m)**2 for x in l) / (len(l)-1)
-    return m,sqrt(d)
-
-
 class LabelledPermutation(SageObject):
     r"""
     General template for labelled objects.
@@ -246,7 +226,7 @@ class LabelledPermutation(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import * 
+            sage: from surface_dynamics.all import *
             sage: p1 = iet.Permutation('a b', 'b a', alphabet='ab')
             sage: p2 = iet.Permutation('a b', 'b a', alphabet='ba')
             sage: q1 = iet.Permutation('b a', 'a b', alphabet='ab')
@@ -312,7 +292,7 @@ class LabelledPermutation(SageObject):
             for j in range(len(labels[i])):
                 labels[i][j] = change(labels[i][j], twin_to_index[i][j])
 
-        s = "IntExchange([[" + ', '.join(labels[0]) + "], [" + ', '.join(labels[1]) +"]])"        
+        s = "IntExchange([[" + ', '.join(labels[0]) + "], [" + ', '.join(labels[1]) +"]])"
         print s
 
     def list(self):
@@ -496,8 +476,8 @@ class LabelledPermutation(SageObject):
         return self[1-winner][side]
 
     def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=100,
-                                  nb_iterations=32768, return_speed=False, 
-                                  verbose=False, output_file=None, lengths=None, 
+                                  nb_iterations=32768, return_speed=False,
+                                  verbose=False, output_file=None, lengths=None,
                                   sigma=None, isotypic_decomposition=False):
         r"""
         Compute the H^+ Lyapunov exponents in  the covering locus.
@@ -507,7 +487,7 @@ class LabelledPermutation(SageObject):
         provided but genus is 1).
 
         INPUT:
- 
+
         - ``nb_vectors`` -- the number of exponents to compute. The number of
           vectors must not exceed the dimension of the space!
 
@@ -540,6 +520,8 @@ class LabelledPermutation(SageObject):
             sage: p.lyapunov_exponents_H_plus() #abs tol .1
             [1., 2./3, 1./3]
         """
+        from surface_dynamics.misc.statistics import mean_and_std_dev
+
         n = len(self)
 
         if nb_vectors is None:
@@ -570,7 +552,7 @@ class LabelledPermutation(SageObject):
         if nb_experiments <= 0: raise ValueError("the number of experiments must be positive")
         if nb_iterations <= 0 : raise ValueError("the number of iterations must be positive")
         if len(sigma) %n != 0 : raise ValueError("you must give a permutation for each interval")
-        
+
         #Translate our structure to the C structure"
         k = len(self[0])
         def convert((i,j)):
@@ -597,7 +579,7 @@ class LabelledPermutation(SageObject):
 
         t0 = time.time()
         res = lyapunov_exponents.lyapunov_exponents_H_plus_cover(
-            gp, int(k), twin, sigma, 
+            gp, int(k), twin, sigma,
             nb_experiments, nb_iterations,
             [nb_vectors], projections, None, verbose)
         t1 = time.time()

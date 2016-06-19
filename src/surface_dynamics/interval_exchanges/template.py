@@ -321,7 +321,7 @@ class Permutation(SageObject):
         s.append(' '.join(map(str,l[0])))
         s.append(' '.join(map(str,l[1])))
         return sep.join(s)
- 
+
     def __copy__(self) :
         r"""
         Returns a copy of self.
@@ -790,76 +790,69 @@ class Permutation(SageObject):
 
         return res
 
-    def _twins_and_orientation(self):
+    def _canonical_signs(self):
         r"""
-        Internal function for convenience. 
-        Give the position of the two intervals corresponding to a label, and the orientation
-        given by convention to an interval.
+        Return label positions and orientation in some compatible way.
 
-        The convention choosen for the orientation of the interval is the following.
-        We choose the clockwise orientation for every interval to be positive on
-        the corresponding flat surface. The first interval we meet at the top will
-        get positive orientation, and the other negative.
-        At the bottom, any interval which also appears at the top has to be of negative
-        orientation. If both intervals appears, the first that we meet when we browse
-        from left to right the intervals, will get the positive orientation
-        (i.e. it will head to the left).
-        For convenience here positive orientation corresponds to 0, and negative to 1.
-        
-        OUTPUT::
-            - label_to_twins -- dictionary which associate to any label a list of the position
-            of the intervals underlying this label in the permutation
+        OUTPUT:
 
-            - twin_to_index -- list with the same size that the permutation, which to each position
-            returns the orientation given as a convention to the interval.
+        - a dictionary whose keys are the labels of this permutation and the
+          value associated to a label `a` is a pair `((ip,jp), (im,jm))` made
+          of the two positions of `a`. The first one correspond to the
+          positively oriented one.
+
+        - a list of two lists that give the signs of each subinterval
 
         EXAMPLES::
 
             sage: from surface_dynamics.all import *
 
-            sage: p = iet.GeneralizedPermutation('d a a b b','c c d')
-            sage: orientation = p._twins_and_orientation()[1]
-            sage: orientation[0][0]
-            0
-            sage: orientation[0][1]
-            0
-            sage: orientation[0][2]
-            1
-            sage: orientation[1][0]
-            0
-            sage: orientation[1][1]
-            1
-            sage: orientation[1][2]
-            1
+            sage: p = iet.GeneralizedPermutation('d a e a b b','e c c d')
+            sage: twins, orientation = p._canonical_signs()
+            sage: twins
+            {'a': [(0, 1), (0, 3)],
+             'b': [(0, 4), (0, 5)],
+             'c': [(1, 2), (1, 1)],
+             'd': [(0, 0), (1, 3)],
+             'e': [(0, 2), (1, 0)]}
+            sage: orientation
+            [[0, 0, 0, 1, 0, 1], [1, 1, 0, 1]]
 
-            sage: label_to_twins = p._twins_and_orientation()[0]
-            sage: label_to_twins['d']
-            [(0,0),(1,2)]
-            sage: label_to_twins['c']
-            [(1,0),(1,1)]
+            sage: for a, ((ip,jp),(im,jm)) in twins.iteritems():
+            ....:     assert p[ip][jp] == p[im][jm] == a
+            ....:     assert orientation[ip][jp] == 0
+            ....:     assert orientation[im][jm] == 1
         """
-        labels = self.list()
-        letters = set((label,j) for label in self.letters() for j in xrange(2))
-        label_to_twins = dict((label,[]) for label in self.letters())
-               # position of each label
-        twin_to_index = [] # list of lists of {0,1} of the same size as self.
-                           # Each pairs of letters is exactly mapped to a 0 and
-                           # a 1 in a canonic way which is compatible with
-                           # label_to_twins.
-        for i in xrange(2):
-            twin_to_index.append([])
-            line = labels[i]
-            for p in xrange(len(line)):
-                twin_to_index[-1].append(len(label_to_twins[line[p]]))
-                label_to_twins[line[p]].append((i,p))
+        letters = set(self.letters())
 
-        return (label_to_twins, twin_to_index)
+        label_to_twins = {}
+        sign_top = []
+        sign_bot = []
+        for i,a in enumerate(self[0]):
+            if a in letters:
+                sign_top.append(0)
+                label_to_twins[a] = [(0,i)]
+                letters.remove(a)
+            else:
+                sign_top.append(1)
+                label_to_twins[a].append((0,i))
+        n = len(self[1])
+        for i,a in enumerate(reversed(self[1])):
+            i = n - 1 - i
+            if a in letters:
+                sign_bot.append(0)
+                letters.remove(a)
+                label_to_twins[a] = [(1,i)]
+            else:
+                sign_bot.append(1)
+                label_to_twins[a].append((1,i))
+        sign_bot.reverse()
+
+        return (label_to_twins, [sign_top, sign_bot])
 
     def interval_diagram(self, glue_ends=True, sign=False):
         r"""
         Return the interval diagram of self
-
-        Convention, the first letter is always the left hand side.
 
         INPUT:
 
@@ -886,17 +879,24 @@ class Permutation(SageObject):
             sage: p = iet.GeneralizedPermutation('a a b b','c c')
             sage: p.interval_diagram()
             [['a'], [('b', 'c', 'a')], ['b'], ['c']]
+            sage: p.interval_diagram(sign=True)
+            [[('a', 1)],
+             [(('b', 0), ('c', 0), ('a', 0))],
+             [('b', 1)],
+             [('c', 1)]]
 
             sage: p = iet.GeneralizedPermutation((0,1,0,2),(3,2,4,1,4,3))
             sage: p.interval_diagram()
             [[0, 1, 4, 1], [2, 3, 4, (2, 3, 0)]]
+            sage: p.interval_diagram(sign=True)
         """
         if self._flips is not None:
             raise ValueError("not implemented for flipped permutation")
+
         twin = self.twin_list()
         labels = self.list()
-        letters = set((label,j) for label in self.letters() for j in xrange(2))
-        label_to_twins, twin_to_index = self._twins_and_orientation()
+        letters = set((label,j) for label in self.letters() for j in (0,1))
+        label_to_twins, orientation = self._canonical_signs()
         m0 = len(labels[0])
         m1 = len(labels[1])
 
@@ -920,13 +920,13 @@ class Permutation(SageObject):
                         p = m1-1
                         j = 1
                 else:
-                    p-=1
+                    p -= 1
                     if p == -1:
                         i = 0
                         p = 0
                         j = 0
                 label = labels[i][p]
-                j = twin_to_index[i][p]
+                j = orientation[i][p]
                 if (label,j) not in letters:
                     if (glue_ends and
                         ((i == 1 and p == m1-1) or (i == 0 and p == 0))):
@@ -935,9 +935,9 @@ class Permutation(SageObject):
                         if glued_at_begin:
                             singularity.append((sg1,) + sg2)
                         elif just_glued:
-                            singularity.append(sg1 +(sg2,))
+                            singularity.append(sg1 + (sg2,))
                         else:
-                            singularity.append((sg1,sg2))
+                            singularity.append((sg1, sg2))
                     break
                 letters.remove((label,j))
                 if (glue_ends and (
@@ -967,8 +967,17 @@ class Permutation(SageObject):
 
         return singularities
 
-    def cover(self, permutations, as_tuple=False):
+    def cover(self, perms, as_tuple=False):
         r"""
+        Return a covering of this permutation.
+
+        INPUT:
+
+        - ``perms`` - a list of permutations that describe the gluings
+
+        - ``as_tuple`` - whether permutations need to be considered as `1`-based
+          (default) or `0`-based.
+
         EXAMPLES::
 
             sage: from surface_dynamics.all import *
@@ -982,46 +991,34 @@ class Permutation(SageObject):
             Covering of degree 3 of the permutation:
             a b
             b a
+
+            sage: p = iet.GeneralizedPermutation('a a b b','c c')
+            sage: q = p.cover(['(0,1)', [], [2,1,0]], as_tuple=True)
+            Covering of degree 3 of the permutation:
+            a a b b
+            c c
+            sage: q.covering_data('a')
+            (1,2)
+            sage: q.covering_data('b')
+            ()
+            sage: q.covering_data('c')
+            (1,3)
         """
-        from cover import PermutationCover
+        if len(perms) != len(self):
+            raise ValueError("wrong number of permutations")
 
-        if len(permutations) != len(self):
-            raise ValueError
-
-        if not as_tuple:
-            from sage.groups.perm_gps.permgroup_element import PermutationGroupElement
-            permutations = [PermutationGroupElement(p,check=True) for p in permutations]
-            permutations = [[i-1 for i in p.domain()] for p in permutations]
-
-            d = max(len(p) for p in permutations)
-
-            for p in permutations: p.extend(xrange(len(p),d))
-
+        from surface_dynamics.misc.permutation import init_perm, equalize_perms
+        if as_tuple:
+            perms = [init_perm(p) for p in perms]
         else:
-            d = len(permutations[0])
+            from sage.groups.perm_gps.permgroup_element import PermutationGroupElement
+            perms = [PermutationGroupElement(p,check=True) for p in perms]
+            perms = [[i-1 for i in p.domain()] for p in perms]
 
-        return PermutationCover(self, d, permutations)
+        d = equalize_perms(perms)
 
-    def orientation_cover(self):
-        r"""
-        EXAMPLES::
-
-            sage: from surface_dynamics.all import *
-            sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
-            sage: c = p.orientation_cover()
-            sage: c
-            Covering of degree 2 of the permutation:
-            a a b
-            b c c
-            sage: c.stratum()
-            H_1(0^4)
-        """
-        rank = self.alphabet().rank
-        p0 = set(map(rank, self[0]))
-        p1 = set(map(rank, self[1]))
-        inv_letters = p0.symmetric_difference(p1)
-        permut_cover = [[1,0] if i in inv_letters else [0,1] for i in range(len(self.alphabet()))]
-        return self.cover(permut_cover, as_tuple=True)
+        from cover import PermutationCover
+        return PermutationCover(self, d, perms)
 
 class PermutationIET(Permutation):
     def _init_twin(self, a):
@@ -1348,12 +1345,12 @@ class PermutationIET(Permutation):
             sage: p._identify_intervals(1,2)
             sage: p
             a c
-            c a 
+            c a
 
             sage: p = iet.Permutation('a b c d', 'c a d b')
             sage: p._identify_intervals(3,1)
             sage: p
-            a b c 
+            a b c
             c a b
 
             sage: p = iet.Permutation('a b c d', 'd a c b')
@@ -2423,6 +2420,35 @@ class PermutationLI(Permutation):
 
             return True
 
+    def orientation_cover(self):
+        r"""
+        Return the orientation cover of this permutation.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+
+            sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
+            sage: c = p.orientation_cover()
+            sage: c
+            Covering of degree 2 of the permutation:
+            a a b
+            b c c
+            sage: c.stratum()
+            H_1(0^4)
+
+            sage: C = QuadraticStratum(3,2,2,1).unique_component()
+            sage: p = C.permutation_representative()
+            sage: c = p.orientation_cover()
+            sage: c.stratum()
+            H_6(4, 2, 1^4)
+        """
+        rank = self.alphabet().rank
+        p0 = set(map(rank, self[0]))
+        p1 = set(map(rank, self[1]))
+        inv_letters = p0.symmetric_difference(p1)
+        permut_cover = [[1,0] if i in inv_letters else [0,1] for i in range(len(self))]
+        return self.cover(permut_cover, as_tuple=True)
 
 class OrientablePermutationIET(PermutationIET):
     """
@@ -4269,7 +4295,6 @@ class RauzyDiagram(SageObject):
 
                 sage: from surface_dynamics.all import *
 
-                
                 sage: p = iet.Permutation('a b c','c b a')
                 sage: r = p.rauzy_diagram()
                 sage: g = r.path(p, 0, 1)

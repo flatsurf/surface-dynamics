@@ -1,66 +1,103 @@
 # coding: utf8
+r"""
+Permutation cover
+
+This module deals with combinatorial data for covering of connected components of
+strata of Abelian and quadratic differentials. The main feature is to be able to
+compute Lyapunov exponents.
+"""
+# *************************************************************************
+# Copyright (C) 2015-2016 Charles Fougeron <charlesfougeron@gmail.com>
+#                         Vincent Delecroix <20100.delecroix@gmail.com>
+#
+#  Distributed under the terms of the GNU General Public License (GPL)
+#
+#  The full text of the GPL is available at http://www.gnu.org/licenses/
+# *************************************************************************
 
 from sage.structure.sage_object import SageObject
 
 from sage.misc.cachefunc import cached_method
 from sage.libs.gap.libgap import libgap
-from sage.interfaces.gap import gap
 from sage.rings.integer import Integer
-from sage.matrix.constructor import Matrix, identity_matrix
 
-from copy import copy
-from labelled import mean_and_std_dev
 
 class PermutationCover(SageObject):
     r"""
-    Finite cover of a flat surface corresponding to a Permutation.
-    To define this cover, we copy d times a simply connected fondamental
-    domain of the given flat surface, and we need to describe the action of
-    the fundamental group on these copies.
+    A permutation with covering data
 
-    To do so, we associated to each interval on the base surface
-    an orientation and for the permutation of the copies of the
-    fondamental domain given by the path crossing positively the oriented
-    interval.
+    Let `\pi` be the combinatorial data of an interval exchange transformation
+    (or linear involution) on the alphabet `{1, 2, \ldots, m\}`. A cover of
+    degree `d` is given by a list of permutations `\sigma_i \in S_d` for each `i
+    \in \{1, 2, \ldots, m\}`.
 
-    This orientation is choosen by convention according to a clockwise
-    orientation of the surface. The two copies of any interval have to
-    be oriented alternatively in this choosen orientation and in the
-    oposite to it.
-    We browse the first line of intervals and give the orientation of
-    the first we meet according to the clockwise orientation. If we meet
-    a second one on the same line it will get the oposite orientation.
-    Then we browse the second line, from left to right again, if the interval
-    has already been meet in the first line it gets the negative orientation.
-    Otherwise if we meet the interval for the first time it will have
-    the clockwise orientation.
+    In order to do so, each interval on the base surface should come with an
+    orientation. This orientation is automaticaly choosen by convention
+    according to a clockwise orientation of the surface. The two copies of any
+    interval have to be oriented alternatively in this choosen orientation and
+    in the oposite to it.
 
     This convention is made such that the permutation associated to each interval
     is the action of the path going into the interval oriented according to
     the clockwise orientation and going out of the other one.
 
-    Has three attributes
+    This class store three attributes
 
-    - ``_base`` -- base permutation
+    - ``_base`` -- combinatorial data of an i.e.t. or a l.i.
 
-    - ``_degree_cover`` -- degree of the cover
+    - ``_degree_cover`` -- (integer) degree of the cover
 
-    - ``_permut_cover`` -- permutations of the copies over each interval
+    - ``_permut_cover`` -- list of permutations describing the cover
+
+    - ``_inv_permut_cover`` -- list of inverses of ``_permut_cover``
     """
-    _base = None
-    _degree_cover = None
-    _permut_cover = None
+    def __init__(self, base, degree, perms):
+        r"""
+        TESTS::
 
-    def __init__(self, base, degree, permut):
+            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics.interval_exchanges.cover import PermutationCover
+            sage: p1 = iet.Permutation('a b c', 'c b a')
+            sage: PermutationCover(p1, 2, [[0,1],[1,0],[1,0]])
+            Covering of degree 2 of the permutation:
+            a b c
+            c b a
+
+            sage: PermutationCover(p1, 2, [[0,1],[0,1],[0,1]])
+            Traceback (most recent call last):
+            ...
+            ValueError: the cover is not connected
+
+            sage: p1 = iet.Permutation('a b c d', 'b a d c')
+            sage: PermutationCover(p1, 2, [[0,1],[1,0],[1,0]])
+            Traceback (most recent call last):
+            ...
+            ValueError: the base must be irreducible
+        """
+        if not base.is_irreducible():
+            raise ValueError("the base must be irreducible")
+        from surface_dynamics.misc.permutation import perms_are_transitive
+        if not perms_are_transitive(perms):
+            raise ValueError("the cover is not connected")
+
+        from surface_dynamics.misc.permutation import perm_invert
+
         self._base = base.__copy__()
         self._degree_cover = degree
-        self._permut_cover = copy(permut)
-
-        if not self._base.is_irreducible():
-            raise ValueError("the base must be irreducible")
+        self._permut_cover = perms[:]
+        self._inv_permut_cover = [perm_invert(p) for p in perms]
 
     def __len__(self):
-        return(len(self._base))
+        r"""
+        TESTS::
+
+            sage: from surface_dynamics.all import *
+            sage: p1 = iet.Permutation('a b c', 'c b a')
+            sage: p2 = p1.cover(['(1,2)', '(1,3)', '(2,3)'])
+            sage: len(p2)
+            3
+        """
+        return len(self._base)
 
     def __repr__(self):
         r"""
@@ -89,21 +126,93 @@ class PermutationCover(SageObject):
         return s
 
     def __getitem__(self,i):
-        return(self._base[i])
+        r"""
+        TESTS::
+
+            sage: from surface_dynamics.all import *
+            sage: p1 = iet.Permutation('a b c', 'c b a')
+            sage: p2 = p1.cover(['(1,2)', '(1,3)', '(2,3)'])
+            sage: p2[0]
+            ['a', 'b', 'c']
+            sage: p2[1]
+            ['c', 'b', 'a']
+        """
+        return self._base[i]
+
+    def __eq__(self, other):
+        r"""
+        TESTS::
+
+            sage: from surface_dynamics.all import *
+            sage: p1 = iet.GeneralizedPermutation('a a b', 'b c c')
+            sage: p2 = iet.GeneralizedPermutation('a a b',' b c c')
+            sage: p3 = iet.GeneralizedPermutation('a a b b', 'c c')
+            sage: p1.cover(['', '', '']) == p2.cover(['', '', ''])
+            True
+            sage: p1.cover(['(1,2)', '', '']) == p1.cover(['(1,2)', '(1,2)', ''])
+            False
+            sage: p1.cover(['', '', '']) == p3.cover(['', '', ''])
+            False
+        """
+        return type(self) == type(other) and \
+               self._base == other._base and \
+               self._degree_cover == other._degree_cover and \
+               self._permut_cover == other._permut_cover
+
+    def __ne__(self, other):
+        r"""
+        TESTS::
+
+            sage: from surface_dynamics.all import *
+            sage: p1 = iet.GeneralizedPermutation('a a b', 'b c c')
+            sage: p2 = iet.GeneralizedPermutation('a a b',' b c c')
+            sage: p3 = iet.GeneralizedPermutation('a a b b', 'c c')
+            sage: p1.cover(['', '', '']) != p2.cover(['', '', ''])
+            False
+            sage: p1.cover(['(1,2)', '', '']) != p1.cover(['(1,2)', '(1,2)', ''])
+            True
+            sage: p1.cover(['', '', '']) != p3.cover(['', '', ''])
+            True
+        """
+        return type(self) != type(other) or \
+               self._base != other._base or \
+               self._degree_cover != other._degree_cover or \
+               self._permut_cover != other._permut_cover
 
     def __copy__(self):
-        q = PermutationCover(self._base.__copy__(), self._degree_cover, copy(self._permut_cover))
-        return(q)
-
-    def covering_data(self, label, list=False):
         r"""
-        Returns the permutation associated to a label.
+        TESTS::
 
-        INPUT:
+            sage: from surface_dynamics.all import *
+            sage: p1 = iet.Permutation('a b c', 'c b a')
+            sage: p2 = p1.cover(['(1,2)', '(1,3)', '(2,3)'])
+            sage: p2 == p2.__copy__()
+            True
+        """
+        q = PermutationCover(self._base.__copy__(), self._degree_cover, self._permut_cover[:])
+        return q
 
-        - ``label`` - label you are looking at
+    def base(self):
+        r"""
+        Return the combinatorial data corresponding to the base of this cover
 
-        - ``list`` - boolen (default: True) - wether or not retourning as a list or sage Permutation
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+            sage: p = iet.GeneralizedPermutation('a b b','c c a')
+            sage: c = p.cover(['(1,2,3)','(1,3)','(1,2)'])
+            sage: q = c.base()
+            sage: q
+            a b b
+            c c a
+            sage: q == p
+            True
+        """
+        return self._base
+
+    def covering_data(self, label):
+        r"""
+        Returns the permutation associated to the given ``label``.
 
         EXAMPLES::
 
@@ -116,90 +225,216 @@ class PermutationCover(SageObject):
             0 1 2 3 3
             2 1 4 4 0
 
-            sage: pc.covering_data(1, list=True)
-            [0, 1]
+            sage: pc.covering_data(1)
+            ()
             sage: pc.covering_data(3)
-            [2, 1]
-
+            (1,2)
         """
-        alphabet = self._base.alphabet()
-        perm = self._permut_cover[alphabet.rank(label)]
-        if list:
-            return(perm)
-        else:
-            from sage.combinat.permutation import Permutation
-            perm = [i+1 for i in perm]
-            return Permutation(perm)
+        from sage.groups.perm_gps.permgroup_named import SymmetricGroup
+        S = SymmetricGroup(self._degree_cover)
+        return S([i+1 for i in self.covering_data_tuple(label)])
 
-    def interval_diagram(self, glue_ends=True, sign=False):
-        base_diagram = self._base.interval_diagram(glue_ends=False, sign = True)
-        singularities= []
+    def covering_data_tuple(self, label):
+        r"""
+        Returns the permutation associated to the given ``label`` as a tuple on
+        `\{0, 1, \ldots, d-1\}` where `d` is the degree of the cover.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+
+            sage: p = QuadraticStratum([1,1,-1,-1]).components()[0].permutation_representative()
+            sage: pc = p.orientation_cover()
+            sage: pc
+            Covering of degree 2 of the permutation:
+            0 1 2 3 3
+            2 1 4 4 0
+
+            sage: pc.covering_data_tuple(1)
+            [0, 1]
+            sage: pc.covering_data_tuple(3)
+            [1, 0]
+        """
+        return self._permut_cover[self._base.alphabet().rank(label)]
+
+    def interval_diagram(self, sign=False):
+        r"""
+        Return the interval diagram.
+
+        This is the permutation induced on the subintervals of this cover while
+        we turn around the singularities. This is mainly used to compute the
+        stratum of this permutation.
+
+        OUTPUT:
+
+        A list of lists of pairs ``(label, index of interval)`` if
+        ``sign=False`` or a list of triples ``(label, index of interval,
+        sign)``.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+            sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
+            sage: c = p.cover(['(1,2)','(1,3)','(1,4)'])
+            sage: c.interval_diagram()
+            [[('a', 1), ('a', 0)],
+             [('a', 2)],
+             [('a', 3)],
+             [('a', 0), ('b', 1), ('a', 1), ('b', 0), ('a', 2), ('b', 2)],
+             [('a', 3), ('b', 3)],
+             [('b', 2), ('c', 2), ('b', 0), ('c', 0), ('b', 3), ('c', 3)],
+             [('b', 1), ('c', 1)],
+             [('c', 3), ('c', 0)],
+             [('c', 1)],
+             [('c', 2)]]
+            sage: c.interval_diagram(sign=True)
+            [[('a', 1, 1), ('a', 0, 1)],
+             [('a', 2, 1)],
+             [('a', 3, 1)],
+             [('a', 0, 0), ..., ('b', 2, 0)],
+             [('a', 3, 0), ('b', 3, 0)],
+             [('b', 2, 1), ..., ('c', 3, 0)],
+             [('b', 1, 1), ('c', 1, 0)],
+             [('c', 3, 1), ('c', 0, 1)],
+             [('c', 1, 1)],
+             [('c', 2, 1)]]
+        """
+        twins, orientation = self._base._canonical_signs()
+        base_diagram = self._base.interval_diagram(glue_ends=False, sign=True)
+        singularities = []
 
         alphabet = self._base.alphabet()
-        perm = lambda label : self._permut_cover[alphabet.rank(label)]
+        rank = alphabet.rank
+        perm = lambda sign,label: self._inv_permut_cover[rank(label)] if sign else \
+                                  self._permut_cover[rank(label)]
 
         for orbit in base_diagram:
             init_label = orbit[0][0]
             cover_copies = set(range(self._degree_cover))
             while cover_copies:
-                d_init = cover_copies.pop()
-                d = d_init
+                d = d_init = cover_copies.pop()
                 singularity = []
                 while True:
+                    # lift a loop from downstair
                     for base_singularity in orbit:
-                        label, j = base_singularity
-                        singularity.append((label, j, d) if sign else (label, d))
-                        d = perm(label).index(d) if j else perm(label)[d]
-                        # let us remind the convention that covering data is permutation
-                        # for path going through label with a 0 number in the canonical
-                        # orientation
-                    if d == d_init: break
-                    else: cover_copies.remove(d)
+                        label,s = base_singularity
+                        if s:
+                            dd = perm(s,label)[d]
+                        else:
+                            dd = d
+                        singularity.append((label,dd,s) if sign else (label,dd))
+                        d = perm(s,label)[d]
+
+                    # if it closes, break the loop
+                    if d == d_init:
+                        break
+                    else:
+                        cover_copies.remove(d)
 
                 singularities.append(singularity)
 
         return singularities
 
-    def homology_boundary_matrix(self):
+    def _delta2(self):
         r"""
-        Return projection matrix from the left from relative to boundaries space.
+        Matrix `\delta_2: C_2 -> C_1` from the `2`-cycles to the `1`-cycles.
+
+        The matrix acts on the left. The basis of `C1` (corresponding to
+        columns) is ordered first by index in the cover and then by index in the
+        base.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+            sage: p = iet.GeneralizedPermutation('a b b', 'c c a')
+            sage: c = p.cover(['()', '()', '()'])
+            sage: c._delta2()
+            [0 0 0]
+            sage: c = p.cover(['(1,2)', '(1,3)', '(1,4)'])
+            sage: c._delta2()
+            [ 1  1  1 -1  0  0  0 -1  0  0  0 -1]
+            [-1  0  0  1  0  0  0  0  0  0  0  0]
+            [ 0 -1  0  0  0  0  0  1  0  0  0  0]
+            [ 0  0 -1  0  0  0  0  0  0  0  0  1]
         """
+        gens = [(i,a) for i in range(self._degree_cover) for a in self._base.letters()]
+        gen_indices = {g:i for i,g in enumerate(gens)}
         B = []
         p = self._base
-        twin_to_index = p._twins_and_orientation()[1]
-        for d in xrange(self._degree_cover):
-            border = [0 for _ in self.rel_homology_generator()]
+        signs = p._canonical_signs()[1]
+        for k in xrange(self._degree_cover):
+            border = [0] * len(gens)
             for i in xrange(2):
                 for j in xrange(len(p[i])):
-                    if twin_to_index[i][j]:
-                        border[self.rel_homology_index(d,p[i][j])] = 1
-                    else:
-                        perm_cover = self.covering_data(p[i][j],list=True)
-                        border[self.rel_homology_index(perm_cover[d],p[i][j])] = -1
+                    if signs[i][j]:  # -1 sign
+                        perm_cover = self.covering_data_tuple(p[i][j])
+                        border[gen_indices[(perm_cover.index(k),p[i][j])]] += -1
+                    else:            # +1 sign
+                        border[gen_indices[(k,p[i][j])]] += 1
             B.append(border)
-        return(Matrix(B))
 
-    def homology_cycle_matrix(self):
+        from sage.matrix.constructor import matrix
+        from sage.rings.integer_ring import ZZ
+        return matrix(ZZ, B)
+
+    def _delta1(self):
         r"""
-        Return projection matrix from the left from relative to cycles space.
+        Matrix `\delta_1: C_1 -> C_0` from the `1`-chains to the `0`-chains
+
+        The matrix acts on the left. The basis of `C_1` (corresponding to
+        rows) is ordered first by index in the cover and then by index in the
+        base. The basis of `C_0` is ordered as given by the method
+        :meth:`interval_diagram`.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+
+            sage: p = iet.GeneralizedPermutation('a b b','c c a')
+            sage: c = p.cover(['', '', ''])
+            sage: m = c._delta1()
+            sage: m
+            [-1  1  0  0]
+            [ 1  0 -1  0]
+            [ 0  1  0 -1]
+            sage: m.ncols() == len(c.profile())
+            True
+            sage: m.nrows() == len(c) * c._degree_cover
+            True
+
+            sage: c = p.cover(['(1,2)', '(1,3)', '(1,4)'])
+            sage: (c._delta2() * c._delta1()).is_zero()
+            True
+
+            sage: a,b = QuaternionGroup().gens()
+            sage: p = iet.Permutation('a b', 'b a')
+            sage: c = p.cover([a, b])
+            sage: assert c._delta1().nrows() == 2 * 8  # number of edges
+            sage: assert c._delta1().ncols() == 4      # number of vertices
+            sage: assert c._delta2().nrows() == 8      # number of faces
+            sage: assert c._delta2().ncols() == 2 * 8  # number of edges
+            sage: (c._delta2() * c._delta1()).is_zero()
+            True
+
+            sage: p = iet.GeneralizedPermutation('a a b c d b e', 'e f d c f')
+            sage: c = p.cover(['(1,2,3,4)', '(1,3)', '(1,2)', '(2,3)', '(1,3,4)', '()'])
+            sage: (c._delta2() * c._delta1()).is_zero()
+            True
         """
-        singularities = self.interval_diagram(glue_ends=False, sign=True)
+        singularities = self.interval_diagram(sign=True)
+        sing_to_index = {s:i for i,sing in enumerate(singularities) for s in sing}
         nb_sing = len(singularities)
         borders = []
         for d in range(self._degree_cover):
             for a in self._base.alphabet():
-                border_side = [0 for _ in xrange(nb_sing)]
-                i = 0
-                while i < nb_sing and not any((a,0,d) == sing for sing in singularities[i]):
-                    i += 1
-                border_side[i] = 1
-                j = 0
-                while j < nb_sing and not any((a,1,d) == sing for sing in singularities[j]):
-                    j += 1
-                border_side[j] = -1
-                if i == j and i < nb_sing: border_side[j] = 0
+                border_side = [0] * nb_sing
+                border_side[sing_to_index[(a,d,0)]] += 1
+                border_side[sing_to_index[(a,d,1)]] += -1
                 borders.append(border_side)
-        return(Matrix(borders).left_kernel().matrix())
+
+        from sage.matrix.constructor import matrix
+        from sage.rings.integer_ring import ZZ
+        return matrix(ZZ, borders)
 
     def profile(self):
         r"""
@@ -223,12 +458,12 @@ class PermutationCover(SageObject):
             [2, 2, 2, 2]
         """
         from sage.combinat.partition import Partition
-        from sage.combinat.permutation import Permutations
+        from sage.groups.perm_gps.permgroup_named import SymmetricGroup
 
         s = []
 
-        base_diagram = self._base.interval_diagram(sign=True,glue_ends=True)
-        p_id = Permutations(self._degree_cover).identity()
+        base_diagram = self._base.interval_diagram(sign=True, glue_ends=True)
+        p_id = SymmetricGroup(self._degree_cover).identity()
         for orbit in base_diagram:
             flat_orbit = []
             for x in orbit:
@@ -238,7 +473,7 @@ class PermutationCover(SageObject):
                     flat_orbit.append(x)
             p = p_id
             for lab,sign in flat_orbit:
-                q = self.covering_data(lab, list=False)
+                q = self.covering_data(lab)
                 if sign: q = q.inverse()
                 p = p*q
             for c in p.cycle_type():
@@ -248,7 +483,7 @@ class PermutationCover(SageObject):
 
     def is_orientable(self):
         r"""
-        Test whether the covering has an orientable foliation.
+        Test whether this permutation cover has an orientable foliation.
 
         EXAMPLES::
 
@@ -276,8 +511,8 @@ class PermutationCover(SageObject):
         elif any(x%2 for x in self.profile()):
             return False
         else:
-            # here we should really unfold the holonomy
-            # i.e. try to orient each copy with pm 1
+            # here we unfold the holonomy, i.e. try to orient each copy with +1
+            # or -1
             signs = [+1] + [None] * (self._degree_cover - 1)
             todo = [0]
             A = self._base.alphabet()
@@ -342,62 +577,131 @@ class PermutationCover(SageObject):
         p = self.profile()
         return Integer((sum(p)-2*len(p))/4+1)
 
-
-    def base_stratum(self):
+    @cached_method
+    def _real_characters(self):
         r"""
-        Stratum of the base permutation.
-        """
-        return self._base.stratum()
+        The real characters of the automorphism group
 
-    def base_genus(self):
+        OUTPUT:
+
+        - table of characters
+
+        - degrees
+
+        For more information see
+        :func:`~flatsurf.misc.group_representation.real_characters`.
+
+        TESTS::
+
+            sage: from surface_dynamics.all import *
+            sage: p = iet.GeneralizedPermutation('a b b','c c a')
+            sage: c = p.cover(['(1,2,3)','(1,3,2)','()'])
+            sage: c._real_characters()
+            ([(1, 1, 1), (2, -1, -1)], [1, 1])
+        """
+        from surface_dynamics.misc.group_representation import real_characters
+        return real_characters(self.automorphism_group())
+
+    @cached_method
+    def _cc_mats(self):
         r"""
-        Genus of the base permutation.
-        """
-        return self._base.genus()
+        The projection given by the conjugacy class.
 
-    def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=100,
-                                  nb_iterations=32768, lengths=None, output_file=None,
+        This is cached to speed up the computation of the projection matrices.
+        See :meth:`~flatsurf.misc.group_representation.conjugacy_class_matrix`
+        for more informations.
+
+        TESTS::
+
+            sage: from surface_dynamics.all import *
+            sage: p = iet.GeneralizedPermutation('a b b','c c a')
+            sage: c = p.cover(['(1,2,3)','(1,3,2)','()'])
+            sage: c._cc_mats()
+            (
+            [1 0 0]  [0 1 0]  [0 0 1]
+            [0 1 0]  [0 0 1]  [1 0 0]
+            [0 0 1], [1 0 0], [0 1 0]
+            )
+        """
+        from surface_dynamics.misc.group_representation import conjugacy_class_matrix
+        G = self.automorphism_group()
+        mats = []
+        for cl in libgap(G).ConjugacyClasses():
+            m = conjugacy_class_matrix(cl, self._degree_cover)
+            m.set_immutable()
+            mats.append(m)
+        return tuple(mats)
+
+    def isotypic_projection_matrix(self, i):
+        r"""
+        TESTS::
+
+            sage: from surface_dynamics.all import *
+            sage: p = iet.GeneralizedPermutation('a b b','c c a')
+            sage: c = p.cover(['(1,2,3)','(1,3,2)','()'])
+            sage: c.isotypic_projection_matrix(0)
+            [1/3   0   0 1/3   0   0 1/3   0   0]
+            [  0 1/3   0   0 1/3   0   0 1/3   0]
+            [  0   0 1/3   0   0 1/3   0   0 1/3]
+            [1/3   0   0 1/3   0   0 1/3   0   0]
+            [  0 1/3   0   0 1/3   0   0 1/3   0]
+            [  0   0 1/3   0   0 1/3   0   0 1/3]
+            [1/3   0   0 1/3   0   0 1/3   0   0]
+            [  0 1/3   0   0 1/3   0   0 1/3   0]
+            [  0   0 1/3   0   0 1/3   0   0 1/3]
+        """
+        from sage.matrix.special import identity_matrix
+        from surface_dynamics.misc.group_representation import isotypic_projection_matrix
+        m = isotypic_projection_matrix(
+               self.automorphism_group(),
+               self._degree_cover,
+               self._real_characters()[0][i],
+               self._real_characters()[1][i],
+               self._cc_mats())
+        return m.tensor_product(identity_matrix(len(self._base)), subdivide=False)
+
+    def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=10,
+                                  nb_iterations=32768, output_file=None,
                                   return_speed=False, isotypic_decomposition=False, return_char=False, verbose=False):
         r"""
         Compute the H^+ Lyapunov exponents in  the covering locus.
 
-        It calls the C-library lyap_exp interfaced with Cython. The computation
-        might be significantly faster if ``nb_vectors=1`` (or if it is not
-        provided but genus is 1).
+        This method calls a C-library that performs renormalization (i.e. Rauzy
+        induction and orthogonalization of vectors under the Kontsevich-Zorich
+        cocycle). The computation might be significantly faster if
+        ``nb_vectors=1`` (or if it is not provided but genus is 1) as in this
+        case no orthogonalization is needed.
 
         INPUT:
 
-             - ``nb_vectors`` -- the number of exponents to compute. The number of
-             vectors must not exceed the dimension of the space!
+         - ``nb_vectors`` -- the number of exponents to compute. The number of
+         vectors must not exceed the dimension of the space!
 
-             - ``nb_experiments`` -- the number of experiments to perform. It might
-             be around 100 (default value) in order that the estimation of
-             confidence interval is accurate enough.
+         - ``nb_experiments`` -- the number of experiments to perform. It might
+         be around 100 (default value) in order that the estimation of
+         confidence interval is accurate enough.
 
-             - ``nb_iterations`` -- the number of iteration of the Rauzy-Zorich
-             algorithm to perform for each experiments. The default is 2^15=32768
-             which is rather small but provide a good compromise between speed and
-             quality of approximation.
+         - ``nb_iterations`` -- the number of iteration of the Rauzy-Zorich
+         algorithm to perform for each experiments. The default is 2^15=32768
+         which is rather small but provide a good compromise between speed and
+         quality of approximation.
 
-             - ``lengths`` -- specify some lengths for the iet you want to start with.
-             None by default will imply random lengths.
+         - ``output_file`` -- if provided (as a file object or a string) output
+         the additional information in the given file rather than on the
+         standard output.
 
-             - ``output_file`` -- if provided (as a file object or a string) output
-             the additional information in the given file rather than on the
-             standard output.
+         - ``return_speed`` -- wether or not return the lyapunov exponents list
+         in a pair with the speed of the geodesic.
 
-             - ``return_speed`` -- wether or not return the lyapunov exponents list
-             in a pair with the speed of the geodesic.
+         - ``isotypic_decomposition`` -- whether or not decompose the space
+         into isotypic subspaces for the cover automorphisms.
 
-             - ``isotypic_decomposition`` -- whether or not decompose the space
-             into isotypic subspaces for the cover automorphisms.
+         - ``return_char`` -- whether or not return the character corresponding to
+         the isotypic component.
 
-             - ``return_char`` -- whether or not return the character corresponding to
-             the isotypic component.
-
-             - ``verbose`` -- if ``True`` provide additional informations rather than
-             returning only the Lyapunov exponents (i.e. ellapsed time, confidence
-             intervals, ...)
+         - ``verbose`` -- if ``True`` provide additional informations rather than
+         returning only the Lyapunov exponents (i.e. ellapsed time, confidence
+         intervals, ...)
 
 
         EXAMPLES::
@@ -405,12 +709,12 @@ class PermutationCover(SageObject):
             sage: from surface_dynamics.all import *
 
             sage: q = QuadraticStratum([1,1,-1,-1]).one_component()
-            sage: q.lyapunov_exponents_H_plus() # abs tol .1
-            [0.66]
+            sage: q.lyapunov_exponents_H_plus() # abs tol 0.01
+            [0.666666]
             sage: p = q.permutation_representative(reduced=False).orientation_cover()
             sage: c = p.lyapunov_exponents_H_plus(isotypic_decomposition=True)[0]
-            sage: print c[0] # abs tol .1
-            1.0
+            sage: print c[0] # abs tol 0.05
+            1.000000
 
             sage: p = iet.GeneralizedPermutation('e a a', 'b b c c d d e')
             sage: p.stratum()
@@ -420,26 +724,59 @@ class PermutationCover(SageObject):
             sage: c = p.cover(['()', '(1,2)', '()', '(1,2)', '(1,2)'])
             sage: c.stratum()
             Q_1(1^2, 0^4, -1^2)
-            sage: c.lyapunov_exponents_H_plus() # abs tol 0.1
-            [0.66]
+            sage: c.lyapunov_exponents_H_plus() # abs tol 0.01
+            [0.666666]
 
-            sage: p = iet.GeneralizedPermutation('c a a', 'b b c')
-            sage: def cyclic(n,a): return([(i+a)%n + 1 for i in range(n)])
-            sage: def cyclic_cover(n, a, b): return(p.cover([Permutation(cyclic(n,a+b)), Permutation(cyclic(n,a)), Permutation(cyclic(n, b))]))
-            sage: c = cyclic_cover(5,1,1)
-            sage: c.lyapunov_exponents_H_plus(isotypic_decomposition=True) # abs rel 0.1
-            [[0.0, 0.0],
-            [],
-            [0.4, 0.4]]
-            sage: c.lyapunov_exponents_H_plus(isotypic_decomposition=True, return_char=True) # abs rel 0.1
-            [([0.0, 0.0],
-            [2, E(5) + E(5)^4, E(5)^2 + E(5)^3, E(5)^2 + E(5)^3, E(5) + E(5)^4]),
-            ([], (1, 1, 1, 1, 1)),
-            ([0.4, 0.4],
-            [2, E(5)^2 + E(5)^3, E(5) + E(5)^4, E(5) + E(5)^4, E(5)^2 + E(5)^3])]
+        Some cyclic covers (see [EKZ]_ for the formulas)::
+
+            sage: p = iet.GeneralizedPermutation('c a a', 'b b c', alphabet='abc')
+            sage: def cyclic(n,a):
+            ....:     return [(i+a)%n + 1 for i in range(n)]
+            sage: def cyclic_cover(n, a, b, c):
+            ....:     return p.cover([cyclic(n,c), cyclic(n,a), cyclic(n, b)])
+
+            sage: c = cyclic_cover(7,1,1,2)
+            sage: c.lyapunov_exponents_H_plus(isotypic_decomposition=True) # abs tol 0.05
+            [[],
+             [0.2857, 0.2857],
+             [0.5714, 0.5714],
+             [0.2857, 0.2857]]
+
+            sage: c = cyclic_cover(7, 1, 2, 3)
+            sage: lexp = c.lyapunov_exponents_H_plus(isotypic_decomposition=True, return_char=True)
+            sage: lexp[0]
+            ([], (1, 1, 1, 1, 1, 1, 1))
+            sage: lexp[1][0] # abs tol 0.05
+            [0.2857, 0.2857]
+            sage: lexp[1][1]
+            (2, E(7) + E(7)^6, ..., E(7) + E(7)^6)
+            sage: lexp[2][0] # abs tol 0.05
+            [0.2857, 0.2857]
+            sage: lexp[2][1]
+            (2, E(7)^2 + E(7)^5, ...,  E(7)^2 + E(7)^5)
+            sage: lexp[3][0] # abs tol 0.05
+            [0.5714, 0.5714]
+            sage: lexp[3][1]
+            (2, E(7)^3 + E(7)^4, ..., E(7)^3 + E(7)^4)
+
+        The Eierlegendewollmilchsau as a quaternionic cover of the once
+        punctured torus::
+
+            sage: p = iet.Permutation('a b', 'b a')
+            sage: Q = QuaternionGroup()
+            sage: a,b = Q.gens()
+            sage: c = p.cover([a, b])
+            sage: c.lyapunov_exponents_H_plus()  # abs tol 0.05
+            [1.0, 0.0, 0.0]
+
+        REFERENCES:
+
+        .. [EKZ] A. Eskin, M. Kontsevich, A. Zorich "Lyapunov spectrum of
+                 square-tiled cyclic cover", J. Mod. Dyn. 5 (2011), no. 2, 319-353.
         """
         import surface_dynamics.interval_exchanges.lyapunov_exponents as lyapunov_exponents
         import time
+        from surface_dynamics.misc.statistics import mean_and_std_dev
 
         n = len(self)
 
@@ -458,64 +795,52 @@ class PermutationCover(SageObject):
         nb_experiments = int(nb_experiments)
         nb_iterations = int(nb_iterations)
 
-        if verbose:
-            output_file.write("Stratum : " + str(self.stratum()))
-            output_file.write("\n")
-
         if nb_vectors < 0 :     raise ValueError("the number of vectors must be positive")
         if nb_vectors == 0:     return []
         if nb_experiments <= 0: raise ValueError("the number of experiments must be positive")
         if nb_iterations <= 0 : raise ValueError("the number of iterations must be positive")
         if len(sigma) %n != 0 : raise ValueError("you must give a permutation for each interval")
 
-        #Translate our structure to the C structure"
+        if verbose:
+            output_file.write("Stratum: {}\n".format(self.stratum()))
+
+        # Translate our structure to the C structure"
         k = int(len(self[0]))
-        def convert((i,j)):
-            return(j + i*k)
-
         gp, twin = range(2*n), range(2*n)
-
-        base_twin = self._base._twin
-        alphabet = self._base.alphabet()
-
+        base_twin = self._base.twin_list()
+        rank = self._base.alphabet().rank
         for i in range(2):
-            for j in range(len(self[i])):
-                gp[convert((i,j))] = int(alphabet.rank(self[i][j]))
-                if isinstance(base_twin[i][j], int):
-                       twin[convert((i,j))] = int(convert((1-i, base_twin[i][j])))
-                else:
-                       twin[convert((i,j))] = int(convert(base_twin[i][j]))
+            for j,a in enumerate(self._base[i]):
+                gp[i*k+j] = rank(a)
+                ii,jj = base_twin[i][j]
+                twin[i*k+j] = int(ii*k+jj)
 
-        if lengths != None:
-            print lengths
-            lengths = map(int, lengths)
-
-        projections = None
-        dimensions=[nb_vectors]
         if isotypic_decomposition:
-            if verbose: print "Looking for isotypic decomposition"
-            from sage.rings.all import CC
-            from sage.functions.other import real
-
-            size_of_matrix = len(self.rel_homology_generator())
-            projections = range(size_of_matrix**2 * self.n_characters())
-            dimensions = range(self.n_characters())
-            for i_char in xrange(self.n_characters()):
+            nc = len(self._real_characters()[0])
+            dim = len(self._base) * self._degree_cover
+            projections = range(dim**2 * nc)
+            dimensions = range(nc)
+            for i_char in xrange(nc):
                 M = self.isotypic_projection_matrix(i_char)
-                H = self.homology_cycle_matrix()
-                B = self.homology_boundary_matrix()
+                H = self._delta1().left_kernel().matrix()
+                B = self._delta2()
                 dimension = (H*M).rank() - (B*M).rank()
-                assert dimension % 2 == 0
+                if dimension%2:
+                    raise RuntimeError("get a subspace of odd dimension\n" +
+                            "  i_char = {}\n".format(i_char) +
+                            "  dim    = {}".format(2*dimension))
                 dimensions[i_char] = dimension//2
-                for i in xrange(size_of_matrix):
-                    for j in xrange(size_of_matrix):
-                        projections [i_char * (size_of_matrix**2) + i * size_of_matrix + j] = float(real(CC(M[j][i])))
-            if verbose: print "Computing Lyapunov exponents"
+                for i in xrange(dim):
+                    for j in xrange(dim):
+                        projections[i_char * (dim**2) + i * dim + j] = float(M[j][i])
+        else:
+            projections = None
+            dimensions = [nb_vectors]
 
         t0 = time.time()
         res = lyapunov_exponents.lyapunov_exponents_H_plus_cover(
             gp, k, twin, sigma, nb_experiments, nb_iterations,
-            dimensions, projections, None, verbose) #No lengths for random length
+            dimensions, projections, None, verbose)
         t1 = time.time()
 
         res_final = []
@@ -535,17 +860,19 @@ class PermutationCover(SageObject):
 
         if isotypic_decomposition:
             i_0 = 1
-            for i_char in xrange(self.n_characters()):
+            for i_char in xrange(nc):
                 res_int = []
                 if verbose:
                     output_file.write("##### char_%d #####\n"%(i_char))
-                for i in xrange(i_0, i_0 + dimensions[i_char]) :
+                    output_file.write("chi = {}\n".format(self._real_characters()[0][i_char]))
+                    output_file.write("dim = {}\n".format(dimensions[i_char]))
+                for i in xrange(i_0, i_0 + dimensions[i_char]):
                     m,d = mean_and_std_dev(res[i])
                     res_int.append(m)
-                if verbose:
-                    output_file.write("theta%d           : %f (std. dev. = %f, conf. rad. 0.01 = %f)\n"%(
-                        i,m,d, 2.576*d/sqrt(nb_experiments)))
-                res_final.append((res_int, self.character_table()[i_char]) if return_char else res_int)
+                    if verbose:
+                        output_file.write("theta_%d          : %f (std. dev. = %f, conf. rad. 0.01 = %f)\n"%(
+                            i,m,d, 2.576*d/sqrt(nb_experiments)))
+                res_final.append((res_int, self._real_characters()[0][i_char]) if return_char else res_int)
                 i_0 += dimensions[i_char]
 
         else:
@@ -558,146 +885,46 @@ class PermutationCover(SageObject):
         if return_speed: return (lexp, res_final)
         else: return res_final
 
+    @cached_method
+    def monodromy(self):
+        r"""
+        Return the monodromy of this covering.
+
+        That it to say the permutation group generated by the action of the
+        fundamental group.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+            sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
+            sage: p.cover(['(1,2,3)', '(1,3,2)', '']).monodromy()
+            Permutation Group with generators [(1,2,3), (1,3,2), ()]
+            sage: p.cover(['(1,2)', '(1,3)', '']).monodromy()
+            Permutation Group with generators [(1,2), (1,3), ()]
+        """
+        from sage.groups.perm_gps.permgroup import PermutationGroup
+        return PermutationGroup([self.covering_data(a) for a in self._base.letters()], canonicalize=False)
 
     @cached_method
     def automorphism_group(self):
         r"""
-        Return the galois group of the cover
-        """
-        perm = map(lambda p : libgap.PermList([i+1 for i in p]), self._permut_cover)
-        perm = libgap.Group(perm)
+        Return the Deck group of the cover.
 
-        G = libgap.Centralizer(libgap.SymmetricGroup(self._degree_cover), perm)
-
-        return G
-
-    @cached_method
-    def _characters(self):
-        r"""
-        We want to decompose homology space with the observation that it gives a representation of the galois group.
-
-
-        .. warning::
-
-        Internal class! Do not use directly!
-
-        OUPUT:
-
-            - tuple -- composed of 5 elements which will be gien by 5 cached functions:
-
-            - character_table: table of character, character[i][g] give the value of
-            the i-th character on g
-            g is given by a number
-            - character_degree: list of degree of every character
-            - autmorphism_group_order : Order of the group
-            - automorphism_group_permutation : table s.t. perm[g] give the permutation
-            associated to the group element g on the cover
-            - n_characters : number of characters
-        """
-        from sage.rings.universal_cyclotomic_field import UniversalCyclotomicField
-
-        UCF = UniversalCyclotomicField()
-        G = self.automorphism_group()
-        G_order, T = int(libgap.Order(G)), libgap.CharacterTable(G)
-        irr_characters = libgap.Irr(T)
-        n_characters = len(irr_characters)
-        character_set = set([tuple(UCF(irr_characters[i][j]) for j in xrange(G_order)) for i in xrange(n_characters)])
-        character_degree = [int(libgap.Degree(irr_characters[i])) for i in xrange(n_characters)]
-        elements_group = libgap.Elements(G)
-        perm = [list(libgap.ListPerm(elements_group[i], self._degree_cover))
-                for i in range(G_order)]
-
-        #extract real characters
-        real_character_table = []
-        i = 0
-        while character_set:
-            chi = character_set.pop()
-            if any(not x.is_real() for x in chi):
-                character_set.remove(tuple(map(lambda z: z.conjugate(), chi)))
-                real_character_table.append([chi[j] + chi[j].conjugate() for j in xrange(n_characters)])
-                i += 1
-            else:
-                real_character_table.append(chi)
-            i += 1
-
-        n_real_characters = len(real_character_table)
-
-        return(real_character_table, character_degree, G_order, map(lambda x: [i-1 for i in x], perm), n_real_characters)
-
-    def character_table(self):
-        r"""
-        Table of characters.
-
-        character_table()[i][g] give the value of the i-th character on g.
-        the g-th element of the group is a permutation given by the list
-        automorphism_group_permutation
-        """
-        return self._characters()[0]
-
-    def character_degree(self):
-        r"""
-        List of degrees for every character.
-        """
-        return self._characters()[1]
-
-    def automorphism_group_order(self):
-        r"""
-        Order of the automorphism group.
-        """
-        return Integer(self._characters()[2])
-
-    def automorphism_group_permutation(self):
-        return self._characters()[3]
-
-    def n_characters(self):
-        r"""
-        Number or real characters
-        """
-        return Integer(self._characters()[4])
-
-    def rel_homology_generator(self):
-        r"""
-        Return the conventienal list whe use as a relative homology basis.
-        """
-        alphabet = self._base.alphabet()
-        return([(d,a) for d in range(self._degree_cover) for a in alphabet])
-
-    def rel_homology_index(self, d, a):
-        r"""
-        Return the index in the canonical basis choosen for relative homology.
-
-        TEST::
+        EXAMPLES::
 
             sage: from surface_dynamics.all import *
-            sage: p = iet.Permutation('a b c', 'c b a')
-            sage: c = p.cover(['(1,2)', '(1,3)', '(2,3)'])
-            sage: c.rel_homology_generator(c.rel_homology_index(2,'a')) == (2,'a')
-            sage: c.rel_homology_generator(c.rel_homology_index(0,'c')) == (0,'c')
+            sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
+            sage: p.cover(['(1,2,3)', '(1,3,2)', '']).automorphism_group()
+            Permutation Group with generators [(1,2,3), (1,3,2)]
+            sage: p.cover(['(1,2)', '(1,3)', '']).automorphism_group()
+            Permutation Group with generators [()]
         """
-        n = len(self._base.alphabet())
-        return(d*n + self._base.alphabet().rank(a))
+        from sage.groups.perm_gps.permgroup_named import SymmetricGroup
+        from sage.groups.perm_gps.permgroup import PermutationGroup
 
-    @cached_method
-    def isotypic_projection_matrix(self, i_character):
-        r"""
-        Return the projection matrix to the isotypic space of the \chi_i
-        character recall the formula of Theorem 8 in [Ser]:
+        Sd = SymmetricGroup(self._degree_cover)
+        G = libgap.Subgroup(Sd, [self.covering_data(a) for a in self._base.letters()])
+        C = libgap.Centralizer(Sd, G)
 
-        .. MATH::
+        return PermutationGroup(libgap.GeneratorsOfGroup(C).sage())
 
-            p_i_character (d, a) = \sum_{t \in G} char_i(t).conjugate (automorphism_group_permutation(t)(d), a)
-
-        REFERENCES::
-
-        .. [Ser] J.-P. Serre, "Représentation des groupes finis."
-        """
-        res = [[0 for _ in self.rel_homology_generator()] for _ in self.rel_homology_generator()]
-        char = self.character_table()[i_character]
-        coeff = self.character_degree()[i_character]/self.automorphism_group_order()
-        alphabet = self._base.alphabet()
-        for d, a in self.rel_homology_generator():
-            for t in range(self.automorphism_group_order()):
-                i = d*len(alphabet) + alphabet.rank(a)
-                j = int(self.automorphism_group_permutation()[t][d-1])*len(alphabet) + alphabet.rank(a)
-                res[i][j] += coeff*char[t]
-        return Matrix(res)
