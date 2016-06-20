@@ -662,7 +662,8 @@ class PermutationCover(SageObject):
 
     def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=10,
                                   nb_iterations=32768, output_file=None,
-                                  return_speed=False, isotypic_decomposition=False, return_char=False, verbose=False):
+                                  return_speed=False, isotypic_decomposition=False,
+                                  return_char=False, verbose=False):
         r"""
         Compute the H^+ Lyapunov exponents in  the covering locus.
 
@@ -789,8 +790,6 @@ class PermutationCover(SageObject):
         elif isinstance(output_file, str):
             output_file = open(output_file, "w")
 
-        sigma = sum(self._permut_cover, [])
-        sigma = map(int, sigma)
         nb_vectors = int(nb_vectors)
         nb_experiments = int(nb_experiments)
         nb_iterations = int(nb_iterations)
@@ -799,12 +798,10 @@ class PermutationCover(SageObject):
         if nb_vectors == 0:     return []
         if nb_experiments <= 0: raise ValueError("the number of experiments must be positive")
         if nb_iterations <= 0 : raise ValueError("the number of iterations must be positive")
-        if len(sigma) %n != 0 : raise ValueError("you must give a permutation for each interval")
 
         if verbose:
             output_file.write("Stratum: {}\n".format(self.stratum()))
 
-        # Translate our structure to the C structure"
         k = int(len(self[0]))
         gp, twin = range(2*n), range(2*n)
         base_twin = self._base.twin_list()
@@ -813,7 +810,7 @@ class PermutationCover(SageObject):
             for j,a in enumerate(self._base[i]):
                 gp[i*k+j] = rank(a)
                 ii,jj = base_twin[i][j]
-                twin[i*k+j] = int(ii*k+jj)
+                twin[i*k+j] = ii*k+jj
 
         if isotypic_decomposition:
             nc = len(self._real_characters()[0])
@@ -839,7 +836,7 @@ class PermutationCover(SageObject):
 
         t0 = time.time()
         res = lyapunov_exponents.lyapunov_exponents_H_plus_cover(
-            gp, k, twin, sigma, nb_experiments, nb_iterations,
+            gp, k, twin, self._permut_cover, nb_experiments, nb_iterations,
             dimensions, projections, None, verbose)
         t1 = time.time()
 

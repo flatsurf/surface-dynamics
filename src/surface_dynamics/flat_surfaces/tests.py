@@ -149,7 +149,7 @@ class Test:
         assert m.rank() == 2*g.genus()
 
     def test_homological_dimension(self):
-        from sage.rings.finite_rings.constructor import GF
+        from sage.rings.finite_rings.finite_field_constructor import GF
 
         g = self._get_random_cylinder_diagram()
         C = g.to_ribbon_graph().chain_complex(GF(2))

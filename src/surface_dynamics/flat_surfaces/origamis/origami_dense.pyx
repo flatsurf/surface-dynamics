@@ -2173,7 +2173,7 @@ cdef class Origami_dense_pyx(object):
             sage: o.is_primitive()
             False
         """
-        from sage.rings.arith import is_prime
+        from sage.arith.all import is_prime
         if is_prime(self.nb_squares()):
             return True
 
@@ -2204,7 +2204,7 @@ cdef class Origami_dense_pyx(object):
             sage: o.is_quasi_primitive()
             False
         """
-        from sage.rings.arith import is_prime
+        from sage.arith.all import is_prime
         if is_prime(self._n):
             return True
 

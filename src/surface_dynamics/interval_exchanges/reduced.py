@@ -500,7 +500,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
             254
         """
         from rauzy_class_cardinality import gamma_irr,delta_irr
-        from sage.rings.arith import binomial
+        from sage.arith.all import binomial
 
         s = self.stratum()
         mp = self.marked_profile()

@@ -1465,7 +1465,7 @@ class OrigamiDatabase(SQLDatabase):
              H_3(4)^odd   :  8 T. curves (up to  7 squares)
             <BLANKLINE>
             <BLANKLINE>
-             Total: 14 Teichmueller curves
+             Total: 8 Teichmueller curves
         """
         assert not self.__read_only__, "The database should be not in read only"
         import sys

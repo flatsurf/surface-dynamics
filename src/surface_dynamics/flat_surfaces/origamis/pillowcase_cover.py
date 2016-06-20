@@ -181,12 +181,12 @@ class PillowcaseCover_dense(PillowcaseCover_dense_pyx):
                 zeros = [i-2 for i in p if i != 2]
             return QuadraticStratum(zeros)
 
-    def is_primitive(self,return_base=False):
+    def is_primitive(self, return_base=False):
         r"""
         A pillowcase cover is primitive if it does not cover an other pillowcase
         cover.
         """
-        from sage.rings.arith import is_prime
+        from sage.arith.all import is_prime
         if is_prime(self.degree()):
             return True
 

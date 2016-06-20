@@ -1255,7 +1255,7 @@ class Constellations_ld(UniqueRepresentation, Parent):
             sage: Constellations(4,4).cardinality()  # long time
             12858
         """
-        from sage.misc.misc import srange
+        from sage.arith.srange import srange
         from itertools import product, permutations
 
         if self._length == 1:
@@ -1591,7 +1591,7 @@ class Constellations_p(UniqueRepresentation, Parent):
             g1 (0,3,1)(2)
             g2 (0,1)(2,3)
         """
-        from sage.misc.misc import srange
+        from sage.arith.srange import srange
         from itertools import product, permutations
 
         if self._length == 1:

@@ -475,16 +475,16 @@ class LabelledPermutation(SageObject):
 
         return self[1-winner][side]
 
-    def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=100,
+    def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=10,
                                   nb_iterations=32768, return_speed=False,
-                                  verbose=False, output_file=None, lengths=None,
-                                  sigma=None, isotypic_decomposition=False):
+                                  verbose=False, output_file=None,
+                                  lengths=None):
         r"""
-        Compute the H^+ Lyapunov exponents in  the covering locus.
+        Compute the H^+ Lyapunov exponents of the stratum associated to this
+        permutation.
 
-        It calls the C-library lyap_exp interfaced with Cython. The computation
-        might be significantly faster if ``nb_vectors=1`` (or if it is not
-        provided but genus is 1).
+        This method calls a C library. It might be  significantly faster if
+        ``nb_vectors=1`` (or if it is not provided but genus is 1).
 
         INPUT:
 
@@ -512,13 +512,13 @@ class LabelledPermutation(SageObject):
 
             sage: from surface_dynamics.all import *
             sage: QuadraticStratum([1,1,-1,-1]).one_component().lyapunov_exponents_H_plus() #abs tol .1
-            [2./3]
+            [0.6666]
 
             sage: from surface_dynamics.all import *
             sage: q = QuadraticStratum([1,1,-1,-1]).one_component()
             sage: p = q.permutation_representative().orientation_cover()
             sage: p.lyapunov_exponents_H_plus() #abs tol .1
-            [1., 2./3, 1./3]
+            [1.0, 0.6666, 0.3333]
         """
         from surface_dynamics.misc.statistics import mean_and_std_dev
 
@@ -533,12 +533,6 @@ class LabelledPermutation(SageObject):
         elif isinstance(output_file, str):
             output_file = open(output_file, "w")
 
-        if sigma == None or sigma == []: sigma = [0]*len(self)        #look at the trivial cover
-        if isinstance(sigma, dict):
-            sigma = map(lambda x : sigma[self._alphabet.unrank(x)], range(n))
-        if isinstance(sigma, list) and isinstance(sigma[0], list):
-            sigma = reduce(lambda x,y: x+y, sigma)
-
         nb_vectors = int(nb_vectors)
         nb_experiments = int(nb_experiments)
         nb_iterations = int(nb_iterations)
@@ -551,7 +545,6 @@ class LabelledPermutation(SageObject):
         if nb_vectors == 0:     return []
         if nb_experiments <= 0: raise ValueError("the number of experiments must be positive")
         if nb_iterations <= 0 : raise ValueError("the number of iterations must be positive")
-        if len(sigma) %n != 0 : raise ValueError("you must give a permutation for each interval")
 
         #Translate our structure to the C structure"
         k = len(self[0])
@@ -571,17 +564,13 @@ class LabelledPermutation(SageObject):
 
         if lengths is not None:
             lengths = map(int, lengths)
-        sigma = map(int, sigma)
-
-        projections = None
-        if sigma and isotypic_decomposition:
-            projections = [self.isotypic_projection_matrix(i) for i in range(self.n_characters())]
 
         t0 = time.time()
+
         res = lyapunov_exponents.lyapunov_exponents_H_plus_cover(
-            gp, int(k), twin, sigma,
+            gp, int(k), twin, None,
             nb_experiments, nb_iterations,
-            [nb_vectors], projections, None, verbose)
+            [nb_vectors], None, None, verbose)
         t1 = time.time()
 
         res_final = []

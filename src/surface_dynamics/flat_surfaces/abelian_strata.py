@@ -1939,7 +1939,7 @@ class HypAbelianStratumComponent(ASC):
             sage: c.rauzy_class_cardinality()
             32767
         """
-        from sage.rings.arith import binomial
+        from sage.arith.all import binomial
 
         if left_degree is not None:
             assert isinstance(left_degree, (int,Integer)), "if not None, left_degree should be an integer"

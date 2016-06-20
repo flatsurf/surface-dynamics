@@ -14,7 +14,7 @@ cdef extern from "lyapunov_exponents.h":
     # initialisation/allocation/free
     generalized_permutation * new_generalized_permutation(int *perm, int *twin, int k, int n)
     quad_cover * new_quad_cover(generalized_permutation * gp, size_t ** sigma, size_t degree, size_t nb_vectors)
-    void set_lengths(quad_cover * qcc, long double	       *lengths)
+    void set_lengths(quad_cover * qcc, long double *lengths)
     void set_random_lengths_quad_cover(quad_cover * qcc)
     void set_random_vectors(quad_cover * qcc)
     void renormalize_length_quad_cover(quad_cover *qcc)
@@ -74,38 +74,62 @@ def lyapunov_exponents_H_plus_cover(
     - ``verbose`` -- if ``True`` print additional information concerning the
       mean and standard deviation
     """
-    if not projections and len(dimensions)>1:
-        print "Warning, you are computing lyapunov exponents on several familly of vectors whitout any projections"
-
-    n = int(len(gp))/2
-
-    cdef int *p, *t   # permutation, twin, sigma
-    cdef size_t **s
-    cdef size_t *tab
-    cdef size_t nc = len(dimensions) if dimensions else 0
-    cdef size_t degree = int(len(sigma))/n if sigma else 1
-    cdef size_t i, j, nn
+    cdef int n
+    cdef int *p, *t   # permutation, twin
+    cdef size_t **s   # sigma
+    cdef size_t nc
+    cdef size_t degree, i, j, nn
     cdef size_t *dim
     cdef generalized_permutation *gp_c
     cdef quad_cover *qcc
     cdef double * theta
     cdef double *proj
 
+    if not projections and len(dimensions)>1:
+        raise ValueError("dimensions without projections")
+    nc = len(dimensions)
 
-    # convert the data of into C values
+    if not isinstance(gp, (tuple, list)) or not isinstance(twin, (tuple,list)):
+        raise ValueError("gp and twin should be lists")
+    if len(gp)%2 or len(gp) != len(twin):
+        raise ValueError("gp and twin should have the same even length")
+    n = len(gp)//2
+    if any(gp.count(i) != 2 for i in range(n)):
+        raise ValueError("gp is not a generalized permutation")
+    if set(twin) != set(range(2*n)) or \
+       not all(gp[twin[i]] == gp[i] for i in range(2*n)):
+        raise ValueError("invalid twin")
+
+    if sigma is None:
+        sigma = [[0]]*n
+        degree = 1
+    elif not isinstance(sigma, (tuple,list)):
+        raise ValueError("sigma should be either a tuple or a list")
+    elif len(sigma) != n:
+        raise ValueError("the length of sigma (={}) should be n={}".format(len(sigma), n))
+    elif not all(isinstance(l, (tuple,list)) for l in sigma):
+        raise ValueError("sigma should be a list of lists")
+    else:
+        degree = len(sigma[0])
+        sd = set(range(degree))
+        if not all(len(l) == degree and set(l) == sd for l in sigma):
+            raise ValueError("sigma should be a list of lists of length d that are permutations of {0, 1, ..., d}")
+
+
     p = <int *> malloc(2*n * sizeof(int))
     t = <int *> malloc(2*n * sizeof(int))
-    s = <size_t **> malloc(n * sizeof(size_t*))
 
     for i in range(2*n):
         p[i] = gp[i]
         t[i] = twin[i]
-    
+
+    s = <size_t **> malloc(n * sizeof(size_t*))
+    s[0] = <size_t *> malloc(degree * n * sizeof(size_t))
+    for i in range(1,n):
+        s[i] = s[0] + i * degree
     for i in range(n):
-        tab = <size_t *> malloc(degree * sizeof(size_t))
-        for j from 0 <= j < degree:
-            tab[j] = sigma[j + degree * i]
-        s[i] = tab
+        for j in range(degree):
+            s[i][j] = sigma[i][j]
 
     if dimensions is not None :
         nb_vectors = sum(dimensions)
@@ -120,7 +144,7 @@ def lyapunov_exponents_H_plus_cover(
     if lengths is None:
        set_random_lengths_quad_cover(qcc)
     else:
-        l = <long double *> malloc(n * sizeof(long double))	
+        l = <long double *> malloc(n * sizeof(long double))
         for i from 0 <= i < n:
             l[i] = <long double> lengths[i]
         set_lengths(qcc, l)
@@ -132,17 +156,13 @@ def lyapunov_exponents_H_plus_cover(
 
     res = [[] for _ in range(nn)]
 
-    nan_or_inf, tot_isnan, tot_isinf = 0, 0, 0
-
     if nb_vectors == 1:
         for i in xrange(nb_experiments):
             top_lyapunov_exponents_H_plus(qcc, theta, nb_iterations)
             if any(isnan(theta[j]) or isinf(theta[j]) for j in xrange(nn)):
-                print [theta[j] for j in range(nn)], "Warning: contains NaN of Inf"
-                nan_or_inf  += 1
-            else:
-                for j in xrange(nn):
-                    res[j].append(theta[j]) 
+                raise RuntimeError('got NaN or Inf')
+            for j in xrange(nn):
+                res[j].append(theta[j])
     else:
         init_GS(nb_vectors)
 
@@ -159,11 +179,9 @@ def lyapunov_exponents_H_plus_cover(
                 lyapunov_exponents_isotypic(qcc, theta, nb_iterations, nc, dim, proj)
                 #cleaning some experiments which return NaN or inf as a lyapunov exponent
                 if any(isnan(theta[j]) or isinf(theta[j]) for j in xrange(nn)):
-                    print [theta[j] for j in range(nn)], "Warning: contains NaN of Inf"
-                    nan_or_inf  += 1
-                else:
-                    for j in xrange(nn):
-                        res[j].append(theta[j])
+                    raise RuntimeError('got NaN or Inf')
+                for j in xrange(nn):
+                    res[j].append(theta[j])
             free(proj)
             free(dim)
 
@@ -171,21 +189,16 @@ def lyapunov_exponents_H_plus_cover(
             for i in range(nb_experiments):
                 lyapunov_exponents_H_plus(qcc, theta, nb_iterations)
                 if any(isnan(theta[j]) or isinf(theta[j]) for j in xrange(nn)):
-                    print [theta[j] for j in range(nn)], "Warning: contains NaN of Inf"
-                    nan_or_inf  += 1
+                    raise RuntimeError('got NaN or Inf')
                 else:
                     for j in xrange(nn):
-                        res[j].append(theta[j])            
+                        res[j].append(theta[j])
 
-    for i in xrange(n):
-        free(s[i])
+    free(s[0])
     free(s)
 
     free_quad_cover(&qcc)
     free_GS()
     free(theta)
-
-    if nan_or_inf > .1 * nb_experiments:
-        raise RuntimeError('too many NaN or Inf: got %d among %d experiments'%(nan_or_inf, nb_experiments))
 
     return res

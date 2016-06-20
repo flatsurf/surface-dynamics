@@ -1202,7 +1202,7 @@ class RibbonGraphWithAngles(RibbonGraph):
             sage: r2.spin_parity()
             0
         """
-        from sage.rings.finite_rings.constructor import GF
+        from sage.rings.finite_rings.finite_field_constructor import GF
         # mod F2 we have: q(x+y) = B(x,y) + q(x) + q(y)
 
         if not self.has_trivial_holonomy():

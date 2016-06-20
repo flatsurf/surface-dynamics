@@ -889,6 +889,8 @@ class Permutation(SageObject):
             sage: p.interval_diagram()
             [[0, 1, 4, 1], [2, 3, 4, (2, 3, 0)]]
             sage: p.interval_diagram(sign=True)
+            [[(0, 1), (1, 0), (4, 1), (1, 1)],
+             [(2, 0), (3, 1), (4, 0), ((2, 1), (3, 0), (0, 0))]]
         """
         if self._flips is not None:
             raise ValueError("not implemented for flipped permutation")
@@ -994,6 +996,7 @@ class Permutation(SageObject):
 
             sage: p = iet.GeneralizedPermutation('a a b b','c c')
             sage: q = p.cover(['(0,1)', [], [2,1,0]], as_tuple=True)
+            sage: q
             Covering of degree 3 of the permutation:
             a a b b
             c c
@@ -1984,17 +1987,12 @@ class PermutationLI(Permutation):
             return MarkedPartition([],2,(0,0))
 
         g = self.interval_diagram(glue_ends=True,sign=True)
+        signs = self._canonical_signs()[1]
         p = sorted(map(lambda x: len(x), g),reverse=True)
 
-        if self._twin[1][0][0] == 0:
-            left1 = ((self[1][0],0),(self[0][0],0))
-        else:
-            left1 = ((self[1][0],1),(self[0][0],0))
+        left1 = ((self[1][0],1-signs[1][0]),(self[0][0],signs[0][0]))
         left2 = (left1[1],left1[0])
-        if self._twin[0][-1][0] == 1:
-            right1 = ((self[0][-1],1),(self[1][-1],1))
-        else:
-            right1 = ((self[0][-1],0),(self[1][-1],1))
+        right1 = ((self[0][-1],1-signs[0][-1]),(self[1][-1],signs[1][-1]))
         right2 = (right1[1],right1[0])
         if len(set(left1+right1)) == 3:
             if left1[0] == right1[0]:
@@ -2930,7 +2928,7 @@ class OrientablePermutationIET(PermutationIET):
         if any((z+1)%2 for z in self.profile()):
             return None
 
-        from sage.rings.finite_rings.constructor import GF
+        from sage.rings.finite_rings.finite_field_constructor import GF
         GF2 = GF(2)
 
         M = self.intersection_matrix(GF2)

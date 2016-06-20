@@ -124,26 +124,26 @@ class OrigamiGenerators():
             sage: o.sum_of_lyapunov_exponents()
             1
         """
-        from sage.rings.arith import gcd
+        from sage.arith.all import gcd
 
         if M is None:
             M = sum(a)
 
         a = map(Integer,a)
         if len(a) != 4:
-            raise ValueError, "a should be of length 4"
+            raise ValueError("a should be of length 4")
             
         if any(ai%2==0 for ai in a):
-            raise ValueError, "ai should be odd"
+            raise ValueError("ai should be odd")
             
         if gcd([M]+a) != 1:
-            raise ValueError, "gcd(M,a) should be 0"
+            raise ValueError("gcd(M,a) should be 0")
             
         if M%2:
-            raise ValueError, "M should be even"
+            raise ValueError("M should be even")
 
         if sum(a) % M:
-            raise ValueError, "the sum of ai should be 0 mod M"
+            raise ValueError("the sum of ai should be 0 mod M")
             
         r = [None] * (2*M)
         u = [None] * (2*M)
@@ -363,7 +363,7 @@ class OrigamiGenerators():
             sage: o.stratum_component()
             H_3(4)^hyp
         """
-        from sage.rings.arith import is_prime
+        from sage.arith.all import is_prime
         from sage.rings.finite_rings.finite_field_constructor import GF
         from sage.groups.matrix_gps.linear import GL
         from sage.modules.free_module import VectorSpace
