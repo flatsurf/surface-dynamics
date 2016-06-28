@@ -135,6 +135,7 @@ class IntervalExchangeTransformation(object):
             return self._base_ring.zero()
         except AttributeError:
             return self._base_ring(0)
+
     def _one(self):
         try:
             return self._base_ring.one()
@@ -629,7 +630,6 @@ class IntervalExchangeTransformation(object):
         p = LabelledPermutationIET((top,bot))
         return IntervalExchangeTransformation(p,lengths)
 
-
     def in_which_interval(self, x, interval=0):
         r"""
         Returns the letter for which x is in this interval.
@@ -931,7 +931,7 @@ class IntervalExchangeTransformation(object):
             p = self._permutation.__copy__()
             top = p._labels[0][-1]
             bot = p._labels[1][-1]
-            p._identify_intervals(len(p)-1, len(p)-1)
+            p._identify_intervals(-1)
             res._permutation = p
             res._lengths = self._lengths[:]
             res._lengths[top] = 0

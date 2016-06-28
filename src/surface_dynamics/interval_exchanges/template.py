@@ -199,9 +199,366 @@ class Permutation(SageObject):
 
     The datatype for ``_twin`` differs for IET and LI.
     """
+    _alphabet = None
     _twin = None
     _labels = None
     _flips = None
+
+    def __eq__(self,other):
+        r"""
+        Tests equality
+
+        TESTS::
+
+            sage: from surface_dynamics.all import *
+
+            sage: p1 = iet.Permutation('a b','a b',reduced=True,alphabet='ab')
+            sage: p2 = iet.Permutation('a b','a b',reduced=True,alphabet='ba')
+            sage: q1 = iet.Permutation('a b','b a',reduced=True,alphabet='ab')
+            sage: q2 = iet.Permutation('a b','b a',reduced=True,alphabet='ba')
+            sage: p1 == p2 and p2 == p1 and q1 == q2 and q2 == q1
+            True
+            sage: p1 == q1 or p2 == q1 or q1 == p1 or q1 == p2
+            False
+
+            sage: p1 = iet.Permutation('a b', 'b a', alphabet='ab')
+            sage: p2 = iet.Permutation('a b', 'b a', alphabet='ba')
+            sage: q1 = iet.Permutation('b a', 'a b', alphabet='ab')
+            sage: q2 = iet.Permutation('b a', 'a b', alphabet='ba')
+            sage: p1 == p2 or p2 == p1
+            False
+            sage: p1 == q1 or q1 == p1
+            False
+            sage: p1 == q2 or q2 == p1
+            False
+            sage: p2 == q1 or q1 == p2
+            False
+            sage: p2 == q2 or q2 == p2
+            False
+            sage: q1 == q2 or q2 == q1
+            False
+
+        ::
+
+            sage: p1 = iet.GeneralizedPermutation('a a','b b',alphabet='ab')
+            sage: p2 = iet.GeneralizedPermutation('a a','b b',alphabet='ba')
+            sage: q1 = iet.GeneralizedPermutation('b b','a a',alphabet='ab')
+            sage: q2 = iet.GeneralizedPermutation('b b','a a',alphabet='ba')
+            sage: p1 == p2 or p2 == p1
+            False
+            sage: p1 == q1 or q1 == p1
+            False
+            sage: p1 == q2 or q2 == p1
+            False
+            sage: p2 == q1 or q1 == p2
+            False
+            sage: p2 == q2 or q2 == p2
+            False
+            sage: q1 == q2 or q2 == q1
+            False
+
+        ::
+
+            sage: p = iet.GeneralizedPermutation('a b b', 'c c a', reduced = True)
+            sage: q = iet.GeneralizedPermutation('b a a', 'c c b', reduced = True)
+            sage: r = iet.GeneralizedPermutation('t s s', 'w w t', reduced = True)
+            sage: p == q
+            True
+            sage: p == r
+            True
+
+        ::
+
+            sage: p = iet.Permutation('a b','a b',reduced=True,flips='a')
+            sage: q = copy(p)
+            sage: q.alphabet([0,1])
+            sage: p == q
+            True
+            sage: l0 = ['a b','a b']
+            sage: l1 = ['a b','b a']
+            sage: l2 = ['b a', 'a b']
+            sage: p0 = iet.Permutation(l0, reduced=True, flips='ab')
+            sage: p1 = iet.Permutation(l1, reduced=True, flips='a')
+            sage: p2 = iet.Permutation(l2, reduced=True, flips='b')
+            sage: p3 = iet.Permutation(l1, reduced=True, flips='ab')
+            sage: p4 = iet.Permutation(l2 ,reduced=True,flips='ab')
+            sage: p0 == p1 or p0 == p2 or p0 == p3 or p0 == p4
+            False
+            sage: p1 == p2 and p3 == p4
+            True
+            sage: p1 == p3 or p1 == p4 or p2 == p3 or p2 == p4
+            False
+
+        ::
+
+            sage: a0 = [0,0,1]
+            sage: a1 = [1,2,2]
+            sage: p = iet.GeneralizedPermutation(a0,a1,reduced=True,flips=[0])
+            sage: q = copy(p)
+            sage: q.alphabet("abc")
+            sage: p == q
+            True
+            sage: b0 = [1,0,0]
+            sage: b1 = [2,2,1]
+            sage: r = iet.GeneralizedPermutation(b0,b1,reduced=True,flips=[0])
+            sage: p == r or q == r
+            False
+
+        ::
+
+            sage: p1 = iet.Permutation('a b c', 'c b a', flips='a')
+            sage: p2 = iet.Permutation('a b c', 'c b a', flips='b')
+            sage: p3 = iet.Permutation('d e f', 'f e d', flips='d')
+            sage: p1 == p1 and p2 == p2 and p3 == p3
+            True
+            sage: p1 == p2
+            False
+            sage: p1 == p3
+            False
+            sage: p1.reduced() == p3.reduced()
+            True
+        """
+        return type(self) == type(other) and \
+               self._twin == other._twin and \
+               self._labels == other._labels and \
+               self._flips == other._flips and \
+               (self._labels is None or self._alphabet == other._alphabet)
+
+    def __ne__(self, other):
+        r"""
+        Tests difference
+
+        TESTS::
+
+            sage: from surface_dynamics.all import *
+
+            sage: p1 = iet.Permutation('a b', 'a b', reduced=True, alphabet='ab')
+            sage: p2 = iet.Permutation('a b', 'a b', reduced=True, alphabet='ba')
+            sage: q1 = iet.Permutation('a b', 'b a', reduced=True, alphabet='ab')
+            sage: q2 = iet.Permutation('a b', 'b a', reduced=True, alphabet='ba')
+            sage: p1 != p2 or p2 != p1 or q1 != q2 or q2 != q1
+            False
+            sage: p1 != q1 and p2 != q1 and q1 != p1 and q1 != p2
+            True
+
+            sage: p1 = iet.Permutation('a b', 'b a', alphabet='ab')
+            sage: p2 = iet.Permutation('a b', 'b a', alphabet='ba')
+            sage: q1 = iet.Permutation('b a', 'a b', alphabet='ab')
+            sage: q2 = iet.Permutation('b a', 'a b', alphabet='ba')
+            sage: p1 != p2 and p2 != p1
+            True
+            sage: p1 != q1 and q1 != p1
+            True
+            sage: p1 != q2 and q2 != p1
+            True
+            sage: p2 != q1 and q1 != p2
+            True
+            sage: p2 != q2 and q2 != p2
+            True
+            sage: q1 != q2 and q2 != q1
+            True
+
+        ::
+
+            sage: p1 = iet.GeneralizedPermutation('a a','b b',alphabet='ab')
+            sage: p2 = iet.GeneralizedPermutation('a a','b b',alphabet='ba')
+            sage: q1 = iet.GeneralizedPermutation('b b','a a',alphabet='ab')
+            sage: q2 = iet.GeneralizedPermutation('b b','a a',alphabet='ba')
+            sage: p1 != p2 or p2 != p1
+            True
+            sage: p1 != q1 or q1 != p1
+            True
+            sage: p1 != q2 or q2 != p1
+            True
+            sage: p2 != q1 or q1 != p2
+            True
+            sage: p2 != q2 or q2 != p2
+            True
+            sage: q1 != q2 or q2 != q1
+            True
+
+        ::
+
+            sage: p = iet.GeneralizedPermutation('a b b', 'c c a', reduced = True)
+            sage: q = iet.GeneralizedPermutation('b b a', 'c c a', reduced = True)
+            sage: r = iet.GeneralizedPermutation('i j j', 'k k i', reduced = True)
+            sage: p != q
+            True
+            sage: p != r
+            False
+
+        ::
+
+            sage: p = iet.Permutation('a b','a b',reduced=True,flips='a')
+            sage: q = copy(p)
+            sage: q.alphabet([0,1])
+            sage: p != q
+            False
+            sage: l0 = ['a b','a b']
+            sage: l1 = ['a b','b a']
+            sage: l2 = ['b a', 'a b']
+            sage: p0 = iet.Permutation(l0, reduced=True, flips='ab')
+            sage: p1 = iet.Permutation(l1, reduced=True, flips='a')
+            sage: p2 = iet.Permutation(l2, reduced=True, flips='b')
+            sage: p3 = iet.Permutation(l1, reduced=True, flips='ab')
+            sage: p4 = iet.Permutation(l2 ,reduced=True,flips='ab')
+            sage: p0 != p1 and p0 != p2 and p0 != p3 and p0 != p4
+            True
+            sage: p1 != p2 or p3 != p4
+            False
+            sage: p1 != p3 and p1 != p4 and p2 != p3 and p2 != p4
+            True
+
+        ::
+
+            sage: a0 = [0,0,1]
+            sage: a1 = [1,2,2]
+            sage: p = iet.GeneralizedPermutation(a0,a1,reduced=True,flips=[0])
+            sage: q = copy(p)
+            sage: q.alphabet("abc")
+            sage: p != q
+            False
+            sage: b0 = [1,0,0]
+            sage: b1 = [2,2,1]
+            sage: r = iet.GeneralizedPermutation(b0,b1,reduced=True,flips=[0])
+            sage: p != r and q != r
+            True
+
+        ::
+
+            sage: p1 = iet.Permutation('a b c','c b a',flips='a')
+            sage: p2 = iet.Permutation('a b c','c b a',flips='b')
+            sage: p3 = iet.Permutation('d e f','f e d',flips='d')
+            sage: p1 != p1 or p2 != p2 or p3 != p3
+            False
+            sage: p1 != p2
+            True
+            sage: p1 != p3
+            True
+            sage: p1.reduced() != p3.reduced()
+            False
+        """
+        return type(self) != type(other) or \
+               self._twin != other._twin or \
+               self._labels != other._labels or \
+               self._flips != other._flips or \
+               (self._labels is not None and self._alphabet != other._alphabet)
+
+    def __cmp__(self, other):
+        r"""
+        Defines a natural lexicographic order.
+
+        TESTS::
+
+            sage: p = iet.GeneralizedPermutation('a b','a b',reduced=True)
+            sage: q = copy(p)
+            sage: q.alphabet([0,1])
+            sage: p == q
+            True
+            sage: p0 = iet.GeneralizedPermutation('a b', 'a b', reduced=True)
+            sage: p1 = iet.GeneralizedPermutation('a b', 'b a', reduced=True)
+            sage: p0 < p1 and p1 > p0
+            True
+            sage: q0 = iet.GeneralizedPermutation('a b c','a b c',reduced=True)
+            sage: q1 = iet.GeneralizedPermutation('a b c','a c b',reduced=True)
+            sage: q2 = iet.GeneralizedPermutation('a b c','b a c',reduced=True)
+            sage: q3 = iet.GeneralizedPermutation('a b c','b c a',reduced=True)
+            sage: q4 = iet.GeneralizedPermutation('a b c','c a b',reduced=True)
+            sage: q5 = iet.GeneralizedPermutation('a b c','c b a',reduced=True)
+            sage: p0 < q0 and q0 > p0 and p1 < q0 and q0 > p1
+            True
+            sage: q0 < q1 and q1 > q0
+            True
+            sage: q1 < q2 and q2 > q1
+            True
+            sage: q2 < q3 and q3 > q2
+            True
+            sage: q3 < q4 and q4 > q3
+            True
+            sage: q4 < q5 and q5 > q4
+            True
+        """
+        if type(self) != type(other):
+            raise ValueError("Permutations must be of the same type")
+
+        if len(self) > len(other):
+            return 1
+        elif len(self) < len(other):
+            return -1
+
+        n = len(self)
+        j = 0
+        while (j < n and self._twin[1][j] == other._twin[1][j]):
+            j += 1
+
+        if j != n:
+            if self._twin[1][j] > other._twin[1][j]: return 1
+            else: return -1
+
+        return 0
+
+
+    def _check(self):
+        r"""
+        TESTS::
+
+            sage: from surface_dynamics.all import *
+            sage: p = iet.Permutation('a b c d', 'd a c b', flips=['a','b'])
+            sage: p._check()
+        """
+        if set(self.letters()) != set().union(*self.list()):
+            raise RuntimeError("letters are bad")
+
+        for i in range(2):
+            for p in range(self.length(i)):
+                j,q = self.twin(i,p)
+                if self.twin(j,q) != (i,p):
+                    raise RuntimeError("self.twin is not an involution: i={} p={} j={} q={}".format(i,p,j,q))
+                if self[i][p] != self[j][q]:
+                    raise RuntimeError("uncoherent getitem i={} p={} j={} q={}".format(i,p,j,q))
+                if self._labels is not None:
+                    if self._labels[i][p] != self._labels[j][q]:
+                        raise RuntimeError("self._labels wrong i={} p={} j={} q={}".format(i,p,j,q))
+                if self._flips is not None:
+                    if self._flips[i][p] != self._flips[j][q]:
+                        raise RuntimeError("self._flips wrong i={} p={} j={} q={}".format(i,p,j,q))
+
+    def letters(self):
+        r"""
+        Returns the list of letters of the alphabet used for representation.
+
+        The letters used are not necessarily the whole alphabet (for example if
+        the alphabet is infinite).
+
+        OUTPUT: a list of labels
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+
+            sage: p = iet.Permutation([1,2],[2,1])
+            sage: p.alphabet(Alphabet(name="NN"))
+            sage: p
+            0 1
+            1 0
+            sage: p.letters()
+            [0, 1]
+
+            sage: p = iet.GeneralizedPermutation('a a b','b c c')
+            sage: p.letters()
+            ['a', 'b', 'c']
+            sage: p.alphabet(range(10))
+            sage: p.letters()
+            [0, 1, 2]
+            sage: p._remove_interval(0, 2)
+            sage: p.letters()
+            [0, 2]
+        """
+        unrank = self._alphabet.unrank
+        if self._labels is not None:
+            return map(unrank, sorted(set(self._labels[0]+self._labels[1])))
+        else:
+            return [unrank(i) for i in range(len(self))]
 
     def _repr_(self):
         r"""
@@ -588,7 +945,6 @@ class Permutation(SageObject):
         else:
             self._set_alphabet(data)
 
-
     def left_right_inverse(self):
         r"""
         Returns the left-right inverse.
@@ -969,6 +1325,176 @@ class Permutation(SageObject):
 
         return singularities
 
+    def _remove_interval(self, i, pos):
+        r"""
+        Remove the letter in the interval ``i`` and position ``pos`` (and its
+        twin).
+
+        TESTS::
+
+            sage: from surface_dynamics.all import *
+
+            sage: p = iet.Permutation('a b c d', 'd a b c')
+            sage: p._remove_interval(0, 1); p
+            a c d
+            d a c
+            sage: p._check()
+            sage: p.twin_list()
+            [[(1, 1), (1, 2), (1, 0)], [(0, 2), (0, 0), (0, 1)]]
+            sage: p._remove_interval(0, 2); p
+            a c
+            a c
+            sage: p._check()
+            sage: p.twin_list()
+            [[(1, 0), (1, 1)], [(0, 0), (0, 1)]]
+            sage: p._remove_interval(0, 0); p
+            c
+            c
+            sage: p.twin_list()
+            [[(1, 0)], [(0, 0)]]
+
+            sage: p = iet.Permutation('a b c d', 'd c b a', reduced=True)
+            sage: p._remove_interval(0, 1); p
+            a b c
+            c b a
+            sage: p._check()
+            sage: p._remove_interval(1, 0); p
+            a b
+            b a
+            sage: p._check()
+
+            sage: p = iet.Permutation('a b c d', 'd a c b', flips=['a','b'])
+            sage: p._remove_interval(0, 0); p
+            -b  c  d
+             d  c -b
+            sage: p._check()
+            sage: p._remove_interval(1, 0); p
+            -b  c
+             c -b
+            sage: p._check()
+
+            sage: p = iet.Permutation('a b c e d', 'e b d a c')
+            sage: p._remove_interval(0, 3); p
+            a b c d
+            b d a c
+            sage: p._check()
+            sage: p._remove_interval(1, 3); p
+            a b d
+            b d a
+            sage: p._check()
+            sage: p._remove_interval(1, 0); p
+            a d
+            d a
+            sage: p._check()
+
+            sage: p = iet.GeneralizedPermutation('a a b c b e d e', 'f c d f g g')
+            sage: p._remove_interval(0, 0)
+            sage: p._check()
+            sage: p._remove_interval(0, 4)
+            sage: p._check()
+            sage: p._remove_interval(1, 4)
+            sage: p._check()
+            sage: p
+            b c b e e
+            f c f
+        """
+        assert i == 0 or i == 1
+        assert 0 <= pos < self.length(i)
+
+        ii, ppos = self.twin(i, pos)
+        if i == ii and pos < ppos:
+            pos, ppos = ppos, pos
+
+        for j,t in enumerate(self.twin_list()):
+            for q,(jj,qq) in enumerate(t):
+                dec = (jj == i and qq > pos) + (jj == ii and qq > ppos)
+                if dec:
+                    self._set_twin(j, q, jj, qq - dec)
+
+        del self._twin[i][pos]
+        del self._twin[ii][ppos]
+
+        if self._flips is not None:
+            del self._flips[i][pos]
+            del self._flips[ii][ppos]
+
+        if self._labels is not None:
+            del self._labels[i][pos]
+            del self._labels[ii][ppos]
+
+    def _identify_intervals(self, side):
+        r"""
+        Identify the two intervals on the right (if ``side=-1``) or on the left
+        (if ``side=0``).
+
+        This is needed for the generalized Rauzy induction when the length on
+        top and bottom are equal.
+
+        The label of the top interval disappears.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+
+            sage: p = iet.Permutation('a b c', 'c a b')
+            sage: p._identify_intervals(-1); p
+            a b
+            b a
+            sage: p._check()
+
+            sage: p = iet.Permutation('a b c', 'c b a')
+            sage: p._identify_intervals(0); p
+            b c
+            b c
+            sage: p._check()
+
+            sage: p = iet.Permutation('a b c', 'c b a')
+            sage: p._identify_intervals(0); p
+            b c
+            b c
+            sage: p._check()
+
+            sage: p = iet.Permutation('a b c d', 'c a d b')
+            sage: p._identify_intervals(-1); p
+            a b c
+            c a b
+            sage: p._check()
+
+            sage: p = iet.Permutation('a b c d', 'd a c b')
+            sage: p._identify_intervals(-1); p
+            a b c
+            b a c
+            sage: p._check()
+
+            sage: p = iet.GeneralizedPermutation('a d e e a b', 'b c c d')
+            sage: p._identify_intervals(0); p
+            d e e b b
+            c c d
+            sage: p._check()
+            sage: p._identify_intervals(-1); p
+            d e e d
+            c c
+            sage: p._check()
+
+            sage: p = iet.GeneralizedPermutation('a b b', 'a c c')
+            sage: p._identify_intervals(0); p
+            b b
+            c c
+            sage: p._check()
+        """
+        if self._flips:
+            raise ValueError("not implemented if there is a flip")
+
+        if side == 0:
+            pos0 = pos1 = 0
+        elif side == -1:
+            pos0 = self.length_top()-1
+            pos1 = self.length_bottom()-1
+        twin = self.twin(0, pos0)
+        if self.twin(0, pos0) != (1, pos1):
+            self._move(1, pos1, twin[0], twin[1])
+        self._remove_interval(0, pos0)
+
     def cover(self, perms, as_tuple=False):
         r"""
         Return a covering of this permutation.
@@ -1023,6 +1549,7 @@ class Permutation(SageObject):
         from cover import PermutationCover
         return PermutationCover(self, d, perms)
 
+
 class PermutationIET(Permutation):
     def _init_twin(self, a):
         r"""
@@ -1048,6 +1575,37 @@ class PermutationIET(Permutation):
                 j = a[1].index(a[0][i])
                 self._twin[0][i] = j
                 self._twin[1][j] = i
+
+    def twin(self, i, pos):
+        r"""
+        Return the twin of the interval in the interval ``i`` at position
+        ``pos``.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+            sage: p = iet.Permutation('a b c e d', 'e b d a c')
+            sage: p.twin(0,0)
+            (1, 3)
+            sage: p.twin(0,1)
+            (1, 1)
+
+            sage: twin_top = [p.twin(0,i) for i in range(p.length_top())]
+            sage: twin_bot = [p.twin(1,i) for i in range(p.length_bottom())]
+            sage: p.twin_list() == [twin_top, twin_bot]
+            True
+        """
+        return (1-i, self._twin[i][pos])
+
+    def _set_twin(self, i, p, j, q):
+        r"""
+        """
+        assert i == 0 or i == 1
+        assert j == 0 or j == 1
+        assert i == 1 - j
+        assert 0 <= p < self.length(i)
+        assert 0 <= q < self.length(j)
+        self._twin[i][p] = q
 
     def twin_list(self):
         r"""
@@ -1150,7 +1708,7 @@ class PermutationIET(Permutation):
 
         self._twin = tmp
 
-    def _move(self, interval, position, position_to):
+    def _move(self, interval, position, interval_to, position_to):
         r"""
         Moves the element at (interval,position) to (interval, position_to)
 
@@ -1160,6 +1718,8 @@ class PermutationIET(Permutation):
 
         - ``position`` - a position in interval
 
+        - ``interval_to`` - 0 or 1
+
         - ``position_to`` - a position in interval
 
         TESTS::
@@ -1167,23 +1727,25 @@ class PermutationIET(Permutation):
             sage: from surface_dynamics.all import *
 
             sage: p = iet.Permutation('a b c d','d c b a')
-            sage: p._move(0,0,2)
+            sage: p._move(0,0,0,2)
             sage: p
             b a c d
             d c b a
-            sage: p._move(0,1,3)
+            sage: p._move(0,1,0,3)
             sage: p
             b c a d
             d c b a
-            sage: p._move(0,2,4)
+            sage: p._move(0,2,0,4)
             sage: p
             b c d a
             d c b a
-            sage: p._move(1,3,1)
+            sage: p._move(1,3,1,1)
             sage: p
             b c d a
             d a c b
         """
+        assert interval == interval_to
+
         if position < position_to:
             if self._flips is not None:
                 self._flips[interval].insert(
@@ -1238,160 +1800,6 @@ class PermutationIET(Permutation):
                     position_to,
                     self._twin[interval].pop(position))
 
-    def _remove_interval(self, pos):
-        r"""
-        Remove the interval at ``pos`` in the top interval
-
-        TESTS::
-
-            sage: from surface_dynamics.all import *
-
-            sage: p = iet.Permutation('a b c d', 'd a b c')
-            sage: p._remove_interval(1)
-            sage: p
-            a c d
-            d a c
-            sage: p._twin
-            [[1, 2, 0], [2, 0, 1]]
-            sage: p._remove_interval(2)
-            sage: p
-            a c
-            a c
-            sage: p._twin
-            [[0, 1], [0, 1]]
-            sage: p._remove_interval(0)
-            sage: p
-            c
-            c
-            sage: p._twin
-            [[0], [0]]
-
-            sage: p = iet.Permutation('a b c d', 'd c b a', reduced=True)
-            sage: p._remove_interval(1)
-            sage: p
-            a b c
-            c b a
-            sage: p._remove_interval(2)
-            sage: p
-            a b
-            b a
-
-            sage: p = iet.Permutation('a b c d', 'd a c b', flips=['a','b'])
-            sage: p._remove_interval(0)
-            sage: p
-            -b  c  d
-             d  c -b
-            sage: p._remove_interval(2)
-            sage: p
-            -b  c
-             c -b
-        """
-        assert 0 <= pos < len(self)
-
-        twin = self._twin[0][pos]
-
-        if self._flips is not None:
-            del self._flips[0][pos]
-            del self._flips[1][twin]
-
-        if self._labels is not None:
-            del self._labels[0][pos]
-            del self._labels[1][twin]
-
-        del self._twin[0][pos]
-        del self._twin[1][twin]
-
-        for i,j in enumerate(self._twin[0]):
-            if j > twin:
-                self._twin[0][i] = j-1
-        for i,j in enumerate(self._twin[1]):
-            if j > pos:
-                self._twin[1][i] = j-1
-
-    def _identify_intervals(self, pos1, pos2):
-        r"""
-        Identify the interval ``pos1`` in top with ``pos2`` in bottom.
-
-        The label of the top interval at position ``pos1`` disappears.
-
-        EXAMPLES::
-
-            sage: from surface_dynamics.all import *
-
-            sage: p = iet.Permutation('a b c', 'c a b')
-            sage: p._identify_intervals(2,2)
-            sage: p
-            a b
-            b a
-
-            sage: p = iet.Permutation('a b c', 'c b a')
-            sage: p._identify_intervals(0,0)
-            sage: p
-            b c
-            b c
-            sage: p.letters()
-            ['b', 'c']
-
-            sage: p = iet.Permutation('a b c', 'c b a')
-            sage: p._identify_intervals(0,1)
-            sage: p
-            b c
-            c b
-
-            sage: p = iet.Permutation('a b c', 'c b a')
-            sage: p._identify_intervals(1,0)
-            sage: p
-            a c
-            c a
-
-            sage: p = iet.Permutation('a b c', 'c b a')
-            sage: p._identify_intervals(1,2)
-            sage: p
-            a c
-            c a
-
-            sage: p = iet.Permutation('a b c d', 'c a d b')
-            sage: p._identify_intervals(3,1)
-            sage: p
-            a b c
-            c a b
-
-            sage: p = iet.Permutation('a b c d', 'd a c b')
-            sage: p._identify_intervals(1,0)
-            sage: p
-            a c d
-            a c d
-            sage: p._twin
-            [[0, 1, 2], [0, 1, 2]]
-            sage: p = iet.Permutation('a b c d', 'd a c b')
-            sage: p._identify_intervals(1,1)
-            sage: p
-            a c d
-            d c a
-            sage: p._twin
-            [[2, 1, 0], [2, 1, 0]]
-
-            sage: p = iet.Permutation('a b c d', 'd a c b')
-            sage: p._identify_intervals(1,2)
-            sage: p
-            a c d
-            d a c
-
-            sage: p = iet.Permutation('a b c d', 'd a c b')
-            sage: p._identify_intervals(1,3)
-            Traceback (most recent call last):
-            ...
-            AssertionError
-        """
-        assert 0 <= pos1 < len(self)
-        assert 0 <= pos2 < len(self)
-        twin1 = self._twin[0][pos1]
-        assert pos2 != twin1
-        if self._flips:
-            raise ValueError("not implemented if there is a flip")
-        self._remove_interval(pos1)
-        self._move(1, pos2 if pos2 < twin1 else pos2-1, twin1)
-
     def has_rauzy_move(self, winner, side='right'):
         r"""
         Test if a Rauzy move can be performed on this permutation.
@@ -1428,33 +1836,6 @@ class PermutationIET(Permutation):
         winner = interval_conversion(winner)
 
         return self._twin[winner][side] % len(self) != side % len(self)
-
-    def letters(self):
-        r"""
-        Returns the list of letters of the alphabet used for representation.
-
-        The letters used are not necessarily the whole alphabet (for example if
-        the alphabet is infinite).
-
-        OUTPUT: a list of labels
-
-        EXAMPLES::
-
-            sage: from surface_dynamics.all import *
-
-            sage: p = iet.Permutation([1,2],[2,1])
-            sage: p.alphabet(Alphabet(name="NN"))
-            sage: p
-            0 1
-            1 0
-            sage: p.letters()
-            [0, 1]
-        """
-        if self._labels is not None:
-            return map(self._alphabet.unrank, sorted(self._labels[0]))
-        else:
-            return map(self._alphabet.unrank, range(len(self)))
-
 
 class PermutationLI(Permutation):
     def _init_twin(self, a):
@@ -1694,32 +2075,33 @@ class PermutationLI(Permutation):
                         position_to,
                         self._twin[interval].pop(position))
 
-    def letters(self):
+
+    def _set_twin(self, i, p, j, q):
+        assert i == 0 or i == 1
+        assert j == 0 or j == 1
+        assert 0 <= p < self.length(i)
+        assert 0 <= q < self.length(j)
+        self._twin[i][p] = (j,q)
+
+    def twin(self, i, pos):
         r"""
-        Returns the list of letters of the alphabet used for representation.
-
-        The letters used are not necessarily the whole alphabet (for example if
-        the alphabet is infinite).
-
-        OUTPUT: a list of labels
+        Return the twin of the letter in interval ``i`` at position ``pos``
 
         EXAMPLES::
 
             sage: from surface_dynamics.all import *
+            sage: p = iet.GeneralizedPermutation('a a b c', 'c e b e')
+            sage: p.twin(0,0)
+            (0, 1)
+            sage: p.twin(0,1)
+            (0, 0)
 
-            sage: p = iet.Permutation([1,2],[2,1])
-            sage: p.alphabet(Alphabet(name="NN"))
-            sage: p
-            0 1
-            1 0
-            sage: p.letters()
-            [0, 1]
+            sage: twin_top = [p.twin(0,i) for i in range(p.length_top())]
+            sage: twin_bot = [p.twin(1,i) for i in range(p.length_bottom())]
+            sage: p.twin_list() == [twin_top, twin_bot]
+            True
         """
-        unrank = self._alphabet.unrank
-        if self._labels is not None:
-            return map(unrank, sorted(set(self._labels[0]+self._labels[1])))
-        else:
-            return map(unrank, range(len(self)))
+        return self._twin[i][pos]
 
     def twin_list(self):
         r"""
@@ -3153,10 +3535,10 @@ class OrientablePermutationIET(PermutationIET):
         wtp = res._twin[winner][side]
 
         if side == -1:
-            res._move(loser, len(self._twin[loser])-1, wtp+1)
+            res._move(loser, len(self._twin[loser])-1, loser, wtp+1)
 
         if side == 0:
-            res._move(loser, 0, wtp)
+            res._move(loser, 0, loser, wtp)
 
         return res
 
@@ -3903,10 +4285,10 @@ class FlippedPermutationIET(FlippedPermutation, PermutationIET):
 
         if side == -1:
             d = len(self._twin[loser])
-            res._move(loser, d-1, wtp+1-flip)
+            res._move(loser, d-1, loser, wtp+1-flip)
 
         if side == 0:
-            res._move(loser, 0, wtp+flip)
+            res._move(loser, 0, loser, wtp+flip)
 
         return res
 
@@ -3951,17 +4333,17 @@ class FlippedPermutationIET(FlippedPermutation, PermutationIET):
             if flip == -1:
                 res._flips[loser][wtp-1] *= -1
                 res._flips[winner][res._twin[loser][wtp-1]] *= -1
-                res._move(loser, wtp-1, d)
+                res._move(loser, wtp-1, loser, d)
             else:
-                res._move(loser, wtp+1, d)
+                res._move(loser, wtp+1, loser, d)
 
         if side == 0:
             if flip == -1:
                 res._flips[loser][wtp+1] *= -1
                 res._flips[winner][res._twin[loser][wtp+1]] *= -1
-                res._move(loser, wtp+1, 0)
+                res._move(loser, wtp+1, loser, 0)
             else:
-                res._move(loser, wtp-1, 0)
+                res._move(loser, wtp-1, loser, 0)
 
         return res
 

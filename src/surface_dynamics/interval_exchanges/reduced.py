@@ -248,93 +248,6 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
             map(lambda x: self._alphabet.unrank(x), range(len(self._twin[0]))),
             map(lambda x: self._alphabet.unrank(x), self._twin[1])]
 
-    def __eq__(self,other):
-        r"""
-        Tests equality
-
-        TESTS::
-
-            sage: p1 = iet.Permutation('a b','a b',reduced=True,alphabet='ab')
-            sage: p2 = iet.Permutation('a b','a b',reduced=True,alphabet='ba')
-            sage: q1 = iet.Permutation('a b','b a',reduced=True,alphabet='ab')
-            sage: q2 = iet.Permutation('a b','b a',reduced=True,alphabet='ba')
-            sage: p1 == p2 and p2 == p1 and q1 == q2 and q2 == q1
-            True
-            sage: p1 == q1 or p2 == q1 or q1 == p1 or q1 == p2
-            False
-        """
-        return self._twin == other._twin
-
-    def __ne__(self, other):
-        r"""
-        Tests difference
-
-        TESTS::
-
-            sage: p1 = iet.Permutation('a b','a b',reduced=True,alphabet='ab')
-            sage: p2 = iet.Permutation('a b','a b',reduced=True,alphabet='ba')
-            sage: q1 = iet.Permutation('a b','b a',reduced=True,alphabet='ab')
-            sage: q2 = iet.Permutation('a b','b a',reduced=True,alphabet='ba')
-            sage: p1 != p2 or p2 != p1 or q1 != q2 or q2 != q1
-            False
-            sage: p1 != q1 and p2 != q1 and q1 != p1 and q1 != p2
-            True
-        """
-        return self._twin != other._twin
-
-    def __cmp__(self, other):
-        r"""
-        Defines a natural lexicographic order.
-
-        TESTS::
-
-            sage: p = iet.GeneralizedPermutation('a b','a b',reduced=True)
-            sage: q = copy(p)
-            sage: q.alphabet([0,1])
-            sage: p == q
-            True
-            sage: p0 = iet.GeneralizedPermutation('a b', 'a b', reduced=True)
-            sage: p1 = iet.GeneralizedPermutation('a b', 'b a', reduced=True)
-            sage: p0 < p1 and p1 > p0
-            True
-            sage: q0 = iet.GeneralizedPermutation('a b c','a b c',reduced=True)
-            sage: q1 = iet.GeneralizedPermutation('a b c','a c b',reduced=True)
-            sage: q2 = iet.GeneralizedPermutation('a b c','b a c',reduced=True)
-            sage: q3 = iet.GeneralizedPermutation('a b c','b c a',reduced=True)
-            sage: q4 = iet.GeneralizedPermutation('a b c','c a b',reduced=True)
-            sage: q5 = iet.GeneralizedPermutation('a b c','c b a',reduced=True)
-            sage: p0 < q0 and q0 > p0 and p1 < q0 and q0 > p1
-            True
-            sage: q0 < q1 and q1 > q0
-            True
-            sage: q1 < q2 and q2 > q1
-            True
-            sage: q2 < q3 and q3 > q2
-            True
-            sage: q3 < q4 and q4 > q3
-            True
-            sage: q4 < q5 and q5 > q4
-            True
-        """
-        if type(self) != type(other):
-            raise ValueError, "Permutations must be of the same type"
-
-        if len(self) > len(other):
-            return 1
-        elif len(self) < len(other):
-            return -1
-
-        n = len(self)
-        j = 0
-        while (j < n and self._twin[1][j] == other._twin[1][j]):
-            j += 1
-
-        if j != n:
-            if self._twin[1][j] > other._twin[1][j]: return 1
-            else: return -1
-
-        return 0
-
     def rauzy_move_relabel(self, winner, side='right'):
         r"""
         Returns the relabelization obtained from this move.
@@ -621,40 +534,6 @@ class ReducedPermutationLI(ReducedPermutation, OrientablePermutationLI):
                     i_a += 1
         return l
 
-    def __eq__(self, other) :
-        r"""
-        Tests equality.
-
-        Two reduced permutations are equal if they have the same order of
-        apparition of intervals. Non necessarily the same alphabet.
-
-        TESTS::
-
-            sage: p = iet.GeneralizedPermutation('a b b', 'c c a', reduced = True)
-            sage: q = iet.GeneralizedPermutation('b a a', 'c c b', reduced = True)
-            sage: r = iet.GeneralizedPermutation('t s s', 'w w t', reduced = True)
-            sage: p == q
-            True
-            sage: p == r
-            True
-        """
-        return isinstance(self, type(other)) and self._twin == other._twin
-
-    def __ne__(self, other) :
-        """
-        Tests difference.
-
-        TESTS::
-            sage: p = iet.GeneralizedPermutation('a b b', 'c c a', reduced = True)
-            sage: q = iet.GeneralizedPermutation('b b a', 'c c a', reduced = True)
-            sage: r = iet.GeneralizedPermutation('i j j', 'k k i', reduced = True)
-            sage: p != q
-            True
-            sage: p != r
-            False
-        """
-        return not isinstance(self, type(other)) or (self._twin != other._twin)
-
     def rauzy_diagram(self, **kargs):
         r"""
         Returns the associated Rauzy diagram.
@@ -771,58 +650,6 @@ class FlippedReducedPermutationIET(
         sage: p == loads(dumps(p))
         True
     """
-    def __eq__(self,other):
-        r"""
-        TESTS::
-
-            sage: p = iet.Permutation('a b','a b',reduced=True,flips='a')
-            sage: q = copy(p)
-            sage: q.alphabet([0,1])
-            sage: p == q
-            True
-            sage: l0 = ['a b','a b']
-            sage: l1 = ['a b','b a']
-            sage: l2 = ['b a', 'a b']
-            sage: p0 = iet.Permutation(l0, reduced=True, flips='ab')
-            sage: p1 = iet.Permutation(l1, reduced=True, flips='a')
-            sage: p2 = iet.Permutation(l2, reduced=True, flips='b')
-            sage: p3 = iet.Permutation(l1, reduced=True, flips='ab')
-            sage: p4 = iet.Permutation(l2 ,reduced=True,flips='ab')
-            sage: p0 == p1 or p0 == p2 or p0 == p3 or p0 == p4
-            False
-            sage: p1 == p2 and p3 == p4
-            True
-            sage: p1 == p3 or p1 == p4 or p2 == p3 or p2 == p4
-            False
-        """
-        return (self._twin == other._twin) and (self._flips == other._flips)
-
-    def __ne__(self, other):
-        r"""
-        TESTS::
-
-            sage: p = iet.Permutation('a b','a b',reduced=True,flips='a')
-            sage: q = copy(p)
-            sage: q.alphabet([0,1])
-            sage: p != q
-            False
-            sage: l0 = ['a b','a b']
-            sage: l1 = ['a b','b a']
-            sage: l2 = ['b a', 'a b']
-            sage: p0 = iet.Permutation(l0, reduced=True, flips='ab')
-            sage: p1 = iet.Permutation(l1, reduced=True, flips='a')
-            sage: p2 = iet.Permutation(l2, reduced=True, flips='b')
-            sage: p3 = iet.Permutation(l1, reduced=True, flips='ab')
-            sage: p4 = iet.Permutation(l2 ,reduced=True,flips='ab')
-            sage: p0 != p1 and p0 != p2 and p0 != p3 and p0 != p4
-            True
-            sage: p1 != p2 or p3 != p4
-            False
-            sage: p1 != p3 and p1 != p4 and p2 != p3 and p2 != p4
-            True
-        """
-        return (self._twin != other._twin) or (self._flips != other._flips)
-
     def __cmp__(self, other):
         r"""
         Defines a natural lexicographic order.
@@ -1002,48 +829,6 @@ class FlippedReducedPermutationLI(
                         l[self._twin[i][j][0]][self._twin[i][j][1]] = l[i][j]
                         i_a += 1
         return l
-
-    def __eq__(self, other) :
-        r"""
-        TESTS::
-
-            sage: a0 = [0,0,1]
-            sage: a1 = [1,2,2]
-            sage: p = iet.GeneralizedPermutation(a0,a1,reduced=True,flips=[0])
-            sage: q = copy(p)
-            sage: q.alphabet("abc")
-            sage: p == q
-            True
-            sage: b0 = [1,0,0]
-            sage: b1 = [2,2,1]
-            sage: r = iet.GeneralizedPermutation(b0,b1,reduced=True,flips=[0])
-            sage: p == r or q == r
-            False
-        """
-        return (isinstance(self, type(other)) and
-            self._twin == other._twin and
-            self._flips == other._flips)
-
-    def __ne__(self, other) :
-        r"""
-        TESTS::
-
-            sage: a0 = [0,0,1]
-            sage: a1 = [1,2,2]
-            sage: p = iet.GeneralizedPermutation(a0,a1,reduced=True,flips=[0])
-            sage: q = copy(p)
-            sage: q.alphabet("abc")
-            sage: p != q
-            False
-            sage: b0 = [1,0,0]
-            sage: b1 = [2,2,1]
-            sage: r = iet.GeneralizedPermutation(b0,b1,reduced=True,flips=[0])
-            sage: p != r and q != r
-            True
-        """
-        return (not isinstance(self, type(other)) or
-            self._twin != other._twin or
-            self._flips != other._flips)
 
     def rauzy_diagram(self, **kargs):
         r"""
