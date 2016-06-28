@@ -867,29 +867,40 @@ class QuadraticStratumComponent(StratumComponent):
 
             return CylinderDiagram([(c0_bot[::-1],c0_top),(c1_bot,c1_top[::-1])])
 
-    def lyapunov_exponents_H_plus(self, **kargs):
+    def lyapunov_exponents_H_plus(self, *args, **kargs):
         r"""
-        Compute the H^+ part of Lyapunov exponents spectrum.
+        Compute the `H^+` part of Lyapunov exponents spectrum.
+
+        All arguments and keywords are sent to
+        :meth:`~surface_dynamics.interval_exchanges.labelled.LabelledPermutation.lyapunov_exponents_H_plus`.
 
         EXAMPLES::
 
             sage: from surface_dynamics.all import *
-            sage: R = QuadraticStratum([3,3,3,-1]).regular_component()
-            sage: R.lyapunov_exponents_H_plus() # abs tol .01
-            [0.59995541909558, 0.40396239348610125, 0.20351443734981095]
 
+            sage: R = QuadraticStratum([3,3,3,-1]).regular_component()
+            sage: R.lyapunov_exponents_H_plus() # abs tol .05
+            [0.596, 0.402, 0.200]
+            sage: sum(_) # abs tol .01
+            1.2
+
+            sage: R = QuadraticStratum([2,2,2,2]).unique_component()
+            sage: R.lyapunov_exponents_H_plus() # abs tol .05
+            [0.651, 0.468, 0.243]
+            sage: sum(_) # abs tol .01
+            1.3636
         """
-        return(self.permutation_representative(reduced=False).lyapunov_exponents_H_plus(**kargs))
+        return self.permutation_representative(reduced=False).lyapunov_exponents_H_plus(*args, **kargs)
 
-    def lyapunov_exponents(self, **kargs):
+    def lyapunov_exponents_H_minus(self, *args, **kargs):
         r"""
-        Compute the all the Lyapunov exponents.
+        Compute the `H^-` Lyapunov exponents.
 
         EXAMPLES::
 
             sage: from surface_dynamics.all import *
             sage: R = QuadraticStratum([3,3,3,-1]).regular_component()
-            sage: R.lyapunov_exponents() # abs tol .01
+            sage: R.lyapunov_exponents_H_minus() # abs tol .05
             [1.0042029874815872,
             0.6001065825147999,
             0.40316380987190165,
@@ -897,11 +908,9 @@ class QuadraticStratumComponent(StratumComponent):
             0.2042487557305612,
             0.1881923173595571,
             0.08311579750620597]
-
-
         """
         perm = self.permutation_representative(reduced=False).orientation_cover()
-        return(perm.lyapunov_exponents_H_plus(**kargs))
+        return perm.lyapunov_exponents_H_plus(*args, **kargs)
 
 QSC = QuadraticStratumComponent
 

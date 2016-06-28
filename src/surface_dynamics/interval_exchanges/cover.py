@@ -661,7 +661,7 @@ class PermutationCover(SageObject):
         return m.tensor_product(identity_matrix(len(self._base)), subdivide=False)
 
     def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=10,
-                                  nb_iterations=32768, output_file=None,
+                                  nb_iterations=65536, output_file=None,
                                   return_speed=False, isotypic_decomposition=False,
                                   return_char=False, verbose=False):
         r"""
@@ -694,8 +694,7 @@ class PermutationCover(SageObject):
          - ``return_speed`` -- wether or not return the lyapunov exponents list
          in a pair with the speed of the geodesic.
 
-         - ``isotypic_decomposition`` -- whether or not decompose the space
-         into isotypic subspaces for the cover automorphisms.
+         - ``isotypic_decomposition`` -- either a boolean or a character or a list of characters.
 
          - ``return_char`` -- whether or not return the character corresponding to
          the isotypic component.
@@ -778,6 +777,7 @@ class PermutationCover(SageObject):
         import surface_dynamics.interval_exchanges.lyapunov_exponents as lyapunov_exponents
         import time
         from surface_dynamics.misc.statistics import mean_and_std_dev
+        from sage.matrix.special import zero_matrix
 
         n = len(self)
 
@@ -812,24 +812,48 @@ class PermutationCover(SageObject):
                 ii,jj = base_twin[i][j]
                 twin[i*k+j] = ii*k+jj
 
+        flatten = False
         if isotypic_decomposition:
-            nc = len(self._real_characters()[0])
+            if isotypic_decomposition is True:
+                characters = self._real_characters()[0]
+            elif isinstance(isotypic_decomposition, (tuple,list)):
+                if isinstance(isotypic_decomposition[0], (tuple,list)):
+                    characters = map(tuple, isotypic_decomposition)
+                else:
+                    characters = [tuple(isotypic_decomposition)]
+                    flatten = True
+            else:
+                raise ValueError("isotypic_decomposition must be a boolean or a list of characters")
+
+            all_characters = self._real_characters()[0]
+            for c in characters:
+                if c not in all_characters:
+                    raise ValueError("{} is an invalid character".format(c))
+
+            nc = len(characters)
+            na = len(all_characters)
             dim = len(self._base) * self._degree_cover
             projections = range(dim**2 * nc)
             dimensions = range(nc)
-            for i_char in xrange(nc):
+            ii = 0
+
+            H = self._delta1().left_kernel().matrix()
+            B = self._delta2()
+            for i_char in xrange(na):
+                if all_characters[i_char] not in characters:
+                    continue
                 M = self.isotypic_projection_matrix(i_char)
-                H = self._delta1().left_kernel().matrix()
-                B = self._delta2()
                 dimension = (H*M).rank() - (B*M).rank()
+
                 if dimension%2:
                     raise RuntimeError("get a subspace of odd dimension\n" +
                             "  i_char = {}\n".format(i_char) +
                             "  dim    = {}".format(2*dimension))
-                dimensions[i_char] = dimension//2
+                dimensions[ii] = dimension//2
                 for i in xrange(dim):
                     for j in xrange(dim):
-                        projections[i_char * (dim**2) + i * dim + j] = float(M[j][i])
+                        projections[ii * (dim**2) + i * dim + j] = float(M[j][i])
+                ii += 1
         else:
             projections = None
             dimensions = [nb_vectors]
@@ -879,8 +903,11 @@ class PermutationCover(SageObject):
                     output_file.write("theta%d           : %f (std. dev. = %f, conf. rad. 0.01 = %f)\n"%(i,m,d, 2.576*d/sqrt(nb_experiments)))
                 res_final.append(m)
 
-        if return_speed: return (lexp, res_final)
-        else: return res_final
+        res_final = res_final[0] if flatten else res_final
+        if return_speed:
+            return (lexp, res_final)
+        else:
+            return res_final
 
     @cached_method
     def monodromy(self):

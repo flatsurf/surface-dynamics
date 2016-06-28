@@ -372,9 +372,8 @@ class LabelledPermutation(SageObject):
         return self[1-winner][side]
 
     def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=10,
-                                  nb_iterations=32768, return_speed=False,
-                                  verbose=False, output_file=None,
-                                  lengths=None):
+                                  nb_iterations=65536, return_speed=False,
+                                  verbose=False, output_file=None):
         r"""
         Compute the H^+ Lyapunov exponents of the stratum associated to this
         permutation.
@@ -407,92 +406,106 @@ class LabelledPermutation(SageObject):
         EXAMPLES::
 
             sage: from surface_dynamics.all import *
-            sage: QuadraticStratum([1,1,-1,-1]).one_component().lyapunov_exponents_H_plus() #abs tol .1
+            sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()
+            sage: p = Q.permutation_representative(reduced=False)
+            sage: p.lyapunov_exponents_H_plus() # abs tol .05
             [0.6666]
 
-            sage: from surface_dynamics.all import *
-            sage: q = QuadraticStratum([1,1,-1,-1]).one_component()
-            sage: p = q.permutation_representative().orientation_cover()
-            sage: p.lyapunov_exponents_H_plus() #abs tol .1
-            [1.0, 0.6666, 0.3333]
+            sage: Q_reg = QuadraticStratum([12]).regular_component()
+            sage: p_reg = Q_reg.permutation_representative(reduced=False)
+            sage: p_reg.lyapunov_exponents_H_plus() # abs tol .05
+            [0.662, 0.448, 0.230, 0.087]
+            sage: sum(_)  # abs tol .05
+            1.43
+
+            sage: Q_irr = QuadraticStratum([12]).irregular_component()
+            sage: p_irr = Q_irr.permutation_representative(reduced=False)
+            sage: p_irr.lyapunov_exponents_H_plus() # abs tol .05
+            [0.747, 0.491, 0.245, 0.090]
+            sage: sum(_) # abs tol .05
+            1.5727
         """
-        from surface_dynamics.misc.statistics import mean_and_std_dev
+        c = self.cover([[0]]*len(self), as_tuple=True)
+        return c.lyapunov_exponents_H_plus(
+                    nb_vectors=nb_vectors, nb_experiments=nb_experiments,
+                    nb_iterations=nb_iterations, return_speed=return_speed,
+                    verbose=verbose, output_file=output_file)
 
-        n = len(self)
+    def lyapunov_exponents_H_minus(self, nb_vectors=None, nb_experiments=10,
+                                  nb_iterations=65536, return_speed=False,
+                                  verbose=False, output_file=None):
+        r"""
+        Compute the H^+ Lyapunov exponents of the stratum associated to this
+        permutation.
 
-        if nb_vectors is None:
-            nb_vectors = self.stratum().genus()
+        This method calls a C library. It might be  significantly faster if
+        ``nb_vectors=1`` (or if it is not provided but genus is 1).
 
-        if output_file is None:
-            from sys import stdout
-            output_file = stdout
-        elif isinstance(output_file, str):
-            output_file = open(output_file, "w")
+        INPUT:
 
-        nb_vectors = int(nb_vectors)
-        nb_experiments = int(nb_experiments)
-        nb_iterations = int(nb_iterations)
+        - ``nb_vectors`` -- the number of exponents to compute. The number of
+          vectors must not exceed the dimension of the space!
 
-        if verbose:
-            output_file.write("Stratum : " + str(self.stratum()))
-            output_file.write("\n")
+         - ``nb_experiments`` -- the number of experiments to perform. It might
+           be around 100 (default value) in order that the estimation of
+           confidence interval is accurate enough.
 
-        if nb_vectors < 0 :     raise ValueError("the number of vectors must be positive")
-        if nb_vectors == 0:     return []
-        if nb_experiments <= 0: raise ValueError("the number of experiments must be positive")
-        if nb_iterations <= 0 : raise ValueError("the number of iterations must be positive")
+         - ``nb_iterations`` -- the number of iteration of the Rauzy-Zorich
+           algorithm to perform for each experiments. The default is 2^15=32768
+           which is rather small but provide a good compromise between speed and
+           quality of approximation.
 
-        #Translate our structure to the C structure"
-        k = len(self[0])
-        def convert((i,j)):
-            return(j + i*k)
+        - ``verbose`` -- if ``True`` provide additional informations rather than
+          returning only the Lyapunov exponents (i.e. ellapsed time, confidence
+          intervals, ...)
 
-        gp, twin = range(2*n), range(2*n)
+        - ``output_file`` -- if provided (as a file object or a string) output
+          the additional information in the given file rather than on the
+          standard output.
 
-        for i in range(2):
-            for j in range(len(self[i])):
-                gp[convert((i,j))] = int(self._alphabet.rank(self[i][j]))
-                if isinstance(self._twin[i][j], int):
-                       twin[convert((i,j))] = int(convert((1-i, self._twin[i][j])))
-                else:
-                       twin[convert((i,j))] = int(convert(self._twin[i][j]))
+        EXAMPLES::
 
+            sage: from surface_dynamics.all import *
+            sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()
+            sage: p = Q.permutation_representative(reduced=False)
+            sage: p.lyapunov_exponents_H_minus() # abs tol .05
+            [1.000, 0.333]
 
-        if lengths is not None:
-            lengths = map(int, lengths)
+            sage: Q_reg = QuadraticStratum([12]).regular_component()
+            sage: p_reg = Q_reg.permutation_representative(reduced=False)
+            sage: p_reg.lyapunov_exponents_H_minus() # abs tol .05
+            [1.000, 0.310, 0.120]
+            sage: sum(_)  # abs tol .05
+            1.430
 
-        t0 = time.time()
+            sage: Q_irr = QuadraticStratum([12]).irregular_component()
+            sage: p_irr = Q_irr.permutation_representative(reduced=False)
+            sage: p_irr.lyapunov_exponents_H_minus() # abs tol .05
+            [1.000, 0.444, 0.128]
+            sage: sum(_) # abs tol .05
+            1.5725
+        """
+        # we now that the double cover gives rise to two characters. We need to
+        # find the one corresponding to H^-. We just pick the one which is not
+        # constantly 1 and correspond to H^+.
+        c = self.orientation_cover()
+        c0,c1 = c._real_characters()[0]
+        i0 = (-1 in c0)
+        i1 = (-1 in c1)
+        if i0 and i1:
+            raise RuntimeError("not a generalized permutation")
+        elif i0:
+            character = c0
+        elif i1:
+            character = c1
+        else:
+            raise RuntimeError("trouble with permutation={}".format(self))
 
-        res = lyapunov_exponents.lyapunov_exponents_H_plus_cover(
-            gp, int(k), twin, None,
-            nb_experiments, nb_iterations,
-            [nb_vectors], None, None, verbose)
-        t1 = time.time()
-
-        res_final = []
-
-        m,d = mean_and_std_dev(res[0])
-        lexp = m
-
-        if verbose:
-            from math import log, floor, sqrt
-            output_file.write("sample of %d experiments\n"%nb_experiments)
-            output_file.write("%d iterations (~2^%d)\n"%(
-                    nb_iterations,
-                    floor(log(nb_iterations) / log(2))))
-            output_file.write("ellapsed time %s\n"%time.strftime("%H:%M:%S",time.gmtime(t1-t0)))
-            output_file.write("Lexp Rauzy-Zorich: %f (std. dev. = %f, conf. rad. 0.01 = %f)\n"%(
-                    m,d, 2.576*d/sqrt(nb_experiments)))
-        for i in xrange(1,nb_vectors+1):
-            m,d = mean_and_std_dev(res[i])
-            if verbose:
-                output_file.write("theta%d           : %f (std. dev. = %f, conf. rad. 0.01 = %f)\n"%(
-                    i,m,d, 2.576*d/sqrt(nb_experiments)))
-            res_final.append(m)
-
-        if return_speed: return (lexp, res_final)
-        else: return res_final
-
+        return c.lyapunov_exponents_H_plus(
+                    nb_vectors=nb_vectors, nb_experiments=nb_experiments,
+                    nb_iterations=nb_iterations, return_speed=return_speed,
+                    isotypic_decomposition=character,
+                    verbose=verbose, output_file=output_file)
 
 def LabelledPermutationsIET_iterator(
     nintervals=None,
