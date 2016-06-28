@@ -73,7 +73,7 @@ class ReducedPermutation(SageObject) :
 
         Internal class! Do not use directly!
    """
-    def __init__(self,intervals=None,alphabet=None):
+    def __init__(self, intervals=None, alphabet=None):
         r"""
         INPUT:
 
@@ -115,7 +115,7 @@ class ReducedPermutation(SageObject) :
                     raise TypeError("the alphabet is too short")
                 self._alphabet = alphabet
 
-    def __getitem__(self,i):
+    def __getitem__(self, i):
         r"""
         TESTS::
 
@@ -130,7 +130,7 @@ class ReducedPermutation(SageObject) :
             sage: print p[1]
             [1, 0]
         """
-        return self.list().__getitem__(i)
+        return self.list()[i]
 
 def ReducedPermutationsIET_iterator(
     nintervals=None,
@@ -149,6 +149,8 @@ def ReducedPermutationsIET_iterator(
       of at least nintervals letters
 
     TESTS::
+
+        sage: from surface_dynamics.all import *
 
         sage: for p in iet.Permutations_iterator(3,reduced=True,alphabet="abc"):
         ...    print p  #indirect doctest
@@ -254,6 +256,8 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
 
         EXAMPLE::
 
+            sage: from surface_dynamics.all import *
+
             sage: p = iet.Permutation('a b c d','d c b a')
             sage: q = p.reduced()
             sage: p_t = p.rauzy_move('t')
@@ -289,7 +293,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
 
         return WordMorphism(d)
 
-    def rauzy_diagram(self,extended=False,**kwds):
+    def rauzy_diagram(self, extended=False, **kwds):
         r"""
         Returns a Rauzy diagram associated to this permutation
 
@@ -305,6 +309,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
         EXAMPLES::
 
             sage: from surface_dynamics.all import *
+
             sage: p = iet.Permutation('a b c d', 'd a b c',reduced=True)
             sage: d = p.rauzy_diagram()
             sage: p.rauzy_move(0) in d
@@ -319,7 +324,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
             options['symmetric'] = True
         return ReducedRauzyDiagram(self,**options)
 
-    def rauzy_class_cardinality(self,extended=False):
+    def rauzy_class_cardinality(self, extended=False):
         r"""
         Cardinality of Rauzy diagram
 
@@ -591,6 +596,8 @@ class FlippedReducedPermutation(ReducedPermutation):
         r"""
         TESTS::
 
+            sage: from surface_dynamics.all import *
+
             sage: p = iet.Permutation('a b','b a',reduced=True,flips='a')
             sage: p == loads(dumps(p))
             True
@@ -655,6 +662,8 @@ class FlippedReducedPermutationIET(
         Defines a natural lexicographic order.
 
         TESTS::
+
+            sage: from surface_dynamics.all import *
 
             sage: p = iet.Permutation('a b','a b',reduced=True,flips='a')
             sage: q = copy(p)
@@ -721,6 +730,7 @@ class FlippedReducedPermutationIET(
         EXAMPLES::
 
             sage: from surface_dynamics.all import *
+
             sage: p = iet.Permutation('a b','b a',reduced=True,flips='b')
             sage: p.list(flips=True)
             [[('a', 1), ('b', -1)], [('b', -1), ('a', 1)]]
@@ -857,6 +867,7 @@ class ReducedRauzyDiagram(RauzyDiagram):
 
         TESTS::
 
+            sage: from surface_dynamics.all import *
 
             sage: p = iet.Permutation('a b c','c b a',reduced=True)   #indirect doctest
             sage: r = p.rauzy_diagram()
@@ -870,6 +881,8 @@ class ReducedRauzyDiagram(RauzyDiagram):
         Sets self._element with data.
 
         TESTS::
+
+            sage: from surface_dynamics.all import *
 
             sage: p = iet.Permutation('a b c','c b a',reduced=True)
             sage: r = p.rauzy_diagram()
@@ -886,6 +899,8 @@ class FlippedReducedRauzyDiagram(FlippedRauzyDiagram, ReducedRauzyDiagram):
         r"""
         TESTS::
 
+            sage: from surface_dynamics.all import *
+
             sage: p = iet.GeneralizedPermutation('a b b','c c a',flips='a',reduced=True)
             sage: r = p.rauzy_diagram()
             sage: p in r   #indirect doctest
@@ -897,7 +912,10 @@ class FlippedReducedRauzyDiagram(FlippedRauzyDiagram, ReducedRauzyDiagram):
     def _set_element(self, data=None):
         r"""
         Sets self._element with data.
+
         TESTS::
+
+            sage: from surface_dynamics.all import *
 
             sage: r = iet.RauzyDiagram('a b c','c b a',flips='b',reduced=True)   #indirect doctest
         """

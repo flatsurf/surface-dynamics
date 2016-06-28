@@ -450,6 +450,8 @@ class Permutation(SageObject):
 
         TESTS::
 
+            sage: from surface_dynamics.all import *
+
             sage: p = iet.GeneralizedPermutation('a b','a b',reduced=True)
             sage: q = copy(p)
             sage: q.alphabet([0,1])
@@ -4575,6 +4577,8 @@ class RauzyDiagram(SageObject):
 
             TEST::
 
+                sage: from surface_dynamics.all import *
+
                 sage: p = iet.Permutation('a b c', 'c b a')
                 sage: r = p.rauzy_diagram()
                 sage: g = r.path(p, 0, 1, 0); g
@@ -4689,6 +4693,8 @@ class RauzyDiagram(SageObject):
 
             TEST::
 
+                sage: from surface_dynamics.all import *
+
                 sage: p1 = iet.Permutation('a b','b a')
                 sage: r1 = p1.rauzy_diagram()
                 sage: p2 = p1.reduced()
@@ -4711,6 +4717,8 @@ class RauzyDiagram(SageObject):
             Tests inequality
 
             TEST::
+
+                sage: from surface_dynamics.all import *
 
                 sage: p1 = iet.Permutation('a b','b a')
                 sage: r1 = p1.rauzy_diagram()
@@ -5171,6 +5179,8 @@ class RauzyDiagram(SageObject):
 
             TEST::
 
+                sage: from surface_dynamics.all import *
+
                 sage: p = iet.Permutation('a b','b a')
                 sage: r = p.rauzy_diagram()
                 sage: def f(i,t):
@@ -5341,8 +5351,9 @@ class RauzyDiagram(SageObject):
         r"""
         Tests difference.
 
-
         TEST::
+
+            sage: from surface_dynamics.all import *
 
             sage: iet.RauzyDiagram('a b','b a') != iet.RauzyDiagram('a b c','c b a')
             True
@@ -5801,6 +5812,8 @@ class RauzyDiagram(SageObject):
 
         TEST::
 
+            sage: from surface_dynamics.all import *
+
             sage: r = iet.RauzyDiagram('a b','b a')
             sage: r.edge_to_loser(None,None)
             []
@@ -5971,6 +5984,8 @@ class RauzyDiagram(SageObject):
 
         TEST::
 
+            sage: from surface_dynamics.all import *
+
             sage: iet.RauzyDiagram('a b','b a')   #indirect doctest
             Rauzy diagram with 1 permutation
             sage: iet.RauzyDiagram('a b c','c b a')   #indirect doctest
@@ -6073,6 +6088,8 @@ class RauzyDiagram(SageObject):
         be defined for child and their corresponding permutation types.
 
         TEST::
+
+            sage: from surface_dynamics.all import *
 
             sage: r = iet.RauzyDiagram('a b c','c b a')   #indirect doctest
             sage: r = iet.RauzyDiagram('a b c','c b a',left_induction=True) #indirect doctest

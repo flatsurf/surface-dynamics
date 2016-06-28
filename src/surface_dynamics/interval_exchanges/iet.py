@@ -113,6 +113,8 @@ class IntervalExchangeTransformation(object):
 
         TEST::
 
+            sage: from surface_dynamics.all import *
+
             sage: p = iet.IntervalExchangeTransformation(('a','a'), [1])
             sage: p == loads(dumps(p))
             True
@@ -274,6 +276,8 @@ class IntervalExchangeTransformation(object):
         - ``x`` - a positive number
 
         TESTS::
+
+            sage: from surface_dynamics.all import *
 
             sage: t = iet.IET(("a","a"), [1])
             sage: t.lengths()
@@ -526,6 +530,8 @@ class IntervalExchangeTransformation(object):
 
         TESTS::
 
+            sage: from surface_dynamics.all import *
+
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1,1])
             sage: t == t
             True
@@ -540,6 +546,8 @@ class IntervalExchangeTransformation(object):
         Tests difference
 
         TESTS::
+
+            sage: from surface_dynamics.all import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1,1])
             sage: t != t
@@ -645,9 +653,9 @@ class IntervalExchangeTransformation(object):
 
         label -- a label corresponding to an interval
 
-        TEST:
+        TESTS::
 
-        ::
+            sage: from surface_dynamics.all import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b c','c b a'),[1,1,1])
             sage: t.in_which_interval(0)
@@ -665,7 +673,7 @@ class IntervalExchangeTransformation(object):
             sage: t.in_which_interval(3)
             Traceback (most recent call last):
             ...
-            ValueError: your value does not lie in [0;l[
+            ValueError: your value does not lie in [0; 3[
 
         .. and for the bottom interval::
 
@@ -702,7 +710,9 @@ class IntervalExchangeTransformation(object):
         list -- two lists of positive numbers which corresponds to extremities
             of subintervals
 
-        EXAMPLE::
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1/2,3/2])
             sage: t.singularities()
