@@ -642,42 +642,6 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
         sage: p in d
         True
     """
-    def __cmp__(self, other):
-        r"""
-        ALGORITHM:
-
-        The order is lexicographic on intervals[0] + intervals[1]
-
-        TESTS::
-
-            sage: from surface_dynamics.all import *
-
-            sage: list_of_p2 = []
-            sage: p0 = iet.Permutation('1 2', '1 2')
-            sage: p1 = iet.Permutation('1 2', '2 1')
-            sage: p0 != p0
-            False
-            sage: (p0 == p0) and (p0 < p1)
-            True
-            sage: (p1 > p0) and (p1 == p1)
-            True
-        """
-        if not isinstance(self, type(other)):
-            return -1
-
-        n = len(self)
-        if n != len(other):
-            return n - len(other)
-
-        i, j = 0,0
-        while (self._labels[i][j] == other._labels[i][j]):
-            j += 1
-            if j == n:
-                if i == 1: return 0
-                i = 1
-                j = 0
-        return self._labels[i][j] - other._labels[i][j]
-
     def reduced(self):
         r"""
         Returns the associated reduced abelian permutation.
@@ -866,70 +830,6 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
         sage: p in r
         True
     """
-    def __cmp__(self, other):
-        r"""
-        ALGORITHM:
-
-        Order is lexicographic on length of intervals and on intervals.
-
-        TESTS::
-
-            sage: from surface_dynamics.all import *
-
-            sage: p0 = iet.GeneralizedPermutation('0 0','1 1 2 2')
-            sage: p1 = iet.GeneralizedPermutation('0 0','1 2 1 2')
-            sage: p2 = iet.GeneralizedPermutation('0 0','1 2 2 1')
-            sage: p3 = iet.GeneralizedPermutation('0 0 1','1 2 2')
-            sage: p4 = iet.GeneralizedPermutation('0 0 1 1','2 2')
-            sage: p5 = iet.GeneralizedPermutation('0 1 0 1','2 2')
-            sage: p6 = iet.GeneralizedPermutation('0 1 1 0','2 2')
-            sage: p0 == p0 and p0 < p1 and p0 < p2 and p0 < p3 and p0 < p4
-            True
-            sage: p0 < p5 and p0 < p6 and p1 < p2 and p1 < p3 and p1 < p4
-            True
-            sage: p1 < p5 and p1 < p6 and p2 < p3 and p2 < p4 and p2 < p5
-            True
-            sage: p2 < p6 and p3 < p4 and p3 < p5 and p3 < p6 and p4 < p5
-            True
-            sage: p4 < p6 and p5 < p6 and p0 == p0 and p1 == p1 and p2 == p2
-            True
-            sage: p3 == p3 and p4 == p4 and p5 == p5 and p6 == p6
-            True
-        """
-        if not isinstance(self, type(other)):
-            return -1
-
-        n = len(self)
-
-        if n != len(other): return n - len(other)
-
-        l0 = self._labels[0]
-        l1 = other._labels[0]
-
-        n = len(self._labels[0])
-
-        if n != len(other._labels[0]): return n - len(other._labels[0])
-
-        i = 0
-        while (i < n) and (l0[i] == l1[i]):
-            i += 1
-
-        if i != n:
-            return l0[i] - l1[i]
-
-        l0 = self._labels[1]
-        l1 = other._labels[1]
-        n = len(self._labels[1])
-
-        i = 0
-        while (i < n) and (l0[i] == l1[i]):
-            i += 1
-
-        if i != n:
-            return l0[i] - l1[i]
-
-        return 0
-
     def has_right_rauzy_move(self, winner):
         r"""
         Test of Rauzy movability with a specified winner)

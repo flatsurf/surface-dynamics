@@ -464,8 +464,8 @@ class Permutation(SageObject):
             sage: q0 = iet.GeneralizedPermutation('a b c','a b c',reduced=True)
             sage: q1 = iet.GeneralizedPermutation('a b c','a c b',reduced=True)
             sage: q2 = iet.GeneralizedPermutation('a b c','b a c',reduced=True)
-            sage: q3 = iet.GeneralizedPermutation('a b c','b c a',reduced=True)
-            sage: q4 = iet.GeneralizedPermutation('a b c','c a b',reduced=True)
+            sage: q3 = iet.GeneralizedPermutation('a b c','c a b',reduced=True)
+            sage: q4 = iet.GeneralizedPermutation('a b c','b c a',reduced=True)
             sage: q5 = iet.GeneralizedPermutation('a b c','c b a',reduced=True)
             sage: p0 < q0 and q0 > p0 and p1 < q0 and q0 > p1
             True
@@ -479,26 +479,74 @@ class Permutation(SageObject):
             True
             sage: q4 < q5 and q5 > q4
             True
+
+            sage: p0 = iet.Permutation('1 2', '1 2')
+            sage: p1 = iet.Permutation('1 2', '2 1')
+            sage: p0 != p0
+            False
+            sage: (p0 == p0) and (p0 < p1)
+            True
+            sage: (p1 > p0) and (p1 == p1)
+            True
+
+            sage: p0 = iet.GeneralizedPermutation('0 0','1 1 2 2')
+            sage: p1 = iet.GeneralizedPermutation('0 0','1 2 1 2')
+            sage: p2 = iet.GeneralizedPermutation('0 0','1 2 2 1')
+            sage: p3 = iet.GeneralizedPermutation('0 0 1 1','2 2')
+            sage: p4 = iet.GeneralizedPermutation('0 0 1','1 2 2')
+            sage: p5 = iet.GeneralizedPermutation('0 1 0 1','2 2')
+            sage: p6 = iet.GeneralizedPermutation('0 1 1 0','2 2')
+            sage: p0 == p0 and p0 < p1 and p0 < p2 and p0 < p3 and p0 < p4
+            True
+            sage: p0 < p5 and p0 < p6 and p1 < p2 and p1 < p3 and p1 < p4
+            True
+            sage: p1 < p5 and p1 < p6 and p2 < p3 and p2 < p4 and p2 < p5
+            True
+            sage: p2 < p6 and p3 < p4 and p3 < p5 and p3 < p6 and p4 < p5
+            True
+            sage: p4 < p6 and p5 < p6 and p0 == p0 and p1 == p1 and p2 == p2
+            True
+            sage: p3 == p3 and p4 == p4 and p5 == p5 and p6 == p6
+            True
+
+            sage: p = iet.Permutation('a b','a b',reduced=True,flips='a')
+            sage: q = copy(p)
+            sage: q.alphabet([0,1])
+            sage: p == q
+            True
+            sage: l0 = ['a b','a b']
+            sage: l1 = ['a b','b a']
+            sage: p1 = iet.Permutation(l1,reduced=True, flips='b')
+            sage: p2 = iet.Permutation(l1,reduced=True, flips='a')
+            sage: p3 = iet.Permutation(l1,reduced=True, flips='ab')
+            sage: p2 > p3 and p3 < p2
+            True
+            sage: p1 > p2 and p2 < p1
+            True
+            sage: p1 > p3 and p3 < p1
+            True
+            sage: q1 = iet.Permutation(l0, reduced=True, flips='a')
+            sage: q2 = iet.Permutation(l0, reduced=True, flips='b')
+            sage: q3 = iet.Permutation(l0, reduced=True, flips='ab')
+            sage: q2 > q1 and q2 > q3 and q1 < q2 and q3 < q2
+            True
+            sage: q1 > q3
+            True
+            sage: q3 < q1
+            True
+            sage: r = iet.Permutation('a b c','a b c', reduced=True, flips='a')
+            sage: r > p1 and r > p2 and r > p3
+            True
+            sage: p1 < r and p2 < r and p3 < r
+            True
         """
         if type(self) != type(other):
-            raise ValueError("Permutations must be of the same type")
+            raise TypeError("Permutations must be of the same type")
 
-        if len(self) > len(other):
-            return 1
-        elif len(self) < len(other):
-            return -1
-
-        n = len(self)
-        j = 0
-        while (j < n and self._twin[1][j] == other._twin[1][j]):
-            j += 1
-
-        if j != n:
-            if self._twin[1][j] > other._twin[1][j]: return 1
-            else: return -1
-
-        return 0
-
+        return cmp(len(self), len(other)) or \
+               cmp(self._twin, other._twin) or \
+               cmp(self._labels, other._labels) or \
+               cmp(self._flips, other._flips)
 
     def _check(self):
         r"""

@@ -657,67 +657,6 @@ class FlippedReducedPermutationIET(
         sage: p == loads(dumps(p))
         True
     """
-    def __cmp__(self, other):
-        r"""
-        Defines a natural lexicographic order.
-
-        TESTS::
-
-            sage: from surface_dynamics.all import *
-
-            sage: p = iet.Permutation('a b','a b',reduced=True,flips='a')
-            sage: q = copy(p)
-            sage: q.alphabet([0,1])
-            sage: p == q
-            True
-            sage: l0 = ['a b','a b']
-            sage: l1 = ['a b','b a']
-            sage: p1 = iet.Permutation(l1,reduced=True, flips='a')
-            sage: p2 = iet.Permutation(l1,reduced=True, flips='b')
-            sage: p3 = iet.Permutation(l1,reduced=True, flips='ab')
-            sage: p2 > p3 and p3 < p2
-            True
-            sage: p1 > p2 and p2 < p1
-            True
-            sage: p1 > p3 and p3 < p1
-            True
-            sage: q1 = iet.Permutation(l0, reduced=True, flips='a')
-            sage: q2 = iet.Permutation(l0, reduced=True, flips='b')
-            sage: q3 = iet.Permutation(l0, reduced=True, flips='ab')
-            sage: q2 > q1 and q2 > q3 and q1 < q2 and q3 < q2
-            True
-            sage: q1 > q3
-            True
-            sage: q3 < q1
-            True
-            sage: r = iet.Permutation('a b c','a b c', reduced=True, flips='a')
-            sage: r > p1 and r > p2 and r > p3
-            True
-            sage: p1 < r and p2 < r and p3 < r
-            True
-        """
-        if not isinstance(self, type(other)):
-            return -1
-
-        if len(self) > len(other):
-            return 1
-        elif len(self) < len(other):
-            return -1
-
-        n = len(self)
-        j = 0
-        while (j < n and
-            self._twin[1][j] == other._twin[1][j] and
-            self._flips[1][j] == other._flips[1][j]):
-            j += 1
-
-        if j != n:
-            if self._twin[1][j] > other._twin[1][j]: return 1
-            elif self._twin[1][j] < other._twin[1][j]: return -1
-            else: return self._flips[1][j]
-
-        return 0
-
     def list(self, flips=False):
         r"""
         Returns a list representation of self.
