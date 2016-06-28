@@ -1077,9 +1077,9 @@ class AbelianStratumComponent(StratumComponent):
                 p._inversed_twin()
                 p._reversed_twin()
             elif rd < .55: # (inplace) rauzy move top with proba 9/20
-                p._move(1, 0, p._twin[0][0])
+                p._move(1, 0, 1, p._twin[0][0])
             else:          # (inplace) rauzy move bot with proba 9/20
-                p._move(0, 0, p._twin[1][0])
+                p._move(0, 0, 0, p._twin[1][0])
 
         while not p.is_standard():
             rd = prandom.random()
@@ -1087,9 +1087,9 @@ class AbelianStratumComponent(StratumComponent):
                 p._inversed_twin()
                 p._reversed_twin()
             elif rd < .55: # (inplace) rauzy move top with proba 9/20
-                p._move(1, 0, p._twin[0][0])
+                p._move(1, 0, 1, p._twin[0][0])
             else:          # (inplace) rauzy move bot with proba 9/20
-                p._move(0, 0, p._twin[1][0])
+                p._move(0, 0, 0, p._twin[1][0])
 
         return p
 
