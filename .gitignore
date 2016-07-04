@@ -2,7 +2,7 @@
 doc/build/
 *.swp
 *.so
-src/build/
-src/surface_dynamics/flat_surfaces/origamis/origami_dense.c
-src/surface_dynamics/interval_exchanges/lyapunov_exponents/lyapunov_exponents.c
+build/
+surface_dynamics/flat_surfaces/origamis/origami_dense.c
+surface_dynamics/interval_exchanges/lyapunov_exponents/lyapunov_exponents.c
 
