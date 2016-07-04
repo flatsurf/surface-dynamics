@@ -26,7 +26,7 @@ Installation
 ------------
 
 Download and unzip the last release (size is around 30M) at
-`https://github.com/videlec/flatsurf-package/releases`_. On a command line this
+https://github.com/videlec/flatsurf-package/releases. On a command line this
 can be achived with::
 
     $ wget https://github.com/videlec/flatsurf-package/archive/VERSION.tar.gz
