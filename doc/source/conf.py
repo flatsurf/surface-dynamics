@@ -12,7 +12,10 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sage.all
+try:
+    import sage.all
+except ImportError:
+    raise RuntimeError("to build the documentation you need to be inside a Sage shell (run first the command 'sage -sh' in a shell")
 import sys
 import os
 
