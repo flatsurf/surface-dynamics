@@ -165,6 +165,9 @@ AUTHOR:
 - Vincent Delecroix (2011-2014): initial version
 
 """
+
+from __future__ import absolute_import
+
 from sage.rings.integer import Integer
 from sage.rings.real_mpfr import RealField
 from sage.rings.all import ZZ,QQ,Integer
@@ -175,7 +178,11 @@ from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
 from sage.databases.sql_db import SQLDatabase, SQLQuery
 from sage.env import SAGE_SHARE
 import os
-ORIGAMI_DB_LOCATION = os.path.join(SAGE_SHARE, 'flat_surfaces/origamis.db')
+
+from . import __path__ as db_path
+if len(db_path) != 1:
+    raise RuntimeError("error setting path for origami database")
+ORIGAMI_DB_LOCATION = os.path.join(db_path[0], 'origamis.db')
 
 # for primitive and primitive orientation cover
 # classification of primitive group action in GAP (order < )

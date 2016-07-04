@@ -1,19 +1,40 @@
 #!/usr/bin/env bash
-# setup file for the Sage module of translation surfaces
-# this is called from the spkg-install script
+r"""
+Installation script for the flatsurf module
+
+It depends on distutils
+"""
+
+try:
+    from sage.env import SAGE_LOCAL, SAGE_SHARE, SAGE_DOC, SAGE_SRC, SAGE_VERSION
+except ImportError:
+    raise ValueError("this package currently installs only inside SageMath (http://sagemath.org)")
 
 from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Distutils import build_ext
-import Cython.Compiler.Options
 import os
-
-Cython.Compiler.Options.old_style_globals = True
-
-from sage.env import SAGE_LOCAL, SAGE_SRC
 
 with open("package-version.txt") as f:
     version = f.read()
+
+ORIGAMIS_DIR = os.path.join('surface_dynamics', 'flat_surfaces', 'origamis')
+LYAPUNOV_DIR = os.path.join('surface_dynamics', 'interval_exchanges', 'lyapunov_exponents')
+
+extensions = [
+    Extension('surface_dynamics.flat_surfaces.origamis.origami_dense',
+            sources = [
+            os.path.join(ORIGAMIS_DIR, filename) for filename in ('origami_dense.pyx', 'normal_form.c', 'lyapunov_exponents.c')],
+            libraries = ['m'],
+            include_dirs = [ORIGAMIS_DIR, SAGE_SRC],
+            ),
+
+    Extension('surface_dynamics.interval_exchanges.lyapunov_exponents',
+        sources = [
+            os.path.join(LYAPUNOV_DIR, filename) for filename in ('lyapunov_exponents.pyx', 'generalized_permutation.c' , 'lin_alg.c', 'quad_cover.c', 'random.c', 'permutation.c')],
+        depends = [os.path.join(LYAPUNOV_DIR, 'lyapunov_exponents.h')])
+    ]
+
 
 setup(name='surface_dynamics',
       version=version,
@@ -28,25 +49,25 @@ setup(name='surface_dynamics',
                 'surface_dynamics/databases',
                 'surface_dynamics/flat_surfaces/origamis',
                 'surface_dynamics/interval_exchanges'],
-      ext_modules=[
-        Extension('surface_dynamics.flat_surfaces.origamis.origami_dense',
-                sources = [
-                os.path.join('surface_dynamics','flat_surfaces','origamis', filename) for filename in ('origami_dense.pyx', 'normal_form.c', 'lyapunov_exponents.c')],
-                libraries = ['m'],
-                include_dirs = [
-                      os.path.join('surface_dynamics','flat_surfaces','origamis'),
-                      SAGE_SRC,
-                      os.path.join(SAGE_SRC, 'sage', 'ext')
-                      ],
-                ),
-        Extension('surface_dynamics.interval_exchanges.lyapunov_exponents',
-            sources = ['surface_dynamics/interval_exchanges/lyapunov_exponents/lyapunov_exponents.pyx', 
-                'surface_dynamics/interval_exchanges/lyapunov_exponents/generalized_permutation.c',
-                'surface_dynamics/interval_exchanges/lyapunov_exponents/lin_alg.c',
-                'surface_dynamics/interval_exchanges/lyapunov_exponents/quad_cover.c',
-                'surface_dynamics/interval_exchanges/lyapunov_exponents/random.c',
-                'surface_dynamics/interval_exchanges/lyapunov_exponents/permutation.c',],
-            depends = ['surface_dynamics/interval_exchanges/lyapunov_exponents/lyapunov_exponents.h'])
-        ], 
-      cmdclass = {'build_ext': build_ext}
+      package_data = {
+          'surface_dynamics/databases': [
+              'cylinder_diagrams/*',
+              'generalized_permutation_twins/*'],
+          'surface_dynamics/flat_surfaces/origamis': [
+              'origamis.db'],
+          },
+      ext_modules = extensions,
+    cmdclass = {'build_ext': build_ext},
+    classifiers = [
+      'Development Status :: 4 - Beta',
+      'Intended Audience :: Science/Research',
+      'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
+      'Operating System :: OS Independent',
+      'Programming Language :: C',
+      'Programming Language :: C++', 
+      'Programming Language :: Python',
+      'Programming Language :: Cython',
+      'Topic :: Scientific/Engineering :: Mathematics',
+    ],
+    keywords = 'surfaces, dynamics, geometry, flat surfaces',
 )

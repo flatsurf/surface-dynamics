@@ -9,11 +9,18 @@ algorithms related to translation surfaces:
 - database of separatrix and cylinder diagrams up to isomorphism
 - database of volume of connected components of Abelian strata
 """
+
+from __future__ import absolute_import
+
 import os
 import sage.misc.misc
 
 from sage.env import SAGE_SHARE
-FLAT_DB_HOME='%s/flat_surfaces'%SAGE_SHARE
+
+from . import __path__ as db_path
+if len(db_path) != 1:
+    raise RuntimeError("problem with setting paths")
+db_path = db_path[0]
 
 def line_count(filename):
     r"""
@@ -145,7 +152,7 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
     Abelian differentials.
     """
     default_name = "generalized_permutation_twins"
-    default_path = FLAT_DB_HOME
+    default_path = db_path
 
     def __repr__(self):
         r"""
@@ -155,8 +162,8 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
 
             sage: from surface_dynamics.databases.flat_surfaces import IrregularComponentTwins
             sage: D = IrregularComponentTwins()
-            sage: D.__repr__()  # random
-            'Database of twins of irregular components at /path/to/database'
+            sage: D.__repr__()
+            'Database of twins of irregular components at ...'
         """
         return "Database of twins of irregular components at %s"%self.path
 
@@ -318,7 +325,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
         H_4(3, 1^3)
     """
     default_name = "cylinder_diagrams"
-    default_path = FLAT_DB_HOME
+    default_path = db_path
 
     def __repr__(self):
         r"""
