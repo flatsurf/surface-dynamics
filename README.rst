@@ -25,7 +25,17 @@ the Mac App Store.
 Installation
 ------------
 
-TO BE UPDATED WITH MAKING FLATSURF A PURE PYTHON PACKAGE
+Download and unzip the last release (size is around 30M) at
+`https://github.com/videlec/flatsurf-package/releases`_. On a command line this
+can be achived with::
+
+    $ wget https://github.com/videlec/flatsurf-package/archive/VERSION.tar.gz
+    $ tar xf VERSION.tar.gz
+
+Install the package on your computer::
+
+    $ cd flatsurf-package
+    $ sage -python setup.py install --user
 
 Check
 -----
