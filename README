@@ -2,7 +2,7 @@
 Surface dynamics
 ================
 
-The flatsurf package for SageMath adds functionality related to interval exchange
+The surface_dynamics package for SageMath adds functionality related to interval exchange
 transformations, translation surfaces, mapping classes and more. It is
 distributed as an external Python package. It installs on top of an existing
 Sage installation.
@@ -16,7 +16,7 @@ This package is based on `SageMath <http://www.sagemath.org>`_ and relies heavil
 Prerequisites
 -------------
 
-Installing flatsurf requires a working Sage installation (with Cython and gcc).
+Installing surface_dynamics requires a working Sage installation (with Cython and gcc).
 Under most Linux distribution, you can install the package gcc
 (it might even be already installed by default).
 Under Mac OS X, get a working gcc by installing XCode from
@@ -31,10 +31,16 @@ The module is distributed on PyPI. You just need to run the following command::
 
 Alternatively, you can download the source code (see below).
 
+Documentation
+-------------
+
+* https://pythonhosted.org/surface_dynamics/
+* http://www.labri.fr/perso/vdelecro/flatsurf.html
+
 Check
 -----
 
-After installing flatsurf, check that it works by launching Sage
+After installing surface_dynamics, check that it works by launching Sage
 and typing the following commands. You should get the same
 output as below.::
 
@@ -93,5 +99,5 @@ Versions
 --------
 
 * flatsurf 0.3 is in version beta
-* flatsurf 0.2 was released on 2015-11-15.
-* flatsurf 0.1 was released on 2015-07-30.
+* flatsurf 0.2 was released on 2015-11-15 (as a Sage spkg).
+* flatsurf 0.1 was released on 2015-07-30 (as a Sage spkg).
