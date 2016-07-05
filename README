@@ -16,8 +16,8 @@ This package is based on `SageMath <http://www.sagemath.org>`_ and relies heavil
 Prerequisites
 -------------
 
-Installing flatsurf requires a working Sage installation and a working gcc.
-Under most Linux distribution, just install the package gcc
+Installing flatsurf requires a working Sage installation (with Cython and gcc).
+Under most Linux distribution, you can install the package gcc
 (it might even be already installed by default).
 Under Mac OS X, get a working gcc by installing XCode from
 the Mac App Store.
@@ -25,17 +25,11 @@ the Mac App Store.
 Installation
 ------------
 
-Download and unzip the last release (size is around 30M) at
-https://github.com/videlec/flatsurf-package/releases. On a command line this
-can be achived with::
+The module is distributed on PyPI. You just need to run the following command::
 
-    $ wget https://github.com/videlec/flatsurf-package/archive/VERSION.tar.gz
-    $ tar xf VERSION.tar.gz
+    $ sage -sh -c "pip install surface_dynamics --user"
 
-Install the package on your computer::
-
-    $ cd flatsurf-package
-    $ sage -python setup.py install --user
+Alternatively, you can download the source code (see below).
 
 Check
 -----
@@ -75,6 +69,11 @@ output as below.::
 
 	(1)(2)(3,4,5)
 	(1,2,3)(4)(5)
+
+Source code
+-----------
+
+The complete source code is available at https://github.com/videlec/flatsurf-package
 
 Contact
 -------

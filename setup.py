@@ -8,7 +8,7 @@ It depends on distutils
 try:
     from sage.env import SAGE_LOCAL, SAGE_SHARE, SAGE_DOC, SAGE_SRC, SAGE_VERSION
 except ImportError:
-    raise ValueError("this package currently installs only inside SageMath (http://sagemath.org)")
+    raise ValueError("this package currently installs only inside SageMath (http://www.sagemath.org)")
 
 from distutils.core import setup
 from distutils.extension import Extension
@@ -16,7 +16,7 @@ from Cython.Distutils import build_ext
 import os
 
 from surface_dynamics.version import version
-with open("README.rst") as f:
+with open("README") as f:
     long_description = f.read()
 
 ORIGAMIS_DIR = os.path.join('surface_dynamics', 'flat_surfaces', 'origamis')
@@ -42,7 +42,7 @@ setup(name='surface_dynamics',
       description="Dynamics on surfaces",
       long_description=long_description,
       author='Vincent Delecroix',
-      author_email='vincent.delecroix@labri.fr',
+      author_email='vincent.delecroix@u-bordeaux.fr',
       url='http://www.labri.fr/perso/vdelecro/',
       license="GPL v3",
       packages=['surface_dynamics',
@@ -52,11 +52,16 @@ setup(name='surface_dynamics',
                 'surface_dynamics/flat_surfaces/origamis',
                 'surface_dynamics/interval_exchanges'],
       package_data={
+          'surface_dynamics/interval_exchanges': [
+              'lyapunov_exponents/lyapunov_exponents.h'],
           'surface_dynamics/databases': [
               'cylinder_diagrams/*',
               'generalized_permutation_twins/*'],
           'surface_dynamics/flat_surfaces/origamis': [
-              'origamis.db'],
+              'origamis.db',
+              'origami_dense.pxd',
+              'normal_form.h',
+              'lyapunov_exponents.h'],
           },
       ext_modules=extensions,
     cmdclass={'build_ext': build_ext},

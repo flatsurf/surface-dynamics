@@ -1,8 +1,11 @@
 *.pyc
-doc/build/
 *.swp
 *.so
+.pypirc
+MANIFEST
 build/
+doc/build/
+dist/
 surface_dynamics/flat_surfaces/origamis/origami_dense.c
 surface_dynamics/interval_exchanges/lyapunov_exponents/lyapunov_exponents.c
 
