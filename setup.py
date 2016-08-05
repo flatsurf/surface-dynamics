@@ -12,7 +12,7 @@ except ImportError:
 
 from distutils.core import setup
 from distutils.extension import Extension
-from Cython.Distutils import build_ext
+from Cython.Build import cythonize
 import os
 
 from surface_dynamics.version import version
@@ -53,18 +53,21 @@ setup(name='surface_dynamics',
                 'surface_dynamics/interval_exchanges'],
       package_data={
           'surface_dynamics/interval_exchanges': [
-              'lyapunov_exponents/lyapunov_exponents.h'],
+              'lyapunov_exponents/*.h',
+              'lyapunov_exponents/*.c',
+              'lyapunov_exponents/lyapunov_exponents.pyx'],
           'surface_dynamics/databases': [
-              'cylinder_diagrams/*',
-              'generalized_permutation_twins/*'],
+              'cylinder_diagrams/cyl_diags*',
+              'generalized_permutation_twins/twins*'],
           'surface_dynamics/flat_surfaces/origamis': [
-              'origamis.db',
-              'origami_dense.pxd',
+              '*.pyx',
+              '*.pxd',
               'normal_form.h',
+              'normal_form.c',
+              'lyapunov_exponents.c',
               'lyapunov_exponents.h'],
           },
-      ext_modules=extensions,
-    cmdclass={'build_ext': build_ext},
+      ext_modules=cythonize(extensions),
     classifiers=[
       'Development Status :: 4 - Beta',
       'Intended Audience :: Science/Research',
