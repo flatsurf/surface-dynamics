@@ -188,7 +188,11 @@ class Permutation(SageObject):
     This class implement generic algorithm (stratum, connected component, ...)
     and unfies all its children.
 
-    It has three attributes
+    It has four attributes
+
+    - ``_alphabet`` -- the alphabet on which the permutation is defined. Be
+      careful, it might have a different cardinality as the size of the
+      permutation!
 
      - ``_twin`` -- the permutation
 
@@ -197,7 +201,7 @@ class Permutation(SageObject):
      - ``_flips`` -- None or the list of flips (each flip is either ``1`` or
        ``-1``)
 
-    The datatype for ``_twin`` differs for IET and LI.
+    The datatype for ``_twin`` differs for IET and LI (TODO: unify).
     """
     _alphabet = None
     _twin = None
