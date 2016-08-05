@@ -795,6 +795,49 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
         """
         return LabelledRauzyDiagram(self, **args)
 
+    def heights_cone(self):
+        r"""
+        Return the cone of heights of suspension data.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+            sage: p = iet.Permutation('a b c d e f', 'e c b f d a')
+            sage: H = p.heights_cone()
+            sage: H.dimension()
+            6
+            sage: rays = [r.vector() for r in H.rays()]
+            sage: r = sum(randint(1,5)*ray for ray in rays)
+            sage: r[0]>0 and r[0]+r[1] > 0 and r[0]+r[1]+r[2] > 0
+            True
+            sage: r[0]+r[1]+r[2]+r[3]>0
+            True
+            sage: r[0]+r[1]+r[2]+r[3]+r[4]>0
+            True
+            sage: r[4]<0 and r[4]+r[2]<0 and r[4]+r[2]+r[1] < 0
+            True
+            sage: r[4]+r[2]+r[1]+r[5]<0
+            True
+            sage: r[4]+r[2]+r[1]+r[5]+r[3]<0
+            True
+        """
+        n = len(self)
+        ieqs = []
+
+        for i in range(1,len(self)):
+            ieq = [0]*(n+1)
+            for j in range(i):
+                ieq[self._labels[0][j]+1] = 1
+            ieqs.append(ieq)
+
+            ieq = [0]*(n+1)
+            for j in range(i):
+                ieq[self._labels[1][j]+1] = -1
+            ieqs.append(ieq)
+
+        from sage.geometry.polyhedron.constructor import Polyhedron
+        return Polyhedron(ieqs=ieqs)
+
 class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
     r"""
     Labelled quadratic (or generalized) permutation
