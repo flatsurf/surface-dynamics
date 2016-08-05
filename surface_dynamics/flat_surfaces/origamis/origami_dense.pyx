@@ -36,8 +36,9 @@ from sage.misc.decorators import options
 cdef extern from "normal_form.h":
     int origami_normal_form(int *x, int *y, int *ren, unsigned int n)
     int pillowcase_cover_normal_form(int *g, int *ren, unsigned int n)
-    inline int origami_diff(int *o1, int *o2, unsigned int n)
-    inline int pillowcase_cover_diff(int *g1, int *g2, unsigned int n)
+    # TODO: inline troubles
+    int origami_diff(int *o1, int *o2, unsigned int n)
+    int pillowcase_cover_diff(int *g1, int *g2, unsigned int n)
 
 cdef extern from "lyapunov_exponents.h":
     ctypedef struct origami_data

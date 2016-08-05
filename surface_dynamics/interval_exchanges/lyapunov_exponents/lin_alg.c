@@ -526,7 +526,8 @@ check_orthogonality_iso(quad_cover * qcc, size_t nb_char, size_t * dimensions)
 }
 
 
-inline void
+/*TODO: inline troubles*/
+void
 project_isotypic(quad_cover * qcc, size_t nb_char, size_t * dimensions,
                  double *projections)
 {
@@ -596,7 +597,8 @@ project_isotypic(quad_cover * qcc, size_t nb_char, size_t * dimensions,
 }
 
 
-inline double
+/*TODO: inline troubles*/
+double
 max_norm(quad_cover * qcc)
 {
     double sqnorm = 0., max = 0.;

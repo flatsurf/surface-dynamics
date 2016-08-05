@@ -1,7 +1,8 @@
 #include "lyapunov_exponents.h"
 
 /* random (?) uniform double in [0,1] */
-inline double
+/* TODO: inline troubles! */
+double
 drand(void)
 {
     return (((double) random() +
@@ -10,7 +11,8 @@ drand(void)
 }
 
 /* random (?) uniform long double in [0,1] */
-inline long double
+/* TODO: inline troubles! */
+long double
 ldrand(void)
 {
     return ((long double) random() +

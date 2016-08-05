@@ -235,7 +235,8 @@ new_quad_cover(generalized_permutation * gp, size_t ** sigma, size_t degree,
     return qcc;
 }
 
-inline int
+/* TODO: inline troubles*/
+int
 give_name(interval * inter)
 {
     return ((inter->orientation == 1 && inter->is_top)

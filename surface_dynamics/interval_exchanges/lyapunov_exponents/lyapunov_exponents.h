@@ -23,8 +23,9 @@
 /* custom random functions */
 /***************************/
 
-inline double drand(void);
-inline long double ldrand(void);
+/*TODO: inline trouble*/
+double drand(void);
+long double ldrand(void);
 
 /***************************************************/
 /* data and functions for generalized permutations */
@@ -133,7 +134,9 @@ void orthogonalize_iso(quad_cover * qcc, double * theta, size_t nb_char, size_t*
 void check_orthogonality(quad_cover * qcc);
 void check_orthogonality_iso(quad_cover *qcc, size_t nb_char, size_t* dimensions);
 
-inline void project_isotypic(quad_cover *qcc, size_t nb_char, size_t* dimension, double* projections);
+/*TODO: inline troubles*/
+void project_isotypic(quad_cover *qcc, size_t nb_char, size_t* dimension, double* projections);
 void check_projection(quad_cover *qcc, size_t nb_char, size_t* dimension, double* projections);
 
-inline double max_norm(quad_cover *qcc);
+/*TODO: inline troubles*/
+double max_norm(quad_cover *qcc);

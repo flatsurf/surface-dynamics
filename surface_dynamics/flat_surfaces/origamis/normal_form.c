@@ -5,7 +5,8 @@
 /* COMPARISONS */
 /***************/
 
-inline int origami_diff(int *x1, int *x2, unsigned int n)
+/* TODO: inline troubles */
+int origami_diff(int *x1, int *x2, unsigned int n)
 {
 	unsigned int i;
 	int test;
@@ -15,7 +16,8 @@ inline int origami_diff(int *x1, int *x2, unsigned int n)
 	return 0;
 }
 
-inline int pillowcase_cover_diff(int *g1, int *g2, unsigned int n)
+/* TODO: inline troubles */
+int pillowcase_cover_diff(int *g1, int *g2, unsigned int n)
 {
 	unsigned int i;
 	int test;

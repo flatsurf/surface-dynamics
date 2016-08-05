@@ -50,7 +50,8 @@ check_permutation(size_t * sigma, size_t degree)
 }
 
 
-inline void
+/*TODO: inline troubles*/
+void
 inverse_permutation(size_t * sigma, size_t * perm_buffer, size_t degree)
 {
     size_t i;
@@ -58,7 +59,8 @@ inverse_permutation(size_t * sigma, size_t * perm_buffer, size_t degree)
         perm_buffer[sigma[i]] = i;
 }
 
-inline void
+/*TODO: inline troubles*/
+void
 permutation(int n, size_t * perm_buffer, size_t degree)
 {
     size_t i;
@@ -66,7 +68,8 @@ permutation(int n, size_t * perm_buffer, size_t degree)
         perm_buffer[i] = (i + n) % degree;
 }
 
-inline void
+/*TODO: inline troubles*/
+void
 perm_name(interval * inter, size_t * perm_buffer, size_t degree)
 {
     if (inter->orientation == 1)
@@ -75,7 +78,8 @@ perm_name(interval * inter, size_t * perm_buffer, size_t degree)
         inverse_permutation(inter->lab->sigma, perm_buffer, degree);
 }
 
-inline void
+/*TODO: inline troubles*/
+void
 perm_ident_rev(interval * inter, size_t * perm_buffer, size_t degree)
 {
     if (inter->orientation == 1)
@@ -84,7 +88,8 @@ perm_ident_rev(interval * inter, size_t * perm_buffer, size_t degree)
         inverse_permutation(inter->lab->sigma, perm_buffer, degree);
 }
 
-inline void
+/*TODO: inline troubles*/
+void
 perm_product(size_t * sigma, size_t * tau, size_t * perm_buffer, size_t degree)
 {
     size_t i;
