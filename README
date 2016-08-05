@@ -27,7 +27,7 @@ Installation
 
 The module is distributed on PyPI. You just need to run the following command::
 
-    $ sage -sh -c "pip install surface_dynamics --user"
+    $ sage -pip install surface_dynamics --user
 
 Alternatively, you can download the source code (see below).
 
