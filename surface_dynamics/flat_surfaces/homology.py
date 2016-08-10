@@ -75,6 +75,8 @@ i is the angle between i and v(i))::
     sage: r.spin_parity()
     1
 """
+from __future__ import print_function
+
 from surface_dynamics.misc.permutation import (init_perm, perm_cycle_tuples, perm_invert,
         perm_check, perm_compose, equalize_perms, perm_orbit)
 
@@ -895,37 +897,37 @@ class RibbonGraph(SageObject):
         cycles = [] # the cycles
         for e in r.edges():
             if verbose:
-                print "build cycle from edge %s between vertex v0=%d and v1=%d" %(str(e),self.dart_to_vertex(e[0]),self.dart_to_vertex(e[1]))
+                print("build cycle from edge %s between vertex v0=%d and v1=%d" %(str(e),self.dart_to_vertex(e[0]),self.dart_to_vertex(e[1])))
 
             # build the branch to the root from v0
             v0 = self.dart_to_vertex(e[0])
             if verbose:
-                print " build branch from v0=%d" %v0
+                print(" build branch from v0=%d" % v0)
             p0 = []
             while v0 != 0:
                 v0,_,e0 = T.incoming_edges(v0)[0] # (v_in,v_out,label)
                 p0.append(e0)
                 if verbose:
-                    print " add %d" %v0
+                    print(" add %d" % v0)
             if verbose:
-                print " branch is %s" %str(p0)
+                print(" branch is %s" % str(p0))
             # build the branch to the root from v1
 
             v1 = self.dart_to_vertex(e[1])
             if verbose:
-                print " build branch from v1=%d" %v1
+                print(" build branch from v1=%d" % v1)
             p1 = []
             while v1 != 0:
                 v1,_,e1 = T.incoming_edges(v1)[0]
                 p1.append(e1)
                 if verbose:
-                    print " add %d" %v1
+                    print(" add %d" % v1)
             if verbose:
-                print " branch is %s" %str(p1)
+                print(" branch is %s" % str(p1))
             # clean the branches by removing common part
             while p0 and p1 and p0[-1] == p1[-1]:
                 if verbose:
-                    print "find common element",p0[-1]
+                    print("find common element", p0[-1])
                 p0.pop(-1)
                 p1.pop(-1)
 
@@ -937,13 +939,13 @@ class RibbonGraph(SageObject):
                 i = []
                 for _,ee,_ in cycles:
                     if verbose:
-                        print "compute intersection"
+                        print("compute intersection")
                     p_in = c.index(e[1])
                     p_out = (c.index(e[0]) - p_in) % M
                     q_in  = (c.index(ee[1]) - p_in) % M
                     q_out = (c.index(ee[0]) - p_in) % M
                     if verbose:
-                        print "  after reduction: p_out = %d, q_in = %d, q_out = %d" %(p_out,q_in,q_out)
+                        print("  after reduction: p_out = %d, q_in = %d, q_out = %d" % (p_out, q_in, q_out))
 
                     # compute intersection
                     # p_in = 0 and the others 3 are positive
@@ -1222,19 +1224,19 @@ class RibbonGraphWithAngles(RibbonGraph):
             winding.append(GF2(w//2))
 
         if verbose:
-            print "cycles with winding"
+            print("cycles with winding")
             for i in xrange(len(c)):
-                print c[i], winding[i]
-            print "intersection matrix on Z"
-            print M
+                print(c[i], winding[i])
+            print("intersection matrix on Z")
+            print(M)
 
         # compute a base change to get a symplectic basis
         _,P = M.symplectic_form()
         M = M.change_ring(GF2)
         P = P.change_ring(GF2)
         if verbose:
-            print "base change for symplectic basis on GF(2)"
-            print P
+            print("base change for symplectic basis on GF(2)")
+            print(P)
 
         g = self.genus()
 
@@ -1262,7 +1264,7 @@ class RibbonGraphWithAngles(RibbonGraph):
 
             # 3. add to s the contribution of the couple
             if verbose:
-                print "contribution from %d is %d * %d = %d"%(i,t_a,t_b,t_a*t_b)
+                print("contribution from %d is %d * %d = %d" % (i, t_a, t_b, t_a * t_b))
             s += t_a*t_b
 
         return s
