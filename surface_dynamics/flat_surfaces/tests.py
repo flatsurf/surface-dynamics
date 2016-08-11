@@ -1,6 +1,8 @@
 r"""
 Testing abelian strata and related combinatorics
 """
+from __future__ import print_function
+
 import sage.misc.prandom as prandom
 from sage.misc.misc import cputime
 
@@ -44,7 +46,7 @@ class Test:
         argument. This function exists to avoid a call to eval.
         """
 
-        print "test_%s"%name
+        print("test_%s" % name)
         Test.__dict__["test_%s"%name](self)
 
     def _get_random_ribbon_graph(self):
@@ -110,7 +112,7 @@ class Test:
                 s += " (will stop after about %s seconds)"%seconds
             t = cputime()
             self._do(name)
-            print "\ttime=%s\telapsed=%s"%(cputime(t),cputime(total))
+            print("\ttime=%s\telapsed=%s" % (cputime(t), cputime(total)))
             n += 1
 
     def test_random(self):
@@ -125,7 +127,7 @@ class Test:
         """
         tests = [a for a in Test.__dict__.keys() if a[:5] == "test_" and a != "test_random"]
         name = prandom.choice(tests)
-        print "Doing random test %s"%name
+        print("Doing random test %s" % name)
         Test.__dict__[name](self)
 
     def test_chain_complex(self):
