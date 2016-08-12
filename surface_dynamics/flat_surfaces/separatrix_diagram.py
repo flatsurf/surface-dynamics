@@ -58,9 +58,9 @@ Separatrix diagrams::
 Cylinder diagrams::
 
     sage: c = CylinderDiagram([((0,),(4,)),((1,2),(0,1,3)),((3,4),(2,))])
-    sage: print c
+    sage: print(c)
     (0)-(4) (1,2)-(0,1,3) (3,4)-(2)
-    sage: print c.separatrix_diagram()
+    sage: print(c.separatrix_diagram())
     (0)(1,2)(3,4)-(0,1,3)(2)(4)
 
 They can also be built from separatrix diagram::
@@ -71,6 +71,7 @@ They can also be built from separatrix diagram::
     sage: s.to_cylinder_diagram([(0,1),(1,0),(2,2)])
     (0,1,2)-(3,7) (3,4)-(0,4,1,2) (5,6,7)-(5,6)
 """
+from __future__ import print_function
 from sage.structure.sage_object import SageObject
 
 import itertools
@@ -156,9 +157,9 @@ class SeparatrixDiagram(SageObject):
         sage: from surface_dynamics.all import *
 
         sage: s = SeparatrixDiagram('(0,2)(1,3,4)','(0,4)(2,1,3)')
-        sage: print s
+        sage: print(s)
         (0,2)(1,3,4)-(0,4)(1,3,2)
-        sage: print s.stratum()
+        sage: print(s.stratum())
         H_3(4)
     """
     def __init__(self, data, top=None, check=True, copy=True):
@@ -335,7 +336,7 @@ class SeparatrixDiagram(SageObject):
 
             sage: from surface_dynamics.all import *
 
-            sage: print "to be done"
+            sage: print("to be done")
             to be done
         """
         n = self._n
@@ -570,7 +571,7 @@ class SeparatrixDiagram(SageObject):
             ....:         b[p[i]] = p[bot[i]]
             ....:         t[p[i]] = p[top[i]]
             ....:     s = SeparatrixDiagram(b,t)
-            ....:     print s.canonical_label()
+            ....:     print(s.canonical_label())
             (0,1)(2,3,4)-(0,2,4)(1,3)
             (0,1)(2,3,4)-(0,2,4)(1,3)
             (0,1)(2,3,4)-(0,2,4)(1,3)
@@ -613,7 +614,7 @@ class SeparatrixDiagram(SageObject):
 
             sage: s = SeparatrixDiagram('(0,1,2,3)(4,5)','(1,2,3)(4,5,0)')
             sage: sh = s.horizontal_symmetry()
-            sage: print sh
+            sage: print(sh)
             (0,5,4)(1,3,2)-(0,3,2,1)(4,5)
 
             sage: sh.cylinder_diagrams()
@@ -634,7 +635,7 @@ class SeparatrixDiagram(SageObject):
 
             sage: s = SeparatrixDiagram('(0,1,2,3)(4,5)','(1,2,3)(4,5,0)')
             sage: sv = s.vertical_symmetry()
-            sage: print sv
+            sage: print(sv)
             (0,3,2,1)(4,5)-(0,5,4)(1,3,2)
 
             sage: sv.cylinder_diagrams()
@@ -1284,7 +1285,7 @@ class SeparatrixDiagram(SageObject):
             sage: from surface_dynamics.all import *
 
             sage: s = SeparatrixDiagram('(0,1)(2,3)(4,5)','(1,2)(3,4)(5,0)')
-            sage: for c in s.cylinder_diagram_iterator(): print c
+            sage: for c in s.cylinder_diagram_iterator(): print(c)
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
             (0,3)-(0,5) (1,2)-(1,4) (4,5)-(2,3)
             (0,5)-(3,4) (1,4)-(0,2) (2,3)-(1,5)
@@ -1369,26 +1370,26 @@ class SeparatrixDiagram(SageObject):
             sage: from surface_dynamics.all import *
 
             sage: s = SeparatrixDiagram('(0)(1)(2)','(0)(1)(2)')
-            sage: for c in s.cylinder_diagrams(connected=True): print c
+            sage: for c in s.cylinder_diagrams(connected=True): print(c)
             (0)-(2) (1)-(0) (2)-(1)
-            sage: for c in s.cylinder_diagrams(connected=False): print c
+            sage: for c in s.cylinder_diagrams(connected=False): print(c)
             (0)-(0) (1)-(1) (2)-(2)
             (0)-(1) (1)-(0) (2)-(2)
             (0)-(2) (1)-(0) (2)-(1)
 
             sage: s = SeparatrixDiagram('(0,1)(2)','(0)(1,2)')
-            sage: for c in s.cylinder_diagrams(): print c
+            sage: for c in s.cylinder_diagrams(): print(c)
             (0,1)-(0,2) (2)-(1)
 
         In the example below, there is no isomorphism problem for the cylinder
         diagram generation as the separatrix diagram admit no automorphism::
 
             sage: s = SeparatrixDiagram('(0,3)(1,4,5)(2)','(0)(1,2)(3,4,5)')
-            sage: for c in s.cylinder_diagrams(): print c
+            sage: for c in s.cylinder_diagrams(): print(c)
             (0,1,2)-(0,1,5) (3,5)-(2,4) (4)-(3)
             (0,2,3)-(2,5) (1,4)-(0,1,3) (5)-(4)
             (0,3,1)-(5) (2,5)-(3,4) (4)-(0,2,1)
-            sage: for c in s.cylinder_diagrams(up_to_isomorphism=False): print c
+            sage: for c in s.cylinder_diagrams(up_to_isomorphism=False): print(c)
             (0,3)-(1,2) (1,4,5)-(0) (2)-(3,4,5)
             (0,3)-(1,2) (1,4,5)-(3,4,5) (2)-(0)
             (0,3)-(3,4,5) (1,4,5)-(1,2) (2)-(0)
@@ -1446,11 +1447,11 @@ def separatrix_diagram_fast_iterator(profile,ncyls=None):
         sage: from surface_dynamics.all import *
 
         sage: from surface_dynamics.flat_surfaces.separatrix_diagram import separatrix_diagram_fast_iterator
-        sage: for s in separatrix_diagram_fast_iterator([3]): print s
+        sage: for s in separatrix_diagram_fast_iterator([3]): print(s)
         ([0, 2, 1], [1, 0, 2], [(0, 1, 2)])
         ([1, 2, 0], [1, 2, 0], [(0, 2, 1)])
         ([2, 1, 0], [1, 0, 2], [(0, 2, 1)])
-        sage: for s in separatrix_diagram_fast_iterator([2,2]): print s
+        sage: for s in separatrix_diagram_fast_iterator([2,2]): print(s)
         ([0, 2, 3, 1], [1, 2, 0, 3], [(0, 1), (2, 3)])
         ([0, 1, 3, 2], [1, 0, 2, 3], [(0, 1), (2, 3)])
         ([1, 2, 3, 0], [1, 2, 3, 0], [(0, 2), (1, 3)])
@@ -1528,15 +1529,15 @@ def separatrix_diagram_iterator(profile, ncyls=None):
 
         sage: from surface_dynamics.flat_surfaces.separatrix_diagram import separatrix_diagram_iterator
 
-        sage: for s in separatrix_diagram_iterator([1,1]): print s
+        sage: for s in separatrix_diagram_iterator([1,1]): print(s)
         (0,1)-(0,1)
         (0)(1)-(0)(1)
 
-        sage: for s in separatrix_diagram_iterator([3]): print s
+        sage: for s in separatrix_diagram_iterator([3]): print(s)
         (0)(1,2)-(0,1)(2)
         (0,1,2)-(0,1,2)
 
-        sage: for s in separatrix_diagram_iterator([2,2]): print s
+        sage: for s in separatrix_diagram_iterator([2,2]): print(s)
         (0)(1,2,3)-(0,1,2)(3)
         (0)(1)(2,3)-(0,1)(2)(3)
         (0,1,2,3)-(0,1,2,3)
@@ -1606,7 +1607,7 @@ def orientation_cover(alpha,phi,a,verbose=0):
         sage: orientation_cover(alpha,phi,3)
         (0,2)-(0,1) (1)-(2)
     """
-    if verbose: print " orientation cover"
+    if verbose: print(" orientation cover")
     cyls = []
     todo = [True]*a
 
@@ -1618,7 +1619,7 @@ def orientation_cover(alpha,phi,a,verbose=0):
                 t = [i]
             else:
                 t = [alpha[i]]
-            if verbose: print "  top from %d,  bot from %d"%(i,t[0])
+            if verbose: print("  top from %d,  bot from %d" % (i, t[0]))
             j = phi[i]
             if j >= a:
                 j = phi[j]
@@ -1630,7 +1631,7 @@ def orientation_cover(alpha,phi,a,verbose=0):
                     t.append(j)
                 else:
                     t.append(alpha[j])
-                if verbose: print "  add %d to bot,  add %d to top"%(j,b[-1])
+                if verbose: print("  add %d to bot,  add %d to top" % (j, b[-1]))
 
                 j = phi[j]
                 if j >= a:
@@ -1695,26 +1696,26 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
         alpha = [None]*(2*a+2)  # edge permutation
         phi = [None]*(2*a+2)    # face permutation
         if verbose:
-            print "n = %d,  l = %d,  p = %d"%(n,l,p)
-            print "t =", t
+            print("n = %d,  l = %d,  p = %d" % (n, l, p))
+            print("t =", t)
         for k in xrange(1,n+2):
-            if verbose: print " k = %d"%k
+            if verbose: print(" k = %d" % k)
             for kk in xrange(t[k-1],t[k]-1,-1): # close current loops
                 if B[kk] is not False:
                     if verbose:
-                        print " close loop from %d to %d"%(B[kk],s)
+                        print(" close loop from %d to %d" % (B[kk], s))
                     alpha[B[kk]] = s
                     alpha[s] = B[kk]
                     phi[s] = (B[kk]-1)%a
                     phi[B[kk]] = (s-1)%a
                     s += 1
                     if verbose > 2:
-                        print " alpha =",alpha
-                        print " phi   =",phi
+                        print(" alpha =", alpha)
+                        print(" phi   =", phi)
             if ll < p and t[k] >= t[k+1]:
                 L.append(s) # store the leaf
                 # t[k] is a pole
-                if verbose: print " pole at %d"%s
+                if verbose: print(" pole at %d" % s)
                 alpha[s] = sp
                 alpha[sp] = s
                 phi[s] = sp
@@ -1724,41 +1725,41 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
                 ll += 1
                 B[t[k]] = False
                 if verbose > 2:
-                    print " alpha =",alpha
-                    print " phi   =",phi
+                    print(" alpha =", alpha)
+                    print(" phi   =", phi)
 
             elif k != n+1: # not at the end -> open a loop
                 if t[k] >= t[k+1]: # store the leaf
                     L.append(s)
-                if verbose: print " open loop at %d"%s
+                if verbose: print(" open loop at %d" % s)
                 B[t[k]] = s
                 s += 1
                 if verbose > 2:
-                    print " alpha =",alpha
-                    print " phi   =",phi
+                    print(" alpha =", alpha)
+                    print(" phi   =", phi)
 
         if verbose:
-            print " tree is over"
-            print " alpha =", alpha
-            print " phi =", phi
+            print(" tree is over")
+            print(" alpha =", alpha)
+            print(" phi =", phi)
 
         for pp in xrange(a+p,2*a+2,2):
-            if verbose: print " paired poles (%d,%d)"%(pp,pp+1)
+            if verbose: print(" paired poles (%d,%d)" % (pp, pp+1))
             alpha[pp] = phi[pp] = pp+1
             alpha[pp+1] = phi[pp+1] = pp
             if verbose > 1:
-                print " alpha =",alpha
-                print " phi   =",phi
+                print(" alpha =", alpha)
+                print(" phi   =", phi)
 
         assert len(L) == l, "This may not happen"
 
         # yield the canonical sepx. diag
         if verbose:
-            print " ="*(3*a+7)
-            print " sigma =",sigma
-            print " alpha =",alpha
-            print " phi   =",phi
-            print " ="*(3*a+7)
+            print(" =" * (3*a+7))
+            print(" sigma =", sigma)
+            print(" alpha =", alpha)
+            print(" phi   =", phi)
+            print(" =" * (3*a+7))
 
         c = orientation_cover(alpha,phi,a,verbose=verbose)
         c.canonical_label(inplace=True)
@@ -1778,13 +1779,13 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
         #TODO: optimization when tree has nontrivial cyclic symmetry
         if p != 0 and p != l:
             if verbose:
-                print " start revolving door(%d,%d)"%(l,p)
-                print " leaves are at separatrices", L
+                print(" start revolving door(%d,%d)" % (l, p))
+                print(" leaves are at separatrices", L)
             for i,j in combinations(l,p):
                 i = L[i]
                 j = L[j]
                 if verbose > 1:
-                    print " revolve i=%d j=%d"%(i,j)
+                    print(" revolve i=%d j=%d" % (i, j))
                 a_i = alpha[i]
                 a_j = alpha[j]
                 s_i = sigma[i]
@@ -1825,11 +1826,11 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
                     phi[a_j] = j
 
                 if verbose:
-                    print " ="*(3*a+7)
-                    print " sigma =",sigma
-                    print " alpha =",alpha
-                    print " phi   =",phi
-                    print " ="*(3*a+7)
+                    print(" =" * (3*a+7))
+                    print(" sigma =", sigma)
+                    print(" alpha =", alpha)
+                    print(" phi   =", phi)
+                    print(" =" * (3*a+7))
 
                 for i in xrange(2*a+2):
                     ii = phi[alpha[sigma[i]]]
@@ -2037,7 +2038,7 @@ class CylinderDiagram(SeparatrixDiagram):
             ....:    cc,m = c.canonical_label(return_map=True)
             ....:    b  = c.bot() ; t  = c.top()
             ....:    bb = cc.bot(); tt = cc.top()
-            ....:    print cc
+            ....:    print(cc)
             ....:    print all(bb[m[i]] == m[b[i]] for i in xrange(c.nseps())),
             ....:    print all(tt[m[i]] == m[t[i]] for i in xrange(c.nseps()))
             (0,1)-(2,3) (2)-(1) (3)-(0)
@@ -2069,7 +2070,7 @@ class CylinderDiagram(SeparatrixDiagram):
             ....:    cc,m = c.canonical_label(return_map=True)
             ....:    b  = c.bot() ; t  = c.top()
             ....:    bb = cc.bot(); tt = cc.top()
-            ....:    print cc
+            ....:    print(cc)
             ....:    print all(bb[m[i]] == m[b[i]] for i in xrange(c.nseps())),
             ....:    print all(tt[m[i]] == m[t[i]] for i in xrange(c.nseps()))
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
@@ -2473,16 +2474,16 @@ class CylinderDiagram(SeparatrixDiagram):
         In genus 2, strata H(2) and H(1,1), all surfaces are hyperelliptic::
 
             sage: for c in AbelianStratum(2).cylinder_diagrams():
-            ....:     print c
-            ....:     print c.is_hyperelliptic()
+            ....:     print(c)
+            ....:     print(c.is_hyperelliptic())
             (0,2,1)-(0,2,1)
             True
             (0,1)-(0,2) (2)-(1)
             True
 
             sage: for c in AbelianStratum(1,1).cylinder_diagrams():
-            ....:     print c
-            ....:     print c.is_hyperelliptic()
+            ....:     print(c)
+            ....:     print(c.is_hyperelliptic())
             (0,3,1,2)-(0,3,1,2)
             True
             (0,1,2)-(0,1,3) (3)-(2)
@@ -2522,12 +2523,12 @@ class CylinderDiagram(SeparatrixDiagram):
             for _ in xrange(ns):
                 lin.append(t[lout[-1]])
                 lout.append(b[lin[-1]])
-            if verbose: print 'lin  ', lin; print 'lout', lout
+            if verbose: print('lin  ', lin); print('lout', lout)
             # build involution on separatrices
             p = [None]*ns
             for a in xrange(ns):
                 p[lout[a]] = lin[(a+ns//2)%ns]
-            if verbose: print "involution on seps", p
+            if verbose: print("involution on seps", p)
             # wsep = counter of sepatrices with a wpt
             wsep = 0
             for cy in self.cylinders():
@@ -2538,7 +2539,7 @@ class CylinderDiagram(SeparatrixDiagram):
                     if k in cy[1]:
                         if k != p[k]: return False
                         wsep += 1
-            if verbose: print "wsep", wsep
+            if verbose: print("wsep", wsep)
             # check number of w pts
             if wsep + 2*self.ncyls() != z[0] + 3: return False
             # check that cylinders are stable under involution
@@ -2558,7 +2559,7 @@ class CylinderDiagram(SeparatrixDiagram):
             for _ in xrange(ns//2):
                 lin.append(t[lout[-1]])
                 lout.append(b[lin[-1]])
-            if verbose: print 'lin  ', lin; print 'lout', lout
+            if verbose: print('lin  ', lin); print('lout', lout)
             # build list of seps in cyclic order around the other zero
             a = 0
             while a in lout: a += 1
@@ -2567,7 +2568,7 @@ class CylinderDiagram(SeparatrixDiagram):
             for _ in xrange(ns//2):
                 llin.append(t[llout[-1]])
                 llout.append(b[llin[-1]])
-            if verbose: print 'llin  ', llin; print 'llout', llout
+            if verbose: print('llin  ', llin); print('llout', llout)
             # now, try each way the involution could send lout to llout
             for j in xrange(ns//2):
                 test = True
@@ -2576,7 +2577,7 @@ class CylinderDiagram(SeparatrixDiagram):
                 for a in xrange(ns//2):
                     p[lout[a]] = llin[(j+a)%(ns//2)]
                     p[llout[a]] = lin[(a-j-1)%(ns//2)]
-                if verbose: print "involution on seps", p
+                if verbose: print("involution on seps", p)
                 wsep = 0
                 for cy in self.cylinders():
                     for k in cy[0]:
@@ -2592,7 +2593,7 @@ class CylinderDiagram(SeparatrixDiagram):
                             wsep += 1
                     if test is False: break
                 if test is False: continue # try next j
-                if verbose: print "wsep", wsep
+                if verbose: print("wsep", wsep)
                 # check number of w pts
                 if wsep + 2*self.ncyls() != 2*z[0] + 4:
                     continue # try next j
@@ -3017,7 +3018,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
             sage: cyl = CylinderDiagram('(0,1,2)-(3,1,2) (3)-(0)')
             sage: for o in cyl.origami_iterator(4):
-            ....:     print o
+            ....:     print(o)
             ....:     print o.stratum(), o.nb_squares()
             (1,2,3)(4)
             (1,4)(2,3)
@@ -3080,9 +3081,9 @@ class CylinderDiagram(SeparatrixDiagram):
 
             sage: it = cyl.widths_and_heights_iterator(10)
             sage: l,h = it.next()
-            sage: print l
+            sage: print(l)
             (2, 1, 1)
-            sage: print h
+            sage: print(h)
             [3, 1]
             sage: cyl.cylcoord_to_origami(l,h)
             (1,2,3)(4,5,6)(7,8,9)(10)
@@ -3153,7 +3154,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
             sage: cyl = CylinderDiagram('(0,1,2)-(3,1,2) (3)-(0)')
             sage: for o in cyl.cylcoord_to_origami_iterator((1,1,1,1),(1,1)):
-            ....:     print o
+            ....:     print(o)
             (1,2,3)(4)
             (1,4)(2,3)
             (1,2,3)(4)
