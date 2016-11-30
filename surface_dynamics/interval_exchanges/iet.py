@@ -127,7 +127,7 @@ class IntervalExchangeTransformation(object):
             self._lengths = []
             self._base_ring = None
         else:
-            self._permutation = permutation
+            self._permutation = copy(permutation)
             self._lengths = vector(lengths)
             self._base_ring = self._lengths.base_ring()
 
@@ -937,6 +937,21 @@ class IntervalExchangeTransformation(object):
             True
             sage: path == code
             True
+
+        Saddle connection detection::
+
+            sage: p = iet.Permutation('a b c', 'c b a')
+            sage: T = iet.IntervalExchangeTransformation(p, [41, 22, 135])
+            sage: T.zorich_move(iterations=100)
+            Traceback (most recent call last):
+            ...
+            ValueError: saddle connection found
+            sage: p = iet.Permutation('a b c d e f', 'f c b e d a')
+            sage: T = iet.IntervalExchangeTransformation(p, [41, 132, 22, 135, 55, 333])
+            sage: T.zorich_move(iterations=100)
+            Traceback (most recent call last):
+            ...
+            ValueError: saddle connection found
         """
         if data:
             path = ''
@@ -1119,6 +1134,15 @@ class IntervalExchangeTransformation(object):
             [('b', 1), ('t', 2), ('b', 2), ('t', 1), ('b', 2), ('t', 2)]
             sage: lengths == a^2 * t.lengths()
             True
+
+        Saddle connection detection::
+
+            sage: p = iet.Permutation('a b c', 'c b a')
+            sage: T = iet.IntervalExchangeTransformation(p, [41, 1, 5])
+            sage: T._zorich_move()
+            Traceback (most recent call last):
+            ...
+            ValueError: saddle connection found
         """
         top = self._permutation._labels[0][side]
         bot = self._permutation._labels[1][side]
@@ -1166,11 +1190,14 @@ class IntervalExchangeTransformation(object):
 
         # remaining steps
         r = 0
-        while self._lengths[winner_interval] > self._lengths[loser_interval]:
+        while self._lengths[winner_interval] >= self._lengths[loser_interval]:
             self._lengths[winner_interval] -= self._lengths[loser_interval]
             self._permutation.rauzy_move(winner=winner, side=side, inplace=True)
             loser_interval = self._permutation._labels[loser][side]
             r += 1
+
+        if self._lengths[winner_interval].is_zero():
+            raise ValueError("saddle connection found")
 
         return winner_letter, k*m + r
 
