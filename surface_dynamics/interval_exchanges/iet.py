@@ -69,12 +69,12 @@ class IntervalExchangeTransformation(object):
         a b c
         c b a
         sage: p.lengths()
-        [1, 1, 1]
+        (1, 1, 1)
 
     Initialization from a iet.Permutation::
 
         sage: perm = iet.Permutation('a b c','c b a')
-        sage: l = [0.5,1,1.2]
+        sage: l = vector([0.5,1,1.2])
         sage: t = iet.IET(perm,l)
         sage: t.permutation() == perm
         True
@@ -120,17 +120,16 @@ class IntervalExchangeTransformation(object):
             True
         """
         from labelled import LabelledPermutationIET
+        from sage.modules.free_module_element import free_module_element as vector
+
         if permutation is None or lengths is None:
-            self._permutation = LabelledPermutationIET()
+            self._permutation = None
             self._lengths = []
-            self._base_ring = base_ring
+            self._base_ring = None
         else:
             self._permutation = permutation
-            if base_ring is None:
-                from sage.structure.sequence import Sequence
-                base_ring = Sequence(lengths).universe()
-            self._lengths = [base_ring(x) for x in lengths]
-            self._base_ring = base_ring
+            self._lengths = vector(lengths)
+            self._base_ring = self._lengths.base_ring()
 
     def _zero(self):
         try:
@@ -195,7 +194,7 @@ class IntervalExchangeTransformation(object):
 
             sage: p = iet.IntervalExchangeTransformation(('a b','b a'),[1,3])
             sage: p.lengths()
-            [1, 3]
+            (1, 3)
         """
         return self._lengths[:]
 
@@ -226,7 +225,7 @@ class IntervalExchangeTransformation(object):
 
         return translations
 
-    def normalize(self, total=1):
+    def normalize(self, total=1, inplace=False):
         r"""
         Returns a interval exchange transformation of normalized lengths.
 
@@ -252,7 +251,7 @@ class IntervalExchangeTransformation(object):
             sage: s.length()
             2
             sage: s.lengths()
-            [1/2, 3/2]
+            (1/2, 3/2)
         """
         try:
             y = float(total)
@@ -262,31 +261,14 @@ class IntervalExchangeTransformation(object):
         if total <= 0:
            raise ValueError("the total length must be positive")
 
-        res = copy(self)
-        coeff = total / res.length()
-        res._multiply_lengths(coeff)
-        return res
+        if inplace:
+            res = self
+        else:
+            res = copy(self)
 
-    def _multiply_lengths(self, x):
-        r"""
-        Multiplies the lengths of self by x (no verification on x).
-
-        INPUT:
-
-        - ``x`` - a positive number
-
-        TESTS::
-
-            sage: from surface_dynamics.all import *
-
-            sage: t = iet.IET(("a","a"), [1])
-            sage: t.lengths()
-            [1]
-            sage: t._multiply_lengths(2)
-            sage: t.lengths()
-            [2]
-        """
-        self._lengths = [x*t for t in self._lengths]
+        res._lengths *= total / res.length()
+        if not inplace:
+            return res
 
     def __repr__(self):
         r"""
@@ -349,7 +331,7 @@ class IntervalExchangeTransformation(object):
             b a
             a b
             sage: t.lengths()
-            [1, sqrt(2) - 1]
+            (1, sqrt(2) - 1)
             sage: t*s
             Interval exchange transformation of [0, sqrt(2)[ with permutation
             aa bb
@@ -793,7 +775,7 @@ class IntervalExchangeTransformation(object):
 
         return value - dom_sg[i0] + im_sg[i1]
 
-    def rauzy_move(self, side='right', iterations=1, data=False):
+    def rauzy_move(self, side='right', iterations=1, data=False, error_on_saddles=True):
         r"""
         Performs a Rauzy move.
 
@@ -806,6 +788,9 @@ class IntervalExchangeTransformation(object):
 
         - ``data`` - whether to return also the paths and composition of towers
 
+        - ``error_on_saddles`` - (default: ``True``) whether to stop when a saddle
+          is encountered
+
         OUTPUT:
 
         - ``iet`` -- the Rauzy move of self
@@ -813,7 +798,6 @@ class IntervalExchangeTransformation(object):
         - ``path`` -- (if ``data=True``) a list of 't' and 'b'
 
         - ``towers`` -- (if ``data=True``) the towers of the Rauzy induction as a word morphism
-
 
         EXAMPLES::
 
@@ -843,6 +827,41 @@ class IntervalExchangeTransformation(object):
             sage: p = t1.permutation()
             sage: p.rauzy_diagram().path(p, *path).substitution() == sub
             True
+
+        An other examples involving 3 intervals::
+
+            sage: t = iet.IntervalExchangeTransformation(('a b c','c b a'),[1,1,3])
+            sage: t
+            Interval exchange transformation of [0, 5[ with permutation
+            a b c
+            c b a
+            sage: t1 = t.rauzy_move()
+            sage: t1
+            Interval exchange transformation of [0, 4[ with permutation
+            a b c
+            c a b
+            sage: t2 = t1.rauzy_move()
+            sage: t2
+            Interval exchange transformation of [0, 3[ with permutation
+            a b c
+            c b a
+            sage: t2.rauzy_move()
+            Traceback (most recent call last):
+            ...
+            ValueError: saddle connection found
+            sage: t2.rauzy_move(error_on_saddles=False)
+            Interval exchange transformation of [0, 2[ with permutation
+            a b
+            a b
+
+        Degenerate cases::
+
+            sage: p = iet.Permutation('a b', 'b a')
+            sage: T = iet.IntervalExchangeTransformation(p, [1,1])
+            sage: T.rauzy_move(error_on_saddles=False)
+            Interval exchange transformation of [0, 1[ with permutation
+            a
+            a
         """
         if data:
             towers = {a:[a] for a in self._permutation.letters()}
@@ -852,8 +871,10 @@ class IntervalExchangeTransformation(object):
 
         res = copy(self)
         for i in range(iterations):
-            res,winner,(a,b,c) = res._rauzy_move(side)
+            winner,(a,b,c) = res._rauzy_move(side, error_on_saddles=error_on_saddles)
             if data:
+                if winner is None:
+                    raise ValueError("does not handle degenerate situations")
                 towers[a] = towers[b] + towers[c]
                 path.append(winner)
 
@@ -863,19 +884,94 @@ class IntervalExchangeTransformation(object):
         else:
             return res
 
-    def _rauzy_move(self,side=-1):
+    def zorich_move(self, side='right', iterations=1, data=False):
         r"""
-        Performs a Rauzy move
+        Performs a Rauzy move.
+
+        INPUT:
+
+        - ``side`` - 'left' (or 'l' or 0) or 'right' (or 'r' or 1)
+
+        - ``iterations`` - integer (default :1) the number of iteration of Rauzy
+           moves to perform
+
+        - ``data`` - whether to return also the path
+
+        OUTPUT:
+
+        - ``iet`` -- the Rauzy move of self
+
+        - ``path`` -- (if ``data=True``) a list of 't' and 'b'
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+
+            sage: p = iet.Permutation('a b c', 'c b a')
+            sage: T = iet.IntervalExchangeTransformation(p, [12, 35, 67])
+            sage: T.zorich_move()
+            Interval exchange transformation of [0, 55[ with permutation
+            a b c
+            c a b
+            sage: assert T.permutation() == p and T.lengths() == vector((12,35,67))
+
+        A self similar example in genus 2::
+
+            sage: p = iet.Permutation('a b c d', 'd a c b')
+            sage: R = p.rauzy_diagram()
+            sage: code = 'b'*4 + 't'*1 + 'b'*3 + 't'*1 + 'b'*3 + 't'*1 + 'b'*1 + 't'*1 + 'b'*4 + 't'*1 + 'b'*2 + 't'*7
+            sage: g = R.path(p, *code)
+            sage: m = g.matrix()
+            sage: poly = m.charpoly()
+            sage: l = max(poly.roots(AA, False))
+            sage: K.<a> = NumberField(poly, embedding=l)
+            sage: lengths = (m - a).right_kernel().basis()[0]
+            sage: T = iet.IntervalExchangeTransformation(p, lengths)
+            sage: T.normalize(a, inplace=True)
+            sage: T
+            Interval exchange transformation of [0, a[ with permutation
+            a b c d
+            d a c b
+            sage: T2, path = T.zorich_move(iterations=12, data=True)
+            sage: a*T2.lengths() == T.lengths()
+            True
+            sage: path == code
+            True
+        """
+        if data:
+            path = ''
+
+        side = side_conversion(side)
+
+        res = copy(self)
+        for i in range(iterations):
+            winner, m = res._zorich_move(side)
+            if data:
+                path += winner * m
+
+        if data:
+            return res, path
+        else:
+            return res
+
+
+    def _rauzy_move(self, side=-1, error_on_saddles=True):
+        r"""
+        Perform a Rauzy move inplace
 
         INPUT:
 
         - ``side`` - must be 0 or -1 (no verification)
 
+        - ``error_on_saddles`` - (default ``True``) whether an error is raised
+          when a saddle connections is encountered
+
         OUTPUT:
 
         - ``T`` - the iet after Rauzy induction
 
-        - ``winner`` - either ``'t'`` or ``'b'``
+        - ``winner`` - either ``'t'`` or ``'b'`` (and possibly ``None`` if
+          ``error_on_saddles`` is ``False``)
 
         - ``(a,b,c)`` - a triple of letter such that the towers are obtained by
           applying the substitution `a \mapsto bc`.
@@ -884,75 +980,199 @@ class IntervalExchangeTransformation(object):
 
             sage: from surface_dynamics.all import *
 
-            sage: t = iet.IntervalExchangeTransformation(('a b c','c b a'),[1,1,3])
-            sage: t
-            Interval exchange transformation of [0, 5[ with permutation
-            a b c
-            c b a
-            sage: t1 = t.rauzy_move()    #indirect doctest
-            sage: t1
-            Interval exchange transformation of [0, 4[ with permutation
-            a b c
-            c a b
-            sage: t2 = t1.rauzy_move()   #indirect doctest
-            sage: t2
-            Interval exchange transformation of [0, 3[ with permutation
-            a b c
-            c b a
-            sage: t2.rauzy_move()        #indirect doctest
-            Interval exchange transformation of [0, 2[ with permutation
+            sage: p = iet.Permutation('a b c d', 'd c b a')
+            sage: K.<sqrt2> = QuadraticField(2)
+            sage: T = iet.IntervalExchangeTransformation(p, [1,1,1,sqrt2])
+            sage: T._rauzy_move()
+            ('t', ('a', 'a', 'd'))
+            sage: T._rauzy_move()
+            ('b', ('d', 'b', 'd'))
+            sage: T._rauzy_move()
+            ('t', ('b', 'b', 'c'))
+            sage: T._rauzy_move()
+            ('b', ('c', 'b', 'c'))
+            sage: T._rauzy_move()
+            ('t', ('b', 'b', 'd'))
+            sage: T._rauzy_move()
+            ('b', ('d', 'c', 'd'))
+            sage: T._rauzy_move()
+            ('t', ('c', 'c', 'd'))
+            sage: T._rauzy_move()
+            ('b', ('d', 'a', 'd'))
+            sage: T
+            Interval exchange transformation of [0, -4*sqrt2 + 7[ with permutation
+            a d b c
+            d c b a
+
+        Saddle connections::
+
+            sage: p = iet.Permutation('a b c', 'c b a')
+            sage: T = iet.IntervalExchangeTransformation(p, [1,2,1])
+            sage: T._rauzy_move()
+            Traceback (most recent call last):
+            ...
+            ValueError: saddle connection found
+            sage: T._rauzy_move(error_on_saddles=False)
+            (None, ('a', 'a', 'c'))
+            sage: T.lengths()
+            (1, 2, 0)
+            sage: T.permutation()
             a b
             a b
-
-        Degenerate cases::
-
-            sage: p = iet.Permutation('a b', 'b a')
-            sage: T = iet.IntervalExchangeTransformation(p, [1,1])
-            sage: T.rauzy_move()
-            Interval exchange transformation of [0, 1[ with permutation
-            a
-            a
         """
         top = self._permutation._labels[0][side]
         bot = self._permutation._labels[1][side]
 
-        A = self._permutation.alphabet()
-        top_letter = A.unrank(top)
-        bot_letter = A.unrank(bot)
+        unrank = self._permutation.alphabet().unrank
+        top_letter = unrank(top)
+        bot_letter = unrank(bot)
+
+        length_top = self._lengths[top]
+        length_bot = self._lengths[bot]
+
+        if length_top > length_bot:
+            winner = 0 # TODO: this value is ignored
+            winner_interval = top
+            loser_interval = bot
+            abc = (bot_letter, bot_letter, top_letter)
+            winner = 't'
+        elif length_top < length_bot:
+            winner = 1 # TODO: this value is ignored
+            winner_interval = bot
+            loser_interval = top
+            abc = (top_letter, bot_letter, top_letter)
+            winner = 'b'
+        elif error_on_saddles:
+            raise ValueError("saddle connection found")
+        else:
+            # we do a pseudo-top Rauzy induction and remove the bot interval
+            # (the iet get one interval less)
+            p = self._permutation
+            top = p._labels[0][-1]
+            bot = p._labels[1][-1]
+            p._identify_intervals(-1)
+            self._lengths[top] = 0
+            return None, (bot_letter,bot_letter,top_letter)
+
+        self._permutation = self._permutation.rauzy_move(winner=winner, side=side, inplace=True)
+        self._lengths[winner_interval] -= self._lengths[loser_interval]
+
+        return winner, abc
+
+    def _zorich_move(self, side=-1):
+        r"""
+        Performs a Zorich move (acceleration of Rauzy) inplace
+
+        INPUT:
+
+        - ``side`` - must be 0 or -1 (no verification)
+
+        OUTPUT:
+
+        - ``winner_letter`` - whether top or bot was done
+
+        - ``m`` -- number of Rauzy made on the same side
+
+        TEST::
+
+            sage: from surface_dynamics.all import *
+
+            sage: p = iet.Permutation('a b', 'b a')
+            sage: K.<sqrt3> = QuadraticField(3)
+            sage: t = iet.IntervalExchangeTransformation(p, [1, sqrt3 - 1])
+            sage: t._zorich_move()
+            ('b', 1)
+            sage: t._zorich_move()
+            ('t', 2)
+            sage: t._zorich_move()
+            ('b', 1)
+            sage: t._zorich_move()
+            ('t', 2)
+            sage: t._zorich_move()
+            ('b', 1)
+            sage: continued_fraction(sqrt3 - 1)
+            [0; (1, 2)*]
+            
+            sage: x = polygen(ZZ)
+            sage: K.<a> = NumberField(x^3 - 2, embedding=AA(2)**(1/3))
+            sage: t = iet.IntervalExchangeTransformation(p, [1, a])
+            sage: [t._zorich_move()[1] for _ in range(10)]
+            [1, 3, 1, 5, 1, 1, 4, 1, 1, 8]
+            sage: continued_fraction(a)
+            [1; 3, 1, 5, 1, 1, 4, 1, 1, 8, 1, 14, 1, 10, 2, 1, 4, 12, 2, 3, ...]
+
+        A self-similar example in genus 2::
+
+            sage: x = polygen(ZZ)
+            sage: poly = x^4 - 11*x^3 + 21*x^2 - 11*x + 1
+            sage: l = max(poly.roots(AA, False))
+            sage: K.<a> = NumberField(poly, embedding=l)
+            sage: lengths = vector([-3*a^3 + 33*a^2 - 63*a + 33, -4*a^3 + 42*a^2 - 63*a + 14,
+            ....:     7*a^3 - 74*a^2 + 116*a - 34, -a^2 + 10*a - 10])
+            sage: p = iet.Permutation('a b c d', 'd c b a')
+            sage: t = iet.IntervalExchangeTransformation(p, lengths)
+            sage: [t._zorich_move() for _ in range(6)]
+            [('t', 1), ('b', 2),  ('t', 2), ('b', 1), ('t', 2), ('b', 2)]
+            sage: lengths == a * t.lengths()
+            True
+            sage: [t._zorich_move(side=0) for _ in range(6)]
+            [('b', 1), ('t', 2), ('b', 2), ('t', 1), ('b', 2), ('t', 2)]
+            sage: lengths == a^2 * t.lengths()
+            True
+        """
+        top = self._permutation._labels[0][side]
+        bot = self._permutation._labels[1][side]
 
         length_top = self._lengths[top]
         length_bot = self._lengths[bot]
 
         if length_top > length_bot:
             winner = 0
+            winner_letter = 't'
             winner_interval = top
             loser_interval = bot
-            abc = (bot_letter, bot_letter, top_letter)
-            winner = 't'
         elif length_top < length_bot:
             winner = 1
+            winner_letter = 'b'
             winner_interval = bot
             loser_interval = top
-            abc = (top_letter, bot_letter, top_letter)
-            winner = 'b'
         else:
-            # we do a pseudo-top Rauzy induction and remove the bot interval
-            res = IntervalExchangeTransformation(([],[]),{})
-            p = self._permutation.__copy__()
-            top = p._labels[0][-1]
-            bot = p._labels[1][-1]
-            p._identify_intervals(-1)
-            res._permutation = p
-            res._lengths = self._lengths[:]
-            res._lengths[top] = 0
-            return res,0,(bot_letter,bot_letter,top_letter)
+            raise ValueError("saddle connection found")
 
-        res = IntervalExchangeTransformation(([],[]),{})
-        res._permutation = self._permutation.rauzy_move(winner=winner,side=side)
-        res._lengths = self._lengths[:]
-        res._lengths[winner_interval] -= res._lengths[loser_interval]
+        # number of full loops
+        lwin = self._lengths[winner_interval]
+        loser = 1 - winner
+        loser_row = self._permutation._labels[loser]
+        llos = 0
+        k = 0
+        if side == -1:
+            # right induction
+            j = -1
+            while loser_row[j] != winner_interval:
+                llos += self._lengths[loser_row[j]]
+                j -= 1
+                k += 1
+        else:
+            # left induction
+            j = 0
+            while loser_row[j] != winner_interval:
+                llos += self._lengths[loser_row[j]]
+                j += 1
+                k += 1
 
-        return res,winner,abc
+        # remove the full loops
+        m = (lwin / llos).floor()
+        self._lengths[winner_interval] -= m*llos
+
+        # remaining steps
+        r = 0
+        while self._lengths[winner_interval] > self._lengths[loser_interval]:
+            self._lengths[winner_interval] -= self._lengths[loser_interval]
+            self._permutation.rauzy_move(winner=winner, side=side, inplace=True)
+            loser_interval = self._permutation._labels[loser][side]
+            r += 1
+
+        return winner_letter, k*m + r
 
     def __copy__(self):
         r"""

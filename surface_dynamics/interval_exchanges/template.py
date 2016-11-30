@@ -3516,7 +3516,7 @@ class OrientablePermutationIET(PermutationIET):
         elif side == 0:
             return self._twin[winner][0]
 
-    def rauzy_move(self, winner, side='right'):
+    def rauzy_move(self, winner, side='right', inplace=False):
         r"""
         Returns the permutation after a Rauzy move.
 
@@ -3526,6 +3526,11 @@ class OrientablePermutationIET(PermutationIET):
 
         - ``side`` - 'right' or 'left' (defaut: 'right') corresponding
           to the side on which the Rauzy move must be performed.
+
+        - ``inplace`` - (default ``False``) whether the Rauzy move is
+          performed inplace (to be used with care since permutations
+          are hashable, set to ``True`` if you are sure to know what
+          you are doing)
 
         OUTPUT:
 
@@ -3576,6 +3581,18 @@ class OrientablePermutationIET(PermutationIET):
             Traceback (most recent call last):
             ...
             ValueError: Rauzy induction is not well defined
+
+
+        Test the inplace option::
+
+            sage: p = iet.Permutation('a b c d', 'd c b a')
+            sage: q = p.rauzy_move('t', inplace=True)
+            sage: assert q is p
+            sage: p
+            a b c d
+            d a c b
+            sage: q = p.rauzy_move('b', inplace=True)
+            sage: assert q is p
         """
         winner = interval_conversion(winner)
         side = side_conversion(side)
@@ -3584,7 +3601,10 @@ class OrientablePermutationIET(PermutationIET):
         if self._twin[0][side] == side or self._twin[0][side] == len(self)+side:
             raise ValueError("Rauzy induction is not well defined")
 
-        res = copy(self)
+        if inplace:
+            res = self
+        else:
+            res = copy(self)
 
         wtp = res._twin[winner][side]
 
@@ -3596,7 +3616,7 @@ class OrientablePermutationIET(PermutationIET):
 
         return res
 
-    def backward_rauzy_move(self, winner, side='right'):
+    def backward_rauzy_move(self, winner, side='right', inplace=False):
         r"""
         Returns the permutation before a Rauzy move.
 
@@ -3606,6 +3626,11 @@ class OrientablePermutationIET(PermutationIET):
 
         - ``side`` - 'right' or 'left' (defaut: 'right') corresponding
           to the side on which the Rauzy move must be performed.
+
+        - ``inplace`` - (default ``False``) whether the Rauzy move is
+          performed inplace (to be used with care since permutations
+          are hashable, set to ``True`` if you are sure to know what
+          you are doing)
 
         OUTPUT:
 
@@ -3634,6 +3659,24 @@ class OrientablePermutationIET(PermutationIET):
             ...    q = p.backward_rauzy_move(pos,side)
             ...    print q.rauzy_move(pos,side) == p,
             True True True True True True True True
+
+        Test the inplace option::
+
+            sage: p = iet.Permutation('a b c d', 'd c b a')
+            sage: q = p.backward_rauzy_move('t', inplace=True)
+            sage: assert q is p
+            sage: p
+            a b c d
+            d b a c
+            sage: q = p.backward_rauzy_move('t', inplace=True)
+            sage: q = p.backward_rauzy_move('b', inplace=True)
+            sage: assert q is p
+            sage: q = p.rauzy_move('b', inplace=True)
+            sage: q = p.rauzy_move('t', inplace=True)
+            sage: q = p.rauzy_move('t', inplace=True)
+            sage: p
+            a b c d
+            d c b a
         """
         winner = interval_conversion(winner)
         side = side_conversion(side)
@@ -3642,7 +3685,10 @@ class OrientablePermutationIET(PermutationIET):
         winner_twin = self._twin[winner][side]
         d = len(self)
 
-        res = copy(self)
+        if inplace:
+            res = self
+        else:
+            res = copy(self)
 
         if side == -1:
             if self._labels is not None:
@@ -3659,7 +3705,7 @@ class OrientablePermutationIET(PermutationIET):
                 res._twin[winner][res._twin[loser][j]] -= 1
 
         elif side == 0:
-            if self._labels is not None:
+            if res._labels is not None:
                 res._labels[loser].insert(
                         0,
                         res._labels[loser].pop(winner_twin-1))
