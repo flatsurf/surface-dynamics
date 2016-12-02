@@ -45,8 +45,20 @@ There are two plotting methods for iet::
     Graphics object consisting of 3 graphics primitives
 """
 from copy import copy
+from sage.modules.free_module_element import free_module_element
+from sage.rings.all import ZZ, QQ
 
 from template import side_conversion, interval_conversion
+
+
+def wedge(u, v):
+    r"""
+    Return the wedge of the vectors ``u`` and ``v``
+    """
+    d = len(u)
+    R = u.base_ring()
+    assert len(u) == len(v) and v.base_ring() == R
+    return free_module_element(R, d*(d-1)//2, [(u[i]*v[j] - u[j]*v[i]) for i in range(d-1) for j in range(i+1,d)])
 
 class IntervalExchangeTransformation(object):
     r"""
@@ -143,6 +155,34 @@ class IntervalExchangeTransformation(object):
         except AttributeError:
             return self._base_ring(1)
 
+    def base_ring(self):
+        r"""
+        Return the base ring over which the lengths are defined
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+            sage: p = iet.Permutation('a b', 'b a')
+
+            sage: T = iet.IntervalExchangeTransformation(p, [3, 12])
+            sage: T.base_ring()
+            Integer Ring
+
+            sage: T = iet.IntervalExchangeTransformation(p, [3, 12/5])
+            sage: T.base_ring()
+            Rational Field
+
+            sage: T = iet.IntervalExchangeTransformation(p, [3, AA(12).sqrt()])
+            sage: T.base_ring()
+            Algebraic Real Field
+
+            sage: sqrt2 = QuadraticField(2).gen()
+            sage: T = iet.IntervalExchangeTransformation(p, [1, sqrt2])
+            sage: T.base_ring()
+            Number Field in a with defining polynomial x^2 - 2
+        """
+        return self._base_ring
+
     def permutation(self):
         r"""
         Returns the permutation associated to this iet.
@@ -224,6 +264,56 @@ class IntervalExchangeTransformation(object):
             translations[j] = im_sg[i1] - dom_sg[i0]
 
         return translations
+
+    def sah_arnoux_fathi_invariant(self):
+        r"""
+        Return the Sah-Arnoux-Fathi invariant
+
+        The interval exchange needs to be defined over a number field. The output
+        is then a vector with rational entries of dimension `d (d-1) / 2` where
+        `d` is the degree of the field.
+
+        EXAMPLES:
+
+        Rotations::
+
+            sage: from surface_dynamics.all import *
+            sage: p = iet.Permutation('a b','b a')
+            sage: R = p.rauzy_diagram()
+            sage: g = R.path(p, 't', 'b')
+            sage: T = g.self_similar_iet()
+            sage: T.sah_arnoux_fathi_invariant()
+            (2)
+            sage: g = R.path(p, 't', 'b', 'b')
+            sage: T = g.self_similar_iet()
+            sage: T.sah_arnoux_fathi_invariant()
+            (1)
+
+        Arnoux-Yoccoz examples in genus 4::
+
+            sage: x = polygen(ZZ)
+            sage: poly = x^4 - x^3 - x^2 - x - 1
+            sage: l = max(poly.roots(AA, False))
+            sage: K.<a> = NumberField(poly, embedding=l)
+            sage: top = 'A1l A1r A2 B1 B2 C1 C2 D1 D2'
+            sage: bot = 'A1r B2 B1 C2 C1 D2 D1 A2 A1l'
+            sage: p = iet.Permutation(top, bot)
+            sage: lengths = vector((a**4-a**3, 2*a**3-a**4, a**3, a**2, a**2, a, a, 1, 1))
+            sage: T = iet.IntervalExchangeTransformation(p, lengths)
+            sage: T.sah_arnoux_fathi_invariant()
+            (0, 0, 0, 0, 0, 0)
+        """
+        if self.base_ring() is ZZ:
+            return free_module_element(ZZ, [])
+        elif self.base_ring() is QQ:
+            return free_module_element(QQ, [])
+
+        try:
+            K, from_V, to_V = self.base_ring().vector_space()
+        except (AttributeError, ValueError):
+            raise ValueError("the interval exchange needs to be define over a number field")
+
+        return sum(wedge(to_V(u), to_V(v)) for u,v in zip(self.lengths(), self.translations()))
 
     def normalize(self, total=1, inplace=False):
         r"""
@@ -571,7 +661,7 @@ class IntervalExchangeTransformation(object):
         sg_top = self.domain_singularities()[1:-1]  # iterates of the top singularities
         cuts = [[[i], lengths[i]] for i in bot]     # the refined bottom interval
 
-        translations = self.translations() 
+        translations = self.translations()
 
 
         for step in range(n-1):
@@ -1107,7 +1197,7 @@ class IntervalExchangeTransformation(object):
             ('b', 1)
             sage: continued_fraction(sqrt3 - 1)
             [0; (1, 2)*]
-            
+
             sage: x = polygen(ZZ)
             sage: K.<a> = NumberField(x^3 - 2, embedding=AA(2)**(1/3))
             sage: t = iet.IntervalExchangeTransformation(p, [1, a])
@@ -1353,17 +1443,17 @@ class IntervalExchangeTransformation(object):
     def plot_towers(self, iterations, position=(0,0), colors=None):
         """
         Plot the towers of this interval exchange obtained from Rauzy induction.
-        
+
         INPUT:
-            
+
         - ``nb_iterations`` -- the number of steps of Rauzy induction
-        
+
         - ``colors`` -- (optional) colors for the towers
-        
+
         EXAMPLES::
-            
+
             sage: from surface_dynamics.all import *
-            
+
             sage: p = iet.Permutation('A B', 'B A')
             sage: T = iet.IntervalExchangeTransformation(p, [0.41510826, 0.58489174])
             sage: T.plot_towers(iterations=5)
@@ -1371,7 +1461,7 @@ class IntervalExchangeTransformation(object):
         """
         px,py = map(float, position)
 
-        T,_,towers = self.rauzy_move(iterations=iterations,data=True) 
+        T,_,towers = self.rauzy_move(iterations=iterations,data=True)
         pi = T.permutation()
         A = pi.alphabet()
         lengths = map(float, T.lengths())
