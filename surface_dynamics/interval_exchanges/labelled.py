@@ -1724,6 +1724,56 @@ class LabelledRauzyDiagram(RauzyDiagram):
             """
             return set(self._parent.letters()) == set(self.winners())
 
+        def self_similar_iet(self, name='a'):
+            r"""
+            Return the self-similar interval exchange transformation associated to this path
+
+            INPUT:
+
+            - ``name`` - an optional name for the generator of the number field
+
+            EXAMPLES::
+
+                sage: from surface_dynamics.all import *
+
+            The golden rotation::
+
+                sage: p = iet.Permutation('a b', 'b a')
+                sage: R = p.rauzy_diagram()
+                sage: g = R.path(p, 't', 'b')
+                sage: T = g.self_similar_iet()
+                sage: T.lengths().base_ring()
+                Number Field in a with defining polynomial x^2 - 3*x + 1
+                sage: T.lengths().n()
+                (1.00000000000000, 1.61803398874989)
+
+            An example from Do-Schmidt::
+
+                sage: code = [1,0,1,0,1,0,0,0,1,0,0,1,1,1,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,0]
+                sage: p = iet.Permutation([0,1,2,3,4,5,6],[6,5,4,3,2,1,0])
+                sage: R = p.rauzy_diagram()
+                sage: g = R.path(p, *code)
+                sage: T = g.self_similar_iet()
+                sage: T.sah_arnoux_fathi_invariant()
+                (0, 0, 0)
+            """
+            if not self.is_loop() or not self.is_full():
+                raise ValueError("the path must be a full loop")
+
+            from sage.rings.qqbar import AA
+            from sage.rings.number_field.number_field import NumberField
+            m = self.matrix()
+            poly = m.charpoly()
+            l = max(poly.roots(AA, False))
+            K = NumberField(l.minpoly(), name=name, embedding=l)
+            a = K.gen()
+            lengths = (m - a).right_kernel().basis()[0]
+            if any(x <= 0 for x in lengths):
+                raise RuntimeError("wrong Perron-Frobenius eigenvector: {}".format(lengths))
+
+            from iet import IntervalExchangeTransformation
+            return IntervalExchangeTransformation(self.start(), lengths)
+
     def edge_to_interval_substitution(self, p=None, edge_type=None):
         r"""
         Returns the interval substitution associated to an edge
