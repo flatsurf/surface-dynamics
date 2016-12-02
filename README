@@ -27,9 +27,15 @@ Installation
 
 The module is distributed on PyPI. You just need to run the following command::
 
-    $ sage -pip install surface_dynamics --user
+    $ sage -pip install surface_dynamics [--user]
 
-Alternatively, you can download the source code (see below).
+The --user option is optional and allows to install the module in your user space
+(and does not require administrator rights). Alternatively, you can install the
+development version using
+
+    $ sage -pip install git+https://github.com/videlec/flatsurf-package [--user]
+
+or even download the source code (see below)
 
 Documentation
 -------------
@@ -85,7 +91,19 @@ output as below.::
 Source code
 -----------
 
-The complete source code is available at https://github.com/videlec/flatsurf-package
+The complete source code is available at
+
+    https://github.com/videlec/flatsurf-package
+
+Once you developed the source code you might want to install the package
+with
+
+    $ sage -pip install . [--user] [--upgrade]
+
+wher the options `--user` and `--upgrade` are optional. It can also be
+compiled inplace using
+
+    $ sage -python setup.py build_ext --inplace
 
 Contact
 -------
