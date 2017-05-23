@@ -26,16 +26,20 @@ extensions = [
     Extension('surface_dynamics.flat_surfaces.origamis.origami_dense',
             sources = [
             os.path.join(ORIGAMIS_DIR, filename) for filename in ('origami_dense.pyx', 'normal_form.c', 'lyapunov_exponents.c')],
+            include_dirs = [SAGE_SRC, ORIGAMIS_DIR],
             libraries = ['m'],
-            include_dirs = [ORIGAMIS_DIR, SAGE_SRC],
             ),
 
     Extension('surface_dynamics.interval_exchanges.lyapunov_exponents',
-        sources = [
-            os.path.join(LYAPUNOV_DIR, filename) for filename in ('lyapunov_exponents.pyx', 'generalized_permutation.c' , 'lin_alg.c', 'quad_cover.c', 'random.c', 'permutation.c')],
-        depends = [os.path.join(LYAPUNOV_DIR, 'lyapunov_exponents.h')])
-    ]
+            sources = [
+                os.path.join(LYAPUNOV_DIR, filename) for filename in ('lyapunov_exponents.pyx', 'generalized_permutation.c' , 'lin_alg.c', 'quad_cover.c', 'random.c', 'permutation.c')],
+            include_dirs = [SAGE_SRC, LYAPUNOV_DIR],
+            depends = [os.path.join(LYAPUNOV_DIR, 'lyapunov_exponents.h')]),
 
+    Extension('surface_dynamics.interval_exchanges.iet_family',
+            sources = [os.path.join('surface_dynamics', 'interval_exchanges', 'iet_family.pyx')])
+
+    ]
 
 setup(name='surface_dynamics',
       version=version,
@@ -53,6 +57,7 @@ setup(name='surface_dynamics',
                 'surface_dynamics/interval_exchanges'],
       package_data={
           'surface_dynamics/interval_exchanges': [
+              'iet_family.pyx',
               'lyapunov_exponents/*.h',
               'lyapunov_exponents/*.c',
               'lyapunov_exponents/lyapunov_exponents.pyx'],

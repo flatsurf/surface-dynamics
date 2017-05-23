@@ -950,14 +950,32 @@ def IntervalExchangeTransformation(permutation=None,lengths=None):
 
 IET = IntervalExchangeTransformation
 
-#TODO
-# def LinearInvolution(*args,**kargs):
-#     r"""
-#     Constructs a Linear Involution from the given data
-#     """
-#     from iet import LinearInvolution as _LI
-#     pass
+def IntervalExchangeTransformationFamily(*args):
+    r"""
+    Return a linear family of interval exchange transformations
 
-# LI = LinearInvolution
+    INPUT: either an interval exchange transformation or a pair consisting of a
+    permutation and a cone
 
+    EXAMPLES::
 
+        sage: from surface_dynamics.all import *
+        sage: p = iet.Permutation([0,1,2,3,4,5],[5,4,3,2,1,0])
+        sage: rays = [[5, 1, 0, 0, 3, 8], [2, 1, 0, 3, 0, 5], [1, 0, 1, 2, 0, 3], [3, 0, 1, 0, 2, 5]]
+        sage: F = iet.IETFamily(p, rays)
+    """
+    if len(args) == 1:
+        raise NotImplementedError
+    elif len(args) == 2:
+        from .iet_family import IETFamily
+        C = args[1]
+        if isinstance(C, (tuple, list)):
+            from surface_dynamics.misc.ppl_utils import ppl_cone
+            C = ppl_cone(C)
+        else:
+            from surface_dynamics.misc.ppl_utils import ppl_convert
+            C = ppl_convert(C)
+
+        return IETFamily(args[0], C)
+
+IETFamily = IntervalExchangeTransformationFamily
