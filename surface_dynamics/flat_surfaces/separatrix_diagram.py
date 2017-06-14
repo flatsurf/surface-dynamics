@@ -2101,7 +2101,7 @@ class CylinderDiagram(SeparatrixDiagram):
         """
         if not hasattr(self,'_normal_form'):
             G = self.to_directed_graph()
-            _,m = G.canonical_label(certify=True,edge_labels=True)
+            _,m = G.canonical_label(certificate=True,edge_labels=True)
             # m = [m[i] for i in xrange(self.nseps())]
             # GG the new digraph
             # m from the digraph to its canonic labels
