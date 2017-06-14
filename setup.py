@@ -21,6 +21,7 @@ with open("README") as f:
 
 ORIGAMIS_DIR = os.path.join('surface_dynamics', 'flat_surfaces', 'origamis')
 LYAPUNOV_DIR = os.path.join('surface_dynamics', 'interval_exchanges', 'lyapunov_exponents')
+INTEGER_IET_DIR = os.path.join('surface_dynamics', 'interval_exchanges', 'integer_iet')
 
 extensions = [
     Extension('surface_dynamics.flat_surfaces.origamis.origami_dense',
@@ -35,6 +36,12 @@ extensions = [
                 os.path.join(LYAPUNOV_DIR, filename) for filename in ('lyapunov_exponents.pyx', 'generalized_permutation.c' , 'lin_alg.c', 'quad_cover.c', 'random.c', 'permutation.c')],
             include_dirs = [SAGE_SRC, LYAPUNOV_DIR] + sys.path,
             depends = [os.path.join(LYAPUNOV_DIR, 'lyapunov_exponents.h')]),
+
+    Extension('surface_dynamics.interval_exchanges.integer_iet',
+        sources = [os.path.join(INTEGER_IET_DIR, 'int_iet.c'),
+                   os.path.join(INTEGER_IET_DIR, 'integer_iet.pyx')],
+        include_dirs = [SAGE_SRC, INTEGER_IET_DIR] + sys.path,
+        depends = [os.path.join(INTEGER_IET_DIR, 'int_iet.h')]),
 
     Extension('surface_dynamics.interval_exchanges.iet_family',
             sources = [os.path.join('surface_dynamics', 'interval_exchanges', 'iet_family.pyx')],
