@@ -13,7 +13,7 @@ except ImportError:
 from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Build import cythonize
-import os
+import sys, os
 
 from surface_dynamics.version import version
 with open("README") as f:
@@ -26,18 +26,19 @@ extensions = [
     Extension('surface_dynamics.flat_surfaces.origamis.origami_dense',
             sources = [
             os.path.join(ORIGAMIS_DIR, filename) for filename in ('origami_dense.pyx', 'normal_form.c', 'lyapunov_exponents.c')],
-            include_dirs = [SAGE_SRC, ORIGAMIS_DIR],
+            include_dirs = [SAGE_SRC, ORIGAMIS_DIR] + sys.path,
             libraries = ['m'],
             ),
 
     Extension('surface_dynamics.interval_exchanges.lyapunov_exponents',
             sources = [
                 os.path.join(LYAPUNOV_DIR, filename) for filename in ('lyapunov_exponents.pyx', 'generalized_permutation.c' , 'lin_alg.c', 'quad_cover.c', 'random.c', 'permutation.c')],
-            include_dirs = [SAGE_SRC, LYAPUNOV_DIR],
+            include_dirs = [SAGE_SRC, LYAPUNOV_DIR] + sys.path,
             depends = [os.path.join(LYAPUNOV_DIR, 'lyapunov_exponents.h')]),
 
     Extension('surface_dynamics.interval_exchanges.iet_family',
-            sources = [os.path.join('surface_dynamics', 'interval_exchanges', 'iet_family.pyx')])
+            sources = [os.path.join('surface_dynamics', 'interval_exchanges', 'iet_family.pyx')],
+            include_dirs = [SAGE_SRC] + sys.path)
 
     ]
 
