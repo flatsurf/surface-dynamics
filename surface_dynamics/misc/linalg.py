@@ -25,6 +25,14 @@ def relation_space(v):
         [   1    0 -1/2  1/2]
         [   0    1 -1/2 -1/2]
 
+        sage: v = vector([1,2,5,3])
+        sage: relation_space(v)
+        Vector space of degree 4 and dimension 3 over Rational Field
+        Basis matrix:
+        [   1    0    0 -1/3]
+        [   0    1    0 -2/3]
+        [   0    0    1 -5/3]
+
     The relation space has some covariance relation with respect to matrix
     actions::
 
@@ -41,7 +49,12 @@ def relation_space(v):
         True
     """
     from sage.matrix.constructor import matrix
-    m_lengths = matrix([u.vector() for u in v])
+    try:
+        m_lengths = matrix([u.vector() for u in v])
+    except AttributeError:
+        from sage.rings.rational_field import QQ
+        v = [QQ.coerce(i) for i in v]
+        m_lengths = matrix([[i] for i in v])
     return m_lengths.left_kernel()
 
 def deformation_space(lengths):
@@ -68,6 +81,12 @@ def deformation_space(lengths):
         [ 1  0  1 -1]
         [ 0  1  1  1]
 
+        sage: v = vector([1, 5, 2, 9])
+        sage: deformation_space(v)
+        Vector space of degree 4 and dimension 1 over Rational Field
+        Basis matrix:
+        [1 5 2 9]
+
     The deformation space has some covariance relation with respect to matrix
     actions::
 
@@ -84,7 +103,13 @@ def deformation_space(lengths):
         True
     """
     from sage.matrix.constructor import matrix
-    m_lengths = matrix([u.vector() for u in lengths])
+    try:
+        m_lengths = matrix([u.vector() for u in lengths])
+    except AttributeError:
+        from sage.rings.rational_field import QQ
+        lengths = [QQ.coerce(i) for i in lengths]
+        m_lengths = matrix([[i] for i in lengths])
+
     return m_lengths.column_space()
 
 def deformation_cone(v):
