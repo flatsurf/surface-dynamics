@@ -964,10 +964,19 @@ def IntervalExchangeTransformationFamily(*args):
         sage: rays = [[5, 1, 0, 0, 3, 8], [2, 1, 0, 3, 0, 5], [1, 0, 1, 2, 0, 3], [3, 0, 1, 0, 2, 5]]
         sage: F = iet.IETFamily(p, rays)
     """
+    from .iet_family import IETFamily
+
     if len(args) == 1:
-        raise NotImplementedError
+        T = args[0]
+        from iet import IntervalExchangeTransformation
+        if not isinstance(T, IntervalExchangeTransformation):
+            raise ValueError('not an iet')
+        from surface_dynamics.misc.linalg import deformation_cone
+        from surface_dynamics.misc.ppl_utils import ppl_convert
+        C = ppl_convert(deformation_cone(T.lengths()))
+        return IETFamily(T.permutation(), C)
+
     elif len(args) == 2:
-        from .iet_family import IETFamily
         C = args[1]
         if isinstance(C, (tuple, list)):
             from surface_dynamics.misc.ppl_utils import ppl_cone
