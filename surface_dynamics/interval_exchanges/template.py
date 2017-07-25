@@ -3031,6 +3031,16 @@ class OrientablePermutationIET(PermutationIET):
             [-1 -1  0  0  1]
             [-1  0  0  0  1]
             [-1 -1 -1 -1  0]
+
+        ::
+
+            sage: p = iet.Permutation('a b c d', 'd c b a')
+            sage: R = p.rauzy_diagram()
+            sage: g = R.path(p, *'tbt')
+            sage: m = g.matrix()
+            sage: q = g.end()
+            sage: q.intersection_matrix() == m.transpose() * p.intersection_matrix() * m
+            True
         """
         if ring is None:
             from sage.rings.integer_ring import ZZ
@@ -3038,10 +3048,12 @@ class OrientablePermutationIET(PermutationIET):
         n = self.length_top()
         m = matrix(ring,n)
         for i in range(n):
+            ii = i if self._labels is None else self._labels[0][i]
             for j in range(i,n):
+                jj = j if self._labels is None else self._labels[0][j]
                 if self._twin[0][i] > self._twin[0][j]:
-                    m[i,j] = 1
-                    m[j,i] = -1
+                    m[ii,jj] = 1
+                    m[jj,ii] = -1
         return m
 
     def attached_out_degree(self):
