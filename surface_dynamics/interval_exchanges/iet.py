@@ -138,22 +138,16 @@ class IntervalExchangeTransformation(object):
             self._permutation = None
             self._lengths = []
             self._base_ring = None
+            self._vector_space = None
         else:
             self._permutation = copy(permutation)
             self._lengths = vector(lengths)
+            V = self._lengths.parent()
             self._base_ring = self._lengths.base_ring()
+            self._vector_space = V.ambient_module()
 
-    def _zero(self):
-        try:
-            return self._base_ring.zero()
-        except AttributeError:
-            return self._base_ring(0)
-
-    def _one(self):
-        try:
-            return self._base_ring.one()
-        except AttributeError:
-            return self._base_ring(1)
+    def vector_space(self):
+        return self._vector_space
 
     def base_ring(self):
         r"""
@@ -226,7 +220,8 @@ class IntervalExchangeTransformation(object):
 
         OUTPUT:
 
-        list -- the list of lengths of subinterval
+        vector -- the list of lengths of subinterval (the order of the entries
+                  correspond to the alphabet)
 
         EXAMPLES::
 
@@ -236,11 +231,11 @@ class IntervalExchangeTransformation(object):
             sage: p.lengths()
             (1, 3)
         """
-        return self._lengths[:]
+        return self._lengths.__copy__()
 
     def translations(self):
         r"""
-        Return the translations operated on each intervals.
+        Return the vector of translations operated on each intervals.
 
         EXAMPLES::
 
@@ -248,7 +243,27 @@ class IntervalExchangeTransformation(object):
             sage: p = iet.Permutation('a b c', 'c b a')
             sage: T = iet.IntervalExchangeTransformation(p, [5,1,3])
             sage: T.translations()
-            [4, -2, -6]
+            (4, -2, -6)
+
+        The order of the entries correspond to the alphabet::
+
+            sage: p = iet.Permutation('a c d b', 'b d c a', alphabet='abcd')
+            sage: T = iet.IntervalExchangeTransformation(p, [1, 1, 1, 1])
+            sage: T.translations()
+            (3, -3, 1, -1)
+
+        This vector is covariant with respect to the Rauzy matrices::
+
+            sage: p = iet.Permutation('a b c d', 'd c b a')
+            sage: R = p.rauzy_diagram()
+            sage: g = R.path(p, *'ttbtbtbtbb')
+            sage: T = g.self_similar_iet()
+            sage: for i in range(12):
+            ....:     S, code = T.zorich_move(iterations=i, data=True)
+            ....:     gg = R.path(p, *code)
+            ....:     m = gg.matrix()
+            ....:     assert m * S.lengths() == T.lengths()
+            ....:     assert m.transpose() * T.translations() == S.translations()
         """
         dom_sg = self.domain_singularities()
         im_sg = self.range_singularities()
@@ -258,7 +273,7 @@ class IntervalExchangeTransformation(object):
         top = p[0]
         bot = p[1]
 
-        translations = [None] * (max(top)+1)
+        translations = self.vector_space()()
         for i0,j in enumerate(top):
             i1 = top_twin[i0]
             translations[j] = im_sg[i1] - dom_sg[i0]
@@ -275,7 +290,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES:
 
-        Rotations::
+        The golden rotation::
 
             sage: from surface_dynamics.all import *
             sage: p = iet.Permutation('a b','b a')
@@ -284,9 +299,23 @@ class IntervalExchangeTransformation(object):
             sage: T = g.self_similar_iet()
             sage: T.sah_arnoux_fathi_invariant()
             (2)
+
+        The Sah-Arnoux-Fathi invariant is not changed under Rauzy
+        (or Zorich) induction::
+
+            sage: S = T.zorich_move(iterations=100)
+            sage: S.sah_arnoux_fathi_invariant()
+            (2)
+            sage: (T.length().n(), S.length().n())
+            (2.61803398874989, 0.000000000000000)
+
+        An other rotation::
+
             sage: g = R.path(p, 't', 'b', 'b')
             sage: T = g.self_similar_iet()
             sage: T.sah_arnoux_fathi_invariant()
+            (1)
+            sage: T.rauzy_move().sah_arnoux_fathi_invariant()
             (1)
 
         Arnoux-Yoccoz examples in genus 4::
@@ -301,6 +330,8 @@ class IntervalExchangeTransformation(object):
             sage: lengths = vector((a**4-a**3, 2*a**3-a**4, a**3, a**2, a**2, a, a, 1, 1))
             sage: T = iet.IntervalExchangeTransformation(p, lengths)
             sage: T.sah_arnoux_fathi_invariant()
+            (0, 0, 0, 0, 0, 0)
+            sage: T.zorich_move(iterations=10).sah_arnoux_fathi_invariant()
             (0, 0, 0, 0, 0, 0)
         """
         if self.base_ring() is ZZ:
@@ -547,7 +578,7 @@ class IntervalExchangeTransformation(object):
         i_other = 0
         i_self = 0
 
-        x = self._zero()
+        x = self.base_ring().zero()
         l_lengths = []
         while i_other < n_other and i_self < n_self:
             j_other = interval_other[i_other]
@@ -666,7 +697,7 @@ class IntervalExchangeTransformation(object):
 
         for step in range(n-1):
             i = 0
-            y = self._zero()
+            y = self.base_ring().zero()
             new_sg_top = []
             limits = [0]
             for j,x in enumerate(sg_top):
@@ -809,7 +840,7 @@ class IntervalExchangeTransformation(object):
             sage: t.domain_singularities()
             [0, 1, sqrt(2) + 1]
         """
-        l = [self._zero()]
+        l = [self.base_ring().zero()]
         for j in self._permutation._labels[0]:
             l.append(l[-1] + self._lengths[j])
         return l
@@ -830,7 +861,7 @@ class IntervalExchangeTransformation(object):
             sage: t.range_singularities()
             [0, sqrt(2), sqrt(2) + 1]
         """
-        l = [self._zero()]
+        l = [self.base_ring().zero()]
         for j in self._permutation._labels[1]:
             l.append(l[-1] + self._lengths[j])
         return l
@@ -1308,6 +1339,7 @@ class IntervalExchangeTransformation(object):
         """
         res = self.__class__()
         res._base_ring = self._base_ring
+        res._vector_space = self._vector_space
         res._permutation = copy(self._permutation)
         res._lengths = copy(self._lengths)
         return res
