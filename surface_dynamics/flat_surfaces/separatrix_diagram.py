@@ -2264,7 +2264,7 @@ class CylinderDiagram(SeparatrixDiagram):
             False
         """
         from sage.graphs.graph import Graph
-        G = Graph()
+        G = Graph(multiedges=True, loops=True)
         for b,t in self.cylinders():
             G.add_edges((b[0],b[j]) for j in xrange(1,len(b)))
             G.add_edges((t[0],t[j]) for j in xrange(1,len(t)))
