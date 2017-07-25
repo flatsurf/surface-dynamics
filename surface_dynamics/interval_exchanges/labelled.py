@@ -1185,6 +1185,8 @@ class FlippedLabelledPermutation(LabelledPermutation):
             sage: p == loads(dumps(p))
             True
         """
+        self._hash = None
+
         if intervals is None: intervals=[[],[]]
         if flips is None: flips = []
 
@@ -1742,8 +1744,8 @@ class LabelledRauzyDiagram(RauzyDiagram):
                 sage: R = p.rauzy_diagram()
                 sage: g = R.path(p, 't', 'b')
                 sage: T = g.self_similar_iet()
-                sage: T.lengths().base_ring()
-                Number Field in a with defining polynomial x^2 - 3*x + 1
+                sage: T.lengths().parent()
+                Vector space of dimension 2 over Number Field in a with defining polynomial x^2 - 3*x + 1
                 sage: T.lengths().n()
                 (1.00000000000000, 1.61803398874989)
 
@@ -1770,6 +1772,10 @@ class LabelledRauzyDiagram(RauzyDiagram):
             lengths = (m - a).right_kernel().basis()[0]
             if any(x <= 0 for x in lengths):
                 raise RuntimeError("wrong Perron-Frobenius eigenvector: {}".format(lengths))
+
+            # NOTE: the above code makes "lengths" with parent being the right kernel (that is
+            # a submodule of R^d)
+            lengths = lengths.parent().ambient_vector_space()(lengths)
 
             from iet import IntervalExchangeTransformation
             return IntervalExchangeTransformation(self.start(), lengths)
