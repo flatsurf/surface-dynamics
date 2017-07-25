@@ -637,8 +637,7 @@ class FlippedReducedPermutation(ReducedPermutation):
 
 class FlippedReducedPermutationIET(
     FlippedReducedPermutation,
-    FlippedPermutationIET,
-    ReducedPermutationIET):
+    FlippedPermutationIET):
     r"""
     Flipped Reduced Permutation from iet
 
@@ -714,8 +713,7 @@ class FlippedReducedPermutationIET(
 
 class FlippedReducedPermutationLI(
     FlippedReducedPermutation,
-    FlippedPermutationLI,
-    ReducedPermutationLI):
+    FlippedPermutationLI):
     r"""
     Flipped Reduced Permutation from li
 
