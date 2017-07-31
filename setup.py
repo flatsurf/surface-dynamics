@@ -6,7 +6,7 @@ It depends on distutils
 """
 
 try:
-    from sage.env import SAGE_LOCAL, SAGE_SHARE, SAGE_DOC, SAGE_SRC, SAGE_VERSION
+    from sage.env import SAGE_SRC
 except ImportError:
     raise ValueError("this package currently installs only inside SageMath (http://www.sagemath.org)")
 
@@ -41,13 +41,19 @@ extensions = [
         sources = [os.path.join(INTEGER_IET_DIR, 'int_iet.c'),
                    os.path.join(INTEGER_IET_DIR, 'integer_iet.pyx')],
         include_dirs = [SAGE_SRC, INTEGER_IET_DIR] + sys.path,
-        depends = [os.path.join(INTEGER_IET_DIR, 'int_iet.h')]),
+        depends = [os.path.join(INTEGER_IET_DIR, 'int_iet.h')])]
 
+# build the iet family only if pplpy is available
+try:
+    import ppl
+except ImportError:
+    sys.stderr.write('Warning: pplpy not installed. Will not compile iet_family\n')
+else:
+    extensions.append(
     Extension('surface_dynamics.interval_exchanges.iet_family',
             sources = [os.path.join('surface_dynamics', 'interval_exchanges', 'iet_family.pyx')],
             include_dirs = [SAGE_SRC] + sys.path)
-
-    ]
+    )
 
 setup(name='surface_dynamics',
       version=version,
@@ -78,7 +84,8 @@ setup(name='surface_dynamics',
               'normal_form.h',
               'normal_form.c',
               'lyapunov_exponents.c',
-              'lyapunov_exponents.h'],
+              'lyapunov_exponents.h',
+              'origamis.db'],
           },
       ext_modules=cythonize(extensions),
     classifiers=[
