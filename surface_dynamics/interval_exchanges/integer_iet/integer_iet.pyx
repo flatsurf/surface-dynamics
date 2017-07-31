@@ -1,4 +1,4 @@
-from libc.stdlib cimport malloc, free
+from cysignals.memory cimport check_malloc, sig_free
 
 def perm_to_twin(p):
     r"""
@@ -6,13 +6,14 @@ def perm_to_twin(p):
 
     EXAMPLES::
 
+        sage: from surface_dynamics.interval_exchanges.integer_iet.integer_iet import perm_to_twin
         sage: perm_to_twin([0,0,1,1,2,2])
         [1, 0, 3, 2, 5, 4]
     """
     n = len(p)
     if n%2 == 1:
         raise ValueError("p must have even length")
-    n = n/2
+    n = n//2
     d = {}
     for i,j in enumerate(p):
         j = int(j)
@@ -33,6 +34,7 @@ def perm_to_twin(p):
     return t
 
 cdef set_int_iet(int_iet_t t, top, bot, lengths):
+    "Initialize and set t with the data from top, bot, lengths"
     cdef int * labels
     cdef int * twin
     cdef uint64_t * clengths
@@ -40,27 +42,24 @@ cdef set_int_iet(int_iet_t t, top, bot, lengths):
     cdef int n = (len(top)+len(bot))/2
     cdef int i,j
 
-    # quick checks
+    # checks and twin construction
     lengths = map(int, lengths)
-    assert len(lengths) == n
+    if len(lengths) != n:
+        raise ValueError('invalid lengths')
     p = map(int, top + bot)
-    assert len(p) == 2*n
-    for i in range(n):
-        assert p.count(i) == 2
-    assert all(l > 0 for l in lengths)
-    assert sum(lengths[i] for i in top) == sum(lengths[i] for i in bot)
-
+    if len(p) != 2*n:
+        raise ValueError('invalid top, bot')
     python_twin = perm_to_twin(top + bot)
 
+    assert all(l > 0 for l in lengths)
+    if sum(lengths[i] for i in top) != sum(lengths[i] for i in bot):
+        raise ValueError('different lengths for top and bot')
+
+
     # fill C data
-    labels = <int *> malloc(2*n*sizeof(int));
-    twin = <int *> malloc(2*n*sizeof(int));
-    clengths = <uint64_t *> malloc(n*sizeof(uint64_t));
-    if(labels == NULL or twin == NULL or clengths == NULL):
-        free(labels)
-        free(twin)
-        free(clengths)
-        raise MemoryError("not able to allocate memory!")
+    labels = <int *> check_malloc(2*n*sizeof(int));
+    twin = <int *> check_malloc(2*n*sizeof(int));
+    clengths = <uint64_t *> check_malloc(n*sizeof(uint64_t));
 
     for i in range(2*n):
         labels[i] = p[i]
@@ -71,18 +70,27 @@ cdef set_int_iet(int_iet_t t, top, bot, lengths):
     int_iet_init(t, n)
     int_iet_set_labels_and_twin(t, labels, twin, k)
     int_iet_set_lengths(t, clengths)
-    free(twin)
-    free(labels)
-    free(clengths)
+    sig_free(twin)
+    sig_free(labels)
+    sig_free(clengths)
 
     if int_iet_check(t):
         int_iet_clear(t)
-        raise ValueError("problem with input data")
+        raise RuntimeError("invalid iet")
 
 
 def number_of_cylinders(top, bot, lengths):
     r"""
     Return the number of cylinders of a given interval exchange
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.interval_exchanges.integer_iet.integer_iet import number_of_cylinders
+
+        sage: top = [0, 1]
+        sage: bot = [1, 0]
+        sage: number_of_cylinders(top, bot, [13, 24])
+        1
     """
     cdef int_iet_t t
     set_int_iet(t, top, bot, lengths)
