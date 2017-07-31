@@ -964,7 +964,13 @@ def IntervalExchangeTransformationFamily(*args):
         sage: rays = [[5, 1, 0, 0, 3, 8], [2, 1, 0, 3, 0, 5], [1, 0, 1, 2, 0, 3], [3, 0, 1, 0, 2, 5]]
         sage: F = iet.IETFamily(p, rays)
     """
-    from .iet_family import IETFamily
+    try:
+        from .iet_family import IETFamily
+    except ImportError:
+        raise ValueError('flatsurf was compiled without support for iet_family. In order '
+                         'to compile flatsurf with iet_family support you need '
+                         'to install pplpy with the command:\n    $ sage -pip install pplpy\n'
+                         'Once done, you need to reinstall flatsurf')
 
     if len(args) == 1:
         T = args[0]
