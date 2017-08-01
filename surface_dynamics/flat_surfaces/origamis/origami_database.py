@@ -179,10 +179,9 @@ from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
 from sage.env import SAGE_SHARE
 import os
 
-from . import __path__ as db_path
-if len(db_path) != 1:
-    raise RuntimeError("error setting path for origami database")
-ORIGAMI_DB_LOCATION = os.path.join(db_path[0], 'origamis.db')
+import surface_dynamics.flat_surfaces.origamis as origamis
+db_path = os.path.abspath(os.path.dirname(origamis.__file__))
+ORIGAMI_DB_LOCATION = os.path.join(db_path, 'origamis.db')
 
 # for primitive and primitive orientation cover
 # classification of primitive group action in GAP (order < )
@@ -1353,8 +1352,8 @@ class OrigamiDatabase(SQLDatabase):
             skeleton = ORIGAMI_DB_skeleton
 
         if force_creation or not os.path.isfile(dblocation):
-            if read_only is False:
-                raise ValueError('read_only was set to False but no database exists at {}'.format(dblocation))
+            if read_only:
+                raise ValueError('read_only was set to True but no database exists at {}'.format(dblocation))
             if os.path.isfile(dblocation):
                 os.remove(dblocation)
             SQLDatabase.__init__(self,
