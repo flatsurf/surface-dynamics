@@ -889,7 +889,7 @@ class QuadraticStratumComponent(StratumComponent):
             sage: R = QuadraticStratum([2,2,2,2]).unique_component()
             sage: R.lyapunov_exponents_H_plus() # abs tol .05
             [0.651, 0.468, 0.243]
-            sage: sum(_) # abs tol .01
+            sage: sum(_) # abs tol .05
             1.3636
         """
         return self.permutation_representative(reduced=False).lyapunov_exponents_H_plus(*args, **kargs)
