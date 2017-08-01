@@ -948,6 +948,23 @@ class Permutation(SageObject):
             True
             sage: p is q
             False
+
+        TESTS::
+
+            sage: p1 = iet.Permutation('a b c', 'c b a', reduced=True)
+            sage: p2 = iet.Permutation('a b c', 'c b a', reduced=False)
+            sage: p3 = iet.Permutation('a b c', 'c b a', flips='a', reduced=True)
+            sage: p4 = iet.Permutation('a b c', 'c b a', flips='a', reduced=False)
+
+            sage: p5 = iet.GeneralizedPermutation('a a b', 'b c c', reduced=True)
+            sage: p6 = iet.GeneralizedPermutation('a a b', 'b c c', reduced=False)
+            sage: p7 = iet.GeneralizedPermutation('a a b', 'b c c', flips='a', reduced=True)
+            sage: p8 = iet.GeneralizedPermutation('a a b', 'b c c', flips='a', reduced=False)
+
+            sage: for p in (p1,p2,p3,p4,p5,p6,p7,p8):
+            ....:     q = p.__copy__()
+            ....:     assert type(p) is type(q)
+            ....:     assert p == q
         """
         q = self.__class__.__new__(self.__class__)
 
@@ -3954,7 +3971,7 @@ class OrientablePermutationIET(PermutationIET):
         if inplace:
             res = self
         else:
-            res = copy(self)
+            res = self.__copy__()
 
         wtp = res._twin[winner][side]
 

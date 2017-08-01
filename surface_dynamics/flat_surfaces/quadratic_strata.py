@@ -711,8 +711,10 @@ class QuadraticStratumComponent(StratumComponent):
         for _ in xrange(nsteps):
             while not p.has_rauzy_move(0):
                 p = p.rauzy_move(1)
+                continue
             while not p.has_rauzy_move(1):
                 p = p.rauzy_move(0)
+                continue
 
             rd = prandom.random()
             if rd < 0.1:  # inplace (symmetric)
@@ -964,13 +966,8 @@ class GenusZeroQuadraticStratumComponent(QSC):
         l1.extend([1,1])
         l1.extend(ll)
 
-        if reduced == True:
-            from surface_dynamics.interval_exchanges.reduced import ReducedPermutationLI
-            p = ReducedPermutationLI([l0,l1])
-
-        else:
-            from surface_dynamics.interval_exchanges.labelled import LabelledPermutationLI
-            p = LabelledPermutationLI([l0,l1])
+        from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
+        p = GeneralizedPermutation(l0, l1, reduced=reduced)
 
         if alphabet is not None:
             p.alphabet(alphabet)
@@ -1033,13 +1030,8 @@ class GenusOneQuadraticStratumComponent(QSC):
             for i in xrange(sum(z[:k])+1,sum(z[:k+1])):
                 del l0[2*i+k]
 
-        if reduced == True:
-            from surface_dynamics.interval_exchanges.reduced import ReducedPermutationLI
-            p = ReducedPermutationLI([l0,l1])
-
-        else:
-            from surface_dynamics.interval_exchanges.labelled import LabelledPermutationLI
-            p = LabelledPermutationLI([l0,l1])
+        from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
+        p = GeneralizedPermutation(l0, l1, reduced=reduced)
 
         if alphabet is not None:
             p.alphabet(alphabet)
@@ -1107,13 +1099,8 @@ class GenusTwoHyperellipticQuadraticStratumComponent(QSC):
 
         l1.extend(ll)
 
-        if reduced == True:
-            from surface_dynamics.interval_exchanges.reduced import ReducedPermutationLI
-            p = ReducedPermutationLI([l0,l1])
-
-        else:
-            from surface_dynamics.interval_exchanges.labelled import LabelledPermutationLI
-            p = LabelledPermutationLI([l0,l1])
+        from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
+        p = GeneralizedPermutation(l0, l1, reduced=reduced)
 
         if alphabet is not None:
             p.alphabet(alphabet)
@@ -1183,13 +1170,8 @@ class GenusTwoNonhyperellipticQuadraticStratumComponent(QSC):
                 if i in l1: del l1[l1.index(i)]
                 if i in l1: del l1[l1.index(i)]
 
-        if reduced == True:
-            from surface_dynamics.interval_exchanges.reduced import ReducedPermutationLI
-            p = ReducedPermutationLI([l0,l1])
-
-        else:
-            from surface_dynamics.interval_exchanges.labelled import LabelledPermutationLI
-            p = LabelledPermutationLI([l0,l1])
+        from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
+        p = GeneralizedPermutation(l0, l1, reduced=reduced)
 
         if alphabet is not None:
             p.alphabet(alphabet)
@@ -1251,13 +1233,8 @@ class HyperellipticQuadraticStratumComponent(QSC):
         l1.append('B')
         l1.extend(ll)
 
-        if reduced == True:
-            from surface_dynamics.interval_exchanges.reduced import ReducedPermutationLI
-            p = ReducedPermutationLI([l0,l1])
-
-        else:
-            from surface_dynamics.interval_exchanges.labelled import LabelledPermutationLI
-            p = LabelledPermutationLI([l0,l1])
+        from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
+        p = GeneralizedPermutation(l0, l1, reduced=reduced)
 
         if alphabet is not None:
             p.alphabet(alphabet)
@@ -1357,13 +1334,8 @@ class ConnectedQuadraticStratumComponent(QSC):
                 del l0[l0.index(i)]
                 del l1[l1.index(i)]
 
-        if reduced == True:
-            from surface_dynamics.interval_exchanges.reduced import ReducedPermutationLI
-            p = ReducedPermutationLI([l0,l1])
-
-        else:
-            from surface_dynamics.interval_exchanges.labelled import LabelledPermutationLI
-            p = LabelledPermutationLI([l0,l1])
+        from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
+        p = GeneralizedPermutation(l0, l1, reduced=reduced)
 
         if alphabet is not None:
             p.alphabet(alphabet)
@@ -1455,13 +1427,8 @@ class RegularExceptionalQuadraticStratumComponent(QSC):
 
         l1.extend(ll)
 
-        if reduced == True:
-            from surface_dynamics.interval_exchanges.reduced import ReducedPermutationLI
-            p = ReducedPermutationLI([l0,l1])
-
-        else:
-            from surface_dynamics.interval_exchanges.labelled import LabelledPermutationLI
-            p = LabelledPermutationLI([l0,l1])
+        from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
+        p = GeneralizedPermutation(l0, l1, reduced=reduced)
 
         if alphabet:
             p.alphabet(alphabet)
@@ -1546,13 +1513,8 @@ class IrregularExceptionalQuadraticStratumComponent(QSC):
 
         l1.extend(ll)
 
-        if reduced == True:
-            from surface_dynamics.interval_exchanges.reduced import ReducedPermutationLI
-            p = ReducedPermutationLI([l0,l1])
-
-        else:
-            from surface_dynamics.interval_exchanges.labelled import LabelledPermutationLI
-            p = LabelledPermutationLI([l0,l1])
+        from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
+        p = GeneralizedPermutation(l0, l1, reduced=reduced)
 
         if alphabet:
             p.alphabet(alphabet)
