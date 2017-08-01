@@ -925,7 +925,7 @@ class AbelianStratumComponent(StratumComponent):
             H_4(3, 2, 1, 0)^c
             sage: p.marking().left()
             4
-            sage: p.rauzy_diagram()  # long time
+            sage: p.rauzy_diagram()  # not tested
             Rauzy diagram with 1060774 permutations
 
             sage: p = cc.permutation_representative(left_degree=2); p
@@ -935,7 +935,7 @@ class AbelianStratumComponent(StratumComponent):
             H_4(3, 2, 1, 0)^c
             sage: p.marking().left()
             3
-            sage: p.rauzy_diagram()  # long time
+            sage: p.rauzy_diagram()  # not tested
             Rauzy diagram with 792066 permutations
 
             sage: p = cc.permutation_representative(left_degree=1); p
@@ -945,7 +945,7 @@ class AbelianStratumComponent(StratumComponent):
             H_4(3, 2, 1, 0)^c
             sage: p.marking().left()
             2
-            sage: p.rauzy_diagram()  # long time
+            sage: p.rauzy_diagram()  # not tested
             Rauzy diagram with 538494 permutations
 
             sage: p = cc.permutation_representative(left_degree=0); p
@@ -955,7 +955,7 @@ class AbelianStratumComponent(StratumComponent):
             H_4(3, 2, 1, 0)^c
             sage: p.marking().left()
             1
-            sage: p.rauzy_diagram()  # long time
+            sage: p.rauzy_diagram()  # not tested
             Rauzy diagram with 246914 permutations
         """
         stratum = self.stratum()
@@ -1289,31 +1289,7 @@ class AbelianStratumComponent(StratumComponent):
             ***********
         """
         p = self.permutation_representative(reduced=True)
-        p.alphabet(range(len(p)))
-        waiting = set([p])
-        res = set([])
-        N = self.stratum().dimension()
-
-        while waiting:
-            p = waiting.pop()
-            s = set([p.rauzy_move('top','left'),
-                     p.rauzy_move('bot','left'),
-                     p.symmetric()])
-
-            for i in xrange(N):
-                ss = set([])
-                for p in s:
-                    if p.is_standard() and p not in res:
-                        res.add(p)
-                        if i > N//2:
-                            waiting.add(p)
-                    ss.add(p.rauzy_move('top','left'))
-                    ss.add(p.rauzy_move('bot','left'))
-                    ss.add(p.symmetric())
-                s = ss
-
-        assert len(res) == self.standard_permutations_number()
-        return sorted(res)
+        return sorted(q for q in p.rauzy_diagram(symmetric=True) if q.is_standard())
 
     def one_cylinder_diagram(self):
         r"""
@@ -2109,7 +2085,7 @@ class NonHypAbelianStratumComponent(ASC):
             Rauzy diagram with 155680 permutations
             sage: c.rauzy_class_cardinality(left_degree=3)
             155680
-            sage: c.rauzy_diagram(left_degree=3, reduced=False)  # long time
+            sage: c.rauzy_diagram(left_degree=3, reduced=False)  # not tested
             Rauzy diagram with 311360 permutations
             sage: c.rauzy_class_cardinality(left_degree=3, reduced=False)
             311360
@@ -2118,7 +2094,7 @@ class NonHypAbelianStratumComponent(ASC):
             Rauzy diagram with 18043 permutations
             sage: c.rauzy_class_cardinality(left_degree=0)
             18043
-            sage: cc.rauzy_diagram(left_degree=0, reduced=False) # long time
+            sage: cc.rauzy_diagram(left_degree=0, reduced=False) # not tested
             Rauzy diagram with 288688 permutations
             sage: c.rauzy_class_cardinality(left_degree=0,reduced=False)
             288688
@@ -2595,7 +2571,7 @@ class OddAbelianStratumComponent(ASC):
             H_4(4, 2, 0)^odd
             sage: p.marking().left()
             5
-            sage: p.rauzy_diagram()   # long time
+            sage: p.rauzy_diagram()   # not tested
             Rauzy diagram with 147090 permutations
 
             sage: p = c.permutation_representative(left_degree=2); p
