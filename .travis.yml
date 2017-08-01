@@ -1,0 +1,12 @@
+dist: trusty
+sudo: required
+language: python
+before_install:
+  - sudo apt-get -qq update
+  - apt-cache search sagemath
+# command to install dependencies
+install: 
+  - sage -pip install --verbose --user .
+# command to run tests
+script:
+  - sage -t --long surface_dynamics/
