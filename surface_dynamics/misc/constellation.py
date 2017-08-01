@@ -455,7 +455,7 @@ class Constellation_class(Element):
         """
         if self._connected:
             return [self]
-        G = Graph()
+        G = Graph(loops=True, multiedges=True)
         for p in self._g:
             G.add_edges(enumerate(p))
         m = G.connected_components()
