@@ -20,7 +20,7 @@ from sage.env import SAGE_SHARE
 from . import __path__ as db_path
 if len(db_path) != 1:
     raise RuntimeError("problem with setting paths")
-db_path = db_path[0]
+db_path = os.path.abspath(db_path[0])
 
 def line_count(filename):
     r"""
@@ -135,9 +135,13 @@ class GenericRepertoryDatabase:
             sage: C = CylinderDiagrams(tmp_dir(), "cylinder_diagrams", read_only=False)
             sage: C.update(AbelianStratum(4))
             sage: import os
-            sage: os.listdir(C.path)
-            ['cyl_diags-4-odd-1', 'cyl_diags-4-hyp-2', 'cyl_diags-4-odd-2',
-             'cyl_diags-4-odd-3', 'cyl_diags-4-hyp-3', 'cyl_diags-4-hyp-1']
+            sage: sorted(os.listdir(C.path))
+            ['cyl_diags-4-hyp-1',
+             'cyl_diags-4-hyp-2',
+             'cyl_diags-4-hyp-3',
+             'cyl_diags-4-odd-1',
+             'cyl_diags-4-odd-2',
+             'cyl_diags-4-odd-3']
             sage: C.clean()
             sage: os.listdir(C.path)
             []
