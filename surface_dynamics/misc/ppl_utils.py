@@ -13,28 +13,28 @@ def ppl_check_non_negative_cone(C):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.misc.ppl_utils import ppl_check_non_negative_cone
-        sage: import ppl
+        sage: from surface_dynamics.misc.ppl_utils import ppl_check_non_negative_cone # optional - pplpy
+        sage: import ppl    # optional - pplpy
 
-        sage: gs = ppl.Generator_System()
-        sage: gs.insert(ppl.point())
-        sage: gs.insert(ppl.ray(ppl.Variable(0) + ppl.Variable(2)))
-        sage: ppl_check_non_negative_cone(ppl.C_Polyhedron(gs))
+        sage: gs = ppl.Generator_System()     # optional - pplpy
+        sage: gs.insert(ppl.point())          # optional - pplpy
+        sage: gs.insert(ppl.ray(ppl.Variable(0) + ppl.Variable(2))) # optional - pplpy
+        sage: ppl_check_non_negative_cone(ppl.C_Polyhedron(gs)) # optional - pplpy
 
-        sage: gs.insert(ppl.ray(-ppl.Variable(0) - ppl.Variable(2)))
-        sage: ppl_check_non_negative_cone(ppl.C_Polyhedron(gs))
+        sage: gs.insert(ppl.ray(-ppl.Variable(0) - ppl.Variable(2))) # optional - pplpy
+        sage: ppl_check_non_negative_cone(ppl.C_Polyhedron(gs)) # optional - pplpy
         Traceback (most recent call last):
         ...
         ValueError: C must be a subcone of the non-negative cone
 
-        sage: gs = ppl.Generator_System()
-        sage: gs.insert(ppl.point(ppl.Variable(2)))
-        sage: ppl_check_non_negative_cone(ppl.C_Polyhedron(gs))
+        sage: gs = ppl.Generator_System() # optional - pplpy
+        sage: gs.insert(ppl.point(ppl.Variable(2))) # optional - pplpy
+        sage: ppl_check_non_negative_cone(ppl.C_Polyhedron(gs)) # optional - pplpy
         Traceback (most recent call last):
         ...
         ValueError: the cone does not contain zero
-        sage: gs.insert(ppl.point())
-        sage: ppl_check_non_negative_cone(ppl.C_Polyhedron(gs))
+        sage: gs.insert(ppl.point()) # optional - pplpy
+        sage: ppl_check_non_negative_cone(ppl.C_Polyhedron(gs)) # optional - pplpy
         Traceback (most recent call last):
         ...
         ValueError: should have only zero as vertices
@@ -59,10 +59,10 @@ def ppl_zero_point(n):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.misc.ppl_utils import ppl_zero_point
-        sage: ppl_zero_point(3)
+        sage: from surface_dynamics.misc.ppl_utils import ppl_zero_point # optional - pplpy
+        sage: ppl_zero_point(3)   # optional - pplpy
         point(0/1, 0/1, 0/1)
-        sage: ppl_zero_point(5)
+        sage: ppl_zero_point(5)   # optional - pplpy
         point(0/1, 0/1, 0/1, 0/1, 0/1)
     """
     z = ppl.point()
@@ -75,9 +75,9 @@ def ppl_positive_cone(n):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.misc.ppl_utils import ppl_positive_cone
-        sage: C = ppl_positive_cone(3)
-        sage: C.minimized_generators()
+        sage: from surface_dynamics.misc.ppl_utils import ppl_positive_cone # optional - pplpy
+        sage: C = ppl_positive_cone(3)  # optional - pplpy
+        sage: C.minimized_generators()  # optional - pplpy
         Generator_System {point(0/1, 0/1, 0/1), ray(0, 0, 1), ray(0, 1, 0), ray(1, 0, 0)}
     """
     gs = ppl.Generator_System(ppl_zero_point(n))
@@ -92,9 +92,9 @@ def ppl_cone(rays):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.misc.ppl_utils import ppl_cone
-        sage: C = ppl_cone([(0,1,2),(1,1,1),(1,0,1)])
-        sage: C.minimized_generators()
+        sage: from surface_dynamics.misc.ppl_utils import ppl_cone  # optional - pplpy
+        sage: C = ppl_cone([(0,1,2),(1,1,1),(1,0,1)])   # optional - pplpy
+        sage: C.minimized_generators()   # optional - pplpy
         Generator_System {point(0/1, 0/1, 0/1), ray(0, 1, 2), ray(1, 0, 1), ray(1, 1, 1)}
     """
     n = len(rays[0])
@@ -110,9 +110,9 @@ def ppl_convert(P):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.misc.ppl_utils import ppl_convert
-        sage: P = ppl_convert(Polyhedron(vertices=[(0,1,0),(1,0,1)], rays=[(0,0,1),[3,2,1]]))
-        sage: P.minimized_generators()
+        sage: from surface_dynamics.misc.ppl_utils import ppl_convert  # optional - pplpy
+        sage: P = ppl_convert(Polyhedron(vertices=[(0,1,0),(1,0,1)], rays=[(0,0,1),[3,2,1]]))  # optional - pplpy
+        sage: P.minimized_generators()  # optional - pplpy
         Generator_System {ray(0, 0, 1), point(0/1, 1/1, 0/1), point(1/1, 0/1, 1/1), ray(3, 2, 1)}
     """
     if isinstance(P, ppl.C_Polyhedron):
