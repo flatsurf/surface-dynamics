@@ -33,3 +33,9 @@ nice examples
 - interval exchanges in the non-orientable case
     - minimal component of the Rauzy diagram
     - orientation cover
+
+- separate topological surfaces
+
+- more on geometry of surfaces (uniformization, quasi-conformal mappings, etc)
+
+- Ribbon graphs https://github.com/riccardomurri/fatghol

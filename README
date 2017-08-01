@@ -12,6 +12,7 @@ This package is based on `SageMath <http://www.sagemath.org>`_ and relies heavil
 * gmp or mpir for arbitrary precision arithmetic
 * PARI/GP for number field computations
 * GAP for finite groups representation and permutation groups
+* PPL (Parma Polyhedra Library) for Polytope computations
 
 Prerequisites
 -------------
