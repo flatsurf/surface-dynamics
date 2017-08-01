@@ -179,8 +179,10 @@ from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
 from sage.env import SAGE_SHARE
 import os
 
-import surface_dynamics.flat_surfaces.origamis as origamis
-db_path = os.path.abspath(os.path.dirname(origamis.__file__))
+from . import __path__ as db_path
+if len(db_path) != 1:
+    raise RuntimeError("problem with setting paths")
+db_path = os.path.abspath(db_path[0])
 ORIGAMI_DB_LOCATION = os.path.join(db_path, 'origamis.db')
 
 # for primitive and primitive orientation cover
