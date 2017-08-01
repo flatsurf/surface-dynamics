@@ -400,19 +400,19 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
                 o = reps_o[e0]
                 if label == 's':
                     m = copy(s_mat)
-                    m[n:,:n] = o.y().matrix().transpose()
+                    m[n:,:n] = o.u().matrix().transpose()
                     reps[e1] = m * reps[e0]
                     reps_o[e1] = o.S_action()
                 elif label == 'l':
                     o = o.L_action()
                     m = copy(l_mat)
-                    m[:n,n:] = (~o.y()).matrix().transpose()
+                    m[:n,n:] = (~o.u()).matrix().transpose()
                     reps[e1] = m * reps[e0]
                     reps_o[e1] = o
                 elif label == 'r':
                     o = o.R_action()
                     m = copy(l_mat)
-                    m[n:,:n] = (~o.x()).matrix().transpose()
+                    m[n:,:n] = (~o.r()).matrix().transpose()
                     reps[e1] = m * reps[e0]
                     reps_o[e1] = o
                 else:
@@ -425,15 +425,15 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
             if label == 's':
                 oo = o.S_action()
                 m = copy(s_mat)
-                m[n:,:n] = o.y().matrix().transpose()
+                m[n:,:n] = o.u().matrix().transpose()
             elif label == 'l':
                 oo = o.L_action()
                 m = copy(l_mat)
-                m[:n,n:] = (~oo.y()).matrix().transpose()
+                m[:n,n:] = (~oo.u()).matrix().transpose()
             elif label == 'r':
                 oo = o.R_action()
                 m = copy(l_mat)
-                m[:n,n:] = (~oo.x()).matrix().transpose()
+                m[:n,n:] = (~oo.r()).matrix().transpose()
             else:
                 raise ValueError, "does know how to do only with slr"
 

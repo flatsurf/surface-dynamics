@@ -85,6 +85,13 @@ from surface_dynamics.misc.permutation import (perm_check, equalize_perms, init_
         perm_orbit, perm_invert, perms_canonical_labels,
         perms_transitive_components, canonical_perm, canonical_perm_i)
 
+def test_func(d):
+    from sage.symbolic.ring import SR
+
+    x = [None] * d
+    subs = {SR.var('x%d'%i): x[i] for i in range(d)}
+    return subs.keys()
+
 #
 # Abelian and quadratic Separatrix Diagram
 #
@@ -1424,6 +1431,7 @@ def cyclic_direction(x,y,z):
     if (x < y < z) or (y < z < x) or (z < x < y): return 1
     else: return -1
 
+
 # iterators
 
 def separatrix_diagram_fast_iterator(profile,ncyls=None):
@@ -2703,6 +2711,109 @@ class CylinderDiagram(SeparatrixDiagram):
                 m[i,b] += -1
         return m
 
+    def length_cone(self):
+        r"""
+        Return the cone of lengths
+
+        EXAMPLES:
+
+        The unique cylinder diagram in H(2) with two cylinders::
+
+            sage: from surface_dynamics.all import *
+            sage: cd, = AbelianStratum(2).cylinder_diagrams(2)
+            sage: cd
+            (0,1)-(0,2) (2)-(1)
+            sage: C = cd.length_cone()
+            sage: C.rays_list()
+            [[1, 0, 0], [0, 1, 1]]
+        """
+        ncyls = self.ncyls()
+        nseps = self.nseps()
+        eqns = []
+        ieqs = []
+        
+        # each length is >= 1
+        for i in range(nseps):
+            v = [0] * (nseps)
+            v[i] = 1
+            ieqs.append([-1] + v)
+
+        # constraints on separatrices:
+        #  top length = bot length
+        for i,(top,bot) in enumerate(self.cylinders()):
+            v = [0] * nseps
+            for j in top:
+                v[j] += 1
+            for j in bot:
+                v[j] -= 1
+            eqns.append([0] + v)
+        
+        from sage.geometry.polyhedron.constructor import Polyhedron
+        from sage.rings.rational_field import QQ
+        return Polyhedron(ieqs=ieqs, eqns=eqns, base_ring=QQ)
+
+    def length_generating_series(self, var='w', verbose=False):
+        r"""
+        EXAMPLES::
+
+            sage: c = CylinderDiagram('(0,1)-(0,2,5) (2,3)-(4) (4,5)-(1,3)')
+            sage: c.length_generating_series()
+            w0^3*w1^4*w2/((w0*w1*w2 - 1)*(w0*w1 - 1)^2*(w1 - 1))
+            sage: c.length_generating_series('z')
+            z0^3*z1^2*z2^3/((z0*z1*z2 - 1)*(z0*z2 - 1)*(z1*z2 - 1)*(z0 - 1))
+
+        An example in H(2,2) where the cone is not simple::
+
+            sage: c = CylinderDiagram('(0,5)-(3,4) (1,4)-(0,2) (2,3)-(1,5)')
+            sage: c.length_generating_series()
+            w0^2*w1^2*w2^2/((w0*w1 - 1)*(w1*w2 - 1)*(w0 - 1)*(w2 - 1)) +
+            w0^2*w1^2*w2^2/((w0*w1*w2 - 1)*(w0*w1 - 1)*(w0*w2 - 1)*(1/w0 - 1)) +
+            w0^2*w1^2*w2^2/((w0*w1*w2 - 1)*(w0*w2 - 1)*(w1*w2 - 1)*(1/w2 - 1))
+        """
+        from sage.interfaces import latte
+        from sage.rings.integer_ring import ZZ
+        from sage.symbolic.ring import SR
+        from sage.misc.sage_eval import sage_eval
+
+        m = self.ncyls()
+        d = self.nseps()
+
+        #Rs = PolynomialRing(ZZ, 's', d)
+        #Rw = PolynomialRing(ZZ, 'w', m)
+
+        P = self.length_cone()
+        ans = latte.count(P.cdd_Hrepresentation(),
+              cdd=True,
+              raw_output=True,
+              multivariate_generating_function=True)
+        for i in range(d):
+            ans = ans.replace('x[%d]'%i, 'x%d'%i)
+
+        if verbose:
+            print('-'*60)
+            print('LATTE OUTPUT:')
+            print(ans)
+            print('-'*60)
+        res = SR.zero()
+        gen_dict = {'x%d'%i: SR.var('x%d'%i) for i in range(d)}
+        for term in ans.splitlines():
+            #num, den = term.split('/')
+            #num = sage_eval(num, locals=gen_dict)
+            #den = sage_eval(den, locals=gen_dict)
+            res += SR(term)
+        if verbose:
+            print('separatrix polynomial:')
+            print(res)
+
+        gens = {}
+
+        w = [SR.var('%s%d'%(var,i)) for i in range(m)]
+        x = [None] * d
+        for i,(top,bot) in enumerate(self.cylinders()):
+            for j in top:
+                x[j] = w[i]
+        
+        return res.subs({SR.var('x%d'%i): x[i] for i in range(d)})
 
     #
     # Abelian differentials / coordinates
@@ -3386,4 +3497,124 @@ class CylinderDiagram(SeparatrixDiagram):
 #        return TranslationSurfaceChainComplex(ring,vertices,edges,angles)
 
 
+
+
+class QuadraticCylinderDiagram(SageObject):
+    r"""
+    Cylinder diagram for quadratic differentials
+
+    Cylinder diagrams are encoded as a Ribbon graph together with a pairing of
+    faces (in particular the number of faces must be even).
+    """
+    def __init__(self, *args, **kwds):
+        r"""
+        INPUT:
+
+        - ``g`` -- a ribbon graph
+
+        - ``pairing`` -- the pairing of faces of g (= permutation)
+        """
+        if args and kwds:
+            raise ValueError
+
+        from homology import RibbonGraph
+        if args:
+            if not len(args) == 2:
+                raise ValueError
+            g = args[0]
+            if not isinstance(g, RibbonGraph):
+                raise ValueError
+            p = args[1]
+        else:
+            g = RibbonGraph(vertices = kwds.pop('vertices', None),
+                            edges = kwds.pop('edges', None),
+                            faces = kwds.pop('faces', None))
+            p = kwds.pop('pairing', None)
+            if kwds:
+                raise ValueError('unknown arguments {}'.format(kwds.keys()))
+
+        from surface_dynamics.misc.permutation import init_perm
+        self._g = g
+        self._p = init_perm(p)
+
+        self._check()
+
+    def _check(self):
+        self._g._check()
+
+        f = self._g.num_faces()
+        if f % 2:
+            raise ValueError('the number of faces of the fatgraph must be even')
+        if len(self._p) != f:
+            raise ValueError('the pairing has wrong length')
+        for i,j in enumerate(self._p):
+            if i == j or self._p[j] != i:
+                raise ValueError('the pairing is not an involution')
+
+        from sage.graphs.graph import Graph
+        G = Graph(loops=True, multiedges=True)
+        for i in range(self._g._total_darts):
+            if self._g._active_darts[i]:
+                G.add_edge(i,self._g._vertices[i])
+                G.add_edge(i,self._g._edges[i])
+                G.add_edge(i,self._g._faces[i])
+        for i,j in enumerate(self._p):
+            k1 = self._g._face_cycles[i][0]
+            k2 = self._g._face_cycles[j][0]
+            G.add_edge(k1, k2)
+
+        if not G.is_connected():
+            raise ValueError("the graph is not connected")
+
+    def stratum(self):
+        from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
+        return QuadraticStratum([len(t)-2 for t in self._g._face_cycles])
+
+    def num_edges(self):
+        return self._g.num_edges()
+
+    def edges(self):
+        return self._g.edges()
+
+    def num_cylinders(self):
+        return len(self._p) // 2
+
+    def __repr__(self):
+        return 'Cylinder diagram of quadratic differential with {} cylidners'.format(self.num_cylinders())
+
+    def length_cone(self):
+        r"""
+        Return the polytope of admissible lengths.
+
+        EXAMPLES::
+
+            sage: rg = RibbonGraph(edges='(1,2)(3,4)(5,6)(7,8)(9,10)(11,12)', faces='(1,2)(3,4,6)(5)(8)(7,9,10)(11,12)', connected=False)
+            sage: q = QuadraticCylinderDiagram(rg, [1,0,4,5,2,3])
+            sage: q.stratum()
+            Q_1(1^2, 0^2, -1^2)
+            sage: L = q.length_cone()
+            sage: L
+            A 3-dimensional polyhedron in QQ^6 defined as the convex hull of 1 vertex and 3 rays
+        """
+        g = self._g
+        ieqs = []
+        eqns = []
+
+        # edges have length >= 0
+        for i in range(self.num_edges()):
+            v = [0] * self.num_edges()
+            v[i] = 1
+            ieqs.append([0] + v)
+
+        # equality of the two boundaries
+        for i,j in enumerate(self._p):
+            v = [0] * g.num_edges()
+            for k in g._face_cycles[i]:
+                v[g._dart_to_edge_index[k]] += 1
+            for k in g._face_cycles[j]:
+                v[g._dart_to_edge_index[k]] -= 1
+            eqns.append([0] + v)
+
+        from sage.geometry.polyhedron.constructor import Polyhedron
+        return Polyhedron(eqns=eqns, ieqs=ieqs)
 
