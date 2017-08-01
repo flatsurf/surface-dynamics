@@ -175,7 +175,7 @@ from surface_dynamics.flat_surfaces.origamis.origami import Origami, Origami_den
 from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum
 from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
 
-from sage.databases.sql_db import SQLDatabase, SQLQuery
+from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
 from sage.env import SAGE_SHARE
 import os
 
@@ -1353,7 +1353,8 @@ class OrigamiDatabase(SQLDatabase):
             skeleton = ORIGAMI_DB_skeleton
 
         if force_creation or not os.path.isfile(dblocation):
-            assert read_only is False
+            if read_only is False:
+                raise ValueError('read_only was set to False but no database exists at {}'.format(dblocation))
             if os.path.isfile(dblocation):
                 os.remove(dblocation)
             SQLDatabase.__init__(self,
