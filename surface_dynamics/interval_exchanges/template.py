@@ -208,6 +208,152 @@ class Permutation(SageObject):
     _labels = None
     _flips = None
 
+    def __init__(self, intervals=None, alphabet=None, reduced=False, flips=None):
+        r"""
+        INPUT:
+
+        - ``intervals`` - the intervals as a list of two lists
+
+        - ``alphabet`` - something that should be converted to an alphabe
+
+        - ``reduced`` - (boolean) whether the permutation is reduced or labeled
+
+        - ``flips`` - (optional) a list of letters of the alphabet to be flipped (in which
+          case the permutation corresponds to non-orientable surface)
+
+        TESTS::
+
+            sage: from surface_dynamics.interval_exchanges.labelled import LabelledPermutationIET
+
+            sage: p1 = LabelledPermutationIET([[1,2,3],[3,2,1]])
+            sage: p1 == loads(dumps(p1))
+            True
+            sage: p2 = LabelledPermutationIET([['a', 'b', 'c'], ['c', 'b', 'a']])
+            sage: p2 == loads(dumps(p2))
+            True
+            sage: p3 = LabelledPermutationIET([['1','2','3'],['3','2','1']])
+            sage: p3 == loads(dumps(p3))
+            True
+            sage: from surface_dynamics.interval_exchanges.labelled import LabelledPermutationLI
+            sage: p1 = LabelledPermutationLI([[1,2,2],[3,3,1]])
+            sage: p1 == loads(dumps(p1))
+            True
+            sage: p2 = LabelledPermutationLI([['a','b','b'],['c','c','a']])
+            sage: p2 == loads(dumps(p2))
+            True
+            sage: p3 = LabelledPermutationLI([['1','2','2'],['3','3','1']])
+            sage: p3 == loads(dumps(p3))
+            True
+
+            sage: from surface_dynamics.interval_exchanges.reduced import ReducedPermutationIET
+            sage: p = ReducedPermutationIET()
+            sage: loads(dumps(p)) == p
+            True
+            sage: p = ReducedPermutationIET([['a','b'],['b','a']])
+            sage: loads(dumps(p)) == p
+            True
+            sage: from surface_dynamics.interval_exchanges.reduced import ReducedPermutationLI
+            sage: p = ReducedPermutationLI()
+            sage: loads(dumps(p)) == p
+            True
+            sage: p = ReducedPermutationLI([['a','a'],['b','b']])
+            sage: loads(dumps(p)) == p
+            True
+
+            sage: from surface_dynamics.interval_exchanges.labelled import FlippedLabelledPermutationIET
+            sage: p = FlippedLabelledPermutationIET([['a','b'],['a','b']],flips='a')
+            sage: p == loads(dumps(p))
+            True
+            sage: p = FlippedLabelledPermutationIET([['a','b'],['b','a']],flips='ab')
+            sage: p == loads(dumps(p))
+            True
+
+            sage: from surface_dynamics.interval_exchanges.labelled import FlippedLabelledPermutationLI
+            sage: p = FlippedLabelledPermutationLI([['a','a','b'],['b','c','c']],flips='a')
+            sage: p == loads(dumps(p))
+            True
+            sage: p = FlippedLabelledPermutationLI([['a','a'],['b','b','c','c']],flips='ac')
+            sage: p == loads(dumps(p))
+            True
+
+            sage: p = iet.Permutation('a b','b a',reduced=True,flips='a')
+            sage: p == loads(dumps(p))
+            True
+            sage: p = iet.Permutation('a b','b a',reduced=True,flips='b')
+            sage: p == loads(dumps(p))
+            True
+            sage: p = iet.Permutation('a b','b a',reduced=True,flips='ab')
+            sage: p == loads(dumps(p))
+            True
+            sage: p = iet.GeneralizedPermutation('a a','b b',reduced=True,flips='a')
+            sage: p == loads(dumps(p))
+            True
+            sage: p = iet.GeneralizedPermutation('a a','b b',reduced=True,flips='b')
+            sage: p == loads(dumps(p))
+            True
+            sage: p = iet.GeneralizedPermutation('a a','b b',reduced=True,flips='ab')
+            sage: p == loads(dumps(p))
+            True
+        """
+        # this constructor assumes that several methods are present
+        #  _init_twin(intervals)
+        #  _set_alphabet(alphabet)
+        #  _init_alphabet(intervals)
+        #  _init_flips(intervals, flips)
+        self._hash = None
+
+        # setting twins
+        if intervals is None:
+            self._twin = [[], []]
+        else:
+            self._init_twin(intervals)
+
+        # setting alphabet
+        if alphabet is not None:
+            self._set_alphabet(alphabet)
+        elif intervals is not None:
+            self._init_alphabet(intervals)
+
+        # optionally setting labels
+        if intervals is not None and not reduced:
+            self._labels = [
+                map(self._alphabet.rank, intervals[0]),
+                map(self._alphabet.rank, intervals[1])]
+
+        # optionally setting flips
+        if flips is not None:
+            self._init_flips(intervals, flips)
+
+    def _init_flips(self,intervals,flips):
+        r"""
+        Initialize the flip list
+
+        TESTS::
+
+            sage: from surface_dynamics.all import *
+
+            sage: iet.Permutation('a b','b a',flips='a').flips() #indirect doctest
+            ['a']
+            sage: iet.Permutation('a b','b a',flips='b').flips() #indirect doctest
+            ['b']
+            sage: iet.Permutation('a b','b a',flips='ab').flips() #indirect doctest
+            ['a', 'b']
+
+        ::
+
+            sage: iet.GeneralizedPermutation('a a','b b',flips='a').flips()
+            ['a']
+            sage: iet.GeneralizedPermutation('a a','b b',flips='b').flips()
+            ['b']
+            sage: iet.GeneralizedPermutation('a a','b b',flips='ab').flips()
+            ['a', 'b']
+        """
+        self._flips = [[1]*self.length_top(), [1]*self.length_bottom()]
+        for interval in (0,1):
+            for i,letter in enumerate(intervals[interval]):
+                if letter in flips:
+                    self._flips[interval][i] = -1
+
     def __eq__(self,other):
         r"""
         Tests equality
@@ -726,12 +872,61 @@ class Permutation(SageObject):
 
             sage: p == iet.GeneralizedPermutation(p.str())
             True
+
+        With flips::
+
+            sage: p = iet.GeneralizedPermutation('a a','b b',flips='a')
+            sage: print p.str()
+            -a -a
+             b  b
+             sage: print p.str('/')
+             -a -a/ b  b
         """
-        l = self.list()
         s = []
-        s.append(' '.join(map(str,l[0])))
-        s.append(' '.join(map(str,l[1])))
+        if self._flips is None:
+            l = self.list()
+            s.append(' '.join(map(str,l[0])))
+            s.append(' '.join(map(str,l[1])))
+        else:
+            l = self.list(flips=True)
+            s.append(' '.join(map(labelize_flip, l[0])))
+            s.append(' '.join(map(labelize_flip, l[1])))
         return sep.join(s)
+
+    def flips(self):
+        r"""
+        Returns the list of flips.
+
+        If the permutation is not a flipped permutations then ``None`` is returned.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+
+            sage: iet.Permutation('a b c', 'c b a').flips() is None
+            True
+            sage: iet.Permutation('a b c', 'c b a', flips='ac').flips()
+            ['a', 'c']
+            sage: iet.GeneralizedPermutation('a a', 'b b', flips='a').flips()
+            ['a']
+            sage: iet.GeneralizedPermutation('a a','b b', flips='b', reduced=True).flips()
+            ['b']
+        """
+        if self._flips is None:
+            return None
+
+        res = []
+        l = self.list(flips=False)
+        letters = []
+        for i,f in enumerate(self._flips[0]):
+            if f == -1 and l[0][i] not in letters:
+                res.append(l[0][i])
+                letters.append(l[0][i])
+        for i,f in enumerate(self._flips[1]):
+            if f == -1 and l[1][i] not in letters:
+                res.append(l[1][i])
+                letters.append(l[1][i])
+        return letters
 
     def __copy__(self) :
         r"""
@@ -1891,6 +2086,47 @@ class PermutationIET(Permutation):
 
         return self._twin[winner][side] % len(self) != side % len(self)
 
+    def is_irreducible(self, return_decomposition=False) :
+        r"""
+        Test irreducibility.
+
+        A permutation p = (p0,p1) is reducible if:
+        set(p0[:i]) = set(p1[:i]) for an i < len(p0)
+
+        OUTPUT:
+
+        - a boolean
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+
+            sage: p = iet.Permutation('a b c', 'c b a')
+            sage: p.is_irreducible()
+            True
+
+            sage: p = iet.Permutation('a b c', 'b a c')
+            sage: p.is_irreducible()
+            False
+
+            sage: p = iet.Permutation('a b c', 'c b a', flips=['a'])
+            sage: p.is_irreducible()
+            True
+
+        """
+        s0, s1 = 0, 0
+        for i in range(len(self)-1) :
+            s0 += i
+            s1 += self._twin[0][i]
+            if s0 == s1 :
+                if return_decomposition :
+                    return False, (self[0][:i+1], self[0][i+1:], self[1][:i+1], self[1][i+1:])
+                return False
+        if return_decomposition:
+            return True, (self[0],[],self[1],[])
+        return True
+
+
 class PermutationLI(Permutation):
     def _init_twin(self, a):
         r"""
@@ -2199,6 +2435,160 @@ class PermutationLI(Permutation):
         """
         return [self._twin[0][:],self._twin[1][:]]
 
+    def is_irreducible(self, return_decomposition=False):
+        r"""
+        Test of reducibility
+
+        A quadratic (or generalized) permutation is *reducible* if there exists
+        a decomposition
+
+        .. math::
+
+           A1 u B1 | ... | B1 u A2
+
+           A1 u B2 | ... | B2 u A2
+
+        where no corners is empty, or exactly one corner is empty
+        and it is on the left, or two and they are both on the
+        right or on the left. The definition is due to [BL08]_ where they prove
+        that the property of being irreducible is stable under Rauzy induction.
+
+        INPUT:
+
+        -  ``return_decomposition`` - boolean (default: False) - if True, and
+           the permutation is reducible, returns also the blocs A1 u B1, B1 u
+           A2, A1 u B2 and B2 u A2 of a decomposition as above.
+
+        OUTPUT:
+
+        If return_decomposition is True, returns a 2-uple
+        (test,decomposition) where test is the preceding test and
+        decomposition is a 4-uple (A11,A12,A21,A22) where:
+
+        A11 = A1 u B1
+        A12 = B1 u A2
+        A21 = A1 u B2
+        A22 = B2 u A2
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import *
+
+            sage: GP = iet.GeneralizedPermutation
+
+            sage: GP('a a','b b').is_irreducible()
+            False
+            sage: GP('a a b','b c c').is_irreducible()
+            True
+            sage: GP('1 2 3 4 5 1','5 6 6 4 3 2').is_irreducible()
+            True
+
+        TESTS::
+
+            sage: from surface_dynamics.all import *
+
+        Test reducible permutations with no empty corner::
+
+            sage: GP('1 4 1 3','4 2 3 2').is_irreducible(True)
+            (False, (['1', '4'], ['1', '3'], ['4', '2'], ['3', '2']))
+
+        Test reducible permutations with one left corner empty::
+
+            sage: GP('1 2 2 3 1','4 4 3').is_irreducible(True)
+            (False, (['1'], ['3', '1'], [], ['3']))
+            sage: GP('4 4 3','1 2 2 3 1').is_irreducible(True)
+            (False, ([], ['3'], ['1'], ['3', '1']))
+
+        Test reducible permutations with two left corner empty::
+
+            sage: GP('1 1 2 3','4 2 4 3').is_irreducible(True)
+            (False, ([], ['3'], [], ['3']))
+
+        Test reducible permutations with two right corner empty::
+
+            sage: GP('1 2 2 3 3','1 4 4').is_irreducible(True)
+            (False, (['1'], [], ['1'], []))
+            sage: GP('1 2 2','1 3 3').is_irreducible(True)
+            (False, (['1'], [], ['1'], []))
+            sage: GP('1 2 3 3','2 1 4 4 5 5').is_irreducible(True)
+            (False, (['1', '2'], [], ['2', '1'], []))
+
+        A ``NotImplementedError`` is raised when there are flips::
+
+            sage: p = iet.GeneralizedPermutation('a b c e b','d c d a e', flips='abcd', reduced=True)
+            sage: p.is_irreducible()
+            Traceback (most recent call last):
+            ...
+            NotImplementedError: irreducibility test not implemented for generalized permutations with flips
+            sage: p = iet.GeneralizedPermutation('a b c e b','d c d a e', flips='abcd', reduced=False)
+            sage: p.is_irreducible()
+            Traceback (most recent call last):
+            ...
+            NotImplementedError: irreducibility test not implemented for generalized permutations with flips
+        """
+        if self._flips is not None:
+            raise NotImplementedError('irreducibility test not implemented for generalized permutations with flips')
+
+        l0 = self.length_top()
+        l1 = self.length_bottom()
+        s0,s1 = self.list()
+
+        # testing two corners empty on the right (i12 = i22 = 0)
+        A11, A21, A12, A22 = [],[],[],[]
+
+        for i11 in range(1, l0):
+            if s0[i11-1] in A11:
+                break
+            A11 = s0[:i11]
+
+            for i21 in range(1, l1):
+                if s1[i21-1] in A21:
+                    break
+                A21 = s1[:i21]
+
+                if sorted(A11)  == sorted(A21):
+                    if return_decomposition:
+                        return False,(A11,A12,A21,A22)
+                    return False
+            A21 = []
+
+        # testing no corner empty but one or two on the left
+        t11 = t21 = False
+        A11, A12, A21, A22 = [], [], [], []
+        for i11 in range(0, l0):
+            if i11 > 0 and s0[i11-1] in A11:
+                break
+            A11 = s0[:i11]
+
+            for i21 in xrange(0, l1) :
+                if i21 > 0 and s1[i21-1] in A21:
+                    break
+                A21 = s1[:i21]
+
+                for i12 in xrange(l0 - 1, i11 - 1, -1) :
+                    if s0[i12] in A12 or s0[i12] in A21:
+                        break
+                    A12 = s0[i12:]
+
+                    for i22 in xrange(l1 - 1, i21 - 1, -1) :
+                        if s1[i22] in A22 or s1[i22] in A11:
+                            break
+                        A22 = s1[i22:]
+
+                        if sorted(A11 + A22) == sorted(A12 + A21) :
+                            if return_decomposition :
+                                return False, (A11,A12,A21,A22)
+                            return False
+                    A22 = []
+                A12 = []
+            A21 = []
+
+
+        if return_decomposition:
+            return True, ()
+        return True
+
+
     def to_cylindric(self):
         r"""
         Return a cylindric permutation in the same extended Rauzy class
@@ -2265,23 +2655,6 @@ class PermutationLI(Permutation):
             False
         """
         return self._twin[0][-1] == (1,0) or self._twin[1][-1] == (0,0)
-
-    def stratum(self):
-        r"""
-        Returns the stratum associated to self
-
-        EXAMPLES::
-
-            sage: from surface_dynamics.all import *
-
-            sage: p = iet.GeneralizedPermutation('a b b','c c a')
-            sage: p.stratum()
-            Q_0(-1^4)
-        """
-        from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
-        if self.is_irreducible():
-            return QuadraticStratum([x-2 for x in self.profile()])
-        raise ValueError("stratum is well defined only for irreducible permutations")
 
     def profile(self):
         r"""
@@ -2915,41 +3288,6 @@ class OrientablePermutationIET(PermutationIET):
             False
         """
         return all(self._twin[0][i] == i for i in range(len(self)))
-
-    def is_irreducible(self, return_decomposition=False) :
-        r"""
-        Tests the irreducibility.
-
-        An abelian permutation p = (p0,p1) is reducible if:
-        set(p0[:i]) = set(p1[:i]) for an i < len(p0)
-
-        OUTPUT:
-
-        - a boolean
-
-        EXAMPLES::
-
-            sage: from surface_dynamics.all import *
-
-            sage: p = iet.Permutation('a b c', 'c b a')
-            sage: p.is_irreducible()
-            True
-
-            sage: p = iet.Permutation('a b c', 'b a c')
-            sage: p.is_irreducible()
-            False
-        """
-        s0, s1 = 0, 0
-        for i in range(len(self)-1) :
-            s0 += i
-            s1 += self._twin[0][i]
-            if s0 == s1 :
-                if return_decomposition :
-                    return False, (self[0][:i+1], self[0][i+1:], self[1][:i+1], self[1][i+1:])
-                return False
-        if return_decomposition:
-            return True, (self[0],[],self[1],[])
-        return True
 
     #TODO: change the name
     def decompose(self):
@@ -4140,214 +4478,26 @@ class OrientablePermutationLI(PermutationLI):
 
         return res
 
-    def is_irreducible(self, return_decomposition=False):
+    def stratum(self):
         r"""
-        Test of reducibility
-
-        A quadratic (or generalized) permutation is *reducible* if there exists
-        a decomposition
-
-        .. math::
-
-           A1 u B1 | ... | B1 u A2
-
-           A1 u B2 | ... | B2 u A2
-
-        where no corners is empty, or exactly one corner is empty
-        and it is on the left, or two and they are both on the
-        right or on the left. The definition is due to [BL08]_ where they prove
-        that the property of being irreducible is stable under Rauzy induction.
-
-        INPUT:
-
-        -  ``return_decomposition`` - boolean (default: False) - if True, and
-           the permutation is reducible, returns also the blocs A1 u B1, B1 u
-           A2, A1 u B2 and B2 u A2 of a decomposition as above.
-
-        OUTPUT:
-
-        If return_decomposition is True, returns a 2-uple
-        (test,decomposition) where test is the preceding test and
-        decomposition is a 4-uple (A11,A12,A21,A22) where:
-
-        A11 = A1 u B1
-        A12 = B1 u A2
-        A21 = A1 u B2
-        A22 = B2 u A2
+        Returns the stratum associated to self
 
         EXAMPLES::
 
             sage: from surface_dynamics.all import *
 
-            sage: GP = iet.GeneralizedPermutation
-
-            sage: GP('a a','b b').is_irreducible()
-            False
-            sage: GP('a a b','b c c').is_irreducible()
-            True
-            sage: GP('1 2 3 4 5 1','5 6 6 4 3 2').is_irreducible()
-            True
-
-        TESTS::
-
-            sage: from surface_dynamics.all import *
-
-        Test reducible permutations with no empty corner::
-
-            sage: GP('1 4 1 3','4 2 3 2').is_irreducible(True)
-            (False, (['1', '4'], ['1', '3'], ['4', '2'], ['3', '2']))
-
-        Test reducible permutations with one left corner empty::
-
-            sage: GP('1 2 2 3 1','4 4 3').is_irreducible(True)
-            (False, (['1'], ['3', '1'], [], ['3']))
-            sage: GP('4 4 3','1 2 2 3 1').is_irreducible(True)
-            (False, ([], ['3'], ['1'], ['3', '1']))
-
-        Test reducible permutations with two left corner empty::
-
-            sage: GP('1 1 2 3','4 2 4 3').is_irreducible(True)
-            (False, ([], ['3'], [], ['3']))
-
-        Test reducible permutations with two right corner empty::
-
-            sage: GP('1 2 2 3 3','1 4 4').is_irreducible(True)
-            (False, (['1'], [], ['1'], []))
-            sage: GP('1 2 2','1 3 3').is_irreducible(True)
-            (False, (['1'], [], ['1'], []))
-            sage: GP('1 2 3 3','2 1 4 4 5 5').is_irreducible(True)
-            (False, (['1', '2'], [], ['2', '1'], []))
-
-        AUTHORS:
-
-        - Vincent Delecroix (2008-12-20)
+            sage: p = iet.GeneralizedPermutation('a b b','c c a')
+            sage: p.stratum()
+            Q_0(-1^4)
         """
-        l0 = self.length_top()
-        l1 = self.length_bottom()
-        s0,s1 = self.list()
+        if self.is_irreducible():
+            from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
+            return QuadraticStratum([x-2 for x in self.profile()])
+        raise ValueError("stratum is well defined only for irreducible permutations")
 
-        # testing two corners empty on the right (i12 = i22 = 0)
-        A11, A21, A12, A22 = [],[],[],[]
+FlippedPermutation = Permutation
 
-        for i11 in range(1, l0):
-            if s0[i11-1] in A11:
-                break
-            A11 = s0[:i11]
-
-            for i21 in range(1, l1):
-                if s1[i21-1] in A21:
-                    break
-                A21 = s1[:i21]
-
-                if sorted(A11)  == sorted(A21):
-                    if return_decomposition:
-                        return False,(A11,A12,A21,A22)
-                    return False
-            A21 = []
-
-        # testing no corner empty but one or two on the left
-        t11 = t21 = False
-        A11, A12, A21, A22 = [], [], [], []
-        for i11 in range(0, l0):
-            if i11 > 0 and s0[i11-1] in A11:
-                break
-            A11 = s0[:i11]
-
-            for i21 in xrange(0, l1) :
-                if i21 > 0 and s1[i21-1] in A21:
-                    break
-                A21 = s1[:i21]
-
-                for i12 in xrange(l0 - 1, i11 - 1, -1) :
-                    if s0[i12] in A12 or s0[i12] in A21:
-                        break
-                    A12 = s0[i12:]
-
-                    for i22 in xrange(l1 - 1, i21 - 1, -1) :
-                        if s1[i22] in A22 or s1[i22] in A11:
-                            break
-                        A22 = s1[i22:]
-
-                        if sorted(A11 + A22) == sorted(A12 + A21) :
-                            if return_decomposition :
-                                return False, (A11,A12,A21,A22)
-                            return False
-                    A22 = []
-                A12 = []
-            A21 = []
-
-
-        if return_decomposition:
-            return True, ()
-        return True
-
-class FlippedPermutation(Permutation):
-    r"""
-    Template for flipped generalized permutations.
-
-    .. warning::
-
-        Internal class! Do not use directly!
-
-    AUTHORS:
-
-    - Vincent Delecroix (2008-12-20): initial version
-
-    """
-    def _init_flips(self,intervals,flips):
-        r"""
-        Initialize the flip list
-
-        TESTS::
-
-            sage: from surface_dynamics.all import *
-
-            sage: iet.Permutation('a b','b a',flips='a').flips() #indirect doctest
-            ['a']
-            sage: iet.Permutation('a b','b a',flips='b').flips() #indirect doctest
-            ['b']
-            sage: iet.Permutation('a b','b a',flips='ab').flips() #indirect doctest
-            ['a', 'b']
-
-        ::
-
-            sage: iet.GeneralizedPermutation('a a','b b',flips='a').flips()
-            ['a']
-            sage: iet.GeneralizedPermutation('a a','b b',flips='b').flips()
-            ['b']
-            sage: iet.GeneralizedPermutation('a a','b b',flips='ab').flips()
-            ['a', 'b']
-        """
-        self._flips = [[1]*self.length_top(), [1]*self.length_bottom()]
-        for interval in (0,1):
-            for i,letter in enumerate(intervals[interval]):
-                if letter in flips:
-                    self._flips[interval][i] = -1
-
-    def str(self, sep="\n"):
-        r"""
-        String representation.
-
-        TESTS::
-
-            sage: from surface_dynamics.all import *
-
-            sage: p = iet.GeneralizedPermutation('a a','b b',flips='a')
-            sage: print p.str()
-            -a -a
-             b  b
-             sage: print p.str('/')
-             -a -a/ b  b
-        """
-        l = self.list(flips=True)
-        return (' '.join(map(labelize_flip, l[0]))
-                + sep
-                + ' '.join(map(labelize_flip, l[1])))
-
-        return s
-
-
-class FlippedPermutationIET(FlippedPermutation, PermutationIET):
+class FlippedPermutationIET(PermutationIET):
     r"""
     Template for flipped Abelian permutations.
 
@@ -4459,28 +4609,8 @@ class FlippedPermutationIET(FlippedPermutation, PermutationIET):
 
         return res
 
-    def flips(self):
-        r"""
-        Returns the list of flips.
 
-        EXAMPLES::
-
-            sage: from surface_dynamics.all import *
-
-            sage: p = iet.Permutation('a b c','c b a',flips='ac')
-            sage: p.flips()
-            ['a', 'c']
-        """
-        result = []
-        l = self.list(flips=False)
-        for i,f in enumerate(self._flips[0]):
-            if f == -1:
-                result.append(l[0][i])
-        return result
-
-
-
-class FlippedPermutationLI(FlippedPermutation, PermutationLI):
+class FlippedPermutationLI(PermutationLI):
     r"""
     Template for flipped quadratic permutations.
 
@@ -4493,34 +4623,6 @@ class FlippedPermutationLI(FlippedPermutation, PermutationLI):
     - Vincent Delecroix (2008-12-20): initial version
 
     """
-    def flips(self):
-        r"""
-        Returns the list of flipped intervals.
-
-        EXAMPLES::
-
-            sage: from surface_dynamics.all import *
-
-            sage: p = iet.GeneralizedPermutation('a a','b b',flips='a')
-            sage: p.flips()
-            ['a']
-            sage: p = iet.GeneralizedPermutation('a a','b b',flips='b',reduced=True)
-            sage: p.flips()
-            ['b']
-        """
-        res = []
-        l = self.list(flips=False)
-        letters = []
-        for i,f in enumerate(self._flips[0]):
-            if f == -1 and l[0][i] not in letters:
-                res.append(l[0][i])
-                letters.append(l[0][i])
-        for i,f in enumerate(self._flips[1]):
-            if f == -1 and l[1][i] not in letters:
-                res.append(l[1][i])
-                letters.append(l[1][i])
-        return letters
-
     def rauzy_move(self, winner, side=-1):
         r"""
         Rauzy move
@@ -4652,8 +4754,6 @@ class FlippedPermutationLI(FlippedPermutation, PermutationLI):
                     res._move(winner, wtp+1, loser, 0)
 
         return res
-
-
 
 class RauzyDiagram(SageObject):
     r"""

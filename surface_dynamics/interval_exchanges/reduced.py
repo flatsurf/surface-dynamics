@@ -73,48 +73,6 @@ class ReducedPermutation(SageObject) :
 
         Internal class! Do not use directly!
    """
-    def __init__(self, intervals=None, alphabet=None):
-        r"""
-        INPUT:
-
-        - ``intervals`` - a list of two lists of labels
-
-        - ``alphabet`` - (default: None) alphabet
-
-        TESTS::
-
-            sage: from surface_dynamics.interval_exchanges.reduced import ReducedPermutationIET
-            sage: p = ReducedPermutationIET()
-            sage: loads(dumps(p)) == p
-            True
-            sage: p = ReducedPermutationIET([['a','b'],['b','a']])
-            sage: loads(dumps(p)) == p
-            True
-            sage: from surface_dynamics.interval_exchanges.reduced import ReducedPermutationLI
-            sage: p = ReducedPermutationLI()
-            sage: loads(dumps(p)) == p
-            True
-            sage: p = ReducedPermutationLI([['a','a'],['b','b']])
-            sage: loads(dumps(p)) == p
-            True
-        """
-        self._hash = None
-
-        if intervals is None:
-            self._twin = [[],[]]
-            self._alphabet = alphabet
-
-        else:
-            self._init_twin(intervals)
-
-            if alphabet is None:
-                self._init_alphabet(intervals)
-            else:
-                alphabet = Alphabet(alphabet)
-                if alphabet.cardinality() < len(self):
-                    raise TypeError("the alphabet is too short")
-                self._alphabet = alphabet
-
     def __getitem__(self, i):
         r"""
         TESTS::
@@ -173,7 +131,7 @@ def ReducedPermutationsIET_iterator(
 
             a0 = range(1,nintervals+1)
             f = lambda x: ReducedPermutationIET([a0,list(x)],
-                alphabet=alphabet)
+                alphabet=alphabet, reduced=True)
             return imap(f, Permutations(nintervals))
     else:
         return ifilter(lambda x: x.is_irreducible(),
@@ -576,64 +534,7 @@ def labelize_flip(couple):
     if couple[1] == -1: return '-' + str(couple[0])
     return ' ' + str(couple[0])
 
-class FlippedReducedPermutation(ReducedPermutation):
-    r"""
-    Flipped Reduced Permutation.
-
-    .. warning::
-
-        Internal class! Do not use directly!
-
-    INPUT:
-
-    - ``intervals`` - a list of two lists
-
-    - ``flips`` - the flipped letters
-
-    - ``alphabet`` - an alphabet
-    """
-    def __init__(self, intervals=None, flips=None, alphabet=None):
-        r"""
-        TESTS::
-
-            sage: from surface_dynamics.all import *
-
-            sage: p = iet.Permutation('a b','b a',reduced=True,flips='a')
-            sage: p == loads(dumps(p))
-            True
-            sage: p = iet.Permutation('a b','b a',reduced=True,flips='b')
-            sage: p == loads(dumps(p))
-            True
-            sage: p = iet.Permutation('a b','b a',reduced=True,flips='ab')
-            sage: p == loads(dumps(p))
-            True
-            sage: p = iet.GeneralizedPermutation('a a','b b',reduced=True,flips='a')
-            sage: p == loads(dumps(p))
-            True
-            sage: p = iet.GeneralizedPermutation('a a','b b',reduced=True,flips='b')
-            sage: p == loads(dumps(p))
-            True
-            sage: p = iet.GeneralizedPermutation('a a','b b',reduced=True,flips='ab')
-            sage: p == loads(dumps(p))
-            True
-        """
-        self._hash = None
-
-        if intervals is None:
-            self._twin = [[],[]]
-            self._flips = [[],[]]
-            self._alphabet = None
-
-        else:
-            if flips is None: flips = []
-
-            if alphabet is None : self._init_alphabet(intervals)
-            else : self._alphabet = Alphabet(alphabet)
-
-            self._init_twin(intervals)
-            self._init_flips(intervals, flips)
-
-            self._hash = None
+FlippedReducedPermutation = ReducedPermutation
 
 class FlippedReducedPermutationIET(
     FlippedReducedPermutation,
@@ -831,31 +732,21 @@ class ReducedRauzyDiagram(RauzyDiagram):
 class FlippedReducedRauzyDiagram(FlippedRauzyDiagram, ReducedRauzyDiagram):
     r"""
     Rauzy diagram of flipped reduced permutations.
+
+    TESTS::
+
+        sage: from surface_dynamics.all import *
+
+        sage: p = iet.GeneralizedPermutation('a b b','c c a',flips='a',reduced=True)
+        sage: r = p.rauzy_diagram()
+        Traceback (most recent call last):
+        ...
+        NotImplementedError: irreducibility test not implemented for generalized permutations with flips
     """
-    def _permutation_to_vertex(self, p):
-        r"""
-        TESTS::
-
-            sage: from surface_dynamics.all import *
-
-            sage: p = iet.GeneralizedPermutation('a b b','c c a',flips='a',reduced=True)
-            sage: r = p.rauzy_diagram()
-            sage: p in r   #indirect doctest
-            True
-        """
-        return ((tuple(p._twin[0]), tuple(p._twin[1])),
-                (tuple(p._flips[0]), tuple(p._flips[1])))
-
-    def _set_element(self, data=None):
-        r"""
-        Sets self._element with data.
-
-        TESTS::
-
-            sage: from surface_dynamics.all import *
-
-            sage: r = iet.RauzyDiagram('a b c','c b a',flips='b',reduced=True)   #indirect doctest
-        """
-        self._element._twin = [list(data[0][0]), list(data[0][1])]
-        self._element._flips = [list(data[1][0]), list(data[1][1])]
-
+#    def _permutation_to_vertex(self, p):
+#        return ((tuple(p._twin[0]), tuple(p._twin[1])),
+#                (tuple(p._flips[0]), tuple(p._flips[1])))
+#
+#    def _set_element(self, data=None):
+#        self._element._twin = [list(data[0][0]), list(data[0][1])]
+#        self._element._flips = [list(data[1][0]), list(data[1][1])]

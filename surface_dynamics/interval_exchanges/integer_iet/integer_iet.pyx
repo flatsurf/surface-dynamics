@@ -6,7 +6,7 @@ def perm_to_twin(p):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.interval_exchanges.integer_iet.integer_iet import perm_to_twin
+        sage: from surface_dynamics.interval_exchanges.integer_iet import perm_to_twin
         sage: perm_to_twin([0,0,1,1,2,2])
         [1, 0, 3, 2, 5, 4]
     """
@@ -85,7 +85,7 @@ def number_of_cylinders(top, bot, lengths):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.interval_exchanges.integer_iet.integer_iet import number_of_cylinders
+        sage: from surface_dynamics.interval_exchanges.integer_iet import number_of_cylinders
 
         sage: top = [0, 1]
         sage: bot = [1, 0]

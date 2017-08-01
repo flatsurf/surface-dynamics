@@ -127,51 +127,6 @@ class LabelledPermutation(SageObject):
     .. warning::
        Internal class! Do not use directly!
     """
-    def __init__(self, intervals=None, alphabet=None):
-        r"""
-        TESTS::
-
-            sage: from surface_dynamics.interval_exchanges.labelled import LabelledPermutationIET
-
-            sage: p1 = LabelledPermutationIET([[1,2,3],[3,2,1]])
-            sage: p1 == loads(dumps(p1))
-            True
-            sage: p2 = LabelledPermutationIET([['a', 'b', 'c'], ['c', 'b', 'a']])
-            sage: p2 == loads(dumps(p2))
-            True
-            sage: p3 = LabelledPermutationIET([['1','2','3'],['3','2','1']])
-            sage: p3 == loads(dumps(p3))
-            True
-            sage: from surface_dynamics.interval_exchanges.labelled import LabelledPermutationLI
-            sage: p1 = LabelledPermutationLI([[1,2,2],[3,3,1]])
-            sage: p1 == loads(dumps(p1))
-            True
-            sage: p2 = LabelledPermutationLI([['a','b','b'],['c','c','a']])
-            sage: p2 == loads(dumps(p2))
-            True
-            sage: p3 = LabelledPermutationLI([['1','2','2'],['3','3','1']])
-            sage: p3 == loads(dumps(p3))
-            True
-        """
-        self._hash = None
-
-        if intervals is None:
-            self._twin = [[], []]
-            self._labels = [[],[]]
-            self._alphabet = None
-
-        else:
-            self._init_twin(intervals)
-
-            if alphabet is not None:
-                self._set_alphabet(alphabet)
-            else:
-                self._init_alphabet(intervals)
-
-            self._labels = [
-                map(self._alphabet.rank, intervals[0]),
-                map(self._alphabet.rank, intervals[1])]
-
     def __getitem__(self, i):
         r"""
         TESTS::
@@ -605,7 +560,7 @@ def LabelledPermutationsIET_iterator(
             assert(isinstance(nintervals,(int,Integer)))
             assert(nintervals > 0)
 
-            f = lambda x: LabelledPermutationIET([list(x[0]),list(x[1])],alphabet=alphabet)
+            f = lambda x: LabelledPermutationIET([list(x[0]),list(x[1])],alphabet=alphabet,reduced=False)
 
             alphabet = Alphabet(alphabet)
             g = lambda x: [alphabet.unrank(k-1) for k in x]
@@ -675,7 +630,7 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
         """
         from reduced import ReducedPermutationIET
 
-        return ReducedPermutationIET(self.list(),alphabet=self._alphabet)
+        return ReducedPermutationIET(self.list(), alphabet=self._alphabet, reduced=True)
 
     def rauzy_move_interval_substitution(self,winner=None,side=None):
         r"""
@@ -1123,7 +1078,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
         """
         from reduced import ReducedPermutationLI
 
-        return ReducedPermutationLI(self.list(),alphabet=self._alphabet)
+        return ReducedPermutationLI(self.list(),alphabet=self._alphabet, reduced=True)
 
     def rauzy_diagram(self, **kargs):
         r"""
@@ -1153,46 +1108,6 @@ class FlippedLabelledPermutation(LabelledPermutation):
     .. warning::
        Internal class! Do not use directly!
     """
-    def __init__(self, intervals=None, alphabet=None, flips=None):
-        r"""
-        INPUT:
-
-        - `intervals` - the intervals as a list of two lists
-
-        - `alphabet` - something that should be converted to an alphabe
-
-        - `flips` - a list of letters of the alphabet
-
-        TESTS:
-
-        ::
-
-            sage: from surface_dynamics.interval_exchanges.labelled import FlippedLabelledPermutationIET
-            sage: p = FlippedLabelledPermutationIET([['a','b'],['a','b']],flips='a')
-            sage: p == loads(dumps(p))
-            True
-            sage: p = FlippedLabelledPermutationIET([['a','b'],['b','a']],flips='ab')
-            sage: p == loads(dumps(p))
-            True
-
-        ::
-
-            sage: from surface_dynamics.interval_exchanges.labelled import FlippedLabelledPermutationLI
-            sage: p = FlippedLabelledPermutationLI([['a','a','b'],['b','c','c']],flips='a')
-            sage: p == loads(dumps(p))
-            True
-            sage: p = FlippedLabelledPermutationLI([['a','a'],['b','b','c','c']],flips='ac')
-            sage: p == loads(dumps(p))
-            True
-        """
-        self._hash = None
-
-        if intervals is None: intervals=[[],[]]
-        if flips is None: flips = []
-
-        super(FlippedLabelledPermutation, self).__init__(intervals, alphabet)
-        self._init_flips(intervals, flips)
-
     def list(self, flips=False):
         r"""
         Returns a list associated to the permutation.
@@ -1303,10 +1218,6 @@ class FlippedLabelledPermutationIET(
     Rauzy diagrams::
 
         sage: d = iet.RauzyDiagram('a b c d','d a b c',flips='a')
-
-    AUTHORS:
-
-    - Vincent Delecroix (2009-09-29): initial version
     """
     def reduced(self):
         r"""
@@ -1328,7 +1239,8 @@ class FlippedLabelledPermutationIET(
         return FlippedReducedPermutationIET(
             intervals=self.list(flips=False),
             flips=self.flips(),
-            alphabet=self.alphabet())
+            alphabet=self.alphabet(),
+            reduced=True)
 
     def __hash__(self):
         r"""
@@ -1393,23 +1305,6 @@ class FlippedLabelledPermutationLI(
 
             sage: from surface_dynamics.all import *
 
-    Reducibility testing::
-
-        sage: p = iet.GeneralizedPermutation('a b b', 'c c a', flips='a')
-        sage: p.is_irreducible()
-        True
-
-    Reducibility testing with associated decomposition::
-
-        sage: p = iet.GeneralizedPermutation('a b c a', 'b d d c', flips='ab')
-        sage: p.is_irreducible()
-        False
-        sage: test, decomp = p.is_irreducible(return_decomposition = True)
-        sage: print test
-        False
-        sage: print decomp
-        (['a'], ['c', 'a'], [], ['c'])
-
     Rauzy movability and Rauzy move::
 
         sage: p = iet.GeneralizedPermutation('a a b b c c', 'd d', flips='d')
@@ -1445,7 +1340,8 @@ class FlippedLabelledPermutationLI(
         return FlippedReducedPermutationLI(
             intervals=self.list(flips=False),
             flips=self.flips(),
-            alphabet=self.alphabet())
+            alphabet=self.alphabet(),
+            reduced=True)
 
     def right_rauzy_move(self, winner):
         r"""
