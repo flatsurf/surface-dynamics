@@ -22,4 +22,4 @@ cdef extern from "int_iet.h":
     void int_iet_print(int_iet_t t)
 
     # number of cylinders
-    int int_iet_num_cylinders(int_iet_t t)
+    int int_iet_num_cylinders(uint64_t * widths, int_iet_t t)

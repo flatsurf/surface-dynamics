@@ -412,7 +412,7 @@ void int_iet_induce_to_first_sc(int_iet * t)
 
 
 
-int int_iet_num_cylinders(int_iet_t t)
+int int_iet_num_cylinders(uint64_t * widths, int_iet_t t)
 /* t: an interval exchange with integer lengths                         */
 /* s: another (empty) interval exchange on the same number of intervals */
 /*    it will be allocated to the last valid intervals t is             */
@@ -461,12 +461,16 @@ int int_iet_num_cylinders(int_iet_t t)
 #ifdef VERBOSE
                 printf("-> find a cylinder in %d\n", (int) (t->top->lab - t->labels));
 #endif
+
+                if (widths != NULL)
+                    widths[nb_cyl] = t->top->lab->length;
+                nb_cyl += 1;
+
                 // in order to simplify the check test we set same_interval to 1
                 // and set the length to 0
                 t->top->lab->same_interval = 1;
                 t->top->lab->length = 0;
 
-                nb_cyl += 1;
                 t->top = t->top->next;
                 t->bot = t->bot->next;
                 if(t->top != NULL) t->top->prev = NULL;

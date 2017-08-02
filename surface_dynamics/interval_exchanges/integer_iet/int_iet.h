@@ -53,5 +53,5 @@ void int_iet_set_lengths(int_iet_t t, uint64_t * lengths);
 void int_iet_print(int_iet_t t);
 
 /* number of cylinders */
-int int_iet_num_cylinders(int_iet_t t);
+int int_iet_num_cylinders(uint64_t * widths, int_iet_t t);
 
