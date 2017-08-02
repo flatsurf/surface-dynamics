@@ -43,12 +43,12 @@ void int_iet_set_labels_and_twin(int_iet_t t, int * labels, int * twin, int k)
     {
         if(labels[i] != labels[twin[i]])
         {
-            fprintf(stderr,"ERROR (set_labels_and_twin): interval %d and its twin %d have different labels", i, twin[i]);
+            fprintf(stderr,"ERROR (set_labels_and_twin): interval %d and its twin %d have different labels\n", i, twin[i]);
             exit(EXIT_FAILURE);
         }
         if(twin[twin[i]] != i)
         {
-            fprintf(stderr, "ERROR (set_labels_and_twin): twin is not an involution %d->%d->%d",i,twin[i],twin[twin[i]]);
+            fprintf(stderr, "ERROR (set_labels_and_twin): twin is not an involution %d->%d->%d\n",i,twin[i],twin[twin[i]]);
             exit(EXIT_FAILURE);
         }
     }
@@ -96,14 +96,14 @@ int int_iet_check(int_iet_t t)
     {
         if((t->top != NULL) || (t->bot != NULL))
         {
-            fprintf(stderr,"check problem: if zero interval t->top and t->bot must be NULL");
+            fprintf(stderr,"check problem: if zero interval t->top and t->bot must be NULL\n");
             return 1;
         }
         return 0;
     }
     if((t->top == NULL) || (t->bot == NULL))
     {
-        fprintf(stderr,"check problem: got nb_labels = %d but t->top or t->bot is NULL", t->nb_labels);
+        fprintf(stderr,"check problem: got nb_labels = %d but t->top or t->bot is NULL\n", t->nb_labels);
         return 1;
     }
 
@@ -161,7 +161,7 @@ int int_iet_check(int_iet_t t)
             default:
             fprintf(stderr,"check problem: interval %d seen %d time on top\n", j, seen[j]);
             free(seen);
-            exit(EXIT_FAILURE);
+            return 1;
         }
     }
     free(seen);
@@ -177,7 +177,7 @@ int int_iet_check(int_iet_t t)
         if((i->next != NULL) && (i->next->prev != i))
         {
             fprintf(stderr, "check problem: pointer error on top at label %lu\n", i->lab - t->labels);
-            exit(EXIT_FAILURE);
+            return 1;
         }
         if(i->twin->twin != i)
         {
@@ -185,12 +185,11 @@ int int_iet_check(int_iet_t t)
                         i - t->intervals,
                         i->twin - t->intervals,
                         i->twin->twin - t->intervals);
-            exit(EXIT_FAILURE);
+            return 1;
         }
         if(i->lab != i->twin->lab)
         {
             fprintf(stderr,"check problem: label problem on top\n");
-            exit(EXIT_FAILURE);
             return 1;
         }
     }
@@ -204,17 +203,17 @@ int int_iet_check(int_iet_t t)
         if((i->next != NULL) && (i->next->prev != i))
         {
             fprintf(stderr,"pointer error on bot\n");
-            exit(EXIT_FAILURE);
+            return 1;
         }
         if(i->twin->twin != i)
         {
             fprintf(stderr,"twin problem on bot\n");
-            exit(EXIT_FAILURE);
+            return 1;
         }
         if(i->lab != i->twin->lab)
         {
             fprintf(stderr,"label problem on bot");
-            exit(EXIT_FAILURE);
+            return 1;
         }
     }
 

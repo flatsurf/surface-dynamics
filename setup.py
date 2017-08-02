@@ -44,6 +44,7 @@ extensions = [
 
     Extension('surface_dynamics.interval_exchanges.integer_iet',
         sources = [os.path.join(INTEGER_IET_DIR, 'int_iet.c'),
+                   os.path.join(INTEGER_IET_DIR, 'int_vector.c'),
                    os.path.join(INTEGER_IET_DIR, 'integer_iet.pyx')],
         include_dirs = [SAGE_SRC, INTEGER_IET_DIR] + sys.path,
         depends = [os.path.join(INTEGER_IET_DIR, 'int_iet.h')])]

@@ -1,4 +1,110 @@
+from __future__ import print_function
+
 from cysignals.memory cimport check_malloc, sig_free
+from libc.string cimport memcpy
+
+def _test_iterator1(int n, int k):
+    r"""
+    TESTS::
+
+        sage: from surface_dynamics.interval_exchanges.integer_iet import _test_iterator1
+
+        sage: list(_test_iterator1(0, 0))
+        [[]]
+        sage: list(_test_iterator1(0, 1))
+        []
+        sage: list(_test_iterator1(1, 0))
+        []
+
+        sage: list(_test_iterator1(1, 1))
+        [[1L]]
+        sage: list(_test_iterator1(2, 1))
+        [[2L]]
+
+        sage: list(_test_iterator1(2, 2))
+        [[1L, 1L]]
+        sage: list(_test_iterator1(3, 2))
+        [[2L, 1L], [1L, 2L]]
+        sage: list(_test_iterator1(4, 2))
+        [[3L, 1L], [2L, 2L], [1L, 3L]]
+
+        sage: list(_test_iterator1(6, 3))
+        [[4L, 1L, 1L],
+         [3L, 2L, 1L],
+         [2L, 3L, 1L],
+         [1L, 4L, 1L],
+         [3L, 1L, 2L],
+         [2L, 2L, 2L],
+         [1L, 3L, 2L],
+         [2L, 1L, 3L],
+         [1L, 2L, 3L],
+         [1L, 1L, 4L]]
+
+        sage: list(_test_iterator1(3, 4))
+        []
+    """
+    cdef uint64_t * x
+
+    x = <uint64_t *> check_malloc(k * sizeof(uint64_t))
+
+    if not int_vector_first(x, n, k):
+        sig_free(x)
+        return
+    yield [x[i] for i in range(k)]
+    while int_vector_next(x, n, k):
+        yield [x[i] for i in range(k)]
+
+    sig_free(x)
+
+def _test_iterator2(int n, int kfree, int ktop, int kbot):
+    r"""
+    TESTS::
+
+        sage: from surface_dynamics.interval_exchanges.integer_iet import _test_iterator2
+
+        sage: list(_test_iterator2(3, 1, 1, 1))
+        [[1L, 1L, 1L]]
+        sage: list(_test_iterator2(4, 1, 1, 1))
+        [[2L, 1L, 1L]]
+        sage: list(_test_iterator2(5, 1, 1, 1))
+        [[3L, 1L, 1L], [1L, 2L, 2L]]
+
+        sage: list(_test_iterator2(3, 0, 1, 1))
+        []
+        sage: list(_test_iterator2(4, 0, 2, 1))
+        [[1L, 1L, 2L]]
+        sage: list(_test_iterator2(1, 1, 0, 0))
+        [[1L]]
+
+        sage: list(_test_iterator2(5, 2, 1, 1))
+        [[2L, 1L, 1L, 1L], [1L, 2L, 1L, 1L]]
+        sage: list(_test_iterator2(7, 2, 2, 1))
+        [[2L, 1L, 1L, 1L, 2L], [1L, 2L, 1L, 1L, 2L]]
+        sage: list(_test_iterator2(8, 2, 2, 1))
+        [[3L, 1L, 1L, 1L, 2L],
+         [2L, 2L, 1L, 1L, 2L],
+         [1L, 3L, 1L, 1L, 2L],
+         [1L, 1L, 2L, 1L, 3L],
+         [1L, 1L, 1L, 2L, 3L]]
+        sage: list(_test_iterator2(8, 2, 1, 2))
+        [[3L, 1L, 2L, 1L, 1L],
+         [2L, 2L, 2L, 1L, 1L],
+         [1L, 3L, 2L, 1L, 1L],
+         [1L, 1L, 3L, 2L, 1L],
+         [1L, 1L, 3L, 1L, 2L]]
+
+         sage: for a in _test_iterator2(5, 1, 1, 1):
+         ....:     assert a[0] + 2*a[1] == a[0] + 2*a[2] == 5
+    """
+    cdef li_vector_iterator_t v
+
+    int_li_vector_init(v, n, kfree, ktop, kbot)
+
+    int_li_vector_prefirst(v)
+    while int_li_vector_first_or_next(v):
+        yield [(v.x)[i] for i in range(kfree+ktop+kbot)]
+
+    int_li_vector_clear(v)
 
 def perm_to_twin(p):
     r"""
@@ -89,6 +195,182 @@ cdef set_int_iet(int_iet_t t, top, bot, lengths):
         int_iet_clear(t)
         raise RuntimeError("invalid iet")
 
+# we want an iterator over lengths
+
+def _relabel(top, bot):
+    r"""
+    TESTS::
+
+        sage: from surface_dynamics.interval_exchanges.integer_iet import _relabel
+        sage: _relabel([1,0,1],[2,2,0])
+        ([1, 0, 1], [2, 2, 0], 1, 1, 1)
+
+        sage: _relabel([1,1,2,2], [0,0])
+        ([0, 0, 1, 1], [2, 2], 0, 2, 1)
+
+        sage: _relabel([3,1,3,0,0,4],[4,2,2,1])
+        ([2, 0, 2, 3, 3, 1], [1, 4, 4, 0], 2, 2, 1)
+
+        sage: _relabel([3, 2, 0, 1], [1, 2, 0, 3])
+        ([0, 1, 2, 3], [3, 1, 2, 0], 4, 0, 0)
+    """
+    n = (len(top) + len(bot)) / 2
+    k = len(top)
+    j = 0
+    p = top + bot
+    twin = perm_to_twin(top + bot)
+    for i in range(k):
+        if twin[i] >= k:
+            p[i] = p[twin[i]] = j
+            j += 1
+    nfree = j
+    for i in range(k):
+        if i < twin[i] < k:
+            p[i] = p[twin[i]] = j
+            j += 1
+    ntop = j - nfree
+    for i in range(k, 2*n):
+        if twin[i] >= k and twin[i] > i:
+            p[i] = p[twin[i]] = j
+            j += 1
+    nbot = j - ntop - nfree
+    return p[:k], p[k:], nfree, ntop, nbot
+
+# there are several interesting statistics one might want to compute
+# such as
+#  - number of cylinders
+#  - sum of heights of cylinders
+#  - mean ratio in view of Siegel Veech constants (not available for now) as
+#    we would need the circumferences of cylinders as well
+def cylinder_number_statistics(top, bot, uint64_t L):
+    r"""
+    Return the statistics of the number of cylinders for a given total length
+
+    INPUT:
+
+    - ``top`` -- (list) composition of the top of the cylinder
+
+    - ``bot`` -- (list) composition of the bottom of the cylinder
+    
+    - ``L`` -- (positive integer) the length we are considering
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.interval_exchanges.integer_iet import cylinder_number_statistics
+
+    The case of H(0,0)::
+
+        sage: top = [0, 1]
+        sage: bot = [1, 0]
+        sage: for n in range(2,20):
+        ....:     s = cylinder_number_statistics(top, bot, n)
+        ....:     print "%2d : %3d %3d %3d" %(n, s[1], s[2], s[1] + s[2])
+         2 :   1   1   2
+         3 :   4   2   6
+         4 :   7   5  12
+         5 :  16   4  20
+         6 :  15  15  30
+         7 :  36   6  42
+         8 :  35  21  56
+         9 :  52  20  72
+        10 :  53  37  90
+        11 : 100  10 110
+        12 :  65  67 132
+        13 : 144  12 156
+        14 : 115  67 182
+        15 : 132  78 210
+        16 : 155  85 240
+        17 : 256  16 272
+        18 : 165 141 306
+        19 : 324  18 342
+
+    Which are the same numbers as Q(0,-1^4)::
+
+        sage: top1 = [0, 1]
+        sage: bot1 = [1, 0]
+        sage: top2 = [0, 0]
+        sage: bot2 = [1, 1, 2, 2]
+        sage: for _ in range(20):
+        ....:     n = randint(2, 100)
+        ....:     s1 = cylinder_number_statistics(top1, bot1, n)
+        ....:     s2 = cylinder_number_statistics(top2, bot2, 2*n)
+        ....:     assert sorted(s1.keys()) == sorted(s2.keys())
+        ....:     assert all(2*s1[i] == s2[i] for i in s1)
+
+    Q(1, -1^5)
+
+        sage: top = [1,1]
+        sage: bot = [2,2,3,3,4,4]
+
+
+    """
+    cdef int * labels1
+    cdef int * labels2
+    cdef int * twin1
+    cdef int * twin2
+    cdef uint64_t * clengths
+    cdef int k1 = len(top)
+    cdef int k2 = k1 + 1
+    cdef int n = (len(top)+len(bot))/2
+    cdef int i,j
+    cdef uint64_t twist
+    cdef int_iet_t t1, t2
+    cdef li_vector_iterator_t v
+
+    from collections import defaultdict
+    statistics = defaultdict(int)
+
+    top, bot, kfree, ktop, kbot = _relabel(top, bot)
+
+    p1 = top + bot
+    p2 = [n] + p1 + [n]
+    python_twin1 = perm_to_twin(p1)
+    python_twin2 = perm_to_twin(p2)
+
+    labels1 = <int *> check_malloc(2*n*sizeof(int))
+    twin1 = <int *> check_malloc(2*n*sizeof(int))
+    labels2 = <int *> check_malloc(2*(n+1)*sizeof(int))
+    twin2 = <int *> check_malloc(2*(n+1)*sizeof(int))
+
+    clengths = <uint64_t *> check_malloc((n+1)*sizeof(uint64_t));
+
+    for i in range(2*n):
+        labels1[i] = p1[i]
+        twin1[i] = python_twin1[i]
+    int_iet_init(t1, n)
+
+    for i in range(2*(n+1)):
+        labels2[i] = p2[i]
+        twin2[i] = python_twin2[i]
+    int_iet_init(t2, n+1)
+
+    int_li_vector_init(v, L, kfree, ktop, kbot)
+    int_li_vector_prefirst(v)
+    while int_li_vector_first_or_next(v):
+        memcpy(clengths, v.x, n * sizeof(uint64_t))
+
+        # twist 0 case
+        int_iet_set_labels_and_twin(t1, labels1, twin1, k1)
+        int_iet_set_lengths(t1, clengths)
+        statistics[int_iet_num_cylinders(NULL, t1)] += 1
+
+        # positive twists case
+        for twist in range(1, L):
+            clengths[n] = twist
+            int_iet_set_labels_and_twin(t2, labels2, twin2, k2)
+            int_iet_set_lengths(t2, clengths)
+            statistics[int_iet_num_cylinders(NULL, t2)] += 1
+
+    sig_free(labels1)
+    sig_free(twin1)
+    sig_free(labels2)
+    sig_free(twin2)
+    sig_free(clengths)
+    int_iet_clear(t1)
+    int_iet_clear(t2)
+    int_li_vector_clear(v)
+
+    return dict(statistics)
 
 def cylinder_number(top, bot, lengths):
     r"""
