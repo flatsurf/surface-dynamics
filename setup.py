@@ -15,7 +15,12 @@ from distutils.extension import Extension
 from Cython.Build import cythonize
 import sys, os
 
-from surface_dynamics.version import version
+with open("surface_dynamics/version.py") as f:
+    version = f.read().strip()
+    prefix = "version='"
+    suffix = "'"
+    assert version.startswith(prefix) and version.endswith(suffix)
+    version = version[len(prefix):len(version)-len(suffix)]
 with open("README") as f:
     long_description = f.read()
 
