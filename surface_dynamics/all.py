@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
-from .flat_surfaces.all import *
-from .interval_exchanges.all import *
-from .misc.constellation import Constellation, Constellations
+#from warnings import warn
+#warn('importing from surface_dynamics.all is deprecated. Simply use "from surface_dynamics import *"', Warning)
+
+from . import *
