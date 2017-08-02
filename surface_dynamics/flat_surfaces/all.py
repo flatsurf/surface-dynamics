@@ -5,3 +5,5 @@ from .quadratic_strata import QuadraticStrata, QuadraticStratum
 from .homology import RibbonGraph, RibbonGraphWithAngles
 from .separatrix_diagram import SeparatrixDiagram, CylinderDiagram
 from .origamis.all import *
+
+del absolute_import
