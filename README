@@ -12,7 +12,7 @@ This package is based on `SageMath <http://www.sagemath.org>`_ and relies heavil
 * gmp or mpir for arbitrary precision arithmetic
 * PARI/GP for number field computations
 * GAP for finite groups representation and permutation groups
-* PPL (Parma Polyhedra Library) and LattE (Lattice point Enumeration) for Polytope computations
+* PPL (Parma Polyhedra Library) and LattE (Lattice point Enumeration) for polytope computations
 
 Prerequisites
 -------------
@@ -35,8 +35,8 @@ development version using::
 Documentation
 -------------
 
-* https://pythonhosted.org/surface_dynamics/
-* http://www.labri.fr/perso/vdelecro/flatsurf.html
+* short tutorial: http://www.labri.fr/perso/vdelecro/flatsurf.html
+* complete module documentation: http://www.labri.fr/perso/vdelecro/surface-dynamics/
 
 Check
 -----
