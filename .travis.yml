@@ -1,12 +1,23 @@
 dist: trusty
 sudo: required
-language: python
+python: "2.7"
+cache:
+  directories:
+  - ${HOME}/SageMath
+before_cache:
+  - rm -rf "${HOME}/SageMath/logs"
+  - rm -f "${HOME}/SageMath/.BUILDSTART"
+env:
+  SAGE_MIRROR="http://mirrors.mit.edu/sage/linux/64bit"
+  SAGE_BINARY="sage-8.0-Ubuntu_14.04-x86_64.tar.bz2"
+  SAGE="${HOME}/SageMath/sage"
 before_install:
   - sudo apt-get -qq update
-  - apt-cache search sagemath
+  - sudo apt-get install gcc g++ gfortran
 # command to install dependencies
 install: 
-  - sage -pip install --verbose --user .
+  - ./.travis_sage_install.sh
+  - ${SAGE} -pip install --verbose .
 # command to run tests
 script:
-  - sage -t --long surface_dynamics/
+  - ${SAGE} -t --force-lib --long surface_dynamics/
