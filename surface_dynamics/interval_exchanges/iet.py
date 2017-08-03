@@ -36,12 +36,12 @@ There are two plotting methods for iet::
 
 .. plot the domain and the range of T::
 
-    sage: T.plot_two_intervals()
+    sage: T.plot_two_intervals()   # not tested (problem with matplotlib font cache)
     Graphics object consisting of 12 graphics primitives
 
 .. plot T as a function::
 
-    sage: T.plot_function()
+    sage: T.plot_function()  # not tested (problem with matplotlib font cache)
     Graphics object consisting of 3 graphics primitives
 """
 from copy import copy
@@ -1362,7 +1362,7 @@ class IntervalExchangeTransformation(object):
             sage: from surface_dynamics.all import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b c d','d a c b'),[1,1,1,1])
-            sage: t.plot_function(rgbcolor=(0,1,0))
+            sage: t.plot_function(rgbcolor=(0,1,0))    # not tested (problem with matplotlib font cache)
             Graphics object consisting of 4 graphics primitives
         """
         from sage.plot.plot import Graphics
@@ -1411,7 +1411,7 @@ class IntervalExchangeTransformation(object):
             sage: from surface_dynamics.all import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1,1])
-            sage: t.plot_two_intervals()
+            sage: t.plot_two_intervals()  # not tested (problem with matplotlib font cache)
             Graphics object consisting of 8 graphics primitives
         """
         from sage.plot.plot import Graphics
@@ -1488,7 +1488,7 @@ class IntervalExchangeTransformation(object):
 
             sage: p = iet.Permutation('A B', 'B A')
             sage: T = iet.IntervalExchangeTransformation(p, [0.41510826, 0.58489174])
-            sage: T.plot_towers(iterations=5)
+            sage: T.plot_towers(iterations=5)   # not tested (problem with matplotlib font cache)
             Graphics object consisting of 65 graphics primitives
         """
         px,py = map(float, position)
@@ -1544,7 +1544,7 @@ class IntervalExchangeTransformation(object):
 
             sage: phi = QQbar((sqrt(5)-1)/2)
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1,phi])
-            sage: t.show()
+            sage: t.show() # not tested (problem with matplotlib font cache)
         """
         self.plot_two_intervals().show(axes=False)
 

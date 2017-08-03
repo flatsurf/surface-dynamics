@@ -2698,7 +2698,7 @@ cdef class Origami_dense_pyx(object):
 
             sage: from surface_dynamics.all import *
             sage: o = origamis.Escalator(3)
-            sage: o.plot()
+            sage: o.plot()  # not tested (problem with matplotlib font caches)
             Graphics object consisting of 71 graphics primitives
         """
         if self._pos is None:
