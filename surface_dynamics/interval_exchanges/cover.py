@@ -709,7 +709,7 @@ class PermutationCover(SageObject):
             sage: from surface_dynamics.all import *
 
             sage: q = QuadraticStratum([1,1,-1,-1]).one_component()
-            sage: q.lyapunov_exponents_H_plus() # abs tol 0.01
+            sage: q.lyapunov_exponents_H_plus() # abs tol 0.05
             [0.666666]
             sage: p = q.permutation_representative(reduced=False).orientation_cover()
             sage: c = p.lyapunov_exponents_H_plus(isotypic_decomposition=True)[0]
@@ -724,7 +724,7 @@ class PermutationCover(SageObject):
             sage: c = p.cover(['()', '(1,2)', '()', '(1,2)', '(1,2)'])
             sage: c.stratum()
             Q_1(1^2, 0^4, -1^2)
-            sage: c.lyapunov_exponents_H_plus() # abs tol 0.01
+            sage: c.lyapunov_exponents_H_plus() # abs tol 0.05
             [0.666666]
 
         Some cyclic covers (see [EKZ]_ for the formulas)::
