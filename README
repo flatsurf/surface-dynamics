@@ -12,16 +12,12 @@ This package is based on `SageMath <http://www.sagemath.org>`_ and relies heavil
 * gmp or mpir for arbitrary precision arithmetic
 * PARI/GP for number field computations
 * GAP for finite groups representation and permutation groups
-* PPL (Parma Polyhedra Library) for Polytope computations
+* PPL (Parma Polyhedra Library) and LattE (Lattice point Enumeration) for Polytope computations
 
 Prerequisites
 -------------
 
 Installing surface_dynamics requires a working Sage installation (with Cython and gcc).
-Under most Linux distribution, you can install the package gcc
-(it might even be already installed by default).
-Under Mac OS X, get a working gcc by installing XCode from
-the Mac App Store.
 
 Installation
 ------------
@@ -35,8 +31,6 @@ The --user option is optional and allows to install the module in your user spac
 development version using
 
     $ sage -pip install git+https://github.com/videlec/flatsurf-package [--user]
-
-or even download the source code (see below)
 
 Documentation
 -------------
