@@ -27,10 +27,7 @@ The module is distributed on PyPI. You just need to run the following command::
     $ sage -pip install surface_dynamics [--user]
 
 The --user option is optional and allows to install the module in your user space
-(and does not require administrator rights). Alternatively, you can install the
-development version using::
-
-    $ sage -pip install git+https://github.com/videlec/flatsurf-package [--user]
+(and does not require administrator rights).
 
 Documentation
 -------------
@@ -83,22 +80,16 @@ output as below.::
     sage: Q12_reg.lyapunov_exponents_H_minus()
     [1.001, 0.6669, 0.45018, 0.3139, 0.23218, 0.12143, 0.08594]
 
-Source code
------------
 
-The complete source code is available at::
+Installing development version. Source code
+-------------------------------------------
 
-    https://github.com/videlec/flatsurf-package
+The development webpage is https://github.com/videlec/flatsurf-package
 
-Once you developed the source code you might want to install the package
-with::
+Assuming you have the program git on your computer, you can install the
+development version with the command::
 
-    $ sage -pip install . [--user] [--upgrade]
-
-wher the options `--user` and `--upgrade` are optional. It can also be
-compiled inplace using::
-
-    $ sage -python setup.py build_ext --inplace
+    $ sage -pip install git+https://github.com/videlec/flatsurf-package [--user]
 
 Contact
 -------
