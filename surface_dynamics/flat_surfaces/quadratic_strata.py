@@ -70,17 +70,17 @@ EXAMPLES::
 Construction of a stratum from a list of singularity degrees::
 
     sage: a = QuadraticStratum(2,2)
-    sage: print a
+    sage: print(a)
     Q_2(2^2)
-    sage: print a.genus()
+    sage: print(a.genus())
     2
 
 ::
 
     sage: a = QuadraticStratum(4,3,2,2,1)
-    sage: print a
+    sage: print(a)
     Q_4(4, 3, 2^2, 1)
-    sage: print a.genus()
+    sage: print(a.genus())
     4
 
 By convention, the degrees are always written in decreasing order::
@@ -97,17 +97,17 @@ By convention, the degrees are always written in decreasing order::
 List the connected components of a stratum::
 
     sage: a = QuadraticStratum(6,2)
-    sage: print a.components()
+    sage: print(a.components())
     [Q_3(6, 2)^hyp, Q_3(6, 2)^nonhyp]
 
 ::
 
     sage: a = QuadraticStratum(12)
     sage: cc = a.components()
-    sage: print cc
+    sage: print(cc)
     [Q_4(12)^reg, Q_4(12)^irr]
     sage: for c in cc:
-    ...       print c; print c.permutation_representative()
+    ...       print(c); print(c.permutation_representative())
     Q_4(12)^reg
     0 1 2 1 2 3 4 3 4 5
     5 6 7 6 7 0
@@ -118,7 +118,7 @@ List the connected components of a stratum::
 ::
 
     sage: a = QuadraticStratum(1, 1, 1, 1)
-    sage: print a.components()
+    sage: print(a.components())
     [Q_2(1^4)^hyp]
     sage: c = a.components()[0]
     sage: p = c.permutation_representative(); p
@@ -694,8 +694,12 @@ class QuadraticStratumComponent(StratumComponent):
 
             sage: Q = QuadraticStratum(6,6)
             sage: c_hyp, c_reg, c_irr = Q.components()
-            sage: print (c_hyp, c_reg, c_irr)
-            (Q_4(6^2)^hyp, Q_4(6^2)^reg, Q_4(6^2)^irr)
+            sage: print(c_hyp)
+            Q_4(6^2)^hyp
+            sage: print(c_reg)
+            Q_4(6^2)^reg
+            sage: print(c_irr)
+            Q_4(6^2)^irr
 
             sage: all(c_hyp.random_cylindric_permutation().stratum_component() == c_hyp for _ in range(4))
             True
@@ -1566,7 +1570,7 @@ def QuadraticStrata(genus=None, dimension=None, min_nb_poles=None, max_nb_poles=
         Quadratic strata of genus 3 surfaces with at most 6 poles
         sage: Q.cardinality()
         463
-        sage: for q in Q: print q
+        sage: for q in Q: print(q)
         Q_3(8)
         Q_3(7, 1)
         Q_3(6, 2)
@@ -1577,7 +1581,7 @@ def QuadraticStrata(genus=None, dimension=None, min_nb_poles=None, max_nb_poles=
 
         sage: Q = QuadraticStrata(genus=2,nb_poles=0); Q
         Quadratic strata of genus 2 surfaces with no pole
-        sage: for q in Q: print q
+        sage: for q in Q: print(q)
         Q_2(2^2)
         Q_2(2, 1^2)
         Q_2(1^4)
@@ -1585,7 +1589,7 @@ def QuadraticStrata(genus=None, dimension=None, min_nb_poles=None, max_nb_poles=
 
         sage: Q = QuadraticStrata(dimension=7,min_nb_poles=1,max_nb_poles=3); Q
         Quadratic strata of dimension 7 with at least 1 and at most 3 poles
-        sage: for q in Q: print q
+        sage: for q in Q: print(q)
         Q_3(8, 1, -1)
         Q_3(7, 2, -1)
         Q_3(6, 3, -1)
@@ -1932,7 +1936,7 @@ class QuadraticStrata_d(QuadraticStrata_class):
 
         sage: from surface_dynamics.all import *
 
-        sage: for q in QuadraticStrata(dimension=5): print q
+        sage: for q in QuadraticStrata(dimension=5): print(q)
         Q_3(8)
         Q_2(2, 1^2)
         Q_2(4, 1, -1)
@@ -1944,7 +1948,7 @@ class QuadraticStrata_d(QuadraticStrata_class):
 
         sage: Q = QuadraticStrata(dimension=6,nb_poles=1); Q
         Quadratic strata of dimension 6 with 1 pole
-        sage: for q in Q: print q
+        sage: for q in Q: print(q)
         Q_3(9, -1)
         Q_2(3, 1^2, -1)
         Q_2(2^2, 1, -1)
@@ -2035,7 +2039,7 @@ class QuadraticStrata_d(QuadraticStrata_class):
 
             sage: from surface_dynamics.all import *
 
-            sage: for q in QuadraticStrata(dimension=6): print q
+            sage: for q in QuadraticStrata(dimension=6): print(q)
             Q_3(7, 1)
             Q_3(6, 2)
             Q_3(5, 3)
@@ -2171,7 +2175,7 @@ class QuadraticStrata_gd(QuadraticStrata_class):
 
             sage: from surface_dynamics.all import *
 
-            sage: for a in QuadraticStrata(genus=1, dimension=6): print a
+            sage: for a in QuadraticStrata(genus=1, dimension=6): print(a)
             Q_1(1^3, -1^3)
             Q_1(3, 1, -1^4)
             Q_1(2^2, -1^4)

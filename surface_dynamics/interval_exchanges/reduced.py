@@ -52,6 +52,8 @@ TESTS::
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************
 
+from __future__ import absolute_import, print_function
+
 from sage.structure.sage_object import SageObject
 
 from copy import copy
@@ -59,11 +61,10 @@ from copy import copy
 from sage.combinat.words.alphabet import Alphabet
 from sage.rings.integer import Integer
 
-from template import OrientablePermutationIET, OrientablePermutationLI   # permutations
-from template import FlippedPermutationIET, FlippedPermutationLI         # flipped permutations
-from template import RauzyDiagram, FlippedRauzyDiagram
-
-from template import interval_conversion, side_conversion
+from .template import (OrientablePermutationIET, OrientablePermutationLI,    # permutations
+                       FlippedPermutationIET, FlippedPermutationLI,         # flipped permutations
+                       RauzyDiagram, FlippedRauzyDiagram,
+                       interval_conversion, side_conversion)
 
 class ReducedPermutation(SageObject) :
     r"""
@@ -78,14 +79,14 @@ class ReducedPermutation(SageObject) :
         TESTS::
 
             sage: p = iet.Permutation('a b', 'b a', reduced=True)
-            sage: print p[0]
+            sage: print(p[0])
             ['a', 'b']
-            sage: print p[1]
+            sage: print(p[1])
             ['b', 'a']
             sage: p.alphabet([0,1])
-            sage: print p[0]
+            sage: print(p[0])
             [0, 1]
-            sage: print p[1]
+            sage: print(p[1])
             [1, 0]
         """
         return self.list()[i]
@@ -111,7 +112,7 @@ def ReducedPermutationsIET_iterator(
         sage: from surface_dynamics.all import *
 
         sage: for p in iet.Permutations_iterator(3,reduced=True,alphabet="abc"):
-        ...    print p  #indirect doctest
+        ...    print(p) #indirect doctest
         a b c
         b c a
         a b c
@@ -174,7 +175,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
         sage: p = iet.Permutation('a b c', 'c b a', reduced = True)
         sage: p.has_rauzy_move(1)
         True
-        sage: print p.rauzy_move(1)
+        sage: print(p.rauzy_move(1))
         a b c
         b c a
 
@@ -186,8 +187,10 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
         sage: d_red = p_red.rauzy_diagram()
         sage: p.rauzy_move(0) in d
         True
-        sage: print d.cardinality(), d_red.cardinality()
-        12 6
+        sage: print(d.cardinality())
+        12
+        sage: print(d_red.cardinality())
+        6
     """
     def list(self):
         r"""
@@ -221,7 +224,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
             sage: p_t = p.rauzy_move('t')
             sage: q_t = q.rauzy_move('t')
             sage: s_t = q.rauzy_move_relabel('t')
-            sage: print s_t
+            sage: print(s_t)
             a->a, b->b, c->c, d->d
             sage: map(s_t, p_t[0]) == map(Word, q_t[0])
             True
@@ -230,7 +233,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
             sage: p_b = p.rauzy_move('b')
             sage: q_b = q.rauzy_move('b')
             sage: s_b = q.rauzy_move_relabel('b')
-            sage: print s_b
+            sage: print(s_b)
             a->a, b->d, c->b, d->c
             sage: map(s_b, q_b[0]) == map(Word, p_b[0])
             True
@@ -375,7 +378,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
             sage: p.rauzy_class_cardinality(extended=True)
             254
         """
-        from rauzy_class_cardinality import gamma_irr,delta_irr
+        from .rauzy_class_cardinality import gamma_irr,delta_irr
         from sage.arith.all import binomial
 
         s = self.stratum()

@@ -2039,27 +2039,36 @@ class CylinderDiagram(SeparatrixDiagram):
             ....:    b  = c.bot() ; t  = c.top()
             ....:    bb = cc.bot(); tt = cc.top()
             ....:    print(cc)
-            ....:    print all(bb[m[i]] == m[b[i]] for i in xrange(c.nseps())),
-            ....:    print all(tt[m[i]] == m[t[i]] for i in xrange(c.nseps()))
+            ....:    print(all(bb[m[i]] == m[b[i]] for i in xrange(c.nseps())))
+            ....:    print(all(tt[m[i]] == m[t[i]] for i in xrange(c.nseps())))
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
             ...
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
 
             sage: import itertools
             sage: for p in itertools.permutations([0,1,2,3,4,5]):
@@ -2071,23 +2080,30 @@ class CylinderDiagram(SeparatrixDiagram):
             ....:    b  = c.bot() ; t  = c.top()
             ....:    bb = cc.bot(); tt = cc.top()
             ....:    print(cc)
-            ....:    print all(bb[m[i]] == m[b[i]] for i in xrange(c.nseps())),
-            ....:    print all(tt[m[i]] == m[t[i]] for i in xrange(c.nseps()))
+            ....:    print(all(bb[m[i]] == m[b[i]] for i in xrange(c.nseps())))
+            ....:    print(all(tt[m[i]] == m[t[i]] for i in xrange(c.nseps())))
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True True
+            True
+            True
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True True
+            True
+            True
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True True
+            True
+            True
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True True
+            True
+            True
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True True
+            True
+            True
             ...
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True True
+            True
+            True
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True True
+            True
+            True
 
         TESTS::
 
@@ -3019,16 +3035,20 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: cyl = CylinderDiagram('(0,1,2)-(3,1,2) (3)-(0)')
             sage: for o in cyl.origami_iterator(4):
             ....:     print(o)
-            ....:     print o.stratum(), o.nb_squares()
+            ....:     print(o.stratum())
+            ....:     print(o.nb_squares())
             (1,2,3)(4)
             (1,4)(2,3)
-            H_2(1^2) 4
+            H_2(1^2)
+            4
             (1,2,3)(4)
             (1,2,4)(3)
-            H_2(1^2) 4
+            H_2(1^2)
+            4
             (1,2,3)(4)
             (1,3,4)(2)
-            H_2(1^2) 4
+            H_2(1^2)
+            4
         """
         for w,h in self.widths_and_heights_iterator(n):
             for o in self.cylcoord_to_origami_iterator(w, h):

@@ -11,6 +11,8 @@ that the product `g_0 g_1 g_2 g_3` is the identity. It is sometimes called a
 independant C program in noraml_form.c
 """
 
+from __future__ import print_function
+
 #from sage.ext.interrupt.interrupt cimport sig_on, sig_off
 #from sage.ext.memory cimport sage_malloc, sage_free
 
@@ -1327,8 +1329,8 @@ cdef class Origami_dense_pyx(object):
         # and rr,uu is memory allocated
         while True:
             if VERBOSE:
-                print "loop from %s %s" %(str(o.r_tuple()),str(o.u_tuple()))
-                print "len(l) = %d len(i) = %d" %(len(l_edges),len(i_edges))
+                print("loop from %s %s" %(str(o.r_tuple()),str(o.u_tuple())))
+                print("len(l) = %d len(i) = %d" %(len(l_edges),len(i_edges)))
             if o in l_edges:
                 raise ValueError, "%s seen before" %str(o)
 
@@ -1342,7 +1344,7 @@ cdef class Origami_dense_pyx(object):
             while origami_diff(r,rr,n):
                 oo = o._new_c(rr)
                 if VERBOSE:
-                    print "new element in cups %s %s" %(str(oo.r_tuple()),str(oo.u_tuple()))
+                    print("new element in cups %s %s" %(str(oo.r_tuple()),str(oo.u_tuple())))
                 waiting.add(oo)
                 l_edges[oo] = ooo
                 ooo = oo
@@ -1358,9 +1360,9 @@ cdef class Origami_dense_pyx(object):
             l_edges[o] = ooo
 
             if VERBOSE:
-                print "cups computed"
-                print "len(l) = %d len(i) = %d" %(len(l_edges),len(i_edges))
-                print "%d origami wait" %len(waiting)
+                print("cups computed")
+                print("len(l) = %d len(i) = %d" %(len(l_edges),len(i_edges)))
+                print("%d origami wait" %len(waiting))
 
             # then we create i-edges until we find a new guy
             # we set r,u to be available
@@ -1368,7 +1370,7 @@ cdef class Origami_dense_pyx(object):
             while waiting:
                 oo = waiting.pop()
                 if VERBOSE:
-                    print "try i-link from %s %s" %(str(oo.r_tuple()),str(oo.u_tuple()))
+                    print("try i-link from %s %s" %(str(oo.r_tuple()),str(oo.u_tuple())))
                 rr = oo._r; uu = oo._u
                 for i from 0 <= i < n:
                     r[i] = uu[i]
@@ -1377,21 +1379,21 @@ cdef class Origami_dense_pyx(object):
                 if origami_diff(r,rr,n): # not symmetric under r <-> u
                     o = self._new_c(r)
                     if VERBOSE:
-                        print "find new guy %s %s" %(str(o.r_tuple()),str(o.u_tuple()))
+                        print("find new guy %s %s" %(str(o.r_tuple()),str(o.u_tuple())))
                     rr = <int *>malloc(N)
                     uu = rr+n
                     i_edges[o] = oo
                     i_edges[oo] = o
                     if o in waiting: # we find a fake new guy
                         if VERBOSE:
-                            print "he was there before"
+                            print("he was there before")
                         waiting.remove(o)
                         r = rr; u = uu
                     else: # we find a real new guy
                         break
                 else: # symmetric under r <-> u
                     if VERBOSE:
-                        print "symmetric one"
+                        print("symmetric one")
                     i_edges[oo] = oo
                     rr = NULL
                     uu = NULL
@@ -1422,7 +1424,7 @@ cdef class Origami_dense_pyx(object):
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: l,i = o.gl2z_edges()
-            sage: for oo in l: print "(%s,%s) -> (%s,%s)" %(oo.r(),oo.u(),l[oo].r(),l[oo].u())
+            sage: for oo in l: print("(%s,%s) -> (%s,%s)" %(oo.r(),oo.u(),l[oo].r(),l[oo].u()))
             ((1,2,3),(2,3)) -> ((1,2,3),(2,3))
             ((2,3),(1,2)) -> ((2,3),(1,2,3))
             ((2,3),(1,2,3)) -> ((2,3),(1,2))
@@ -1953,7 +1955,7 @@ cdef class Origami_dense_pyx(object):
             [(Q_0(3, -1^7), (4,), (5, 1, 1))]
 
             sage: o = Origami('(1,2,4)(3,6,5)','(1,3)(2,5)(4,6)')
-            sage: for q,_,_ in o.orientation_data(): print q
+            sage: for q,_,_ in o.orientation_data(): print(q)
             Q_1(4, -1^4)
             Q_1(4, -1^4)
             Q_0(1^2, -1^6)
@@ -1971,7 +1973,7 @@ cdef class Origami_dense_pyx(object):
 
         m = m2 * ~m1  # one element which reverses orientation
         if verbose:
-            print "m  =",m
+            print("m  = %s" %m)
         r = self.r()
         u = self.u()
         assert(m*r*~m == ~r and m*u*~m == ~u) # check
@@ -1996,8 +1998,8 @@ cdef class Origami_dense_pyx(object):
                 continue
 
             if verbose:
-                print "g  =",g
-                print "mm =",mm
+                print("g  = %s" %g)
+                print("mm = %s" %mm)
 
             # fixed points which are not integer points
             squares = []; h_edges = []; v_edges = []
@@ -2016,11 +2018,11 @@ cdef class Origami_dense_pyx(object):
                     ramifications[len(c)-1] += 1
 
             if verbose:
-                print "ramifications"
-                print "  deg. of int. pts.",ramifications
-                print "  h_edges",len(h_edges)
-                print "  v_edges",len(v_edges)
-                print "  centers",len(squares)
+                print("ramifications")
+                print("  deg. of int. pts. %s" %ramifications)
+                print("  h_edges %d" %len(h_edges))
+                print("  v_edges %d" %len(v_edges))
+                print("  centers %d" %len(squares))
 
             qdegrees = dict((d-1,ramifications[d]) for d in ramifications)
             qdegrees[-1] += len(squares) + len(h_edges) + len(v_edges)
@@ -2038,7 +2040,7 @@ cdef class Origami_dense_pyx(object):
                     (len(squares),len(h_edges),len(v_edges))))
 
             if verbose:
-                print " stratum", res[-1][0]
+                print(" stratum", res[-1][0])
             assert(not res[-1][0].is_empty())  # check that the stratum is non empty!
 
         return res
@@ -2226,9 +2228,9 @@ cdef class Origami_dense_pyx(object):
 
             sage: o = Origami('(3,4,5)', '(1,2,3)(4,6,7)(5,8,9)')
             sage: for oo in o.intermediate_covers():
-            ....:    print oo.nb_squares()
-            ....:    print oo
-            ....:    print "- - - - - -"
+            ....:    print(oo.nb_squares())
+            ....:    print(oo)
+            ....:    print("- - - - - -")
             1
             (1)
             (1)
@@ -2287,7 +2289,7 @@ cdef class Origami_dense_pyx(object):
             sage: P = o.normal_cover().lattice_of_quotients(); P
             Finite lattice containing 6 elements
             sage: for p in P:
-            ....:     print p.nb_squares(), p.stratum_component()
+            ....:     print(p.nb_squares(), p.stratum_component())
             6 H_3(2^2)^odd
             3 H_2(2)^hyp
             3 H_2(2)^hyp
@@ -2306,7 +2308,7 @@ cdef class Origami_dense_pyx(object):
         u = self.u()
         blocks = list(G.AllBlocks())
         if verbose:
-            print blocks
+            print(blocks)
         d = {}
         for b in blocks:
             orbit = G.Orbit(b, gap.OnSets)
@@ -2317,7 +2319,7 @@ cdef class Origami_dense_pyx(object):
         d[frozenset([1])] = self
         if verbose:
             for i in d:
-                print i,"->\n",d[i]
+                print(i,"->\n",d[i])
         E = d.values()
         R = [(d[i],d[j]) for i in d for j in d if i.issubset(j)]
         return LatticePoset((E,R))
@@ -2582,7 +2584,7 @@ cdef class Origami_dense_pyx(object):
             sage: G.order()
             2
             sage: oo = o.quotient(G)
-            sage: print oo
+            sage: print(oo)
             (1,2)
             (1)(2)
             sage: oo.genus()
@@ -2620,10 +2622,10 @@ cdef class Origami_dense_pyx(object):
         EXAMPLES::
 
             sage: from surface_dynamics.all import *
-            sage: print Origami('(1,2)','(1,3)').__str__()
+            sage: print(Origami('(1,2)','(1,3)').__str__())
             (1,2)(3)
             (1,3)(2)
-            sage: print Origami('(1,2)','(1,3)',name='toto').__str__()
+            sage: print(Origami('(1,2)','(1,3)',name='toto').__str__())
             (1,2)(3)
             (1,3)(2)
         """
@@ -2644,7 +2646,7 @@ cdef class Origami_dense_pyx(object):
         EXAMPLES::
 
             sage: from surface_dynamics.all import *
-            sage: print Origami('(1,2)','(1,3)')._latex_()
+            sage: print(Origami('(1,2)','(1,3)')._latex_())
             (1,2)(3) \atop (1,3)(2)
         """
         sr = self.r().cycle_string(singletons=True)
@@ -3167,8 +3169,8 @@ cdef class Origami_dense_pyx(object):
             sage: t.sum_of_lyapunov_exponents()
             4/3
             sage: for o in t.cusp_representatives():
-            ....:     print o[0]
-            ....:     print o[1]
+            ....:     print(o[0])
+            ....:     print(o[1])
             (1)(2,3)
             (1,2)(3)
             2
@@ -3314,10 +3316,10 @@ cdef gl2z_orbits(origamis, int n, int limit):
         rr = <int *> malloc(N)
         uu = rr+n
         if VERBOSE:
-            print "pop origami\n r=%s\n u=%s"%(str(o.r()),str(o.u()))
-            print "check:"
-            print "  l = %s at %d"%(o._l_edges, id(o._l_edges))
-            print "  i = %s at %d"%(o._i_edges, id(o._i_edges))
+            print("pop origami\n r=%s\n u=%s"%(str(o.r()),str(o.u())))
+            print("check:")
+            print("  l = %s at %d"%(o._l_edges, id(o._l_edges)))
+            print("  i = %s at %d"%(o._i_edges, id(o._i_edges)))
         l_edges = o._l_edges
         i_edges = o._i_edges
 
@@ -3331,7 +3333,7 @@ cdef gl2z_orbits(origamis, int n, int limit):
         # r,u   pointed by o
         while True:
             if VERBOSE:
-                print "start new cusp..."
+                print("start new cusp...")
             if o in l_edges:
                 raise ValueError("%s seen before" %str(o))
 
@@ -3345,13 +3347,13 @@ cdef gl2z_orbits(origamis, int n, int limit):
             while origami_diff(r,rr,n):
                 oo = o._new_c(rr)
                 if VERBOSE:
-                    print " new elt in cusp"
-                    print " r = %s"%oo.r()
-                    print " u = %s"%oo.u()
-                    print " go"
+                    print(" new elt in cusp")
+                    print(" r = %s"%oo.r())
+                    print(" u = %s"%oo.u())
+                    print(" go")
                 if oo in origamis:
                     if VERBOSE:
-                        print " remove origami in the set"
+                        print(" remove origami in the set")
                     origamis.remove(oo)
 
                 waiting.add(oo)
@@ -3371,7 +3373,7 @@ cdef gl2z_orbits(origamis, int n, int limit):
             l_edges[o] = ooo
             if limit > 0 and len(l_edges) > limit: # test the size
                 if VERBOSE:
-                    print "oversize"
+                    print("oversize")
                 l_edges.clear()
                 i_edges.clear()
                 waiting.clear()
@@ -3380,11 +3382,11 @@ cdef gl2z_orbits(origamis, int n, int limit):
 
             # then we create i-edges until we find a new guy
             # we set r,u to be available
-            if VERBOSE: print "end of cusp, apply symmetry"
+            if VERBOSE: print("end of cusp, apply symmetry")
             r = rr; u = uu
             while waiting:
                 if VERBOSE:
-                    print " new try..."
+                    print(" new try...")
                 oo = waiting.pop()
                 rr = oo._r; uu = oo._u
                 for i from 0 <= i < n:
@@ -3398,18 +3400,18 @@ cdef gl2z_orbits(origamis, int n, int limit):
                     i_edges[o] = oo
                     i_edges[oo] = o
                     if o in waiting: # we find a fake new guy
-                        if VERBOSE: print " ...was already there"
+                        if VERBOSE: print(" ...was already there")
                         waiting.remove(o)
                         r = rr; u = uu
                     else: # we find a real new guy
                         if VERBOSE:
-                            print "go elsewhere"
+                            print("go elsewhere")
                         if o in origamis:
                             origamis.remove(o)
                         break
                 else: # symmetric under r <-> u
                     if VERBOSE:
-                        print " ...symmetric guy"
+                        print(" ...symmetric guy")
                     i_edges[oo] = oo
                     rr = NULL
                     uu = NULL
@@ -3419,8 +3421,8 @@ cdef gl2z_orbits(origamis, int n, int limit):
         if l_edges: # append if we do not quit because of oversize
             orbits.append((l_edges,i_edges))
             if VERBOSE:
-                    print "new orbit of size %d"%(len(l_edges))
-                    print "check: waiting=",waiting
+                    print("new orbit of size %d"%(len(l_edges)))
+                    print("check: waiting=",waiting)
 
     free(renum)
     free(rr)

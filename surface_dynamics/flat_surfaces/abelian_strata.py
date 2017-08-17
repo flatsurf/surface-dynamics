@@ -58,21 +58,21 @@ EXAMPLES:
 Construction of a stratum from a list of singularity degrees::
 
     sage: a = AbelianStratum(1,1)
-    sage: print a
+    sage: print(a)
     H_2(1^2)
-    sage: print a.genus()
+    sage: print(a.genus())
     2
-    sage: print a.dimension()
+    sage: print(a.dimension())
     5
 
 ::
 
     sage: a = AbelianStratum(4,3,2,1)
-    sage: print a
+    sage: print(a)
     H_6(4, 3, 2, 1)
-    sage: print a.genus()
+    sage: print(a.genus())
     6
-    sage: print a.dimension()
+    sage: print(a.dimension())
     15
 
 By convention, the degrees are always written in decreasing order::
@@ -100,7 +100,7 @@ of a representative::
 Obtains the connected components of a stratum::
 
     sage: a = AbelianStratum(0)
-    sage: print a.components()
+    sage: print(a.components())
     [H_1(0)^hyp]
 
 ::
@@ -121,8 +121,8 @@ Obtains the connected components of a stratum::
     ....:       for z in set(a.zeros()):
     ....:           p = cc.permutation_representative(left_degree=z)
     ....:           n = p.rauzy_diagram().cardinality()
-    ....:           print "%13s, %d  :  %d"%(cc, z, n)
-    ....:           print p
+    ....:           print("%13s, %d  :  %d"%(cc, z, n))
+    ....:           print(p)
     ....:           N += n
     H_2(2, 0)^hyp, 0  :  11
     0 1 2 3 4
@@ -187,7 +187,7 @@ class AbelianStratum(Stratum):
     Creation of an Abelian stratum and get its connected components::
 
         sage: a = AbelianStratum(2, 2)
-        sage: print a
+        sage: print(a)
         H_3(2^2)
         sage: a.components()
         [H_3(2^2)^hyp, H_3(2^2)^odd]
@@ -196,16 +196,16 @@ class AbelianStratum(Stratum):
 
         sage: a = AbelianStratum(2,2)
         sage: a_hyp, a_odd = a.components()
-        sage: print a_hyp.permutation_representative()
+        sage: print(a_hyp.permutation_representative())
         0 1 2 3 4 5 6
         6 5 4 3 2 1 0
-        sage: print a_odd.permutation_representative()
+        sage: print(a_odd.permutation_representative())
         0 1 2 3 4 5 6
         3 2 4 6 5 1 0
 
     You can specify the alphabet::
 
-        sage: print a_odd.permutation_representative(alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        sage: print(a_odd.permutation_representative(alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
         A B C D E F G
         D C E G F B A
     """
@@ -642,7 +642,7 @@ class AbelianStratum(Stratum):
 
             sage: a = AbelianStratum(2); a
             H_2(2)
-            sage: for s in a.separatrix_diagrams(): print s
+            sage: for s in a.separatrix_diagrams(): print(s)
             (0,1,2)-(0,1,2)
             (0)(1,2)-(0,1)(2)
         """
@@ -668,7 +668,7 @@ class AbelianStratum(Stratum):
 
             sage: A = AbelianStratum(4)
             sage: for c in A.cylinder_diagram_iterator(3,force_computation=True):
-            ....:     print c
+            ....:     print(c)
             (0,2,1)-(0,3,4) (3)-(2) (4)-(1)
             (0,2,1)-(0,3,4) (3)-(1) (4)-(2)
             (0,1)-(0,3,4) (2,3)-(1) (4)-(2)
@@ -830,22 +830,31 @@ class AbelianStratum(Stratum):
 
             sage: H31 = AbelianStratum(3,1)
             sage: for d in range(1,5):
-            ....:     print H31.cylinder_diagrams_number(d, False),
-            ....:     print H31.cylinder_diagrams_number(d, True)
-            2 2
-            12 12
-            16 16
-            4 4
+            ....:     print(H31.cylinder_diagrams_number(d, False))
+            ....:     print(H31.cylinder_diagrams_number(d, True))
+            2
+            2
+            12
+            12
+            16
+            16
+            4
+            4
 
             sage: H211 = AbelianStratum(2,1,1)
             sage: for d in range(1,6):
-            ....:     print H211.cylinder_diagrams_number(d, False),
-            ....:     print H211.cylinder_diagrams_number(d, True)
-            5 5
-            29 29
-            53 53
-            27 27
-            8 8
+            ....:     print(H211.cylinder_diagrams_number(d, False))
+            ....:     print(H211.cylinder_diagrams_number(d, True))
+            5
+            5
+            29
+            29
+            53
+            53
+            27
+            27
+            8
+            8
         """
         if ncyls is not None and ncyls > self.genus() + self.nb_zeros() - 1:
             return 0
@@ -914,7 +923,7 @@ class AbelianStratumComponent(StratumComponent):
             sage: p
             a b c d e f g h i
             e d c f i h g b a
-            sage: print p.stratum_component()
+            sage: print(p.stratum_component())
             H_3(1^4)^c
 
             sage: cc = AbelianStratum(3,2,1,0).unique_component()
@@ -1222,17 +1231,17 @@ class AbelianStratumComponent(StratumComponent):
             sage: from surface_dynamics.all import *
 
             sage: cc = AbelianStratum(3,1).unique_component()
-            sage: print sum(1 for p in cc.rauzy_diagram() if p.is_standard())
+            sage: print(sum(1 for p in cc.rauzy_diagram() if p.is_standard()))
             24
             sage: cc.standard_permutations_number()
             24
 
-            sage: print sum(1 for p in cc.rauzy_diagram(left_degree=3) if p.is_standard())
+            sage: print(sum(1 for p in cc.rauzy_diagram(left_degree=3) if p.is_standard()))
             16
             sage: cc.standard_permutations_number(left_degree=3)
             16
 
-            sage: print sum(1 for p in cc.rauzy_diagram(left_degree=1) if p.is_standard())
+            sage: print(sum(1 for p in cc.rauzy_diagram(left_degree=1) if p.is_standard()))
             8
             sage: cc.standard_permutations_number(left_degree=1)
             8
@@ -1265,7 +1274,9 @@ class AbelianStratumComponent(StratumComponent):
             sage: C = AbelianStratum(4).odd_component()
             sage: C
             H_3(4)^odd
-            sage: for p in C.standard_permutations(): print p,"\n***********"
+            sage: for p in C.standard_permutations():
+            ....:     print(p)
+            ....:     print("***********")
             0 1 2 3 4 5
             5 2 1 4 3 0
             ***********
@@ -1396,7 +1407,7 @@ class AbelianStratumComponent(StratumComponent):
 
             sage: C = AbelianStratum(1,1,1,1).unique_component(); C
             H_3(1^4)^c
-            sage: for c in C.cylinder_diagrams(6): print c
+            sage: for c in C.cylinder_diagrams(6): print(c)
             (0,1)-(7) (2)-(0) (3)-(4) (4,7)-(5,6) (5)-(1) (6)-(2,3)
             (0,1)-(7) (2)-(1) (3)-(0) (4,7)-(5,6) (5)-(4) (6)-(2,3)
             (0,3)-(6,7) (1,2)-(4,5) (4)-(1) (5)-(3) (6)-(2) (7)-(0)
@@ -1434,7 +1445,7 @@ class AbelianStratumComponent(StratumComponent):
         same numbers::
 
             sage: for i in range(1,5):
-            ....:     print C.cylinder_diagrams_number(i, force_computation=True)
+            ....:     print(C.cylinder_diagrams_number(i, force_computation=True))
             2
             12
             16
@@ -1444,18 +1455,30 @@ class AbelianStratumComponent(StratumComponent):
             sage: C_hyp = C.hyperelliptic_component()
             sage: C_odd = C.odd_component()
             sage: C_even = C.even_component()
-            sage: for i in xrange(1,5): print C.cylinder_diagrams_number(i),
-            16 76 130 67
-            sage: for i in xrange(1,5): print C_hyp.cylinder_diagrams_number(i),
-            1 3 8 4
-            sage: for i in xrange(1,5): print C_odd.cylinder_diagrams_number(i),
-            11 49 80 42
+            sage: for i in xrange(1,5): print(C.cylinder_diagrams_number(i))
+            16
+            76
+            130
+            67
+            sage: for i in xrange(1,5): print(C_hyp.cylinder_diagrams_number(i))
+            1
+            3
+            8
+            4
+            sage: for i in xrange(1,5): print(C_odd.cylinder_diagrams_number(i))
+            11
+            49
+            80
+            42
 
             sage: for i in xrange(1,5):
-            ....:     print C_even.cylinder_diagrams_number(i, False),
-            4 24 42 21
+            ....:     print(C_even.cylinder_diagrams_number(i, False))
+            4
+            24
+            42
+            21
             sage: for i in xrange(1,5):                               # long time
-            ....:     print C_even.cylinder_diagrams_number(i, True), # long time
+            ....:     print(C_even.cylinder_diagrams_number(i, True)) # long time
             4 24 42 21
         """
         if ncyls is not None and ncyls > self.stratum().genus() + self.stratum().nb_zeros() - 1:
@@ -1596,7 +1619,7 @@ class AbelianStratumComponent(StratumComponent):
             sage: A = AbelianStratum(2).hyperelliptic_component(); A
             H_2(2)^hyp
             sage: for i in xrange(3,10):
-            ....:     print i,len(A.arithmetic_teichmueller_curves(i))
+            ....:     print("%d %d" % (i,len(A.arithmetic_teichmueller_curves(i))))
             3 1
             4 1
             5 2
@@ -1610,7 +1633,7 @@ class AbelianStratumComponent(StratumComponent):
             sage: for i in xrange(4,10):
             ....:    T = A.arithmetic_teichmueller_curves(i)
             ....:    T_prim = filter(lambda t:t.origami().is_primitive(), T)
-            ....:    print i,len(T),len(T_prim)
+            ....:    print("%d %d %d" %(i,len(T),len(T_prim)))
             4 2 1
             5 1 1
             6 5 2
@@ -1621,7 +1644,7 @@ class AbelianStratumComponent(StratumComponent):
             sage: A = AbelianStratum(4).hyperelliptic_component(); A
             H_3(4)^hyp
             sage: for i in xrange(5,10):
-            ....:    print i,len(A.arithmetic_teichmueller_curves(i))
+            ....:    print("%d %d" % (i,len(A.arithmetic_teichmueller_curves(i))))
             5 2
             6 4
             7 3
@@ -2011,10 +2034,10 @@ class HypAbelianStratumComponent(ASC):
             sage: from surface_dynamics.all import *
 
             sage: C = AbelianStratum(2,2).hyperelliptic_component()
-            sage: for c in C.cylinder_diagram_iterator(1): print c
+            sage: for c in C.cylinder_diagram_iterator(1): print(c)
             (0,5,3,1,2,4)-(0,5,3,1,2,4)
 
-            sage: for c in C.cylinder_diagram_iterator(2): print c
+            sage: for c in C.cylinder_diagram_iterator(2): print(c)
             (0,2,4,1)-(0,2,5,1) (3,5)-(3,4)
             (0,3,4)-(0,3,5) (1,2,5)-(1,2,4)
             (0,1,3,4,2)-(0,1,3,5,2) (5)-(4)
@@ -2815,15 +2838,15 @@ class OddAbelianStratumComponent(ASC):
             sage: from surface_dynamics.all import *
 
             sage: C = AbelianStratum(4).odd_component()
-            sage: for c in C.cylinder_diagrams(1): print c
+            sage: for c in C.cylinder_diagrams(1): print(c)
             (0,2,1,4,3)-(0,4,2,1,3)
             (0,4,1,2,3)-(0,1,3,4,2)
-            sage: for c in C.cylinder_diagrams(2): print c
+            sage: for c in C.cylinder_diagrams(2): print(c)
             (0,1,2)-(0,3,1,4) (3,4)-(2)
             (0,1,3)-(4) (2,4)-(0,1,2,3)
             (0,2,3)-(2,4) (1,4)-(0,1,3)
             (0,2,3,1)-(0,2,1,4) (4)-(3)
-            sage: for c in C.cylinder_diagrams(3): print c
+            sage: for c in C.cylinder_diagrams(3): print(c)
             (0,1)-(0,3,4) (2,3)-(1) (4)-(2)
             (0,2)-(0,3) (1,3)-(1,4) (4)-(2)
             (0,2)-(4) (1,4)-(2,3) (3)-(0,1)
@@ -2863,18 +2886,18 @@ class AbelianStrata(Strata):
 
     Abelian strata with a given genus::
 
-        sage: for s in AbelianStrata(genus=1): print s
+        sage: for s in AbelianStrata(genus=1): print(s)
         H_1(0)
 
     ::
 
-        sage: for s in AbelianStrata(genus=2): print s
+        sage: for s in AbelianStrata(genus=2): print(s)
         H_2(2)
         H_2(1^2)
 
     ::
 
-        sage: for s in AbelianStrata(genus=3): print s
+        sage: for s in AbelianStrata(genus=3): print(s)
         H_3(4)
         H_3(3, 1)
         H_3(2^2)
@@ -2883,7 +2906,7 @@ class AbelianStrata(Strata):
 
     ::
 
-        sage: for s in AbelianStrata(genus=4): print s
+        sage: for s in AbelianStrata(genus=4): print(s)
         H_4(6)
         H_4(5, 1)
         H_4(4, 2)
@@ -2899,18 +2922,18 @@ class AbelianStrata(Strata):
     Get outside of the tests.
     Abelian strata with a given number of intervals
 
-    sage for s in AbelianStrata(dimension=2): print s
+    sage for s in AbelianStrata(dimension=2): print(s)
     H^out([0])
 
-    sage for s in AbelianStrata(dimension=3): print s
+    sage for s in AbelianStrata(dimension=3): print(s)
     H^out([0], 0)
 
-    sage for s in AbelianStrata(dimension=4): print s
+    sage for s in AbelianStrata(dimension=4): print(s)
     H^out([2])
     H^out([0], 0, 0)
 
     Get outisde of tests
-    sage  for s in AbelianStrata(dimension=5): print s
+    sage  for s in AbelianStrata(dimension=5): print(s)
     H^out(2, [0])
     H^out([2], 0)
     H^out([1], 1)
@@ -3165,8 +3188,8 @@ class AbelianStrata_d(AbelianStrata):
         sage: from surface_dynamics.all import *
 
         sage: for a in AbelianStrata(dimension=5,fake_zeros=True):
-        ....:     print a
-        ....:     print a.permutation_representative()
+        ....:     print(a)
+        ....:     print(a.permutation_representative())
         H_2(2, 0)
         0 1 2 3 4
         4 1 3 2 0
@@ -3239,7 +3262,7 @@ class AbelianStrata_d(AbelianStrata):
 
             sage: from surface_dynamics.all import *
 
-            sage: for a in AbelianStrata(dimension=4,fake_zeros=True): print a
+            sage: for a in AbelianStrata(dimension=4,fake_zeros=True): print(a)
             H_2(2)
             H_1(0^3)
         """
@@ -3353,7 +3376,7 @@ class AbelianStrata_all(AbelianStrata):
         sage: A = AbelianStrata()
         sage: it = iter(A)
         sage: for _ in range(10):
-        ....:     print it.next()
+        ....:     print(it.next())
         H_1(0)
         H_2(2)
         H_2(1^2)
@@ -3368,7 +3391,7 @@ class AbelianStrata_all(AbelianStrata):
         sage: A = AbelianStrata(fake_zeros=True)
         sage: it = iter(A)
         sage: for _ in range(10):
-        ....:     print it.next()
+        ....:     print(it.next())
         H_1(0)
         H_1(0^2)
         H_2(2)

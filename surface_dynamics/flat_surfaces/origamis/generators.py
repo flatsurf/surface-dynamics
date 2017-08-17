@@ -21,7 +21,9 @@ The constructors available in this database are organized as follows
 - :meth:`ProjectiveLine <OrigamiGenerators.ProjectiveLine>`
 """
 
-from origami import Origami
+from __future__ import absolute_import, print_function
+
+from .origami import Origami
 from sage.rings.integer import Integer
 from sage.rings.integer_ring import ZZ
 
@@ -51,7 +53,7 @@ class OrigamiGenerators():
             sage: o = origamis.Escalator(3)
             sage: o
             Escalator with 3 steps
-            sage: print str(o)
+            sage: print(str(o))
             (1,2)(3,4)(5,6)
             (1,6)(2,3)(4,5)
             sage: o.veech_group().index()
@@ -79,7 +81,7 @@ class OrigamiGenerators():
             sage: o = origamis.EierlegendeWollmilchsau()
             sage: o
             Eierlegende Wollmilchsau
-            sage: print str(o)
+            sage: print(str(o))
             (1,2,3,4)(5,6,7,8)
             (1,5,3,7)(2,8,4,6)
             sage: o.veech_group().index()
@@ -216,13 +218,13 @@ class OrigamiGenerators():
             sage: o = origamis.Stair(4)
             sage: o
             Stair origami with 4 squares
-            sage: print str(o)
+            sage: print(str(o))
             (1,2)(3,4)
             (1)(2,3)(4)
             sage: o = origamis.Stair(5)
             sage: o
             Stair origami with 5 squares
-            sage: print str(o)
+            sage: print(str(o))
             (1,2)(3,4)(5)
             (1)(2,3)(4,5)
         """
@@ -260,7 +262,7 @@ class OrigamiGenerators():
             sage: o = origamis.Podium([3,3,2,1])
             sage: o
             Podium origami with partition [3, 3, 2, 1]
-            sage: print o
+            sage: print(o)
             (1,2,3)(4,5,6)(7,8)(9)
             (1,4,7,9)(2,5,8)(3,6)
         """

@@ -33,6 +33,8 @@ REFERENCES:
             applications", Springer-Verlag, 2004.
 """
 
+from __future__ import print_function
+
 from sage.structure.parent import Parent
 from sage.structure.element import Element
 from sage.structure.unique_representation import UniqueRepresentation
@@ -526,7 +528,7 @@ class Constellation_class(Element):
             sage: c = Constellation([[1,0,2],[2,1,0],[0,2,1],None])
             sage: d = Constellation([[2,1,0],[0,2,1],[1,0,2],None])
             sage: answer, mapping = c.is_isomorphic(d,return_map=True)
-            sage: print answer
+            sage: print(answer)
             True
             sage: c.relabel(mapping) == d
             True
@@ -1078,7 +1080,7 @@ class Constellations_all(UniqueRepresentation, Parent):
             sage: from surface_dynamics.misc.constellation import Constellations
 
             sage: I = iter(Constellations())
-            sage: for _ in xrange(100): print I.next()
+            sage: for _ in xrange(100): print(I.next())
             Constellation of length 1 and degree 1
             g0 (0)
             Constellation of length 2 and degree 1
@@ -1452,7 +1454,7 @@ class Constellations_p(UniqueRepresentation, Parent):
         sage: c1 = p1.conjugacy_class_size()
         sage: c2 = p2.conjugacy_class_size()
         sage: c3 = p3.conjugacy_class_size()
-        sage: print c1 * c2 * c3 / factorial(4)**2 * s
+        sage: print(c1 * c2 * c3 / factorial(4)**2 * s)
         1
 
     The number obtained above is up to isomorphism. And we can check::
@@ -1572,7 +1574,7 @@ class Constellations_p(UniqueRepresentation, Parent):
             sage: from surface_dynamics.misc.constellation import Constellations
 
             sage: C = Constellations([(3,1),(3,1),(2,2)])
-            sage: for c in C: print c
+            sage: for c in C: print(c)
             Constellation of length 3 and degree 4
             g0 (0)(1,2,3)
             g1 (0,1,2)(3)

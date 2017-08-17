@@ -15,6 +15,8 @@ compute Lyapunov exponents.
 #  The full text of the GPL is available at http://www.gnu.org/licenses/
 # *************************************************************************
 
+from __future__ import print_function
+
 from sage.structure.sage_object import SageObject
 
 from sage.misc.cachefunc import cached_method
@@ -496,14 +498,22 @@ class PermutationCover(SageObject):
 
             sage: for cov in it:
             ....:     c = p.cover(cov)
-            ....:     print cov, c.is_orientable()
-            ('()', '()', '(1,2)') False
-            ('()', '(1,2)', '()') False
-            ('()', '(1,2)', '(1,2)') False
-            ('(1,2)', '()', '()') False
-            ('(1,2)', '()', '(1,2)') True
-            ('(1,2)', '(1,2)', '()') False
-            ('(1,2)', '(1,2)', '(1,2)') False
+            ....:     print(cov)
+            ....:     print(c.is_orientable())
+            ('()', '()', '(1,2)')
+            False
+            ('()', '(1,2)', '()')
+            False
+            ('()', '(1,2)', '(1,2)')
+            False
+            ('(1,2)', '()', '()')
+            False
+            ('(1,2)', '()', '(1,2)')
+            True
+            ('(1,2)', '(1,2)', '()')
+            False
+            ('(1,2)', '(1,2)', '(1,2)')
+            False
         """
         from surface_dynamics.interval_exchanges.template import PermutationIET
         if isinstance(self._base, PermutationIET):
@@ -713,7 +723,7 @@ class PermutationCover(SageObject):
             [0.666666]
             sage: p = q.permutation_representative(reduced=False).orientation_cover()
             sage: c = p.lyapunov_exponents_H_plus(isotypic_decomposition=True)[0]
-            sage: print c[0] # abs tol 0.05
+            sage: print(c[0]) # abs tol 0.05
             1.000000
 
             sage: p = iet.GeneralizedPermutation('e a a', 'b b c c d d e')

@@ -30,6 +30,8 @@ REFERENCES:
   depth-first search in the tree of trees).
 """
 
+from __future__ import absolute_import, print_function
+
 from sage.rings.integer import Integer
 
 ###################################
@@ -79,12 +81,12 @@ def rooted_tree_iterator(n,verbose=False):
     EXAMPLES::
 
         sage: from surface_dynamics.misc.plane_tree import rooted_tree_iterator
-        sage: for t in rooted_tree_iterator(4): print t
+        sage: for t in rooted_tree_iterator(4): print(t)
         [0, 1, 2, 3]
         [0, 1, 2, 2]
         [0, 1, 2, 1]
         [0, 1, 1, 1]
-        sage: for t in rooted_tree_iterator(5): print t
+        sage: for t in rooted_tree_iterator(5): print(t)
         [0, 1, 2, 3, 4]
         [0, 1, 2, 3, 3]
         [0, 1, 2, 3, 2]
@@ -141,10 +143,10 @@ def rooted_tree_iterator(n,verbose=False):
     p = n-1
 
     if verbose:
-        print "  p =   ", p
-        print "  prev =", prev
-        print "  save =", save
-        print l
+        print("  p =   ", p)
+        print("  prev =", prev)
+        print("  save =", save)
+        print(l)
     yield l
 
     while p > 0:
@@ -161,10 +163,10 @@ def rooted_tree_iterator(n,verbose=False):
             prev[l[p]] = save[p]
 
         if verbose:
-            print "  p =   ", p
-            print "  prev =", prev
-            print "  save =", save
-            print l
+            print("  p =   ", p)
+            print("  prev =", prev)
+            print("  save =", save)
+            print(l)
         yield l
 
 ###############################
@@ -185,13 +187,13 @@ def rooted_plane_tree_iterator(nmin,nmax=None, verbose=False):
 
         sage: from surface_dynamics.misc.plane_tree import rooted_plane_tree_iterator
 
-        sage: for t in rooted_plane_tree_iterator(4): print t
+        sage: for t in rooted_plane_tree_iterator(4): print(t)
         [0, 1, 2, 3]
         [0, 1, 2, 2]
         [0, 1, 2, 1]
         [0, 1, 1, 2]
         [0, 1, 1, 1]
-        sage: for t in rooted_plane_tree_iterator(1,3): print t
+        sage: for t in rooted_plane_tree_iterator(1,3): print(t)
         [0]
         [0, 1]
         [0, 1, 2]
@@ -210,19 +212,19 @@ def rooted_plane_tree_iterator(nmin,nmax=None, verbose=False):
         if len(l) >= nmin:
             yield l
         if len(l) < nmax: # go down
-            if verbose: print "go down"
-            if verbose: print " append: %d"%(l[-1]+1)
+            if verbose: print("go down")
+            if verbose: print(" append: %d"%(l[-1]+1))
             l.append(l[-1]+1)
             b.append(l[-1])
         else: # go up
-            if verbose: print "go up"
+            if verbose: print("go up")
             while b and b[-1] == 1:
-                if verbose: print " pop"
+                if verbose: print(" pop")
                 b.pop(-1)
                 l.pop(-1)
             if b == []:
                 break
-            if verbose: print " modify last to become %d"%b[-1]
+            if verbose: print(" modify last to become %d"%b[-1])
             b[-1] -= 1
             l[-1] = b[-1]
 
@@ -334,13 +336,13 @@ def is_lyndon(t,s=None,d=None,verbose=False):
     if d is None:
         d = [max([1]+ww) for ww in w]
     if verbose:
-        print "w=",w
+        print("w=",w)
     i,j=0,1
     while j < n:
         if verbose:
-            print " i,j =",i,j
-            print " w[i] =",w[i]
-            print " w[j] =",w[j]
+            print(" i,j =",i,j)
+            print(" w[i] =",w[i])
+            print(" w[j] =",w[j])
         c = cmp_subtree(w[i],d[i],w[j],d[j])
         if c == 0:
             i += 1
@@ -352,7 +354,7 @@ def is_lyndon(t,s=None,d=None,verbose=False):
             return False
     # i = 0: Lyndon, j-i = i: periodic ?
     if verbose:
-        print " out", i,j
+        print(" out", i,j)
     if i == 0:
         return True
     elif n%(j-i) == 0:
@@ -381,14 +383,14 @@ def unrooted_plane_tree_iterator(nmin,nmax=None,verbose=False, check=False):
     EXAMPLES::
 
         sage: from surface_dynamics.misc.plane_tree import unrooted_plane_tree_iterator
-        sage: for t in unrooted_plane_tree_iterator(4): print t
+        sage: for t in unrooted_plane_tree_iterator(4): print(t)
         [0, 1, 2, 1]
         [0, 1, 1, 1]
-        sage: for t in unrooted_plane_tree_iterator(5): print t
+        sage: for t in unrooted_plane_tree_iterator(5): print(t)
         [0, 1, 2, 2, 1]
         [0, 1, 2, 1, 2]
         [0, 1, 1, 1, 1]
-        sage: for t in unrooted_plane_tree_iterator(6): print t
+        sage: for t in unrooted_plane_tree_iterator(6): print(t)
         [0, 1, 2, 3, 1, 2]
         [0, 1, 2, 2, 2, 1]
         [0, 1, 2, 2, 1, 2]
@@ -396,7 +398,7 @@ def unrooted_plane_tree_iterator(nmin,nmax=None,verbose=False, check=False):
         [0, 1, 2, 1, 2, 1]
         [0, 1, 1, 1, 1, 1]
 
-        sage: for t in unrooted_plane_tree_iterator(1,5): print t
+        sage: for t in unrooted_plane_tree_iterator(1,5): print(t)
         [0]
         [0, 1]
         [0, 1, 2, 2, 1]
@@ -426,9 +428,9 @@ def unrooted_plane_tree_iterator(nmin,nmax=None,verbose=False, check=False):
     d_occ = [] #TODO: nb of occurrences in d
     while True:
         if verbose:
-            print "  t =", t
-            print "  d =", d
-            print "  s =",s
+            print("  t =", t)
+            print("  d =", d)
+            print("  s =",s)
         # verifications
         if check:
             assert len(d) == len(s)
@@ -454,18 +456,18 @@ def unrooted_plane_tree_iterator(nmin,nmax=None,verbose=False, check=False):
                     if ((m == 1) or
                         (m_nb == 1 and has_mm and cmp_halves(t,s[1]) >= 0) or
                         (m_nb > 1 and is_lyndon(t,s,d))):
-                        if verbose: print "YIELD"
+                        if verbose: print("YIELD")
                         yield t
                     elif verbose:
-                        print "NOT YIELD"
+                        print("NOT YIELD")
         # do we go down
         #TODO: remove len(s) <= 1 (corresponds to the leftmost branch in the
         #      tree of trees)
         if (len(t) < nmax and
             ((len(s) <= 1 and t[-1] <= nnmax) or
              (len(s) > 1 and t[-1] <= d[0]))):
-            if verbose: print "go down"
-            if verbose: print " append: %d"%(t[-1]+1)
+            if verbose: print("go down")
+            if verbose: print(" append: %d"%(t[-1]+1))
             #TODO: append the right thing which is not necessarily t[-1]+1
             t.append(t[-1]+1)
             b.append(t[-1])
@@ -479,9 +481,9 @@ def unrooted_plane_tree_iterator(nmin,nmax=None,verbose=False, check=False):
                 d[-1] = t[-1]
         # or go up
         else:
-            if verbose: print "go up"
+            if verbose: print("go up")
             while b and b[-1] == 1:
-                if verbose: print " pop"
+                if verbose: print(" pop")
                 b.pop(-1)
                 t.pop(-1)
                 if check:
@@ -492,7 +494,7 @@ def unrooted_plane_tree_iterator(nmin,nmax=None,verbose=False, check=False):
             if b == []:
                 break
             if verbose:
-                print " modify last to become %d"%(b[-1]-1)
+                print(" modify last to become %d"%(b[-1]-1))
             b[-1] -= 1
             t[-1] = b[-1]
             if d[-1] == t[-1]+1: # update the depth of the rightmost branch or
@@ -502,7 +504,7 @@ def unrooted_plane_tree_iterator(nmin,nmax=None,verbose=False, check=False):
                 for i in xrange(s[-1]+1,len(t)-1):
                     if t[i] > d[-1]:
                         d[-1] = t[i]
-                if verbose: print " updated length of rightmost which is now %d"%d[-1]
+                if verbose: print(" updated length of rightmost which is now %d"%d[-1])
             if t[-1] == 1: # new branch
                 d.append(1)
                 s.append(len(t)-1)
@@ -541,28 +543,28 @@ def _TMP_admissible_plane_tree_iterator(a, verbose=False):
     l = 1   # number of leaves
     while True:
         if verbose:
-            print t
-            print "n = %2d,   l = %2d" %(n,l)
+            print(t)
+            print("n = %2d,   l = %2d" %(n,l))
         if (2*n >= a) and (2*n-l <= a):
-            if verbose: print "yield"
+            if verbose: print("yield")
             t.append(0)
             yield t, n, l
             t.pop(-1)
 
         if n <= a and 2*n-l < a: # could add more nodes -> go down
             if verbose:
-                print "go down"
-                print "  append: %d"%(t[-1]+1)
+                print("go down")
+                print("  append: %d"%(t[-1]+1))
             t.append(t[-1]+1)
             b.append(t[-1])
             n += 1
             # l is unchanged
 
         else: # we are too far -> go up
-            if verbose: print "go up"
+            if verbose: print("go up")
             # update l and n, then pop the rightmost node
             while b and b[-1] == 1:
-                if verbose: print " pop"
+                if verbose: print(" pop")
                 b.pop(-1)
                 t.pop(-1)
                 n -= 1
@@ -570,13 +572,13 @@ def _TMP_admissible_plane_tree_iterator(a, verbose=False):
             if b == []:
                 break
             if verbose:
-                print " modify last"
+                print(" modify last")
             if len(t) > 1 and t[-2] == t[-1] - 1:
                 l += 1
             b[-1] -= 1
             t[-1] = b[-1]
 
-        if verbose: print
+        if verbose: print()
 
 def admissible_plane_tree_iterator(a,verbose=False):
     r"""
@@ -589,7 +591,9 @@ def admissible_plane_tree_iterator(a,verbose=False):
     EXAMPLES::
 
         sage: from surface_dynamics.misc.plane_tree import admissible_plane_tree_iterator
-        sage: for t,n,l in admissible_plane_tree_iterator(5): print t,"\n",n,l
+        sage: for t,n,l in admissible_plane_tree_iterator(5):
+        ....:     print(t)
+        ....:     print(n, l)
         [0, 1, 2, 2, 1, 0]
         4 3
         [0, 1, 2, 1, 0]
@@ -613,9 +617,9 @@ def admissible_plane_tree_iterator(a,verbose=False):
     d_occ = [] #TODO: nb of occurrences in d
     while True:
         if verbose:
-            print "  t =", t
-            print "  d =", d
-            print "  s =",s
+            print("  t =", t)
+            print("  d =", d)
+            print("  s =",s)
         # do we need to output t
         if (2*n >= a) and (2*n-l <= a):
             #TODO: remove the loop and use d_occ
@@ -633,19 +637,19 @@ def admissible_plane_tree_iterator(a,verbose=False):
                 if ((m == 1) or
                     (m_nb == 1 and has_mm and cmp_halves(t,s[1]) >= 0) or
                     (m_nb > 1 and is_lyndon(t,s,d))):
-                    if verbose: print "YIELD"
+                    if verbose: print("YIELD")
                     t.append(0)
                     yield t,n,l
                     t.pop(-1)
                 elif verbose:
-                    print "NOT YIELD"
+                    print("NOT YIELD")
         # do we go down
         #TODO: remove len(s) <= 1 (corresponds to the leftmost branch in the
         #      tree of trees)
         if ((n <= a and 2*n-l < a) and
            ((len(s) <= 1 and t[-1] <= aa) or (len(s) > 1 and t[-1] <= d[0]))):
-            if verbose: print "go down"
-            if verbose: print " append: %d"%(t[-1]+1)
+            if verbose: print("go down")
+            if verbose: print(" append: %d"%(t[-1]+1))
             #TODO: append the right thing which is not necessarily t[-1]+1
             t.append(t[-1]+1)
             b.append(t[-1])
@@ -657,9 +661,9 @@ def admissible_plane_tree_iterator(a,verbose=False):
                 d[-1] = t[-1]
         # or go up
         else:
-            if verbose: print "go up"
+            if verbose: print("go up")
             while b and b[-1] == 1:
-                if verbose: print " pop"
+                if verbose: print(" pop")
                 b.pop(-1)
                 t.pop(-1)
                 d.pop(-1)
@@ -669,7 +673,7 @@ def admissible_plane_tree_iterator(a,verbose=False):
             if b == []:
                 break
             if verbose:
-                print " modify last to become %d"%(b[-1]-1)
+                print(" modify last to become %d"%(b[-1]-1))
             if len(t) > 1 and t[-2] == t[-1] - 1:
                 l += 1
             b[-1] -= 1
@@ -681,7 +685,7 @@ def admissible_plane_tree_iterator(a,verbose=False):
                 for i in xrange(s[-1]+1,len(t)-1):
                     if t[i] > d[-1]:
                         d[-1] = t[i]
-                if verbose: print " updated length of rightmost which is now %d"%d[-1]
+                if verbose: print(" updated length of rightmost which is now %d"%d[-1])
             if t[-1] == 1: # new branch
                 d.append(1)
                 s.append(len(t)-1)

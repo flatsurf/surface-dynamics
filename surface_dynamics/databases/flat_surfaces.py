@@ -10,7 +10,7 @@ algorithms related to translation surfaces:
 - database of volume of connected components of Abelian strata
 """
 
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 import os
 import sage.misc.misc
@@ -339,7 +339,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
             sage: C = CylinderDiagrams(tmp_dir(), read_only=False)
-            sage: print C    # indirect doctest
+            sage: print(C)   # indirect doctest
             Database of cylinder diagrams at ...
         """
         return "Database of cylinder diagrams at %s"%self.path
@@ -611,9 +611,9 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             s.add(min(cc))
             garbage.update(cc)
 
-        print "old cardinality:", n
-        print "new cardinality:", len(s)
-        print "gain           :", n-len(s)
+        print("old cardinality: %d" % n)
+        print("new cardinality: %d" % len(s))
+        print("gain           : %d" % (n-len(s)))
 
         f = open(filename, "w")
         for c in sorted(s):
@@ -658,17 +658,17 @@ class CylinderDiagrams(GenericRepertoryDatabase):
         import sys
 
         if verbose:
-            print "computation for %s"%stratum
+            print("computation for %s"%stratum)
             sys.stdout.flush()
 
         for ncyls in xrange(1, stratum.genus() + stratum.nb_zeros()):
             if verbose:
-                print " ncyls = %d"%ncyls
+                print(" ncyls = %d"%ncyls)
                 sys.stdout.flush()
             d = stratum.cylinder_diagrams_by_component(ncyls, force_computation = True)
             for c in d:
                 if verbose:
-                    print " %d cyl. diags for %s"%(len(d[c]),c)
+                    print(" %d cyl. diags for %s"%(len(d[c]),c))
                 f = open(os.path.join(self.path,self.filename(c,ncyls)), "w")
                 for cyl in sorted(d[c]):
                     f.write(str(cyl) + "\n")
