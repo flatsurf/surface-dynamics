@@ -592,18 +592,12 @@ def admissible_plane_tree_iterator(a,verbose=False):
 
         sage: from surface_dynamics.misc.plane_tree import admissible_plane_tree_iterator
         sage: for t,n,l in admissible_plane_tree_iterator(5):
-        ....:     print(t)
-        ....:     print(n, l)
-        [0, 1, 2, 2, 1, 0]
-        4 3
-        [0, 1, 2, 1, 0]
-        3 2
-        [0, 1, 1, 1, 0]
-        3 3
-        [0, 1, 1, 1, 1, 0]
-        4 4
-        [0, 1, 1, 1, 1, 1, 0]
-        5 5
+        ....:     print("%d %d %s" % (n,l,t))
+        4 3 [0, 1, 2, 2, 1, 0]
+        3 2 [0, 1, 2, 1, 0]
+        3 3 [0, 1, 1, 1, 0]
+        4 4 [0, 1, 1, 1, 1, 0]
+        5 5 [0, 1, 1, 1, 1, 1, 0]
     """
     aa = (a+1)//2
 

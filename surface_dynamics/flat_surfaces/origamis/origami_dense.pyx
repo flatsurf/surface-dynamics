@@ -2289,13 +2289,20 @@ cdef class Origami_dense_pyx(object):
             sage: P = o.normal_cover().lattice_of_quotients(); P
             Finite lattice containing 6 elements
             sage: for p in P:
-            ....:     print(p.nb_squares(), p.stratum_component())
-            6 H_3(2^2)^odd
-            3 H_2(2)^hyp
-            3 H_2(2)^hyp
-            3 H_2(2)^hyp
-            2 H_1(0)^hyp
-            1 H_1(0)^hyp
+            ....:     print(p.nb_squares())
+            ....:     print(p.stratum_component())
+            6
+            H_3(2^2)^odd
+            3
+            H_2(2)^hyp
+            3
+            H_2(2)^hyp
+            3
+            H_2(2)^hyp
+            2
+            H_1(0)^hyp
+            1
+            H_1(0)^hyp
 
             sage: o = Origami('(1,2)(3,4)','(1,3)')
             sage: o.lattice_of_quotients()

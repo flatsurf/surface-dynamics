@@ -1775,7 +1775,8 @@ class LabelledRauzyDiagram(RauzyDiagram):
             sage: p = iet.Permutation('a b','b a')
             sage: r = p.rauzy_diagram()
             sage: for g in r.full_loop_iterator(p,2):
-            ....:       print(g.matrix(), "\n*****")
+            ....:       print(g.matrix())
+            ....:       print("*****")
             [1 1]
             [1 2]
             *****

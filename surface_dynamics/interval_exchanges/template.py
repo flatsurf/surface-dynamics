@@ -5664,7 +5664,7 @@ class RauzyDiagram(SageObject):
             sage: p = iet.Permutation('a b','b a')
             sage: r = p.rauzy_diagram()
             sage: for e in r.edge_iterator():
-            ....:    print(e[0].str(sep='/'), '-->', e[1].str(sep='/'))
+            ....:    print('%s --> %s' %(e[0].str(sep='/'), e[1].str(sep='/')))
             a b/b a --> a b/b a
             a b/b a --> a b/b a
         """

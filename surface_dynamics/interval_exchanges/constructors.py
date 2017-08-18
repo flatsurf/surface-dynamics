@@ -697,13 +697,17 @@ def RauzyDiagram(arg1, arg2=None, reduced=False, flips=None, alphabet=None,
         sage: g1 = r.path(p, 'bottom', 'top', 'bottom')
         sage: print(g0.is_loop(), g1.is_loop())
         True True
-        sage: print(g0.is_full(), g1.is_full())
-        False False
+        sage: print(g0.is_full())
+        False
+        sage: print(g1.is_full())
+        False
         sage: g = g0 + g1
         sage: g
         Path of length 6 in a Rauzy diagram
-        sage: print(g.is_loop(), g.is_full())
-        True True
+        sage: print(g.is_loop())
+        True
+        sage: print(g.is_full())
+        True
         sage: m = g.matrix()
         sage: print(m)
         [1 1 1]
