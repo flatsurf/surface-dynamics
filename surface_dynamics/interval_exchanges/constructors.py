@@ -695,8 +695,10 @@ def RauzyDiagram(arg1, arg2=None, reduced=False, flips=None, alphabet=None,
         True
         sage: g0 = r.path(p, 'top', 'bottom','top')
         sage: g1 = r.path(p, 'bottom', 'top', 'bottom')
-        sage: print(g0.is_loop(), g1.is_loop())
-        True True
+        sage: print(g0.is_loop())
+        True
+        sage: print(g1.is_loop())
+        True
         sage: print(g0.is_full())
         False
         sage: print(g1.is_full())
