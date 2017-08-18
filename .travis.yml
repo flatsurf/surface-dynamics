@@ -15,11 +15,13 @@ before_install:
   - export SAGE_BINARY="sage-${SAGE_VERSION}-Ubuntu_14.04-x86_64.tar.bz2"
   - export SAGE_ROOT="${HOME}/SageMath-${SAGE_VERSION}"
   - export SAGE="${SAGE_ROOT}/sage"
+  - echo ${SAGE_ROOT}
+  - echo ${SAGE}
   - sudo apt-get -qq update
   - sudo apt-get install gcc g++ gfortran
 # command to install dependencies
 install: 
-  - ./.travis_sage_install.sh
+  - bash -x .travis_sage_install.sh
   - ${SAGE} --version
   - which gcc
   - ${SAGE} -sh -c "which gcc"
