@@ -6,7 +6,7 @@ It depends on distutils
 """
 
 try:
-    from sage.env import SAGE_SRC
+    from sage.env import SAGE_SRC, SAGE_VERSION
 except ImportError:
     raise ValueError("this package currently installs only inside SageMath (http://www.sagemath.org)")
 
@@ -14,6 +14,7 @@ from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Build import cythonize
 import sys, os
+from distutils.version import LooseVersion
 
 with open("surface_dynamics/version.py") as f:
     version = f.read().strip()
@@ -40,26 +41,34 @@ extensions = [
             sources = [
                 os.path.join(LYAPUNOV_DIR, filename) for filename in ('lyapunov_exponents.pyx', 'generalized_permutation.c' , 'lin_alg.c', 'quad_cover.c', 'random.c', 'permutation.c')],
             include_dirs = [SAGE_SRC, LYAPUNOV_DIR] + sys.path,
-            depends = [os.path.join(LYAPUNOV_DIR, 'lyapunov_exponents.h')]),
+            depends = [os.path.join(LYAPUNOV_DIR, 'lyapunov_exponents.h')])
+]
 
+try:
+    import ppl
+except ImportError:
+    sys.stderr.write('Warning: pplpy not installed. Will not compile iet_family\n')
+else:
+    WITH_PPL = True
+
+# build integer iet only from sage 8.0 (troubles with cysignals)
+if LooseVersion(SAGE_VERSION) >= LooseVersion('8.0'):
+    extensions.append(
     Extension('surface_dynamics.interval_exchanges.integer_iet',
         sources = [os.path.join(INTEGER_IET_DIR, 'int_iet.c'),
                    os.path.join(INTEGER_IET_DIR, 'int_vector.c'),
                    os.path.join(INTEGER_IET_DIR, 'integer_iet.pyx')],
         include_dirs = [SAGE_SRC, INTEGER_IET_DIR] + sys.path,
         depends = [os.path.join(INTEGER_IET_DIR, 'int_iet.h')])]
-
-# build the iet family only if pplpy is available
-try:
-    import ppl
-except ImportError:
-    sys.stderr.write('Warning: pplpy not installed. Will not compile iet_family\n')
-else:
-    extensions.append(
-    Extension('surface_dynamics.interval_exchanges.iet_family',
-            sources = [os.path.join('surface_dynamics', 'interval_exchanges', 'iet_family.pyx')],
-            include_dirs = [SAGE_SRC] + sys.path)
     )
+
+    # build the iet family only if pplpy is available
+    if WITH_PPL:
+        extensions.append(
+        Extension('surface_dynamics.interval_exchanges.iet_family',
+                sources = [os.path.join('surface_dynamics', 'interval_exchanges', 'iet_family.pyx')],
+                include_dirs = [SAGE_SRC] + sys.path)
+        )
 
 setup(name='surface_dynamics',
       version=version,
