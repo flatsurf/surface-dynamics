@@ -26,8 +26,9 @@ install:
   - which gcc
   - ${SAGE} -sh -c "which gcc"
   - ${SAGE} -pip install --verbose --no-index --user .
+  - export SURFACE_DYNAMICS_PATH="$(${SAGE} -c 'import surface_dynamics; print(surface_dynamics.__path__[0])')"
 # command to run tests
 script:
-  - ${SAGE} -t --force-lib --long surface_dynamics/
+  - ${SAGE} -t --force-lib --long ${SURFACE_DYNAMICS_PATH}
   - cd doc/
   - ${SAGE} -sh -c "make html"
