@@ -7,6 +7,7 @@ then
     echo "Downloading and installing Sage..."
     wget ${SAGE_MIRROR}/${SAGE_BINARY}
     tar xf ${SAGE_BINARY}
+    mv SageMath SageMath-${SAGE_VERSION}
     echo "done"
 
     if [ ! -x "${SAGE}" ] ;

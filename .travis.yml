@@ -4,13 +4,17 @@ language: c
 cache:
   ccache: true
   directories:
-  - ${HOME}/SageMath
+  - ${HOME}/SageMath-7.6
+  - ${HOME}/SageMath-8.0
   timeout: 1000
 env:
-  SAGE_MIRROR="http://mirrors.mit.edu/sage/linux/64bit"
-  SAGE_BINARY="sage-8.0-Ubuntu_14.04-x86_64.tar.bz2"
-  SAGE="${HOME}/SageMath/sage"
+  - SAGE_VERSION="7.6"
+  - SAGE_VERSION="8.0"
 before_install:
+  - export SAGE_MIRROR="http://mirrors.mit.edu/sage/linux/64bit"
+  - export SAGE_BINARY="sage-${SAGE_VERSION}-Ubuntu_14.04-x86_64.tar.bz2"
+  - export SAGE_ROOT="${HOME}/SageMath-${SAGE_VERSION}"
+  - export SAGE="${SAGE_ROOT}/sage"
   - sudo apt-get -qq update
   - sudo apt-get install gcc g++ gfortran
 # command to install dependencies
