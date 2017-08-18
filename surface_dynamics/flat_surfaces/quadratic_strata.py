@@ -898,25 +898,31 @@ class QuadraticStratumComponent(StratumComponent):
         """
         return self.permutation_representative(reduced=False).lyapunov_exponents_H_plus(*args, **kargs)
 
-    def lyapunov_exponents_H_minus(self, *args, **kargs):
+    def lyapunov_exponents_H_minus(self, **kargs):
         r"""
         Compute the `H^-` Lyapunov exponents.
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
+
+            sage: Q = QuadraticStratum({1:3, -1:3}).unique_component()
+            sage: Q.lyapunov_exponents_H_minus(nb_iterations=2**20) # abs tol .05
+            [1.0001340319512813,
+             0.37073449576129014,
+             0.17774577678536208]
+
             sage: R = QuadraticStratum([3,3,3,-1]).regular_component()
-            sage: R.lyapunov_exponents_H_minus() # abs tol .05
-            [1.0042029874815872,
-            0.6001065825147999,
-            0.40316380987190165,
-            0.3301506894685491,
-            0.2042487557305612,
-            0.1881923173595571,
-            0.08311579750620597]
+            sage: R.lyapunov_exponents_H_minus(nb_iterations=2**19) # abs tol .05
+            [1.0000547531697714,
+             0.32894039954052146,
+             0.19062961312122667,
+             0.0824827258582411]
         """
         perm = self.permutation_representative(reduced=False).orientation_cover()
-        return perm.lyapunov_exponents_H_plus(*args, **kargs)
+        if 'isotypic_decomposition' not in kargs:
+            kargs['isotypic_decomposition'] = (1,-1)
+        return perm.lyapunov_exponents_H_plus(**kargs)
 
 QSC = QuadraticStratumComponent
 
