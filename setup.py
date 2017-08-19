@@ -25,50 +25,69 @@ with open("surface_dynamics/version.py") as f:
 with open("README") as f:
     long_description = f.read()
 
-ORIGAMIS_DIR = os.path.join('surface_dynamics', 'flat_surfaces', 'origamis')
-LYAPUNOV_DIR = os.path.join('surface_dynamics', 'interval_exchanges', 'lyapunov_exponents')
-INTEGER_IET_DIR = os.path.join('surface_dynamics', 'interval_exchanges', 'integer_iet')
-
-extensions = [
-    Extension('surface_dynamics.flat_surfaces.origamis.origami_dense',
-            sources = [
-            os.path.join(ORIGAMIS_DIR, filename) for filename in ('origami_dense.pyx', 'normal_form.c', 'lyapunov_exponents.c')],
-            include_dirs = [SAGE_SRC, ORIGAMIS_DIR] + sys.path,
-            libraries = ['m'],
-            ),
-
-    Extension('surface_dynamics.interval_exchanges.lyapunov_exponents',
-            sources = [
-                os.path.join(LYAPUNOV_DIR, filename) for filename in ('lyapunov_exponents.pyx', 'generalized_permutation.c' , 'lin_alg.c', 'quad_cover.c', 'random.c', 'permutation.c')],
-            include_dirs = [SAGE_SRC, LYAPUNOV_DIR] + sys.path,
-            depends = [os.path.join(LYAPUNOV_DIR, 'lyapunov_exponents.h')])
-]
-
 try:
     import ppl
 except ImportError:
     sys.stderr.write('Warning: pplpy not installed. Will not compile iet_family\n')
+    WITH_PPL = False
 else:
     WITH_PPL = True
 
-# build integer iet only from sage 8.0 (troubles with cysignals)
-if LooseVersion(SAGE_VERSION) >= LooseVersion('8.0'):
-    extensions.append(
-    Extension('surface_dynamics.interval_exchanges.integer_iet',
-        sources = [os.path.join(INTEGER_IET_DIR, 'int_iet.c'),
-                   os.path.join(INTEGER_IET_DIR, 'int_vector.c'),
-                   os.path.join(INTEGER_IET_DIR, 'integer_iet.pyx')],
-        include_dirs = [SAGE_SRC, INTEGER_IET_DIR] + sys.path,
-        depends = [os.path.join(INTEGER_IET_DIR, 'int_iet.h')])]
-    )
+extensions_data = {
+    'origamis': {
+        'name': 'surface_dynamics.flat_surfaces.origamis.origami_dense',
+        'dir': os.path.join('flat_surfaces', 'origamis'),
+        'sources': ['origami_dense.pyx', 'normal_form.c', 'lyapunov_exponents.c'],
+        'headers': ['origami_dense.pxd', 'lyapunov_exponents.h', 'normal_form.h']
+        },
 
-    # build the iet family only if pplpy is available
-    if WITH_PPL:
-        extensions.append(
-        Extension('surface_dynamics.interval_exchanges.iet_family',
-                sources = [os.path.join('surface_dynamics', 'interval_exchanges', 'iet_family.pyx')],
-                include_dirs = [SAGE_SRC] + sys.path)
+    'lyapunov_exponents': {
+        'name': 'surface_dynamics.interval_exchanges.lyapunov_exponents',
+        'dir': os.path.join('interval_exchanges', 'lyapunov_exponents'),
+        'sources': ['lyapunov_exponents.pyx', 'generalized_permutation.c' , 'lin_alg.c', 'quad_cover.c', 'random.c', 'permutation.c'],
+        'headers': ['lyapunov_exponents.h']
+        },
+
+    # build integer_iet only from sage 8.0 (troubles with cysignals)
+    'integer_iet': {
+        'name': 'surface_dynamics.interval_exchanges.integer_iet',
+        'dir': os.path.join('interval_exchanges', 'integer_iet'),
+        'sources': ['integer_iet.pyx', 'int_iet.c', 'int_vector.c'],
+        'headers': ['integer_iet.pxd', 'int_iet.h'],
+        'condition': LooseVersion(SAGE_VERSION) >= LooseVersion('8.0')
+        },
+
+    # build iet_family only if pplpy is available
+    'iet_family': {
+        'name': 'surface_dynamics.interval_exchanges.iet_family',
+        'dir': 'interval_exchanges',
+        'sources': ['iet_family.pyx'],
+        'headers': [],
+        'condition': WITH_PPL
+        }
+}
+
+extensions = []
+source_files = []
+
+for name, data in extensions_data.items():
+    if data.get('condition', True):
+        print('Adding extension {}:\n  sources = {}\n  headers = {}'.format(data['name'], data['sources'], data['headers']))
+
+        full_dir = os.path.join('surface_dynamics', data['dir'])
+        sources = [os.path.join(full_dir, src) for src in data['sources']]
+        headers = [os.path.join(full_dir, data['dir'], head) for head in data['headers']]
+        ext = Extension(data['name'],
+            sources = sources,
+            include_dirs = [SAGE_SRC, full_dir] + sys.path,
+            depends = headers,
         )
+        extensions.append(ext)
+
+        sources = [os.path.join(data['dir'], src) for src in data['sources']]
+        headers = [os.path.join(data['dir'], head) for head in data['headers']]
+        source_files.extend(sources)
+        source_files.extend(headers)
 
 setup(name='surface_dynamics',
       version=version,
@@ -85,27 +104,9 @@ setup(name='surface_dynamics',
                 'surface_dynamics/flat_surfaces/origamis',
                 'surface_dynamics/interval_exchanges'],
       package_data={
-          'surface_dynamics/interval_exchanges': [
-              'iet_family.pyx',
-              'lyapunov_exponents/*.h',
-              'lyapunov_exponents/*.c',
-              'lyapunov_exponents/*.pyx',
-              'lyapunov_exponents/*.pxd',
-              'integer_iet/*.h',
-              'integer_iet/*.c',
-              'integer_iet/*.pyx',
-              'integer_iet/*.pxd'],
-          'surface_dynamics/databases': [
-              'cylinder_diagrams/cyl_diags*',
-              'generalized_permutation_twins/twins*'],
-          'surface_dynamics/flat_surfaces/origamis': [
-              '*.pyx',
-              '*.pxd',
-              'normal_form.h',
-              'normal_form.c',
-              'lyapunov_exponents.c',
-              'lyapunov_exponents.h',
-              'origamis.db'],
+          'surface_dynamics': source_files,
+          'surface_dynamics/databases': ['cylinder_diagrams/cyl_diags*', 'generalized_permutation_twins/twins*'],
+          'surface_dynamics/flat_surfaces/origamis': ['origamis.db'],
           },
       ext_modules=cythonize(extensions),
     classifiers=[
