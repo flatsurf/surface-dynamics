@@ -1,12 +1,37 @@
 r"""
-Permutation in Sage works by default on `{1, 2, ..., n}` but it might be much
-more convenient to work on `{0, 1, ..., n-1}`. This module provide simple
-functions for the latter representation.
+Permutation on `\{0, 1, ..., n-1\}` as lists.
 """
+
+def argmin(l):
+    r"""
+    Return the position of the minimal element in the list ``l``.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import argmin
+        sage: argmin([3,0,1,2])
+        1
+        sage: argmin([-1,3,5,-2,50])
+        3
+    """
+    if not(l):
+        raise ValueError('empty list')
+    imin = 0
+    jmin = l[0]
+    for i,j in enumerate(l):
+        if j < jmin:
+            jmin = j
+            imin = i
+    return imin
+
+
+#####################################################################
+# Initialization
+#####################################################################
 
 def permutation_to_perm(p):
     r"""
-    Returns a list on `[0, n-1]` from a permutation on `[1, n]`
+    Return a list on `[0, n-1]` from a permutation on `[1, n]`
 
     EXAMPLES::
 
@@ -31,60 +56,9 @@ def perm_to_permutation(l):
     return PermutationGroupElement(map(lambda x: x+1, l))
 
 
-def cycles_to_list(t):
-    r"""
-    Returns a permutation on `[0, n-1]` from a list of cycles on `[0, n-1]`
-
-    EXAMPLES::
-
-        sage: from surface_dynamics.misc.permutation import cycles_to_list
-        sage: cycles_to_list([[1,3,5],[0,2,4],[6]])
-        [2, 3, 4, 5, 0, 1, 6]
-
-        sage: cycles_to_list([])
-        []
-        sage: cycles_to_list([[],[]])
-        []
-    """
-    if not any(tt for tt in t):
-        return []
-
-    res = range(max(map(max, t))+1)
-
-    for c in t:
-        for j in xrange(len(c)-1):
-            res[c[j]] = int(c[j+1])
-        res[c[-1]] = int(c[0])
-
-    return res
-
-
-def str_to_cycles(s):
-    """
-    Returns a list of cycles from a string
-
-    EXAMPLES::
-
-        sage: from surface_dynamics.misc.permutation import str_to_cycles
-        sage: str_to_cycles('(0,1)')
-        [[0, 1]]
-        sage: str_to_cycles('(0,1)(3,2)')
-        [[0, 1], [3, 2]]
-
-        sage: str_to_cycles('()(0,1)()(2,3)')
-        [[0, 1], [2, 3]]
-    """
-    r = []
-    for c_str in s[1:-1].split(')('):
-        if not c_str:
-            continue
-        r.append(map(int, c_str.replace(' ', '').split(',')))
-    return r
-
-
 def init_perm(data):
     """
-    Returns a permutation from different kinds of data
+    Returns a permutation from ``data``.
 
     EXAMPLES::
 
@@ -121,11 +95,7 @@ def init_perm(data):
 
 def equalize_perms(l):
     """
-    Ensures that permutations have the same size ?
-
-    INPUT:
-
-    a list of permutations
+    Extend the permutations in ``l`` to have the same lengths.
 
     EXAMPLES::
 
@@ -142,7 +112,7 @@ def equalize_perms(l):
 
 def perm_check(l):
     r"""
-    Checks that `l` is a permutation of `[0, n-1]` for some `n`
+    Checks that ``l`` is a permutation of `[0, n-1]` for some ``n``.
 
     EXAMPLES::
 
@@ -183,94 +153,59 @@ def perm_check(l):
         seen[l[i]] = True
 
 
-def perm_invert(l):
+#####################################################################
+# Conversion
+#####################################################################
+
+def cycles_to_list(t):
     r"""
-    Returns the inverse of the permutation `l`
-
-    TESTS::
-
-        sage: from itertools import permutations
-        sage: from surface_dynamics.misc.permutation import perm_invert, perm_compose
-        sage: all(perm_compose(perm_invert(p),p) == range(3) for p in permutations(range(3)))
-        True
-        sage: all(perm_compose(p,perm_invert(p)) == range(3) for p in permutations(range(3)))
-        True
-
-        sage: perm_invert([2, None, 5, 0, None, 3])
-        [3, None, 0, 5, None, 2]
-    """
-    res = [0]*len(l)
-    for i in xrange(len(l)):
-        if l[i] is None:
-            res[i] = None
-        else:
-            res[l[i]] = i
-    return res
-
-
-def perm_compose(l1, l2):
-    r"""
-    Returns the product `p_1 * p_2` where `p_1` and `p_2` are the permutations
-    associated to `l_1` and `l_2`
-
-    INPUT:
-
-    two lists that are permutations on `[0, n-1]`.
+    Returns a permutation on `[0, n-1]` from a list of cycles on `[0, n-1]`
 
     EXAMPLES::
 
-        sage: from surface_dynamics.misc.permutation import perm_compose
-        sage: perm_compose([0,2,1],[0,2,1])
-        [0, 1, 2]
-        sage: perm_compose([None,2,3,1],[None,2,1,3])
-        [None, 1, 3, 2]
+        sage: from surface_dynamics.misc.permutation import cycles_to_list
+        sage: cycles_to_list([[1,3,5],[0,2,4],[6]])
+        [2, 3, 4, 5, 0, 1, 6]
+
+        sage: cycles_to_list([])
+        []
+        sage: cycles_to_list([[],[]])
+        []
     """
-    r = [None] * len(l1)
-    for i in xrange(len(l1)):
-        if l1[i] is not None and l1[i] < len(l2):
-            r[i] = l2[l1[i]]
+    if not any(tt for tt in t):
+        return []
+
+    res = range(max(map(max, t))+1)
+
+    for c in t:
+        for j in xrange(len(c)-1):
+            res[c[j]] = int(c[j+1])
+        res[c[-1]] = int(c[0])
+
+    return res
+
+
+def str_to_cycles(s):
+    """
+    Returns a list of cycles from a string.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import str_to_cycles
+        sage: str_to_cycles('(0,1)')
+        [[0, 1]]
+        sage: str_to_cycles('(0,1)(3,2)')
+        [[0, 1], [3, 2]]
+
+        sage: str_to_cycles('()(0,1)()(2,3)')
+        [[0, 1], [2, 3]]
+    """
+    r = []
+    for c_str in s[1:-1].split(')('):
+        if not c_str:
+            continue
+        r.append(map(int, c_str.replace(' ', '').split(',')))
     return r
-
-def perm_compose_i(l1, l2):
-    r"""
-    Returns the product `p_1^{-1} * p_2^{-1}` where `p_1` and `p_2` are the
-    permutations associated to the list `l_1` and `l_2`
-
-    INPUT:
-
-    two lists that are permutations on `[0, n-1]`.
-
-    EXAMPLES::
-
-        sage: from surface_dynamics.misc.permutation import perm_compose_i
-        sage: perm_compose_i([0,1,2],[1,2,0])
-        [2, 0, 1]
-    """
-    assert(len(l1) == len(l2))
-
-    res = [None]*len(l1)
-    for i in xrange(len(l1)):
-        res[l2[l1[i]]] = i
-
-    return res
-
-
-def perm_orbit(p, i):
-    r"""
-    Returns the orbit of an integer `i` under the permutation `p`
-
-    EXAMPLES::
-
-        sage: from surface_dynamics.misc.permutation import perm_orbit
-        sage: perm_orbit([0,3,1,2],2)
-        [2, 1, 3]
-    """
-    res = [i]
-    j = p[i]
-    while j != i:
-        res.append(j)
-        j = p[j]
-    return res
 
 
 def perm_cycle_tuples(p, singletons=False):
@@ -326,10 +261,155 @@ def perm_cycle_string(p, singletons=False):
     return ''.join(map(lambda x: '('+','.join(map(str, x))+')',
                        perm_cycle_tuples(p, singletons)))
 
+#####################################################################
+# Group operations
+#####################################################################
 
-def canonical_perm(part,i=0):
+def perm_invert(l):
     r"""
-    Return the canonical permutation with the given part
+    Returns the inverse of the permutation ``l``.
+
+    TESTS::
+
+        sage: from itertools import permutations
+        sage: from surface_dynamics.misc.permutation import perm_invert, perm_compose
+        sage: all(perm_compose(perm_invert(p),p) == range(3) for p in permutations(range(3)))
+        True
+        sage: all(perm_compose(p,perm_invert(p)) == range(3) for p in permutations(range(3)))
+        True
+
+        sage: perm_invert([2, None, 5, 0, None, 3])
+        [3, None, 0, 5, None, 2]
+    """
+    res = [0]*len(l)
+    for i in xrange(len(l)):
+        if l[i] is None:
+            res[i] = None
+        else:
+            res[l[i]] = i
+    return res
+
+
+def perm_compose(p1, p2):
+    r"""
+    Returns the product ``p1 p2``.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_compose
+        sage: perm_compose([0,2,1],[0,2,1])
+        [0, 1, 2]
+        sage: perm_compose([None,2,3,1],[None,2,1,3])
+        [None, 1, 3, 2]
+    """
+    r = [None] * len(p1)
+    for i in xrange(len(p1)):
+        if p1[i] is not None and p1[i] < len(p2):
+            r[i] = p2[p1[i]]
+    return r
+
+
+def perm_compose_i(p1, p2):
+    r"""
+    Returns the product ``p1^{-1} p2^{-1}`.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_compose_i
+        sage: perm_compose_i([0,1,2],[1,2,0])
+        [2, 0, 1]
+
+        sage: from surface_dynamics.misc.permutation import perm_invert, perm_compose
+        sage: from itertools import permutations
+        sage: for p1 in permutations(range(4)):
+        ....:     for p2 in permutations(range(4)):
+        ....:         assert perm_compose_i(p1, p2) == perm_compose(perm_invert(p1), perm_invert(p2))
+    """
+    assert(len(p1) == len(p2))
+
+    res = [None]*len(p1)
+    for i in xrange(len(p1)):
+        res[p1[p2[i]]] = i
+
+    return res
+
+#####################################################################
+# Actions
+#####################################################################
+
+def perm_orbit(p, i):
+    r"""
+    Returns the orbit of an integer `i` under the permutation `p`
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_orbit
+        sage: perm_orbit([0,3,1,2],2)
+        [2, 1, 3]
+    """
+    res = [i]
+    j = p[i]
+    while j != i:
+        res.append(j)
+        j = p[j]
+    return res
+
+
+def perm_on_list(p, t):
+    r"""
+    Action of the permutation ``p`` on the list ``t``.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_on_list
+        sage: perm_on_list([2,1,3,0], [2,1,2,0])
+        [3, 1, 3, 2]
+    """
+    return [p[i] for i in t]
+
+
+def perm_on_cyclic_list(p, t):
+    r"""
+    Action of the permutation ``p`` on the list ``t`` up to cyclic order.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_on_cyclic_list
+        sage: perm_on_cyclic_list([0,1,2], [2,1,2])
+        [1, 2, 2]
+        sage: perm_on_cyclic_list([0,1], [0,1,0,0,1,0,0,0,1,1])
+        [0, 0, 0, 1, 1, 0, 1, 0, 0, 1]
+
+        sage: a = [1, 0, 3, 2, 5, 4]
+        sage: perm_on_cyclic_list(a, [0, 5, 3])
+        [1, 4, 2]
+        sage: perm_on_cyclic_list(a, [1, 4, 2])
+        [0, 5, 3]
+
+        sage: a1 = [0, 1, 4, 2, 3, 5]
+        sage: a2 = [1, 5, 3, 4, 2, 0]
+        sage: a3 = [2, 3, 1, 5, 0, 4]
+        sage: a4 = [5, 0, 2, 3, 4, 1]
+        sage: t1 = [0, 5, 1]
+        sage: t2 = [2, 4, 3]
+        sage: perm_on_cyclic_list(a1, t1) == perm_on_cyclic_list(a2, t1) == perm_on_cyclic_list(a4, t1) == t1
+        True
+        sage: perm_on_cyclic_list(a3, t1) == t2
+        True
+        sage: perm_on_cyclic_list(a3, t2) == t1
+        True
+    """
+    res = r = [p[i] for i in t]
+    for i in range(1, len(r)):
+        rr = r[i:] + r[:i]
+        if rr < res:
+            res = rr
+    return res
+
+
+def canonical_perm(part, i=0):
+    r"""
+    Return the canonical permutation with the given part.
 
     EXAMPLES::
 
@@ -349,9 +429,9 @@ def canonical_perm(part,i=0):
     return res
 
 
-def canonical_perm_i(part,i=0):
+def canonical_perm_i(part, i=0):
     r"""
-    Return the canonical permutation reversed
+    Return the canonical permutation reversed.
 
     EXAMPLES::
 
@@ -373,7 +453,8 @@ def canonical_perm_i(part,i=0):
 
 def perm_switch(p1, p2, i, j):
     """
-    Exchanges the values at positions `i` and `j` in two permutations `p_1` and `p_2`
+    Exchanges the values at positions ``i`` and ``j`` in two permutations
+    ``p_1`` and ``p_2``.
 
     EXAMPLES::
 
@@ -487,11 +568,13 @@ def perms_are_transitive(p):
 
 def perms_relabel(p, m):
     """
-    `p` is a list of permutations
+    Relabel the list of permutations ``p`` according to ``m``.
 
-    `m` is a permutation
+    INPUT:
 
-    The result is the relabelling of the permutations in `p` according to `m`.
+    - ``p`` - a list of permutations
+
+    - ``m`` - the relabeling permutation
 
     EXAMPLES::
 
@@ -508,7 +591,7 @@ def perms_relabel(p, m):
 
 def perms_canonical_labels_from(x, y, j0):
     r"""
-    Return canonical labels for ``x``, ``y`` that starts at ``j0``
+    Return canonical labels for ``x``, ``y`` that starts at ``j0``.
 
     .. WARNING:
 
@@ -608,5 +691,4 @@ def perms_canonical_labels(p, e=None):
             m_win = m_test
 
     return c_win, m_win
-
 
