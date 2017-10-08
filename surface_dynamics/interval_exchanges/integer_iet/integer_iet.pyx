@@ -236,13 +236,68 @@ def _relabel(top, bot):
     nbot = j - ntop - nfree
     return p[:k], p[k:], nfree, ntop, nbot
 
+def interval_exchange_statistics(top, bot, uint64_t L, int kind=0):
+    r"""
+    - ``kind`` -- if 0 number of cylinders, if 1 number of components
+    """
+    cdef int * labels
+    cdef int * twin
+    cdef uint64_t * widths
+    cdef uint64_t s
+    cdef int k = len(top)
+    cdef int n = (len(top)+len(bot))/2
+    cdef int i,j
+    cdef int_iet_t t
+    cdef li_vector_iterator_t v
+
+    from collections import defaultdict
+    statistics = defaultdict(int)
+
+    top, bot, kfree, ktop, kbot = _relabel(top, bot)
+
+    p = top + bot
+    python_twin = perm_to_twin(p)
+
+    labels = <int *> check_malloc(2 * n * sizeof(int))
+    twin = <int *> check_malloc(2 * n * sizeof(int))
+    widths = <uint64_t *> check_malloc(n * sizeof(uint64_t))
+
+    for i in range(2*n):
+        labels[i] = p[i]
+        twin[i] = python_twin[i]
+    int_iet_init(t, n)
+
+    int_li_vector_init(v, L, kfree, ktop, kbot)
+    int_li_vector_prefirst(v)
+    while int_li_vector_first_or_next(v):
+        int_iet_set_labels_and_twin(t, labels, twin, k)
+        int_iet_set_lengths(t, v.x)
+        j = int_iet_num_cylinders(widths, t)
+
+        if kind:
+            s = 0
+            for i in range(j):
+                s += widths[i]
+        else:
+            s = j
+        statistics[s] += 1
+
+    sig_free(labels)
+    sig_free(twin)
+    sig_free(widths)
+    int_iet_clear(t)
+    int_li_vector_clear(v)
+
+    return dict(statistics)
+
+
 # there are several interesting statistics one might want to compute
 # such as
 #  - number of cylinders
 #  - sum of heights of cylinders
 #  - mean ratio in view of Siegel Veech constants (not available for now) as
 #    we would need the circumferences of cylinders as well
-def cylinder_number_statistics(top, bot, uint64_t L):
+def cylinder_statistics(top, bot, uint64_t L, int kind=0):
     r"""
     Return the statistics of the number of cylinders for a given total length
 
@@ -254,9 +309,11 @@ def cylinder_number_statistics(top, bot, uint64_t L):
     
     - ``L`` -- (positive integer) the length we are considering
 
+    - ``kind`` -- if ``kind=0`` number of cylinders, if ``kind=1`` number of components
+
     EXAMPLES::
 
-        sage: from surface_dynamics.interval_exchanges.integer_iet import cylinder_number_statistics
+        sage: from surface_dynamics.interval_exchanges.integer_iet import cylinder_statistics
 
     The case of H(0,0)::
 
@@ -292,8 +349,8 @@ def cylinder_number_statistics(top, bot, uint64_t L):
         sage: bot2 = [1, 1, 2, 2]
         sage: for _ in range(20):
         ....:     n = randint(2, 100)
-        ....:     s1 = cylinder_number_statistics(top1, bot1, n)
-        ....:     s2 = cylinder_number_statistics(top2, bot2, 2*n)
+        ....:     s1 = cylinder_statistics(top1, bot1, n)
+        ....:     s2 = cylinder_statistics(top2, bot2, 2*n)
         ....:     assert sorted(s1.keys()) == sorted(s2.keys())
         ....:     assert all(2*s1[i] == s2[i] for i in s1)
 
@@ -314,6 +371,7 @@ def cylinder_number_statistics(top, bot, uint64_t L):
     cdef int n = (len(top)+len(bot))/2
     cdef int i,j
     cdef uint64_t twist
+    cdef uint64_t * widths
     cdef int_iet_t t1, t2
     cdef li_vector_iterator_t v
 
@@ -331,6 +389,7 @@ def cylinder_number_statistics(top, bot, uint64_t L):
     twin1 = <int *> check_malloc(2*n*sizeof(int))
     labels2 = <int *> check_malloc(2*(n+1)*sizeof(int))
     twin2 = <int *> check_malloc(2*(n+1)*sizeof(int))
+    widths = <uint64_t *> check_malloc((n+1) * sizeof(uint64_t))
 
     clengths = <uint64_t *> check_malloc((n+1)*sizeof(uint64_t));
 
@@ -352,20 +411,35 @@ def cylinder_number_statistics(top, bot, uint64_t L):
         # twist 0 case
         int_iet_set_labels_and_twin(t1, labels1, twin1, k1)
         int_iet_set_lengths(t1, clengths)
-        statistics[int_iet_num_cylinders(NULL, t1)] += 1
+        j = int_iet_num_cylinders(widths, t1)
+        if kind:
+            s = 0
+            for i in range(j):
+                s += widths[i]
+        else:
+            s = j
+        statistics[s] += 1
 
         # positive twists case
         for twist in range(1, L):
             clengths[n] = twist
             int_iet_set_labels_and_twin(t2, labels2, twin2, k2)
             int_iet_set_lengths(t2, clengths)
-            statistics[int_iet_num_cylinders(NULL, t2)] += 1
+            j = int_iet_num_cylinders(widths, t2)
+            if kind:
+                s = 0
+                for i in range(j):
+                    s += widths[i]
+            else:
+                s = j
+            statistics[s] += 1
 
     sig_free(labels1)
     sig_free(twin1)
     sig_free(labels2)
     sig_free(twin2)
     sig_free(clengths)
+    sig_free(widths)
     int_iet_clear(t1)
     int_iet_clear(t2)
     int_li_vector_clear(v)
