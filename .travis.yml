@@ -3,8 +3,6 @@ sudo: required
 language: c
 cache:
   ccache: true
-  directories:
-  - ${HOME}/SageMath
   timeout: 1000
 env:
   SAGE_MIRROR="http://mirrors.mit.edu/sage/linux/64bit"
@@ -19,6 +17,7 @@ install:
   - ${SAGE} --version
   - which gcc
   - ${SAGE} -sh -c "which gcc"
+  - ccache -s
   - ${SAGE} -pip install --verbose --no-index --user .
 # command to run tests
 script:
