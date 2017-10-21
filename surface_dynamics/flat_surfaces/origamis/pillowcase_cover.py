@@ -62,7 +62,17 @@ class PillowcaseCover_dense(PillowcaseCover_dense_pyx):
     r"""
     Generic class for pillowcase cover.
     """
-    def _repr_(self):
+    def __repr__(self):
+        r"""
+        TESTS::
+
+            sage: from surface_dynamics import *
+            sage: PillowcaseCover('(1,2)(3,4)', '(1,3)', '()')   # indirect doctest
+            g_0 = (1,2)(3,4)
+            g_1 = (1,3)
+            g_2 = ()
+            g_3 = (1,4,3,2)
+        """
         return '\n'.join("g_%d = %s"%(i,self.g(i)) for i in xrange(4))
 
     def g(self,i=None):
@@ -140,12 +150,13 @@ class PillowcaseCover_dense(PillowcaseCover_dense_pyx):
         """
         return self.as_graph().to_undirected().is_bipartite()
 
-    def to_origami(self):
+    def orientation_cover(self):
         r"""
         If self is orientable returns it as a cover of a torus, otherwise raise
         an AssertionError.
         """
-        assert self.is_orientable()
+        if self.is_orientable():
+            raise ValueError
 
         raise NotImplementedError
 
@@ -161,6 +172,12 @@ class PillowcaseCover_dense(PillowcaseCover_dense_pyx):
         r"""
         Return the stratum of self. It may be either a stratum of Abelian or
         quadratic differentials.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import *
+            sage: sage: PillowcaseCover('(1,2)(3,4)', '(1,3)', '()').stratum()
+            Q_0(2, -1^6)
         """
         p = sum(self.profile(),[])
         if self.is_orientable():
