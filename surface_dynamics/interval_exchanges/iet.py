@@ -318,6 +318,20 @@ class IntervalExchangeTransformation(object):
             sage: T.rauzy_move().sah_arnoux_fathi_invariant()
             (1)
 
+        Arnoux-Yoccoz in genus 3::
+
+            sage: x = polygen(ZZ)
+            sage: poly = x^3 - x^2 - x - 1
+            sage: l = max(poly.roots(AA, False))
+            sage: K.<a> = NumberField(poly, embedding=l)
+            sage: top = 'A1l A1r A2 B1 B2 C1 C2'
+            sage: bot = 'A1r B2 B1 C2 C1 A2 A1l'
+            sage: p = iet.Permutation(top, bot)
+            sage: lengths = vector((a+1, a**2-a-1, a**2, a, a, 1, 1))
+            sage: T = iet.IntervalExchangeTransformation(p, lengths)
+            sage: T.sah_arnoux_fathi_invariant()
+            (0, 0, 0)
+
         Arnoux-Yoccoz examples in genus 4::
 
             sage: x = polygen(ZZ)
