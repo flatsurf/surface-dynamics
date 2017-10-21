@@ -20,6 +20,8 @@ from sage.structure.sage_object import SageObject
 from sage.combinat.partition import Partition
 from sage.rings.integer import Integer
 
+from surface_dynamics.flat_surfaces.strata import list_to_exp_list
+
 class Marking(SageObject):
     r"""
     EXAMPLES::
@@ -123,6 +125,15 @@ class Marking(SageObject):
         """
         return not self.__eq__(other)
 
+    def __lt__(self, other):
+        return self.t < other.t or (self.t == other.t and self.data < other.data)
+    def __le__(self,other):
+        return self.t <= other.t or (self.t == other.t and self.data <= other.data)
+    def __gt__(self, other):
+        return self.t > other.t or (self.t == other.t and self.data > other.data)
+    def __ge__(self, other):
+        return self.t >= other.t or (self.t == other.t and self.data >= other.data)
+
     def left(self):
         r"""
         Return the part that is marked on the left.
@@ -151,6 +162,33 @@ class Marking(SageObject):
         """
         if self.t == 1: return self.data[0]
         else: return self.data[1]
+
+def markings(p):
+    r"""
+    Return all possible markings attached to a given partition.
+
+    INPUT:
+
+    - ``p`` - a list of non-negative integers
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.interval_exchanges.marked_partition import markings
+        sage: list(markings([2,1]))
+        [2|0, 2|1, 2|2, 1|0, 1|1, 2o1, 1o2]
+        sage: list(markings([2,2,1]))
+        [2|0, 2|1, 2|2, 1|0, 1|1, 2o2, 2o1, 1o2]
+        sage: list(markings([2,2,1,1]))
+        [2|0, 2|1, 2|2, 1|0, 1|1, 2o2, 2o1, 1o2, 1o1]
+    """
+    q = list_to_exp_list(p)
+    for i,_ in q:
+        for j in range(i+1):
+            yield Marking(1, (i,j))
+    for i,m in q:
+        for j,n in q:
+            if m > 1 or i != j:
+                yield Marking(2, (i,j))
 
 class MarkedPartition(SageObject):
     r"""
