@@ -1257,7 +1257,6 @@ class SeparatrixDiagram(SageObject):
             ([0, 4, 2, 1], [3, 6, 5], [7, 8])
 
             sage: c = CylinderDiagram('(0,1,3,4,2)-(0,1,5,7,6) (5,6)-(4) (7)-(2,3)')
-            [([0, 3], [1, 2]), ([1, 6], [0, 5]), ([2, 4], [3, 4]), ([5, 7], [6, 7])]
             sage: perm_cycle_tuples(c.outgoing_edges_perm())
             ([0, 3], [1, 6], [2, 4], [5, 7])
             sage: perm_cycle_tuples(c.incoming_edges_perm())
@@ -2181,27 +2180,36 @@ class CylinderDiagram(SeparatrixDiagram):
             ....:    b  = c.bot() ; t  = c.top()
             ....:    bb = cc.bot(); tt = cc.top()
             ....:    print(cc)
-            ....:    print all(bb[m[i]] == m[b[i]] for i in xrange(c.nseps())),
-            ....:    print all(tt[m[i]] == m[t[i]] for i in xrange(c.nseps()))
+            ....:    print(all(bb[m[i]] == m[b[i]] for i in xrange(c.nseps())))
+            ....:    print(all(tt[m[i]] == m[t[i]] for i in xrange(c.nseps())))
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
             ...
             (0,1)-(2,3) (2)-(1) (3)-(0)
-            True True
+            True
+            True
 
             sage: import itertools
             sage: for p in itertools.permutations([0,1,2,3,4,5]):
@@ -2213,23 +2221,30 @@ class CylinderDiagram(SeparatrixDiagram):
             ....:    b  = c.bot() ; t  = c.top()
             ....:    bb = cc.bot(); tt = cc.top()
             ....:    print(cc)
-            ....:    print all(bb[m[i]] == m[b[i]] for i in xrange(c.nseps())),
-            ....:    print all(tt[m[i]] == m[t[i]] for i in xrange(c.nseps()))
+            ....:    print(all(bb[m[i]] == m[b[i]] for i in xrange(c.nseps())))
+            ....:    print(all(tt[m[i]] == m[t[i]] for i in xrange(c.nseps())))
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True True
+            True
+            True
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True True
+            True
+            True
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True True
+            True
+            True
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True True
+            True
+            True
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True True
+            True
+            True
             ...
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True True
+            True
+            True
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True True
+            True
+            True
 
         TESTS::
 
@@ -2345,15 +2360,15 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: from surface_dynamics import CylinderDiagram
 
             sage: c = CylinderDiagram('(0,1)-(0,2) (2)-(1)')
-            sage: c.widths_generating_series()
+            sage: c.widths_generating_series()   # optional - latte_int
             (1)/((1 - w0)*(1 - w0*w1))
 
             sage: c = CylinderDiagram('(0)-(2) (1,2,3)-(4,5) (4)-(3) (5)-(0,1)')
-            sage: c.widths_generating_series()
+            sage: c.widths_generating_series()   # optional - latte_int
             (1)/((1 - w1*w3)*(1 - w1*w2)*(1 - w0*w1*w3))
 
             sage: c = CylinderDiagram('(0,1,3)-(0,2,5) (2,4)-(1,3) (5)-(4)')
-            sage: c.widths_generating_series()
+            sage: c.widths_generating_series()   # optional - latte_int
             (1)/((1 - w0)*(1 - w0*w1)^2*(1 - w0*w1*w2)) + (1)/((1 - w0)*(1 - w0*w1)*(1 - w0*w1*w2)^2)
         """
         from sage.interfaces.latte import count
@@ -2408,14 +2423,21 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: from surface_dynamics import *
 
             sage: c0, c1 = AbelianStratum(2).cylinder_diagrams()
-            sage: v0 = c0.volume_contribution()
-            sage: v0
-            sage: v1 = c1.volume_contribution()
-            sage: v1
-            sage: v0 + v1   # how can we hope to obtain a nice formula?
+            sage: v0 = c0.volume_contribution()   # optional - latte_int
+            sage: v0                              # optional - latte_int
+            [(1/3, Z((n1)^4))]
+            sage: v1 = c1.volume_contribution()   # optional - latte_int
+            sage: v1                              # optional - latte_int
+            [(1/3, Z((n1)^2, (n1 + n2)^2)), (2/3, Z((n1), (n1 + n2)^3))]
+            sage: v0 + v1                         # optional - latte_int
+            [(1/3, Z((n1)^4)), (1/3, Z((n1)^2, (n1 + n2)^2)), (2/3, Z((n1), (n1 + n2)^3))]
 
-            sage: for c in AbelianStratum(1,1).cylinder_diagrams():
+            sage: for c in AbelianStratum(1,1).cylinder_diagrams():  # optional - latte_int
             ....:     print(c.volume_contribution())
+            [(1/6, Z((n1)^5))]
+            [(1/3, Z((n1)^3, (n1 + n2)^2)), (1/3, Z((n1)^2, (n1 + n2)^3))]
+            [(1/6, Z((n2), (n1), (n1 + n2)^3)), (1/12, Z((n2), (n1)^2, (n1 + n2)^2)), (1/12, Z((n2)^2, (n1)^2, (n1 + n2))), (1/12, Z((n2)^2, (n1), (n1 + n2)^2))]
+            [(1/6, Z((n1 + n3)^2, (n1 + n2)^3)), (1/6, Z((n1 + n3)^3, (n1 + n2)^2))]
         """
         from sage.misc.misc_c import prod
         from sage.rings.integer_ring import ZZ
@@ -2435,10 +2457,6 @@ class CylinderDiagram(SeparatrixDiagram):
         deg, res = self.widths_generating_series().delta().residue()
 
         assert deg == self.nseps() + 1
-
-        print('sym  : {}'.format(sym))
-        print('nseps: {}'.format(self.nseps()))
-        print('aut  : {}'.format(aut_size))
 
         m = 2 * sym / ZZ(self.nseps()).factorial() / aut_size
         return [(m * c, z) for c,z in res]
@@ -3275,7 +3293,7 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: cyl = CylinderDiagram('(0,1,2)-(3,1,2) (3)-(0)')
             sage: for o in cyl.origami_iterator(4):
             ....:     print(o)
-            ....:     print o.stratum(), o.nb_squares()
+            ....:     print(o.stratum(), o.nb_squares())
             (1,2,3)(4)
             (1,4)(2,3)
             H_2(1^2) 4
@@ -3741,6 +3759,7 @@ class QuadraticCylinderDiagram(SageObject):
         EXAMPLES::
 
             sage: from surface_dynamics import *
+            sage: from surface_dynamics.flat_surfaces.separatrix_diagram import QuadraticCylinderDiagram
             sage: rg = RibbonGraph(edges='(0,1)(2,3)(4,5)(6,7)', faces='(0,1)(2,4,5)(3)(6,7)', connected=False)
             sage: q = QuadraticCylinderDiagram(rg, '(0,1)(2,3)')
             sage: q.cylinders()
@@ -3770,6 +3789,7 @@ class QuadraticCylinderDiagram(SageObject):
         EXAMPLES::
 
             sage: from surface_dynamics import *
+            sage: from surface_dynamics.flat_surfaces.separatrix_diagram import QuadraticCylinderDiagram
             sage: rg = RibbonGraph(edges='(0,1)(2,3)(4,5)(6,7)', faces='(0,1)(2,4,5)(3)(6,7)', connected=False)
             sage: q = QuadraticCylinderDiagram(rg, '(0,1)(2,3)')
             sage: q
@@ -3789,6 +3809,7 @@ class QuadraticCylinderDiagram(SageObject):
         EXAMPLES::
 
             sage: from surface_dynamics import *
+            sage: from surface_dynamics.flat_surfaces.separatrix_diagram import QuadraticCylinderDiagram
 
             sage: rg = RibbonGraph(edges='(0,1)(2,3)(4,5)(6,7)', faces='(0,1)(2,4,5)(3)(6,7)', connected=False)
             sage: q = QuadraticCylinderDiagram(rg, '(0,1)(2,3)')
@@ -3805,7 +3826,7 @@ class QuadraticCylinderDiagram(SageObject):
             sage: rg = RibbonGraph(edges='(1,2)(3,4)(5,6)(7,8)(9,10)(11,12)', faces='(1,2)(3,4,6)(5)(8)(7,9,10)(11,12)', connected=False)
             sage: q = QuadraticCylinderDiagram(rg, '(0,1)(2,4)(3,5)')
             sage: q.stratum()
-            Q_1(1^2, 0^2, -1^2)
+            Q_0(1^2, -1^6)
             sage: L = q.lengths_cone()
             sage: L
             A 3-dimensional polyhedron in QQ^6 defined as the convex hull of 1 vertex and 3 rays
@@ -3847,7 +3868,8 @@ class QuadraticCylinderDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import RibbonGraph, QuadraticCylinderDiagram
+            sage: from surface_dynamics import RibbonGraph
+            sage: from surface_dynamics.flat_surfaces.separatrix_diagram import QuadraticCylinderDiagram
 
             sage: r = RibbonGraph(faces='(0,2,4,6,7)(8,9,5,3,1)', edges='(0,1)(2,3)(4,5)(6,7)(8,9)')
             sage: q = QuadraticCylinderDiagram(r, [1,0])
@@ -3912,6 +3934,7 @@ class QuadraticCylinderDiagram(SageObject):
         EXAMPLES::
 
             sage: from surface_dynamics.all import *
+            sage: from surface_dynamics.flat_surfaces.separatrix_diagram import QuadraticCylinderDiagram
         """
         from surface_dynamics.flat_surfaces.origamis.origami_dense import Origami_dense_pyx
 
