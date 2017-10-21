@@ -1,0 +1,10 @@
+def tikz_string_to_standalone(filename, s):
+    f = open(filename, 'w')
+    f.write('\\documentclass{standalone}\n')
+    f.write('\\usepackage{tikz}\n')
+    f.write('\\begin{document}%\n')
+    f.write('\\begin{tikzpicture}\n')
+    f.write(s)
+    f.write('\\end{tikzpicture}%\n')
+    f.write('\\end{document}\n')
+    f.close()
