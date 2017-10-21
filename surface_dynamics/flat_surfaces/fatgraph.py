@@ -24,12 +24,11 @@ class FatGraph(object):
     r"""
     Fatgraph
 
-    EXAMPLES::
-
-        sage: from surface_dynamics.flat_surfaces.fatgraph import FatGraph
+    EXAMPLES:
 
     The sphere obtained from two bigons::
 
+        sage: from surface_dynamics import *
         sage: FatGraph([1,2,0,-2,-1,-3])
         Fatgraph of genus 0 with 3 vertices, 3 edges and 2 faces
 
@@ -145,9 +144,9 @@ class FatGraph(object):
         r"""
         EXAMPLES::
 
+            sage: from surface_dynamics import *
             sage: T = FatGraph([1r,2r,0r,~4r,~5r,~3r,~2r,~1r,~0r,4,3,5])
-            sage: m = [1,0,2,3,4,5,~5r,~4r,~3r,~2r,~0r,~1r])
-
+            sage: m = [1,0,2,3,4,5,~5r,~4r,~3r,~2r,~0r,~1r]
         """
         if not is_signed_perm(m):
             raise ValueError('m should be a signed permutation')
@@ -162,9 +161,8 @@ class FatGraph(object):
 
         The tetrahedron::
 
+            sage: from surface_dynamics import *
             sage: T = FatGraph([1r,2r,0r,~4r,~5r,~3r,~2r,~1r,~0r,4,3,5])
-            sage: 
-
         """
         if self._can is not None:
             return self._can
