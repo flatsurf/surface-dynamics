@@ -158,6 +158,14 @@ def clean_perm_data(vertices, edges, faces, check):
 
     return (vertices, edges, faces)
 
+
+# TODO: introduce an oriented ribbon graph class
+# an oriented ribbon graph is a ribbon graph such that one can choose
+# coherently an orientation of each edge so that each face gets
+# all its edges oriented the same way
+# (the dual corresponds in having all vertices being either sources or sinks)
+# we encode this by choosing by labeling for each edge with the smaller edge index
+
 class RibbonGraph(SageObject):
     r"""
     Generic class for Ribbon graph.
@@ -171,6 +179,9 @@ class RibbonGraph(SageObject):
     is called a *dart*. A dart is also associated to an oriented edge.
 
     The domain of the permutations must be a subset of [0, ..., N-1] for some N.
+    The edges are always considered to be (i, ~i) where i is the bit complement
+    of the integer i (~0 = -1, ~-3 = 2). So that an edge always has a canonical
+    representative number given by the non-negative version.
 
     A dense ribbon graph has the following attributes
 
@@ -197,7 +208,6 @@ class RibbonGraph(SageObject):
     EXAMPLES::
 
         sage: from surface_dynamics.all import *
-
 
         sage: RibbonGraph([],[],[])
         Ribbon graph with 1 vertex, 0 edge and 1 face
