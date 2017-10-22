@@ -45,6 +45,7 @@ def latte_generating_series(L, M=None):
     r"""
     EXAMPLES::
 
+        sage: from surface_dynamics.misc.multivariate_generating_series import latte_generating_series
         sage: ieqs = [[0, 1, 0, 0, 0, 0, 0],
         ....:         [0, 0, 1, -1, 1, 0, 0],
         ....:         [0, 0, 0, 0, 1, 0, 0],
@@ -52,8 +53,8 @@ def latte_generating_series(L, M=None):
         ....:         [0, 0, 1, 0, 0, 0, 0]]
         sage: eqns = [[0, 0, 1, -1, 1, 0, -1], [0, 0, 1, -1, 1, -1, 0]]
         sage: L = Polyhedron(ieqs=ieqs, eqns=eqns)
-        sage: lattice_generating_series(L)
-        (1)/((1 - x1^-1*x3)*(1 - x1*x4*x5)*(1 - x1*x2)*(1 - x0)) + (1)/((1 - x3*x4*x5)*(1 - x2*x3)*(1 - x1*x3^-1)*(1 - x0))
+        sage: latte_generating_series(L)
+        (1)/((1 - x2^-1*x4*x5)*(1 - x2*x3)*(1 - x1*x2)*(1 - x0)) + (1)/((1 - x3*x4*x5)*(1 - x2*x4^-1*x5^-1)*(1 - x1*x4*x5)*(1 - x0))
     """
     if M is None:
         M = MultivariateGeneratingSeriesRing(L.ambient_dim())
@@ -246,63 +247,63 @@ def monomial_projection(num, den, i, M):
 
 
 
-def monomial_substitution(mat, num, den, M):
-    r"""
-    Apply the monomial substitution on ``num`` / ``den`` given by ``mat``.
-
-    We assume that the matrix applies on rows (in particular it should
-    have the same number of rows as the dimension of the monomial in
-    this factored denominator).
-
-    If some monomial is in the kernel, a vector ``c`` needs to be provided
-    and in that case this function return the constant term of the expansion
-    in the direction given by ``c`` (the result might depend on the choice of
-    the vector ``c`` provided).
-
-    INPUT:
-
-    - ``num`` - a polynomial
-
-    - ``den`` - a factored denominator
-
-    - ``M`` - a multivariate series ring
-
-    - ``c`` - an optional vector
-
-    EXAMPLES::
-
-        sage: from surface_dynamics.misc.multivariate_generating_series import FactoredDenominator
-        sage: V = ZZ**3
-        sage: f = FactoredDenominator([((1,0,0), 1),((0,1,0),1),((0,0,1),1)], V)
-        sage: f.monomial_substitution(matrix(3, 2, [1,1,1,0,1,0]))
-        (1 - x0)^2*(1 - x0*x1)
-        sage: f.monomial_substitution(matrix(3, 4, [1,1,1,1,1,1,0,0,0,0,1,1]))
-        (1 - x2*x3)*(1 - x0*x1)*(1 - x0*x1*x2*x3)
-    """
-    B = []
-    G = []
-    for a,i in self._tuple:
-        b = a * mat
-        if b.is_zero():
-            B.append((a,i))
-        else:
-            b.set_immutable()
-            G.append((a,b,i))
-
-    # no singular part
-    if not B:
-        new_dict = {}
-        for a,b,i in G:
-            if b in new_dict:
-                new_dict[b] += i
-            else:
-                new_dict[b] = i
-        return M.term(1, new_dict)
-
-    # case with singular part
-    l = sum(i for a,i in B)  # degree of the singular part
-    # XXX
-    raise NotImplementedError('singular case not implemented')
+#def monomial_substitution(mat, num, den, M):
+#    r"""
+#    Apply the monomial substitution on ``num`` / ``den`` given by ``mat``.
+#
+#    We assume that the matrix applies on rows (in particular it should
+#    have the same number of rows as the dimension of the monomial in
+#    this factored denominator).
+#
+#    If some monomial is in the kernel, a vector ``c`` needs to be provided
+#    and in that case this function return the constant term of the expansion
+#    in the direction given by ``c`` (the result might depend on the choice of
+#    the vector ``c`` provided).
+#
+#    INPUT:
+#
+#    - ``num`` - a polynomial
+#
+#    - ``den`` - a factored denominator
+#
+#    - ``M`` - a multivariate series ring
+#
+#    - ``c`` - an optional vector
+#
+#    EXAMPLES::
+#
+#        sage: from surface_dynamics.misc.multivariate_generating_series import FactoredDenominator
+#        sage: V = ZZ**3
+#        sage: f = FactoredDenominator([((1,0,0), 1),((0,1,0),1),((0,0,1),1)], V)
+#        sage: f.monomial_substitution(matrix(3, 2, [1,1,1,0,1,0]))
+#        (1 - x0)^2*(1 - x0*x1)
+#        sage: f.monomial_substitution(matrix(3, 4, [1,1,1,1,1,1,0,0,0,0,1,1]))
+#        (1 - x2*x3)*(1 - x0*x1)*(1 - x0*x1*x2*x3)
+#    """
+#    B = []
+#    G = []
+#    for a,i in self._tuple:
+#        b = a * mat
+#        if b.is_zero():
+#            B.append((a,i))
+#        else:
+#            b.set_immutable()
+#            G.append((a,b,i))
+#
+#    # no singular part
+#    if not B:
+#        new_dict = {}
+#        for a,b,i in G:
+#            if b in new_dict:
+#                new_dict[b] += i
+#            else:
+#                new_dict[b] = i
+#        return M.term(1, new_dict)
+#
+#    # case with singular part
+#    l = sum(i for a,i in B)  # degree of the singular part
+#    # XXX
+#    raise NotImplementedError('singular case not implemented')
 
 
 
@@ -320,7 +321,7 @@ class FactoredDenominator(object):
         sage: f2 = FactoredDenominator([((0,1,2), 3), ((1,1,1), 1)], V)
         sage: f3 = FactoredDenominator([((0,-1,2), 1), ((1,0,0), 1), ((0,0,2), 1)], V)
         sage: f1
-        (1 - x1*x2^2)^3*(1 - x0)^2*(1 - x0*x1*x2)
+        (1 - x0)^2
         sage: f1 * f2 * f3
         (1 - x1^-1*x2^2)*(1 - x2^2)*(1 - x1*x2^2)^3*(1 - x0)^3*(1 - x0*x1*x2)
         sage: hash(f1)  # random
@@ -442,6 +443,8 @@ class FactoredDenominator(object):
 
         EXAMPLES::
 
+            sage: from surface_dynamics.misc.multivariate_generating_series import FactoredDenominator
+
             sage: V = ZZ**2
             sage: R = QQ['t,u']
             sage: f = FactoredDenominator([((2,3), 2), ((4,1), 1), ((1,1), 1)], V)
@@ -512,6 +515,7 @@ class FactoredDenominator(object):
 
             sage: f = FactoredDenominator([((1,0,0), 2)], V)
             sage: f
+            (1 - x0)^2
             sage: f.logarithmic_minus_derivative(0, M)
             (2)/((1 - x0))
             sage: f.logarithmic_minus_derivative(1, M)
@@ -525,7 +529,7 @@ class FactoredDenominator(object):
 
             sage: f = FactoredDenominator([((1,0,0), 1), ((0,1,0), 1), ((0,0,1), 1)], V)
             sage: f.logarithmic_minus_derivative(0, M)
-            1/(1 - x0)
+            (1)/((1 - x0))
 
             sage: f = FactoredDenominator([((1,0,0), 2), ((1,1,0), 3), ((1,1,1), 1)], V)
             sage: f
@@ -745,57 +749,57 @@ class MultivariateGeneratingSeries(Element):
     # Barvinok Woods 2003 "Short rational generating functions for lattice point problems"
     # (possible alternative in Verdoolaege)
     #
-    def monomial_substitution(self, arg, M=None):
-        r"""
-        Perform a monomial substitution
-
-        - ``arg`` - a list of monomials or vectors or a matrix
-
-        - ``M`` - an optional codomain
-
-        EXAMPLES::
-
-            sage: M = MultivariateGeneratingSeriesRing(2)
-            sage: R = M.laurent_polynomial_ring()
-            sage: x0,x1 = R.gens()
-
-            sage: f = M.term(x0, [((1,0),2),((0,1),1)])
-            sage: f
-            (x0)/((1 - x1)*(1 - x0)^2)
-            sage: f.monomial_substitution(matrix(2, [1,1,1,1]))
-            (x0*x1)/((1 - x0*x1)^3)
-
-            sage: C = MultivariateGeneratingSeriesRing(3, 'z')
-            sage: f.monomial_substitution(matrix(2, 3, [1,0,1,0,1,1]), C)
-            (z0*z2)/((1 - z1*z2)*(1 - z0*z2)^2)
-        """
-        M_domain = self.parent()
-        R_domain = M_domain.laurent_polynomial_ring()
-
-        if M is None:
-            M_codomain = M_domain
-            R_codomain = R_domain
-        else:
-            M_codomain = M
-            R_codomain = M.laurent_polynomial_ring()
-
-        if arg.nrows() != M_domain.ngens() or arg.ncols() != M_codomain.ngens():
-            raise ValueError('wrong number of rows or columns')
-
-        s_dict = {R_domain.gen(i): R_codomain.monomial(*row) for i,row in enumerate(arg)}
-
-        # the monomial substitution also depends on the numerator !!
-        new_data = {}
-        for den, num in self._data.items():
-            monomial_substitution(arg, num, den, M_codomain)
-            assert num.parent() is R_domain
-            num = R_codomain(num.subs(s_dict))
-            if den in new_data:
-                new_data[den] += num
-            else:
-                new_data[den] = num
-
-        return M_codomain.element_class(M_codomain, new_data)
+#    def monomial_substitution(self, arg, M=None):
+#        r"""
+#        Perform a monomial substitution
+#
+#        - ``arg`` - a list of monomials or vectors or a matrix
+#
+#        - ``M`` - an optional codomain
+#
+#        EXAMPLES::
+#
+#            sage: M = MultivariateGeneratingSeriesRing(2)
+#            sage: R = M.laurent_polynomial_ring()
+#            sage: x0,x1 = R.gens()
+#
+#            sage: f = M.term(x0, [((1,0),2),((0,1),1)])
+#            sage: f
+#            (x0)/((1 - x1)*(1 - x0)^2)
+#            sage: f.monomial_substitution(matrix(2, [1,1,1,1]))
+#            (x0*x1)/((1 - x0*x1)^3)
+#
+#            sage: C = MultivariateGeneratingSeriesRing(3, 'z')
+#            sage: f.monomial_substitution(matrix(2, 3, [1,0,1,0,1,1]), C)
+#            (z0*z2)/((1 - z1*z2)*(1 - z0*z2)^2)
+#        """
+#        M_domain = self.parent()
+#        R_domain = M_domain.laurent_polynomial_ring()
+#
+#        if M is None:
+#            M_codomain = M_domain
+#            R_codomain = R_domain
+#        else:
+#            M_codomain = M
+#            R_codomain = M.laurent_polynomial_ring()
+#
+#        if arg.nrows() != M_domain.ngens() or arg.ncols() != M_codomain.ngens():
+#            raise ValueError('wrong number of rows or columns')
+#
+#        s_dict = {R_domain.gen(i): R_codomain.monomial(*row) for i,row in enumerate(arg)}
+#
+#        # the monomial substitution also depends on the numerator !!
+#        new_data = {}
+#        for den, num in self._data.items():
+#            monomial_substitution(arg, num, den, M_codomain)
+#            assert num.parent() is R_domain
+#            num = R_codomain(num.subs(s_dict))
+#            if den in new_data:
+#                new_data[den] += num
+#            else:
+#                new_data[den] = num
+#
+#        return M_codomain.element_class(M_codomain, new_data)
 
     # TODO: this does not make any sense
     # the residue is 1 / L1(h) ... Ld(h) where the Li are linear forms. At
@@ -803,7 +807,6 @@ class MultivariateGeneratingSeries(Element):
     # In other words, this method should just return a function h -> 1 / prod(Li)
     def residue(self):
         r"""
-
         denominator: each (1 - mon)^k in denom is replaced with -> mon^k
         numerator: evaluate at (1,1,...,1)
 
@@ -818,13 +821,13 @@ class MultivariateGeneratingSeries(Element):
             sage: x0,x1 = R.gens()
             sage: f = M.term(x0, [((1,1),2)])
             sage: f.residue()
-            (2, 1/((h0 + h1)^2))
+            (2, [(1, Z((n1 + n2)^2))])
             sage: f = M.term(x0, [((1,1),2)]) + M.term(1, [((1,0),1),((0,1),1),((1,1),1)])
             sage: f.residue()
-            (3, 1/((h1) (h0) (h0 + h1)))
+            (3, [(1, Z((n2), (n1), (n1 + n2)))])
             sage: f = M.term(x0, [((1,1),2)]) + M.term(1, [((1,0),1),((1,1),1)])
             sage: f.residue()
-            (2, 1/((h0) (h0 + h1)) + 1/((h0 + h1)^2))
+            (2, [(1, Z((n1), (n1 + n2))), (1, Z((n1 + n2)^2))])
         """
         R = self.parent().laurent_polynomial_ring()
         one = QQ.one()
@@ -851,13 +854,14 @@ class MultivariateGeneratingSeries(Element):
             sage: M = MultivariateGeneratingSeriesRing(2)
             sage: R = M.laurent_polynomial_ring()
             sage: x0, x1 = R.gens()
+            sage: xx0, xx1 = R.polynomial_ring().gens()
 
             sage: f = M.term(1, [((1,0),1)])
             sage: f
             (1)/((1 - x0))
             sage: f.taylor(10)
             x0^9 + x0^8 + x0^7 + x0^6 + x0^5 + x0^4 + x0^3 + x0^2 + x0 + 1
-            sage: f.taylor(10).derivative(x0) == f.derivative(0).taylor(9)
+            sage: f.taylor(10).derivative(xx0) == f.derivative(0).taylor(9)
             True
             sage: f.derivative(1)
             0
@@ -865,17 +869,18 @@ class MultivariateGeneratingSeries(Element):
             sage: f = M.term(x0 * x1, [((1,1),2)])
             sage: f.derivative(0)
             (2*x0*x1^2)/((1 - x0*x1)^3) + (x1)/((1 - x0*x1)^2)
-            sage: f.derivative(0).taylor(10) - f.taylor(10).derivative(x0)
+            sage: f.derivative(0).taylor(10) - f.taylor(10).derivative(xx0)
             30*x0^5*x1^6
 
             sage: f = M.term(1, [((1,2),2), ((0,1),2), ((1,0),2), ((1,1),2)])
-            sage: min((f.taylor(10).derivative(x0) - f.derivative(0).taylor(10)).degrees())
+            sage: min((f.taylor(10).derivative(xx0) - f.derivative(0).taylor(10)).degrees())
             9
-            sage: min((f.taylor(10).derivative(x1) - f.derivative(1).taylor(10)).degrees())
+            sage: min((f.taylor(10).derivative(xx1) - f.derivative(1).taylor(10)).degrees())
             10
 
             sage: f = M.term(1, [((1,0),2), ((1,1),1)])
-            sage: f.taylor(10).derivative(x0).derivative(x1) - f.derivative(0).derivative(1).taylor(10)
+            sage: f.taylor(10).derivative(xx0).derivative(xx1) - f.derivative(0).derivative(1).taylor(9)
+            -18*x0^9*x1 - 42*x0^8*x1^2 - ... - 72*x0^5*x1^3 - 25*x0^4*x1^4
 
         You can indistinctly use integers, strings or polynomial variables for ``var``::
 
@@ -892,7 +897,7 @@ class MultivariateGeneratingSeries(Element):
             sage: f.derivative(-1)
             Traceback (most recent call last):
             ...
-            ValueError: Generator not defined.
+            ValueError: generator not defined
             sage: f.derivative('q')
             Traceback (most recent call last):
             ...
@@ -965,7 +970,8 @@ class MultivariateGeneratingSeries(Element):
             sage: M = MultivariateGeneratingSeriesRing(2, 't,u')
             sage: t,u = M.laurent_polynomial_ring().gens()
             sage: f = M.term(t + u^3, [((1,1), 1), ((1,2),2)])
-            (u^3 - t)/((1 - t*u)*(1 - t*u^2)^2)
+            sage: f
+            (u^3 + t)/((1 - t*u)*(1 - t*u^2)^2)
             sage: f.taylor(10)
             2*t^4*u^8 + 4*t^3*u^9 + t^4*u^7 + 3*t^3*u^8 + ... + t*u^4 + 2*t^2*u^2 + t^2*u + u^3 + t
 
@@ -977,6 +983,14 @@ class MultivariateGeneratingSeries(Element):
             sage: m2 = M.term(1, [((-1,1),1), ((1,0),1)])   # not tested
             sage: f = m1 + m2                               # not tested
             sage: f.taylor(10)                              # not tested
+
+        TESTS::
+
+            sage: M = MultivariateGeneratingSeriesRing(2)
+            sage: R = M.laurent_polynomial_ring()
+            sage: x0, x1 = R.gens()
+            sage: type(M.term(1, [((1,0),1)]).taylor(10))
+            <type 'sage.rings.polynomial.multi_polynomial_libsingular.MPolynomial_libsingular'>
         """
         M = self.parent()
         R = M.laurent_polynomial_ring().polynomial_ring()
@@ -993,6 +1007,7 @@ class MultivariateGeneratingSeries(Element):
             sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
             sage: M = MultivariateGeneratingSeriesRing(2)
             sage: M.term(0, []).is_trivial_zero()
+            True
             sage: M.term(0, [((1,1),1)]).is_trivial_zero()
             True
             sage: M.term(1, []).is_trivial_zero()
@@ -1007,8 +1022,9 @@ class MultivariateGeneratingSeries(Element):
             sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
             sage: M = MultivariateGeneratingSeriesRing(2)
             sage: M.term(0, []).is_trivial_one()
+            False
             sage: M.term(0, [((1,1),1)]).is_trivial_one()
-            True
+            False
             sage: M.term(1, []).is_trivial_one()
             True
             sage: M.term(1, [((1,1),1)]).is_trivial_one()
@@ -1045,7 +1061,7 @@ class MultivariateGeneratingSeries(Element):
             sage: m1 = M.term(1, [((1,1,0),1)])
             sage: m2 = M.term(-2, [((1,0,0),1),((0,1,0),2)])
             sage: m1 + m2
-            1/(1 - x0*x1) + -2/(1 - x1)^2*(1 - x0)
+            (1)/((1 - x0*x1)) + (-2)/((1 - x1)^2*(1 - x0))
         """
         if self.is_trivial_zero():
             return other
@@ -1138,6 +1154,7 @@ class MultivariateGeneratingSeries(Element):
             (x1^3 - x0)/((1 - x0*x1)*(1 - x0*x1^2)^2)
 
             sage: M = MultivariateGeneratingSeriesRing(2, 't,u')
+            sage: t, u = M.laurent_polynomial_ring().gens()
             sage: M.term(-t + u^3, [((1,1), 1), ((1,2),2)])
             (u^3 - t)/((1 - t*u)*(1 - t*u^2)^2)
         """
@@ -1176,7 +1193,7 @@ class MultivariateGeneratingSeriesRing(Parent):
 
         sage: M = MultivariateGeneratingSeriesRing(3)
         sage: M.zero()
-        (0)
+        0
         sage: M.one()
         (1)
         sage: m1 = M.term(1, [((1,1,0),1)])
