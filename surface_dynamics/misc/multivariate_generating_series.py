@@ -28,8 +28,6 @@ import numbers
 
 from sage.misc.cachefunc import cached_method
 
-from sage.interfaces.latte import count
-
 from sage.structure.sage_object import SageObject
 from sage.structure.parent import Parent
 from sage.structure.element import Element, parent
@@ -84,6 +82,11 @@ def latte_generating_series(L, M=None):
     """
     if M is None:
         M = MultivariateGeneratingSeriesRing(L.ambient_dim())
+    try:
+        from sage.interfaces.latte import count
+    except ImportError:
+        from sage.version import version
+        raise ValueError('your Sage version is too old ({}) to use this function'.format(version))
     ans = count(L.cdd_Hrepresentation(), cdd=True, multivariate_generating_function=True, raw_output=True)
     return parse_latte_generating_series(M, ans)
 
@@ -1280,7 +1283,7 @@ class MultivariateGeneratingSeriesRing(Parent):
             sage: M.has_coerce_map_from(ZZ)
             True
             sage: M.coerce_map_from(ZZ)
-            Coercion map:
+            Co...ion map:
               From: Integer Ring
               To:   Multivariate quasi-polynomial generating series on x0, x1
 
