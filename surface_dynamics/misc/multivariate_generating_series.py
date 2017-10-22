@@ -53,16 +53,12 @@ def laurent_monomial(R, arg):
     """
     # only in beta 8.1 versions of Sage
     # return R.monomial(*arg)
-
     arg = tuple(arg)
     if len(arg) != R.ngens():
         raise TypeError("tuple key must have same length as ngens")
 
-    from sage.rings.polynomial.laurent_polynomial import LaurentPolynomial_mpair
-    from sage.rings.polynomial.polydict import ETuple
-
-    m = ETuple(arg, int(R.ngens()))
-    return LaurentPolynomial_mpair(R, R.polynomial_ring().one(), m)
+    from sage.misc.misc_c import prod
+    return prod(x**int(i) for (x,i) in zip(R.gens(), arg))
 
 # custom latte count
 def latte_generating_series(L, M=None):
