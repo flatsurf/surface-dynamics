@@ -876,10 +876,10 @@ class Permutation(SageObject):
         With flips::
 
             sage: p = iet.GeneralizedPermutation('a a','b b',flips='a')
-            sage: print p.str()
+            sage: print(p.str())
             -a -a
              b  b
-             sage: print p.str('/')
+             sage: print(p.str('/'))
              -a -a/ b  b
         """
         s = []
@@ -2988,13 +2988,13 @@ class PermutationLI(Permutation):
                 else: l1.append((0,j))
 
         if verbose:
-            print "found Jenkins-Strebel"
-            print q
-            print l0
-            print l1
+            print("found Jenkins-Strebel")
+            print(q)
+            print(l0)
+            print(l1)
 
         if any(x[0] == 1 for x in l0):
-            if verbose: print "potential form 1"
+            if verbose: print("potential form 1")
             i0 = []; i1 = []
             for i in xrange(len(l0)):
                 if l0[i][0] == 0:
@@ -3003,7 +3003,7 @@ class PermutationLI(Permutation):
                 if l1[i][0] == 1:
                     i1.append(i)
             if len(i0) != 2 or len(i1) != 2:
-                if verbose: print "no repetition twice in intervals"
+                if verbose: print("no repetition twice in intervals")
                 return False
 
             q0_0 = q0[i0[0]+1:i0[1]]
@@ -3015,13 +3015,13 @@ class PermutationLI(Permutation):
             q1_1 = q1[i1[1]+1:] + q1[:i1[0]]
 
             if verbose:
-                print q0_0, q0_1
-                print q1_0, q1_1
+                print(q0_0, q0_1)
+                print(q1_0, q1_1)
 
             return (q0_0 == q1_0 and q0_1 == q1_1) or (q0_0 == q1_1 and q0_1 == q1_0)
 
         else:
-            if verbose: print "potential form 2"
+            if verbose: print("potential form 2")
             if any(i==1 for i,_ in l0) or any(i==0 for i,_ in l1):
                 return False
             j = len(l0) // 2
@@ -3596,15 +3596,15 @@ class OrientablePermutationIET(PermutationIET):
             sage: from surface_dynamics.all import *
 
             sage: p = iet.Permutation('a b c', 'c b a')
-            sage: print p.stratum()
+            sage: p.stratum()
             H_1(0^2)
 
             sage: p = iet.Permutation('a b c d', 'd a b c')
-            sage: print p.stratum()
+            sage: p.stratum()
             H_1(0^3)
 
             sage: p = iet.Permutation(range(9), [8,5,2,7,4,1,6,3,0])
-            sage: print p.stratum()
+            sage: p.stratum()
             H_3(1^4)
 
             sage: a = 'a b c d e f g h i j'
@@ -3701,10 +3701,10 @@ class OrientablePermutationIET(PermutationIET):
             sage: b1 = [3,2,4,6,5,7,9,8,1,0]
             sage: b0 = [6,5,4,3,2,7,9,8,1,0]
             sage: p1 = iet.Permutation(a,b1)
-            sage: print p1.arf_invariant()
+            sage: p1.arf_invariant()
             1
             sage: p0 = iet.Permutation(a,b0)
-            sage: print p0.arf_invariant()
+            sage: p0.arf_invariant()
             0
 
         Permutations from the odd and even component of H(4,4)::
@@ -3713,10 +3713,10 @@ class OrientablePermutationIET(PermutationIET):
             sage: b1 = [3,2,5,4,6,8,7,10,9,1,0]
             sage: b0 = [5,4,3,2,6,8,7,10,9,1,0]
             sage: p1 = iet.Permutation(a,b1)
-            sage: print p1.arf_invariant()
+            sage: p1.arf_invariant()
             1
             sage: p0 = iet.Permutation(a,b0)
-            sage: print p0.arf_invariant()
+            sage: p0.arf_invariant()
             0
 
         REFERENCES:
@@ -3778,11 +3778,11 @@ class OrientablePermutationIET(PermutationIET):
             sage: p_hyp = iet.Permutation(a, b_hyp)
             sage: p_odd = iet.Permutation(a, b_odd)
             sage: p_even = iet.Permutation(a, b_even)
-            sage: print p_hyp.stratum_component()
+            sage: p_hyp.stratum_component()
             H_4(6)^hyp
-            sage: print p_odd.stratum_component()
+            sage: p_odd.stratum_component()
             H_4(6)^odd
-            sage: print p_even.stratum_component()
+            sage: p_even.stratum_component()
             H_4(6)^even
 
         Permutations from the stratum H(4,4)::
@@ -3796,15 +3796,15 @@ class OrientablePermutationIET(PermutationIET):
             sage: p_even = iet.Permutation(a,b_even)
             sage: p_hyp.stratum() == AbelianStratum(4,4)
             True
-            sage: print p_hyp.stratum_component()
+            sage: p_hyp.stratum_component()
             H_5(4^2)^hyp
             sage: p_odd.stratum() == AbelianStratum(4,4)
             True
-            sage: print p_odd.stratum_component()
+            sage: p_odd.stratum_component()
             H_5(4^2)^odd
             sage: p_even.stratum() == AbelianStratum(4,4)
             True
-            sage: print p_even.stratum_component()
+            sage: p_even.stratum_component()
             H_5(4^2)^even
 
         As for stratum you can specify that you want to attach the singularity
@@ -4011,21 +4011,35 @@ class OrientablePermutationIET(PermutationIET):
 
             sage: p = iet.Permutation('a b c d','d c b a')
             sage: for pos,side in [('t','r'),('b','r'),('t','l'),('b','l')]:
-            ...    q = p.rauzy_move(pos,side)
-            ...    print q.backward_rauzy_move(pos,side) == p,
-            ...    q = p.backward_rauzy_move(pos,side)
-            ...    print q.rauzy_move(pos,side) == p,
-            True True True True True True True True
+            ....:     q = p.rauzy_move(pos,side)
+            ....:     print(q.backward_rauzy_move(pos,side) == p)
+            ....:     q = p.backward_rauzy_move(pos,side)
+            ....:     print(q.rauzy_move(pos,side) == p)
+            True
+            True
+            True
+            True
+            True
+            True
+            True
+            True
 
         Testing the inversion on reduced permutations::
 
             sage: p = iet.Permutation('a b c d','d c b a',reduced=True)
             sage: for pos,side in [('t','r'),('b','r'),('t','l'),('b','l')]:
-            ...    q = p.rauzy_move(pos,side)
-            ...    print q.backward_rauzy_move(pos,side) == p,
-            ...    q = p.backward_rauzy_move(pos,side)
-            ...    print q.rauzy_move(pos,side) == p,
-            True True True True True True True True
+            ....:     q = p.rauzy_move(pos,side)
+            ....:     print(q.backward_rauzy_move(pos,side) == p)
+            ....:     q = p.backward_rauzy_move(pos,side)
+            ....:     print(q.rauzy_move(pos,side) == p)
+            True
+            True
+            True
+            True
+            True
+            True
+            True
+            True
 
         Test the inplace option::
 
@@ -4454,22 +4468,35 @@ class OrientablePermutationLI(PermutationLI):
 
             sage: p = iet.GeneralizedPermutation('a a b b','c c d d')
             sage: for pos,side in [('t','r'),('b','r'),('t','l'),('b','l')]:
-            ...    q = p.rauzy_move(pos,side)
-            ...    print q.backward_rauzy_move(pos,side) == p,
-            ...    q = p.backward_rauzy_move(pos,side)
-            ...    print q.rauzy_move(pos,side) == p,
-            True True True True True True True True
-
+            ....:     q = p.rauzy_move(pos,side)
+            ....:     print(q.backward_rauzy_move(pos,side) == p)
+            ....:     q = p.backward_rauzy_move(pos,side)
+            ....:     print(q.rauzy_move(pos,side) == p)
+            True
+            True
+            True
+            True
+            True
+            True
+            True
+            True
 
         Tests the inversion on reduced generalized permutations::
 
             sage: p = iet.GeneralizedPermutation('a a b b','c c d d',reduced=True)
             sage: for pos,side in [('t','r'),('b','r'),('t','l'),('b','l')]:
-            ...    q = p.rauzy_move(pos,side)
-            ...    print q.backward_rauzy_move(pos,side) == p,
-            ...    q = p.backward_rauzy_move(pos,side)
-            ...    print q.rauzy_move(pos,side) == p,
-            True True True True True True True True
+            ....:     q = p.rauzy_move(pos,side)
+            ....:     print(q.backward_rauzy_move(pos,side) == p)
+            ....:     q = p.backward_rauzy_move(pos,side)
+            ....:     print(q.rauzy_move(pos,side) == p)
+            True
+            True
+            True
+            True
+            True
+            True
+            True
+            True
         """
         winner = interval_conversion(winner)
         side = side_conversion(side)
@@ -4579,23 +4606,37 @@ class FlippedPermutationIET(PermutationIET):
 
             sage: from surface_dynamics.all import *
 
-            sage: p = iet.GeneralizedPermutation('a b c d e','d a b e c',flips='abcd')
+            sage: p = iet.GeneralizedPermutation('a b c d e','d a b e c', flips='abcd')
             sage: for pos,side in [('t','r'),('b','r'),('t','l'),('b','l')]:
-            ...    q = p.rauzy_move(pos,side)
-            ...    print q.backward_rauzy_move(pos,side) == p,
-            ...    q = p.backward_rauzy_move(pos,side)
-            ...    print q.rauzy_move(pos,side) == p,
-            True True True True True True True True
+            ....:     q = p.rauzy_move(pos,side)
+            ....:     print(q.backward_rauzy_move(pos,side) == p)
+            ....:     q = p.backward_rauzy_move(pos,side)
+            ....:     print(q.rauzy_move(pos,side) == p)
+            True
+            True
+            True
+            True
+            True
+            True
+            True
+            True
 
         Testing the inversion on reduced permutations::
 
-            sage: p = iet.Permutation('f a b c d e','d f c b e a',flips='abcd', reduced=True)
+            sage: p = iet.Permutation('f a b c d e','d f c b e a', flips='abcd', reduced=True)
             sage: for pos,side in [('t','r'),('b','r'),('t','l'),('b','l')]:
-            ...    q = p.rauzy_move(pos,side)
-            ...    print q.backward_rauzy_move(pos,side) == p,
-            ...    q = p.backward_rauzy_move(pos,side)
-            ...    print q.rauzy_move(pos,side) == p,
-            True True True True True True True True
+            ....:     q = p.rauzy_move(pos,side)
+            ....:     print(q.backward_rauzy_move(pos,side) == p)
+            ....:     q = p.backward_rauzy_move(pos,side)
+            ....:     print(q.rauzy_move(pos,side) == p)
+            True
+            True
+            True
+            True
+            True
+            True
+            True
+            True
         """
         winner = interval_conversion(winner)
         side = side_conversion(side)
@@ -4706,21 +4747,35 @@ class FlippedPermutationLI(PermutationLI):
 
             sage: p = iet.GeneralizedPermutation('a b c e b','d c d a e',flips='abcd')
             sage: for pos,side in [('t','r'),('b','r'),('t','l'),('b','l')]:
-            ...    q = p.rauzy_move(pos,side)
-            ...    print q.backward_rauzy_move(pos,side) == p,
-            ...    q = p.backward_rauzy_move(pos,side)
-            ...    print q.rauzy_move(pos,side) == p,
-            True True True True True True True True
+            ....:     q = p.rauzy_move(pos,side)
+            ....:     print(q.backward_rauzy_move(pos,side) == p)
+            ....:     q = p.backward_rauzy_move(pos,side)
+            ....:     print(q.rauzy_move(pos,side) == p)
+            True
+            True
+            True
+            True
+            True
+            True
+            True
+            True
 
         Testing the inversion on reduced permutations::
 
             sage: p = iet.GeneralizedPermutation('a b c e b','d c d a e',flips='abcd',reduced=True)
             sage: for pos,side in [('t','r'),('b','r'),('t','l'),('b','l')]:
-            ...    q = p.rauzy_move(pos,side)
-            ...    print q.backward_rauzy_move(pos,side) == p,
-            ...    q = p.backward_rauzy_move(pos,side)
-            ...    print q.rauzy_move(pos,side) == p,
-            True True True True True True True True
+            ....:     q = p.rauzy_move(pos,side)
+            ....:     print(q.backward_rauzy_move(pos,side) == p)
+            ....:     q = p.backward_rauzy_move(pos,side)
+            ....:     print(q.rauzy_move(pos,side) == p)
+            True
+            True
+            True
+            True
+            True
+            True
+            True
+            True
         """
         winner = interval_conversion(winner)
         side = side_conversion(side)
@@ -5311,12 +5366,12 @@ class RauzyDiagram(SageObject):
                 sage: r = p.rauzy_diagram()
                 sage: g = r.path(p)
                 sage: for q in g:
-                ...       print p
+                ....:     print(p)
                 a b c
                 c b a
                 sage: g = r.path(p, 't', 't')
                 sage: for q in g:
-                ...       print q, "\n*****"
+                ....:     print("%s\n*****" % q)
                 a b c
                 c b a
                 *****
@@ -5328,7 +5383,7 @@ class RauzyDiagram(SageObject):
                 *****
                 sage: g = r.path(p,'b','t')
                 sage: for q in g:
-                ...       print q, "\n*****"
+                ....:     print("%s\n*****" % q)
                 a b c
                 c b a
                 *****
@@ -5608,7 +5663,7 @@ class RauzyDiagram(SageObject):
             sage: from surface_dynamics.all import *
 
             sage: r = iet.RauzyDiagram('a b','b a')
-            sage: for p in r.vertices(): print p
+            sage: for p in r.vertices(): print(p)
             a b
             b a
         """
@@ -5625,7 +5680,7 @@ class RauzyDiagram(SageObject):
             sage: from surface_dynamics.all import *
 
             sage: r = iet.RauzyDiagram('a b','b a')
-            sage: for p in r.vertex_iterator(): print p
+            sage: for p in r.vertex_iterator(): print(p)
             a b
             b a
 
@@ -5634,7 +5689,7 @@ class RauzyDiagram(SageObject):
             sage: r = iet.RauzyDiagram('a b c d','d c b a')
             sage: from itertools import ifilter
             sage: r_1n = ifilter(lambda x: x.is_standard(), r)
-            sage: for p in r_1n: print p
+            sage: for p in r_1n: print(p)
             a b c d
             d c b a
         """
@@ -5668,7 +5723,7 @@ class RauzyDiagram(SageObject):
             sage: p = iet.Permutation('a b','b a')
             sage: r = p.rauzy_diagram()
             sage: for e in r.edge_iterator():
-            ...    print e[0].str(sep='/'), '-->', e[1].str(sep='/')
+            ....:     print('%s --> %s' %(e[0].str(sep='/'), e[1].str(sep='/')))
             a b/b a --> a b/b a
             a b/b a --> a b/b a
         """
@@ -5994,7 +6049,7 @@ class RauzyDiagram(SageObject):
 
             sage: p = iet.Permutation('a b c','c b a')
             sage: d = p.rauzy_diagram()
-            sage: print d.edge_to_matrix(p,1)
+            sage: print(d.edge_to_matrix(p,1))
             [1 0 1]
             [0 1 0]
             [0 0 1]
@@ -6075,14 +6130,14 @@ class RauzyDiagram(SageObject):
             sage: r = p.rauzy_diagram()
             sage: g0 = r.path(p)
             sage: for g in r._all_npath_extension(g0,0):
-            ...       print g
+            ....:     print(g)
             Path of length 0 in a Rauzy diagram
             sage: for g in r._all_npath_extension(g0,1):
-            ...       print g
+            ....:     print(g)
             Path of length 1 in a Rauzy diagram
             Path of length 1 in a Rauzy diagram
             sage: for g in r._all_npath_extension(g0,2):
-            ...       print g
+            ....:     print(g)
             Path of length 2 in a Rauzy diagram
             Path of length 2 in a Rauzy diagram
             Path of length 2 in a Rauzy diagram
@@ -6126,10 +6181,10 @@ class RauzyDiagram(SageObject):
             sage: r = p.rauzy_diagram()
             sage: g0 = r.path(p)
             sage: for g in r._all_path_extension(g0,0):
-            ...       print g
+            ....:     print(g)
             Path of length 0 in a Rauzy diagram
             sage: for g in r._all_path_extension(g0, 1):
-            ...       print g
+            ....:     print(g)
             Path of length 0 in a Rauzy diagram
             Path of length 1 in a Rauzy diagram
             Path of length 1 in a Rauzy diagram
@@ -6166,11 +6221,11 @@ class RauzyDiagram(SageObject):
             sage: from surface_dynamics.all import *
 
             sage: r = iet.RauzyDiagram('a b','b a')
-            sage: for p in r: print p
+            sage: for p in r: print(p)
             a b
             b a
             sage: r = iet.RauzyDiagram('a b c','c b a')
-            sage: for p in r: print p.stratum()
+            sage: for p in r: print(p.stratum())
             H_1(0^2)
             H_1(0^2)
             H_1(0^2)
@@ -6325,10 +6380,10 @@ class RauzyDiagram(SageObject):
             sage: r = iet.RauzyDiagram('a b c','c b a',tb_inversion=True)   #indirect doctest
         """
         if p.__class__ is not self._element_class:
-            raise ValueError, "your permutation is not of good type"
+            raise TypeError("wrong permutation type")
 
         if len(p) != self._n:
-            raise ValueError, "your permutation has not the good length"
+            raise ValueError("wrong length")
 
         pred = self._pred
         succ = self._succ
