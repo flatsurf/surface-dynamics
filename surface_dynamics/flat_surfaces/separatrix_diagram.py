@@ -3293,16 +3293,20 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: cyl = CylinderDiagram('(0,1,2)-(3,1,2) (3)-(0)')
             sage: for o in cyl.origami_iterator(4):
             ....:     print(o)
-            ....:     print(o.stratum(), o.nb_squares())
+            ....:     print(o.stratum())
+            ....:     print(o.nb_squares())
             (1,2,3)(4)
             (1,4)(2,3)
-            H_2(1^2) 4
+            H_2(1^2)
+            4
             (1,2,3)(4)
             (1,2,4)(3)
-            H_2(1^2) 4
+            H_2(1^2)
+            4
             (1,2,3)(4)
             (1,3,4)(2)
-            H_2(1^2) 4
+            H_2(1^2)
+            4
         """
         for w,h in self.widths_and_heights_iterator(n):
             for o in self.cylcoord_to_origami_iterator(w, h):
