@@ -76,10 +76,10 @@ TESTS::
     sage: g.is_full()
     True
     sage: s1 = g.orbit_substitution()
-    sage: print s1
+    sage: print(s1)
     a->adbd, b->adbdbd, c->adccd, d->adcd
     sage: s2 = g.interval_substitution()
-    sage: print s2
+    sage: print(s2)
     a->abcd, b->bab, c->cdc, d->dcbababcd
     sage: s1.incidence_matrix() == s2.incidence_matrix().transpose()
     True
@@ -486,7 +486,7 @@ def LabelledPermutationsIET_iterator(
         sage: from surface_dynamics.all import *
 
         sage: for p in iet.Permutations_iterator(2, alphabet="ab"):
-        ...       print p, "\n****"   #indirect doctest
+        ....:     print("%s\n****" % p)  #indirect doctest
         a b
         b a
         ****
@@ -494,7 +494,7 @@ def LabelledPermutationsIET_iterator(
         a b
         ****
         sage: for p in iet.Permutations_iterator(3, alphabet="abc"):
-        ...       print p, "\n*****"   #indirect doctest
+        ....:     print("%s\n*****" %p)   #indirect doctest
         a b c
         b c a
         *****
@@ -594,12 +594,12 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
         sage: p = iet.Permutation('a b c', 'c b a')
         sage: p.has_rauzy_move('top')
         True
-        sage: print p.rauzy_move('bottom')
+        sage: p.rauzy_move('bottom')
         a c b
         c b a
         sage: p.has_rauzy_move('top')
         True
-        sage: print p.rauzy_move('top')
+        sage: p.rauzy_move('top')
         a b c
         c a b
 
@@ -651,13 +651,13 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
             sage: from surface_dynamics.all import *
 
             sage: p = iet.Permutation('a b','b a')
-            sage: print p.rauzy_move_interval_substitution('top','right')
+            sage: print(p.rauzy_move_interval_substitution('top','right'))
             a->a, b->ba
-            sage: print p.rauzy_move_interval_substitution('bottom','right')
+            sage: print(p.rauzy_move_interval_substitution('bottom','right'))
             a->ab, b->b
-            sage: print p.rauzy_move_interval_substitution('top','left')
+            sage: print(p.rauzy_move_interval_substitution('top','left'))
             a->ba, b->b
-            sage: print p.rauzy_move_interval_substitution('bottom','left')
+            sage: print(p.rauzy_move_interval_substitution('bottom','left'))
             a->a, b->ab
         """
         d = dict([(letter,[letter]) for letter in self.letters()])
@@ -699,13 +699,13 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
             sage: from surface_dynamics.all import *
 
             sage: p = iet.Permutation('a b','b a')
-            sage: print p.rauzy_move_orbit_substitution('top','right')
+            sage: print(p.rauzy_move_orbit_substitution('top','right'))
             a->ab, b->b
-            sage: print p.rauzy_move_orbit_substitution('bottom','right')
+            sage: print(p.rauzy_move_orbit_substitution('bottom','right'))
             a->a, b->ab
-            sage: print p.rauzy_move_orbit_substitution('top','left')
+            sage: print(p.rauzy_move_orbit_substitution('top','left'))
             a->a, b->ba
-            sage: print p.rauzy_move_orbit_substitution('bottom','left')
+            sage: print(p.rauzy_move_orbit_substitution('bottom','left'))
             a->ba, b->b
 
         TESTS::
@@ -813,9 +813,9 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
         sage: p.is_irreducible()
         False
         sage: test, decomposition = p.is_irreducible(return_decomposition = True)
-        sage: print test
+        sage: test
         False
-        sage: print decomposition
+        sage: decomposition
         (['a'], ['c', 'a'], [], ['c'])
 
     Rauzy movability and Rauzy move::
@@ -826,7 +826,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
         sage: p.has_rauzy_move(1)
         True
         sage: q = p.rauzy_move(1)
-        sage: print q
+        sage: q
         a a b b c
         c d d
         sage: q.has_rauzy_move(0)
@@ -1166,10 +1166,10 @@ class FlippedLabelledPermutation(LabelledPermutation):
             sage: from surface_dynamics.all import *
 
             sage: p = iet.Permutation('a b', 'b a', flips='a')
-            sage: print p[0]
+            sage: p[0]
             [('a', -1), ('b', 1)]
             sage: p = iet.GeneralizedPermutation('c p p', 't t c', flips='ct')
-            sage: print p[1]
+            sage: p[1]
             [('t', -1), ('t', -1), ('c', -1)]
         """
         if not isinstance(i, (Integer, int)):
@@ -1205,13 +1205,13 @@ class FlippedLabelledPermutationIET(
     Rauzy movability and Rauzy move::
 
         sage: p = iet.Permutation('a b c', 'c b a',flips='a')
-        sage: print p
+        sage: p
         -a  b  c
          c  b -a
-        sage: print p.rauzy_move(1)
+        sage: p.rauzy_move(1)
         -c -a  b
         -c  b -a
-        sage: print p.rauzy_move(0)
+        sage: p.rauzy_move(0)
         -a  b  c
          c -a  b
 
@@ -1548,11 +1548,11 @@ class LabelledRauzyDiagram(RauzyDiagram):
                 sage: r = p.rauzy_diagram()
                 sage: p0 = r.path(p,0)
                 sage: s0 = p0.interval_substitution()
-                sage: print s0
+                sage: print(s0)
                 a->a, b->ba
                 sage: p1 = r.path(p,1)
                 sage: s1 = p1.interval_substitution()
-                sage: print s1
+                sage: print(s1)
                 a->ab, b->b
                 sage: (p0 + p1).interval_substitution() == s1 * s0
                 True
@@ -1577,11 +1577,11 @@ class LabelledRauzyDiagram(RauzyDiagram):
                 sage: d = p.rauzy_diagram()
                 sage: g0 = d.path(p,'top')
                 sage: s0 = g0.orbit_substitution()
-                sage: print s0
+                sage: print(s0)
                 a->ab, b->b
                 sage: g1 = d.path(p,'bottom')
                 sage: s1 = g1.orbit_substitution()
-                sage: print s1
+                sage: print(s1)
                 a->a, b->ab
                 sage: (g0 + g1).orbit_substitution() == s0 * s1
                 True
@@ -1690,11 +1690,11 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
             sage: p = iet.Permutation('a b c','c b a')
             sage: r = p.rauzy_diagram()
-            sage: print r.edge_to_interval_substitution(None,None)
+            sage: print(r.edge_to_interval_substitution(None,None))
             a->a, b->b, c->c
-            sage: print r.edge_to_interval_substitution(p,0)
+            sage: print(r.edge_to_interval_substitution(p,0))
             a->a, b->b, c->ca
-            sage: print r.edge_to_interval_substitution(p,1)
+            sage: print(r.edge_to_interval_substitution(p,1))
             a->ac, b->b, c->c
         """
         if p is None and edge_type is None:
@@ -1720,11 +1720,11 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
             sage: p = iet.Permutation('a b c','c b a')
             sage: r = p.rauzy_diagram()
-            sage: print r.edge_to_orbit_substitution(None,None)
+            sage: print(r.edge_to_orbit_substitution(None,None))
             a->a, b->b, c->c
-            sage: print r.edge_to_orbit_substitution(p,0)
+            sage: print(r.edge_to_orbit_substitution(p,0))
             a->ac, b->b, c->c
-            sage: print r.edge_to_orbit_substitution(p,1)
+            sage: print(r.edge_to_orbit_substitution(p,1))
             a->a, b->b, c->ac
 
         TESTS::
@@ -1734,9 +1734,9 @@ class LabelledRauzyDiagram(RauzyDiagram):
             sage: pi0 = iet.Permutation('A1 A2 B', 'B A1 A2')
             sage: G = pi0.rauzy_diagram()
             sage: s1 = G.edge_to_orbit_substitution(pi0,0)
-            sage: print s1.domain().alphabet()
+            sage: s1.domain().alphabet()
             {'A1', 'A2', 'B'}
-            sage: print s1.codomain().alphabet()
+            sage: s1.codomain().alphabet()
             {'A1', 'A2', 'B'}
         """
         if p is None and edge_type is None:
@@ -1771,7 +1771,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
             sage: p = iet.Permutation('a b','b a')
             sage: r = p.rauzy_diagram()
             sage: for g in r.full_loop_iterator(p,2):
-            ...       print g.matrix(), "\n*****"
+            ....:     print("%s\n*****" % g.matrix())
             [1 1]
             [1 2]
             *****
@@ -1810,7 +1810,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
             sage: p = iet.Permutation('a b','b a')
             sage: d = p.rauzy_diagram()
             sage: for g in d.full_nloop_iterator(p,2):
-            ...       print g.matrix(), "\n*****"
+            ....:     print("%s\n*****" % g.matrix())
             [1 1]
             [1 2]
             *****
