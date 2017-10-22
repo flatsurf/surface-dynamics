@@ -40,6 +40,32 @@ from sage.rings.integer_ring import ZZ
 from sage.rings.rational_field import QQ
 from sage.modules.vector_integer_dense import Vector_integer_dense
 
+def laurent_monomial(R, arg):
+    r"""
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.multivariate_generating_series import laurent_monomial
+        sage: R = LaurentPolynomialRing(QQ, 'x', 2)
+        sage: laurent_monomial(R, (1,2))
+        x0*x1^2
+        sage: laurent_monomial(R, vector((-1r,3r)))
+        x0^-1*x1^3
+        sage: laurent_monomial(R, (-1,3)) * laurent_monomial(R, (1,1)) == laurent_monomial(R, (0,4))
+        True
+    """
+    # only in beta 8.1 versions of Sage
+    # return R.monomial(*arg)
+
+    arg = tuple(arg)
+    if len(arg) != R.ngens():
+        raise TypeError("tuple key must have same length as ngens")
+
+    from sage.rings.polynomial.laurent_polynomial import LaurentPolynomial_mpair
+    from sage.rings.polynomial.polydict import ETuple
+
+    m = ETuple(arg, int(R.ngens()))
+    return LaurentPolynomial_mpair(R, R.polynomial_ring().one(), m)
+
 # custom latte count
 def latte_generating_series(L, M=None):
     r"""
@@ -53,7 +79,7 @@ def latte_generating_series(L, M=None):
         ....:         [0, 0, 1, 0, 0, 0, 0]]
         sage: eqns = [[0, 0, 1, -1, 1, 0, -1], [0, 0, 1, -1, 1, -1, 0]]
         sage: L = Polyhedron(ieqs=ieqs, eqns=eqns)
-        sage: latte_generating_series(L)
+        sage: latte_generating_series(L)   # optional - latte_int
         (1)/((1 - x2^-1*x4*x5)*(1 - x2*x3)*(1 - x1*x2)*(1 - x0)) + (1)/((1 - x3*x4*x5)*(1 - x2*x4^-1*x5^-1)*(1 - x1*x4*x5)*(1 - x0))
     """
     if M is None:
@@ -238,7 +264,7 @@ def monomial_projection(num, den, i, M):
             v = v.__copy__()
             v[i] = 0
             v.set_immutable()
-            s = S.monomial(*v)
+            s = laurent_monomial(S, v)
             z = M.term(1, [(1-s), 1])
             q = (z * (1 - ((1+t)**j - 1) * s * z).inverse_series_trunc(r))._power_trunc(mult, r)
             P = q._mul_trunc_(P, r)
@@ -543,7 +569,7 @@ class FactoredDenominator(object):
             if mon[j]:
                 v = mon.__copy__()
                 v[j] -= 1
-                dmon = R.monomial(*v)
+                dmon = laurent_monomial(R, v)
                 s += M.term(mult * dmon, mon)
         return s
 
