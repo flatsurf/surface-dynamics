@@ -84,11 +84,10 @@ output as below.::
     (1,2,3)(4)(5)
     - - - - - - - -
     sage: Q12_reg = QuadraticStratum(12).regular_component()
-    sage: Q12_reg.lyapunov_exponents_H_plus()   # abs tol 0.05
-    [0.6671, 0.4506, 0.2372, 0.08841]
-    sage: Q12_reg.lyapunov_exponents_H_minus()  # abs tol 0.05
-    [1.000, 0.309, 0.123]
-
+    sage: Q12_reg.lyapunov_exponents_H_plus(nb_iterations=2**20)   # abs tol 0.05
+    [0.6634, 0.4496, 0.2305, 0.0871]
+    sage: Q12_reg.lyapunov_exponents_H_minus(nb_iterations=2**20)  # abs tol 0.05
+    [1.0000, 0.3087, 0.1192]
 
 Installing development version. Source code
 -------------------------------------------
