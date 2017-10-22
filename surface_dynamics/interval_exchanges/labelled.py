@@ -1242,38 +1242,6 @@ class FlippedLabelledPermutationIET(
             alphabet=self.alphabet(),
             reduced=True)
 
-    def __hash__(self):
-        r"""
-        ALGORITHM:
-
-        Uses hash of string
-
-        TESTS::
-
-            sage: from surface_dynamics.all import *
-
-            sage: p =[]
-            sage: p.append(iet.Permutation('a b','a b',flips='a'))
-            sage: p.append(iet.Permutation('a b','a b',flips='b'))
-            sage: p.append(iet.Permutation('a b','a b',flips='ab'))
-            sage: p.append(iet.Permutation('a b','b a',flips='a'))
-            sage: p.append(iet.Permutation('a b','b a',flips='b'))
-            sage: p.append(iet.Permutation('a b','b a',flips='ab'))
-            sage: h = map(hash, p)
-            sage: for i in range(len(h)-1):
-            ...      if h[i] == h[i+1]:
-            ...          print "You choose a bad hash!"
-        """
-        if self._hash is None:
-            f = self._flips
-            i = self._labels
-            l = []
-            l.extend([str(j*(1+k)) for j,k in zip(f[0],i[0])])
-            l.extend([str(-j*(1+k)) for j,k in zip(f[1],i[1])])
-            self._hash = hash(''.join(l))
-
-        return self._hash
-
     def rauzy_diagram(self, **kargs):
         r"""
         Returns the Rauzy diagram associated to this permutation.

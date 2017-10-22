@@ -300,7 +300,6 @@ class Permutation(SageObject):
         #  _set_alphabet(alphabet)
         #  _init_alphabet(intervals)
         #  _init_flips(intervals, flips)
-        self._hash = None
 
         # setting twins
         if intervals is None:
@@ -822,13 +821,26 @@ class Permutation(SageObject):
             sage: s = iet.Permutation('a b c', 'c b a', flips=['a'], reduced=True)
             sage: len(set([hash(p), hash(q), hash(r), hash(s)]))
             4
+
+            sage: P = [iet.Permutation(t, b, flips=f, reduced=False) \
+            ....:        for t in ['a b', 'b a'] \
+            ....:        for b in ['a b', 'b a'] \
+            ....:        for f in [None, 'a', 'b', 'ab']]
+            sage: P.extend(iet.Permutation('a b', b, flips=f, reduced=True) \
+            ....:        for b in ['a b', 'b a'] \
+            ....:        for f in [None, 'a', 'b', 'ab'])
+            sage: len(set(hash(x) for x in P))
+            24
         """
-        return hash(tuple(self._twin[0])) ^ \
-               hash(tuple(self._twin[1])) ^ \
-               (hash(None if self._labels is None else tuple(self._labels[0])) | \
-               hash(None if self._labels is None else tuple(self._labels[1]))) ^ \
-               (hash(None if self._flips is None else tuple(self._flips[0])) | \
-               hash(None if self._flips is None else tuple(self._flips[1])))
+        h = hash(tuple(self._twin[0] + self._twin[1]))
+        if self._labels is not None:
+            h *= 7461864723258187525
+            h ^= hash(tuple(self._labels[0] + self._labels[1]))
+            h += hash(tuple(self.letters()))
+        if self._flips is not None:
+            h *= 5566797465546889505
+            h ^= hash(tuple(self._flips[0] + self._flips[1]))
+        return h
 
     def str(self, sep= "\n"):
         r"""
@@ -4556,6 +4568,20 @@ class FlippedPermutationIET(PermutationIET):
         TESTS::
 
             sage: from surface_dynamics.all import *
+
+            sage: p = iet.Permutation('a b c', 'c a b', flips=['b'], reduced=True)
+            sage: p.rauzy_move('t','r')
+             a -b  c
+             c -b  a
+            sage: p.rauzy_move('b','r')
+             a -b -c
+            -b  a -c
+            sage: p.rauzy_move('t','l')
+             a -b  c
+             c  a -b
+            sage: p.rauzy_move('b','l')
+            -a  b  c
+             c  b -a
 
             sage: p = iet.GeneralizedPermutation('a b c d','d a b c',flips='abcd')
             sage: p

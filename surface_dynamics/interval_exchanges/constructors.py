@@ -404,9 +404,13 @@ def Permutation(arg1, arg2=None, reduced=None, flips=None, alphabet=None):
     letters = set(l)
 
     if flips is not None:
-        for letter in flips:
-            if letter not in letters:
-                raise ValueError("flips contains not valid letters")
+        # make it so that no flip is equivalent to not specifying the flips
+        if not flips:
+            flips = None
+        else:
+            for letter in flips:
+                if letter not in letters:
+                    raise ValueError("flips contains not valid letters")
 
     for letter in letters:
         if a[0].count(letter) != 1 or a[1].count(letter) != 1:
