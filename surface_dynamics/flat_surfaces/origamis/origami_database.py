@@ -86,7 +86,7 @@ Teichmueller curves in H(2) from Hubert-Lelievre and McMullen::
     sage: A = AbelianStratum(2)
     sage: for n in xrange(3, 17):
     ....:     q = D.query(stratum=A, nb_squares=n)
-    ....:     print "%2d %d"%(n, q.number_of())
+    ....:     print("%2d %d"%(n, q.number_of()))
      3 1
      4 1
      5 2
@@ -107,7 +107,7 @@ And look at the conjecture of Delecroix-Lelievre in the stratum H(1,1)::
     sage: A = AbelianStratum(1,1)
     sage: for n in xrange(4,20):
     ....:     q = D.query(stratum=A, nb_squares=n, primitive=True)
-    ....:     print "%2d %d"%(n, q.number_of())
+    ....:     print("%2d %d"%(n, q.number_of()))
      4 1
      5 1
      6 2
@@ -166,7 +166,7 @@ AUTHOR:
 
 """
 
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 from sage.rings.integer import Integer
 from sage.rings.real_mpfr import RealField
@@ -396,7 +396,7 @@ def real_tuple_to_data(t):
 
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
         sage: t = (RR(5.0), RR(pi))
-        sage: print t
+        sage: t
         (5.00000000000000, 3.14159265358979)
         sage: s = odb.real_tuple_to_data(t)
         sage: isinstance(s,str)
@@ -1310,7 +1310,7 @@ class OrigamiDatabase(SQLDatabase):
         sage: A = AbelianStratum(2)
         sage: for n in xrange(3, 15):
         ....:     q = D.query(stratum=A, nb_squares=n)
-        ....:     print "%2d %d"%(n, q.number_of())
+        ....:     print("%2d %d"%(n, q.number_of()))
          3 1
          4 1
          5 2
@@ -1495,8 +1495,8 @@ class OrigamiDatabase(SQLDatabase):
 
         for n in xrange(m, N):
             if verbose:
-                print "nb_squares: %2d"%n
-                print "=============="
+                sys.stdout.write("nb_squares: %2d\n"%n)
+                sys.stdout.write("==============\n")
                 sys.stdout.flush()
                 T1 = time()
             for c in comp.arithmetic_teichmueller_curves(n):
@@ -1505,32 +1505,32 @@ class OrigamiDatabase(SQLDatabase):
                 k += 1
 
                 if verbose:
-                    print "new entry r=%s u=%s"%(o.r(),o.u())
-                    print " build local data...",
+                    sys.stdout.write("new entry r=%s u=%s\n"%(o.r(),o.u()))
+                    sys.stdout.write(" build local data...")
                     sys.stdout.flush()
                     t0 = time()
                 data.update(build_local_data(o))
                 if verbose:
-                    print "done in %s s"%(time()-t0)
-                    print " build lyapunov exponents...",
+                    sys.stdout.write("done in %s s\n"%(time()-t0))
+                    sys.stdout.write(" build lyapunov exponents...")
                     sys.stdout.flush()
                     t1 = time()
                 data.update(build_lyapunov_exponents(o))
                 if verbose:
-                    print "done in %s s"%(time()-t1)
-                    print " build global data...",
+                    sys.stdout.write("done in %s s\n"%(time()-t1))
+                    sys.stdout.write(" build global data...")
                     sys.stdout.flush()
                     t1 = time()
                 data.update(build_global_data(o,c))
                 if verbose:
                     t2 = time()
-                    print "done in %s s"%(t2-t1)
-                    print " total time: %s s"%(t2-t0)
+                    sys.stdout.write("done in %s s\n"%(t2-t1))
+                    sys.stdout.write(" total time: %s s\n"%(t2-t0))
 
                 q = self.query(('representative','=',data['representative']))
                 if len(q) == 1:
                     if verbose:
-                        print "... the entry is yet in the database: update it."
+                        sys.stdout.write("... the entry is yet in the database: update it.\n")
                     self.delete_rows(q.sql_query())
 
                 # check if there are missing columns
@@ -1539,9 +1539,9 @@ class OrigamiDatabase(SQLDatabase):
 
                 if verbose:
                     for x in s1.difference(s2):
-                        print "WARNING: col %s does not appear in the request"%x
+                        sys.stdout.write("WARNING: col %s does not appear in the request\n"%x)
                     for x in s2.difference(s1):
-                        print "WARNING: col %s appear in the request and should not"%x
+                        sys.stdout.write("WARNING: col %s appear in the request and should not\n"%x)
 
                 # convert data to fit the database format
                 for key in data:
@@ -1552,14 +1552,14 @@ class OrigamiDatabase(SQLDatabase):
                 self.add_row('origamis', value, columns)
 
                 if verbose:
-                    print
+                    sys.stdout.write('\n')
                     sys.stdout.flush()
 
             if verbose:
-                print "TOTAL TIME: %s\n"%(time()-T1)
+                sys.stdout.write("TOTAL TIME: %s\n"%(time()-T1))
 
         if verbose:
-            print "%d Teichmueller curves added in %ss\n"%(k,time()-T0)
+            sys.stdout.write("%d Teichmueller curves added in %ss\n"%(k,time()-T0))
 
         self.commit()
 
@@ -1596,13 +1596,13 @@ class OrigamiDatabase(SQLDatabase):
         entry_order = old_cols + new_cols
 
         if verbose:
-            print "new columns are: {}".format(new_cols)
+            print("new columns are: {}".format(new_cols))
 
         for x in q.dict():
             o = x['representative']
 
             if verbose:
-                print "update new entry:\n r={}\n u={}".format(o.r(), o.u())
+                print("update new entry:\n r={}\n u={}".format(o.r(), o.u()))
 
             if 'optimal_degree' in new_cols:
                 x['optimal_degree'] = o.optimal_degree()
@@ -1687,11 +1687,11 @@ class OrigamiDatabase(SQLDatabase):
 
         for x in q.query_results():
             if verbose:
-                print "consider new entry %s"%x[0]
+                print("consider new entry %s"%x[0])
             qq = SQLQuery(self, "SELECT * FROM origamis WHERE representative='%s'"%str(x[0]))
             if len(qq.query_results()) == 1:
                 if verbose:
-                    print "yet in database"
+                    print("yet in database")
                 if not replace:
                     continue
                 else:
@@ -1738,7 +1738,7 @@ class OrigamiDatabase(SQLDatabase):
             self.delete_rows(qq.sql_query())
 
             if verbose:
-                print "modifiy r=%s u=%s"%(o.r(),o.u())
+                print("modifiy r=%s u=%s"%(o.r(),o.u()))
 
             if local_data:
                 x.update(build_local_data(o))
@@ -1827,7 +1827,7 @@ class OrigamiDatabase(SQLDatabase):
         if genus is None:
             q = self.query(cols='genus')
             if not q.number_of():
-                print "Empty database"
+                print("Empty database")
                 return
             genera = range(2,max(q)+1)
         elif isinstance(genus,(int,Integer)):
@@ -1842,17 +1842,17 @@ class OrigamiDatabase(SQLDatabase):
         for g in genera:
             AA = AbelianStrata(genus=g,dimension=dimension)
             if AA.cardinality():
-                print "genus %d"%g
-                print "======="
+                print("genus %d"%g)
+                print("=======")
                 for A in AA:
                     for CC in A.components():
                         n = self.query(("stratum","=",A),("component","=",CC._name)).number_of()
                         if n or print_all:
-                            print s.format(CC,n,self.max_nb_squares(CC))
+                            print(s.format(CC,n,self.max_nb_squares(CC)))
                             n_total += n
-                print
-        print
-        print "Total: %d Teichmueller curves"%n_total
+                print()
+        print()
+        print("Total: %d Teichmueller curves"%n_total)
 
     def help(self, cols=None):
         r"""
@@ -1950,7 +1950,7 @@ class OrigamiDatabase(SQLDatabase):
 
             sage: D = OrigamiDatabase()
             sage: for o in D.query(stratum=AbelianStratum(1,1), nb_squares=6):
-            ....:     print o,"\n---------------"
+            ....:     print("%s\n---------------" % o)
             (1)(2)(3,4,5,6)
             (1,2,3)(4,5,6)
             ---------------
