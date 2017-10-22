@@ -82,6 +82,13 @@ They can also be built from separatrix diagram::
     sage: s.to_cylinder_diagram([(0,1),(1,0),(2,2)])
     (0,1,2)-(3,7) (3,4)-(0,4,1,2) (5,6,7)-(5,6)
 """
+#*****************************************************************************
+#       Copyright (C) 2010 Vincent Delecroix <20100.delecroix@gmail.com>
+#
+#  Distributed under the terms of the GNU General Public License (GPL)
+#                  http://www.gnu.org/licenses/
+#*****************************************************************************
+
 from __future__ import print_function
 from sage.structure.sage_object import SageObject
 
