@@ -70,17 +70,17 @@ EXAMPLES::
 Construction of a stratum from a list of singularity degrees::
 
     sage: a = QuadraticStratum(2,2)
-    sage: print a
+    sage: a
     Q_2(2^2)
-    sage: print a.genus()
+    sage: a.genus()
     2
 
 ::
 
     sage: a = QuadraticStratum(4,3,2,2,1)
-    sage: print a
+    sage: a
     Q_4(4, 3, 2^2, 1)
-    sage: print a.genus()
+    sage: a.genus()
     4
 
 By convention, the degrees are always written in decreasing order::
@@ -97,17 +97,18 @@ By convention, the degrees are always written in decreasing order::
 List the connected components of a stratum::
 
     sage: a = QuadraticStratum(6,2)
-    sage: print a.components()
+    sage: a.components()
     [Q_3(6, 2)^hyp, Q_3(6, 2)^nonhyp]
 
 ::
 
     sage: a = QuadraticStratum(12)
     sage: cc = a.components()
-    sage: print cc
+    sage: cc
     [Q_4(12)^reg, Q_4(12)^irr]
     sage: for c in cc:
-    ...       print c; print c.permutation_representative()
+    ....:     print(c)
+    ....:     print(c.permutation_representative())
     Q_4(12)^reg
     0 1 2 1 2 3 4 3 4 5
     5 6 7 6 7 0
@@ -118,7 +119,7 @@ List the connected components of a stratum::
 ::
 
     sage: a = QuadraticStratum(1, 1, 1, 1)
-    sage: print a.components()
+    sage: a.components()
     [Q_2(1^4)^hyp]
     sage: c = a.components()[0]
     sage: p = c.permutation_representative(); p
@@ -132,6 +133,8 @@ List the connected components of a stratum::
 #  Distributed under the terms of the GNU General Public License (GPL)
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************
+
+from __future__ import print_function
 
 from sage.rings.infinity import Infinity
 from sage.structure.parent import Parent
@@ -694,7 +697,7 @@ class QuadraticStratumComponent(StratumComponent):
 
             sage: Q = QuadraticStratum(6,6)
             sage: c_hyp, c_reg, c_irr = Q.components()
-            sage: print (c_hyp, c_reg, c_irr)
+            sage: (c_hyp, c_reg, c_irr)
             (Q_4(6^2)^hyp, Q_4(6^2)^reg, Q_4(6^2)^irr)
 
             sage: all(c_hyp.random_cylindric_permutation().stratum_component() == c_hyp for _ in range(4))
@@ -766,12 +769,12 @@ class QuadraticStratumComponent(StratumComponent):
         p1 = [i-1 for i in p1[:-1]]
 
         if verbose:
-            print "p0 =",p0
-            print "p1 =",p1
-            print "t0 =",t0
-            print "t1 =",t1
-            print "s0 =",s0
-            print "s1 =",s1
+            print("p0 = %s" % p0)
+            print("p1 = %s" % p1)
+            print("t0 = %s" % t0)
+            print("t1 = %s" % t1)
+            print("s0 = %s" % s0)
+            print("s1 = %s" % s1)
 
 
         if g == 0:
@@ -779,9 +782,9 @@ class QuadraticStratumComponent(StratumComponent):
             bot = [None] * len(p1)
 
             for i,j in enumerate(p1):
-                if verbose: print "i,j=",i,j,
+                if verbose: print("i,j=",i,j)
                 ii = t1[i][1]
-                if verbose: print "same side"
+                if verbose: print("same side")
                 bot[i] = j
                 top[ii] = j
                 if not fake_zeros and i in s1_p:
@@ -791,12 +794,12 @@ class QuadraticStratumComponent(StratumComponent):
                     bot[ii] = j+n
                     top[i] = j+n
                 if verbose:
-                    print "c0 =",c0_bot,c0_top
-                    print "c1 =",c1_bot,c1_top
+                    print("c0 =",c0_bot,c0_top)
+                    print("c1 =",c1_bot,c1_top)
 
             dom = dict((j,i-1) for (i,j) in enumerate(sorted(set(bot+top))))
             if verbose:
-                print dom
+                print(dom)
 
             bot = [dom[i] for i in bot if i != -1]
             top = [dom[i] for i in top if i != -1]
@@ -811,14 +814,14 @@ class QuadraticStratumComponent(StratumComponent):
             c1_top = [None] * len(p1)
 
             for i,j in enumerate(p0):
-                if verbose: print "i,j=",i,j,
+                if verbose: print("i,j=",i,j,)
                 if i in s0:
-                    if verbose: print "other side"
+                    if verbose: print("other side")
                     c0_top[i] = j
                     c1_bot[i] = j+n
                 elif c0_top[i] is None:
                     ii = t0[i][1]
-                    if verbose: print "same side"
+                    if verbose: print("same side")
                     c0_top[i] = j
                     c1_bot[ii] = j
                     if not fake_zeros and i in s0_p:
@@ -828,20 +831,20 @@ class QuadraticStratumComponent(StratumComponent):
                         c0_top[ii] = j+n
                         c1_bot[i] = j+n
                 elif verbose:
-                    print "skip"
+                    print("skip")
 
                 if verbose:
-                    print "c0 =",c0_bot,c0_top
-                    print "c1 =",c1_bot,c1_top
+                    print("c0 =",c0_bot,c0_top)
+                    print("c1 =",c1_bot,c1_top)
             for i,j in enumerate(p1):
-                if verbose: print "i,j=",i,j,
+                if verbose: print("i,j=",i,j,)
                 if i in s1:
-                    if verbose: print "other side"
+                    if verbose: print("other side")
                     c0_bot[i] = j
                     c1_top[i] = j+n
                 elif c0_bot[i] is None:
                     ii = t1[i][1]
-                    if verbose: print "same side"
+                    if verbose: print("same side")
                     c0_bot[i] = j
                     c1_top[ii] = j
                     if not fake_zeros and i in s1_p:
@@ -851,16 +854,16 @@ class QuadraticStratumComponent(StratumComponent):
                         c0_bot[ii] = j+n
                         c1_top[i] = j+n
                 elif verbose:
-                    print "skip"
+                    print("skip")
                 if verbose:
-                    print "c0 =",c0_bot,c0_top
-                    print "c1 =",c1_bot,c1_top
+                    print("c0 =",c0_bot,c0_top)
+                    print("c1 =",c1_bot,c1_top)
 
-            if verbose: print (c0_bot,c0_top),(c1_bot,c1_top)
+            if verbose: print((c0_bot,c0_top),(c1_bot,c1_top))
 
             dom = dict((j,i-1) for (i,j) in enumerate(sorted(set(c0_bot+c0_top+c1_bot+c1_top))))
             if verbose:
-                print dom
+                print(dom)
 
             c0_bot = [dom[i] for i in c0_bot if i != -1]
             c0_top = [dom[i] for i in c0_top if i != -1]
@@ -1572,7 +1575,7 @@ def QuadraticStrata(genus=None, dimension=None, min_nb_poles=None, max_nb_poles=
         Quadratic strata of genus 3 surfaces with at most 6 poles
         sage: Q.cardinality()
         463
-        sage: for q in Q: print q
+        sage: for q in Q: print(q)
         Q_3(8)
         Q_3(7, 1)
         Q_3(6, 2)
@@ -1583,7 +1586,7 @@ def QuadraticStrata(genus=None, dimension=None, min_nb_poles=None, max_nb_poles=
 
         sage: Q = QuadraticStrata(genus=2,nb_poles=0); Q
         Quadratic strata of genus 2 surfaces with no pole
-        sage: for q in Q: print q
+        sage: for q in Q: print(q)
         Q_2(2^2)
         Q_2(2, 1^2)
         Q_2(1^4)
@@ -1591,7 +1594,7 @@ def QuadraticStrata(genus=None, dimension=None, min_nb_poles=None, max_nb_poles=
 
         sage: Q = QuadraticStrata(dimension=7,min_nb_poles=1,max_nb_poles=3); Q
         Quadratic strata of dimension 7 with at least 1 and at most 3 poles
-        sage: for q in Q: print q
+        sage: for q in Q: print(q)
         Q_3(8, 1, -1)
         Q_3(7, 2, -1)
         Q_3(6, 3, -1)
@@ -1938,7 +1941,7 @@ class QuadraticStrata_d(QuadraticStrata_class):
 
         sage: from surface_dynamics.all import *
 
-        sage: for q in QuadraticStrata(dimension=5): print q
+        sage: for q in QuadraticStrata(dimension=5): print(q)
         Q_3(8)
         Q_2(2, 1^2)
         Q_2(4, 1, -1)
@@ -1950,7 +1953,7 @@ class QuadraticStrata_d(QuadraticStrata_class):
 
         sage: Q = QuadraticStrata(dimension=6,nb_poles=1); Q
         Quadratic strata of dimension 6 with 1 pole
-        sage: for q in Q: print q
+        sage: for q in Q: print(q)
         Q_3(9, -1)
         Q_2(3, 1^2, -1)
         Q_2(2^2, 1, -1)
@@ -2041,7 +2044,7 @@ class QuadraticStrata_d(QuadraticStrata_class):
 
             sage: from surface_dynamics.all import *
 
-            sage: for q in QuadraticStrata(dimension=6): print q
+            sage: for q in QuadraticStrata(dimension=6): print(q)
             Q_3(7, 1)
             Q_3(6, 2)
             Q_3(5, 3)
@@ -2177,7 +2180,7 @@ class QuadraticStrata_gd(QuadraticStrata_class):
 
             sage: from surface_dynamics.all import *
 
-            sage: for a in QuadraticStrata(genus=1, dimension=6): print a
+            sage: for a in QuadraticStrata(genus=1, dimension=6): print(a)
             Q_1(1^3, -1^3)
             Q_1(3, 1, -1^4)
             Q_1(2^2, -1^4)
