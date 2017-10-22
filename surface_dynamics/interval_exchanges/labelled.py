@@ -1854,9 +1854,9 @@ class FlippedLabelledRauzyDiagram(FlippedRauzyDiagram, LabelledRauzyDiagram):
             sage: p in r   #indirect doctest
             True
         """
-        return ((tuple(p._labels[0]),tuple(p._labels[1])),
-                (tuple(p._twin[0]), tuple(p._twin[1])),
-                (tuple(p._flips[0]), tuple(p._flips[1])))
+        return (tuple(p._labels[0]),tuple(p._labels[1]),
+                tuple(p._twin[0]), tuple(p._twin[1]),
+                tuple(p._flips[0]), tuple(p._flips[1]))
 
     def _set_element(self, data):
         r"""
@@ -1871,7 +1871,7 @@ class FlippedLabelledRauzyDiagram(FlippedRauzyDiagram, LabelledRauzyDiagram):
             sage: p in r   #indirect doctest
             True
         """
-        self._element._labels = [list(data[0][0]), list(data[0][1])]
-        self._element._twin = [list(data[1][0]), list(data[1][1])]
-        self._element._flips = [list(data[2][0]), list(data[2][1])]
+        self._element._labels = [list(data[0]), list(data[1])]
+        self._element._twin = [list(data[2]), list(data[3])]
+        self._element._flips = [list(data[4]), list(data[5])]
 

@@ -563,16 +563,19 @@ class FlippedReducedPermutationIET(
         sage: for q in p.rauzy_diagram():
         ....:     print('%s\n********' % q)
          a -b  c
-         c  b -a
-        ********
-         a -b  c
-         a  c -b
-        ********
-         a -b  c
          c  a -b
         ********
+         a -b -c
+        -b  a -c
+        ********
+        -a  b -c
+         b -a -c
+        ********
+         a  b -c
+         b -c  a
+        ********
          a -b  c
-         b  a -c
+         c -b  a
         ********
     """
     def list(self, flips=False):
