@@ -320,8 +320,8 @@ def cylinder_statistics(top, bot, uint64_t L, int kind=0):
         sage: top = [0, 1]
         sage: bot = [1, 0]
         sage: for n in range(2,20):
-        ....:     s = cylinder_number_statistics(top, bot, n)
-        ....:     print "%2d : %3d %3d %3d" %(n, s[1], s[2], s[1] + s[2])
+        ....:     s = cylinder_statistics(top, bot, n)
+        ....:     print("%2d : %3d %3d %3d" %(n, s[1], s[2], s[1] + s[2]))
          2 :   1   1   2
          3 :   4   2   6
          4 :   7   5  12
