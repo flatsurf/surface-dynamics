@@ -102,6 +102,7 @@ def even_perm_minus(n):
     r"""
     EXAMPLES::
 
+        sage: from surface_dynamics.misc.even_permutation import even_perm_minus
         sage: even_perm_minus(2)
         array('l', [-1, -2, 1, 0])
     """
@@ -113,7 +114,7 @@ def even_perm_is_orientable(p):
 
     EXAMPLES::
 
-        sage: from sage.misc.even_permutation import even_perm_is_orientable
+        sage: from surface_dynamics.misc.even_permutation import even_perm_is_orientable
         sage: even_perm_is_orientable([1,0,-1,-2])
         True
         sage: even_perm_is_orientable([0,1,-2,-1])
@@ -134,7 +135,9 @@ def even_perm_cycles(p):
         sage: from surface_dynamics.misc.even_permutation import even_perm_cycles
 
         sage: even_perm_cycles([-1,0])
+        ([(-1, 0)], [0, 0])
         sage: even_perm_cycles([-1,0,-2,1])
+        ([(-2,), (-1, 1, 0)], [1, 1, 0, 1])
     """
     ans = []
     n = len(p)//2
@@ -160,7 +163,8 @@ def even_perm_invert(p):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.misc.even_permutation import even_perm_invert, even_perm_compose
+        sage: from surface_dynamics.misc.even_permutation import (even_perm_invert,
+        ....:    even_perm_compose, even_perm_identity)
 
         sage: p = [-2,0,-1,1]
         sage: q = even_perm_invert(p)
@@ -245,7 +249,7 @@ def even_perm_is_transitive(p):
 
         sage: from itertools import permutations
         sage: for p in permutations((-2,-1,0,1)):
-        ....:     print p, even_perm_is_transitive(array('l',p))
+        ....:     print("%s %s" % (p, even_perm_is_transitive(array('l',p))))
         (-2, -1, 0, 1) True
         (-2, -1, 1, 0) True
         (-2, 0, -1, 1) True
@@ -327,7 +331,8 @@ def even_perm_relabel(p, m):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.misc.even_permutation import even_perm_relabel
+        sage: from surface_dynamics.misc.even_permutation import (even_perm_relabel,
+        ....:      even_perm_identity, even_perm_tilde)
         sage: even_perm_relabel([-1, 0, -2, 1], [1, 0, -2, -1])
         array('l', [1, -1, -2, 0])
 
@@ -371,11 +376,12 @@ def even_perm_canonical_label_from(p, i):
     EXAMPLES::
 
         sage: from array import array
-        sage: from surface_dynamics.misc.even_permutation import even_perm_canonical_label_from
+        sage: from surface_dynamics.misc.even_permutation import (even_perm_canonical_label_from,
+        ....:     is_signed_perm)
 
         sage: p = array('l', [-1, 2, 0, 1, -3, -2])
         sage: even_perm_canonical_label_from(p, 0)
-        array('l', [-1, -2, -3, 2, 1, 0])
+        array('l', [0, -2, -3, 2, 1, -1])
 
         sage: p = array('l', [1, 2, 0, -2, -1, -3])
         sage: is_signed_perm(even_perm_canonical_label_from(p, 0))
@@ -383,8 +389,7 @@ def even_perm_canonical_label_from(p, i):
 
         sage: p = array('l', [2,1,0,-1,-3,-2])
         sage: even_perm_canonical_label_from(p, 1)
-        ARCHI_WRONG
-
+        array('l', [2, 0, 1, -2, -1, -3])
     """
     assert isinstance(p, array)
 
