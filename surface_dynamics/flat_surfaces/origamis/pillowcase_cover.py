@@ -176,7 +176,7 @@ class PillowcaseCover_dense(PillowcaseCover_dense_pyx):
         EXAMPLES::
 
             sage: from surface_dynamics import *
-            sage: sage: PillowcaseCover('(1,2)(3,4)', '(1,3)', '()').stratum()
+            sage: PillowcaseCover('(1,2)(3,4)', '(1,3)', '()').stratum()
             Q_0(2, -1^6)
         """
         p = sum(self.profile(),[])
