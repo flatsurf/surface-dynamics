@@ -2293,7 +2293,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,1)(2,3,4)','(0,3)(1,4,2)'); s
             (0,1)(2,3,4)-(0,3)(1,4,2)
@@ -3558,19 +3558,31 @@ class CylinderDiagram(SeparatrixDiagram):
             (1)(2,3,4)
             (1,2,4)(3)
         """
+        from sage.rings.integer_ring import ZZ
         from surface_dynamics.flat_surfaces.origamis.origami_dense import Origami_dense_pyx
+
+        if len(lengths) != self.nseps():
+            raise ValueError("the 'lengths' vector has wrong length")
+        else:
+            lengths = [ZZ.coerce(l) for l in lengths]
+
+        if len(heights) != self.ncyls():
+            raise ValueError("the 'heights' vector has wrong length")
+        else:
+            heights = [ZZ.coerce(h) for h in heights]
 
         widths = [sum(lengths[i] for i in bot) for bot,_ in self.cylinders()]
 
         if widths != [sum(lengths[i] for i in top) for _,top in self.cylinders()]:
-            raise ValueError, "lengths are not compatible with cylinder equations"
+            raise ValueError("lengths are not compatible with cylinder equations")
 
         if twists is None:
             twists = [0] * len(widths)
-        elif len(twists) != len(widths):
-            raise ValueError, "not enough twists"
+        elif len(twists) != self.ncyls():
+            raise ValueError("the 'twists' vector has wrong length")
         else:
             twists = [(-twists[i])%widths[i] for i in xrange(len(widths))]
+
         areas = [heights[i]*widths[i] for i in xrange(self.ncyls())]
 
         # intialization of partial volumes: the set of squares in cylinder i is range(v[i],v[i+1])
@@ -3670,8 +3682,97 @@ class CylinderDiagram(SeparatrixDiagram):
 #        return TranslationSurfaceChainComplex(ring,vertices,edges,angles)
 
 
+def move_forward(i, v, g01, g23):
+    r"""
+    Helper function to build pillowcase covers
 
+    EXAMPLES::
 
+        sage: from surface_dynamics.flat_surfaces.separatrix_diagram import move_forward
+        sage: g23 = [1,2,0]
+        sage: g01 = [2,0,1]
+        sage: i,v = 0,0
+        sage: for _ in range(6):
+        ....:     i,v = move_forward(i, v, g01, g23)
+        ....:     print("%d %d" % (i,v))
+        0 1
+        1 0
+        1 1
+        2 0
+        2 1
+        0 0
+
+        sage: i,v = 0,2
+        sage: for _ in range(6):
+        ....:     i,v = move_forward(i, v, g01, g23)
+        ....:     print("%d %d" % (i,v))
+        0 3
+        2 2
+        2 3
+        1 2
+        1 3
+        0 2
+    """
+    if v == 0:
+        v = 1
+    elif v == 2:
+        v = 3
+    elif v == 1:
+        v = 0
+        i = g23[i]
+    elif v == 3:
+        v = 2
+        i = g01[i]
+    else:
+        raise ValueError
+
+    return i,v
+
+def move_backward(i, v, g01, g23):
+    r"""
+    Helper function to build pillowcase covers
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.flat_surfaces.separatrix_diagram import move_backward
+        sage: g23 = [1,2,0]
+        sage: g01 = [2,0,1]
+        sage: i,v = 0,0
+        sage: for _ in range(6):
+        ....:     i,v = move_backward(i, v, g01, g23)
+        ....:     print("%d %d" % (i,v))
+        2 1
+        2 0
+        1 1
+        1 0
+        0 1
+        0 0
+
+        sage: i,v = 0,2
+        sage: for _ in range(6):
+        ....:     i,v = move_backward(i, v, g01, g23)
+        ....:     print("%d %d" % (i,v))
+        1 3
+        1 2
+        2 3
+        2 2
+        0 3
+        0 2
+    """
+    if v == 0:
+        v = 1
+        i = g01[i]
+    elif v == 1:
+        v = 0
+    elif v == 2:
+        v = 3
+        i = g23[i]
+    elif v == 3:
+        v = 2
+    else:
+        raise ValueError
+
+    return i,v
 
 class QuadraticCylinderDiagram(SageObject):
     r"""
@@ -3679,39 +3780,102 @@ class QuadraticCylinderDiagram(SageObject):
 
     Cylinder diagrams are encoded as a Ribbon graph together with a pairing of
     faces (in particular the number of faces must be even).
+
+    EXAMPLES::
+
+        sage: from surface_dynamics import *
+
+    If you start with strings, the cylinders are preserved but the names of
+    saddle connections are changed::
+
+        sage: QuadraticCylinderDiagram('(4,4,5)-(6,6,1) (2,3,2,0)-(1,0,5,3)')
+        (0,0,1)-(2,2,3) (4,5,4,6)-(3,6,1,5)
     """
-    def __init__(self, *args, **kwds):
+    def __init__(self, arg1, arg2=None):
         r"""
-        INPUT:
+        INPUT: there are two input formats
+
+        - with a unique argument
+
+        - with two arguments
 
         - ``g`` -- a ribbon graph
 
         - ``pairing`` -- the pairing of faces of g (= permutation)
         """
-        if args and kwds:
-            raise ValueError
-
         from homology import RibbonGraph
-        if args:
-            if not len(args) == 2:
-                raise ValueError
-            g = args[0]
+
+        if arg2 is None:
+            if isinstance(arg1, str):
+                data = [(string_to_cycle(b),string_to_cycle(t)) for b,t in (w.split('-') for w in arg1.split(' '))]
+            else:
+                data = arg1
+            N = 0
+            for i,pair in enumerate(data):
+                if not isinstance(pair, (tuple, list)) or len(pair) != 2:
+                    raise TypeError('input must be a list of pairs')
+                data[i] = [[int(x) for x in pair[0]], [int(x) for x in pair[1]]]
+                N += len(pair[0]) + len(pair[1])
+
+            if N%2:
+                raise ValueError('each symbol must appear exactly twice')
+            n = N//2
+            for b,t in data:
+                if any(i < 0 or i >= n for i in b) or \
+                   any(i < 0 or i >= n for i in t):
+                        raise ValueError('symbol out of range')
+
+            k = 0
+            faces = []
+            edges = [None] * N
+            seen = [None] * n
+            p = []
+            for i ,bt in enumerate(data):
+                # constructing p
+                p.append(2*i+1)
+                p.append(2*i)
+
+                # constructing edges and faces
+                for f in bt:
+                    faces.append(tuple(range(k, k+len(f))))
+
+                    for j in range(len(f)):
+                        e = f[j]
+                        if seen[e] is not None:
+                            if seen[e] == -1:
+                                raise ValueError('number %d appears more than twice' % e)
+                            kk = seen[e]
+                            edges[kk] = k + j
+                            edges[k + j] = kk
+                            seen[e] = -1
+                        else:
+                            seen[e] = k + j
+
+                    k += len(f)
+
+            g = RibbonGraph(edges=edges, faces=faces, connected=False)
+
+        else:
+            g = arg1
+            p = arg2
             if not isinstance(g, RibbonGraph):
                 raise ValueError
-            p = args[1]
-        else:
-            g = RibbonGraph(vertices = kwds.pop('vertices', None),
-                            edges = kwds.pop('edges', None),
-                            faces = kwds.pop('faces', None))
-            p = kwds.pop('pairing', None)
-            if kwds:
-                raise ValueError('unknown arguments {}'.format(kwds.keys()))
 
-        from surface_dynamics.misc.permutation import init_perm
+            from surface_dynamics.misc.permutation import init_perm
+            p = init_perm(p)
+
         self._g = g
-        self._p = init_perm(p)
+        self._p = p
 
         self._check()
+
+        k = 0
+        fc = self._face_to_cylinder_index = [None] * self._g.num_faces()
+        for i in range(len(self._p)):
+            if fc[i] is None:
+                fc[i] = k
+                fc[self._p[i]] = k
+                k += 1
 
     def _check(self):
         self._g._check()
@@ -3740,10 +3904,6 @@ class QuadraticCylinderDiagram(SageObject):
         if not G.is_connected():
             raise ValueError("the graph is not connected")
 
-    def stratum(self):
-        from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
-        return QuadraticStratum([len(t)-2 for t in self._g._vertex_cycles])
-
     def num_darts(self):
         return self._g.num_darts()
 
@@ -3759,6 +3919,29 @@ class QuadraticCylinderDiagram(SageObject):
         return len(self._p) // 2
 
     ncyls = num_cylinders
+
+    def stratum(self):
+        r"""
+        Return the stratum of quadratic differentials associated to this cylinder diagram
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import *
+
+            sage: QuadraticCylinderDiagram('(0,0)-(1,1)').stratum()
+            Q_0(-1^4)
+
+            sage: QuadraticCylinderDiagram('(0,0)-(1,1,2,2,3,3)').stratum()
+            Q_0(1, -1^5)
+
+            sage: QuadraticCylinderDiagram('(0,2,3,2)-(1,0,1,3)').stratum()
+            Q_2(2^2)
+
+            sage: QuadraticCylinderDiagram('(0,1)-(2,3) (0)-(4,4) (1)-(5,5) (2)-(6,6) (3)-(7,7)').stratum()
+            Q_0(2^2, -1^8)
+        """
+        from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
+        return QuadraticStratum([len(t)-2 for t in self._g._vertex_cycles])
 
     def cylinders(self, dart=False):
         r"""
@@ -3895,86 +4078,702 @@ class QuadraticCylinderDiagram(SageObject):
         import re
         re_var = re.compile('w(\d+)')
 
+        # sometimes we have to replace x_i by w_i, sometimes with w_i^2 sometimes w_i w_j
         C = self.lengths_cone()
         F = C.ambient_space()
         HC = Polyhedron(vertices=F.basis()).intersection(C)
-        sub = [None] * self.num_darts()
-        for i,(top,bot) in enumerate(self.cylinders(dart=True)):
+        sub1 = [[] for i in range(self.nseps())]
+        sub2 = [[] for i in range(self.nseps())]
+        for i,(top,bot) in enumerate(self.cylinders()):
             for j in top:
-                sub[j] = i
+                sub1[j].append(i)
+            for j in bot:
+                sub2[j].append(i)
 
         M = MultivariateGeneratingSeriesRing(self.ncyls(), 'w')
         ans = M.zero()
+        # note: this is wrong when we consider the whole series!
         for t in HC.triangulate():
             CC = Polyhedron(rays=[HC.Vrepresentation(i).vector() for i in t])
             a = count(CC.cdd_Hrepresentation(), cdd=True,
                     multivariate_generating_function=True, raw_output=True)
-            print(a)
             a1 = a.strip()
-            for i,j in enumerate(sub):
-                a1 = a1.replace('x[%d]'%i, 'w%d'%j)
-            print(a1)
+            for i,j in enumerate(sub1):
+                a1 = a1.replace('x[%d]'%i, '1' if not j else '*'.join('w%d'%jj for jj in j))
+            a2 = a.strip()
+            for i,j in enumerate(sub2):
+                a2 = a2.replace('x[%d]'%i, '1' if not j else '*'.join('w%d'%jj for jj in j))
+
+            a1 = a1.replace('1*', '').replace('*1', '')
+            a2 = a2.replace('1*', '').replace('*1', '')
 
             a1 = re_var.sub(r'x[\1]', a1)
-            print(a1)
+            a2 = re_var.sub(r'x[\1]', a2)
             f1 = parse_latte_generating_series(M, a1)
+            f2 = parse_latte_generating_series(M, a2)
+
+            assert f1 == f2
 
             ans += f1
 
-
         return ans
 
-    def cylcoord_to_origami(self, lengths, heights, twists=None):
+    def _lengths_to_dart_x_coords(self, lengths):
         r"""
-        Convert coordinates of the cylinders into an origami.
+        EXAMPLES::
+
+            sage: from surface_dynamics.flat_surfaces.separatrix_diagram import QuadraticCylinderDiagram
+            sage: from surface_dynamics import *
+            sage: r = RibbonGraph(vertices='(0,3,1,2)(4,7,5,6)',
+            ....:                 edges='(0,1)(2,3)(4,5)(6,7)',
+            ....:                 faces='(0,3,1,2)(4,7,5,6)', connected=False)
+            sage: q = QuadraticCylinderDiagram(r, [1,0])
+            sage: q._lengths_to_dart_x_coords(lengths=[2,2,2,2])
+            [0, 4, 6, 2, 0, 4, 6, 2]
+            sage: q._lengths_to_dart_x_coords(lengths=[1,2,3,4])
+            [0, 3, 4, 1, 0, 7, 10, 3]
+        """
+        G = self._g
+        dart_x_coords = [None] * G.num_darts()
+        for f in G.faces():
+            dart_x_coords[f[0]] = 0
+            w = lengths[G._dart_to_edge_index[f[0]]]
+            for i in range(1, len(f)):
+                dart_x_coords[f[i]] = w
+                w += lengths[G._dart_to_edge_index[f[i]]]
+        return dart_x_coords
+
+    def _cylcoord_dart_to_corner(self, dart_x_coords, heights, twists, verbose=False):
+        r"""
+        TESTS::
+
+            sage: from surface_dynamics.flat_surfaces.separatrix_diagram import QuadraticCylinderDiagram
+            sage: from surface_dynamics import *
+
+        The pillow::
+
+            sage: q = QuadraticCylinderDiagram('(0,0)-(1,1)')
+            sage: x = q._lengths_to_dart_x_coords([1, 1])
+            sage: q._cylcoord_dart_to_corner(x, [1], [0])
+            [0, 1, 3, 2]
+            sage: q._cylcoord_dart_to_corner(x, [1], [1])
+            [0, 1, 2, 3]
+            sage: x = q._lengths_to_dart_x_coords([2, 2])
+            sage: q._cylcoord_dart_to_corner(x, [1], [0])
+            [0, 0, 3, 3]
+            sage: q._cylcoord_dart_to_corner(x, [1], [1])
+            [0, 0, 2, 2]
+
+        An example in `Q(2^2)` (everything is authorized)::
+
+            sage: q = QuadraticCylinderDiagram('(0,1,0,1)-(2,3,2,3)')
+            sage: x = q._lengths_to_dart_x_coords([2,2,2,2])
+            sage: q._cylcoord_dart_to_corner(x, [1], [0])
+            [0, 0, 0, 0, 3, 3, 3, 3]
+            sage: q._cylcoord_dart_to_corner(x, [1], [1])
+            [0, 0, 0, 0, 2, 2, 2, 2]
+            sage: q._cylcoord_dart_to_corner(x, [2], [0])
+            [0, 0, 0, 0, 0, 0, 0, 0]
+            sage: q._cylcoord_dart_to_corner(x, [2], [1])
+            [0, 0, 0, 0, 1, 1, 1, 1]
+
+        Another example in `Q(2^2)`::
+
+            sage: q = QuadraticCylinderDiagram('(0,2,0,3)-(1,2,1,3)')
+            sage: x = q._lengths_to_dart_x_coords([1,2,2,1])
+            sage: q._cylcoord_dart_to_corner(x, [2], [0])
+            [0, 1, 1, 0, 0, 1, 1, 0]
+
+        An example in `Q(3, -1^3)`::
+
+            sage: q = QuadraticCylinderDiagram('(0,1,1)-(0,2,2,3,3)')
+            sage: x = q._lengths_to_dart_x_coords([2, 1, 1, 1])
+            sage: q._cylcoord_dart_to_corner(x, [2], [0])
+            [0, 0, 1, 0, 0, 1, 0, 1]
+            sage: q._cylcoord_dart_to_corner(x, [1], [0])
+            Traceback (most recent call last):
+            ...
+            ValueError: invalid lengths/heights/twists
+            sage: q._cylcoord_dart_to_corner(x, [1], [1])
+            Traceback (most recent call last):
+            ...
+            ValueError: invalid lengths/heights/twists
+
+        An example in `Q(4, 2, -1^2)`::
+
+            sage: q = QuadraticCylinderDiagram('(0,1,0,2)-(1,3,4,3) (2,4)-(5,5)')
+            sage: x = q._lengths_to_dart_x_coords([1, 2, 2, 1, 2, 2])
+            sage: q._cylcoord_dart_to_corner(x, [2, 1], [1, 0])
+            [0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 3, 3]
+            sage: q._cylcoord_dart_to_corner(x, [2, 1], [1, 1])
+            [0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 2, 2]
+            sage: q._cylcoord_dart_to_corner(x, [2, 1], [0, 0])
+            Traceback (most recent call last):
+            ...
+            ValueError: invalid lengths/heights/twists
+        """
+        G = self._g
+        # pillowcase vertices
+        dart_to_corner = [None] * G.num_darts()  # which vertex of the pillowcase the attached
+        dart_to_corner[0] = 0
+        todo = set([0])  # dart from which we should complete vertices and faces
+        cross = set([0]) # dart from which we should cross cylinders
+        while todo or cross:
+
+            # 1. completing vertices and faces
+            while todo:
+                i = todo.pop()
+                if verbose:
+                    print('** new loop **')
+                    print('  i = {}'.format(i))
+                    print('  dart_to_corner = {}'.format(dart_to_corner))
+
+                v = dart_to_corner[i]
+                assert v is not None
+
+                for j in G.vertex_orbit(i):
+                    if dart_to_corner[j] is None:
+                        dart_to_corner[j] = v
+                        todo.add(j)
+                    elif dart_to_corner[j] != dart_to_corner[i]:
+                        if verbose:
+                            print('i = {} j = {} dart_to_corner[{}] = {} dart_to_corner[{}] = {}'.format(
+                                i, j, i, dart_to_corner[i], j, dart_to_corner[j]))
+                        raise ValueError('invalid lengths/heights/twists')
+                if verbose:
+                    print('done completing vertex')
+                    print('  dart_to_corner = {}'.format(dart_to_corner))
+
+                f = G.face_orbit(i)
+                m = dart_x_coords[i] % 2
+                for j in f:
+                    if dart_x_coords[j] % 2 == m:
+                        if dart_to_corner[j] is None:
+                            dart_to_corner[j] = v
+                            todo.add(j)
+                        elif dart_to_corner[j] != dart_to_corner[i]:
+                            if verbose:
+                                print('i = {} j = {} dart_to_corner[{}] = {} dart_to_corner[{}] = {}'.format(
+                                i, j, i, dart_to_corner[i], j, dart_to_corner[j]))
+                            raise ValueError('invalid lengths/heights/twists')
+                    else:
+                        # 0 <-> 1 and 2 <-> 3
+                        vv = v + 1 - 2 * (v % 2)
+                        if dart_to_corner[j] is None:
+                            dart_to_corner[j] = vv
+                            todo.add(j)
+                        elif dart_to_corner[j] != vv:
+                            if verbose:
+                                print('j = {} dart_to_corner[{}] = {}'.format(j, dart_to_corner[j]))
+                            raise ValueError('invalid lengths/heights/twists')
+
+                cross.add(min(f))
+
+                if verbose:
+                    print('done completing face')
+                    print('  dart_to_corner = {}'.format(dart_to_corner))
+
+            # 2. crossing cylinders
+            while cross:
+                # i: dart index
+                # j: face index
+                i = cross.pop()
+                v = dart_to_corner[i]
+                j = G._dart_to_face_index[i]
+                k = self._face_to_cylinder_index[j]
+                jj = self._p[j]
+                ii = G._face_cycles[jj][0]
+
+                vv = v
+                if heights[k] % 2:
+                    # 0 <-> 3 and 1 <-> 2
+                    vv = 3 - vv
+                if twists[k] % 2:
+                    # 0 <-> 1 and 2 <-> 3
+                    vv = vv + 1 - 2 * (vv % 2)
+
+                if verbose:
+                    print('crossing cylinder from i={} to ii={}'.format(i, ii))
+                    print('  dart {} is above pillow vertex {}'.format(i, v))
+                    print('  dart {} is above pillow vertex {}'.format(ii, vv))
+
+                if dart_to_corner[ii] is None:
+                    dart_to_corner[ii] = vv
+                    todo.add(ii)
+                elif dart_to_corner[ii] != vv:
+                    if verbose:
+                        print('ii = {} dart_to_corner[{}] = {}'.format(ii, ii, dart_to_corner[ii]))
+                    raise ValueError('invalid lengths/heights/twists')
+
+                if verbose:
+                    print('done crossing cylinder {} from dart {}'.format(j, i))
+                    print('  dart_to_corner = {}'.format(dart_to_corner))
+
+        if verbose:
+            print('dart_to_corner: {}'.format(dart_to_corner))
+
+        return dart_to_corner
+
+    # figure out whether this awfull method is really useful...
+    # square tiled quadratic surface would be much more simple to handle
+    def cylcoord_to_pillowcase_cover(self, lengths, heights, twists=None, verbose=False):
+        r"""
+        Convert coordinates of the cylinders into a pillowcase cover.
+
+        The pillow is considered as made of two 1 x 1 squares in order to avoid denominators
+        in the input ``lengths``, ``heights`` and ``twists``.
 
         INPUT:
 
-        - ``lengths`` - lengths of the separatrices (recall that each
-          separatrix corresponds to a pair (n, -n-1). These lengths
-          can be half integers.
+        - ``lengths`` - positive integers - lengths of the separatrices
 
-        - ``heights`` - heights of the cylinders
+        - ``heights`` - positive integers - heights of the cylinders
 
-        - ``twists`` - twists for cylinders. The twist is measured as the
-          difference in horizontal coordinates between the smallest element
-          in bottom and the smallest in element in top
+        - ``twists`` - (optional) non-negative integers - twists. The twist
+          is measured as the difference in horizontal coordinates between
+          the smallest element in bottom and the smallest in element in top.
 
         OUTPUT: a pillowcase cover
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
-            sage: from surface_dynamics.flat_surfaces.separatrix_diagram import QuadraticCylinderDiagram
-        """
-        from surface_dynamics.flat_surfaces.origamis.origami_dense import Origami_dense_pyx
+            sage: from surface_dynamics import *
 
-        lengths = [QQ.coerce(l) for l in lengths]
-        QQ_zero = QQ.zero()
-        QQ_two = QQ.one() + QQ.one()
+        Some pillows in `Q(-1^4)`::
+
+            sage: q = QuadraticCylinderDiagram('(0,0)-(1,1)')
+            sage: q.cylcoord_to_pillowcase_cover([1,1],[1],[0])
+            g0 = (1)
+            g1 = (1)
+            g2 = (1)
+            g3 = (1)
+            sage: q.cylcoord_to_pillowcase_cover([1,1],[1],[1])
+            g0 = (1)
+            g1 = (1)
+            g2 = (1)
+            g3 = (1)
+            sage: q.cylcoord_to_pillowcase_cover([2,2],[1],[0])
+            g0 = (1)(2)
+            g1 = (1,2)
+            g2 = (1,2)
+            g3 = (1)(2)
+            sage: q.cylcoord_to_pillowcase_cover([2,2],[1],[1])
+            g0 = (1)(2)
+            g1 = (1,2)
+            g2 = (1)(2)
+            g3 = (1,2)
+            sage: q.cylcoord_to_pillowcase_cover([2,2],[1],[2]) == q.cylcoord_to_pillowcase_cover([2,2],[1],[2])
+            True
+            sage: q.cylcoord_to_pillowcase_cover([3,3],[1],[0])
+            g0 = (1)(2,3)
+            g1 = (1,3)(2)
+            g2 = (1,3)(2)
+            g3 = (1)(2,3)
+            sage: q.cylcoord_to_pillowcase_cover([3,3],[1],[1])
+            g0 = (1)(2,3)
+            g1 = (1,3)(2)
+            g2 = (1)(2,3)
+            g3 = (1,2)(3)
+
+            sage: q.cylcoord_to_pillowcase_cover([1,1],[2],[0])
+            g0 = (1)(2)
+            g1 = (1)(2)
+            g2 = (1,2)
+            g3 = (1,2)
+            sage: q.cylcoord_to_pillowcase_cover([1,1],[2],[1]) == q.cylcoord_to_pillowcase_cover([1,1],[2],[0])
+            True
+
+            sage: q.cylcoord_to_pillowcase_cover([2,2],[2],[1])
+            g0 = (1)(2)(3,4)
+            g1 = (1,2)(3)(4)
+            g2 = (1,3)(2,4)
+            g3 = (1,4)(2,3)
+
+        Two one cylinder examples in `Q(2^2)`::
+
+            sage: q1 = QuadraticCylinderDiagram('(0,1,0,1)-(2,3,2,3)')
+            sage: q2 = QuadraticCylinderDiagram('(0,1,0,2)-(3,1,3,2)')
+
+            sage: q1.cylcoord_to_pillowcase_cover([2,2,2,2],[1],[0])
+            g0 = (1,2,3,4)
+            g1 = (1,3)(2,4)
+            g2 = (1,3)(2,4)
+            g3 = (1,4,3,2)
+            sage: q1.cylcoord_to_pillowcase_cover([2,2,2,2],[1],[1])
+            g0 = (1,2,3,4)
+            g1 = (1,3)(2,4)
+            g2 = (1,4,3,2)
+            g3 = (1,3)(2,4)
+            sage: p = q1.cylcoord_to_pillowcase_cover([2,6,4,4],[3],[1])
+            sage: p.stratum()
+            Q_2(2^2)
+            sage: p.nb_pillows()
+            24
+
+        One two cylinders example in `Q(2^2)`::
+
+            sage: q = QuadraticCylinderDiagram('(0,1)-(2,3) (0,3)-(1,2)')
+            sage: p = q.cylcoord_to_pillowcase_cover([1,1,1,1], [2,2], [0,1])
+            sage: p
+            g0 = (1,4,2,3)
+            g1 = (1,3,2,4)
+            g2 = (1,2)(3,4)
+            g3 = (1,2)(3,4)
+            sage: p.stratum()
+            Q_2(2^2)
+            sage: q.cylcoord_to_pillowcase_cover([1,3,1,3], [2,2], [0,1]).stratum()
+            Q_2(2^2)
+
+        TESTS::
+
+            sage: from surface_dynamics import *
+            sage: q = QuadraticCylinderDiagram('(0,0)-(1,1)')
+            sage: q.cylcoord_to_pillowcase_cover([1,2],[1])
+            Traceback (most recent call last):
+            ...
+            ValueError: sum of lengths on top and bottom differ
+        """
+        from sage.rings.integer_ring import ZZ
+
+        G = self._g
+
+        if len(lengths) != G.num_edges():
+            raise ValueError("'lengths' has wrong length")
+        if len(heights) != self.num_cylinders():
+            raise ValueError("'heights' has wrong length")
+
+        lengths = [ZZ.coerce(l) for l in lengths]
+        heights = [ZZ.coerce(h) for h in heights]
+        ZZ_zero = ZZ.zero()
         for l in lengths:
-            if l <= QQ_zero:
-                raise ValueError("lengths should be positive")
-            if l.denominator() >= 2:
-                raise ValueError("lengths should be half integers")
+            if l <= ZZ_zero:
+                raise ValueError("each length should be positive")
+        for h in heights:
+            if h <= ZZ_zero:
+                raise ValueError("each height should be positive")
 
         widths = []
         for bot, top in self.cylinders(dart=False):
             w1 = sum(lengths[i] for i in bot)
             w2 = sum(lengths[i] for i in top)
-            assert w1 == w2
+            if w1 != w2:
+                raise ValueError('sum of lengths on top and bottom differ')
             widths.append(w1)
 
         areas = [heights[i] * widths[i] for i in xrange(self.ncyls())]
-        N = 2 * sum(areas)  # number of pillows
+        N = sum(areas)  # number of squares
+        if N % 2:
+            raise ValueError('got an odd area')
+        N = N // 2
+        if verbose:
+            print('area = {}'.format(N))
 
         if twists is None:
-            twists = [0] * len(widths)
+            twists = [ZZ_zero] * self.num_cylinders()
         elif len(twists) != len(widths):
-            raise ValueError("not enough twists")
+            raise ValueError("the 'twists' vector has wrong length")
         else:
-            twists = [(-twists[i])%widths[i] for i in xrange(len(widths))]
+            twists = [ZZ.coerce(t) % w for (t,w) in zip(twists, widths)]
 
-        # from here, everything has to be done
-        # each cylinder comes with its top and bottom (in our pairing we pick the minimum
-        # to be the bottom and the maximum to be the top)
+        # now glue the boundaries
+        # (distance with respect to the minimum dart in the face)
+        x = self._lengths_to_dart_x_coords(lengths)
+        dart_to_corner = self._cylcoord_dart_to_corner(x, heights, twists, verbose)
+
+        # building dart_to_pillow
+        if verbose:
+            print('Constructing dart_to_pillow')
+        dart_to_pillow = [None] * G.num_darts()
+        n = 0
+        for w,h,t,(bot,top) in zip(widths, heights, twists, self.cylinders(True)):
+            w = w // 2
+
+            if verbose:
+                print('new cylinder ({},{}) w={} h={} t={}'.format(bot,top,w,h,t))
+                print('pillows in [n, n + h*w[ = [{}, {}['.format(n, n+h*w))
+            # pillows in the bottom
+            dart_to_pillow[bot[0]] = n
+            nn = n
+            for i in range(len(bot) - 1):
+                j = bot[i]
+                l = lengths[G._dart_to_edge_index[j]]
+                if l % 2:
+                    # changing vertex nature (0 <-> 1, 2 <-> 3)
+                    v = dart_to_corner[j]
+                    if verbose:
+                        print('  odd length {} for dart {} at ({},{})'.format(l,j,nn,v))
+                    if v == 0 or v == 2:
+                        nn += (l - 1) // 2
+                    else:
+                        nn += (l + 1) // 2
+                else:
+                    # keeping vertex nature
+                    if verbose:
+                        print('  even length {} for dart {}'.format(l,j))
+                    nn += l // 2
+
+                if nn >= n + w:
+                    nn -= w
+                if verbose:
+                    print('  n={} w={} nn = {}'.format(n,w,nn))
+                assert n <= nn < n + w
+                dart_to_pillow[bot[i+1]] = nn
+
+            if verbose:
+                print('  dart to pillow done on bot')
+                print('  dart_to_pillow {}'.format(dart_to_pillow))
+
+            # pillow of top[0] (depends on twist)
+            if t % 2 == 0:
+                tadj = t // 2
+            else:
+                v = dart_to_corner[bot[0]]
+                if v % 2:
+                    tadj = (t+1) // 2
+                else:
+                    tadj = (t-1) // 2
+
+            nn = dart_to_pillow[bot[0]] + (h-1)*w + tadj
+            if nn >= n + h * w:
+                nn -= w
+            assert n + (h-1)*w <= nn < n + h * w
+            dart_to_pillow[top[0]] = nn
+
+            if verbose:
+                print('  crossing cylinder: dart {} at ({},{})'.format(
+                         top[0], dart_to_pillow[top[0]], dart_to_corner[top[0]]))
+
+            # other pillows on top
+            for i in range(len(top) - 1):
+                j = top[i]
+                l = lengths[G._dart_to_edge_index[j]]
+                if l % 2:
+                    # changing vertex nature (0 <-> 1, 2 <-> 3)
+                    v = dart_to_corner[j]
+                    if verbose:
+                        print('  odd length {} for dart {} at ({},{})'.format(l,j,nn,v))
+                    if v == 0 or v == 2:
+                        nn -= (l - 1) // 2
+                    else:
+                        nn -= (l + 1) // 2
+                    if verbose:
+                        print('  ends at {}'.format(nn))
+                else:
+                    # keeping vertex nature
+                    if verbose:
+                        print('  even length {} for dart {}'.format(l,j))
+                    nn -= l // 2
+
+                if nn < n + (h-1)*w:
+                    nn += w
+
+                assert n <= nn < n + h * w
+                dart_to_pillow[top[i+1]] = nn
+
+            n += h * w
+
+        if verbose:
+            print('  dart to pillow done on top')
+            print('  dart_to_pillow: {}'.format(dart_to_pillow))
+        # safety check
+        assert all(i is None or 0 <= i < N for i in dart_to_pillow)
+
+        # fill the cylinders and record the number at a dart
+        # (g01 and g23 correspond to horizontal displacements)
+        g0 = [None] * N
+        g1 = [None] * N
+        g2 = [None] * N
+        g3 = [None] * N
+        g = [g0, g1, g2, g3]
+        g01 = [None] * N    # redundant information (will be used to glue edges)
+        g23 = [None] * N    # redundant information (will be used to glue edges)
+        n = 0
+        if verbose:
+            print('Filling permutations inside cylinders')
+        for w,h,t,(bot,top) in zip(widths, heights, twists, self.cylinders(True)):
+            w = w // 2
+            if verbose:
+                print('** new cylinder **')
+                print(' w = {} h = {} t = {} n = {}'.format(w,h,t,n))
+
+            u = dart_to_corner[bot[0]]
+            if u < 2:
+                h0 = g0
+                h1 = g1
+                h2 = g2
+                h3 = g3
+                h01 = g01
+                h23 = g23
+            else:
+                h0 = g2
+                h1 = g3
+                h2 = g0
+                h3 = g1
+                h01 = g23
+                h23 = g01
+
+
+            # filling all rows but the top one
+            for k in range(h - 1):
+                if verbose:
+                    print('  filling row k={} from n={}'.format(k, n))
+                for i in range(n, n + w):
+                    h2[i] = i + w; h2[i + w] = i
+                    h3[i] = i + w - 1; h3[i + w - 1] = i
+                    h23[i] = i + 1
+                    h01[i + 1] = i
+
+                # adjustments at the gluings (left and right of the cylinders)
+                h3[n] = n + 2*w - 1
+                h3[n + 2*w - 1] = n
+                h23[n + w - 1] = n
+                h01[n] = n + w - 1
+
+                # 3 2  -> 1 0
+                # 0 1     2 3
+                h0, h1, h2, h3 = h2, h3, h0, h1
+                h01, h23 = h23, h01
+                n += w
+                if verbose:
+                    print('  done')
+                    print('    g0 = {}'.format(g0))
+                    print('    g1 = {}'.format(g1))
+                    print('    g2 = {}'.format(g2))
+                    print('    g3 = {}'.format(g3))
+                    print('    g01 = {}'.format(g01))
+                    print('    g23 = {}'.format(g23))
+
+            # top row
+            if verbose:
+                print('  filling top row from n={}'.format(n))
+            for i in range(n, n + w - 1):
+                h23[i] = i + 1
+                h01[i + 1] = i
+            h23[n + w - 1] = n
+            h01[n] = n + w - 1
+            n += w
+            if verbose:
+                print('  done')
+                print('    g0 = {}'.format(g0))
+                print('    g1 = {}'.format(g1))
+                print('    g2 = {}'.format(g2))
+                print('    g3 = {}'.format(g3))
+                print('    g01 = {}'.format(g01))
+                print('    g23 = {}'.format(g23))
+
+        if verbose:
+            print('done filling cylinders:')
+            print('  g0 : {}'.format(g0))
+            print('  g1 : {}'.format(g1))
+            print('  g2 : {}'.format(g2))
+            print('  g3 : {}'.format(g3))
+            print('  g01: {}'.format(g01))
+            print('  g23: {}'.format(g23))
+
+        # safety check
+        assert all(i is None or 0 <= i < N for i in g0)
+        assert all(i is None or 0 <= i < N for i in g1)
+        assert all(i is None or 0 <= i < N for i in g2)
+        assert all(i is None or 0 <= i < N for i in g3)
+        assert all(i is not None and 0 <= i < N for i in g01)
+        assert all(i is not None and 0 <= i < N for i in g23)
+        assert all(g0.count(i) < 2 for i in range(N))
+        assert all(g1.count(i) < 2 for i in range(N))
+        assert all(g2.count(i) < 2 for i in range(N))
+        assert all(g3.count(i) < 2 for i in range(N))
+
+        # gluing corners
+        for c in G._vertex_cycles:
+            i = dart_to_pillow[c[0]]
+            u = dart_to_corner[c[0]]
+            if verbose:
+                print('gluing vertex c = {}'.format(c))
+                print('  c[0] = {} at ({},{})'.format(c[0], i, u))
+
+            for k in range(len(c)-1):
+                j = dart_to_pillow[c[k+1]]
+                v = dart_to_corner[c[k+1]]
+                if verbose:
+                    print('  c[{}] = {} at ({},{})'.format(k+1, c[k+1], j, v))
+                assert u == v
+                # safety check
+                g[u][i] = j
+                i = j
+            j = dart_to_pillow[c[0]]
+            v = dart_to_corner[c[0]]
+            g[u][i] = j
+
+        if verbose:
+            print('done gluing corners')
+            print('  g0: {}'.format(g0))
+            print('  g1: {}'.format(g1))
+            print('  g2: {}'.format(g2))
+            print('  g3: {}'.format(g3))
+
+        # safety check
+        assert all(i is None or 0 <= i < N for i in g0)
+        assert all(i is None or 0 <= i < N for i in g1)
+        assert all(i is None or 0 <= i < N for i in g2)
+        assert all(i is None or 0 <= i < N for i in g3)
+        assert all(i is not None and 0 <= i < N for i in g01)
+        assert all(i is not None and 0 <= i < N for i in g23)
+        assert all(g0.count(i) < 2 for i in range(N))
+        assert all(g1.count(i) < 2 for i in range(N))
+        assert all(g2.count(i) < 2 for i in range(N))
+        assert all(g3.count(i) < 2 for i in range(N))
+
+        # gluing edges
+        for s1, s2 in G._edge_cycles:
+            t1 = G._faces[s1] # endpoint of first edge
+            t2 = G._faces[s2] # endpoint of second edge
+            i1 = dart_to_pillow[s1]
+            u1 = dart_to_corner[s1]
+            j1 = dart_to_pillow[t1]
+            v1 = dart_to_corner[t1]
+            i2 = dart_to_pillow[s2]
+            u2 = dart_to_corner[s2]
+            j2 = dart_to_pillow[t2]
+            v2 = dart_to_corner[t2]
+            if verbose:
+                print('gluing edge {} ({},{}) - {} ({},{}) to {} ({},{}) - {} ({},{})'.format(
+                         s1,i1,u1,
+                         t1,j1,v1,
+                         s2,i2,u2,
+                         t2,j2,v2))
+
+            # safety check
+            assert u1 == v2 and u2 == v1
+
+            # gluing the central part
+            j2, v2 = move_backward(j2, v2, g01, g23)
+            if verbose:
+                print('MOVE BACKWARD ({},{})'.format(j2, v2))
+            i1, u1 = move_forward(i1, u1, g01, g23)
+            if verbose:
+                print('MOVE FORWARD ({},{})'.format(i1, u1))
+            while (j2,v2) != (i2,u2):
+                if verbose:
+                    print('  glue (i1,u1) = ({},{}) and (j2,v2) = ({},{})'.format(i1, u1, j2, v2))
+                # safety check
+                assert u1 == v2
+                g[v2][j2] = i1
+                g[v2][i1] = j2
+                j2, v2 = move_backward(j2, v2, g01, g23)
+                i1, u1 = move_forward(i1, u1, g01, g23)
+
+        if verbose:
+            print('done gluing edges')
+            print('  (i1,u1) = ({},{})'.format(i1,u1))
+            print('  (j1,v1) = ({},{})'.format(j1,v1))
+            print('  (i2,u2) = ({},{})'.format(i2,u2))
+            print('  (j2,v2) = ({},{})'.format(j2,v2))
+            print('  g0: {}'.format(g0))
+            print('  g1: {}'.format(g1))
+            print('  g2: {}'.format(g2))
+            print('  g3: {}'.format(g3))
+
+        # safety check
+        assert (i1,u1) == (j1,v1)
+
+        from surface_dynamics.flat_surfaces.origamis.pillowcase_cover import PillowcaseCover
+        return PillowcaseCover(g0, g1, g2, g3, as_tuple=True)

@@ -3503,6 +3503,20 @@ cdef class PillowcaseCover_dense_pyx:
         self._l_edges = {}
         self._i_edges = {}
 
+    def nb_pillows(self):
+        r"""
+        Return the number of pillows
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import *
+            sage: PillowcaseCover([0], [0], [0], [0], as_tuple=True).nb_pillows()
+            1
+            sage: PillowcaseCover([2,1,3,4], [1,3,2,4], [4,2,3,1]).nb_pillows()
+            4
+        """
+        return self._n
+
     def __dealloc__(self):
         if self._g != NULL: free(self._g)
 
