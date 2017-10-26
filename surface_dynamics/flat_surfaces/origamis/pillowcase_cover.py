@@ -9,6 +9,14 @@ def PillowcaseCover(g0, g1, g2, g3=None,
         positions=None, name=None):
     r"""
     Pillowcase cover constructor.
+
+    The chosen flat structure is as follows
+
+       3-----2-----3
+       |     .     |
+       |     .     |
+       |     .     |
+       0-----1-----0
     """
     if not as_tuple:
         g0 = PermutationGroupElement(g0, check=check)
@@ -68,14 +76,14 @@ class PillowcaseCover_dense(PillowcaseCover_dense_pyx):
 
             sage: from surface_dynamics import *
             sage: PillowcaseCover('(1,2)(3,4)', '(1,3)', '()')   # indirect doctest
-            g_0 = (1,2)(3,4)
-            g_1 = (1,3)
-            g_2 = ()
-            g_3 = (1,4,3,2)
+            g0 = (1,2)(3,4)
+            g1 = (1,3)(2)(4)
+            g2 = (1)(2)(3)(4)
+            g3 = (1,4,3,2)
         """
-        return '\n'.join("g_%d = %s"%(i,self.g(i)) for i in xrange(4))
+        return '\n'.join("g%d = %s"%(i,self.g(i).cycle_string(True)) for i in xrange(4))
 
-    def g(self,i=None):
+    def g(self, i=None):
         r"""
         Return the ``i``-th permutation that defines this pillowcase cover.
         """
@@ -150,16 +158,6 @@ class PillowcaseCover_dense(PillowcaseCover_dense_pyx):
         """
         return self.as_graph().to_undirected().is_bipartite()
 
-    def orientation_cover(self):
-        r"""
-        If self is orientable returns it as a cover of a torus, otherwise raise
-        an AssertionError.
-        """
-        if self.is_orientable():
-            raise ValueError
-
-        raise NotImplementedError
-
     def profile(self,i=None):
         r"""
         Return the profile (= ramification type above each pole).
@@ -208,5 +206,4 @@ class PillowcaseCover_dense(PillowcaseCover_dense_pyx):
             return True
 
         return bool(gap.IsPrimitive(self.monodromy()))
-
 
