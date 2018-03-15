@@ -1826,6 +1826,10 @@ class QuadraticStrata_g(QuadraticStrata_class):
 
             sage: list(AbelianStrata(genus=1))
             [H_1(0)]
+            sage: list(QuadraticStrata(genus=0, nb_poles=4))
+            [Q_0(-1^4)]
+            sage: list(QuadraticStrata(genus=1, nb_poles=0))
+            []
         """
         from itertools import count
         from sage.combinat.partition import Partitions
@@ -1836,6 +1840,8 @@ class QuadraticStrata_g(QuadraticStrata_class):
         while nb_poles <= self._max_nb_poles:
             s = 4*g-4+nb_poles
             if s == 0:
+                if g == 0:
+                    yield QuadraticStratum({-1:4})
                 nb_poles += 1
                 continue
             for p in Partitions(s):
@@ -2102,7 +2108,7 @@ class QuadraticStrata_gd(QuadraticStrata_class):
             sage: loads(dumps(s)) == s
             True
         """
-        Parent.__init__(self, category=FiniteEnumeratedSets(), name="AbelianStrata_gd")
+        Parent.__init__(self, category=FiniteEnumeratedSets())
         self._genus = genus
         self._dimension = dimension
         self._min_nb_poles = min_nb_poles
@@ -2185,12 +2191,17 @@ class QuadraticStrata_gd(QuadraticStrata_class):
             Q_1(3, 1, -1^4)
             Q_1(2^2, -1^4)
             Q_1(5, -1^5)
+
+            sage: QuadraticStrata(genus=0, dimension=2, nb_poles=5).list()
+            []
+            sage: QuadraticStrata(genus=0, dimension=4, nb_poles=5).list()
+            [Q_0(1, -1^5)]
         """
         from sage.combinat.partition import Partitions
         d = self._dimension
         g = self._genus
         if d == 2:
-            if g == 0:
+            if g == 0 and self._min_nb_poles <= 4 <= self._max_nb_poles:
                 yield QuadraticStratum(-1,-1,-1,-1)
         else:
             m = max(0,self._min_nb_poles)
