@@ -2304,12 +2304,12 @@ class CylinderDiagram(SeparatrixDiagram):
         """
         return SeparatrixDiagram(self._bot,self._top,check=False)
 
-    def lengths_cone(self, involution=None):
+    def lengths_cone(self):
         r"""
         Return the rational polyhedron corresponding to the set of length with
         the given fixed heights.
 
-        -> one can obtain ehrhard series for each of them! It tells us that we
+        -> one can obtain ehrhart series for each of them! It tells us that we
         have a nice asymptotics... and the asymptotics is simply given by the
         volume of this polytope (up to the ignored twists parameters)!
         """
@@ -2336,18 +2336,9 @@ class CylinderDiagram(SeparatrixDiagram):
                 e[j+1] -= ZZ.one()
             eqns.append(e)
 
-        # possible symmetries
-        if involution is not None:
-            for i,j in enumerate(involution):
-                e = [ZZ.zero()] * (n+1)
-                if i != j:
-                    e[i+1] = +1
-                    e[j+1] = -1
-                    eqns.append(e)
-
         return Polyhedron(ieqs=ieqs, eqns=eqns)
 
-    def widths_generating_series(self, var='w', involution=None):
+    def widths_generating_series(self, var='w'):
         r"""
         Generating series of the number of lengths solutions given the widths.
 
@@ -2357,10 +2348,6 @@ class CylinderDiagram(SeparatrixDiagram):
         INPUT:
 
         - ``var`` - (optional) an optional name for the variable
-
-        - ``involution`` - (optional) an involution of the cylinder diagram reversing
-          the orientation. If provided, return the generating series corresponding
-          to the integer points symmetric under the involution.
 
         EXAMPLES::
 
@@ -2388,7 +2375,7 @@ class CylinderDiagram(SeparatrixDiagram):
         import re
         re_var = re.compile('w(\d+)')
 
-        C = self.lengths_cone(involution=involution)
+        C = self.lengths_cone()
         F = C.ambient_space()
         HC = Polyhedron(vertices=F.basis()).intersection(C)
         sub1 = [None] * self.nseps()
@@ -2417,11 +2404,13 @@ class CylinderDiagram(SeparatrixDiagram):
             f1 = parse_latte_generating_series(M, a1)
             f2 = parse_latte_generating_series(M, a2)
 
+            assert f1 == f2
+
             ans += f1
 
         return ans
 
-    def volume_contribution(self, involution=False):
+    def volume_contribution(self):
         r"""
         Return the volume contribution as a generalized multiple zeta values.
 
@@ -2446,12 +2435,26 @@ class CylinderDiagram(SeparatrixDiagram):
             [(1/6, Z((n2), (n1), (n1 + n2)^3)), (1/12, Z((n2), (n1)^2, (n1 + n2)^2)), (1/12, Z((n2)^2, (n1)^2, (n1 + n2))), (1/12, Z((n2)^2, (n1), (n1 + n2)^2))]
             [(1/6, Z((n1 + n3)^2, (n1 + n2)^3)), (1/6, Z((n1 + n3)^3, (n1 + n2)^2))]
         """
+        from surface_dynamics.misc.multivariate_generating_series import GeneralizedMultiZetaElement
+
         from sage.misc.misc_c import prod
         from sage.rings.integer_ring import ZZ
 
-        # this is wrong if there is an involution!
+        # automorphism group
         aut_size = self.automorphism_group().cardinality()
 
+        # equivalent sep diag in the component
+        s = sum(self.symmetries())
+        if s == 0:
+            s = 4
+        elif s == 1:
+            s = 2
+        elif s == 3:
+            s = 1
+        else:
+            raise RuntimeError("invalid symmetries... please contact <vincent.delecroix@u-bordeaux.fr>")
+
+        # numbering zeros
         mult = {}
         for i in perm_cycle_tuples(self.outgoing_edges_perm(), singletons=True):
             i = len(i)
@@ -2461,12 +2464,14 @@ class CylinderDiagram(SeparatrixDiagram):
                 mult[i] = 1
         sym = prod(ZZ(m).factorial() for m in mult.values())
 
-        deg, res = self.widths_generating_series().delta().residue()
+        F = self.widths_generating_series()
+        deg, res = F.delta().residue()
+        res = GeneralizedMultiZetaElement(F.parent().residue_ring(), [(den,num) for num,den in res])
 
         assert deg == self.nseps() + 1
 
         m = 2 * sym / ZZ(self.nseps()).factorial() / aut_size
-        return [(m * c, z) for c,z in res]
+        return m * res
 
     def cylinders(self):
         r"""
@@ -3905,17 +3910,29 @@ class QuadraticCylinderDiagram(SageObject):
             raise ValueError("the graph is not connected")
 
     def num_darts(self):
+        r"""
+        Number of darts
+        """
         return self._g.num_darts()
 
     def num_edges(self):
+        r"""
+        Number of edges
+        """
         return self._g.num_edges()
 
     nseps = num_edges
 
     def edges(self):
+        r"""
+        The set of edges.
+        """
         return self._g.edges()
 
     def num_cylinders(self):
+        r"""
+        Number of cylinders.
+        """
         return len(self._p) // 2
 
     ncyls = num_cylinders
@@ -4003,16 +4020,13 @@ class QuadraticCylinderDiagram(SageObject):
         EXAMPLES::
 
             sage: from surface_dynamics import *
-            sage: from surface_dynamics.flat_surfaces.separatrix_diagram import QuadraticCylinderDiagram
 
             sage: rg = RibbonGraph(edges='(0,1)(2,3)(4,5)(6,7)', faces='(0,1)(2,4,5)(3)(6,7)', connected=False)
             sage: q = QuadraticCylinderDiagram(rg, '(0,1)(2,3)')
             sage: q.stratum()
             Q_0(1, -1^5)
-            sage: L = q.lengths_cone()
-            sage: for r in L.rays_list():
-            ....:     for bot,top in q.cylinders():
-            ....:          assert sum(r[i] for i in bot) == sum(r[i] for i in top)
+            sage: q.lengths_cone().rays_list()
+            [[1, 0, 1, 0], [1, 2, 0, 1]]
 
             sage: rg = RibbonGraph(edges='(0,1)(2,3)(4,5)(6,7)', faces='(0,2,3)(1)(4,6,7)(5)', connected=False)
             sage: q = QuadraticCylinderDiagram(rg, '(0,2)(1,3)')
@@ -4055,18 +4069,24 @@ class QuadraticCylinderDiagram(SageObject):
         r"""
         Generating series of the number of saddle connection lengths.
 
-        In the quadratic differential case it is not clear what is the normalization!
-
         WARNING: when a triangulation is involved, the generating series ignore
         some lower dimensional polytopes that are counted twice!!
 
         EXAMPLES::
 
-            sage: from surface_dynamics import RibbonGraph
-            sage: from surface_dynamics.flat_surfaces.separatrix_diagram import QuadraticCylinderDiagram
+            sage: from surface_dynamics import *
 
-            sage: r = RibbonGraph(faces='(0,2,4,6,7)(8,9,5,3,1)', edges='(0,1)(2,3)(4,5)(6,7)(8,9)')
-            sage: q = QuadraticCylinderDiagram(r, [1,0])
+            sage: q = QuadraticCylinderDiagram('(0,1,2,3,3)-(0,4,4,2,1)')
+            sage: q.widths_generating_series()
+            (1)/((1 - w)^3*(1 - w^2))
+
+            sage: q = QuadraticCylinderDiagram('(0,0,1,1,2,2)-(3,3,4,4)')
+            sage: q.widths_generating_series()
+            (3)/((1 - w^2)^4)
+
+            sage: q = QuadraticCylinderDiagram('(0,0,1)-(2,2,3) (1,4)-(3,4)')
+            sage: q.widths_generating_series()
+            (1)/((1 - w1)*(1 - w0*w1)*(1 - w0^2))
         """
         from sage.interfaces.latte import count
         from sage.matrix.constructor import matrix

@@ -24,11 +24,16 @@ De Loera, R. Hemmecke, J. Tauzer, R. Yoshida
    series is a ``struct gen_fun``
 """
 
+from __future__ import absolute_import
+
+from .factored_denominator import FactoredDenominator
+
 import numbers
 
 from sage.misc.cachefunc import cached_method
 
 from sage.structure.sage_object import SageObject
+from sage.structure.richcmp import op_LT, op_EQ, op_NE, op_LE, op_GE, op_GT, op_LT
 from sage.structure.parent import Parent
 from sage.structure.element import Element, parent
 
@@ -129,66 +134,6 @@ def parse_latte_generating_series(M, s):
         m += M.term(R(num), m_den.items())
 
     return m
-
-def vector_to_monomial_string(u, var_names):
-    r"""
-    EXAMPLES::
-
-        sage: from surface_dynamics.misc.multivariate_generating_series import vector_to_monomial_string
-        sage: vector_to_monomial_string((0,4,3), 'x')
-        'x1^4*x2^3'
-        sage: vector_to_monomial_string((0,4,3), 'hello')
-        'hello1^4*hello2^3'
-        sage: vector_to_monomial_string((0,4,3), ('x','y','z'))
-        'y^4*z^3'
-        sage: vector_to_monomial_string((1,0,-1), 'x')
-        'x0*x2^-1'
-    """
-    s = []
-    for i,j in enumerate(u):
-        if j:
-            if isinstance(var_names, str):
-                var = '%s%d' % (var_names, i)
-            else:
-                var = var_names[i]
-
-            if j == 1:
-                s.append(var)
-            else:
-                s.append('%s^%d' % (var, j))
-
-    return '*'.join(s) if s else '1'
-
-def vector_to_linear_form_string(u, var_names):
-    r"""
-    EXAMPLES::
-
-        sage: from surface_dynamics.misc.multivariate_generating_series import vector_to_linear_form_string
-        sage: vector_to_linear_form_string((0,4,3), 'x')
-        '4*x1 + 3*x2'
-        sage: vector_to_linear_form_string((0,4,3), 'hello')
-        '4*hello1 + 3*hello2'
-        sage: vector_to_linear_form_string((0,4,3), ('x','y','z'))
-        '4*y + 3*z'
-        sage: vector_to_linear_form_string((1,0,-1), 'x')
-        'x0 + -x2'
-    """
-    s = []
-    for i,j in enumerate(u):
-        if j:
-            if isinstance(var_names, str):
-                var = '%s%d' % (var_names, i)
-            else:
-                var = var_names[i]
-
-            if j == 1:
-                s.append(var)
-            elif j == -1:
-                s.append('-' + var)
-            else:
-                s.append('%d*%s' % (j, var))
-
-    return ' + '.join(s) if s else '0'
 
 
 def monomial_projection(num, den, i, M):
@@ -333,304 +278,11 @@ def monomial_projection(num, den, i, M):
 
 
 
-# NOTE: should this be an instance of Factorization?
-class FactoredDenominator(object):
-    r"""
-    (Factored) product of polynomials of the form `(1 - m)^d`.
-
-    EXAMPLES::
-
-        sage: from surface_dynamics.misc.multivariate_generating_series import FactoredDenominator
-        sage: V = ZZ**3
-        sage: f1 = FactoredDenominator([((1,0,0), 2)], V)
-        sage: f2 = FactoredDenominator([((0,1,2), 3), ((1,1,1), 1)], V)
-        sage: f3 = FactoredDenominator([((0,-1,2), 1), ((1,0,0), 1), ((0,0,2), 1)], V)
-        sage: f1
-        (1 - x0)^2
-        sage: f1 * f2 * f3
-        (1 - x1^-1*x2^2)*(1 - x2^2)*(1 - x1*x2^2)^3*(1 - x0)^3*(1 - x0*x1*x2)
-        sage: hash(f1)  # random
-        9164823176457928306
-
-        sage: FactoredDenominator(f1)
-        (1 - x0)^2
-    """
-    __slots__ = ['_dict', '_tuple']
-
-    def __init__(self, data, V=None):
-        if isinstance(data, (tuple, list)):
-            self._dict = {}
-            for mon, mult in data:
-                mon = V(mon)
-                if mon.is_zero():
-                    raise ValueError('zero in denominator')
-                mult = ZZ(mult)
-                if mult <= 0:
-                    raise ValueError('non-positive multiplicity in denominator')
-                mon.set_immutable()
-                self._dict[mon] = mult
-
-        elif isinstance(data, dict):
-            self._dict = data
-
-        elif isinstance(data, FactoredDenominator):
-            self._dict = data._dict
-            self._tuple = data._tuple
-            return
-
-        elif isinstance(data, Vector_integer_dense):
-            data = V(data)
-            data.set_immutable()
-            self._dict = {data: ZZ.one()}
-            self._tuple = ((data, ZZ.one()),)
-            return
-
-        else:
-            raise TypeError('invalid data of type {} to initialized a FactoredDenominator'.format(type(data)))
-
-        self._tuple = tuple(sorted(self._dict.items()))
-
-    def __len__(self):
-        r"""
-        Return the number of factors (without multiplicities).
-        """
-        return len(self._tuple)
-
-    def __iter__(self):
-        r"""
-        Iterates through the pairs ``(monomial, exponent)``.
-        """
-        return iter(self._tuple)
-
-    def degree(self):
-        r"""
-        EXAMPLES::
-
-            sage: from surface_dynamics.misc.multivariate_generating_series import FactoredDenominator
-            sage: V = ZZ**3
-            sage: FactoredDenominator([((1,0,0), 2)], V).degree()
-            2
-            sage: FactoredDenominator([((0,1,2), 3), ((1,1,1), 1)], V).degree()
-            4
-            sage: FactoredDenominator([((0,-1,2), 1), ((1,0,0), 1), ((0,0,2), 1)], V).degree()
-            3
-        """
-        return sum(x[1] for x in self._tuple)
-
-    def to_polynomial(self, S, extra_var=False):
-        r"""
-        Return the product of the term in a given polynomial ring ``S``.
-
-        EXAMPLES::
-
-            sage: from surface_dynamics.misc.multivariate_generating_series import FactoredDenominator
-            sage: V = ZZ ** 3
-            sage: f = FactoredDenominator([((1,0,0), 2)], V)
-            sage: g = FactoredDenominator([((1,0,0), 2), ((1,1,1),1)], V)
-
-            sage: R1 = QQ['x,y,z']
-            sage: f.to_polynomial(R1)
-            x^2 - 2*x + 1
-            sage: g.to_polynomial(R1)
-            -x^3*y*z + 2*x^2*y*z - x*y*z + x^2 - 2*x + 1
-
-            sage: f.to_polynomial(R1['E'], extra_var=True)
-            x^2*E^2 - 2*x*E + 1
-            sage: g.to_polynomial(R1['E'], extra_var=True)
-            -x^3*y*z*E^5 + 2*x^2*y*z*E^4 - x*y*z*E^3 + x^2*E^2 - 2*x*E + 1
-
-            sage: g.to_polynomial(QQ['t1,t2,t3'])
-            -t1^3*t2*t3 + 2*t1^2*t2*t3 - t1*t2*t3 + t1^2 - 2*t1 + 1
-        """
-        if extra_var:
-            R = S.base_ring()
-            T = S.gen()
-        else:
-            R = S
-            T = R.one()
-
-        ans = S.one()
-        for a,i in self._tuple:
-            ans *= (S.one() - R.monomial(*a) * T ** sum(a)) ** i
-        return ans
-
-    def inverse_series_trunc(self, S, prec):
-        r"""
-        Return a truncation of the inverse series of this element.
-
-        INPUT:
-
-        - ``S`` - polynomial ring in one variable whose base ring is a
-          multivariate polynomial ring with the same number of variables
-          as this factor.
-        
-        - ``prec`` - precision of the Taylor expansion (in terms of total degree)
-
-        EXAMPLES::
-
-            sage: from surface_dynamics.misc.multivariate_generating_series import FactoredDenominator
-
-            sage: V = ZZ**2
-            sage: R = QQ['t,u']
-            sage: f = FactoredDenominator([((2,3), 2), ((4,1), 1), ((1,1), 1)], V)
-            sage: f.inverse_series_trunc(R['X'], 10)
-            (t^6*u^3 + 2*t^4*u^5)*X^9 +
-            t^4*u^4*X^8 +
-            (t^5*u^2 + 2*t^3*u^4)*X^7 +
-            t^3*u^3*X^6 +
-            (t^4*u + 2*t^2*u^3)*X^5 +
-            t^2*u^2*X^4 +
-            t*u*X^2 +
-            1
-        """
-        # this is a very stupid way of doing so
-        # we should Taylor expand each monomial and then use _mul_trunc_
-        return self.to_polynomial(S, extra_var=True).inverse_series_trunc(prec)
-
-    def degree(self):
-        r"""
-        EXAMPLES::
-
-            sage: from surface_dynamics.misc.multivariate_generating_series import FactoredDenominator
-            sage: V = ZZ**3
-            sage: FactoredDenominator([], None).degree()
-            0
-            sage: FactoredDenominator([((1,0,0), 2)], V).degree()
-            2
-            sage: FactoredDenominator([((0,1,2), 3), ((1,1,1), 1)], V).degree()
-            4
-            sage: FactoredDenominator([((0,-1,2), 1), ((1,0,0), 1), ((0,0,2), 1)], V).degree()
-            3
-
-        TESTS::
-
-            sage: parent(FactoredDenominator([], None).degree())
-            Integer Ring
-            sage: parent(FactoredDenominator([((1,0,0), 2)], V).degree())
-            Integer Ring
-        """
-        if not self._tuple:
-            return ZZ.zero()
-        return sum(m for _,m in self._tuple)
-
-    def logarithmic_minus_derivative(self, j, M):
-        r"""
-        Minus the logarithmic derivative -v' / v taken with respect to the ``j``-th variable
-
-        Since this denominator has the form 1 / (1 - m1) (1 - m2) ... (1 - mk) the
-        logarithmic derivative is simply
-
-        m1'/(1-m1) + m2'/(1-m2) + ... + mk'/(1-mk)
-
-        INPUT:
-
-        - ``j`` -- index of a variable
-
-        - ``M`` -- the ring of multivariate generating series
-
-        OUTPUT: a sum ``coeff / denom``
-
-        EXAMPLES::
-
-            sage: from surface_dynamics.misc.multivariate_generating_series import FactoredDenominator
-            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
-
-            sage: M = MultivariateGeneratingSeriesRing(3)
-            sage: V = ZZ**3
-
-            sage: f = FactoredDenominator([((1,0,0), 2)], V)
-            sage: f
-            (1 - x0)^2
-            sage: f.logarithmic_minus_derivative(0, M)
-            (2)/((1 - x0))
-            sage: f.logarithmic_minus_derivative(1, M)
-            0
-            sage: f.logarithmic_minus_derivative(2, M)
-            0
-
-            sage: f = FactoredDenominator([((1,1,1), 1)], V)
-            sage: f.logarithmic_minus_derivative(0, M)
-            (x1*x2)/((1 - x0*x1*x2))
-
-            sage: f = FactoredDenominator([((1,0,0), 1), ((0,1,0), 1), ((0,0,1), 1)], V)
-            sage: f.logarithmic_minus_derivative(0, M)
-            (1)/((1 - x0))
-
-            sage: f = FactoredDenominator([((1,0,0), 2), ((1,1,0), 3), ((1,1,1), 1)], V)
-            sage: f
-            (1 - x0)^2*(1 - x0*x1)^3*(1 - x0*x1*x2)
-            sage: f.logarithmic_minus_derivative(0, M)
-            (3*x1)/((1 - x0*x1)) + (2)/((1 - x0)) + (x1*x2)/((1 - x0*x1*x2))
-        """
-        s = M.zero()
-        R = M.laurent_polynomial_ring()
-        for mon, mult in self._tuple:
-            if mon[j]:
-                v = mon.__copy__()
-                v[j] -= 1
-                dmon = laurent_monomial(R, v)
-                s += M.term(mult * dmon, mon)
-        return s
-
-    def __eq__(self, other):
-        if type(self) is not type(other):
-            raise TypeError
-        return self._tuple == other._tuple
-
-    def __ne__(self, other):
-        if type(self) is not type(other):
-            return TypeError
-        return self._tuple != other._tuple
-
-    def __mul__(self, other):
-        if type(self) is not type(other):
-            raise TypeError
-
-        new_data = self._dict.copy()
-        for i,j in other._dict.items():
-            if i in new_data:
-                new_data[i] += j
-                if new_data[i].is_zero():
-                    del new_data[i]
-            else:
-                new_data[i] = j
-
-        return FactoredDenominator(new_data, None)
-
-    def is_one(self):
-        return not self._dict
-
-    def str(self, var_names='x'):
-        terms = []
-        for mon, mul in self._tuple:
-            term = '(1 - %s)' % vector_to_monomial_string(mon, var_names)
-            if not mul.is_one():
-                term += '^%d' % mul
-            terms.append(term)
-        return '*'.join(terms)
-
-    def str_linear(self, var_names='h'):
-        terms = []
-        for mon, mul in self._tuple:
-            term = '(' + vector_to_linear_form_string(mon, var_names) + ')'
-            if not mul.is_one():
-                term += '^%d' % mul
-            terms.append(term)
-
-        return ' '.join(terms)
-
-    def __repr__(self):
-        if not self._dict:
-            return '1'
-        return self.str()
-
-    def __hash__(self):
-        return hash(self._tuple)
 
 
 # This should be a real number!
 # ... and we need an algebra to handle all these values properly
-class GeneralizedMultipleZetaValue(SageObject):
+class _OLD_TOTO_(object):
     r"""
     A generalized multiple zeta value.
 
@@ -646,36 +298,6 @@ class GeneralizedMultipleZetaValue(SageObject):
 
     The version with character is not implemented!
     """
-    def __init__(self, den):
-        r"""
-        INPUT:
-
-        - ``den`` - a factored denominator (seen as a product of linear forms)
-        """
-        self._den = den
-
-    def weight(self):
-        r"""
-        Return the weight of this generalized multiple zeta values.
-        """
-        return self._den.degree()
-
-    def length(self):
-        from sage.rings.integer_ring import ZZ
-
-        if not self._den:
-            return ZZ.zero()
-        else:
-            return self._den._tuple[0][0].length()
-
-    def _repr_(self):
-        if not self._den:
-            return '1'
-        var_names = ['n%d'%n for n in range(1, self.length()+1)]
-        return "Z({})".format(', '.join(
-                     ('(' + vector_to_linear_form_string(mon, var_names) + ')' + ('^%d' % mul if not mul.is_one() else ''))
-                     for mon,mul in self._den))
-
     def gp_multizeta_sum_cmd(self, method='sumnummonien', tabname='T'):
         r"""
         Return a numerical approximation of the corresponding generalized multizeta
@@ -695,7 +317,7 @@ class GeneralizedMultipleZetaValue(SageObject):
 
         tot = []
         for mon, mul in self._den:
-            l = '(' + vector_to_linear_form_string(mon, var_names) + ')'
+            l = den.str_linear()
             if mul:
                 l = '%s^%d' %(l, mul)
             tot.append(l)
@@ -708,13 +330,16 @@ class GeneralizedMultipleZetaValue(SageObject):
 # TODO: make it possible to use Laurent polynomials in denominator
 # TODO: monomial substitution
 # TODO: coefficient expansion Verdoolaege-Woods
-class MultivariateGeneratingSeries(Element):
-    def __init__(self, parent, data, check=True):
+class AbstractMSum(Element):
+    r"""
+    An abstract multiple sums for generating functions
+    """
+    def __init__(self, parent, data, allow_multiple=False, check=True):
         r"""
         _data is a dictionary: {denominator: polynomial}
         """
         Element.__init__(self, parent)
-        V = self.parent()._free_module
+        V = self.parent().free_module()
         R = self.parent().laurent_polynomial_ring()
         self._data = {}
 
@@ -729,6 +354,10 @@ class MultivariateGeneratingSeries(Element):
                 self._data = data
                 return
             data = data.items()
+
+        elif isinstance(data, AbstractMSum):
+            self._data = data.copy()
+            return
         
         for term in data:
             if not isinstance(term, (tuple,list)) or len(term) != 2:
@@ -742,10 +371,180 @@ class MultivariateGeneratingSeries(Element):
             den = FactoredDenominator(den, V)
 
             if den in self._data:
-                raise ValueError('multiple times the same denominator in the input')
+                if not allow_multiple:
+                    raise ValueError('multiple times the same denominator in the input')
+                else:
+                    self._data[den] += num
+            else:
+                self._data[den] = num
 
-            self._data[den] = num
+    def _add_(self, other):
+        r"""
+        TESTS::
 
+            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
+
+            sage: M = MultivariateGeneratingSeriesRing('x', 3)
+            sage: m1 = M.term(1, [((1,1,0),1)])
+            sage: m2 = M.term(-2, [((1,0,0),1),((0,1,0),2)])
+            sage: m1 + m2
+            (1)/((1 - x0*x1)) + (-2)/((1 - x1)^2*(1 - x0))
+        """
+        if self.is_trivial_zero():
+            return other
+        if other.is_trivial_zero():
+            return self
+
+        ans_data = self._data.copy()
+        for den,num in other._data.items():
+            if den in ans_data:
+                ans_data[den] += num
+                if ans_data[den].is_zero():
+                    del ans_data[den]
+            else:
+                ans_data[den] = num
+
+        R = self.parent()
+        return R.element_class(R, ans_data)
+
+    def _mul_(self, other):
+        r"""
+        TESTS::
+
+            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
+
+            sage: M = MultivariateGeneratingSeriesRing('x', 3)
+            sage: m1 = M.term(1, [((1,1,0),1)])
+            sage: m2 = M.term(-2, [((1,0,0),1),((0,1,0),2)])
+            sage: m1 * m2
+            (-2)/((1 - x1)^2*(1 - x0)*(1 - x0*x1))
+
+            sage: R = M.laurent_polynomial_ring()
+            sage: M.one() * R.one()
+            (1)
+
+            sage: R = M.laurent_polynomial_ring()
+            sage: x0, x1, x2 = R.gens()
+            sage: m1 = M.term(x0 - 2*x2 + 1, [((1,1,1),2)])
+            sage: m2 = M.term(x0*x1 + 1, [((0,1,2),1)])
+            sage: m3 = M.term(1 + x0 + x1, [((1,0,1),1)])
+            sage: m4 = M.term(x0 - 1, [((1,0,0),2),((1,0,1),1)])
+            sage: (m1 + m2) * (m3 + m4) - m1 * m3 - m2 * m3 - m1 * m4 - m2 * m4
+            0
+        """
+        ans_data = {}
+        for den1,num1 in self._data.items():
+            for den2, num2 in other._data.items():
+                den = den1 * den2
+                num = num1 * num2
+                if den in ans_data:
+                    ans_data[den] += num
+                    if not ans_data[den]:
+                        del ans_data[den]
+                else:
+                    ans_data[den] = num
+
+        M = self.parent()
+        return M.element_class(M, ans_data)
+
+    def __neg__(self):
+        r"""
+        TESTS::
+
+            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
+
+            sage: M = MultivariateGeneratingSeriesRing('x', 3)
+            sage: m1 = M.term(1, [((1,1,0),1)])
+            sage: m1
+            (1)/((1 - x0*x1))
+            sage: -m1
+            (-1)/((1 - x0*x1))
+            sage: m1 - m1
+            0
+        """
+        ans_data = {}
+        for den, num in self._data.items():
+            ans_data[den] = -num
+        M = self.parent()
+        return M.element_class(M, ans_data)
+
+    def _richcmp_(self, other, op):
+        r"""
+        TESTS::
+
+            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
+
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)
+            sage: x, y = M.laurent_polynomial_ring().gens()
+            sage: M.term(x*y+1, [((1,1),1)]) == M.term(x*y+1, [((1,1),1)])
+            True
+        """
+        if op != op_EQ and op != op_NE:
+            raise TypeError('no comparison available for multivariate series')
+
+        if self._data == other._data and op == op_EQ:
+            return True
+        raise NotImplementedError
+
+
+
+                
+
+class GeneralizedMultiZetaElement(AbstractMSum):
+    def simplify(self):
+        r"""
+        Canonicalize each term by applying a permutation
+        """
+        from itertools import permutations
+
+        P = self.parent()
+        new_data = []
+        n = P.ngens()
+        for den,num in self._data.iteritems():
+            # TODO: this is stupidly innefficient
+            L = [list(k) + [v] for k,v in den._tuple]
+            L.sort()
+            Lmin = L
+            for p in permutations(range(n)):
+                LL = [[l[p[i]] for i in range(n)] + [l[n]] for l in L]
+                LL.sort()
+                if LL < Lmin:
+                    Lmin = LL
+
+            new_den = [(k[:-1], k[-1]) for k in Lmin]
+            new_data.append((new_den, num))
+        return P.element_class(P, new_data, allow_multiple=True)
+
+    def expand(self):
+        r"""
+        Apply 1 / (L1 L2) = 1/(L1+L2) * (1/L1 + 1/L2) to try getting
+        multiple zeta values
+        """
+
+
+    def weights(self):
+        r"""
+        Return the set of weights of the generalized multiple zeta values.
+        """
+        return sorted(set(den.degree() for den in self._data))
+
+    def _repr_(self):
+        r"""
+        String representation
+        """
+        terms = []
+        var_names = ['n%d'%n for n in range(self.parent().laurent_polynomial_ring().ngens())]
+        for den, num in self._data.iteritems():
+            fraction = str(num)
+            if not den.is_one():
+                fraction += ' * Sum( 1 / '
+                fraction += '(' + den.str_linear(var_names) + '), '
+                fraction += ', '.join(var_names) + ')'
+            terms.append(fraction)
+
+        return ' + '.join(terms)
+
+class MultivariateGeneratingSeries(AbstractMSum):
     def __nonzero__(self):
         return bool(self._data)
 
@@ -841,18 +640,18 @@ class MultivariateGeneratingSeries(Element):
 
             sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
 
-            sage: M = MultivariateGeneratingSeriesRing(2)
+            sage: M = MultivariateGeneratingSeriesRing(2, 'x')
             sage: R = M.laurent_polynomial_ring()
             sage: x0,x1 = R.gens()
             sage: f = M.term(x0, [((1,1),2)])
             sage: f.residue()
-            (2, [(1, Z((n1 + n2)^2))])
+            (2, [(1, (1 - x0*x1)^2)])(2, [(1, (1 - x0*x1)^2)])
             sage: f = M.term(x0, [((1,1),2)]) + M.term(1, [((1,0),1),((0,1),1),((1,1),1)])
             sage: f.residue()
-            (3, [(1, Z((n2), (n1), (n1 + n2)))])
+            (3, [(1, (1 - x1)*(1 - x0)*(1 - x0*x1))])
             sage: f = M.term(x0, [((1,1),2)]) + M.term(1, [((1,0),1),((1,1),1)])
             sage: f.residue()
-            (2, [(1, Z((n1), (n1 + n2))), (1, Z((n1 + n2)^2))])
+            (2, [(1, (1 - x0)*(1 - x0*x1)), (1, (1 - x0*x1)^2)])
         """
         R = self.parent().laurent_polynomial_ring()
         one = QQ.one()
@@ -867,7 +666,7 @@ class MultivariateGeneratingSeries(Element):
                 num = QQ(num.subs(values))
                 if num.is_zero():
                     raise NotImplementedError('zero numerator')
-                ans.append((num, GeneralizedMultipleZetaValue(den)))
+                ans.append((num, den))
         return d, ans
 
     def derivative(self, var):
@@ -876,7 +675,7 @@ class MultivariateGeneratingSeries(Element):
 
             sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
 
-            sage: M = MultivariateGeneratingSeriesRing(2)
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)
             sage: R = M.laurent_polynomial_ring()
             sage: x0, x1 = R.gens()
             sage: xx0, xx1 = R.polynomial_ring().gens()
@@ -944,7 +743,7 @@ class MultivariateGeneratingSeries(Element):
         ans = M.zero()
         for den, num in self._data.items():
             ans += M.term(num.derivative(var), den)
-            ans += M.term(num, den) * den.logarithmic_minus_derivative(j, M)
+            ans += M.term(num, den) * den.logarithmic_minus_derivative(j, lambda v: laurent_monomial(v, R))
         return ans
 
     def derivative_up_to_lower_order_terms(self, var):
@@ -959,7 +758,7 @@ class MultivariateGeneratingSeries(Element):
 
             sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
 
-            sage: M = MultivariateGeneratingSeriesRing(2)
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)
             sage: f = M.term(1, [((1,0),2)])
             sage: f
             (1)/((1 - x0)^2)
@@ -969,10 +768,14 @@ class MultivariateGeneratingSeries(Element):
             sage: f = M.term(1, [((1,0),1),((0,1),1),((1,1),1)])
         """
         M = self.parent()
+        R = M.laurent_polynomial_ring()
 
         ans = M.zero()
         for den, num in self._data.items():
-            ans += M.term(num, den) * den.logarithmic_minus_derivative(var, M)
+            s = M.zero()
+            for m,v,d in den.logarithmic_minus_derivative(var):
+                s += M.term(m * laurent_monomial(R,v), [(d,1)])
+            ans += M.term(num, den) * s
 
         return ans
 
@@ -992,7 +795,7 @@ class MultivariateGeneratingSeries(Element):
 
             sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
 
-            sage: M = MultivariateGeneratingSeriesRing(2, 't,u')
+            sage: M = MultivariateGeneratingSeriesRing('t,u')
             sage: t,u = M.laurent_polynomial_ring().gens()
             sage: f = M.term(t + u^3, [((1,1), 1), ((1,2),2)])
             sage: f
@@ -1003,7 +806,7 @@ class MultivariateGeneratingSeries(Element):
         TODO: this is only working term by term but for example containing negative
         powers as::
     
-            sage: M = MultivariateGeneratingSeriesRing(2)   # not tested
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)   # not tested
             sage: m1 = M.term(1, [((1,-1),1), ((0,1),1)])   # not tested
             sage: m2 = M.term(1, [((-1,1),1), ((1,0),1)])   # not tested
             sage: f = m1 + m2                               # not tested
@@ -1011,7 +814,7 @@ class MultivariateGeneratingSeries(Element):
 
         TESTS::
 
-            sage: M = MultivariateGeneratingSeriesRing(2)
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)
             sage: R = M.laurent_polynomial_ring()
             sage: x0, x1 = R.gens()
             sage: type(M.term(1, [((1,0),1)]).taylor(10))
@@ -1030,7 +833,8 @@ class MultivariateGeneratingSeries(Element):
         EXAMPLES::
 
             sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
-            sage: M = MultivariateGeneratingSeriesRing(2)
+
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)
             sage: M.term(0, []).is_trivial_zero()
             True
             sage: M.term(0, [((1,1),1)]).is_trivial_zero()
@@ -1045,7 +849,8 @@ class MultivariateGeneratingSeries(Element):
         EXAMPLES::
 
             sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
-            sage: M = MultivariateGeneratingSeriesRing(2)
+
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)
             sage: M.term(0, []).is_trivial_one()
             False
             sage: M.term(0, [((1,1),1)]).is_trivial_one()
@@ -1077,108 +882,19 @@ class MultivariateGeneratingSeries(Element):
     def degrees(self):
         return (den.degree() for den in self._data.keys())
 
-    def _add_(self, other):
-        r"""
-        TESTS::
-
-            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
-            sage: M = MultivariateGeneratingSeriesRing(3)
-            sage: m1 = M.term(1, [((1,1,0),1)])
-            sage: m2 = M.term(-2, [((1,0,0),1),((0,1,0),2)])
-            sage: m1 + m2
-            (1)/((1 - x0*x1)) + (-2)/((1 - x1)^2*(1 - x0))
-        """
-        if self.is_trivial_zero():
-            return other
-        if other.is_trivial_zero():
-            return self
-
-        ans_data = self._data.copy()
-        for den,num in other._data.items():
-            if den in ans_data:
-                ans_data[den] += num
-                if ans_data[den].is_zero():
-                    del ans_data[den]
-            else:
-                ans_data[den] = num
-
-        R = self.parent()
-        return R.element_class(R, ans_data)
-
-    def _mul_(self, other):
-        r"""
-        TESTS::
-
-            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
-            sage: M = MultivariateGeneratingSeriesRing(3)
-            sage: m1 = M.term(1, [((1,1,0),1)])
-            sage: m2 = M.term(-2, [((1,0,0),1),((0,1,0),2)])
-            sage: m1 * m2
-            (-2)/((1 - x1)^2*(1 - x0)*(1 - x0*x1))
-
-            sage: R = M.laurent_polynomial_ring()
-            sage: M.one() * R.one()
-            (1)
-
-            sage: R = M.laurent_polynomial_ring()
-            sage: x0, x1, x2 = R.gens()
-            sage: m1 = M.term(x0 - 2*x2 + 1, [((1,1,1),2)])
-            sage: m2 = M.term(x0*x1 + 1, [((0,1,2),1)])
-            sage: m3 = M.term(1 + x0 + x1, [((1,0,1),1)])
-            sage: m4 = M.term(x0 - 1, [((1,0,0),2),((1,0,1),1)])
-            sage: (m1 + m2) * (m3 + m4) - m1 * m3 - m2 * m3 - m1 * m4 - m2 * m4
-            0
-        """
-        ans_data = {}
-        for den1,num1 in self._data.items():
-            for den2, num2 in other._data.items():
-                den = den1 * den2
-                num = num1 * num2
-                if den in ans_data:
-                    ans_data[den] += num
-                    if not ans_data[den]:
-                        del ans_data[den]
-                else:
-                    ans_data[den] = num
-
-        M = self.parent()
-        return M.element_class(M, ans_data)
-
-    def __neg__(self):
-        r"""
-        TESTS::
-
-            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
-            sage: M = MultivariateGeneratingSeriesRing(3)
-            sage: m1 = M.term(1, [((1,1,0),1)])
-            sage: m1
-            (1)/((1 - x0*x1))
-            sage: -m1
-            (-1)/((1 - x0*x1))
-            sage: m1 - m1
-            0
-        """
-        ans_data = {}
-        for den, num in self._data.items():
-            ans_data[den] = -num
-        M = self.parent()
-        return M.element_class(M, ans_data)
-
-    def _richcmp_(self, other, op):
-        raise NotImplementedError
-
     def _repr_(self):
         r"""
         TESTS::
 
             sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
-            sage: M = MultivariateGeneratingSeriesRing(2)
+
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)
             sage: R = M.laurent_polynomial_ring()
             sage: x0, x1 = R.gens()
             sage: M.term(-x0 + x1^3, [((1,1), 1), ((1,2),2)])
             (x1^3 - x0)/((1 - x0*x1)*(1 - x0*x1^2)^2)
 
-            sage: M = MultivariateGeneratingSeriesRing(2, 't,u')
+            sage: M = MultivariateGeneratingSeriesRing('t,u')
             sage: t, u = M.laurent_polynomial_ring().gens()
             sage: M.term(-t + u^3, [((1,1), 1), ((1,2),2)])
             (u^3 - t)/((1 - t*u)*(1 - t*u^2)^2)
@@ -1192,7 +908,7 @@ class MultivariateGeneratingSeries(Element):
             fraction = '(' + str(num) + ')'
             if not den.is_one():
                 fraction += '/'
-                fraction += '(' + den.str(var_names) + ')'
+                fraction += '(' + den.str_monomials(var_names) + ')'
 
             terms.append(fraction)
 
@@ -1203,49 +919,24 @@ class MultivariateGeneratingSeries(Element):
         return SR(str(self))
 
 
-# TODO: this should actually be an algebra over QQ[x0, x1, ..., xn]
-class MultivariateGeneratingSeriesRing(Parent):
-    r"""
-    EXAMPLES::
+class AbstractMSumRing(Parent):
+    def __init__(self, *args):
+        if len(args) == 1 and isinstance(args[0], AbstractMSumRing):
+            self._laurent_polynomial_ring = args[0]._laurent_polynomial_ring
+            self._free_module = args[0]._free_module
+            self._laurent_polynomial_ring_extra_var = args[0]._laurent_polynomial_ring_extra_var
+        else:
+            from sage.rings.polynomial.laurent_polynomial_ring import LaurentPolynomialRing
+            from sage.modules.free_module import FreeModule
+            self._laurent_polynomial_ring = LaurentPolynomialRing(QQ, *args)
+            dim = ZZ(self._laurent_polynomial_ring.ngens())
+            self._free_module = FreeModule(ZZ, dim)
 
-        sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
-
-        sage: MultivariateGeneratingSeriesRing(3)
-        Multivariate quasi-polynomial generating series on x0, x1, x2
-
-        sage: MultivariateGeneratingSeriesRing(2, 'y')
-        Multivariate quasi-polynomial generating series on y0, y1
-
-        sage: M = MultivariateGeneratingSeriesRing(3)
-        sage: M.zero()
-        0
-        sage: M.one()
-        (1)
-        sage: m1 = M.term(1, [((1,1,0),1)])
-        sage: m1
-        (1)/((1 - x0*x1))
-        sage: m2 = M.term(-2, [((1,0,0),1),((0,1,0),2)])
-        sage: m2
-        (-2)/((1 - x1)^2*(1 - x0))
-    """
-    Element = MultivariateGeneratingSeries
-
-    def __init__(self, dim, var='x'):
-        from sage.rings.polynomial.laurent_polynomial_ring import LaurentPolynomialRing
-        from sage.modules.free_module import FreeModule
-        dim = ZZ(dim)
-        self._free_module = FreeModule(ZZ, dim)
-        self._laurent_polynomial_ring = LaurentPolynomialRing(QQ, str(var), dim)
-
-        # univariate extension of the polynomial ring
-        # (needed in several algorithms)
-        self._laurent_polynomial_ring_extra_var = self._laurent_polynomial_ring['EXTRA_VAR']
+            # univariate extension of the polynomial ring
+            # (needed in several algorithms)
+            self._laurent_polynomial_ring_extra_var = self._laurent_polynomial_ring['EXTRA_VAR']
 
         Parent.__init__(self, category=Rings())
-
-    def _repr_(self):
-        vars_string = ', '.join(self.laurent_polynomial_ring().variable_names())
-        return 'Multivariate quasi-polynomial generating series on ' + vars_string
 
     def ngens(self):
         return self.laurent_polynomial_ring().ngens()
@@ -1268,30 +959,6 @@ class MultivariateGeneratingSeriesRing(Parent):
     def with_extra_var(self):
         return self['EXTRA_VAR']
 
-    def _coerce_map_from_(self, other):
-        r"""
-        EXAMPLES::
-
-            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
-
-            sage: M = MultivariateGeneratingSeriesRing(2)
-
-            sage: M.has_coerce_map_from(ZZ)
-            True
-            sage: M.coerce_map_from(ZZ)
-            Co...ion map:
-              From: Integer Ring
-              To:   Multivariate quasi-polynomial generating series on x0, x1
-
-            sage: M.has_coerce_map_from(QQ)
-            True
-
-            sage: M.has_coerce_map_from(M.laurent_polynomial_ring())
-            True
-        """
-        if self.laurent_polynomial_ring().has_coerce_map_from(other):
-            return True
-
     @cached_method
     def zero(self):
         r"""
@@ -1299,7 +966,7 @@ class MultivariateGeneratingSeriesRing(Parent):
 
             sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
 
-            sage: M = MultivariateGeneratingSeriesRing(2)
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)
             sage: M.zero()
             0
             sage: M.zero().parent() is M
@@ -1316,7 +983,7 @@ class MultivariateGeneratingSeriesRing(Parent):
 
             sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
 
-            sage: M = MultivariateGeneratingSeriesRing(2)
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)
             sage: M.zero()
             0
             sage: M.zero().parent() is M
@@ -1343,7 +1010,7 @@ class MultivariateGeneratingSeriesRing(Parent):
 
             sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
 
-            sage: M = MultivariateGeneratingSeriesRing(3)
+            sage: M = MultivariateGeneratingSeriesRing('x', 3)
             sage: M.term(1, [([1,1,0],1),([1,0,-1],2)])
             (1)/((1 - x0*x2^-1)^2*(1 - x0*x1))
             sage: M.term(1, {(1,1,0): 1, (1,0,-1): 2})
@@ -1357,7 +1024,7 @@ class MultivariateGeneratingSeriesRing(Parent):
 
             sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
 
-            sage: M = MultivariateGeneratingSeriesRing(2)
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)
             sage: M(1)
             (1)
 
@@ -1367,3 +1034,98 @@ class MultivariateGeneratingSeriesRing(Parent):
         """
         num = self._laurent_polynomial_ring(arg)
         return self.element_class(self, [([], num)])
+
+class GeneralizedMultiZetaRing(AbstractMSumRing):
+    Element = GeneralizedMultiZetaElement
+
+    def _coerce_map_from_(self, other):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
+
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)
+
+            sage: M.has_coerce_map_from(ZZ)
+            True
+            sage: M.coerce_map_from(ZZ)
+            Co...ion map:
+              From: Integer Ring
+              To:   Multivariate quasi-polynomial generating series on x0, x1
+
+            sage: M.has_coerce_map_from(QQ)
+            True
+
+            sage: M.has_coerce_map_from(M.laurent_polynomial_ring())
+            True
+        """
+        if self.laurent_polynomial_ring().base_ring().has_coerce_map_from(other):
+            return True
+
+
+# TODO: this should actually be an algebra over QQ[x0, x1, ..., xn]
+class MultivariateGeneratingSeriesRing(AbstractMSumRing):
+    r"""
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
+
+        sage: MultivariateGeneratingSeriesRing('x', 3)
+        Multivariate quasi-polynomial generating series on x0, x1, x2
+
+        sage: MultivariateGeneratingSeriesRing(['x', 'y', 'z'])
+        Multivariate quasi-polynomial generating series on x, y, z
+
+        sage: MultivariateGeneratingSeriesRing('a,b,c')
+        Multivariate quasi-polynomial generating series on a, b, c
+
+        sage: MultivariateGeneratingSeriesRing('y', 2)
+        Multivariate quasi-polynomial generating series on y0, y1
+
+        sage: M = MultivariateGeneratingSeriesRing('x', 3)
+        sage: M.zero()
+        0
+        sage: M.one()
+        (1)
+        sage: m1 = M.term(1, [((1,1,0),1)])
+        sage: m1
+        (1)/((1 - x0*x1))
+        sage: m2 = M.term(-2, [((1,0,0),1),((0,1,0),2)])
+        sage: m2
+        (-2)/((1 - x1)^2*(1 - x0))
+    """
+    Element = MultivariateGeneratingSeries
+
+    @cached_method
+    def residue_ring(self):
+        return GeneralizedMultiZetaRing(self)
+
+    def _repr_(self):
+        vars_string = ', '.join(self.laurent_polynomial_ring().variable_names())
+        return 'Multivariate quasi-polynomial generating series on ' + vars_string
+
+    def _coerce_map_from_(self, other):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
+
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)
+
+            sage: M.has_coerce_map_from(ZZ)
+            True
+            sage: M.coerce_map_from(ZZ)
+            Co...ion map:
+              From: Integer Ring
+              To:   Multivariate quasi-polynomial generating series on x0, x1
+
+            sage: M.has_coerce_map_from(QQ)
+            True
+
+            sage: M.has_coerce_map_from(M.laurent_polynomial_ring())
+            True
+        """
+        if self.laurent_polynomial_ring().has_coerce_map_from(other):
+            return True
+
+
