@@ -33,9 +33,15 @@ import numbers
 from sage.misc.cachefunc import cached_method
 
 from sage.structure.sage_object import SageObject
-from sage.structure.richcmp import op_LT, op_EQ, op_NE, op_LE, op_GE, op_GT, op_LT
 from sage.structure.parent import Parent
 from sage.structure.element import Element, parent
+
+try:
+    from sage.structure.richcmp import op_LT, op_EQ, op_NE, op_LE, op_GE, op_GT, op_LT
+except ImportError:
+    # sage version <= 7.6
+    from sage.structure.sage_object import op_LT, op_EQ, op_NE, op_LE, op_GE, op_GT, op_LT
+
 
 from sage.categories.all import CommutativeAlgebras, Rings
 
