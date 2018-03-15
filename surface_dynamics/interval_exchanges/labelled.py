@@ -750,15 +750,40 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
         """
         return LabelledRauzyDiagram(self, **args)
 
-    def heights_cone(self):
+    def suspension_cone(self, winner=None):
         r"""
-        Return the cone of heights of suspension data.
+        Return the cone of suspension data.
+
+        A suspension data `\tau` for a permutation `(\pi_{top}, \pi_{bot})`
+        on the alphabet `\mathcal{A}` is a real vector in `RR^\mathcal{A}`
+        so that
+
+        .. MATH::
+
+            \forall 1 \leq k < d,\,
+            \sum_{\beta: \pi_{top}(\beta) \leq k} \tau_\beta > 0
+            \quad \text{and} \quad
+            \sum_{\beta: \pi_{bot}(\beta) \leq k} \tau_\beta < 0.
+
+        A suspension data determines half of a zippered rectangle construction.
+        The other half is the length data that is a positive vector in
+        `\RR^\mathcal{A}`.
+
+        INPUT:
+
+        - ``winner`` - (optional) either ``None``, ``"top"`` or ``"bottom"``. If
+          not ``None`` , then return only half of the suspension cone corresponding
+          to data that either comes from a top or bottom Rauzy induction.
+
+        .. SEEALSO::
+
+            :meth:`heights_cone`
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.Permutation('a b c d e f', 'e c b f d a')
-            sage: H = p.heights_cone()
+            sage: H = p.suspension_cone()
             sage: H.dimension()
             6
             sage: rays = [r.vector() for r in H.rays()]
@@ -790,8 +815,44 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
                 ieq[self._labels[1][j]+1] = -1
             ieqs.append(ieq)
 
+        if winner is not None:
+            winner = interval_conversion(winner)
+            if winner == 0:
+                ieqs.append([0] + [1] * len(self))
+            elif winner == 1:
+                ieqs.append([0] + [-1] * len(self))
+
         from sage.geometry.polyhedron.constructor import Polyhedron
         return Polyhedron(ieqs=ieqs)
+
+    def heights_cone(self, side=None):
+        r"""
+        Return the cone of heights data.
+
+        .. SEEALSO::
+
+            :meth:`suspension_cone`
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import *
+            sage: p = iet.Permutation('a b c d', 'd c b a')
+            sage: C = p.heights_cone()
+            sage: C
+            A 4-dimensional polyhedron in QQ^4 defined as the convex hull of 1 vertex and 5 rays
+            sage: C.rays_list()
+            [[0, 0, 1, 1], [0, 1, 1, 0], [0, 1, 1, 1], [1, 1, 0, 0], [1, 1, 1, 0]]
+
+            sage: p.heights_cone('top').rays_list()
+            [[0, 0, 1, 1], [0, 1, 1, 0], [0, 1, 1, 1], [1, 1, 0, 0]]
+            sage: p.heights_cone('bot').rays_list()
+            [[0, 0, 1, 1], [0, 1, 1, 0], [1, 1, 0, 0], [1, 1, 1, 0]]
+        """
+        I = self.intersection_matrix()
+        C = self.suspension_cone(side)
+
+        from sage.geometry.polyhedron.constructor import Polyhedron
+        return Polyhedron(rays=[-I*c.vector() for c in C.rays()])
 
 class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
     r"""
