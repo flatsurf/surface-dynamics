@@ -9,7 +9,7 @@ def vector_to_monomial_string(u, var_names):
     r"""
     EXAMPLES::
 
-        sage: from surface_dynamics.misc.multivariate_generating_series import vector_to_monomial_string
+        sage: from surface_dynamics.misc.factored_denominator import vector_to_monomial_string
         sage: vector_to_monomial_string((0,4,3), 'x')
         'x1^4*x2^3'
         sage: vector_to_monomial_string((0,4,3), 'hello')
@@ -38,7 +38,7 @@ def vector_to_linear_form_string(u, var_names):
     r"""
     EXAMPLES::
 
-        sage: from surface_dynamics.misc.multivariate_generating_series import vector_to_linear_form_string
+        sage: from surface_dynamics.misc.factored_denominator import vector_to_linear_form_string
         sage: vector_to_linear_form_string((0,4,3), 'x')
         '4*x1 + 3*x2'
         sage: vector_to_linear_form_string((0,4,3), 'hello')
@@ -93,14 +93,14 @@ class FactoredDenominator(object):
         sage: f2 = FactoredDenominator([((0,1,2), 3), ((1,1,1), 1)], V)
         sage: f3 = FactoredDenominator([((0,-1,2), 1), ((1,0,0), 1), ((0,0,2), 1)], V)
         sage: f1
-        (1 - x0)^2
+        {(1, 0, 0): 2}
         sage: f1 * f2 * f3
-        (1 - x1^-1*x2^2)*(1 - x2^2)*(1 - x1*x2^2)^3*(1 - x0)^3*(1 - x0*x1*x2)
+        {(1, 0, 0): 3, (0, 1, 2): 3, (1, 1, 1): 1, (0, -1, 2): 1, (0, 0, 2): 1}
         sage: hash(f1)  # random
         9164823176457928306
 
         sage: FactoredDenominator(f1)
-        (1 - x0)^2
+        {(1, 0, 0): 2}
     """
     __slots__ = ['_dict', '_tuple']
 
@@ -288,34 +288,34 @@ class FactoredDenominator(object):
         EXAMPLES::
 
             sage: from surface_dynamics.misc.factored_denominator import FactoredDenominator
-            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
 
-            sage: M = MultivariateGeneratingSeriesRing('x', 3)
             sage: V = ZZ**3
 
             sage: f = FactoredDenominator([((1,0,0), 2)], V)
             sage: f
-            (1 - x0)^2
-            sage: f.logarithmic_minus_derivative(0, M)
-            (2)/((1 - x0))
-            sage: f.logarithmic_minus_derivative(1, M)
-            0
-            sage: f.logarithmic_minus_derivative(2, M)
-            0
+            {(1, 0, 0): 2}
+            sage: list(f.logarithmic_minus_derivative(0))
+            [(2, (0, 0, 0), (1, 0, 0))]
+            sage: list(f.logarithmic_minus_derivative(1))
+            []
+            sage: list(f.logarithmic_minus_derivative(2))
+            []
 
             sage: f = FactoredDenominator([((1,1,1), 1)], V)
-            sage: f.logarithmic_minus_derivative(0, M)
-            (x1*x2)/((1 - x0*x1*x2))
+            sage: list(f.logarithmic_minus_derivative(0))
+            [(1, (0, 1, 1), (1, 1, 1))]
 
             sage: f = FactoredDenominator([((1,0,0), 1), ((0,1,0), 1), ((0,0,1), 1)], V)
-            sage: f.logarithmic_minus_derivative(0, M)
-            (1)/((1 - x0))
+            sage: list(f.logarithmic_minus_derivative(0))
+            [(1, (0, 0, 0), (1, 0, 0))]
 
             sage: f = FactoredDenominator([((1,0,0), 2), ((1,1,0), 3), ((1,1,1), 1)], V)
             sage: f
-            (1 - x0)^2*(1 - x0*x1)^3*(1 - x0*x1*x2)
-            sage: f.logarithmic_minus_derivative(0, M)
-            (3*x1)/((1 - x0*x1)) + (2)/((1 - x0)) + (x1*x2)/((1 - x0*x1*x2))
+            {(1, 0, 0): 2, (1, 1, 0): 3, (1, 1, 1): 1}
+            sage: list(f.logarithmic_minus_derivative(0))
+            [(2, (0, 0, 0), (1, 0, 0)),
+             (3, (0, 1, 0), (1, 1, 0)),
+             (1, (0, 1, 1), (1, 1, 1))]
         """
         for mon, mult in self._tuple:
             if mon[j]:
@@ -329,7 +329,19 @@ class FactoredDenominator(object):
 
         EXAMPLES::
 
-            sage: 
+            sage: from surface_dynamics.misc.factored_denominator import FactoredDenominator
+
+            sage: V = ZZ**3
+
+            sage: f1 = FactoredDenominator([((1,0,0), 2)], V)
+            sage: f2 = FactoredDenominator([((1,0,0), 2)], V)
+            sage: f3 = FactoredDenominator([((1,0,0), 1)], V)
+            sage: f4 = FactoredDenominator([((1,0,1), 2)], V)
+
+            sage: f1 == f1 and f1 == f2
+            True
+            sage: f1 == f3 or f1 == f4
+            False
         """
         if type(self) is not type(other):
             raise TypeError
