@@ -6,6 +6,10 @@ The set `X_n` comes with a canonical involution `i \mapsto -i-1` (note that `-i-
 complement to `i`). The commutator of this canonical involution are the signed permutations.
 """
 
+# as a datastructure it would be much more efficient to store
+# a permutation
+# a list of n signs
+
 from __future__ import absolute_import, print_function
 from array import array
 
@@ -47,6 +51,18 @@ def even_permutations(n):
     for p in permutations(range(-n, n)):
         yield array('l', p)
 
+def even_perm_init(data):
+    if isinstance(data, (tuple, list)):
+        if not data:
+            return []
+        if isinstance(data[0], (tuple,list)):
+            return even_perm_from_cycles(data)
+        else:
+            return [int(x) for x in data]
+    if isinstance(data,str):
+        raise NotImplementedError
+
+    raise TypeError("The input must be list, tuple or string")
 
 def even_perm_check(p):
     r"""
