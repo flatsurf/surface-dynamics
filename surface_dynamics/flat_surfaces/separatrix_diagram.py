@@ -54,7 +54,7 @@ REFERENCES:
 
 EXAMPLES::
 
-    sage: from surface_dynamics.all import *
+    sage: from surface_dynamics import *
 
 Separatrix diagrams::
 
@@ -103,6 +103,8 @@ from surface_dynamics.misc.permutation import (perm_check, equalize_perms, init_
         perm_orbit, perm_invert, perms_canonical_labels,
         perms_transitive_components, canonical_perm, canonical_perm_i,
         argmin)
+
+from sage.misc.package import is_package_installed
 
 #
 # Abelian and quadratic Separatrix Diagram
@@ -173,7 +175,7 @@ class SeparatrixDiagram(SageObject):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: s = SeparatrixDiagram('(0,2)(1,3,4)','(0,4)(2,1,3)')
         sage: print(s)
@@ -185,7 +187,7 @@ class SeparatrixDiagram(SageObject):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,1)(2,3,4)','(0,2,4)(1,3)')
             sage: s == loads(dumps(s))
@@ -268,7 +270,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = SeparatrixDiagram('(0,1)(2,3)','(0,2,3,1)') #indirect doctest
             Traceback (most recent call last):
@@ -289,7 +291,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,3,2)(1,4)','(0,1)(2,3,4)')
             sage: sage_input(s)
@@ -317,7 +319,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: S = SeparatrixDiagram('(0,1)(2,3,4)','(0,3,2)(1,4)')
             sage: G = S.to_directed_graph(); G
@@ -338,7 +340,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: d = SeparatrixDiagram('(0,1)(2)','(0)(1,2)')
             sage: repr(d) #indirect doctest
@@ -353,7 +355,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: print("to be done")
             to be done
@@ -413,7 +415,7 @@ class SeparatrixDiagram(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: d1 = SeparatrixDiagram('(0)','(0)')
             sage: d2 = SeparatrixDiagram('(0,1)(2)','(0,1)(2)')
@@ -432,7 +434,7 @@ class SeparatrixDiagram(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: d1 = SeparatrixDiagram('(0)','(0)')
             sage: d2 = SeparatrixDiagram('(0,1)(2)','(0,1)(2)')
@@ -450,7 +452,7 @@ class SeparatrixDiagram(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = ['(0,1,2)-(0,1,2)',
             ....:      '(0,2,1)-(0,1,2)',
@@ -494,7 +496,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: bot = [1,2,0,3]
             sage: top = [1,0,3,2]
@@ -527,7 +529,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0)(2,3,4)','(0,3,2)(1)')
             sage: s
@@ -570,7 +572,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: bot = '(0,1,3,6,7,5)(2,4)(8)(9)'
             sage: top = '(0)(1,2)(3,4,5)(6,7,8,9)'
@@ -580,7 +582,7 @@ class SeparatrixDiagram(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: bot = [3,2,4,0,1]
             sage: top = [1,0,3,4,2]
@@ -629,7 +631,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,1,2,3)(4,5)','(1,2,3)(4,5,0)')
             sage: sh = s.horizontal_symmetry()
@@ -650,7 +652,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,1,2,3)(4,5)','(1,2,3)(4,5,0)')
             sage: sv = s.vertical_symmetry()
@@ -672,7 +674,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,1,2)(3,4,5,6,7,8)-(0,1,3,5,7)(2,4,6,8)')
             sage: s.inverse()
@@ -700,7 +702,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,3,2)(1,4)','(0,1)(2,3,4)')
             sage: s._get_normal_perms()
@@ -750,7 +752,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,1,2)(3,4,5)-(0,1)(2,3,4,5)')
             sage: s.symmetries()
@@ -840,7 +842,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,1,2)(3,4,5)(6,7,8)','(0,3,7,8)(1,5)(2,4,6)')
             sage: s.is_in_normal_form()
@@ -860,7 +862,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: S = SeparatrixDiagram('(0,1)(2,3)','(1,3,2)(0)')
             sage: S.degree()
@@ -877,7 +879,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: S = SeparatrixDiagram('(0,1)(2,3)','(1,3,2)(0)')
             sage: S.ncyls()
@@ -891,7 +893,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStratum(1,1,0)
             sage: s = a.separatrix_diagrams()[0]
@@ -909,7 +911,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: SeparatrixDiagram('(0)','(0)').euler_characteristic()
             0
@@ -928,7 +930,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: CylinderDiagram([((0,),(0,))]).genus()
             1
@@ -949,7 +951,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: SeparatrixDiagram('(0)(1)(2)','(0)(1)(2)').stratum()
             H_1(0^3)
@@ -968,7 +970,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0)(1,2)','(0,1)(2)')
             sage: s.bot()
@@ -982,7 +984,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0)(1,2)','(0,1)(2)')
             sage: s.bot_perm()
@@ -998,7 +1000,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,1)(2,5)(3,4,6)','(0,1,5)(2,3,6)(4)')
             sage: s.bot_orbit(0)
@@ -1014,7 +1016,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: S = SeparatrixDiagram('(0,2)(3,4)','(0)(1,2,3)')
             sage: S.bot_cycle_tuples()
@@ -1028,7 +1030,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: S = SeparatrixDiagram('(0,2)(3,4)','(0)(1,2,3)')
             sage: S.bot_cycle_string()
@@ -1044,7 +1046,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,1,3)(2,4)','(0,4)(1,2,3)')
             sage: s.top()
@@ -1058,7 +1060,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0)(1,2)','(1)(0,2)')
             sage: s.top_perm()
@@ -1074,7 +1076,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,1)(2,5)(3,4,6)','(0,1,5)(2,3,6)(4)')
             sage: s.top_orbit(0)
@@ -1090,7 +1092,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: S = SeparatrixDiagram('(0,2)(3,4)','(0)(1,2,3)')
             sage: S.top_cycle_tuples()
@@ -1104,7 +1106,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: S = SeparatrixDiagram('(0,2)(3,4)','(0)(1,2,3)')
             sage: S.top_cycle_string()
@@ -1124,7 +1126,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: S = SeparatrixDiagram('(0,3,1,4,2)','(0,1,2,3,4)')
             sage: G1 = S.automorphism_group(implementation='graph'); G1
@@ -1153,7 +1155,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         Homological dimension in the stratum H(2)::
 
@@ -1204,7 +1206,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,1)','(2,3)')
             sage: s.outgoing_edges_perm()
@@ -1227,7 +1229,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,1)','(2,3)')
             sage: s.incoming_edges_perm()
@@ -1300,7 +1302,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,1,3)(2,4)','(0,2)(1,4,3)'); s
             (0,1,3)(2,4)-(0,2)(1,4,3)
@@ -1354,7 +1356,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,1)(2,3)(4,5)','(1,2)(3,4)(5,0)')
             sage: for c in s.cylinder_diagram_iterator(): print(c)
@@ -1439,7 +1441,7 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0)(1)(2)','(0)(1)(2)')
             sage: for c in s.cylinder_diagrams(connected=True): print(c)
@@ -1517,7 +1519,7 @@ def separatrix_diagram_fast_iterator(profile,ncyls=None):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: from surface_dynamics.flat_surfaces.separatrix_diagram import separatrix_diagram_fast_iterator
         sage: for s in separatrix_diagram_fast_iterator([3]): print(s)
@@ -1598,7 +1600,7 @@ def separatrix_diagram_iterator(profile, ncyls=None):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: from surface_dynamics.flat_surfaces.separatrix_diagram import separatrix_diagram_iterator
 
@@ -1672,7 +1674,7 @@ def orientation_cover(alpha,phi,a,verbose=0):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: from surface_dynamics.flat_surfaces.separatrix_diagram import orientation_cover
         sage: alpha = [3, 2, 1, 0, 5, 4, 7, 6]
@@ -1737,7 +1739,7 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: from surface_dynamics.flat_surfaces.separatrix_diagram import hyperelliptic_cylinder_diagram_iterator
         sage: it = hyperelliptic_cylinder_diagram_iterator(3)
@@ -1947,7 +1949,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
 
     We first build the simplest cylinder diagram which corresponds to a torus::
@@ -1977,7 +1979,7 @@ class CylinderDiagram(SeparatrixDiagram):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = CylinderDiagram([((0,),(0,))])
             sage: CylinderDiagram(str(c)) == c
@@ -2101,7 +2103,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = CylinderDiagram([((0,1),(1,2)),((2,),(0,))])
             sage: repr(c) #indirect doctest
@@ -2118,7 +2120,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: C = AbelianStratum(4).cylinder_diagrams()
             sage: for c in C:
@@ -2154,7 +2156,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = CylinderDiagram('(0,1,5)-(2,5) (2)-(0,1,3) (3,4)-(4)'); c
             (0,1,5)-(2,5) (2)-(0,1,3) (3,4)-(4)
@@ -2178,7 +2180,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: import itertools
             sage: for p in itertools.permutations([0,1,2,3]):
@@ -2479,7 +2481,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = CylinderDiagram('(0,2,4)-(1,3,5) (1,5)-(0) (3)-(2,4)')
             sage: c
@@ -2495,7 +2497,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = CylinderDiagram('(0,2,4)-(1,3,5) (1,5)-(0) (3)-(2,4)')
             sage: c
@@ -2516,7 +2518,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = CylinderDiagram('(0,2,4)-(1,3,5) (1,5)-(0) (3)-(2,4)')
             sage: c.top_to_cyl(0)
@@ -2537,7 +2539,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: CylinderDiagram('(0)-(1) (1)-(0)').is_connected()
             True
@@ -2573,7 +2575,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = CylinderDiagram('(0,1)-(0,2) (3,5,4)-(1,4,6) (2,6)-(3,5)')
             sage: c
@@ -2609,7 +2611,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = CylinderDiagram('(0,3,4)-(0,3,5) (1,2,5)-(1,2,4)')
             sage: c.vertical_symmetry()
@@ -2631,7 +2633,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = CylinderDiagram('(0,3,4)-(0,3,5) (1,2,5)-(1,2,4)')
             sage: c.horizontal_symmetry()
@@ -2652,7 +2654,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = CylinderDiagram('(0,1)-(2,3,5) (2,3,4)-(1) (5)-(0,4)')
             sage: c.symmetries()
@@ -2732,7 +2734,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: cyl = CylinderDiagram('(0,1)-(0,2) (2,3)-(1,3)')
             sage: cyl.automorphism_group()
@@ -2755,7 +2757,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         In genus 2, strata H(2) and H(1,1), all surfaces are hyperelliptic::
 
@@ -2909,7 +2911,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         We consider the three diagrams of the stratum H(1,1)::
 
@@ -2962,7 +2964,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         For a one cylinder diagram, there is no relations::
 
@@ -3112,7 +3114,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: C = CylinderDiagram([((0,1),(0,2)),((2,),(1,))])
             sage: C.stratum()
@@ -3183,7 +3185,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = CylinderDiagram('(0,1,2,3,4)-(0,1,2,3,4)')
             sage: c.spin_parity()
@@ -3241,7 +3243,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: cyl = CylinderDiagram('(0,1)-(0,2) (2,3)-(1,3)')
             sage: cyl.an_origami()
@@ -3300,7 +3302,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: cyl = CylinderDiagram('(0,1,2)-(3,1,2) (3)-(0)')
             sage: for o in cyl.origami_iterator(4):
@@ -3332,7 +3334,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: cyl = CylinderDiagram('(0,1,2)-(0,1,3) (3)-(2)')
             sage: o5 = cyl.origamis(5)
@@ -3363,7 +3365,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: cyl = CylinderDiagram([((0,1),(0,2)),((2,),(1,))])
             sage: cyl
@@ -3440,7 +3442,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: cyl = CylinderDiagram('(0,1,2)-(3,1,2) (3)-(0)')
             sage: for o in cyl.cylcoord_to_origami_iterator((1,1,1,1),(1,1)):
@@ -3520,7 +3522,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = CylinderDiagram([((0,1),(1,2)),((2,),(0,))])
             sage: c.stratum()
@@ -4069,23 +4071,25 @@ class QuadraticCylinderDiagram(SageObject):
         r"""
         Generating series of the number of saddle connection lengths.
 
-        WARNING: when a triangulation is involved, the generating series ignore
-        some lower dimensional polytopes that are counted twice!!
+        .. WARNING::
+        
+            When a triangulation is involved, the generating series ignore
+            some lower dimensional polytopes that are counted twice!
 
         EXAMPLES::
 
             sage: from surface_dynamics import *
 
             sage: q = QuadraticCylinderDiagram('(0,1,2,3,3)-(0,4,4,2,1)')
-            sage: q.widths_generating_series()
+            sage: q.widths_generating_series()                             # optional - latte_int
             (1)/((1 - w)^3*(1 - w^2))
 
             sage: q = QuadraticCylinderDiagram('(0,0,1,1,2,2)-(3,3,4,4)')
-            sage: q.widths_generating_series()
+            sage: q.widths_generating_series()                             # optional - latte_int
             (3)/((1 - w^2)^4)
 
             sage: q = QuadraticCylinderDiagram('(0,0,1)-(2,2,3) (1,4)-(3,4)')
-            sage: q.widths_generating_series()
+            sage: q.widths_generating_series()                             # optional - latte_int
             (1)/((1 - w1)*(1 - w0*w1)*(1 - w0^2))
         """
         from sage.interfaces.latte import count
