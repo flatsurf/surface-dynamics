@@ -131,7 +131,7 @@ class LabelledPermutation(SageObject):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation([0,1,2,3],[3,2,1,0])
             sage: p[0][0]
@@ -156,7 +156,7 @@ class LabelledPermutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         The list of an permutation from iet::
 
@@ -203,7 +203,7 @@ class LabelledPermutation(SageObject):
 
         EXAMPLES:
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         ::
 
@@ -258,7 +258,7 @@ class LabelledPermutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c d','b d a c')
             sage: p.rauzy_move_winner('top','right')
@@ -306,7 +306,7 @@ class LabelledPermutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c d','b d a c')
             sage: p.rauzy_move_loser('top','right')
@@ -360,7 +360,7 @@ class LabelledPermutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()
             sage: p = Q.permutation_representative(reduced=False)
             sage: p.lyapunov_exponents_H_plus() # abs tol .05
@@ -420,7 +420,7 @@ class LabelledPermutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()
             sage: p = Q.permutation_representative(reduced=False)
             sage: p.lyapunov_exponents_H_minus() # abs tol .05
@@ -483,7 +483,7 @@ def LabelledPermutationsIET_iterator(
 
     TESTS::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: for p in iet.Permutations_iterator(2, alphabet="ab"):
         ....:     print("%s\n****" % p)  #indirect doctest
@@ -577,7 +577,7 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
     Reducibility testing::
 
@@ -621,7 +621,7 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
 
         EXAMPLES:
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation("a b c d","d c a b")
             sage: q = iet.Permutation("a b c d","d c a b",reduced=True)
@@ -648,7 +648,7 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b','b a')
             sage: print(p.rauzy_move_interval_substitution('top','right'))
@@ -696,7 +696,7 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b','b a')
             sage: print(p.rauzy_move_orbit_substitution('top','right'))
@@ -743,7 +743,7 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c', 'c b a')
             sage: d = p.rauzy_diagram()
@@ -860,7 +860,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
     Reducibility testing::
 
@@ -920,7 +920,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a','b b')
             sage: p.has_right_rauzy_move('top')
@@ -985,7 +985,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a b','b c c')
             sage: p.right_rauzy_move(0)
@@ -1057,7 +1057,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a b','b c c')
             sage: p.left_rauzy_move(0)
@@ -1127,7 +1127,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a','b b c c')
             sage: q = p.reduced()
@@ -1151,7 +1151,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a b c b', 'c d d a')
             sage: d = p.rauzy_diagram()
@@ -1183,7 +1183,7 @@ class FlippedLabelledPermutation(LabelledPermutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('0 0 1 2 2 1', '3 3', flips='1')
             sage: p.list(flips=True)
@@ -1224,7 +1224,7 @@ class FlippedLabelledPermutation(LabelledPermutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b', 'b a', flips='a')
             sage: p[0]
@@ -1252,7 +1252,7 @@ class FlippedLabelledPermutationIET(
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
     Reducibility testing (does not depends of flips)::
 
@@ -1290,6 +1290,8 @@ class FlippedLabelledPermutationIET(
 
         EXAMPLE::
 
+            sage: from surface_dynamics import *
+
             sage: p = iet.Permutation('a b c','c b a',flips='a')
             sage: q = iet.Permutation('a b c','c b a',flips='a',reduced=True)
             sage: p.reduced() == q
@@ -1315,7 +1317,7 @@ class FlippedLabelledPermutationIET(
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c', 'c b a',flips='a')
             sage: p.rauzy_diagram()
@@ -1332,7 +1334,7 @@ class FlippedLabelledPermutationLI(
 
     EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
     Rauzy movability and Rauzy move::
 
@@ -1357,7 +1359,7 @@ class FlippedLabelledPermutationLI(
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a','b b c c',flips='a')
             sage: q = iet.GeneralizedPermutation('a a','b b c c',flips='a',reduced=True)
@@ -1386,7 +1388,7 @@ class FlippedLabelledPermutationLI(
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a b','b c c',flips='c')
             sage: p.right_rauzy_move(0)
@@ -1448,7 +1450,7 @@ class FlippedLabelledPermutationLI(
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         ::
 
@@ -1497,7 +1499,7 @@ class FlippedLabelledPermutationLI(
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a b b a', 'c d c d')
             sage: d = p.rauzy_diagram()
@@ -1528,7 +1530,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a1 a2','a2 a1')
                 sage: d = p.rauzy_diagram()
@@ -1571,7 +1573,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b','b a')
                 sage: r = p.rauzy_diagram()
@@ -1600,7 +1602,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b','b a')
                 sage: d = p.rauzy_diagram()
@@ -1634,7 +1636,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
             EXAMPLE::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b c','c b a')
                 sage: r = p.rauzy_diagram()
@@ -1661,7 +1663,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
             The golden rotation::
 
@@ -1715,7 +1717,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a')
             sage: r = p.rauzy_diagram()
@@ -1747,6 +1749,8 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
         EXAMPLES::
 
+            sage: from surface_dynamics import *
+
             sage: p = iet.Permutation('a b c','c b a')
             sage: r = p.rauzy_diagram()
             sage: print(r.edge_to_orbit_substitution(None,None))
@@ -1758,7 +1762,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: pi0 = iet.Permutation('A1 A2 B', 'B A1 A2')
             sage: G = pi0.rauzy_diagram()
@@ -1795,7 +1799,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b','b a')
             sage: r = p.rauzy_diagram()
@@ -1834,7 +1838,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b','b a')
             sage: d = p.rauzy_diagram()
@@ -1867,6 +1871,8 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
         TESTS::
 
+            sage: from surface_dynamics import *
+
             sage: p = iet.Permutation('a b c','c b a')
             sage: r = p.rauzy_diagram()
             sage: p in r   #indirect doctest
@@ -1882,7 +1888,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a')
             sage: r = p.rauzy_diagram()
@@ -1908,7 +1914,7 @@ class FlippedLabelledRauzyDiagram(FlippedRauzyDiagram, LabelledRauzyDiagram):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a',flips='a')
             sage: r = p.rauzy_diagram()
@@ -1925,7 +1931,7 @@ class FlippedLabelledRauzyDiagram(FlippedRauzyDiagram, LabelledRauzyDiagram):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b','b a',flips='a')
             sage: r = p.rauzy_diagram()
