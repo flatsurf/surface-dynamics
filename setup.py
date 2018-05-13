@@ -51,7 +51,7 @@ extensions_data = {
     # build integer_iet only from sage 8.0 (troubles with cysignals)
     'integer_iet': {
         'name': 'surface_dynamics.interval_exchanges.integer_iet',
-        'dir': os.path.join('interval_exchanges', 'integer_iet'),
+        'dir': 'interval_exchanges',
         'sources': ['integer_iet.pyx', 'int_iet.c', 'int_vector.c'],
         'headers': ['integer_iet.pxd', 'int_iet.h'],
         'condition': LooseVersion(SAGE_VERSION) >= LooseVersion('8.0')
