@@ -77,6 +77,8 @@ class ReducedPermutation(SageObject) :
         r"""
         TESTS::
 
+            sage: from surface_dynamics import *
+
             sage: p = iet.Permutation('a b', 'b a', reduced=True)
             sage: p[0]
             ['a', 'b']
@@ -108,7 +110,7 @@ def ReducedPermutationsIET_iterator(
 
     TESTS::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: for p in iet.Permutations_iterator(3,reduced=True,alphabet="abc"):
         ....:     print(p)  #indirect doctest
@@ -147,7 +149,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
     Equality testing (no equality of letters but just of ordering)::
 
@@ -197,7 +199,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a b','b a',reduced=True)
             sage: p.list() == [['a', 'b'], ['b', 'a']]
@@ -216,7 +218,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
 
         EXAMPLE::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c d','d c b a')
             sage: q = p.reduced()
@@ -268,7 +270,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c d', 'd a b c',reduced=True)
             sage: d = p.rauzy_diagram()
@@ -299,7 +301,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         Examples for permutations such that the suspensions are tori::
 
@@ -436,7 +438,7 @@ class ReducedPermutationLI(ReducedPermutation, OrientablePermutationLI):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
     Reducibility testing::
 
@@ -482,7 +484,7 @@ class ReducedPermutationLI(ReducedPermutation, OrientablePermutationLI):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a b b', 'c c a', reduced = True)
             sage: list(p)
@@ -514,7 +516,7 @@ class ReducedPermutationLI(ReducedPermutation, OrientablePermutationLI):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c d', 'd a b c')
             sage: d = p.rauzy_diagram()
@@ -546,7 +548,7 @@ class FlippedReducedPermutationIET(
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: p = iet.Permutation('a b c', 'c b a', flips=['a'], reduced=True)
         sage: p.rauzy_move(1)
@@ -589,7 +591,7 @@ class FlippedReducedPermutationIET(
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b','b a',reduced=True,flips='b')
             sage: p.list(flips=True)
@@ -624,7 +626,7 @@ class FlippedReducedPermutationIET(
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b','b a',reduced=True,flips='a')
             sage: r = p.rauzy_diagram()
@@ -641,7 +643,7 @@ class FlippedReducedPermutationLI(
 
     EXAMPLES:
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
     Creation using the GeneralizedPermutation function::
 
@@ -657,7 +659,7 @@ class FlippedReducedPermutationLI(
 
         EXAMPLES:
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         ::
 
@@ -707,7 +709,7 @@ class FlippedReducedPermutationLI(
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a b','c c b',reduced=True)
             sage: r = p.rauzy_diagram()
@@ -726,7 +728,7 @@ class ReducedRauzyDiagram(RauzyDiagram):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a',reduced=True)   #indirect doctest
             sage: r = p.rauzy_diagram()
@@ -741,7 +743,7 @@ class ReducedRauzyDiagram(RauzyDiagram):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a',reduced=True)
             sage: r = p.rauzy_diagram()
@@ -756,7 +758,7 @@ class FlippedReducedRauzyDiagram(FlippedRauzyDiagram, ReducedRauzyDiagram):
 
     TESTS::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: p = iet.Permutation('a b c', 'c a b', flips=['b'], reduced=True)
         sage: r = p.rauzy_diagram()
