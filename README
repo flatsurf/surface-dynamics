@@ -5,7 +5,7 @@ Surface dynamics
 The surface_dynamics package for SageMath adds functionality related to interval exchange
 transformations, translation surfaces, mapping classes and more. It is
 distributed as an external Python package. It installs on top of an existing
-Sage installation (versions 7.5.1, 7.6 or 8.0).
+Sage installation (tested on versions 8.0, 8.1 and 8.2).
 
 This package is based on `SageMath <http://www.sagemath.org>`_ and relies heavily on:
 
@@ -17,7 +17,9 @@ This package is based on `SageMath <http://www.sagemath.org>`_ and relies heavil
 Prerequisites
 -------------
 
-Installing surface_dynamics requires a working Sage installation (with Cython and gcc).
+Installing surface_dynamics requires a working Sage installation (with Cython and gcc). It is
+also recommanded to install the optional SageMath packages ``gap_packages``, ``database_gap``
+and ``latte_int``.
 
 Installation
 ------------
