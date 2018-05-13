@@ -88,7 +88,7 @@ def latte_generating_series(L, M=None):
         (1)/((1 - x2^-1*x4*x5)*(1 - x2*x3)*(1 - x1*x2)*(1 - x0)) + (1)/((1 - x3*x4*x5)*(1 - x2*x4^-1*x5^-1)*(1 - x1*x4*x5)*(1 - x0))
     """
     if M is None:
-        M = MultivariateGeneratingSeriesRing(L.ambient_dim())
+        M = MultivariateGeneratingSeriesRing('x', L.ambient_dim())
     try:
         from sage.interfaces.latte import count
     except ImportError:
@@ -651,13 +651,13 @@ class MultivariateGeneratingSeries(AbstractMSum):
             sage: x0,x1 = R.gens()
             sage: f = M.term(x0, [((1,1),2)])
             sage: f.residue()
-            (2, [(1, (1 - x0*x1)^2)])(2, [(1, (1 - x0*x1)^2)])
+            (2, [(1, {(1, 1): 2})])
             sage: f = M.term(x0, [((1,1),2)]) + M.term(1, [((1,0),1),((0,1),1),((1,1),1)])
             sage: f.residue()
-            (3, [(1, (1 - x1)*(1 - x0)*(1 - x0*x1))])
+            (3, [(1, {(0, 1): 1, (1, 0): 1, (1, 1): 1})])
             sage: f = M.term(x0, [((1,1),2)]) + M.term(1, [((1,0),1),((1,1),1)])
             sage: f.residue()
-            (2, [(1, (1 - x0)*(1 - x0*x1)), (1, (1 - x0*x1)^2)])
+            (2, [(1, {(1, 0): 1, (1, 1): 1}), (1, {(1, 1): 2})])
         """
         R = self.parent().laurent_polynomial_ring()
         one = QQ.one()
@@ -684,13 +684,14 @@ class MultivariateGeneratingSeries(AbstractMSum):
             sage: M = MultivariateGeneratingSeriesRing('x', 2)
             sage: R = M.laurent_polynomial_ring()
             sage: x0, x1 = R.gens()
-            sage: xx0, xx1 = R.polynomial_ring().gens()
 
             sage: f = M.term(1, [((1,0),1)])
-            sage: f
-            (1)/((1 - x0))
-            sage: f.taylor(10)
-            x0^9 + x0^8 + x0^7 + x0^6 + x0^5 + x0^4 + x0^3 + x0^2 + x0 + 1
+            sage: f.derivative(0)
+            (1)/((1 - x0)^2)
+            sage: f.derivative(0).derivative(0)
+            (2)/((1 - x0)^3)
+
+            sage: xx0, xx1 = R.polynomial_ring().gens()
             sage: f.taylor(10).derivative(xx0) == f.derivative(0).taylor(9)
             True
             sage: f.derivative(1)
@@ -749,7 +750,8 @@ class MultivariateGeneratingSeries(AbstractMSum):
         ans = M.zero()
         for den, num in self._data.items():
             ans += M.term(num.derivative(var), den)
-            ans += M.term(num, den) * den.logarithmic_minus_derivative(j, lambda v: laurent_monomial(v, R))
+            s = sum(mul * laurent_monomial(R, v) * M.term(1, mon) for mul, v, mon in den.logarithmic_minus_derivative(j))
+            ans += M.term(num, den) * s
         return ans
 
     def derivative_up_to_lower_order_terms(self, var):
