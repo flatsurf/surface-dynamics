@@ -118,6 +118,7 @@ Authors
 Versions
 --------
 
+* flatsurf 0.4.0 was released on 2018-05-14 (as a Python package on PyPI)
 * flatsurf 0.3 was released on 2017-08-11 (as a Python package on PyPI)
 * flatsurf 0.2 was released on 2015-11-15 (as a Sage spkg).
 * flatsurf 0.1 was released on 2015-07-30 (as a Sage spkg).
