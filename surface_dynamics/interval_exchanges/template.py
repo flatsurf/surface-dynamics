@@ -50,7 +50,7 @@ def interval_conversion(interval=None):
 
     TESTS::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: from surface_dynamics.interval_exchanges.template import interval_conversion
         sage: interval_conversion('top')
@@ -276,6 +276,7 @@ class Permutation(SageObject):
             sage: p == loads(dumps(p))
             True
 
+            sage: from surface_dynamics import iet
             sage: p = iet.Permutation('a b','b a',reduced=True,flips='a')
             sage: p == loads(dumps(p))
             True
@@ -329,7 +330,7 @@ class Permutation(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: iet.Permutation('a b','b a',flips='a').flips() #indirect doctest
             ['a']
@@ -359,7 +360,7 @@ class Permutation(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p1 = iet.Permutation('a b','a b',reduced=True,alphabet='ab')
             sage: p2 = iet.Permutation('a b','a b',reduced=True,alphabet='ba')
@@ -479,7 +480,7 @@ class Permutation(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p1 = iet.Permutation('a b', 'a b', reduced=True, alphabet='ab')
             sage: p2 = iet.Permutation('a b', 'a b', reduced=True, alphabet='ba')
@@ -599,7 +600,7 @@ class Permutation(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a b','a b',reduced=True)
             sage: q = copy(p)
@@ -701,7 +702,7 @@ class Permutation(SageObject):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.Permutation('a b c d', 'd a c b', flips=['a','b'])
             sage: p._check()
         """
@@ -733,7 +734,7 @@ class Permutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation([1,2],[2,1])
             sage: p.alphabet(Alphabet(name="NN"))
@@ -768,7 +769,7 @@ class Permutation(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a')
             sage: p._repr_type = 'str'
@@ -813,7 +814,7 @@ class Permutation(SageObject):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c', 'c b a')
             sage: q = iet.Permutation('a b c', 'c b a', flips=['a'])
@@ -857,7 +858,7 @@ class Permutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         For permutations of iet::
 
@@ -913,7 +914,7 @@ class Permutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: iet.Permutation('a b c', 'c b a').flips() is None
             True
@@ -946,7 +947,7 @@ class Permutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c', 'c b a', reduced=True)
             sage: q = copy(p)
@@ -1000,7 +1001,7 @@ class Permutation(SageObject):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b','b a',reduced=True)
             sage: len(p)
@@ -1033,7 +1034,7 @@ class Permutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a', reduced=True)
             sage: p.length_top()
@@ -1066,7 +1067,7 @@ class Permutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a',reduced=True)
             sage: p.length_bottom()
@@ -1101,7 +1102,7 @@ class Permutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a',reduced=False)
             sage: p.length()
@@ -1129,7 +1130,7 @@ class Permutation(SageObject):
 
         TESTS:
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a','b b')
             sage: p.alphabet([0,1])   #indirect doctest
@@ -1202,7 +1203,7 @@ class Permutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b','a b')
             sage: p.alphabet([0,1])
@@ -1241,7 +1242,7 @@ class Permutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         For labelled permutations::
 
@@ -1309,7 +1310,7 @@ class Permutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b','b a')
             sage: p.top_bottom_inverse()
@@ -1328,7 +1329,7 @@ class Permutation(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b','a b')
             sage: p == p.top_bottom_inverse()
@@ -1372,7 +1373,7 @@ class Permutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a',reduced=True)
             sage: p.symmetric() == p
@@ -1399,7 +1400,7 @@ class Permutation(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a b','b c c',reduced=True)
             sage: q = p.symmetric()
@@ -1439,7 +1440,7 @@ class Permutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('d a e a b b','e c c d')
             sage: twins, orientation = p._canonical_signs()
@@ -1496,7 +1497,7 @@ class Permutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a')
             sage: p.interval_diagram()
@@ -1610,7 +1611,7 @@ class Permutation(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c d', 'd a b c')
             sage: p._remove_interval(0, 1); p
@@ -1712,7 +1713,7 @@ class Permutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c', 'c a b')
             sage: p._identify_intervals(-1); p
@@ -1786,7 +1787,7 @@ class Permutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.Permutation('a b', 'b a')
             sage: p.cover(['(1,2)', '(1,3)'])
             Covering of degree 3 of the permutation:
@@ -1835,7 +1836,7 @@ class PermutationIET(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: iet.Permutation('a b','b a',reduced=True) #indirect doctest
             a b
@@ -1861,7 +1862,7 @@ class PermutationIET(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.Permutation('a b c e d', 'e b d a c')
             sage: p.twin(0,0)
             (1, 3)
@@ -1896,7 +1897,7 @@ class PermutationIET(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a')
             sage: p.twin_list()[0]
@@ -1926,7 +1927,7 @@ class PermutationIET(Permutation):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c d','d c a b')   #indirect doctest
             sage: p.alphabet() == Alphabet(['a', 'b', 'c', 'd'])
@@ -1944,7 +1945,7 @@ class PermutationIET(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c a b',reduced=True)
             sage: p.left_right_inverse() # indirect doc test
@@ -1966,7 +1967,7 @@ class PermutationIET(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c a b',reduced=True)
             sage: p.top_bottom_inverse() # indirect doctest
@@ -2002,7 +2003,7 @@ class PermutationIET(Permutation):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c d','d c b a')
             sage: p._move(0,0,0,2)
@@ -2084,7 +2085,7 @@ class PermutationIET(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         for labelled permutations::
 
@@ -2128,7 +2129,7 @@ class PermutationIET(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c', 'c b a')
             sage: p.is_irreducible()
@@ -2163,7 +2164,7 @@ class PermutationLI(Permutation):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a','b b',reduced=True)   #indirect doctest
             sage: p._twin
@@ -2197,7 +2198,9 @@ class PermutationLI(Permutation):
         r"""
         Intialization procedure of the alphabet of self from intervals list
 
-        TEST::
+        TESTS::
+
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a','b b')   #indirect doctest
             sage: p.alphabet()
@@ -2221,7 +2224,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a','b b',reduced=True)
             sage: p.left_right_inverse() #indirect doctest
@@ -2250,7 +2253,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a b b','c c a',reduced=True)
             sage: p.top_bottom_inverse() #indirect doctest
@@ -2290,7 +2293,7 @@ class PermutationLI(Permutation):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a b c c','d b d a',flips='a')
             sage: p._move(0,0,0,2)
@@ -2408,7 +2411,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.GeneralizedPermutation('a a b c', 'c e b e')
             sage: p.twin(0,0)
             (0, 1)
@@ -2432,7 +2435,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a b','b c c')
             sage: p.twin_list()[0]
@@ -2501,7 +2504,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: GP = iet.GeneralizedPermutation
 
@@ -2514,7 +2517,7 @@ class PermutationLI(Permutation):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         Test reducible permutations with no empty corner::
 
@@ -2627,7 +2630,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a b d a c','c e b e d')
             sage: p.is_irreducible()
@@ -2674,7 +2677,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: q = iet.GeneralizedPermutation('a b b','c c a')
             sage: q.is_cylindric()
@@ -2697,7 +2700,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p1 = iet.GeneralizedPermutation('a a b','b c c')
             sage: p1.profile()
@@ -2731,7 +2734,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: iet.GeneralizedPermutation('a a b','b c c').genus()
             0
@@ -2747,7 +2750,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('0 1 2 3 4 3 5 6 7','1 6 8 4 2 7 5 8 0')
             sage: p.marking()
@@ -2786,7 +2789,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         All possible markings for the profile [1, 1, 1, 1]::
 
@@ -2881,7 +2884,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a b','b c c')
             sage: p.stratum()
@@ -2908,7 +2911,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         An example of hyperelliptic permutation::
 
@@ -3054,7 +3057,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a b b','c c a')
             sage: p.stratum_component()
@@ -3171,7 +3174,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a','b b')
             sage: p.has_rauzy_move('top','right')
@@ -3262,7 +3265,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
             sage: c = p.orientation_cover()
@@ -3305,7 +3308,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: iet.Permutation("a b","a b",reduced=False).is_identity()
             True
@@ -3329,7 +3332,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a').decompose()[0]
             sage: p
@@ -3380,7 +3383,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c d','d c b a')
             sage: p.intersection_matrix()
@@ -3434,7 +3437,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p1 = iet.Permutation('a b c d e f g','d c g f e b a')
             sage: p2 = iet.Permutation('a b c d e f g','e d c g f b a')
@@ -3459,7 +3462,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p1 = iet.Permutation('a b c d e f g','d c g f e b a')
             sage: p2 = iet.Permutation('a b c d e f g','e d c g f b a')
@@ -3480,7 +3483,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: iet.Permutation('a b c d','d c b a').profile()
             [3]
@@ -3497,7 +3500,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c d e f','f a e b d c')
             sage: p.marking()
@@ -3531,7 +3534,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         The irreducible permutation on 1 interval has marked profile of type 2
         with data `(0,0)`::
@@ -3605,7 +3608,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c', 'c b a')
             sage: p.stratum()
@@ -3659,7 +3662,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c', 'c b a')
             sage: p.genus()
@@ -3705,7 +3708,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         Permutations from the odd and even component of H(2,2,2)::
 
@@ -3779,7 +3782,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         Permutations from the stratum H(6)::
 
@@ -3875,7 +3878,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c d','d a c b')
             sage: p.order_of_rauzy_action('top', 'right')
@@ -3917,7 +3920,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b','b a')
             sage: p.rauzy_move(winner='top', side='right') == p
@@ -4017,7 +4020,7 @@ class OrientablePermutationIET(PermutationIET):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         Testing the inversion on labelled permutations::
 
@@ -4123,7 +4126,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b','b a')
             sage: p.erase_marked_points()
@@ -4237,7 +4240,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: iet.Permutation('a b c d','d c b a').is_hyperelliptic()
             True
@@ -4269,7 +4272,7 @@ class OrientablePermutationIET(PermutationIET):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a')
             sage: p.to_cylindric() == p
@@ -4319,7 +4322,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: iet.Permutation('1 2 3','3 2 1').is_cylindric()
             True
@@ -4336,7 +4339,7 @@ class OrientablePermutationIET(PermutationIET):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a')
             sage: p.to_standard() == p
@@ -4373,7 +4376,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c d','d c b a')
             sage: p.is_standard()
@@ -4390,7 +4393,7 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a')
             sage: p.to_permutation()
@@ -4425,7 +4428,7 @@ class OrientablePermutationLI(PermutationLI):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a a b','b c c',reduced=True)
             sage: p.rauzy_move(0)
@@ -4474,7 +4477,7 @@ class OrientablePermutationLI(PermutationLI):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         Tests the inversion on labelled generalized permutations::
 
@@ -4540,7 +4543,7 @@ class OrientablePermutationLI(PermutationLI):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a b b','c c a')
             sage: p.stratum()
@@ -4567,7 +4570,7 @@ class FlippedPermutationIET(PermutationIET):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c', 'c a b', flips=['b'], reduced=True)
             sage: p.rauzy_move('t','r')
@@ -4630,7 +4633,7 @@ class FlippedPermutationIET(PermutationIET):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a b c d e','d a b e c', flips='abcd')
             sage: for pos,side in [('t','r'),('b','r'),('t','l'),('b','l')]:
@@ -4713,7 +4716,7 @@ class FlippedPermutationLI(PermutationLI):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a b c b','d c d a',flips='abcd')
             sage: p
@@ -4769,7 +4772,7 @@ class FlippedPermutationLI(PermutationLI):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a b c e b','d c d a e',flips='abcd')
             sage: for pos,side in [('t','r'),('b','r'),('t','l'),('b','l')]:
@@ -4885,7 +4888,7 @@ class RauzyDiagram(SageObject):
 
             TEST::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b c', 'c b a')
                 sage: r = p.rauzy_diagram()
@@ -4931,7 +4934,9 @@ class RauzyDiagram(SageObject):
             r"""
             Returns a representation of the path.
 
-            TEST::
+            TESTS::
+
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b','b a')
                 sage: r = p.rauzy_diagram()
@@ -4950,7 +4955,7 @@ class RauzyDiagram(SageObject):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b c','c b a')
                 sage: r = p.rauzy_diagram()
@@ -4966,7 +4971,7 @@ class RauzyDiagram(SageObject):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b c','c b a')
                 sage: r = p.rauzy_diagram()
@@ -4985,7 +4990,7 @@ class RauzyDiagram(SageObject):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b c','c b a')
                 sage: r = p.rauzy_diagram()
@@ -5001,7 +5006,7 @@ class RauzyDiagram(SageObject):
 
             TEST::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p1 = iet.Permutation('a b','b a')
                 sage: r1 = p1.rauzy_diagram()
@@ -5026,7 +5031,7 @@ class RauzyDiagram(SageObject):
 
             TEST::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p1 = iet.Permutation('a b','b a')
                 sage: r1 = p1.rauzy_diagram()
@@ -5051,7 +5056,7 @@ class RauzyDiagram(SageObject):
 
             TESTS::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b c','c b a')
                 sage: r = p.rauzy_diagram()
@@ -5075,7 +5080,7 @@ class RauzyDiagram(SageObject):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b','b a')
                 sage: r = p.rauzy_diagram()
@@ -5110,7 +5115,7 @@ class RauzyDiagram(SageObject):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b c','c b a')
                 sage: r = p.rauzy_diagram()
@@ -5140,7 +5145,7 @@ class RauzyDiagram(SageObject):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.GeneralizedPermutation('a a','b b c c')
                 sage: r = p.rauzy_diagram()
@@ -5171,7 +5176,7 @@ class RauzyDiagram(SageObject):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b c d','d c b a')
                 sage: r = p.rauzy_diagram()
@@ -5200,7 +5205,7 @@ class RauzyDiagram(SageObject):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b c','c b a')
                 sage: r = p.rauzy_diagram()
@@ -5220,8 +5225,9 @@ class RauzyDiagram(SageObject):
             r"""
             Returns the length of the path.
 
-            TEST::
+            TESTS::
 
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b c','c b a')
                 sage: r = p.rauzy_diagram()
@@ -5238,7 +5244,7 @@ class RauzyDiagram(SageObject):
             r"""
             TESTS::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b c','c b a')
                 sage: r = p.rauzy_diagram()
@@ -5273,7 +5279,7 @@ class RauzyDiagram(SageObject):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b','b a')
                 sage: r = p.rauzy_diagram()
@@ -5297,7 +5303,7 @@ class RauzyDiagram(SageObject):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b','b a')
                 sage: r = p.rauzy_diagram()
@@ -5327,7 +5333,7 @@ class RauzyDiagram(SageObject):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b','b a')
                 sage: r = p.rauzy_diagram()
@@ -5344,7 +5350,7 @@ class RauzyDiagram(SageObject):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b','b a')
                 sage: r = p.rauzy_diagram()
@@ -5365,7 +5371,7 @@ class RauzyDiagram(SageObject):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b c','c b a')
                 sage: r = p.rauzy_diagram()
@@ -5386,7 +5392,7 @@ class RauzyDiagram(SageObject):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b c','c b a')
                 sage: r = p.rauzy_diagram()
@@ -5446,7 +5452,7 @@ class RauzyDiagram(SageObject):
 
             EXAMPLES::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b','b a')
                 sage: r = p.rauzy_diagram()
@@ -5487,7 +5493,7 @@ class RauzyDiagram(SageObject):
 
             TEST::
 
-                sage: from surface_dynamics.all import *
+                sage: from surface_dynamics import *
 
                 sage: p = iet.Permutation('a b','b a')
                 sage: r = p.rauzy_diagram()
@@ -5545,7 +5551,7 @@ class RauzyDiagram(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: r1 = iet.RauzyDiagram('a b','b a')
             sage: r2 = loads(dumps(r1))
@@ -5623,7 +5629,7 @@ class RauzyDiagram(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: iet.RauzyDiagram('a b','b a') == iet.RauzyDiagram('a b c','c b a')
             False
@@ -5661,7 +5667,7 @@ class RauzyDiagram(SageObject):
 
         TEST::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: iet.RauzyDiagram('a b','b a') != iet.RauzyDiagram('a b c','c b a')
             True
@@ -5686,7 +5692,7 @@ class RauzyDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: r = iet.RauzyDiagram('a b','b a')
             sage: for p in r.vertices(): print(p)
@@ -5703,7 +5709,7 @@ class RauzyDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: r = iet.RauzyDiagram('a b','b a')
             sage: for p in r.vertex_iterator(): print(p)
@@ -5730,7 +5736,7 @@ class RauzyDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: r = iet.RauzyDiagram('a b','b a')
             sage: len(r.edges())
@@ -5744,7 +5750,7 @@ class RauzyDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b','b a')
             sage: r = p.rauzy_diagram()
@@ -5775,7 +5781,7 @@ class RauzyDiagram(SageObject):
 
         EXAMPLES:
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         For a standard Rauzy diagram (only right induction) the 0 index
         corresponds to the 'top' induction and the index 1 corresponds to the
@@ -5975,7 +5981,7 @@ class RauzyDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: r = iet.RauzyDiagram('a b', 'b a')
             sage: r.edge_types()
@@ -6006,7 +6012,7 @@ class RauzyDiagram(SageObject):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: r = iet.RauzyDiagram('a b','b a')
             sage: r.alphabet() == Alphabet(['a','b'])
@@ -6026,7 +6032,7 @@ class RauzyDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: r = iet.RauzyDiagram('a b','b a')
             sage: r.alphabet()
@@ -6047,7 +6053,7 @@ class RauzyDiagram(SageObject):
 
         TESTS:
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: r = iet.RauzyDiagram('a b','b a')   #indirect doctest
         """
@@ -6071,7 +6077,7 @@ class RauzyDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a')
             sage: d = p.rauzy_diagram()
@@ -6096,7 +6102,9 @@ class RauzyDiagram(SageObject):
         r"""
         Return the corresponding winner
 
-        TEST::
+        TESTS::
+
+            sage: from surface_dynamics import *
 
             sage: r = iet.RauzyDiagram('a b','b a')
             sage: r.edge_to_winner(None,None)
@@ -6120,7 +6128,7 @@ class RauzyDiagram(SageObject):
 
         TEST::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: r = iet.RauzyDiagram('a b','b a')
             sage: r.edge_to_loser(None,None)
@@ -6150,7 +6158,7 @@ class RauzyDiagram(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b','b a')
             sage: r = p.rauzy_diagram()
@@ -6201,7 +6209,7 @@ class RauzyDiagram(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b','b a')
             sage: r = p.rauzy_diagram()
@@ -6244,7 +6252,7 @@ class RauzyDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: r = iet.RauzyDiagram('a b','b a')
             sage: for p in r: print(p)
@@ -6265,7 +6273,7 @@ class RauzyDiagram(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c d','d c b a',reduced=True)
             sage: q = iet.Permutation('a b c d','d b c a',reduced=True)
@@ -6292,7 +6300,7 @@ class RauzyDiagram(SageObject):
 
         TEST::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: iet.RauzyDiagram('a b','b a')   #indirect doctest
             Rauzy diagram with 1 permutation
@@ -6319,7 +6327,7 @@ class RauzyDiagram(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
 
             sage: p = iet.Permutation('a b c','c b a')
@@ -6346,7 +6354,7 @@ class RauzyDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: r = iet.RauzyDiagram('a b','b a')
             sage: r.cardinality()
@@ -6364,7 +6372,7 @@ class RauzyDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: r = iet.RauzyDiagram('a b','b a')
             sage: r.cardinality()
@@ -6397,7 +6405,7 @@ class RauzyDiagram(SageObject):
 
         TEST::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: r = iet.RauzyDiagram('a b c','c b a')   #indirect doctest
             sage: r = iet.RauzyDiagram('a b c','c b a',left_induction=True) #indirect doctest
@@ -6450,7 +6458,7 @@ class RauzyDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a')
             sage: r = p.rauzy_diagram()
@@ -6471,7 +6479,7 @@ class RauzyDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: r = iet.RauzyDiagram('a b c','c b a')
             sage: r
@@ -6526,7 +6534,7 @@ class FlippedRauzyDiagram(RauzyDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c','c b a',flips='a')
             sage: d = p.rauzy_diagram()
