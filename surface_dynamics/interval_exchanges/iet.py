@@ -6,7 +6,7 @@ help(iet.IntervalExchangeTransformation) for a more complete help.
 
 EXAMPLES::
 
-    sage: from surface_dynamics.all import *
+    sage: from surface_dynamics import *
 
 Initialization of a simple iet with integer lengths::
 
@@ -72,7 +72,7 @@ class IntervalExchangeTransformation(object):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
     Direct initialization::
 
@@ -125,7 +125,7 @@ class IntervalExchangeTransformation(object):
 
         TEST::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.IntervalExchangeTransformation(('a','a'), [1])
             sage: p == loads(dumps(p))
@@ -155,7 +155,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.Permutation('a b', 'b a')
 
             sage: T = iet.IntervalExchangeTransformation(p, [3, 12])
@@ -187,7 +187,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: perm = iet.Permutation('a b c','c b a')
             sage: p = iet.IntervalExchangeTransformation(perm,(1,2,1))
@@ -206,7 +206,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1,1])
             sage: t.length()
@@ -225,7 +225,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.IntervalExchangeTransformation(('a b','b a'),[1,3])
             sage: p.lengths()
@@ -239,7 +239,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.Permutation('a b c', 'c b a')
             sage: T = iet.IntervalExchangeTransformation(p, [5,1,3])
             sage: T.translations()
@@ -292,7 +292,7 @@ class IntervalExchangeTransformation(object):
 
         The golden rotation::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.Permutation('a b','b a')
             sage: R = p.rauzy_diagram()
             sage: g = R.path(p, 't', 'b')
@@ -377,7 +377,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'), [1,3])
             sage: t.length()
@@ -411,7 +411,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = iet.IntervalExchangeTransformation(('a','a'),[1])
             sage: a   #indirect doctest
@@ -434,7 +434,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation("a b","b a")
             sage: q = iet.Permutation("c d","d c")
@@ -457,7 +457,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation("a b","b a")
             sage: s = iet.IET(p, [1,sqrt(2)-1])
@@ -494,6 +494,8 @@ class IntervalExchangeTransformation(object):
 
         TESTS:
 
+            sage: from surface_dynamics import *
+
         ::
 
             sage: p = iet.Permutation("a b", "a b")
@@ -503,7 +505,7 @@ class IntervalExchangeTransformation(object):
             aa bb
             aa bb
             sage: r.lengths()
-            [1, 1]
+            (1, 1)
 
         ::
 
@@ -514,7 +516,7 @@ class IntervalExchangeTransformation(object):
             ab ba
             ab ba
             sage: r.lengths()
-            [1, 1]
+            (1, 1)
 
         ::
 
@@ -527,20 +529,20 @@ class IntervalExchangeTransformation(object):
             a5 b1 b2 b3 b4 b5
             b5 a5 b4 b3 b2 b1
             sage: r.lengths()
-            [1/2, 1, 1, 1, 1, 1/2]
+            (1/2, 1, 1, 1, 1, 1/2)
             sage: r = t*s
             sage: r.permutation()
             1b 2b 3b 4b 5a 5b
             5b 4b 3b 2b 1b 5a
             sage: r.lengths()
-            [1, 1, 1, 1, 1/2, 1/2]
+            (1, 1, 1, 1, 1/2, 1/2)
             sage: t = iet.IET(q, [3/2, 7/2])
             sage: r = s*t
             sage: r.permutation()
             a4 a5 b1 b2 b3 b4
             a5 b4 a4 b3 b2 b1
             sage: r.lengths()
-            [1/2, 1, 1, 1, 1, 1/2]
+            (1/2, 1, 1, 1, 1, 1/2)
             sage: t = iet.IET(q, [5/2,5/2])
             sage: r = s*t
             sage: r.permutation()
@@ -562,13 +564,13 @@ class IntervalExchangeTransformation(object):
             ac ad bc
             ad bc ac
             sage: r1.lengths()
-            [1, 3, 2]
+            (1, 3, 2)
             sage: r2 = s * t
             sage: r2.permutation()
             ca cb da
             cb da ca
             sage: r2.lengths()
-            [1, 2, 3]
+            (1, 2, 3)
         """
         assert(
             isinstance(other, IntervalExchangeTransformation) and
@@ -647,7 +649,7 @@ class IntervalExchangeTransformation(object):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1,1])
             sage: t == t
@@ -664,7 +666,7 @@ class IntervalExchangeTransformation(object):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1,1])
             sage: t != t
@@ -682,7 +684,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.Permutation('a d c b', 'b c a d', alphabet='abcd')
             sage: T = iet.IntervalExchangeTransformation(p, [119,213,82,33])
             sage: T.recoding(2)
@@ -772,7 +774,7 @@ class IntervalExchangeTransformation(object):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b c','c b a'),[1,1,1])
             sage: t.in_which_interval(0)
@@ -829,7 +831,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1/2,3/2])
             sage: t.singularities()
@@ -848,7 +850,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: t = iet.IET(("a b","b a"), [1, sqrt(2)])
             sage: t.domain_singularities()
@@ -870,7 +872,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: t = iet.IET(("a b","b a"), [1, sqrt(2)])
             sage: t.range_singularities()
             [0, sqrt(2), sqrt(2) + 1]
@@ -886,7 +888,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1/2,3/2])
             sage: t(0)
@@ -936,7 +938,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: phi = QQbar((sqrt(5)-1)/2)
             sage: t1 = iet.IntervalExchangeTransformation(('a b','b a'),[1,phi])
@@ -1040,7 +1042,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c', 'c b a')
             sage: T = iet.IntervalExchangeTransformation(p, [12, 35, 67])
@@ -1128,7 +1130,7 @@ class IntervalExchangeTransformation(object):
 
         TEST::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c d', 'd c b a')
             sage: K.<sqrt2> = QuadraticField(2)
@@ -1225,7 +1227,7 @@ class IntervalExchangeTransformation(object):
 
         TEST::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b', 'b a')
             sage: K.<sqrt3> = QuadraticField(3)
@@ -1342,7 +1344,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1,1])
             sage: s = copy(t)
@@ -1373,7 +1375,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b c d','d a c b'),[1,1,1,1])
             sage: t.plot_function(rgbcolor=(0,1,0))    # not tested (problem with matplotlib font cache)
@@ -1422,7 +1424,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1,1])
             sage: t.plot_two_intervals()  # not tested (problem with matplotlib font cache)
@@ -1498,7 +1500,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('A B', 'B A')
             sage: T = iet.IntervalExchangeTransformation(p, [0.41510826, 0.58489174])
@@ -1554,7 +1556,7 @@ class IntervalExchangeTransformation(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: phi = QQbar((sqrt(5)-1)/2)
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1,phi])
