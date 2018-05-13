@@ -20,7 +20,7 @@ install:
   - which gcc
   - ${SAGE} -sh -c "which gcc"
   - ccache -s
-  - ${SAGE} -pip install --no-index --user sphinxcontrib-websupport # sphinx broken on sage 8-1
+  - ${SAGE} -pip install --user sphinxcontrib-websupport # sphinx broken on sage 8-1
   - ${SAGE} -pip install --verbose --no-index --user .
   - export SURFACE_DYNAMICS_PATH="$(${SAGE} -c 'import surface_dynamics; print(surface_dynamics.__path__[0])')"
 script:
