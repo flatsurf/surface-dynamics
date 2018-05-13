@@ -3,10 +3,11 @@
 *.so
 .pypirc
 MANIFEST
+README.rst
 build/
 doc/build/
 dist/
 surface_dynamics/flat_surfaces/origamis/origami_dense.c
-surface_dynamics/interval_exchanges/lyapunov_exponents/lyapunov_exponents.c
+surface_dynamics/interval_exchanges/lyapunov_exponents.c
 surface_dynamics/interval_exchanges/iet_family.cpp
-surface_dynamics/interval_exchanges/integer_iet/integer_iet.c
+surface_dynamics/interval_exchanges/integer_iet.c
