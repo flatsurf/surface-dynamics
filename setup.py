@@ -43,7 +43,7 @@ extensions_data = {
 
     'lyapunov_exponents': {
         'name': 'surface_dynamics.interval_exchanges.lyapunov_exponents',
-        'dir': os.path.join('interval_exchanges', 'lyapunov_exponents'),
+        'dir': 'interval_exchanges',
         'sources': ['lyapunov_exponents.pyx', 'generalized_permutation.c' , 'lin_alg.c', 'quad_cover.c', 'random.c', 'permutation.c'],
         'headers': ['lyapunov_exponents.h']
         },

@@ -75,7 +75,8 @@ def lyapunov_exponents_H_plus_cover(
       mean and standard deviation
     """
     cdef int n
-    cdef int *p, *t   # permutation, twin
+    cdef int *p   # permutation
+    cdef int *t   # twin
     cdef size_t **s   # sigma
     cdef size_t nc
     cdef size_t degree, i, j, nn
