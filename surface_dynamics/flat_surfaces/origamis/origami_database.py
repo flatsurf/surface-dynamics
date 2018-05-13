@@ -130,13 +130,14 @@ You can get an overview of the content of the database::
     sage: D.info()
     genus 2
     =======
-     H_2(2)^hyp        :  79 T. curves (up to 55 squares)
-     H_2(1^2)^hyp      : 259 T. curves (up to 52 squares)
+     H_2(2)^hyp        : 116 T. curves (up to 80 squares)
+     H_2(1^2)^hyp      : 452 T. curves (up to 80 squares)
     <BLANKLINE>
     genus 3
     =======
      H_3(4)^hyp        : 163 T. curves (up to 51 squares)
-    ...
+     H_3(4)^odd        : 118 T. curves (up to 41 squares)
+     ...
     genus 6
     =======
      H_6(10)^hyp       :  46 T. curves (up to 15 squares)
@@ -144,7 +145,7 @@ You can get an overview of the content of the database::
      H_6(10)^even      :  33 T. curves (up to 12 squares)
     <BLANKLINE>
     <BLANKLINE>
-    Total: 4369 Teichmueller curves
+    Total: 4599 Teichmueller curves
 
 Here is a last example of the list of regular origamis (i.e. such that their
 group of translation acts transitively on the set of squares)::
@@ -1878,7 +1879,7 @@ class OrigamiDatabase(SQLDatabase):
 
             sage: O = OrigamiDatabase()
             sage: O.max_nb_squares(AbelianStratum(2))
-            55
+            80
             sage: O.max_nb_squares()
             11
         """
