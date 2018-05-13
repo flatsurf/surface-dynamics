@@ -100,7 +100,7 @@ def ppl_cone(rays):
     n = len(rays[0])
     gs = ppl.Generator_System(ppl_zero_point(n))
     for r in rays:
-        gs.insert(ppl.ray(sum(j * ppl.Variable(i) for i,j in enumerate(r))))
+        gs.insert(ppl.ray(sum(int(j) * ppl.Variable(i) for i,j in enumerate(r))))
     return ppl.C_Polyhedron(gs)
 
 
@@ -119,10 +119,10 @@ def ppl_convert(P):
         return P
     gs = ppl.Generator_System()
     for v in P.vertices_list():
-        gs.insert(ppl.point(sum(j * ppl.Variable(i) for i,j in enumerate(v))))
+        gs.insert(ppl.point(sum(int(j) * ppl.Variable(i) for i,j in enumerate(v))))
     for r in P.rays_list():
-        gs.insert(ppl.ray(sum(j * ppl.Variable(i) for i,j in enumerate(r))))
+        gs.insert(ppl.ray(sum(int(j) * ppl.Variable(i) for i,j in enumerate(r))))
     for l in P.lines_list():
-        gs.insert(ppl.line(sum(j * ppl.Variable(i) for i,j in enumerate(l))))
+        gs.insert(ppl.line(sum(int(j) * ppl.Variable(i) for i,j in enumerate(l))))
     return ppl.C_Polyhedron(gs)
 
