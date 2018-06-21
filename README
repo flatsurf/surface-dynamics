@@ -97,15 +97,15 @@ output as below.::
     sage: Q12_reg.lyapunov_exponents_H_minus(nb_iterations=2**20)  # abs tol 0.05
     [1.0000, 0.3087, 0.1192]
 
-Installing development version. Source code
--------------------------------------------
+Installing development version - source code
+--------------------------------------------
 
 The development webpage is https://github.com/videlec/flatsurf-package
 
 Assuming you have the program git on your computer, you can install the
 development version with the command::
 
-    $ sage -pip install git+https://github.com/videlec/flatsurf-package [--user]
+    $ sage -pip install git+https://gitlab.com/videlec/surface_dynamics.git [--user]
 
 Contact
 -------
