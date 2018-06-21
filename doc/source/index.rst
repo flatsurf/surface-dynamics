@@ -12,11 +12,18 @@ you need to run the following command in a console::
 You might want to provide the option ``--user`` to this command in order to install
 surface dynamics in your home directory and keep intact your SageMath installation.
 
+In case you use the sagemath package in a Debian or Ubuntu system you need to perform
+a two step installation::
+
+    $ source /usr/share/sagemath/bin/sage-env
+    $ sage -pip install surface_dynamics --user
+
 Other sources of information:
 
 - there is a short tutorial at http://www.labri.fr/perso/vdelecro/flatsurf.html
 
-- the source code is available at https://github.com/videlec/flatsurf-package
+- development webpage (including source code) is available at
+  https://gitlab.com/videlec/surface_dynamics
 
 Module documentation
 --------------------
