@@ -95,7 +95,7 @@ def permutation_simplicial_action(r,u,n,w):
             m[n:,:n] = r.matrix()
             res = m * res
         else:
-            raise ValueError, "does not understand the letter %s" %str(letter)
+            raise ValueError("does not understand the letter %s" %str(letter))
 
     return r,u,res
 
@@ -319,7 +319,7 @@ class OrigamiEdges(OrigamiObjects):
                 c_in[self.end(i)] = i
                 c_out[self.start(i)] = i
             else:
-                raise ValueError, "not a simple closed curve"
+                raise ValueError("not a simple closed curve")
         return c_in, c_out
 
     def basis_of_simple_closed_curves(self):
