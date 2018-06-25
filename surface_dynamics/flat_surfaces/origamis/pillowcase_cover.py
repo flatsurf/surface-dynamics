@@ -207,3 +207,75 @@ class PillowcaseCover_dense(PillowcaseCover_dense_pyx):
 
         return bool(gap.IsPrimitive(self.monodromy()))
 
+    def orientation_cover(self):
+        r"""
+        Return the orientation cover as an origami.
+
+        EXAMPLES:
+
+        The pillowcase itself has cover a torus (made from 4 squares)::
+
+            sage: from surface_dynamics import *
+
+            sage: p0 = p1 = p2 = p3 = [0]
+            sage: pc = PillowcaseCover(p0, p1, p2, p3, as_tuple=True)
+            sage: pc.stratum()
+            Q_0(-1^4)
+            sage: o = pc.orientation_cover()
+            sage: o
+            (1,2)(3,4)
+            (1,4)(2,3)
+            sage: o.stratum()
+            H_1(0)
+
+        An example in Q(1,-1^5) whose cover belongs to H(2)::
+
+            sage: p0 = [2,1,0]
+            sage: p1 = [2,0,1]
+            sage: p2 = [1,0,2]
+            sage: p3 = [0,1,2]
+            sage: pc = PillowcaseCover(p0, p1, p2, p3,as_tuple=True)
+            sage: pc.stratum()
+            Q_0(1, -1^5)
+            sage: o = pc.orientation_cover()
+            sage: o
+            (1,2,3,4)(5,6)(7,10,9,8)(11,12)
+            (1,10,5,12)(2,9)(3,8)(4,7,6,11)
+            sage: o.stratum()
+            H_2(2)
+
+        A last example in Q(2^2)::
+
+            sage: q = QuadraticCylinderDiagram('(0,1)-(2,3) (0,3)-(1,2)')
+            sage: pc = q.cylcoord_to_pillowcase_cover([1,1,1,1], [2,2], [0,1])
+            sage: pc.orientation_cover().stratum()
+            H_3(1^4)
+        """
+        from surface_dynamics.misc.permutation import perm_invert
+        from surface_dynamics.flat_surfaces.origamis.origami import Origami
+
+        g0 = self.g_tuple(0)
+        g1 = self.g_tuple(1)
+        g2 = self.g_tuple(2)
+        g3 = self.g_tuple(3)
+
+        n = len(g0)
+
+        r = [None] * (4*n)
+        u = [None] * (4*n)
+
+        h1 = perm_invert(g1)
+        h2 = perm_invert(g2)
+
+        for i in range(n):
+            r[2*i] = 2*i+1
+            r[2*i+1] = 2*g3[g2[i]]
+            r[2*n+2*i+1] = 2*n + 2*i
+            r[2*n+2*i] = 2*n + 2*g1[g0[i]] + 1
+
+            u[2*i] = 2*n + 2*h2[i] + 1
+            u[2*i+1] = 2*n + 2*g2[i]
+            u[2*n+2*i] = 2*g1[i] + 1
+            u[2*n+2*i+1] = 2*h1[i]
+
+        return Origami(r, u, as_tuple=True)
