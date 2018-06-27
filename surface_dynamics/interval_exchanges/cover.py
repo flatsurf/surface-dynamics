@@ -277,27 +277,28 @@ class PermutationCover(SageObject):
             sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
             sage: c = p.cover(['(1,2)','(1,3)','(1,4)'])
             sage: c.interval_diagram()
-            [[('a', 1), ('a', 0)],
-             [('a', 2)],
-             [('a', 3)],
-             [('a', 0), ('b', 1), ('a', 1), ('b', 0), ('a', 2), ('b', 2)],
+            [[('a', 0), ('b', 1), ('a', 1), ('b', 0), ('a', 2), ('b', 2)],
              [('a', 3), ('b', 3)],
-             [('b', 2), ('c', 2), ('b', 0), ('c', 0), ('b', 3), ('c', 3)],
-             [('b', 1), ('c', 1)],
              [('c', 3), ('c', 0)],
              [('c', 1)],
-             [('c', 2)]]
+             [('c', 2)],
+             [('c', 0), ('b', 3), ('c', 3), ('b', 2), ('c', 2), ('b', 0)],
+             [('c', 1), ('b', 1)],
+             [('a', 1), ('a', 0)],
+             [('a', 2)],
+             [('a', 3)]]
+
             sage: c.interval_diagram(sign=True)
-            [[('a', 1, 1), ('a', 0, 1)],
-             [('a', 2, 1)],
-             [('a', 3, 1)],
-             [('a', 0, 0), ..., ('b', 2, 0)],
-             [('a', 3, 0), ('b', 3, 0)],
-             [('b', 2, 1), ..., ('c', 3, 0)],
-             [('b', 1, 1), ('c', 1, 0)],
-             [('c', 3, 1), ('c', 0, 1)],
-             [('c', 1, 1)],
-             [('c', 2, 1)]]
+            [[('a', 0, 1), ... ('b', 2, 1)],
+             [('a', 3, 1), ('b', 3, 1)],
+             [('c', 3, -1), ('c', 0, -1)],
+             [('c', 1, -1)],
+             [('c', 2, -1)],
+             [('c', 0, 1), ..., ('b', 0, -1)],
+             [('c', 1, 1), ('b', 1, -1)],
+             [('a', 1, -1), ('a', 0, -1)],
+             [('a', 2, -1)],
+             [('a', 3, -1)]]
         """
         twins, orientation = self._base._canonical_signs()
         base_diagram = self._base.interval_diagram(glue_ends=False, sign=True)
@@ -305,8 +306,8 @@ class PermutationCover(SageObject):
 
         alphabet = self._base.alphabet()
         rank = alphabet.rank
-        perm = lambda sign,label: self._inv_permut_cover[rank(label)] if sign else \
-                                  self._permut_cover[rank(label)]
+        perm = lambda ss,label: self._permut_cover[rank(label)] if ss==1 else \
+                                self._inv_permut_cover[rank(label)]
 
         for orbit in base_diagram:
             init_label = orbit[0][0]
@@ -318,7 +319,7 @@ class PermutationCover(SageObject):
                     # lift a loop from downstair
                     for base_singularity in orbit:
                         label,s = base_singularity
-                        if s:
+                        if s == -1:
                             dd = perm(s,label)[d]
                         else:
                             dd = d
@@ -366,11 +367,13 @@ class PermutationCover(SageObject):
             border = [0] * len(gens)
             for i in xrange(2):
                 for j in xrange(len(p[i])):
-                    if signs[i][j]:  # -1 sign
+                    if signs[i][j] == -1:
                         perm_cover = self.covering_data_tuple(p[i][j])
                         border[gen_indices[(perm_cover.index(k),p[i][j])]] += -1
-                    else:            # +1 sign
+                    elif signs[i][j] == 1:
                         border[gen_indices[(k,p[i][j])]] += 1
+                    else:
+                        RuntimeError
             B.append(border)
 
         from sage.matrix.constructor import matrix
@@ -394,9 +397,9 @@ class PermutationCover(SageObject):
             sage: c = p.cover(['', '', ''])
             sage: m = c._delta1()
             sage: m
-            [-1  1  0  0]
             [ 1  0 -1  0]
-            [ 0  1  0 -1]
+            [ 0  0  1 -1]
+            [ 1 -1  0  0]
             sage: m.ncols() == len(c.profile())
             True
             sage: m.nrows() == len(c) * c._degree_cover
@@ -428,8 +431,8 @@ class PermutationCover(SageObject):
         for d in range(self._degree_cover):
             for a in self._base.alphabet():
                 border_side = [0] * nb_sing
-                border_side[sing_to_index[(a,d,0)]] += 1
-                border_side[sing_to_index[(a,d,1)]] += -1
+                border_side[sing_to_index[(a,d,+1)]] += 1
+                border_side[sing_to_index[(a,d,-1)]] += -1
                 borders.append(border_side)
 
         from sage.matrix.constructor import matrix
@@ -440,7 +443,8 @@ class PermutationCover(SageObject):
         r"""
         Return the profile of the surface.
 
-        Return the list of angles of singularities in the surface divided by pi.
+        The *profile* of a translation surface is the list of angles of
+        singularities in the surface divided by pi.
 
         EXAMPLES::
 
@@ -474,7 +478,7 @@ class PermutationCover(SageObject):
             p = p_id
             for lab,sign in flat_orbit:
                 q = self.covering_data(lab)
-                if sign: q = q.inverse()
+                if sign == -1: q = q.inverse()
                 p = p*q
             for c in p.cycle_type():
                s.append(len(orbit)*c)

@@ -15,7 +15,7 @@ TODO:
 
 - disallow access to stratum, stratum component for permutations with flip
 
-- construct dynamic graphs
+- construct dynamic Rauzy graphs and paths
 
 - construct coherent _repr_
 
@@ -753,10 +753,26 @@ class Permutation(SageObject):
             sage: p._remove_interval(0, 2)
             sage: p.letters()
             [0, 2]
+
+            sage: p = iet.GeneralizedPermutation('a a b', 'b c c', reduced=True)
+            sage: p.letters()
+            ['a', 'b', 'c']
+
+        For permutations with flips, the letters appear as pairs made of an element
+        of the alphabet and the flip::
+
+            sage: p = iet.Permutation('A B C D', 'D C A B', flips='AC')
+            sage: p.letters()
+            ['A', 'B', 'C',  'D']
+
+            sage: p = iet.GeneralizedPermutation('A A B', 'B C C', flips='B')
+            sage: p.letters()
+            ['A', 'B', 'C']
         """
         unrank = self._alphabet.unrank
         if self._labels is not None:
-            return map(unrank, sorted(set(self._labels[0]+self._labels[1])))
+            labels = set(self._labels[0]).union(self._labels[1])
+            return [unrank(l) for l in sorted(labels)]
         else:
             return [unrank(i) for i in range(len(self))]
 
@@ -786,10 +802,10 @@ class Permutation(SageObject):
             sage: p._repr_type = 'interval_diagram'
             sage: p._repr_options = (False,)
             sage: p   #indirect doctest
-            [['a', 'b', 'c'], ['a', 'b', 'c']]
+            [['a', 'b', 'c'], ['c', 'a', 'b']]
             sage: p._repr_options = (True,)
             sage: p
-            [['b', ('c', 'a')], ['b', ('c', 'a')]]
+            [['b', ('c', 'a')], [('c', 'a'), 'b']]
 
         ::
 
@@ -868,7 +884,7 @@ class Permutation(SageObject):
             sage: p.str(sep=' | ')
             'a b c | c b a'
 
-        ..the permutation can be rebuilt from the standard string::
+        The permutation can be rebuilt from the standard string::
 
             sage: p == iet.Permutation(p.str())
             True
@@ -881,7 +897,7 @@ class Permutation(SageObject):
             sage: p.str(sep=' | ')
             'a b b | c c a'
 
-        ..the generalized permutation can be rebuilt from the standard string::
+        Again, the generalized permutation can be rebuilt from the standard string::
 
             sage: p == iet.GeneralizedPermutation(p.str())
             True
@@ -898,8 +914,8 @@ class Permutation(SageObject):
         s = []
         if self._flips is None:
             l = self.list()
-            s.append(' '.join(map(str,l[0])))
-            s.append(' '.join(map(str,l[1])))
+            s.append(' '.join(map(str, l[0])))
+            s.append(' '.join(map(str, l[1])))
         else:
             l = self.list(flips=True)
             s.append(' '.join(map(labelize_flip, l[0])))
@@ -916,8 +932,8 @@ class Permutation(SageObject):
 
             sage: from surface_dynamics import *
 
-            sage: iet.Permutation('a b c', 'c b a').flips() is None
-            True
+            sage: iet.Permutation('a b c', 'c b a').flips()
+            []
             sage: iet.Permutation('a b c', 'c b a', flips='ac').flips()
             ['a', 'c']
             sage: iet.GeneralizedPermutation('a a', 'b b', flips='a').flips()
@@ -926,7 +942,7 @@ class Permutation(SageObject):
             ['b']
         """
         if self._flips is None:
-            return None
+            return []
 
         res = []
         l = self.list(flips=False)
@@ -1181,7 +1197,7 @@ class Permutation(SageObject):
         from sage.combinat.words.alphabet import build_alphabet
         alphabet = build_alphabet(alphabet)
         if alphabet.cardinality() < len(self):
-            raise ValueError("Your alphabet has not enough letters")
+            raise ValueError("not enough letters in alphabet")
         self._alphabet = alphabet
 
     def alphabet(self, data=None):
@@ -1433,8 +1449,7 @@ class Permutation(SageObject):
 
         - a dictionary whose keys are the labels of this permutation and the
           value associated to a label `a` is a pair `((ip,jp), (im,jm))` made
-          of the two positions of `a`. The first one correspond to the
-          positively oriented one.
+          of the two positions of `a`.
 
         - a list of two lists that give the signs of each subinterval
 
@@ -1451,35 +1466,61 @@ class Permutation(SageObject):
              'd': [(0, 0), (1, 3)],
              'e': [(0, 2), (1, 0)]}
             sage: orientation
-            [[0, 0, 0, 1, 0, 1], [1, 1, 0, 1]]
+            [[1, 1, 1, -1, 1, -1], [-1, -1, 1, -1]]
 
             sage: for a, ((ip,jp),(im,jm)) in twins.iteritems():
             ....:     assert p[ip][jp] == p[im][jm] == a
-            ....:     assert orientation[ip][jp] == 0
-            ....:     assert orientation[im][jm] == 1
+            ....:     assert orientation[ip][jp] == +1
+            ....:     assert orientation[im][jm] == -1
+
+            sage: p = iet.Permutation('a b c', 'c b a', flips='ac')
+            sage: twins, orientation = p._canonical_signs()
+            sage: twins
+            {'a': [(0, 0), (1, 2)],
+             'b': [(0, 1), (1, 1)],
+             'c': [(0, 2), (1, 0)]}
+            sage: orientation
+            [[1, 1, 1], [1, -1, 1]]
+
+            sage: p = iet.GeneralizedPermutation('a a', 'b b c c', flips='b')
+            sage: twins, orientation = p._canonical_signs()
+            sage: twins
+            {'a': [(0, 0), (0, 1)],
+             'b': [(1, 1), (1, 0)],
+             'c': [(1, 3), (1, 2)]}
+            sage: orientation
+            [[1, -1], [1, 1, -1, 1]]
         """
+        flips = self._flips
         letters = set(self.letters())
 
         label_to_twins = {}
         sign_top = []
         sign_bot = []
         for i,a in enumerate(self[0]):
-            if a in letters:
-                sign_top.append(0)
+            if a in letters:  # first time seen
+                sign_top.append(1)
                 label_to_twins[a] = [(0,i)]
                 letters.remove(a)
-            else:
-                sign_top.append(1)
+            else:             # already seen
+                if flips is not None and flips[0][i] == -1:
+                    sign_top.append(1)
+                else:
+                    sign_top.append(-1)
                 label_to_twins[a].append((0,i))
+
         n = len(self[1])
         for i,a in enumerate(reversed(self[1])):
             i = n - 1 - i
-            if a in letters:
-                sign_bot.append(0)
+            if a in letters:  # first time seen
+                sign_bot.append(1)
                 letters.remove(a)
                 label_to_twins[a] = [(1,i)]
-            else:
-                sign_bot.append(1)
+            else:             # already seen
+                if flips is not None and flips[1][i] == -1:
+                    sign_bot.append(1)
+                else:
+                    sign_bot.append(-1)
                 label_to_twins[a].append((1,i))
         sign_bot.reverse()
 
@@ -1487,7 +1528,7 @@ class Permutation(SageObject):
 
     def interval_diagram(self, glue_ends=True, sign=False):
         r"""
-        Return the interval diagram of self
+        Return the interval diagram of self.
 
         INPUT:
 
@@ -1501,72 +1542,162 @@ class Permutation(SageObject):
 
             sage: p = iet.Permutation('a b c','c b a')
             sage: p.interval_diagram()
-            [['b', ('c', 'a')], ['b', ('c', 'a')]]
+            [['b', ('c', 'a')], [('c', 'a'), 'b']]
 
             sage: p = iet.Permutation('a b c','c a b')
             sage: p.interval_diagram()
-            [['a', 'b'], [('c', 'b'), ('c', 'a')]]
+            [[('c', 'b'), ('c', 'a')], ['b', 'a']]
 
             sage: p = iet.GeneralizedPermutation('a a','b b c c')
             sage: p.interval_diagram()
-            [['a'], [('b', 'a', 'c')], ['b'], ['c']]
+            [[('b', 'a', 'c')], ['c'], ['b'], ['a']]
 
             sage: p = iet.GeneralizedPermutation('a a b b','c c')
             sage: p.interval_diagram()
-            [['a'], [('b', 'c', 'a')], ['b'], ['c']]
+            [[('b', 'c', 'a')], ['c'], ['b'], ['a']]
             sage: p.interval_diagram(sign=True)
-            [[('a', 1)],
-             [(('b', 0), ('c', 0), ('a', 0))],
-             [('b', 1)],
-             [('c', 1)]]
+            [[(('b', 1), ('c', 1), ('a', 1))], [('c', -1)], [('b', -1)], [('a', -1)]]
 
             sage: p = iet.GeneralizedPermutation((0,1,0,2),(3,2,4,1,4,3))
             sage: p.interval_diagram()
-            [[0, 1, 4, 1], [2, 3, 4, (2, 3, 0)]]
+            [[2, 3, 4, (2, 3, 0)], [4, 1, 0, 1]]
             sage: p.interval_diagram(sign=True)
-            [[(0, 1), (1, 0), (4, 1), (1, 1)],
-             [(2, 0), (3, 1), (4, 0), ((2, 1), (3, 0), (0, 0))]]
-        """
-        if self._flips is not None:
-            raise ValueError("not implemented for flipped permutation")
+            [[(2, 1), (3, -1), (4, 1), ((2, -1), (3, 1), (0, 1))],
+             [(4, -1), (1, -1), (0, -1), (1, 1)]]
 
+            sage: p = iet.GeneralizedPermutation('a b c d b', 'e d f e a f c', flips='bdf')
+            sage: p.interval_diagram()
+            [[('e', 'a')], ['d', 'e', 'f', 'c', ('b', 'c'), 'd', 'f', 'a', 'b']]
+
+
+        TESTS::
+
+            sage: from surface_dynamics import *
+
+            sage: p = iet.GeneralizedPermutation('0 1 2 3 2','4 3 4 1 0')
+            sage: p.interval_diagram(sign=True)
+            [[('4', -1), ('3', -1), ('2', -1), ('3', 1)],
+             [('1', -1), (('2', 1), ('0', -1)), ('1', 1), (('4', 1), ('0', 1))]]
+
+            sage: p = iet.Permutation('a b c', 'c b a', flips='a')
+            sage: p.interval_diagram(glue_ends=False, sign=True)
+            [[('a', 1), ('c', -1), ('b', 1), ('a', -1), ('b', -1), ('c', 1)]]
+            sage: p.interval_diagram(glue_ends=True, sign=False)
+            [['b', 'a', 'b', ('c', 'a', 'c')]]
+
+            sage: iet.Permutation('a b c', 'c b a', flips='b').interval_diagram(glue_ends=False, sign=True)
+            [[('a', 1), ('b', 1), ('a', -1), ('c', -1), ('b', -1), ('c', 1)]]
+            sage: iet.Permutation('a b c', 'c b a', flips='c').interval_diagram(glue_ends=False, sign=True)
+            [[('a', 1), ('b', -1), ('c', 1), ('b', 1), ('a', -1), ('c', -1)]]
+
+            sage: iet.Permutation('a b c', 'c b a', flips='bc').interval_diagram(glue_ends=False, sign=True)
+            [[('a', 1), ('b', 1), ('a', -1), ('c', -1)], [('c', 1), ('b', -1)]]
+            sage: iet.Permutation('a b c', 'c b a', flips='ac').interval_diagram(glue_ends=False, sign=True)
+            [[('a', 1), ('c', -1)], [('b', 1), ('c', 1), ('b', -1), ('a', -1)]]
+            sage: iet.Permutation('a b c', 'c b a', flips='ab').interval_diagram(glue_ends=False, sign=True)
+            [[('a', 1), ('c', -1), ('b', -1), ('c', 1)], [('b', 1), ('a', -1)]]
+
+            sage: iet.Permutation('a b c', 'c b a', flips='abc').interval_diagram(glue_ends=False, sign=True)
+            [[('a', 1), ('c', -1)], [('b', 1), ('a', -1)], [('c', 1), ('b', -1)]]
+        """
+        # NOTE: each interval comes with an orientation (obtained from the
+        # method ._canonical_signs(). We label each side of each interval
+        # by either +1 or -1 as follows
+        #
+        #   o---------------->--------------o
+        #  +1 (for source)       -1 (for target)
+        #
+        flips = self._flips
         twin = self.twin_list()
         labels = self.list()
-        letters = set((label,j) for label in self.letters() for j in (0,1))
+        letters = set((label,j) for label in self.letters() for j in (+1,-1))
         label_to_twins, orientation = self._canonical_signs()
         m0 = len(labels[0])
         m1 = len(labels[1])
 
         singularities = []
+#        print('letters       : {}'.format(letters))
+#        print('label_to_twins: {}'.format(label_to_twins))
+#        print('orientation   : {}'.format(orientation))
 
         just_glued = False     # True iff the last elt in singularity is paired
         glued_at_begin = False # True iff the 1st elt in singularity is paired
+        flip = 1
         while letters:
-            label,j = letters.pop()
-            i,p = label_to_twins[label][j]
+#            print('------ new loop ---------------')
+            label,j = letters.pop()                  # pick a remaining letter at random
+#            print('start from ({},{})'.format(label, j))
+#            print('pop letter: label={} j={}'.format(label, j))
+            (i0,p0),(i1,p1) = label_to_twins[label]  # its two positions in the interval
+#            print('i0={} p0={}  i1={} p1={}'.format(i0, p0, i1, p1))
+#            print('orientation[{}][{}] = {} and orientation[{}][{}] = {}'.format(i0, p0, orientation[i0][p0], i1, p1, orientation[i1][p1]))
+
+            # try to see if one of (i0, p0) fits for anti-clockwise order
+            # otherwise start with clockwise direction
+            if j == -1:
+                if orientation[i0][p0] == -1:
+                    i,p = i0,p0
+                    flip = 1
+                elif orientation[i1][p1] == -1:
+                    i,p = i1,p1
+                    flip = 1
+                else:
+                    i,p = i0,p0
+                    flip = -1
+            else:
+                if orientation[i0][p0] == +1:
+                    i,p = i0,p0
+                    flip = 1
+                elif orientation[i1][p1] == +1:
+                    i,p = i1,p1
+                    flip = 1
+                else:
+                    i,p = i0,p0
+                    flip = -1
+
+#            print('starting from i={} p={} with flip={}'.format(i,p,flip))
+
             if sign:
                 singularity = [(label,j)]
             else:
                 singularity = [label]
             while True:
+#               print('- - - - inside loop - - - - -')
+#               print('remaining letters: {}'.format(letters))
+#               print('i={}  p={} label={} j={}'.format(i,p,label,j))
                 i,p = twin[i][p]
-                if i == 0:
-                    p += 1
-                    if p == m0:
+                if flips is not None and flips[i][p] == -1:
+                    flip *= -1
+#               print('twin i={} p={}'.format(i,p))
+#               print('flip: {}'.format(flip))
+                if i == 0:      # twin on top
+                    p += flip   # next interval
+#                   print('top')
+                    if flip == 1 and p == m0:     # at the right end?
                         i = 1
                         p = m1-1
-                        j = 1
-                else:
-                    p -= 1
-                    if p == -1:
+                    elif flip == -1 and p == -1:  # at the left end?
+                        i = 1
+                        p = 0
+                else:           # twin on bot
+                    p -= flip   # next interval
+#                   print('bot')
+                    if flip == 1 and p == -1:     # at the left end?
                         i = 0
                         p = 0
-                        j = 0
+                    elif flip == -1 and p == m1:  # at the right end?
+                        i = 0
+                        p = m0 - 1
+
                 label = labels[i][p]
-                j = orientation[i][p]
+                j = flip * orientation[i][p]
+
+#               print('arrived on ({},{}) (at position ({},{}))'.format(label, j, i, p))
+
                 if (label,j) not in letters:
                     if (glue_ends and
-                        ((i == 1 and p == m1-1) or (i == 0 and p == 0))):
+                        ((i == 1 and p == m1-1 and flip == +1) or (i == 0 and p == 0 and flip == +1) or
+                         (i == 0 and p == m1-1 and flip == -1) or (i == 1 and p == 0 and flip == -1))):
                         sg2 = singularity.pop(0)
                         sg1 = singularity.pop(-1)
                         if glued_at_begin:
@@ -1578,7 +1709,8 @@ class Permutation(SageObject):
                     break
                 letters.remove((label,j))
                 if (glue_ends and (
-                    (i == 1 and p==m1-1) or (i == 0 and p == 0))):
+                    (i == 1 and p == m1-1 and flip == +1) or (i == 0 and p == 0 and flip == 1) or
+                    (i == 0 and p == m1-1 and flip == -1) or (i == 1 and p == 0 and flip == -1))):
                     sg1 = singularity.pop(-1)
                     if sign:
                         sg2 = (label,j)
@@ -2822,6 +2954,9 @@ class PermutationLI(Permutation):
             sage: p.marked_profile()
             4|3 [4, 4]
         """
+        if self._flips:
+            raise ValueError('not available on permutations with flips')
+
         from marked_partition import MarkedPartition
 
         if len(self) == 1:
@@ -2831,10 +2966,10 @@ class PermutationLI(Permutation):
         signs = self._canonical_signs()[1]
         p = sorted(map(lambda x: len(x), g),reverse=True)
 
-        left1 = ((self[1][0],1-signs[1][0]),(self[0][0],signs[0][0]))
-        left2 = (left1[1],left1[0])
-        right1 = ((self[0][-1],1-signs[0][-1]),(self[1][-1],signs[1][-1]))
-        right2 = (right1[1],right1[0])
+        left1 = ((self[1][0], -signs[1][0]), (self[0][0], signs[0][0]))
+        left2 = (left1[1], left1[0])
+        right1 = ((self[0][-1], -signs[0][-1]), (self[1][-1], signs[1][-1]))
+        right2 = (right1[1], right1[0])
         if len(set(left1+right1)) == 3:
             if left1[0] == right1[0]:
                 lr1 = (left1[1], left1[0],right1[1])
@@ -3446,7 +3581,7 @@ class OrientablePermutationIET(PermutationIET):
             sage: p2.attached_out_degree()
             1
         """
-        left_corner = (self[1][0],0)
+        left_corner = (self[1][0], +1)
         for s in self.interval_diagram(glue_ends=False,sign=True):
             if left_corner in s:
                 return len(s)//2 - 1
@@ -3471,8 +3606,7 @@ class OrientablePermutationIET(PermutationIET):
             sage: p2.attached_in_degree()
             3
         """
-        right_corner = (self[1][-1],1)
-
+        right_corner = (self[1][-1], -1)
         for s in self.interval_diagram(glue_ends=False,sign=True):
             if right_corner in s:
                 return len(s)//2 - 1
@@ -3547,31 +3681,31 @@ class OrientablePermutationIET(PermutationIET):
 
             sage: p = iet.Permutation('a b c d e f g','b g a c f e d')
             sage: p.interval_diagram()
-            [['a', ('b', 'a'), ('g', 'd'), 'e', 'f', 'g', 'b', 'c'], ['f', 'c', 'd', 'e']]
+            [[('g', 'd'), 'e', 'f', 'g', 'b', 'c', 'a', ('b', 'a')], ['c', 'd', 'e', 'f']]
             sage: p.marked_profile()
             4|0 [4, 2]
 
             sage: p = iet.Permutation('a b c d e f g','c a g d f b e')
             sage: p.interval_diagram()
-            [['a', 'b', 'f', 'g'], ['c', 'd', ('g', 'e'), 'f', 'd', 'e', 'b', ('c', 'a')]]
+            [['c', 'd', ('g', 'e'), 'f', 'd', 'e', 'b', ('c', 'a')], ['g', 'a', 'b', 'f']]
             sage: p.marked_profile()
             4|1 [4, 2]
 
             sage: p = iet.Permutation('a b c d e f g','e b d g c a f')
             sage: p.interval_diagram()
-            [['a', 'b', 'e', 'f'], ['c', 'd', 'b', 'c', ('g', 'f'), 'g', 'd', ('e', 'a')]]
+            [['c', 'd', 'b', 'c', ('g', 'f'), 'g', 'd', ('e', 'a')], ['f', 'a', 'b', 'e']]
             sage: p.marked_profile()
             4|2 [4, 2]
 
             sage: p = iet.Permutation('a b c d e f g', 'e c g b a f d')
             sage: p.interval_diagram()
-            [['a', 'b', ('g', 'd'), ('e', 'a'), 'b', 'c', 'e', 'f'], ['f', 'g', 'c', 'd']]
+            [['b', 'c', 'e', 'f', 'a', 'b', ('g', 'd'), ('e', 'a')], ['c', 'd', 'f', 'g']]
             sage: p.marked_profile()
             4|3 [4, 2]
 
             sage: p = iet.Permutation('a b c d e f g', 'f d c a g e b')
             sage: p.interval_diagram()
-            [['a', 'b', 'e', ('f', 'a'), 'c', 'd', 'f', 'g'], [('g', 'b'), 'c', 'd', 'e']]
+            [['c', 'd', 'f', 'g', 'a', 'b', 'e', ('f', 'a')], ['d', 'e', ('g', 'b'), 'c']]
             sage: p.marked_profile()
             4o2 [4, 2]
         """
@@ -3582,8 +3716,8 @@ class OrientablePermutationIET(PermutationIET):
 
         g = self.interval_diagram(glue_ends=True,sign=True)
         p = sorted(map(lambda x: len(x)//2, g),reverse=True)
-        left = ((self[1][0],0),(self[0][0],0))
-        right = ((self[0][-1],1),(self[1][-1],1))
+        left = ((self[1][0], +1), (self[0][0], +1))
+        right = ((self[0][-1], -1), (self[1][-1], -1))
         for c in g:
             if left in c: c_left = c
             if right in c: c_right = c
@@ -5263,7 +5397,7 @@ class RauzyDiagram(SageObject):
                 True
             """
             if i > len(self) or i < -len(self)-1:
-                raise IndexError, "path index out of range"
+                raise IndexError("path index out of range")
 
             if i == 0: return self.start()
             if i < 0: i = i + len(self) + 1
@@ -6342,7 +6476,7 @@ class RauzyDiagram(SageObject):
             True
         """
         if not isinstance(p, self._element_class):
-            raise ValueError, "Your element does not have the good type"
+            raise ValueError("Your element does not have the good type")
 
         perm = self._permutation_to_vertex(p)
         return map(lambda x: self._vertex_to_permutation(x),

@@ -124,7 +124,8 @@ class LabelledPermutation(SageObject):
     r"""
     General template for labelled objects.
 
-    .. warning::
+    .. WARNING::
+
        Internal class! Do not use directly!
     """
     def __getitem__(self, i):
@@ -143,16 +144,26 @@ class LabelledPermutation(SageObject):
             ['a', 'b', 'c']
             sage: p[1]
             ['c', 'b', 'a']
+
+            sage: p = iet.Permutation('a b', 'b a', flips='a')
+            sage: p[0]
+            ['a', 'b']
+            sage: p = iet.GeneralizedPermutation('c p p', 't t c', flips='ct')
+            sage: p[1]
+            ['t', 't', 'c']
         """
         return map(self._alphabet.unrank, self._labels[i])
 
-    def list(self):
+    def list(self, flips=False):
         r"""
         Returns a list of two lists corresponding to the intervals.
 
-        OUTPUT:
+        INPUT:
 
-        list -- two lists of labels
+        - ``flips`` - boolean (default: False) - if ``True`` returns instead of
+          letters use pair of letter and flip.
+
+        OUTPUT: two lists of labels (or labels with flips)
 
         EXAMPLES::
 
@@ -184,10 +195,42 @@ class LabelledPermutation(SageObject):
             sage: q2 = iet.GeneralizedPermutation(p2.list(),alphabet=p2.alphabet())
             sage: p2 == q2
             True
+
+        Some non-orientable examples::
+
+            sage: p = iet.GeneralizedPermutation('0 0 1 2 2 1', '3 3', flips='1')
+            sage: p.list(flips=True)
+            [[('0', 1), ('0', 1), ('1', -1), ('2', 1), ('2', 1), ('1', -1)], [('3', 1), ('3', 1)]]
+            sage: p.list(flips=False)
+            [['0', '0', '1', '2', '2', '1'], ['3', '3']]
+
+            sage: iet.Permutation('a b c', 'c b a').list(flips=True)
+            [[('a', 1), ('b', 1), ('c', 1)], [('c', 1), ('b', 1), ('a', 1)]]
+
+        The list can be used to reconstruct the permutation::
+
+            sage: p = iet.Permutation('a b c','c b a',flips='ab')
+            sage: p == iet.Permutation(p.list(), flips=p.flips())
+            True
+
+        ::
+
+            sage: p = iet.GeneralizedPermutation('a b b c','c d d a',flips='ad')
+            sage: p == iet.GeneralizedPermutation(p.list(), flips=p.flips())
+            True
         """
-        a0 = map(self._alphabet.unrank, self._labels[0])
-        a1 = map(self._alphabet.unrank, self._labels[1])
-        return [a0, a1]
+        if flips:
+            if self._flips is None:
+                flips = [[1] * len(self._labels[0]), [1] * len(self._labels[1])]
+            else:
+                flips = self._flips
+            a0 = zip(map(self._alphabet.unrank, self._labels[0]), flips[0])
+            a1 = zip(map(self._alphabet.unrank, self._labels[1]), flips[1])
+        else:
+            a0 = map(self._alphabet.unrank, self._labels[0])
+            a1 = map(self._alphabet.unrank, self._labels[1])
+
+        return [a0,a1]
 
     def rauzy_move_matrix(self, winner=None, side='right'):
         r"""
@@ -325,142 +368,6 @@ class LabelledPermutation(SageObject):
         side = side_conversion(side)
 
         return self[1-winner][side]
-
-    def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=10,
-                                  nb_iterations=65536, return_speed=False,
-                                  verbose=False, output_file=None):
-        r"""
-        Compute the H^+ Lyapunov exponents of the stratum associated to this
-        permutation.
-
-        This method calls a C library. It might be  significantly faster if
-        ``nb_vectors=1`` (or if it is not provided but genus is 1).
-
-        INPUT:
-
-        - ``nb_vectors`` -- the number of exponents to compute. The number of
-          vectors must not exceed the dimension of the space!
-
-         - ``nb_experiments`` -- the number of experiments to perform. It might
-           be around 100 (default value) in order that the estimation of
-           confidence interval is accurate enough.
-
-         - ``nb_iterations`` -- the number of iteration of the Rauzy-Zorich
-           algorithm to perform for each experiments. The default is 2^15=32768
-           which is rather small but provide a good compromise between speed and
-           quality of approximation.
-
-        - ``verbose`` -- if ``True`` provide additional informations rather than
-          returning only the Lyapunov exponents (i.e. ellapsed time, confidence
-          intervals, ...)
-
-        - ``output_file`` -- if provided (as a file object or a string) output
-          the additional information in the given file rather than on the
-          standard output.
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import *
-            sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()
-            sage: p = Q.permutation_representative(reduced=False)
-            sage: p.lyapunov_exponents_H_plus() # abs tol .05
-            [0.6666]
-
-            sage: Q_reg = QuadraticStratum([12]).regular_component()
-            sage: p_reg = Q_reg.permutation_representative(reduced=False)
-            sage: p_reg.lyapunov_exponents_H_plus() # abs tol .05
-            [0.662, 0.448, 0.230, 0.087]
-            sage: sum(_)  # abs tol .05
-            1.43
-
-            sage: Q_irr = QuadraticStratum([12]).irregular_component()
-            sage: p_irr = Q_irr.permutation_representative(reduced=False)
-            sage: p_irr.lyapunov_exponents_H_plus() # abs tol .05
-            [0.747, 0.491, 0.245, 0.090]
-            sage: sum(_) # abs tol .05
-            1.5727
-        """
-        c = self.cover([[0]]*len(self), as_tuple=True)
-        return c.lyapunov_exponents_H_plus(
-                    nb_vectors=nb_vectors, nb_experiments=nb_experiments,
-                    nb_iterations=nb_iterations, return_speed=return_speed,
-                    verbose=verbose, output_file=output_file)
-
-    def lyapunov_exponents_H_minus(self, nb_vectors=None, nb_experiments=10,
-                                  nb_iterations=65536, return_speed=False,
-                                  verbose=False, output_file=None):
-        r"""
-        Compute the H^+ Lyapunov exponents of the stratum associated to this
-        permutation.
-
-        This method calls a C library. It might be  significantly faster if
-        ``nb_vectors=1`` (or if it is not provided but genus is 1).
-
-        INPUT:
-
-        - ``nb_vectors`` -- the number of exponents to compute. The number of
-          vectors must not exceed the dimension of the space!
-
-         - ``nb_experiments`` -- the number of experiments to perform. It might
-           be around 100 (default value) in order that the estimation of
-           confidence interval is accurate enough.
-
-         - ``nb_iterations`` -- the number of iteration of the Rauzy-Zorich
-           algorithm to perform for each experiments. The default is 2^15=32768
-           which is rather small but provide a good compromise between speed and
-           quality of approximation.
-
-        - ``verbose`` -- if ``True`` provide additional informations rather than
-          returning only the Lyapunov exponents (i.e. ellapsed time, confidence
-          intervals, ...)
-
-        - ``output_file`` -- if provided (as a file object or a string) output
-          the additional information in the given file rather than on the
-          standard output.
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import *
-            sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()
-            sage: p = Q.permutation_representative(reduced=False)
-            sage: p.lyapunov_exponents_H_minus() # abs tol .05
-            [1.000, 0.333]
-
-            sage: Q_reg = QuadraticStratum([12]).regular_component()
-            sage: p_reg = Q_reg.permutation_representative(reduced=False)
-            sage: p_reg.lyapunov_exponents_H_minus() # abs tol .05
-            [1.000, 0.310, 0.120]
-            sage: sum(_)  # abs tol .05
-            1.430
-
-            sage: Q_irr = QuadraticStratum([12]).irregular_component()
-            sage: p_irr = Q_irr.permutation_representative(reduced=False)
-            sage: p_irr.lyapunov_exponents_H_minus() # abs tol .05
-            [1.000, 0.444, 0.128]
-            sage: sum(_) # abs tol .05
-            1.5725
-        """
-        # we now that the double cover gives rise to two characters. We need to
-        # find the one corresponding to H^-. We just pick the one which is not
-        # constantly 1 and correspond to H^+.
-        c = self.orientation_cover()
-        c0,c1 = c._real_characters()[0]
-        i0 = (-1 in c0)
-        i1 = (-1 in c1)
-        if i0 and i1:
-            raise RuntimeError("not a generalized permutation")
-        elif i0:
-            character = c0
-        elif i1:
-            character = c1
-        else:
-            raise RuntimeError("trouble with permutation={}".format(self))
-
-        return c.lyapunov_exponents_H_plus(
-                    nb_vectors=nb_vectors, nb_experiments=nb_experiments,
-                    nb_iterations=nb_iterations, return_speed=return_speed,
-                    isotypic_decomposition=character,
-                    verbose=verbose, output_file=output_file)
 
 def LabelledPermutationsIET_iterator(
     nintervals=None,
@@ -1162,91 +1069,149 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
         """
         return LabelledRauzyDiagram(self, **kargs)
 
-class FlippedLabelledPermutation(LabelledPermutation):
-    r"""
-    General template for labelled objects
-
-    .. warning::
-       Internal class! Do not use directly!
-    """
-    def list(self, flips=False):
+    def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=10,
+                                  nb_iterations=65536, return_speed=False,
+                                  verbose=False, output_file=None):
         r"""
-        Returns a list associated to the permutation.
+        Compute the H^+ Lyapunov exponents of the stratum associated to this
+        permutation.
+
+        This method calls a C library. It might be  significantly faster if
+        ``nb_vectors=1`` (or if it is not provided but genus is 1).
 
         INPUT:
 
-        - ``flips`` - boolean (default: False)
+        - ``nb_vectors`` -- the number of exponents to compute. The number of
+          vectors must not exceed the dimension of the space!
 
-        OUTPUT:
+         - ``nb_experiments`` -- the number of experiments to perform. It might
+           be around 100 (default value) in order that the estimation of
+           confidence interval is accurate enough.
 
-        list -- two lists of labels
+         - ``nb_iterations`` -- the number of iteration of the Rauzy-Zorich
+           algorithm to perform for each experiments. The default is 2^15=32768
+           which is rather small but provide a good compromise between speed and
+           quality of approximation.
+
+        - ``verbose`` -- if ``True`` provide additional informations rather than
+          returning only the Lyapunov exponents (i.e. ellapsed time, confidence
+          intervals, ...)
+
+        - ``output_file`` -- if provided (as a file object or a string) output
+          the additional information in the given file rather than on the
+          standard output.
 
         EXAMPLES::
 
             sage: from surface_dynamics import *
+            sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()
+            sage: p = Q.permutation_representative(reduced=False)
+            sage: p.lyapunov_exponents_H_plus() # abs tol .05
+            [0.6666]
 
-            sage: p = iet.GeneralizedPermutation('0 0 1 2 2 1', '3 3', flips='1')
-            sage: p.list(flips=True)
-            [[('0', 1), ('0', 1), ('1', -1), ('2', 1), ('2', 1), ('1', -1)], [('3', 1), ('3', 1)]]
-            sage: p.list(flips=False)
-            [['0', '0', '1', '2', '2', '1'], ['3', '3']]
+            sage: Q_reg = QuadraticStratum([12]).regular_component()
+            sage: p_reg = Q_reg.permutation_representative(reduced=False)
+            sage: p_reg.lyapunov_exponents_H_plus() # abs tol .05
+            [0.662, 0.448, 0.230, 0.087]
+            sage: sum(_)  # abs tol .05
+            1.43
 
-        The list can be used to reconstruct the permutation
-
-        ::
-
-            sage: p = iet.Permutation('a b c','c b a',flips='ab')
-            sage: p == iet.Permutation(p.list(), flips=p.flips())
-            True
-
-        ::
-
-            sage: p = iet.GeneralizedPermutation('a b b c','c d d a',flips='ad')
-            sage: p == iet.GeneralizedPermutation(p.list(),flips=p.flips())
-            True
+            sage: Q_irr = QuadraticStratum([12]).irregular_component()
+            sage: p_irr = Q_irr.permutation_representative(reduced=False)
+            sage: p_irr.lyapunov_exponents_H_plus() # abs tol .05
+            [0.747, 0.491, 0.245, 0.090]
+            sage: sum(_) # abs tol .05
+            1.5727
         """
-        if flips:
-            a0 = zip(map(self._alphabet.unrank, self._labels[0]), self._flips[0])
-            a1 = zip(map(self._alphabet.unrank, self._labels[1]), self._flips[1])
-        else:
-            a0 = map(self._alphabet.unrank, self._labels[0])
-            a1 = map(self._alphabet.unrank, self._labels[1])
+        if self._flips:
+            raise NotImplementedError("Lyapunov exponents not implemented for permutations with flips")
+        c = self.cover([[0]]*len(self), as_tuple=True)
+        return c.lyapunov_exponents_H_plus(
+                    nb_vectors=nb_vectors, nb_experiments=nb_experiments,
+                    nb_iterations=nb_iterations, return_speed=return_speed,
+                    verbose=verbose, output_file=output_file)
 
-        return [a0,a1]
-
-    def __getitem__(self,i):
+    def lyapunov_exponents_H_minus(self, nb_vectors=None, nb_experiments=10,
+                                  nb_iterations=65536, return_speed=False,
+                                  verbose=False, output_file=None):
         r"""
-        Get labels and flips of specified interval.
+        Compute the H^+ Lyapunov exponents of the stratum associated to this
+        permutation.
 
-        The result is a 2-uple (letter, flip) where letter is the name of the
-        sub-interval and flip is a number corresponding to the presence of flip
-        as following: 1 (no flip) and -1 (a flip).
+        This method calls a C library. It might be  significantly faster if
+        ``nb_vectors=1`` (or if it is not provided but genus is 1).
+
+        INPUT:
+
+        - ``nb_vectors`` -- the number of exponents to compute. The number of
+          vectors must not exceed the dimension of the space!
+
+         - ``nb_experiments`` -- the number of experiments to perform. It might
+           be around 100 (default value) in order that the estimation of
+           confidence interval is accurate enough.
+
+         - ``nb_iterations`` -- the number of iteration of the Rauzy-Zorich
+           algorithm to perform for each experiments. The default is 2^15=32768
+           which is rather small but provide a good compromise between speed and
+           quality of approximation.
+
+        - ``verbose`` -- if ``True`` provide additional informations rather than
+          returning only the Lyapunov exponents (i.e. ellapsed time, confidence
+          intervals, ...)
+
+        - ``output_file`` -- if provided (as a file object or a string) output
+          the additional information in the given file rather than on the
+          standard output.
 
         EXAMPLES::
 
             sage: from surface_dynamics import *
+            sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()
+            sage: p = Q.permutation_representative(reduced=False)
+            sage: p.lyapunov_exponents_H_minus() # abs tol .05
+            [1.000, 0.333]
 
-            sage: p = iet.Permutation('a b', 'b a', flips='a')
-            sage: p[0]
-            [('a', -1), ('b', 1)]
-            sage: p = iet.GeneralizedPermutation('c p p', 't t c', flips='ct')
-            sage: p[1]
-            [('t', -1), ('t', -1), ('c', -1)]
+            sage: Q_reg = QuadraticStratum([12]).regular_component()
+            sage: p_reg = Q_reg.permutation_representative(reduced=False)
+            sage: p_reg.lyapunov_exponents_H_minus() # abs tol .05
+            [1.000, 0.310, 0.120]
+            sage: sum(_)  # abs tol .05
+            1.430
+
+            sage: Q_irr = QuadraticStratum([12]).irregular_component()
+            sage: p_irr = Q_irr.permutation_representative(reduced=False)
+            sage: p_irr.lyapunov_exponents_H_minus() # abs tol .05
+            [1.000, 0.444, 0.128]
+            sage: sum(_) # abs tol .05
+            1.5725
         """
-        if not isinstance(i, (Integer, int)):
-            raise TypeError("Must be an integer")
-        if i != 0 and i != 1:
-            raise IndexError("The integer must be 0 or 1")
+        if self._flips:
+            raise NotImplementedError("Lyapunov exponents not implemented for permutations with flips")
 
-        letters = map(self._alphabet.unrank, self._labels[i])
-        flips = self._flips[i]
+        # we know that the double cover gives rise to two characters. We need to
+        # find the one corresponding to H^-. We just pick the one which is not
+        # constantly 1 and correspond to H^+.
+        c = self.orientation_cover()
+        c0,c1 = c._real_characters()[0]
+        i0 = (-1 in c0)
+        i1 = (-1 in c1)
+        if i0 and i1:
+            raise RuntimeError("not a generalized permutation")
+        elif i0:
+            character = c0
+        elif i1:
+            character = c1
+        else:
+            raise RuntimeError("trouble with permutation={}".format(self))
 
-        return zip(letters,flips)
+        return c.lyapunov_exponents_H_plus(
+                    nb_vectors=nb_vectors, nb_experiments=nb_experiments,
+                    nb_iterations=nb_iterations, return_speed=return_speed,
+                    isotypic_decomposition=character,
+                    verbose=verbose, output_file=output_file)
 
-class FlippedLabelledPermutationIET(
-    FlippedLabelledPermutation,
-    FlippedPermutationIET,
-    LabelledPermutationIET):
+
+class FlippedLabelledPermutationIET(FlippedPermutationIET, LabelledPermutationIET):
     r"""
     Flipped labelled permutation from iet.
 
@@ -1325,10 +1290,7 @@ class FlippedLabelledPermutationIET(
         """
         return FlippedLabelledRauzyDiagram(self, **kargs)
 
-class FlippedLabelledPermutationLI(
-    FlippedLabelledPermutation,
-    FlippedPermutationLI,
-    LabelledPermutationLI):
+class FlippedLabelledPermutationLI(FlippedPermutationLI, LabelledPermutationLI):
     r"""
     Flipped labelled quadratic (or generalized) permutation.
 
