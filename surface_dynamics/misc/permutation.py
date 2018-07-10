@@ -311,7 +311,7 @@ def perm_compose(p1, p2):
 
 def perm_compose_i(p1, p2):
     r"""
-    Returns the product ``p1^{-1} p2^{-1}`.
+    Returns the product `p1^{-1} p2^{-1}`.
 
     EXAMPLES::
 
