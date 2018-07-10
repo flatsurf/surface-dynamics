@@ -1616,21 +1616,13 @@ class Permutation(SageObject):
         m1 = len(labels[1])
 
         singularities = []
-#        print('letters       : {}'.format(letters))
-#        print('label_to_twins: {}'.format(label_to_twins))
-#        print('orientation   : {}'.format(orientation))
 
         just_glued = False     # True iff the last elt in singularity is paired
         glued_at_begin = False # True iff the 1st elt in singularity is paired
         flip = 1
         while letters:
-#            print('------ new loop ---------------')
             label,j = letters.pop()                  # pick a remaining letter at random
-#            print('start from ({},{})'.format(label, j))
-#            print('pop letter: label={} j={}'.format(label, j))
             (i0,p0),(i1,p1) = label_to_twins[label]  # its two positions in the interval
-#            print('i0={} p0={}  i1={} p1={}'.format(i0, p0, i1, p1))
-#            print('orientation[{}][{}] = {} and orientation[{}][{}] = {}'.format(i0, p0, orientation[i0][p0], i1, p1, orientation[i1][p1]))
 
             # try to see if one of (i0, p0) fits for anti-clockwise order
             # otherwise start with clockwise direction
@@ -1655,24 +1647,17 @@ class Permutation(SageObject):
                     i,p = i0,p0
                     flip = -1
 
-#            print('starting from i={} p={} with flip={}'.format(i,p,flip))
 
             if sign:
                 singularity = [(label,j)]
             else:
                 singularity = [label]
             while True:
-#               print('- - - - inside loop - - - - -')
-#               print('remaining letters: {}'.format(letters))
-#               print('i={}  p={} label={} j={}'.format(i,p,label,j))
                 i,p = twin[i][p]
                 if flips is not None and flips[i][p] == -1:
                     flip *= -1
-#               print('twin i={} p={}'.format(i,p))
-#               print('flip: {}'.format(flip))
                 if i == 0:      # twin on top
                     p += flip   # next interval
-#                   print('top')
                     if flip == 1 and p == m0:     # at the right end?
                         i = 1
                         p = m1-1
@@ -1681,7 +1666,6 @@ class Permutation(SageObject):
                         p = 0
                 else:           # twin on bot
                     p -= flip   # next interval
-#                   print('bot')
                     if flip == 1 and p == -1:     # at the left end?
                         i = 0
                         p = 0
@@ -1692,7 +1676,6 @@ class Permutation(SageObject):
                 label = labels[i][p]
                 j = flip * orientation[i][p]
 
-#               print('arrived on ({},{}) (at position ({},{}))'.format(label, j, i, p))
 
                 if (label,j) not in letters:
                     if (glue_ends and
