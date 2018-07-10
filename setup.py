@@ -8,7 +8,12 @@ It depends on distutils
 try:
     from sage.env import SAGE_SRC, SAGE_VERSION
 except ImportError:
-    raise ValueError("this package currently installs only inside SageMath (http://www.sagemath.org)")
+    raise ValueError("this package currently installs only inside SageMath (http://www.sagemath.org)\n"
+                     "If you are using Ubuntu with Sage installed from the official apt repository, run\n"
+                     "first in a console \"$ source /usr/share/sagemath/bin/sage-env\"\n")
+
+import cysignals
+CYSIGNALS_SRC = cysignals.__path__[0]
 
 from distutils.core import setup
 from distutils.extension import Extension
@@ -79,7 +84,12 @@ for name, data in extensions_data.items():
         headers = [os.path.join(full_dir, data['dir'], head) for head in data['headers']]
         ext = Extension(data['name'],
             sources = sources,
-            include_dirs = [SAGE_SRC, full_dir] + sys.path,
+            include_dirs = [
+                os.path.join(SAGE_SRC, 'sage', 'libs', 'ntl'),  # apparently needed for Sage on archlinux
+                os.path.join(SAGE_SRC, 'sage', 'cpython'),      # idem
+                CYSIGNALS_SRC,                                  # idem
+                full_dir
+                ],
             depends = headers,
         )
         extensions.append(ext)
