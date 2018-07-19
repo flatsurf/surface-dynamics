@@ -24,7 +24,9 @@ and ``latte_int``.
 Installation
 ------------
 
-The module is distributed on PyPI. You just need to run the following command::
+The module is distributed on PyPI and is easily installed through the Python package manager
+pip. If you downloaded a binary from the Sagemath website (including the Cygwin version
+running on Windows) or compiled from source, run the following command::
 
     $ sage -pip install surface_dynamics [--user]
 
@@ -32,10 +34,15 @@ The --user option is optional and allows to install the module in your user spac
 (and does not require administrator rights).
 
 If you use Debian or Ubuntu and you installed Sage through the operating system
-(that is the package sagemath) then you need a two steps installation
+(that is the package sagemath) run these two commands::
 
     $ source /usr/share/sagemath/bin/sage-env
-    $ sage -pip install surface_dynamics --user
+    $ pip install surface_dynamics --user
+
+If you use archlinux and installed sagemath throught the operating system, run
+this command::
+
+    $ pip2 install git+https://gitlab.com/videlec/surface_dynamics --user
 
 Documentation
 -------------
