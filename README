@@ -100,12 +100,12 @@ output as below.::
 Installing development version - source code
 --------------------------------------------
 
-The development webpage is https://github.com/videlec/flatsurf-package
+The development webpage is https://gitlab.com/videlec/surface_dynamics
 
 Assuming you have the program git on your computer, you can install the
 development version with the command::
 
-    $ sage -pip install git+https://gitlab.com/videlec/surface_dynamics.git [--user]
+    $ sage -pip install git+https://gitlab.com/videlec/surface_dynamics [--user]
 
 Contact
 -------
