@@ -972,6 +972,19 @@ cdef class Origami_dense_pyx(object):
             (0, 2, 1)
             sage: o.u_tuple()
             (1, 0, 2)
+
+        Checking the relabeling map::
+
+            sage: o = Origami('(1,5,3,7,8)(2,9)','(1,4,6,8)(3,2,7)')
+            sage: r = o.r_tuple()
+            sage: u = o.u_tuple()
+            sage: lab = o._set_standard_form(True)
+            sage: rr = o.r_tuple()
+            sage: uu = o.u_tuple()
+            sage: [rr[lab[i]] for i in range(9)] == [lab[r[i]] for i in range(9)]
+            True
+            sage: [uu[lab[i]] for i in range(9)] == [lab[u[i]] for i in range(9)]
+            True
         """
         cdef int *ren = <int *> malloc(self._n * sizeof(int))
         m = None
@@ -2653,18 +2666,40 @@ cdef class Origami_dense_pyx(object):
         su = self.u().cycle_string(singletons=True)
         return sr + " \\atop " + su
 
-    def set_positions(self, pos):
+    def set_positions(self, pos=None):
         r"""
-        Choose position of the squares for plotting
+        Set positions of the squares for plotting.
 
-        set self._positions
-        set self._lr_frontiers
-        set self._tb_frontiers
+        INPUT:
+
+        - ``pos`` - list of pairs of coordinates, one for each square
         """
+        if pos is None:
+            if self._pos is not None:
+                return
+
+            # use cylinder diagram to organize the squares into cylinders
+            from surface_dynamics.misc.permutation import perm_invert
+            o = self.__copy__()
+            rel = o._set_standard_form(return_map=True)
+            rel = perm_invert(rel)
+            cyls = o.cylinder_decomposition()
+            H = 0
+            pos = [None] * self.nb_squares()
+            k = 0
+            for cyl in cyls:
+                _,_,w,h,_,_ = cyl
+                for j in xrange(h):
+                    for i in xrange(w):
+                        pos[rel[k]] = (i,H)
+                        k += 1
+                    H += 1
+                H += 0.5
+
         r = self.r_tuple()
         u = self.u_tuple()
         if len(pos) != self.nb_squares():
-            raise ValueError, "not enough positions"
+            raise ValueError("not enough positions")
 
         rl_frontiers = []
         tb_frontiers = []
@@ -2691,7 +2726,7 @@ cdef class Origami_dense_pyx(object):
             vertex=True)
     def plot(self,**args):
         r"""
-        Plot the normal form of self
+        Plot self.
 
         The positions of each square follow a naive algorithm. If you belive
         that a better picture exists look at the method .set_positions()
@@ -2703,27 +2738,15 @@ cdef class Origami_dense_pyx(object):
             sage: o.plot()  # not tested (problem with matplotlib font caches)
             Graphics object consisting of 71 graphics primitives
         """
-        if self._pos is None:
-            # if not use cylinder diagram
-            o = self.to_standard_form()
-            cyls = o.cylinder_decomposition()
-            H = 0
-            pos = []
-            for cyl in cyls:
-                _,_,w,h,_,_ = cyl
-                for j in xrange(h):
-                    pos.extend((i,H) for i in xrange(w))
-                    H += 1
-                H += 0.5
-            o.set_positions(pos)
-            return o.plot()
-
         from sage.plot.plot import Graphics
         from sage.plot.polygon import polygon2d
         from sage.plot.line import line2d
         from sage.plot.text import text
         from sage.plot.colors import rainbow
         from sage.plot.point import point2d
+
+        # in case self._pos is undefined
+        self.set_positions()
 
         d = {
             'side': {},
