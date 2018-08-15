@@ -742,135 +742,165 @@ class QuadraticStratumComponent(StratumComponent):
 
         return p
 
-    def one_cylinder_diagram(self,fake_zeros=False,verbose=False):
+    def one_cylinder_diagram(self):
         r"""
+        Return a separatrix diagram with one cylinder that belongs to
+        this component of stratum.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import *
+
+            sage: Q = QuadraticStratum({1:1,-1:5})
+            sage: c = Q.unique_component().one_cylinder_diagram()
+            sage: c
+            (0,0)-(1,1,2,2,3,3)
+            sage: c.stratum() == Q
+            True
+
+            sage: Q = QuadraticStratum(5,-1)
+            sage: c = Q.unique_component().one_cylinder_diagram()
+            sage: c
+            (0,1,1,2)-(2,3,0,3)
+            sage: c.stratum() == Q
+            True
         """
-        from separatrix_diagram import CylinderDiagram
-        p = self.permutation_representative()
-        g = self.stratum().genus()
-        n = len(p)-1
-        p.alphabet(range(n+1))
-        assert p[0][0] == p[1][-1]
+        from surface_dynamics.flat_surfaces.separatrix_diagram import QuadraticCylinderDiagram
+        p = self.permutation_representative(reduced=True).to_cylindric()
+        top = [x-1 for x in p[0][1:]]
+        bot = [x-1 for x in p[1][-2::-1]]
+        return QuadraticCylinderDiagram([(bot,top)])
 
-        t0,t1 = p._twin
-
-        f = lambda (i,j): (i,j-1) if i == 0 else (i,j)
-
-        t0 = map(f,t0[1:])
-        t1 = map(f,t1[:-1])
-
-        s0   = set(j for (i,j) in t1 if i == 0)
-        s0_p = set(j for (i,j) in t0 if i == 0 and abs(t0[j][1]-j) == 1)
-        s1   = set(j for (i,j) in t0 if i == 1)
-        s1_p = set(j for (i,j) in t1 if i == 1 and abs(t1[j][1]-j) == 1)
-
-        p0,p1 = p
-        p0 = [i-1 for i in p0[1:]]
-        p1 = [i-1 for i in p1[:-1]]
-
-        if verbose:
-            print("p0 = %s" % p0)
-            print("p1 = %s" % p1)
-            print("t0 = %s" % t0)
-            print("t1 = %s" % t1)
-            print("s0 = %s" % s0)
-            print("s1 = %s" % s1)
-
-
-        if g == 0:
-            top = [None] * len(p1)
-            bot = [None] * len(p1)
-
-            for i,j in enumerate(p1):
-                if verbose: print("i,j=",i,j)
-                ii = t1[i][1]
-                if verbose: print("same side")
-                bot[i] = j
-                top[ii] = j
-                if not fake_zeros and i in s1_p:
-                    bot[ii] = -1
-                    top[i] = -1
-                else:
-                    bot[ii] = j+n
-                    top[i] = j+n
-                if verbose:
-                    print("c0 =",c0_bot,c0_top)
-                    print("c1 =",c1_bot,c1_top)
-
-            dom = dict((j,i-1) for (i,j) in enumerate(sorted(set(bot+top))))
-            if verbose:
-                print(dom)
-
-            bot = [dom[i] for i in bot if i != -1]
-            top = [dom[i] for i in top if i != -1]
-
-            return CylinderDiagram([(bot,top)])
-
-        else:
-
-            c0_top = [None] * len(p0)
-            c1_bot = [None] * len(p0)
-            c0_bot = [None] * len(p1)
-            c1_top = [None] * len(p1)
-
-            for i,j in enumerate(p0):
-                if verbose: print("i,j=",i,j,)
-                if i in s0:
-                    if verbose: print("other side")
-                    c0_top[i] = j
-                    c1_bot[i] = j+n
-                elif c0_top[i] is None:
-                    ii = t0[i][1]
-                    if verbose: print("same side")
-                    c0_top[i] = j
-                    c1_bot[ii] = j
-                    if not fake_zeros and i in s0_p:
-                        c0_top[ii] = -1
-                        c1_bot[i] = -1
-                    else:
-                        c0_top[ii] = j+n
-                        c1_bot[i] = j+n
-                elif verbose:
-                    print("skip")
-
-                if verbose:
-                    print("c0 =",c0_bot,c0_top)
-                    print("c1 =",c1_bot,c1_top)
-            for i,j in enumerate(p1):
-                if verbose: print("i,j=",i,j,)
-                if i in s1:
-                    if verbose: print("other side")
-                    c0_bot[i] = j
-                    c1_top[i] = j+n
-                elif c0_bot[i] is None:
-                    ii = t1[i][1]
-                    if verbose: print("same side")
-                    c0_bot[i] = j
-                    c1_top[ii] = j
-                    if not fake_zeros and i in s1_p:
-                        c0_bot[ii] = -1
-                        c1_top[i] = -1
-                    else:
-                        c0_bot[ii] = j+n
-                        c1_top[i] = j+n
-                elif verbose:
-                    print("skip")
-                if verbose:
-                    print("c0 =",c0_bot,c0_top)
-                    print("c1 =",c1_bot,c1_top)
-
-            if verbose: print((c0_bot,c0_top),(c1_bot,c1_top))
-
-            dom = dict((j,i-1) for (i,j) in enumerate(sorted(set(c0_bot+c0_top+c1_bot+c1_top))))
-            if verbose:
-                print(dom)
-
-            c0_bot = [dom[i] for i in c0_bot if i != -1]
-            c0_top = [dom[i] for i in c0_top if i != -1]
-            c1_bot = [dom[i] for i in c1_bot if i != -1]
-            c1_top = [dom[i] for i in c1_top if i != -1]
-
-            return CylinderDiagram([(c0_bot[::-1],c0_top),(c1_bot,c1_top[::-1])])
+# The code below can be used to compute a *covering*!!
+#    def one_cylinder_diagram(self,fake_zeros=False,verbose=False):
+#        r"""
+#        """
+#        from separatrix_diagram import CylinderDiagram
+#        p = self.permutation_representative()
+#        g = self.stratum().genus()
+#        n = len(p)-1
+#        p.alphabet(range(n+1))
+#        assert p[0][0] == p[1][-1]
+#
+#        t0,t1 = p._twin
+#
+#        f = lambda (i,j): (i,j-1) if i == 0 else (i,j)
+#
+#        t0 = map(f,t0[1:])
+#        t1 = map(f,t1[:-1])
+#
+#        s0   = set(j for (i,j) in t1 if i == 0)
+#        s0_p = set(j for (i,j) in t0 if i == 0 and abs(t0[j][1]-j) == 1)
+#        s1   = set(j for (i,j) in t0 if i == 1)
+#        s1_p = set(j for (i,j) in t1 if i == 1 and abs(t1[j][1]-j) == 1)
+#
+#        p0,p1 = p
+#        p0 = [i-1 for i in p0[1:]]
+#        p1 = [i-1 for i in p1[:-1]]
+#
+#        if verbose:
+#            print("p0 = %s" % p0)
+#            print("p1 = %s" % p1)
+#            print("t0 = %s" % t0)
+#            print("t1 = %s" % t1)
+#            print("s0 = %s" % s0)
+#            print("s1 = %s" % s1)
+#
+#
+#        if g == 0:
+#            top = [None] * len(p1)
+#            bot = [None] * len(p1)
+#
+#            for i,j in enumerate(p1):
+#                if verbose: print("i,j=",i,j)
+#                ii = t1[i][1]
+#                if verbose: print("same side")
+#                bot[i] = j
+#                top[ii] = j
+#                if not fake_zeros and i in s1_p:
+#                    bot[ii] = -1
+#                    top[i] = -1
+#                else:
+#                    bot[ii] = j+n
+#                    top[i] = j+n
+#                if verbose:
+#                    print("c0 =",c0_bot,c0_top)
+#                    print("c1 =",c1_bot,c1_top)
+#
+#            dom = dict((j,i-1) for (i,j) in enumerate(sorted(set(bot+top))))
+#            if verbose:
+#                print(dom)
+#
+#            bot = [dom[i] for i in bot if i != -1]
+#            top = [dom[i] for i in top if i != -1]
+#
+#            return CylinderDiagram([(bot,top)])
+#
+#        else:
+#
+#            c0_top = [None] * len(p0)
+#            c1_bot = [None] * len(p0)
+#            c0_bot = [None] * len(p1)
+#            c1_top = [None] * len(p1)
+#
+#            for i,j in enumerate(p0):
+#                if verbose: print("i,j=",i,j,)
+#                if i in s0:
+#                    if verbose: print("other side")
+#                    c0_top[i] = j
+#                    c1_bot[i] = j+n
+#                elif c0_top[i] is None:
+#                    ii = t0[i][1]
+#                    if verbose: print("same side")
+#                    c0_top[i] = j
+#                    c1_bot[ii] = j
+#                    if not fake_zeros and i in s0_p:
+#                        c0_top[ii] = -1
+#                        c1_bot[i] = -1
+#                    else:
+#                        c0_top[ii] = j+n
+#                        c1_bot[i] = j+n
+#                elif verbose:
+#                    print("skip")
+#
+#                if verbose:
+#                    print("c0 =",c0_bot,c0_top)
+#                    print("c1 =",c1_bot,c1_top)
+#            for i,j in enumerate(p1):
+#                if verbose: print("i,j=",i,j,)
+#                if i in s1:
+#                    if verbose: print("other side")
+#                    c0_bot[i] = j
+#                    c1_top[i] = j+n
+#                elif c0_bot[i] is None:
+#                    ii = t1[i][1]
+#                    if verbose: print("same side")
+#                    c0_bot[i] = j
+#                    c1_top[ii] = j
+#                    if not fake_zeros and i in s1_p:
+#                        c0_bot[ii] = -1
+#                        c1_top[i] = -1
+#                    else:
+#                        c0_bot[ii] = j+n
+#                        c1_top[i] = j+n
+#                elif verbose:
+#                    print("skip")
+#                if verbose:
+#                    print("c0 =",c0_bot,c0_top)
+#                    print("c1 =",c1_bot,c1_top)
+#
+#            if verbose: print((c0_bot,c0_top),(c1_bot,c1_top))
+#
+#            dom = dict((j,i-1) for (i,j) in enumerate(sorted(set(c0_bot+c0_top+c1_bot+c1_top))))
+#            if verbose:
+#                print(dom)
+#
+#            c0_bot = [dom[i] for i in c0_bot if i != -1]
+#            c0_top = [dom[i] for i in c0_top if i != -1]
+#            c1_bot = [dom[i] for i in c1_bot if i != -1]
+#            c1_top = [dom[i] for i in c1_top if i != -1]
+#
+#            return CylinderDiagram([(c0_bot[::-1],c0_top),(c1_bot,c1_top[::-1])])
 
     def lyapunov_exponents_H_plus(self, *args, **kargs):
         r"""
