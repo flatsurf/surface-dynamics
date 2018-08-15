@@ -1008,10 +1008,30 @@ class AbelianStratumComponent(StratumComponent):
         p.alphabet(alphabet)
         return p
 
-    def lyapunov_exponents(self, **kargs):
-        perm = self.permutation_representative(reduced=False)
-        return(perm.lyapunov_exponents_H_plus(**kargs))
+    def lyapunov_exponents_approx(self, **kargs):
+        r"""
+        Return the approximate Lyapunov exponents of the KZ-cocycle.
 
+        EXAMPLES::
+
+            sage: from surface_dynamics import *
+
+            sage: AbelianStratum(2).unique_component().lyapunov_exponents_approx()
+            [1.000, 0.333]
+
+            sage: H4hyp, H4odd = AbelianStratum(4).components()
+            sage: H4hyp.lyapunov_exponents_approx()
+            [1.000, 0.621, 0.179]
+            sage: H4odd.lyapunov_exponents_approx()
+            [1.000, 0.428, 0.183]
+        """
+        perm = self.permutation_representative(reduced=False)
+        return perm.lyapunov_exponents_approx(**kargs) 
+
+    # TODO
+    # def sum_of_lyapunov_exponents(self):
+    # TODO
+    # def volume(self):
 
     def random_standard_permutation(self, nsteps=64):
         r"""

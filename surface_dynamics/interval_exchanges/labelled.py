@@ -761,6 +761,28 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
         from sage.geometry.polyhedron.constructor import Polyhedron
         return Polyhedron(rays=[-I*c.vector() for c in C.rays()])
 
+    def lyapunov_exponents_approx(self, nb_vectors=None, nb_experiments=10,
+                                  nb_iterations=65536, return_speed=False,
+                                  verbose=False, output_file=None):
+        r"""
+        Return approximate Lyapunov exponents of the KZ-cocycle.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import *
+
+            sage: p = iet.Permutation([1,2,3],[3,2,1])
+            sage: p.lyapunov_exponents_approx()
+            [1.000]
+        """
+        if self._flips:
+            raise NotImplementedError("Lyapunov exponents not implemented for permutations with flips")
+        c = self.cover([[0]]*len(self), as_tuple=True)
+        return c.lyapunov_exponents_H_plus(
+                    nb_vectors=nb_vectors, nb_experiments=nb_experiments,
+                    nb_iterations=nb_iterations, return_speed=return_speed,
+                    verbose=verbose, output_file=output_file)
+
 class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
     r"""
     Labelled quadratic (or generalized) permutation
