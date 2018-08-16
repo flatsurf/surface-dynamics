@@ -26,7 +26,7 @@ cdef extern from "int_iet.h":
     void int_iet_print(int_iet_t t)
 
     # number of cylinders
-    int int_iet_num_cylinders(uint64_t * widths, int_iet_t t)
+    int int_iet_num_cylinders(uint64_t * widths, uint64_t * heights, int_iet_t t)
 
     # iterator through vectors of given sum n and length k
     int int_vector_first(uint64_t * x, int n, int k)

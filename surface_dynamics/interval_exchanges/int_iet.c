@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* set the thing below to to disable safety checks */
+/* set the thing below to disable safety checks */
 #define INT_IET_CHECK(t) if(int_iet_check(t)) {fprintf(stderr, "check failed\n"); exit(EXIT_FAILURE);}
 
 void int_iet_init(int_iet_t t, unsigned int n)
@@ -43,7 +43,7 @@ void int_iet_set_labels_and_twin(int_iet_t t, int * labels, int * twin, int k)
     {
         if(labels[i] != labels[twin[i]])
         {
-            fprintf(stderr,"ERROR (set_labels_and_twin): interval %d and its twin %d have different labels\n", i, twin[i]);
+            fprintf(stderr, "ERROR (set_labels_and_twin): interval %d and its twin %d have different labels\n", i, twin[i]);
             exit(EXIT_FAILURE);
         }
         if(twin[twin[i]] != i)
@@ -81,7 +81,10 @@ void int_iet_set_lengths(int_iet_t t, uint64_t * lengths)
 {
     unsigned int i;
     for(i = 0; i < t->nb_labels; ++i)
+    {
         (t->labels)[i].length = lengths[i];
+        (t->labels)[i].height = 1;
+    }
 }
 
 
@@ -96,14 +99,14 @@ int int_iet_check(int_iet_t t)
     {
         if((t->top != NULL) || (t->bot != NULL))
         {
-            fprintf(stderr,"check problem: if zero interval t->top and t->bot must be NULL\n");
+            fprintf(stderr, "check problem: if zero interval t->top and t->bot must be NULL\n");
             return 1;
         }
         return 0;
     }
     if((t->top == NULL) || (t->bot == NULL))
     {
-        fprintf(stderr,"check problem: got nb_labels = %d but t->top or t->bot is NULL\n", t->nb_labels);
+        fprintf(stderr, "check problem: got nb_labels = %d but t->top or t->bot is NULL\n", t->nb_labels);
         return 1;
     }
 
@@ -230,188 +233,30 @@ int int_iet_check(int_iet_t t)
 void int_iet_print(int_iet_t t)
 {
     interval * i;
-    int j1,j2;
+    int j;
 
+    // intervals
     for(i=t->top; i!=NULL; i=i->next)
         printf("%lu ", i->lab - t->labels);
     printf("\n");
-
     for(i=t->bot; i!=NULL; i=i->next)
         printf("%lu ", i->lab - t->labels);
     printf("\n");
-
+    // lengths
     printf("lengths: ");
-    j1=j2=0;
-    while(j2 < t->nb_labels)
-    {
-        if((t->labels)[j1].length != 0)
-        {
-
-            printf("l_%d=%lu ", j1, (t->labels[j1]).length);
-            j2 += 1;
-        }
-        j1 += 1;
-    }
+    for (j = 0; j < t->nb_labels; j++)
+        printf("%lu ", (t->labels[j]).length);
+    printf("\n");
+    // heights
+    printf("heights: ");
+    for (j = 0; j < t->nb_labels; j++)
+        printf("%lu ", (t->labels[j]).height);
     printf("\n");
 }
 
 
-void int_iet_induce_to_first_sc(int_iet * t)
-{
-    uint64_t ltop = t->top->lab->length;
-    uint64_t lbot = t->bot->lab->length;
-    uint64_t l;
-    interval *i1, *i2, *itmp;
-    int nonzero_labels = t->nb_labels;
 
-    if(ltop < lbot)
-    {
-        i1 = t->top; t->top = t->bot; t->bot = i1;
-        ltop = t->top->lab->length;
-        lbot = t->bot->lab->length;
-    }
-    if(!(t->nb_labels))
-    {
-        fprintf(stderr, "ERROR (int_iet_induce_to_first_sc)\n");
-        exit(EXIT_FAILURE);
-    }
-
-    INT_IET_CHECK(t);
-
-    if(ltop < lbot)
-    {
-        fprintf(stderr,"ERROR (num_cylinders): ltop < lbot\n");
-        exit(EXIT_FAILURE);
-    }
-
-#ifdef VERBOSE
-    printf("check ok\n");
-    print_int_iet(t);
-#endif
-
-    while(ltop != lbot)
-    { 
-        if(t->top->lab->same_interval)  // case when top/twin on the same side
-        {
-            // remove the bot invertval
-#ifdef VERBOSE
-            printf("-> different lengths ltop=%lu lbot=%lu and top twin on top (perform rauzy induction)\n",
-                            ltop, lbot);
-#endif
-            // we set i1 to the last interval in the bottom that has to move
-            i1 = t->bot;
-            l = t->top->lab->length - t->bot->lab->length;
-            while(l > i1->next->lab->length)
-            {
-                i1 = i1->next;
-                l -= i1->lab->length;
-            }
-
-            // modify the set of intervals on the bottom:
-            //   - we exchange next <-> prev
-            //   - we switch same_interval
-            i2 = i1;
-            while(i2 != NULL)
-            {
-                itmp = i2->prev;
-                i2->prev = i2->next;
-                i2->next = itmp;
-                i2->lab->same_interval ^= 1;
-                i2 = itmp;
-            }
-
-            // make the junctions
-            i2 = t->top->twin->next;
-            t->top->twin->next = i1;
-            if(i2 != NULL)
-                i2->prev = t->bot;
-            t->bot->next = i2;
-            t->bot = i1->prev;
-            i1->prev->prev = NULL;
-            i1->prev = t->top->twin;
-
-            // set t->top to its new length
-            t->top->lab->length = l;
-
-            // switch top/bot for next loop
-            i1 = t->top; t->top = t->bot; t->bot = i1;
-            ltop = t->top->lab->length;
-            lbot = t->bot->lab->length;
-#ifdef VERBOSE
-            printf("rauzy induction done\n");
-            int_iet_check(t);
-            printf("check ok\n");
-            print_int_iet(t);
-            fflush(stdout);
-#endif
-        }
-
-        else // rauzy induction with top twin in the bottom
-        {
-            // rauzy induction
-#ifdef VERBOSE
-            printf("-> different lengths ltop=%lu lbot=%lu and top twin on bot (perform rauzy induction)\n",
-                            ltop, lbot);
-#endif
-            // the multiplicative step
-            l = 0;
-            for(i1=t->top->twin->prev; i1!= NULL; i1=i1->prev)
-                l += i1->lab->length;
-            ltop -= ((unsigned int) (ltop/l)) * l;
-            if(ltop == 0)
-            {
-                // this is similar to the case where we remove an interval. We
-                // need to translate a whole chunck of subintervals on the bottom
-                // instead, we set the big length to the sum of the small lengths
-                ltop = l;
-            }
-            t->top->lab->length = ltop;
-#ifdef VERBOSE
-            printf("after multiplicative step top length is %lu\n", ltop);
-#endif
-
-            // the additive step (at each step we insert the first interval in the
-            // bottom on the left of the twin top)
-            while(ltop > lbot)
-            {
-#ifdef VERBOSE
-                printf(" additive step bot=%d\n", (int) (t->bot->lab - t->labels));
-                fflush(stdout);
-#endif
-                ltop -= lbot;
-                t->top->lab->length = ltop;
-
-                i1 = t->bot; // the guy which moves
-
-                // remove it from the bottom
-                t->bot = i1->next;
-                t->bot->prev = NULL;
-
-                // place it before the twin
-                i2 = t->top->twin;
-                i1->prev = i2->prev;
-                i1->next = i2;
-                i2->prev->next = i1;
-                i2->prev = i1;
-                lbot = t->bot->lab->length;
-
-                INT_IET_CHECK(t);
-#ifdef VERBOSE
-                printf(" additive step done\n");
-                int_iet_print(t);
-                fflush(stdout);
-#endif
-            }
-            i1 = t->top; t->top = t->bot; t->bot = i1;
-            ltop = t->top->lab->length;
-            lbot = t->bot->lab->length;
-        }
-    }
-}
-
-
-
-int int_iet_num_cylinders(uint64_t * widths, int_iet_t t)
+int int_iet_num_cylinders(uint64_t * widths, uint64_t * heights, int_iet_t t)
 /* t: an interval exchange with integer lengths                         */
 /* s: another (empty) interval exchange on the same number of intervals */
 /*    it will be allocated to the last valid intervals t is             */
@@ -419,7 +264,7 @@ int int_iet_num_cylinders(uint64_t * widths, int_iet_t t)
 {
     uint64_t ltop = t->top->lab->length;
     uint64_t lbot = t->bot->lab->length;
-    uint64_t l;
+    uint64_t m,l;
     interval *i1, *i2, *itmp;
     int nonzero_labels = t->nb_labels;
     int nb_cyl = 0;
@@ -463,6 +308,8 @@ int int_iet_num_cylinders(uint64_t * widths, int_iet_t t)
 
                 if (widths != NULL)
                     widths[nb_cyl] = t->top->lab->length;
+                if (heights != NULL)
+                    heights[nb_cyl] = t->top->lab->height;
                 nb_cyl += 1;
 
                 // in order to simplify the check test we set same_interval to 1
@@ -483,9 +330,13 @@ int int_iet_num_cylinders(uint64_t * widths, int_iet_t t)
                 printf("   remove interval %d\n", (int) (t->bot->lab - t->labels));
 #endif
                 // the label i2 is removed
-                // we just move the current i1 at the position of i2->twin
+                // we update the height and move the current i1 at the
+                // position of i2->twin
                 i1 = t->top;
                 i2 = t->bot;
+
+                i1->lab->height += i2->lab->height;
+
                 if(i1->next->lab != i2->lab)
                 {
                     // we need the if statement to ignore the case of
@@ -510,6 +361,7 @@ int int_iet_num_cylinders(uint64_t * widths, int_iet_t t)
                 i1->lab->same_interval ^= i2->lab->same_interval;
                 i2->lab->same_interval  = 1;
                 i2->lab->length         = 0;
+                i2->lab->height         = 0;
             }
         
             nonzero_labels -= 1;
@@ -536,10 +388,12 @@ int int_iet_num_cylinders(uint64_t * widths, int_iet_t t)
 #endif
             // we set i1 to the last interval in the bottom that has to move
             i1 = t->bot;
-            l = t->top->lab->length - t->bot->lab->length;
+            l = t->top->lab->length - i1->lab->length;
+            i1->lab->height += t->top->lab->height;
             while(l > i1->next->lab->length)
             {
                 i1 = i1->next;
+                i1->lab->height += t->top->lab->height;
                 l -= i1->lab->length;
             }
 
@@ -591,16 +445,22 @@ int int_iet_num_cylinders(uint64_t * widths, int_iet_t t)
 #endif
             // the multiplicative step
             l = 0;
-            for(i1=t->top->twin->prev; i1!= NULL; i1=i1->prev)
+            for(i1 = t->top->twin->prev; i1 != NULL; i1 = i1->prev)
                 l += i1->lab->length;
-            ltop -= ((unsigned int) (ltop/l)) * l;
+            m = (unsigned int) (ltop / l);
+            ltop -= m * l;
             if(ltop == 0)
             {
                 // this is similar to the case where we remove an interval. We
                 // need to translate a whole chunck of subintervals on the bottom
                 // instead, we set the big length to the sum of the small lengths
                 ltop = l;
+                m -= 1;
             }
+
+            for (i1 = t->top->twin->prev; i1 != NULL; i1 = i1->prev)
+                i1->lab->height += m * t->top->lab->height;
+
             t->top->lab->length = ltop;
 #ifdef VERBOSE
             printf("after multiplicative step top length is %lu\n", ltop);
@@ -616,6 +476,7 @@ int int_iet_num_cylinders(uint64_t * widths, int_iet_t t)
 #endif
                 ltop -= lbot;
                 t->top->lab->length = ltop;
+                t->bot->lab->height += t->top->lab->height;
 
                 i1 = t->bot; // the guy which moves
 

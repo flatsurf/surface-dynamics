@@ -16,6 +16,7 @@
  
 typedef struct {
     uint64_t length;
+    uint64_t height;  // not very useful!
     int      same_interval;  // whether or not the two belong to the same interval
 } label;
 
@@ -71,7 +72,7 @@ void int_iet_set_lengths(int_iet_t t, uint64_t * lengths);
 void int_iet_print(int_iet_t t);
 
 /* number of cylinders */
-int int_iet_num_cylinders(uint64_t * widths, int_iet_t t);
+int int_iet_num_cylinders(uint64_t * widths, uint64_t * heights, int_iet_t t);
 
 
 /* iteration through integer vectors of given sum and length */

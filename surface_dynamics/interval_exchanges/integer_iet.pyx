@@ -238,11 +238,49 @@ def _relabel(top, bot):
 
 def interval_exchange_statistics(top, bot, uint64_t L, int kind=0):
     r"""
-    - ``kind`` -- if 0 number of cylinders, if 1 number of components
+    Return statistics about cylinder decomposition of iet.
+
+    An integral interval exchange transformation (or iet for short)
+    decomposes into periodic components. We want to study these
+    components. Equivalently, such iet corresponds to a permutation
+    and we want to study its cycle decomposition.
+
+    INPUT:
+
+    - ``top``, ``bot`` -- top and bottom permutation (as list of
+      numbers starting from ``0``)
+
+    - ``L`` (integer) -- the total length of the integral iet to be
+      tested
+
+    - ``kind`` -- if ``0`` return statistics about the number of
+      cylinders and if ``1`` return statistics about the number
+      of components.
+
+    OUTPUT: a dictionary whose keys are integers and the value associated to a
+    key ``k`` is the number of length data with sum ``L`` which corresponds to
+    an iet with data ``top`` and ``bot`` and whose cylinder decomposition has
+    ``k`` cylinders.
+
+    EXAMPLES:
+
+    Rotations always give a unique cylinder::
+
+        sage: from surface_dynamics.interval_exchanges.integer_iet import interval_exchange_statistics
+        sage: interval_exchange_statistics([0,1],[1,0],10,0)
+        {1: 9}
+
+     Though, the widths of this unique cylinder is the gcd of the two lengths::
+
+        sage: interval_exchange_statistics([0,1],[1,0],10,1)
+        {1: 4, 2: 4, 5: 1}
+        sage: [gcd(k, 10-k) for k in range(1,10)]
+        [1, 2, 1, 2, 5, 2, 1, 2, 1]
     """
     cdef int * labels
     cdef int * twin
     cdef uint64_t * widths
+    cdef uint64_t * heights
     cdef uint64_t s
     cdef int k = len(top)
     cdef int n = (len(top)+len(bot))/2
@@ -272,7 +310,7 @@ def interval_exchange_statistics(top, bot, uint64_t L, int kind=0):
     while int_li_vector_first_or_next(v):
         int_iet_set_labels_and_twin(t, labels, twin, k)
         int_iet_set_lengths(t, v.x)
-        j = int_iet_num_cylinders(widths, t)
+        j = int_iet_num_cylinders(widths, NULL, t)
 
         if kind:
             s = 0
@@ -372,6 +410,7 @@ def cylinder_statistics(top, bot, uint64_t L, int kind=0):
     cdef int i,j
     cdef uint64_t twist
     cdef uint64_t * widths
+    cdef uint64_t * heights
     cdef int_iet_t t1, t2
     cdef li_vector_iterator_t v
 
@@ -391,7 +430,7 @@ def cylinder_statistics(top, bot, uint64_t L, int kind=0):
     twin2 = <int *> check_malloc(2*(n+1)*sizeof(int))
     widths = <uint64_t *> check_malloc((n+1) * sizeof(uint64_t))
 
-    clengths = <uint64_t *> check_malloc((n+1)*sizeof(uint64_t));
+    clengths = <uint64_t *> check_malloc((n+1)*sizeof(uint64_t))
 
     for i in range(2*n):
         labels1[i] = p1[i]
@@ -411,7 +450,7 @@ def cylinder_statistics(top, bot, uint64_t L, int kind=0):
         # twist 0 case
         int_iet_set_labels_and_twin(t1, labels1, twin1, k1)
         int_iet_set_lengths(t1, clengths)
-        j = int_iet_num_cylinders(widths, t1)
+        j = int_iet_num_cylinders(widths, NULL, t1)
         if kind:
             s = 0
             for i in range(j):
@@ -425,7 +464,7 @@ def cylinder_statistics(top, bot, uint64_t L, int kind=0):
             clengths[n] = twist
             int_iet_set_labels_and_twin(t2, labels2, twin2, k2)
             int_iet_set_lengths(t2, clengths)
-            j = int_iet_num_cylinders(widths, t2)
+            j = int_iet_num_cylinders(widths, NULL, t2)
             if kind:
                 s = 0
                 for i in range(j):
@@ -470,11 +509,44 @@ def cylinder_number(top, bot, lengths):
         3
     """
     cdef int_iet_t t
-    cdef uint64_t * widths
     set_int_iet(t, top, bot, lengths)
-    cdef int res = int_iet_num_cylinders(NULL, t)
+    cdef int res = int_iet_num_cylinders(NULL, NULL, t)
     int_iet_clear(t)
     return res
+
+def cylinder_widths_and_heights(top, bot, lengths):
+    r"""
+    Return the list of pairs ``(width, height)`` of each periodic component of the
+    iet determined by ``top``, ``bot`` and ``lengths``.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.interval_exchanges.integer_iet import cylinder_widths_and_heights
+
+        sage: cylinder_widths_and_heights([0,1],[1,0],[5,2])
+        [(1L, 7L)]
+        sage: cylinder_widths_and_heights([0,1],[1,0],[8,12])
+        [(4L, 5L)]
+
+        sage: cylinder_widths_and_heights([0,1,2],[2,1,0],[5,3,2])
+        [(1L, 10L)]
+
+        sage: cylinder_widths_and_heights(range(8),range(7,-1,-1),[1386,924,660,495,385,308,252,210])
+        [(2L, 930L), (3L, 920L)]
+    """
+    cdef int_iet_t t
+    cdef uint64_t * widths
+    cdef uint64_t * heights
+    set_int_iet(t, top, bot, lengths)
+    widths = <uint64_t *> check_malloc((len(bot) + len(top)) / 2 * sizeof(uint64_t))
+    heights = <uint64_t *> check_malloc((len(bot) + len(top)) / 2 * sizeof(uint64_t))
+    cdef int res = int_iet_num_cylinders(widths, heights, t)
+    int_iet_clear(t)
+    output =  [(widths[i], heights[i]) for i in range(res)]
+    sig_free(widths)
+    sig_free(heights)
+    output.sort()
+    return output
 
 def cylinder_widths(top, bot, lengths):
     r"""
@@ -535,7 +607,7 @@ def cylinder_widths(top, bot, lengths):
     cdef uint64_t * widths
     set_int_iet(t, top, bot, lengths)
     widths = <uint64_t *> check_malloc((len(bot) + len(top)) / 2 * sizeof(uint64_t))
-    cdef int res = int_iet_num_cylinders(widths, t)
+    cdef int res = int_iet_num_cylinders(widths, NULL, t)
     int_iet_clear(t)
     output =  [widths[i] for i in range(res)]
     sig_free(widths)
