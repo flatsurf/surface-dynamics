@@ -151,6 +151,10 @@ Obtains the connected components of a stratum::
 
 from __future__ import print_function
 
+import numbers
+
+from sage.structure.unique_representation import UniqueRepresentation
+
 from sage.structure.parent import Parent
 from sage.categories.finite_enumerated_sets import FiniteEnumeratedSets
 from sage.categories.infinite_enumerated_sets import InfiniteEnumeratedSets
@@ -162,7 +166,7 @@ from sage.rings.infinity import Infinity
 
 from surface_dynamics.flat_surfaces.strata import Stratum, StratumComponent, Strata
 
-class AbelianStratum(Stratum):
+class AbelianStratum(UniqueRepresentation, Stratum):
     """
     Stratum of Abelian differentials.
 
@@ -214,7 +218,36 @@ class AbelianStratum(Stratum):
     _name = 'H'
     _latex_name = '\\mathcal{H}'
 
-    def __init__(self, *l, **d):
+    @staticmethod
+    def __classcall_private__(self, *l):
+        if len(l) == 1:
+            try:
+                Integer(l[0])
+            except TypeError:
+                l = l[0]
+        elif len(l) == 2 and isinstance(l[0], (tuple,list)) and isinstance(1, numbers.Integral):
+            l = tuple(l[0]) + (0,) * l[1]
+
+        if isinstance(l, dict):
+            l = sum(([v]*e for v,e in l.iteritems()), [])
+
+        zeros = map(Integer, filter(lambda x: x, l))
+        if any(z < 0 for z in zeros):
+            raise ValueError("the degrees must be non negative")
+        nb_fake_zeros = sum(1 for x in l if not x)
+        zeros.sort(reverse=True)
+        zeros = tuple(zeros)
+
+        s = sum(zeros)
+        if s%2:
+            raise ValueError("the sum of the degrees must be even")
+
+        if not zeros and not nb_fake_zeros:
+            raise ValueError("there must be at least one zero")
+
+        return UniqueRepresentation.__classcall__(AbelianStratum, zeros, nb_fake_zeros)
+
+    def __init__(self, zeros, nb_fake_zeros):
         """
         TESTS::
 
@@ -227,24 +260,8 @@ class AbelianStratum(Stratum):
             sage: s == loads(dumps(s))
             True
         """
-        if len(l) == 1:
-            try:
-                Integer(l[0])
-            except TypeError:
-                l = l[0]
-
-        if isinstance(l, dict):
-            l = sum(([v]*e for v,e in l.iteritems()), [])
-
-        zeros = self._zeros = map(Integer, filter(lambda x: x, l))
-        if any(z < 0 for z in self._zeros):
-            raise ValueError("the degrees must be non negative")
-        self._nb_fake_zeros = sum(1 for x in l if not x)
-        self._zeros.sort(reverse=True)
-
-        if self._zeros == []:
-            if self._nb_fake_zeros == 0:
-                raise ValueError("there must be at least one zero")
+        self._zeros = zeros
+        self._nb_fake_zeros = nb_fake_zeros
 
         s = sum(self._zeros)
         if s%2:
@@ -258,7 +275,7 @@ class AbelianStratum(Stratum):
             self._cc = (HypASC,)
 
         elif genus == 3:
-            if zeros == [2, 2] or zeros == [4]:
+            if zeros == (2, 2) or zeros == (4,):
                 self._cc = (HypASC, OddASC)
             else:
                 self._cc = (ASC,)
@@ -267,7 +284,7 @@ class AbelianStratum(Stratum):
             # just one zeros [2g-2]
             self._cc = (HypASC, OddASC, EvenASC)
 
-        elif zeros == [genus-1, genus-1]:
+        elif zeros == (genus-1, genus-1):
             # two similar zeros [g-1, g-1]
             if genus % 2 == 0:
                 self._cc = (HypASC, NonHypASC)
@@ -294,13 +311,13 @@ class AbelianStratum(Stratum):
             sage: from surface_dynamics.all import *
 
             sage: AbelianStratum([1,2,3]).zeros()
-            [3, 2, 1]
+            (3, 2, 1)
             sage: AbelianStratum({2:4}).zeros()
-            [2, 2, 2, 2]
+            (2, 2, 2, 2)
         """
         if fake_zeros:
-            return self._zeros + [0]*self._nb_fake_zeros
-        return self._zeros[:]
+            return self._zeros + (0,)*self._nb_fake_zeros
+        return self._zeros
 
     def nb_zeros(self, fake_zeros=True):
         r"""
@@ -963,7 +980,7 @@ class AbelianStratumComponent(StratumComponent):
         stratum = self.stratum()
 
         g = stratum.genus()
-        zeros = stratum.zeros(fake_zeros=False)
+        zeros = list(stratum.zeros(fake_zeros=False))
         n = stratum.nb_fake_zeros()
 
         if left_degree is not None and left_degree != 0:
@@ -1016,13 +1033,13 @@ class AbelianStratumComponent(StratumComponent):
 
             sage: from surface_dynamics import *
 
-            sage: AbelianStratum(2).unique_component().lyapunov_exponents_approx()
+            sage: AbelianStratum(2).unique_component().lyapunov_exponents_approx()  # abs tol 0.05
             [1.000, 0.333]
 
             sage: H4hyp, H4odd = AbelianStratum(4).components()
-            sage: H4hyp.lyapunov_exponents_approx()
+            sage: H4hyp.lyapunov_exponents_approx() # abs tol 0.05
             [1.000, 0.621, 0.179]
-            sage: H4odd.lyapunov_exponents_approx()
+            sage: H4odd.lyapunov_exponents_approx() # abs tol 0.05
             [1.000, 0.428, 0.183]
         """
         perm = self.permutation_representative(reduced=False)
@@ -2338,7 +2355,7 @@ class EvenAbelianStratumComponent(ASC):
             sage: p.rauzy_diagram()   # long time
             Rauzy diagram with 11792 permutations
         """
-        z = self._stratum.zeros(fake_zeros=False)
+        z = list(self._stratum.zeros(fake_zeros=False))
         n = self._stratum.nb_fake_zeros()
         g = self._stratum.genus()
 
@@ -2631,7 +2648,7 @@ class OddAbelianStratumComponent(ASC):
             sage: p.rauzy_diagram()   # long time
             Rauzy diagram with 27754 permutations
         """
-        zeros = self.stratum().zeros(fake_zeros=False)
+        zeros = list(self.stratum().zeros(fake_zeros=False))
         n = self._stratum.nb_fake_zeros()
         g = self._stratum.genus()
 

@@ -136,6 +136,10 @@ List the connected components of a stratum::
 
 from __future__ import print_function
 
+import numbers
+
+from sage.structure.unique_representation import UniqueRepresentation
+
 from sage.rings.infinity import Infinity
 from sage.structure.parent import Parent
 
@@ -149,7 +153,7 @@ from sage.rings.rational import Rational
 
 from surface_dynamics.flat_surfaces.strata import Stratum, StratumComponent,Strata
 
-class QuadraticStratum(Stratum):
+class QuadraticStratum(UniqueRepresentation, Stratum):
     r"""
     Stratum of quadratic differentials.
 
@@ -169,13 +173,53 @@ class QuadraticStratum(Stratum):
     """
     _name = "Q"
     _latex_name = "\\mathcal{Q}"
-    def __init__(self, *l, **kwds):
+
+    @staticmethod
+    def __classcall_private__(self, *l, **kwds):
+        r"""
+        TESTS::
+
+            sage: from surface_dynamics import *
+            sage: QuadraticStratum(-1,-1,-1,-1) is QuadraticStratum({-1:4})
+            True
+        """
+        genus = kwds.pop('genus', None)
+        if kwds:
+            raise ValueError('unsupported keyword arguments')
+
+        if len(l) == 1 and isinstance(l[0], (tuple,list,dict)):
+            l = l[0]
+        elif len(l) == 3 and isinstance(l[0], tuple) and \
+             isinstance(l[1], numbers.Integral) and \
+             isinstance(l[2], numbers.Integral):
+                 l = l[0] + (-1,) * l[1] + (0,) * l[2]
+
+        if not l:
+            raise ValueError("the list must be nonempty")
+        if isinstance(l, dict):
+            l = sum(([v]*e for v,e in l.iteritems()),[])
+        allzeros = map(Integer, l)
+        allzeros.sort(reverse=True)
+        nb_poles = allzeros.count(-1)
+        nb_fake_zeros = allzeros.count(0)
+        zeros = tuple(allzeros[:len(allzeros)-nb_fake_zeros-nb_poles])
+
+        if genus is not None:
+            g = sum(zeros) + 4 - nb_poles
+            if 4 * genus > g:
+                raise ValueError
+            elif 4 * genus < g:
+                nb_poles += g - 4*genus
+
+        return UniqueRepresentation.__classcall__(QuadraticStratum, zeros, nb_poles, nb_fake_zeros)
+
+    def __init__(self, zeros, nb_poles, nb_fake_zeros):
         """
         TESTS::
 
             sage: from surface_dynamics.all import *
 
-            sage: a = QuadraticStratum(-1,-1,-1,-1)
+            sage: a = QuadraticStratum(4,-1,-1,-1,-1,0)
             sage: loads(dumps(a)) == a
             True
             sage: QuadraticStratum([])
@@ -183,30 +227,12 @@ class QuadraticStratum(Stratum):
             ...
             ValueError: the list must be nonempty
         """
-        genus = kwds.get('genus', None)
-
-        if len(l) == 1 and isinstance(l[0],(tuple,list,dict)):
-            l = l[0]
-        if not l:
-            raise ValueError("the list must be nonempty")
-        if isinstance(l, dict):
-            l = sum(([v]*e for v,e in l.iteritems()),[])
-        allzeros = map(Integer, l)
-        allzeros.sort(reverse=True)
-        self._nb_poles = allzeros.count(-1)
-        self._nb_fake_zeros = allzeros.count(0)
-        self._zeros = allzeros[:len(allzeros)-self._nb_fake_zeros-self._nb_poles]
+        self._zeros = zeros
+        self._nb_poles = nb_poles
+        self._nb_fake_zeros = nb_fake_zeros
 
         # nfz (for "non fake zeros")
-        nfz = self._zeros + [-1] * self._nb_poles
-
-        if genus is not None:
-            g = sum(nfz) + 4
-            if 4*genus > g:
-                raise ValueError
-            elif 4*genus < g:
-                self._nb_poles += g - 4*genus
-                nfz.extend([-1] * (g-4*genus))
+        nfz = self._zeros + (-1,) * self._nb_poles
 
         genus = sum(nfz) + 4
         if genus%4:
@@ -223,36 +249,36 @@ class QuadraticStratum(Stratum):
 
         #TODO: all genus 1 strata are connected, but two are hyperelliptic; give the component a different name then?
         elif genus == 1:
-            if self._zeros == []:
+            if self._zeros == ():
                 # print "The stratum Q(0) is empty!"
                 self._cc = ()
-            elif self._zeros == [1]:
+            elif self._zeros == (1,):
                 # print "The stratum Q(1,-1) is empty!"
                 self._cc = ()
             else:
                 self._cc = (GOQSC,)
 
         elif genus == 2:
-            if self._zeros == [4]:
+            if self._zeros == (4,):
                 # print "The stratum Q(4) is empty!"
                 self._cc = ()
-            elif self._zeros == [3,1]:
+            elif self._zeros == (3,1):
                 # print "The stratum Q(3,1) is empty!"
                 self._cc = ()
-            elif self._zeros == [6]: self._cc = (HQSC,GTNQSC)
-            elif self._zeros == [3,3]: self._cc = (HQSC,GTNQSC)
-            elif self._zeros == [2,2]: self._cc = (GTHQSC,)
-            elif self._zeros == [2,1,1]: self._cc = (GTHQSC,)
-            elif self._zeros == [1,1,1,1]: self._cc = (GTHQSC,)
+            elif self._zeros == (6,): self._cc = (HQSC,GTNQSC)
+            elif self._zeros == (3,3): self._cc = (HQSC,GTNQSC)
+            elif self._zeros == (2,2): self._cc = (GTHQSC,)
+            elif self._zeros == (2,1,1): self._cc = (GTHQSC,)
+            elif self._zeros == (1,1,1,1): self._cc = (GTHQSC,)
             else: self._cc = (GTNQSC,)
 
         elif genus == 3 and self._nb_poles == 1 and all((z == -1 or z%3 == 0) for z in self._zeros):
                 self._cc = (REQSC, IEQSC)
 
         elif genus == 4 and self._nb_poles == 0 and all(z%3 == 0 for z in self._zeros):
-            if self._zeros in [[12],[9,3]]:
+            if self._zeros in [(12,),(9,3)]:
                 self._cc = (REQSC, IEQSC)
-            elif self._zeros in [[6,6],[6,3,3],[3,3,3,3]]:
+            elif self._zeros in [(6,6),(6,3,3),(3,3,3,3)]:
                 self._cc = (HQSC, REQSC, IEQSC)
         else:
             if len(nfz) == 2 and nfz[0]%4 == 2 and nfz[1]%4 == 2:
@@ -275,22 +301,24 @@ class QuadraticStratum(Stratum):
             sage: from surface_dynamics.all import *
 
             sage: AbelianStratum([1,2,3]).zeros()
-            [3, 2, 1]
+            (3, 2, 1)
             sage: AbelianStratum({2:4}).zeros()
-            [2, 2, 2, 2]
+            (2, 2, 2, 2)
 
             sage: QuadraticStratum({-1:4}).zeros()
-            [-1, -1, -1, -1]
+            (-1, -1, -1, -1)
             sage: QuadraticStratum({1:8}).zeros()
-            [1, 1, 1, 1, 1, 1, 1, 1]
-        """
-        z = self._zeros[:]
-        if fake_zeros:
-            z.extend([0]*self._nb_fake_zeros)
-        if poles:
-            z.extend([-1]*self._nb_poles)
-        return z
+            (1, 1, 1, 1, 1, 1, 1, 1)
 
+            sage: QuadraticStratum({-1:4}).zeros(poles=False)
+            ()
+        """
+        z = self._zeros
+        if fake_zeros:
+            z += (0,) * self._nb_fake_zeros
+        if poles:
+            z += (-1,) * self._nb_poles
+        return z
 
     def nb_zeros(self, poles=True, fake_zeros=True):
         r"""
@@ -665,7 +693,7 @@ class QuadraticStratumComponent(StratumComponent):
 
         # 2) other possibility for the hyperelliptic components (low genus
         # special case for Q(1,1,-1,-1))
-        if zeros == [1,1] and stratum.nb_poles() == 2:
+        if zeros == (1,1) and stratum.nb_poles() == 2:
             return astratum.hyperelliptic_component()
 
         # 3) composant with spin
@@ -1124,13 +1152,13 @@ class GenusTwoHyperellipticQuadraticStratumComponent(QSC):
         if f: ll = map(lambda x:'0'+str(x),range(f+1))
         else: ll = [0]
 
-        if z == [2,2]:
+        if z == (2,2):
             l0 = ll + [6, 5, 6, 4]
             l1 = [2, 4, 2, 5]
-        elif z == [2,1,1]:
+        elif z == (2,1,1):
             l0 = ll + [6, 5, 6, 4, 3]
             l1 = [2, 3, 4, 2, 5]
-        elif z == [1,1,1,1]:
+        elif z == (1,1,1,1):
             l0 = ll + [6, 1, 5, 6, 4, 3]
             l1 = [1, 2, 3, 4, 2, 5]
         else:
@@ -1183,13 +1211,13 @@ class GenusTwoNonhyperellipticQuadraticStratumComponent(QSC):
         f = self._stratum.nb_fake_zeros()
         z = self._stratum.zeros(fake_zeros=False,poles=False)
 
-        if z == [4]:
+        if z == (4,):
             raise ValueError("The stratum Q(4) is empty!")
 
-        if z == [3,1]:
+        if z == (3,1):
             raise ValueError("The stratum Q(3,1) is empty!")
 
-        if z in [[2,2],[2,1,1],[1,1,1,1]]:
+        if z in [(2,2),(2,1,1),(1,1,1,1)]:
             raise ValueError("This stratum has no non-hyperelliptic component!")
 
         if f: ll = map(lambda x:'0'+str(x),range(f+1))
@@ -1429,36 +1457,35 @@ class RegularExceptionalQuadraticStratumComponent(QSC):
             sage: p.stratum_component()
             Q_4(12)^reg
         """
-
         p = self._stratum.nb_poles()
         f = self._stratum.nb_fake_zeros()
         z = self._stratum.zeros(fake_zeros=False,poles=True)
 
-        if f: ll = map(lambda x:'0'+str(x),range(f+1))
+        if f: ll = map(lambda x: '0' + str(x), range(f+1))
         else: ll = [0]
 
-        if z == [12]:
+        if z == (12,):
             l0 = ll + [1, 2, 1, 2, 3, 4, 3, 4, 5]
             l1 = [5, 6, 7, 6, 7]
-        elif z == [9, 3]:
+        elif z == (9, 3):
             l0 = ll + [1, 2, 3, 4, 2, 'A', 5, 6]
             l1 = [1, 4, 5, 7, 6, 7, 'A', 3]
-        elif z == [6, 6]:
+        elif z == (6, 6):
             l0 = ll +[1, 2, 3, 4, 'A', 2, 5, 6, 'A']
             l1 = [1, 4, 5, 7, 6, 7, 3]
-        elif z == [6, 3, 3]:
+        elif z == (6, 3, 3):
             l0 = ll + [1, 2, 3, 'B', 4, 2, 'A', 5, 6]
             l1 = [1, 4, 5, 7, 6, 7, 'B', 'A', 3]
-        elif z == [3, 3, 3, 3]:
+        elif z == (3, 3, 3, 3):
             l0 = ll + [1, 2, 3, 'B', 4, 2, 'A', 5, 6]
             l1 = [1, 4, 5, 7, 6, 'C', 7, 'C', 'B', 'A', 3]
-        elif z == [9, -1]:
+        elif z == (9, -1):
             l0 = ll + [1, 2, 1, 2, 3, 3, 4]
             l1 = [5, 6, 5, 6, 4]
-        elif z == [6, 3, -1]:
+        elif z == (6, 3, -1):
             l0 = ll + [1, 2, 3, 1, 2, 4, 4, 5]
             l1 = [6, 7, 6, 7, 3, 5]
-        elif z == [3, 3, 3, -1]:
+        elif z == (3, 3, 3, -1):
             l0 = ll + [1, 2, 3, 4, 2, 3, 5, 5, 6]
             l1 = [7, 1, 8, 7, 8, 4, 6]
         else:
@@ -1523,28 +1550,28 @@ class IrregularExceptionalQuadraticStratumComponent(QSC):
         if f: ll = map(lambda x:'0'+str(x),range(f+1))
         else: ll = [0]
 
-        if z == [12]:
+        if z == (12,):
             l0 = ll + [1, 2, 3, 4, 5, 6, 5]
             l1 = [7, 6, 4, 7, 3, 2, 1]
-        elif z == [9, 3]:
+        elif z == (9, 3):
             l0 = ll + [1, 2, 3, 4, 'A', 3, 'A', 5, 6]
             l1 = [1, 5, 7, 4, 2, 6, 7]
-        elif z == [6, 6]:
+        elif z == (6, 6):
             l0 = ll + [1, 2, 3, 4, 3, 'A', 5, 6]
             l1 = [1, 5, 7, 4, 2, 6, 'A', 7]
-        elif z == [6, 3, 3]:
+        elif z == (6, 3, 3):
             l0 = ll + [1, 2, 'B', 3, 4, 'A', 3, 'A', 5, 6]
             l1 = [1, 5, 7, 'B', 4, 2, 6, 7]
-        elif z == [3, 3, 3, 3]:
+        elif z == (3, 3, 3, 3):
             l0 = ll + [1, 2, 'B', 3, 4, 'A', 3, 'A', 5, 'C', 6]
             l1 = [1, 5, 7, 'B', 4, 2, 6, 'C', 7]
-        elif z == [9, -1]:
+        elif z == (9, -1):
             l0 = ll + [1, 2, 3, 4, 1, 2, 3, 4, 5]
             l1 = [5, 6, 6]
-        elif z == [6, 3, -1]:
+        elif z == (6, 3, -1):
             l0 = ll + [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6]
             l1 = [6, 7, 7]
-        elif z == [3, 3, 3, -1]:
+        elif z == (3, 3, 3, -1):
             l0 = ll + [1, 2, 3, 4, 5, 1, 6, 2, 3, 4, 5, 6, 7]
             l1 = [7, 8, 8]
         else:
@@ -1685,8 +1712,8 @@ class QuadraticStrata_class(Strata):
 
             sage: from surface_dynamics.all import *
 
-            sage: repr(AbelianStrata(genus=3))   #indirect doctest
-            'Abelian strata of genus 3 surfaces'
+            sage: repr(QuadraticStrata(genus=3))   #indirect doctest
+            'Quadratic strata of genus 3 surfaces'
         """
         s = self._repr_base_()
 
