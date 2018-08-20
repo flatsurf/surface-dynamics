@@ -13,7 +13,7 @@ An origami is:
 
 EXAMPLES::
 
-    sage: from surface_dynamics.all import *
+    sage: from surface_dynamics import *
 
     sage: E = origamis.EierlegendeWollmilchsau()
     sage: E.r()
@@ -433,7 +433,7 @@ class OrigamiVertices(OrigamiObjects):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2,3,4)','(1,5)')
             sage: V = o._vertices()
@@ -451,7 +451,7 @@ class OrigamiVertices(OrigamiObjects):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2,3,4)','(1,5)')
             sage: V = o._vertices()
@@ -466,7 +466,7 @@ class OrigamiVertices(OrigamiObjects):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2,3,4)', '(1,5)')
             sage: V = o._vertices()
@@ -483,7 +483,7 @@ class OrigamiVertices(OrigamiObjects):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2,3,4)', '(1,5)')
             sage: V = o._vertices()
@@ -504,7 +504,7 @@ class OrigamiVertices(OrigamiObjects):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2,3,4)', '(1,5)')
             sage: V = o._vertices()
@@ -519,7 +519,7 @@ class OrigamiVertices(OrigamiObjects):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2,3,4)', '(1,5)')
             sage: V = o._vertices()
@@ -537,7 +537,7 @@ class OrigamiVertices(OrigamiObjects):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2,3,4)', '(1,5)')
             sage: V = o._vertices()

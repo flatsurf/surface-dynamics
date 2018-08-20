@@ -21,7 +21,7 @@ def list_to_exp_list(l):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: from surface_dynamics.flat_surfaces.strata import list_to_exp_list
         sage: l = [0,0,2,2,3,2,0,0,0]
@@ -83,7 +83,7 @@ class Stratum(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStratum({2:3})
             sage: a._flat_zero_str()
@@ -97,7 +97,7 @@ class Stratum(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStratum(2,2,2)
             sage: a._exp_zero_str()
@@ -112,7 +112,7 @@ class Stratum(SageObject):
         """
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: repr(AbelianStratum(1,1))       # indirect doctest
             'H_2(1^2)'
@@ -127,7 +127,7 @@ class Stratum(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum(0)._latex_()
             '\\mathcal{H}_1(0)'
@@ -146,7 +146,7 @@ class Stratum(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: hash(AbelianStratum(0)) == hash(AbelianStratum(0))
             True
@@ -161,7 +161,7 @@ class Stratum(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum(0) == AbelianStratum(0)
             True
@@ -192,7 +192,7 @@ class Stratum(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum(1,1) < AbelianStratum(1,1,0)
             True
@@ -250,7 +250,7 @@ class Stratum(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum([2]).is_connected()
             True
@@ -269,7 +269,7 @@ class Stratum(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         Examples from Abelian differentials::
 
@@ -301,7 +301,7 @@ class Stratum(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum(2).is_empty()
             False
@@ -316,7 +316,7 @@ class Stratum(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum(2).number_of_components()
             1
@@ -333,7 +333,7 @@ class Stratum(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum(2).one_component()
             H_2(2)^hyp
@@ -349,7 +349,7 @@ class Stratum(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStratum(1,1); a
             H_2(1^2)
@@ -381,7 +381,7 @@ class Stratum(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: Q = QuadraticStratum(6,6)
             sage: Q.random_component()
@@ -405,7 +405,7 @@ class Stratum(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         Some abelian strata::
 
@@ -451,7 +451,7 @@ class StratumComponent(SageObject):
         r"""
         TEST::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStratum(4,4).one_component()
             sage: a == loads(dumps(a))
@@ -468,7 +468,7 @@ class StratumComponent(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         Tests for Abelian strata::
 
@@ -502,7 +502,7 @@ class StratumComponent(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a_hyp = AbelianStratum(4).hyperelliptic_component()
             sage: a_hyp._repr_()
@@ -517,7 +517,7 @@ class StratumComponent(SageObject):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: A4hyp = AbelianStratum(4).hyperelliptic_component()
             sage: A4odd = AbelianStratum(4).odd_component()
@@ -535,7 +535,7 @@ class StratumComponent(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStratum(4,4)
             sage: all([c.stratum() == a for c in a.components()])
@@ -549,7 +549,7 @@ class StratumComponent(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStratum(4,4)
             sage: a.one_component().genus()
@@ -563,7 +563,7 @@ class StratumComponent(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c_hyp = AbelianStratum(6).hyperelliptic_component()
             sage: c_odd = AbelianStratum(6).odd_component()
@@ -583,7 +583,7 @@ class StratumComponent(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a1 = AbelianStratum(1,1,1,1)
             sage: c1 = a1.components()[0]

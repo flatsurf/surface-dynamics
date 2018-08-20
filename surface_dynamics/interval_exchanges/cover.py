@@ -55,7 +55,7 @@ class PermutationCover(SageObject):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: from surface_dynamics.interval_exchanges.cover import PermutationCover
             sage: p1 = iet.Permutation('a b c', 'c b a')
             sage: PermutationCover(p1, 2, [[0,1],[1,0],[1,0]])
@@ -91,7 +91,7 @@ class PermutationCover(SageObject):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p1 = iet.Permutation('a b c', 'c b a')
             sage: p2 = p1.cover(['(1,2)', '(1,3)', '(2,3)'])
             sage: len(p2)
@@ -114,7 +114,7 @@ class PermutationCover(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p1 = iet.Permutation('a b c', 'c b a')
             sage: p1.cover(['(1,2)', '(1,3)', '(2,3)'])
             Covering of degree 3 of the permutation:
@@ -129,7 +129,7 @@ class PermutationCover(SageObject):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p1 = iet.Permutation('a b c', 'c b a')
             sage: p2 = p1.cover(['(1,2)', '(1,3)', '(2,3)'])
             sage: p2[0]
@@ -143,7 +143,7 @@ class PermutationCover(SageObject):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p1 = iet.GeneralizedPermutation('a a b', 'b c c')
             sage: p2 = iet.GeneralizedPermutation('a a b',' b c c')
             sage: p3 = iet.GeneralizedPermutation('a a b b', 'c c')
@@ -163,7 +163,7 @@ class PermutationCover(SageObject):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p1 = iet.GeneralizedPermutation('a a b', 'b c c')
             sage: p2 = iet.GeneralizedPermutation('a a b',' b c c')
             sage: p3 = iet.GeneralizedPermutation('a a b b', 'c c')
@@ -183,7 +183,7 @@ class PermutationCover(SageObject):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p1 = iet.Permutation('a b c', 'c b a')
             sage: p2 = p1.cover(['(1,2)', '(1,3)', '(2,3)'])
             sage: p2 == p2.__copy__()
@@ -198,7 +198,7 @@ class PermutationCover(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.GeneralizedPermutation('a b b','c c a')
             sage: c = p.cover(['(1,2,3)','(1,3)','(1,2)'])
             sage: q = c.base()
@@ -216,7 +216,7 @@ class PermutationCover(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = QuadraticStratum([1,1,-1,-1]).components()[0].permutation_representative()
             sage: pc = p.orientation_cover()
@@ -241,7 +241,7 @@ class PermutationCover(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = QuadraticStratum([1,1,-1,-1]).components()[0].permutation_representative()
             sage: pc = p.orientation_cover()
@@ -273,7 +273,7 @@ class PermutationCover(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
             sage: c = p.cover(['(1,2)','(1,3)','(1,4)'])
             sage: c.interval_diagram()
@@ -346,7 +346,7 @@ class PermutationCover(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.GeneralizedPermutation('a b b', 'c c a')
             sage: c = p.cover(['()', '()', '()'])
             sage: c._delta2()
@@ -391,7 +391,7 @@ class PermutationCover(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a b b','c c a')
             sage: c = p.cover(['', '', ''])
@@ -448,7 +448,7 @@ class PermutationCover(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.Permutation('a b', 'b a')
             sage: p.cover(['(1,2)', '(1,3)']).profile()
             [6]
@@ -491,7 +491,7 @@ class PermutationCover(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
             sage: from itertools import product
             sage: it = iter(product(('()', '(1,2)'), repeat=3))
@@ -542,7 +542,7 @@ class PermutationCover(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
             sage: p.cover(['(1,2)', '()', '(1,2)']).stratum()
             H_1(0^4)
@@ -562,7 +562,7 @@ class PermutationCover(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
             sage: p.cover(['(1,2)', '()', '(1,2)']).genus()
             1
@@ -571,7 +571,7 @@ class PermutationCover(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = AbelianStratum([1,2,3,4]).one_component().one_origami()
             sage: assert(o.genus() == AbelianStratum([1,2,3,4]).genus())
             sage: qc = QuadraticStratum([1,2,3,4,-1,-1]).one_component()
@@ -597,7 +597,7 @@ class PermutationCover(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.GeneralizedPermutation('a b b','c c a')
             sage: c = p.cover(['(1,2,3)','(1,3,2)','()'])
             sage: c._real_characters()
@@ -617,7 +617,7 @@ class PermutationCover(SageObject):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.GeneralizedPermutation('a b b','c c a')
             sage: c = p.cover(['(1,2,3)','(1,3,2)','()'])
             sage: c._cc_mats()
@@ -640,7 +640,7 @@ class PermutationCover(SageObject):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.GeneralizedPermutation('a b b','c c a')
             sage: c = p.cover(['(1,2,3)','(1,3,2)','()'])
             sage: c.isotypic_projection_matrix(0)
@@ -710,7 +710,7 @@ class PermutationCover(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: q = QuadraticStratum([1,1,-1,-1]).one_component()
             sage: q.lyapunov_exponents_H_plus() # abs tol 0.05
@@ -923,7 +923,7 @@ class PermutationCover(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
             sage: p.cover(['(1,2,3)', '(1,3,2)', '']).monodromy()
             Permutation Group with generators [(1,2,3), (1,3,2), ()]
@@ -940,7 +940,7 @@ class PermutationCover(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
             sage: p.cover(['(1,2,3)', '(1,3,2)', '']).automorphism_group()
             Permutation Group with generators [(1,2,3), (1,3,2)]

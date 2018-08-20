@@ -11,7 +11,7 @@ origamis that are *arithmetic Teichmueller curves*.
 
 EXAMPLES::
 
-    sage: from surface_dynamics.all import *
+    sage: from surface_dynamics import *
 
 The most useful way to explore the database through queries. We develop several
 examples below and refer to the documentation in the method
@@ -366,7 +366,7 @@ def real_tuple_to_data(t):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
         sage: odb.real_tuple_to_data((1.23,-4.0))
@@ -424,7 +424,7 @@ def data_to_real_tuple(s):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
         sage: R = RealField(22)
@@ -460,7 +460,7 @@ def small_positive_integer_tuple_to_data(t):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
         sage: t = (0, 35, 25, 2, 12)
@@ -483,7 +483,7 @@ def data_to_small_positive_integer_tuple(s):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
         sage: odb.data_to_small_positive_integer_tuple('14m')
@@ -504,7 +504,7 @@ def integer_tuple_to_data(t):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
         sage: t = (0,-12435123,3)
@@ -564,7 +564,7 @@ def representative_to_data(o):
 
     TESTS::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
         sage: o = Origami('(1,2,3)','(3,2,1)')
@@ -603,7 +603,7 @@ def format_representative(s):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
         sage: o = Origami('(1,2)','(1,3)')
@@ -626,7 +626,7 @@ def stratum_to_data(h):
 
     TESTS::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
         sage: h = AbelianStratum(2,0)
@@ -698,7 +698,7 @@ def orientation_stratum_to_data(q):
     r"""
     TESTS::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
         sage: q = QuadraticStratum(2,2,0,-1,-1,-1,-1)
         sage: s = odb.orientation_stratum_to_data(q)
@@ -788,7 +788,7 @@ class OrigamiQuery:
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: O = OrigamiDatabase()
             sage: O.query(("nb_squares","=",5))
@@ -802,7 +802,7 @@ class OrigamiQuery:
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: D = OrigamiDatabase()
             sage: q = D.query(stratum=AbelianStratum(6))
@@ -821,7 +821,7 @@ class OrigamiQuery:
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: O = OrigamiDatabase()
             sage: q = O.query()
@@ -857,7 +857,7 @@ class OrigamiQuery:
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: O = OrigamiDatabase()
             sage: q = O.query()
@@ -894,7 +894,7 @@ class OrigamiQuery:
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: D = OrigamiDatabase()
             sage: q = D.query(('stratum','=',AbelianStratum(1,1)), ('nb_squares','<', 13))
@@ -953,7 +953,7 @@ class OrigamiQuery:
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: S = OrigamiDatabase(read_only=False)
             sage: q = S.query(('stratum','=',AbelianStratum(1,1)),('nb_squares','=',6))
@@ -973,7 +973,7 @@ class OrigamiQuery:
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: D = OrigamiDatabase()
             sage: q = D.query(stratum=AbelianStratum(1,1), nb_squares=8)
@@ -1011,7 +1011,7 @@ class OrigamiQuery:
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         There is a problem with show method the SQLQuery::
 
@@ -1042,7 +1042,7 @@ def build_local_data(o):
 
     EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         sage: o = Origami('(1,2)','(1,3)')
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
@@ -1179,7 +1179,7 @@ def build_lyapunov_exponents(o, nb_iterations=0X10000, nb_experiments=10):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: o = Origami('(1,2)', '(1,3)')
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
@@ -1203,7 +1203,7 @@ def build_global_data(o, c=None):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: o = Origami('(1,2)', '(1,3)')
         sage: from surface_dynamics.flat_surfaces.origamis.origami_database import build_global_data
@@ -1278,7 +1278,7 @@ class OrigamiDatabase(SQLDatabase):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
     To query the database the main method is meth:`query`::
 
@@ -1401,7 +1401,7 @@ class OrigamiDatabase(SQLDatabase):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: OrigamiDatabase().__repr__()
             'Database of origamis'
@@ -1426,7 +1426,7 @@ class OrigamiDatabase(SQLDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: O = OrigamiDatabase()
             sage: cols = O.cols()
@@ -1455,12 +1455,12 @@ class OrigamiDatabase(SQLDatabase):
         - ``force_computation`` - force computation of data which may be yet in
           the database.
 
-        - ``verbose`` - boolean - if True, print useful interactive informations
+        - ``verbose`` - boolean - if ``True``, print useful interactive informations
           during the process.
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: import os
             sage: db_name = os.path.join(SAGE_TMP, 'my_db.db')
@@ -1655,7 +1655,7 @@ class OrigamiDatabase(SQLDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: import os
             sage: db1_name = os.path.join(SAGE_TMP, 'the_first_one.db')
@@ -1815,7 +1815,7 @@ class OrigamiDatabase(SQLDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: O = OrigamiDatabase()
             sage: O.info()
@@ -1875,7 +1875,7 @@ class OrigamiDatabase(SQLDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: O = OrigamiDatabase()
             sage: O.max_nb_squares(AbelianStratum(2))
@@ -1925,7 +1925,7 @@ class OrigamiDatabase(SQLDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: OrigamiDatabase()._get_format(['representative', 'stratum'])
             {'representative': <function format_representative at ...>,
@@ -1947,7 +1947,7 @@ class OrigamiDatabase(SQLDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: D = OrigamiDatabase()
             sage: for o in D.query(stratum=AbelianStratum(1,1), nb_squares=6):

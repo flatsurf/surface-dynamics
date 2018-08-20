@@ -135,7 +135,7 @@ class GenericRepertoryDatabase:
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
 
             sage: C = CylinderDiagrams(tmp_dir(), "cylinder_diagrams", read_only=False)
@@ -183,7 +183,7 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: from surface_dynamics.databases.flat_surfaces import IrregularComponentTwins
             sage: D = IrregularComponentTwins()
@@ -208,7 +208,7 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: from surface_dynamics.databases.flat_surfaces import IrregularComponentTwins
             sage: D = IrregularComponentTwins()
@@ -267,7 +267,7 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: from surface_dynamics.databases.flat_surfaces import IrregularComponentTwins
             sage: D = IrregularComponentTwins()
@@ -295,7 +295,7 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: from surface_dynamics.databases.flat_surfaces import IrregularComponentTwins
             sage: D = IrregularComponentTwins()
@@ -317,7 +317,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
         sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
         sage: import os
         sage: C = CylinderDiagrams()
@@ -357,7 +357,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
             sage: C = CylinderDiagrams()
             sage: C.filename(AbelianStratum(4).odd_component(), 3)
@@ -376,7 +376,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
             sage: import os
@@ -414,7 +414,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
             sage: import os
@@ -472,7 +472,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
             sage: import os
@@ -511,7 +511,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
             sage: import os
@@ -637,7 +637,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
 

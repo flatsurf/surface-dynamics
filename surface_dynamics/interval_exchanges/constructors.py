@@ -10,7 +10,7 @@ of intervals (constructed using :func:`IntervalExchangeTransformation`).
 
 EXAMPLES::
 
-    sage: from surface_dynamics.all import *
+    sage: from surface_dynamics import *
 
 Creation of an interval exchange transformation (iet)::
 
@@ -293,7 +293,7 @@ def Permutation(arg1, arg2=None, reduced=None, flips=None, alphabet=None):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
     Creation of labelled permutations ::
 
@@ -454,7 +454,7 @@ def GeneralizedPermutation(arg1, arg2=None, reduced=None, flips=None, alphabet=N
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
     Creation of labelled generalized permutations::
 
@@ -575,7 +575,7 @@ def Permutations_iterator(
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
     Generates all reduced permutations with given number of intervals::
 
@@ -671,7 +671,7 @@ def RauzyDiagram(arg1, arg2=None, reduced=False, flips=None, alphabet=None,
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
     Standard Rauzy diagrams::
 
@@ -788,7 +788,7 @@ def IntervalExchangeTransformation(permutation=None,lengths=None):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
     Two initialization methods, the first using a iet.Permutation::
 
@@ -869,7 +869,7 @@ def IntervalExchangeTransformationFamily(*args):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
         sage: p = iet.Permutation([0,1,2,3,4,5],[5,4,3,2,1,0])
         sage: rays = [[5, 1, 0, 0, 3, 8], [2, 1, 0, 3, 0, 5], [1, 0, 1, 2, 0, 3], [3, 0, 1, 0, 2, 5]]
         sage: F = iet.IETFamily(p, rays)    # optional - pplpy

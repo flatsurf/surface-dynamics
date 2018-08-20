@@ -80,7 +80,7 @@ def TeichmuellerCurveOfOrigami(origami):
 
     TESTS::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: o = Origami('(1,2)','(1,3)')
         sage: o.teichmueller_curve() #indirect test
@@ -216,7 +216,7 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: t = o.teichmueller_curve()
@@ -233,7 +233,7 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: t = o.teichmueller_curve()
@@ -331,7 +331,7 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         Let us consider few examples in H(2) for which the sum is independant of
         the origami::

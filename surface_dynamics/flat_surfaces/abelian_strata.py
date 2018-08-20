@@ -53,7 +53,7 @@ AUTHORS:
 
 EXAMPLES:
 
-    sage: from surface_dynamics.all import *
+    sage: from surface_dynamics import *
 
 Construction of a stratum from a list of singularity degrees::
 
@@ -188,7 +188,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
     Creation of an Abelian stratum and get its connected components::
 
@@ -251,7 +251,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
         """
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = AbelianStratum(0)
             sage: s == loads(dumps(s))
@@ -308,7 +308,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum([1,2,3]).zeros()
             (3, 2, 1)
@@ -325,7 +325,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum(0).nb_zeros()
             1
@@ -342,7 +342,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum(0).nb_fake_zeros()
             1
@@ -364,7 +364,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum(0).genus()
             1
@@ -386,7 +386,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum(0).dimension()
             2
@@ -416,7 +416,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum(2).has_odd_component()
             False
@@ -433,7 +433,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum(2,2).has_even_component()
             False
@@ -450,7 +450,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum(2,1,1).has_hyperelliptic_component()
             False
@@ -468,7 +468,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum(1,1).has_non_hyperelliptic_component()
             False
@@ -486,7 +486,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStratum([2,2]); a
             H_3(2^2)
@@ -502,7 +502,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStratum({2:4}); a
             H_5(2^4)
@@ -518,7 +518,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStratum(10); a
             H_6(10)
@@ -534,7 +534,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStratum(3,3); a
             H_4(3^2)
@@ -559,7 +559,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         The stratum H(2g-2) has one conic singularities of angle `2(2g-1)pi`. The
         only way a surface in H(2g-2) covers a quadratic differential is that
@@ -657,7 +657,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStratum(2); a
             H_2(2)
@@ -683,7 +683,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: A = AbelianStratum(4)
             sage: for c in A.cylinder_diagram_iterator(3,force_computation=True):
@@ -728,7 +728,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: A = AbelianStratum(2,2)
             sage: c4 = A.cylinder_diagrams(4)
@@ -758,7 +758,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: A = AbelianStratum(4)
             sage: cyls = A.cylinder_diagrams_by_component(ncyls=2, force_computation=True)
@@ -808,7 +808,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStratum(3,2,1); a
             H_4(3, 2, 1)
@@ -831,7 +831,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: H22 = AbelianStratum(2,2)
             sage: H22.cylinder_diagrams_number(3)
@@ -893,7 +893,7 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = AbelianStratum([1,1,1,1]).unique_component(); c
             H_3(1^4)^c
@@ -926,7 +926,7 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = AbelianStratum(1,1,1,1).unique_component()
             sage: p = c.permutation_representative(alphabet="abcdefghi")
@@ -1070,7 +1070,7 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES:
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: C = AbelianStratum(10).hyperelliptic_component()
             sage: p = C.random_standard_permutation(); p   # random
@@ -1142,7 +1142,7 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = AbelianStratum(0).components()[0]
             sage: r = c.rauzy_diagram()
@@ -1172,7 +1172,7 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStratum({1:4}).unique_component(); a
             H_3(1^4)^c
@@ -1258,7 +1258,7 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: cc = AbelianStratum(3,1).unique_component()
             sage: sum(1 for p in cc.rauzy_diagram() if p.is_standard())
@@ -1299,7 +1299,7 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: C = AbelianStratum(4).odd_component()
             sage: C
@@ -1339,7 +1339,7 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: A = AbelianStratum(2,2).odd_component()
             sage: c = A.one_cylinder_diagram(); c
@@ -1370,7 +1370,7 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: A = AbelianStratum(1,1,1,1)
             sage: cc = A.unique_component()
@@ -1431,7 +1431,7 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: C = AbelianStratum(1,1,1,1).unique_component(); C
             H_3(1^4)^c
@@ -1457,7 +1457,7 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: C = AbelianStratum(3,1).unique_component()
             sage: C.cylinder_diagrams_number(1)
@@ -1533,7 +1533,7 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStratum(2,2).one_component()
             sage: a.one_origami().stratum()
@@ -1566,7 +1566,7 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: cc = AbelianStratum(6).even_component()
             sage: it = cc.origami_iterator(13)
@@ -1618,7 +1618,7 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: H11_hyp = AbelianStratum(1,1).hyperelliptic_component()
             sage: len(H11_hyp.origamis(6))
@@ -1645,7 +1645,7 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: A = AbelianStratum(2).hyperelliptic_component(); A
             H_2(2)^hyp
@@ -1706,7 +1706,7 @@ class HypAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         For the strata `H(2g-2)`::
 
@@ -1775,7 +1775,7 @@ class HypAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = AbelianStratum(0).hyperelliptic_component()
             sage: p = c.permutation_representative()
@@ -1896,7 +1896,7 @@ class HypAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         The case of the torus is a little bit different::
 
@@ -2019,7 +2019,7 @@ class HypAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum(6).hyperelliptic_component().standard_permutations()
             [0 1 2 3 4 5 6 7
@@ -2062,7 +2062,7 @@ class HypAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: C = AbelianStratum(2,2).hyperelliptic_component()
             sage: for c in C.cylinder_diagram_iterator(1): print(c)
@@ -2123,7 +2123,7 @@ class NonHypAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         Examples in genus 3::
 
@@ -2199,7 +2199,7 @@ class NonHypAbelianStratumComponent(ASC):
         r"""
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: C = AbelianStratum(3,3).non_hyperelliptic_component()
             sage: len(C.standard_permutations())  # long time
@@ -2227,7 +2227,7 @@ class NonHypAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: cc = AbelianStratum(3,3).non_hyperelliptic_component()
             sage: it = cc.cylinder_diagram_iterator()
@@ -2266,7 +2266,7 @@ class EvenAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = AbelianStratum(4,2).even_component(); c
             H_4(4, 2)^even
@@ -2298,7 +2298,7 @@ class EvenAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = AbelianStratum(6).even_component()
             sage: c
@@ -2424,7 +2424,7 @@ class EvenAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = AbelianStratum(6).even_component()
             sage: c.rauzy_diagram()
@@ -2498,7 +2498,7 @@ class EvenAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         For strata in genus 3, the number of standard permutations is reasonably
         small and the whole set can be computed::
@@ -2544,7 +2544,7 @@ class EvenAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: cc = AbelianStratum(4,2).even_component()
             sage: it = cc.cylinder_diagram_iterator(4)
@@ -2577,7 +2577,7 @@ class OddAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: c = AbelianStratum(4).odd_component(); c
             H_3(4)^odd
@@ -2595,7 +2595,7 @@ class OddAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStratum(6).odd_component()
             sage: p = a.permutation_representative()
@@ -2718,7 +2718,7 @@ class OddAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         The genus must be at least 3 to have an odd component::
 
@@ -2805,7 +2805,7 @@ class OddAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         In genus 2, there are two strata which contains an odd component::
 
@@ -2866,7 +2866,7 @@ class OddAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: C = AbelianStratum(4).odd_component()
             sage: for c in C.cylinder_diagrams(1): print(c)
@@ -2913,7 +2913,7 @@ class AbelianStrata(Strata):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
     Abelian strata with a given genus::
 
@@ -3000,7 +3000,7 @@ class AbelianStrata(Strata):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = AbelianStrata(genus=3)
             sage: loads(dumps(s)) == s
@@ -3035,7 +3035,7 @@ class AbelianStrata(Strata):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStrata()                        # indirect doctest
             Abelian strata
@@ -3074,7 +3074,7 @@ class AbelianStrata(Strata):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStrata(genus=3)
             sage: all(s in a for s in a)
@@ -3113,7 +3113,7 @@ class AbelianStrata_g(AbelianStrata):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: AbelianStrata(genus=2).list()
         [H_2(2), H_2(1^2)]
@@ -3128,7 +3128,7 @@ class AbelianStrata_g(AbelianStrata):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStrata(genus=1).cardinality()
             1
@@ -3149,7 +3149,7 @@ class AbelianStrata_g(AbelianStrata):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: list(AbelianStrata(genus=1))
             [H_1(0)]
@@ -3178,7 +3178,7 @@ class AbelianStrata_g(AbelianStrata):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStrata(genus=3).first()
             H_3(4)
@@ -3195,7 +3195,7 @@ class AbelianStrata_g(AbelianStrata):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStrata(genus=4).last()
             H_4(1^6)
@@ -3216,7 +3216,7 @@ class AbelianStrata_d(AbelianStrata):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: for a in AbelianStrata(dimension=5,fake_zeros=True):
         ....:     print(a)
@@ -3237,7 +3237,7 @@ class AbelianStrata_d(AbelianStrata):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStrata(dimension=2).first()
             H_1(0)
@@ -3259,7 +3259,7 @@ class AbelianStrata_d(AbelianStrata):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStrata(dimension=9,fake_zeros=True).last()
             H_1(0^8)
@@ -3291,7 +3291,7 @@ class AbelianStrata_d(AbelianStrata):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: for a in AbelianStrata(dimension=4,fake_zeros=True): print(a)
             H_2(2)
@@ -3318,7 +3318,7 @@ class AbelianStrata_d(AbelianStrata):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStrata(dimension=5,fake_zeros=True).cardinality()
             3
@@ -3374,7 +3374,7 @@ class AbelianStrata_gd(AbelianStrata):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: list(AbelianStrata(genus=2, dimension=4))
             [H_2(2)]
@@ -3402,7 +3402,7 @@ class AbelianStrata_all(AbelianStrata):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: A = AbelianStrata()
         sage: it = iter(A)
@@ -3438,7 +3438,7 @@ class AbelianStrata_all(AbelianStrata):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: iter(AbelianStrata()).next()  # indirect doctest
             H_1(0)

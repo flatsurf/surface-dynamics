@@ -140,7 +140,7 @@ cdef class IETFamily(object):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: p = iet.Permutation('a b c d', 'd c b a')
         sage: F = iet.IETFamily(p, (ZZ**4).basis())    # optional - pplpy
@@ -221,7 +221,7 @@ cdef class IETFamily(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.Permutation('a b c d', 'd c b a')
             sage: F = iet.IETFamily(p, [(2,3,0,0), (0,1,1,1)]) # optional - pplpy
             sage: F.ray_coefficient(0, 2) # optional - pplpy
@@ -251,7 +251,7 @@ cdef class IETFamily(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.Permutation('a b c d', 'd c b a')
             sage: F = iet.IETFamily(p, [(2,3,0,0), (0,1,1,1)]) # optional - pplpy
             sage: F.rays() # optional - pplpy
@@ -266,7 +266,7 @@ cdef class IETFamily(object):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.Permutation('a b c d', 'd c b a')
             sage: F = iet.IETFamily(p, [(2,3,0,0), (0,1,1,1)]) # optional - pplpy
             sage: repr(F)  # indirect doctest # optional - pplpy
@@ -352,7 +352,7 @@ cdef class IETFamily(object):
         r"""
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.Permutation('a b c d', 'd c b a')
             sage: F = iet.IETFamily(p, Polyhedron(rays=(ZZ**4).basis())) # optional - pplpy
             sage: hash(F) # optional - pplpy
@@ -381,7 +381,7 @@ cdef class IETFamily(object):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p1 = iet.Permutation('a b c d', 'd c b a')
             sage: p2 = iet.Permutation('a b c d', 'd a b c')
@@ -438,7 +438,7 @@ cdef class IETFamily(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.Permutation('A B C D E', 'E D C B A')
             sage: C0 = Polyhedron(rays=(ZZ**5).basis())
             sage: iet.IETFamily(p, C0).has_connection() # optional - pplpy
@@ -498,7 +498,7 @@ cdef class IETFamily(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c d', 'd c b a')
             sage: F = iet.IETFamily(p, Polyhedron(rays=(ZZ**4).basis())) # optional - pplpy
@@ -599,7 +599,7 @@ cdef class IETFamily(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = iet.Permutation([0,1,2,3,4,5],[5,4,3,2,1,0])
             sage: rays = [[5, 1, 0, 0, 3, 8], [2, 1, 0, 3, 0, 5], [1, 0, 1, 2, 0, 3], [3, 0, 1, 0, 2, 5]]
             sage: F = iet.IETFamily(p, rays) # optional - pplpy
@@ -661,7 +661,7 @@ cdef class IETFamily(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: from surface_dynamics.misc.linalg import deformation_space
             sage: q = iet.Permutation([0,1,2,3,4,5],[5,3,2,1,0,4])
             sage: rays = [[0, 0, 0, 1, 1, 0], [3, 1, 0, 1, 0, 2], [5, 0, 1, 2, 0, 3]]
@@ -709,7 +709,7 @@ cdef class IETFamily(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: q = iet.Permutation([0,1,2,3,4,5],[5,3,2,1,0,4])
             sage: rays = [[0, 0, 0, 1, 1, 0], [3, 1, 0, 1, 0, 2], [5, 0, 1, 2, 0, 3]]
             sage: F = iet.IETFamily(q, rays)  # optional - pplpy

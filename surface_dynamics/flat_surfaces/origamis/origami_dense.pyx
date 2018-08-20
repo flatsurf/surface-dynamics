@@ -296,7 +296,7 @@ def sl_orbit_from_gl_orbit(o,L,I):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
     On the following example, the SL(2,Z) action has two orbits whereas the
     GL(2,Z) action as only one::
@@ -366,7 +366,7 @@ cdef class Origami_dense_pyx(object):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
         sage: Origami([2,1,3], [3,2,1])
         (1,2)(3)
         (1,3)(2)
@@ -379,7 +379,7 @@ cdef class Origami_dense_pyx(object):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2)','(1,3)')
             sage: loads(dumps(o)) == o
             True
@@ -401,7 +401,7 @@ cdef class Origami_dense_pyx(object):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami([2,1,3],[1,3,2])
             sage: o == loads(dumps(o))
             True
@@ -449,7 +449,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2)','(1,3)')
             sage: oo = copy(o)
             sage: o == oo
@@ -470,7 +470,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2)','(1,3)')
             sage: loads(dumps(o)) == o
             True
@@ -492,7 +492,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         First compare the number of squares::
 
@@ -552,7 +552,7 @@ cdef class Origami_dense_pyx(object):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: h = []
             sage: from itertools import permutations
             sage: for p in permutations(range(5)):
@@ -580,7 +580,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)', '(1,3)')
             sage: o.nb_squares()
@@ -594,7 +594,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: o.r_tuple()
@@ -609,7 +609,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2,3)','(1,2)')
             sage: o.r_inv_tuple()
             (2, 0, 1)
@@ -622,7 +622,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2)','(1,3)')
             sage: o.u_tuple()
             (2, 1, 0)
@@ -636,7 +636,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2)','(1,2,3)')
             sage: o.u_inv_tuple()
             (2, 0, 1)
@@ -653,7 +653,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2,3)','(1,2)')
             sage: o.r()
             (1,2,3)
@@ -666,7 +666,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2,3)','(1,2)')
             sage: o.r_inv()
             (1,3,2)
@@ -679,7 +679,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2)','(1,2,3,4)')
             sage: o.u()
             (1,2,3,4)
@@ -692,7 +692,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2)','(1,2,3,4)')
             sage: o.u_inv()
             (1,4,3,2)
@@ -705,7 +705,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: Origami('(1,2)','(1,3)').widths_and_heights()
             [(1, 1), (2, 1)]
             sage: Origami('(1,2)(3,4)','(1,3,5)(2,4)').widths_and_heights()
@@ -752,7 +752,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,3,6)(2,5,7)(4)', '(1,2,4,3,5,6,7)')
             sage: sorted(o.period_generators())
             [(-1, 2), (0, 1), (0, 2), (1, 0), (1, 0), (2, 0)]
@@ -848,7 +848,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: o.lattice_of_periods()
@@ -874,7 +874,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2)(3,4)', '(2,3)')
             sage: o.lattice_of_absolute_periods()
             (2, 0, 1)
@@ -897,7 +897,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: E = origamis.EierlegendeWollmilchsau()
             sage: E.optimal_degree()
             2
@@ -923,7 +923,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2)','(1,3)')
             sage: o.is_reduced()
             True
@@ -961,7 +961,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami((1,0,2),(0,2,1), as_tuple=True)
             sage: o.r_tuple()
             (1, 0, 2)
@@ -1010,7 +1010,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: oo,m = o.to_standard_form(return_map=True)
@@ -1051,7 +1051,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2,3,4)(5,6)','(2,5)(3,6)')
             sage: o2,p = o.relabel(return_map=True)
@@ -1085,7 +1085,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2,3)','(1,2)')
             sage: o
@@ -1125,7 +1125,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2,3)(5,6)', '(1,4)(3,5,7)')
             sage: ov = o.vertical_symmetry(); ov
             (1,3,2)(4)(5,6)(7)
@@ -1155,7 +1155,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2,3)(5,6)', '(1,4)(3,5,7)')
             sage: oh = o.horizontal_symmetry(); oh
             (1,2,3)(4)(5,6)(7)
@@ -1185,7 +1185,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2,3,4)','(1,5)'); o
             (1,2,3,4)(5)
@@ -1215,7 +1215,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2,3,4,5,6)','(1,7)')
             sage: o
             (1,2,3,4,5,6)(7)
@@ -1259,7 +1259,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2,3,4)','(4,5,6,7)')
             sage: o.vertical_twist()
             (1,2,3,4,7,6,5)
@@ -1305,7 +1305,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami((1,0,2),(0,2,1),as_tuple=True)
             sage: l,i = o.gl2z_edges() #indirect doctest
@@ -1433,7 +1433,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: l,i = o.gl2z_edges()
@@ -1476,7 +1476,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(2,3)')
             sage: l,r,s = o.sl2z_edges()
@@ -1509,7 +1509,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: l,i = o.pgl2z_edges()
@@ -1542,7 +1542,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: l,r,s = o.psl2z_edges()
@@ -1602,7 +1602,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)(3,4)(5,6)','(2,3)(4,5)')
             sage: lexp = o.lyapunov_exponents_approx()
@@ -1760,7 +1760,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o=Origami('(1,2)','(1,3)')
             sage: G = o.as_graph(); G
@@ -1790,7 +1790,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: o.is_connected()
@@ -1827,7 +1827,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o1 = Origami('(1,2)','(1,3)')
             sage: o2 = Origami('(1,2)','(2,3)')
@@ -1860,7 +1860,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: o.stratum_component()
@@ -1894,7 +1894,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: o.is_orientation_cover()
@@ -1933,7 +1933,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         The stratum H(2) contains two families of primitive origamis for an odd
         number of squares. Every surface in H(2) is a covering of a quadratic
@@ -2067,7 +2067,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: o.is_hyperelliptic()
@@ -2101,7 +2101,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)(3,4)','(1,3,5,6)(2,4)')
             sage: o.lattice_of_periods()
@@ -2180,7 +2180,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLE::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: o.is_primitive()
@@ -2206,7 +2206,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)(3,4)','(1,3)')
             sage: o.is_primitive()
@@ -2237,7 +2237,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(3,4,5)', '(1,2,3)(4,6,7)(5,8,9)')
             sage: for oo in o.intermediate_covers():
@@ -2296,7 +2296,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: P = o.normal_cover().lattice_of_quotients(); P
@@ -2344,7 +2344,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = origamis.EierlegendeWollmilchsau()
             sage: o.is_regular()
@@ -2393,7 +2393,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: o.is_normal()
@@ -2426,7 +2426,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)'); o
             (1,2)(3)
@@ -2504,7 +2504,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: G = o.monodromy()
@@ -2551,7 +2551,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         The L with 3 squares has no automorphisms::
 
@@ -2590,7 +2590,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)(3,4)','(2,3)')
             sage: G = o.automorphism_group()
@@ -2634,7 +2634,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: print(Origami('(1,2)','(1,3)').__str__())
             (1,2)(3)
             (1,3)(2)
@@ -2658,7 +2658,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: print(Origami('(1,2)','(1,3)')._latex_())
             (1,2)(3) \atop (1,3)(2)
         """
@@ -2733,7 +2733,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = origamis.Escalator(3)
             sage: o.plot()  # not tested (problem with matplotlib font caches)
             Graphics object consisting of 71 graphics primitives
@@ -2856,7 +2856,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: r  = '(1,2,3,4)(5,6)'
             sage: u0 = '(1,5)(2,6)(3)(4)'
@@ -2920,7 +2920,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: Origami('(1,2)','(1,3)').num_cylinders()
             2
@@ -2948,7 +2948,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         The two examples in the stratum H(2)::
 
@@ -3055,7 +3055,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2,3,4)(5,6)', '(1,5)(2,6)')
             sage: o.absolute_period_generators()
@@ -3076,7 +3076,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: o.stratum()
@@ -3094,7 +3094,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2)','(1,3)')
             sage: o.genus()
             2
@@ -3110,7 +3110,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2)','(1,3)')
             sage: G = o.veech_group()
             sage: G
@@ -3182,7 +3182,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = Origami('(1,2)','(1,3)')
             sage: t = o.teichmueller_curve()
             sage: t
@@ -3212,7 +3212,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: o.sum_of_lyapunov_exponents()
@@ -3225,7 +3225,7 @@ cdef class Origami_dense_pyx(object):
 
         An error is raised if the origami is not connected::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(3,4)')
             Warning: the origami is not connected
@@ -3255,7 +3255,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = origamis.Escalator(4)
             sage: o.vertices()
             [vertex (1, 5), vertex (2, 6), vertex (3, 7), vertex (4, 8)]
@@ -3268,7 +3268,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2,3,4,5)', '(1,5,3,2,4)')
             sage: o.vertex_degrees()
@@ -3286,7 +3286,7 @@ cdef class Origami_dense_pyx(object):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: o.nb_vertices()
@@ -3458,7 +3458,7 @@ cpdef sl2z_orbits(origamis, int n, int limit):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: from surface_dynamics.flat_surfaces.origamis.origami_dense import sl2z_orbits
         sage: C = AbelianStratum(2,2).odd_component()
@@ -3488,7 +3488,7 @@ cdef class PillowcaseCover_dense_pyx:
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: loads(dumps(o)) == o
@@ -3503,7 +3503,7 @@ cdef class PillowcaseCover_dense_pyx:
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami([2,1,3],[1,3,2])
             sage: o == loads(dumps(o))
@@ -3550,7 +3550,7 @@ cdef class PillowcaseCover_dense_pyx:
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: p = PillowcaseCover([2,1,3,4],[1,3,2,4],[4,2,3,1])
             sage: hash(p)
             -416597224
@@ -3573,7 +3573,7 @@ cdef class PillowcaseCover_dense_pyx:
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p3 = PillowcaseCover([2,3,1],[3,2,1],[2,1,3])
             sage: p4 = PillowcaseCover([1,3,2,4],[3,2,4,1],[2,1,3,4])
@@ -3660,7 +3660,7 @@ cdef class PillowcaseCover_dense_pyx:
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = Origami('(1,2)','(1,3)')
             sage: oo = copy(o)
@@ -3681,7 +3681,7 @@ cdef class PillowcaseCover_dense_pyx:
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = PillowcaseCover([2,1,3,4],[3,2,1,4],[4,2,3,1])
             sage: p.g_tuple(0)
@@ -3708,7 +3708,7 @@ cdef class PillowcaseCover_dense_pyx:
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: p = PillowcaseCover([2,1,3,4],[3,2,1,4],[4,2,3,1])
             sage: p.degree()

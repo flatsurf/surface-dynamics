@@ -65,7 +65,7 @@ AUTHORS:
 
 EXAMPLES::
 
-    sage: from surface_dynamics.all import *
+    sage: from surface_dynamics import *
 
 Construction of a stratum from a list of singularity degrees::
 
@@ -159,7 +159,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: Q = QuadraticStratum(15,-1,-1,-1); Q
         Q_4(15, -1^3)
@@ -217,7 +217,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
         """
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = QuadraticStratum(4,-1,-1,-1,-1,0)
             sage: loads(dumps(a)) == a
@@ -298,7 +298,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: AbelianStratum([1,2,3]).zeros()
             (3, 2, 1)
@@ -324,7 +324,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
         r"""
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStratum({-1:4}).nb_zeros()
             4
@@ -356,7 +356,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStratum(-1,-1,-1,-1).genus()
             0
@@ -372,7 +372,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStratum({-1:4}).dimension()
             2
@@ -391,7 +391,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: q = QuadraticStratum({4:1,-1:4}); q
             Q_1(4, -1^4)
@@ -460,7 +460,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStratum(1,3).spin()
             0
@@ -485,7 +485,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStratum(2,2).has_hyperelliptic_component()
             True
@@ -500,7 +500,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStratum(2,2).hyperelliptic_component()
             Q_2(2^2)^hyp
@@ -522,7 +522,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStratum(10,10).has_non_hyperelliptic_component()
             True
@@ -538,7 +538,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStratum(10,10).non_hyperelliptic_component()
             Q_6(10^2)^nonhyp
@@ -565,7 +565,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-           sage: from surface_dynamics.all import *
+           sage: from surface_dynamics import *
 
             sage: QuadraticStratum(9,-1).has_regular_and_irregular_components()
             True
@@ -580,7 +580,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-           sage: from surface_dynamics.all import *
+           sage: from surface_dynamics import *
 
             sage: QuadraticStratum(12).regular_component()
             Q_4(12)^reg
@@ -599,7 +599,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-           sage: from surface_dynamics.all import *
+           sage: from surface_dynamics import *
 
             sage: QuadraticStratum(3,3,3,-1).irregular_component()
             Q_3(3^3, -1)^irr
@@ -618,7 +618,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
 
         EXAMPLES::
 
-           sage: from surface_dynamics.all import *
+           sage: from surface_dynamics import *
 
             sage: Q = QuadraticStratum(4,4)
             sage: Q.random_cylindric_permutation()  # random
@@ -653,7 +653,7 @@ class QuadraticStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-           sage: from surface_dynamics.all import *
+           sage: from surface_dynamics import *
 
             sage: cc = QuadraticStratum(5,genus=0).unique_component()
             sage: cc.orientation_cover_component()
@@ -714,7 +714,7 @@ class QuadraticStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-           sage: from surface_dynamics.all import *
+           sage: from surface_dynamics import *
 
             sage: Q = QuadraticStratum({4:1,-1:4}); Q
             Q_1(4, -1^4)
@@ -939,7 +939,7 @@ class QuadraticStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: R = QuadraticStratum([3,3,3,-1]).regular_component()
             sage: R.lyapunov_exponents_H_plus() # abs tol .05
@@ -995,7 +995,7 @@ class GenusZeroQuadraticStratumComponent(QSC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStratum(-1,-1,-1,-1).permutation_representative()
             0 1 1
@@ -1056,7 +1056,7 @@ class GenusOneQuadraticStratumComponent(QSC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStratum([2],genus=1).permutation_representative()
             0 1 2 2
@@ -1074,10 +1074,14 @@ class GenusOneQuadraticStratumComponent(QSC):
 
         TESTS::
 
+            sage: from surface_dynamics import *
+
             sage: QuadraticStratum([1],genus=1).permutation_representative()
             Traceback (most recent call last):
             ...
             EmptySetError: The stratum is empty
+
+            sage: QuadraticStratum(2,-1,-1,0).permutation_representative()
         """
         p = self._stratum.nb_poles()
         f = self._stratum.nb_fake_zeros()
@@ -1124,7 +1128,7 @@ class GenusTwoHyperellipticQuadraticStratumComponent(QSC):
 
         TESTS:
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: Q = QuadraticStratum([1,1,1,1],genus=2)
             sage: H = Q.hyperelliptic_component()
@@ -1194,7 +1198,7 @@ class GenusTwoNonhyperellipticQuadraticStratumComponent(QSC):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: Q = QuadraticStratum([6],genus=2)
             sage: N = Q.non_hyperelliptic_component()
@@ -1262,7 +1266,7 @@ class HyperellipticQuadraticStratumComponent(QSC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: cc = QuadraticStratum([6],genus=2).hyperelliptic_component()
             sage: cc.permutation_representative()
@@ -1339,7 +1343,7 @@ class ConnectedQuadraticStratumComponent(QSC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: cc = QuadraticStratum(6,-1,-1).non_hyperelliptic_component()
             sage: p = cc.permutation_representative(); p
@@ -1434,7 +1438,7 @@ class RegularExceptionalQuadraticStratumComponent(QSC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: cc = QuadraticStratum(9,-1).regular_component()
             sage: p = cc.permutation_representative(); p
@@ -1519,7 +1523,7 @@ class IrregularExceptionalQuadraticStratumComponent(QSC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: cc = QuadraticStratum(9,-1).irregular_component()
             sage: p = cc.permutation_representative(); p
@@ -1609,7 +1613,7 @@ def QuadraticStrata(genus=None, dimension=None, min_nb_poles=None, max_nb_poles=
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: Q = QuadraticStrata(genus=2); Q
         Quadratic strata of genus 2 surfaces
@@ -1710,7 +1714,7 @@ class QuadraticStrata_class(Strata):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: repr(QuadraticStrata(genus=3))   #indirect doctest
             'Quadratic strata of genus 3 surfaces'
@@ -1758,7 +1762,7 @@ class QuadraticStrata_g(QuadraticStrata_class):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: Q = QuadraticStrata(genus=3); Q
         Quadratic strata of genus 3 surfaces
@@ -1782,7 +1786,7 @@ class QuadraticStrata_g(QuadraticStrata_class):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = QuadraticStrata(genus=3)
             sage: loads(dumps(s)) == s
@@ -1814,7 +1818,7 @@ class QuadraticStrata_g(QuadraticStrata_class):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStrata(genus=1) == QuadraticStrata(genus=1)
             True
@@ -1836,7 +1840,7 @@ class QuadraticStrata_g(QuadraticStrata_class):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStrata(genus=1).__reduce__()
             (<class 'surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStrata_g'>, (1, 0, +Infinity))
@@ -1849,7 +1853,7 @@ class QuadraticStrata_g(QuadraticStrata_class):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = QuadraticStrata(genus=3,max_nb_poles=4)
             sage: all(s in a for s in a)
@@ -1868,7 +1872,7 @@ class QuadraticStrata_g(QuadraticStrata_class):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStrata(genus=4)._repr_base_()
             'Quadratic strata of genus 4 surfaces'
@@ -1879,7 +1883,7 @@ class QuadraticStrata_g(QuadraticStrata_class):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: list(AbelianStrata(genus=1))
             [H_1(0)]
@@ -1913,7 +1917,7 @@ class QuadraticStrata_g(QuadraticStrata_class):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: Q = QuadraticStrata(genus=4); Q
             Quadratic strata of genus 4 surfaces
@@ -1947,7 +1951,7 @@ class QuadraticStrata_g(QuadraticStrata_class):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: Q = QuadraticStrata(genus=2, nb_poles=0); Q
             Quadratic strata of genus 2 surfaces with no pole
@@ -1963,7 +1967,7 @@ class QuadraticStrata_g(QuadraticStrata_class):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: Q = QuadraticStrata(genus=1,nb_poles=2)
             sage: Q.list()[-1] == Q.last()
@@ -2002,7 +2006,7 @@ class QuadraticStrata_d(QuadraticStrata_class):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import *
+        sage: from surface_dynamics import *
 
         sage: for q in QuadraticStrata(dimension=5): print(q)
         Q_3(8)
@@ -2025,7 +2029,7 @@ class QuadraticStrata_d(QuadraticStrata_class):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = AbelianStrata(dimension=10,fake_zeros=True)
             sage: loads(dumps(s)) == s
@@ -2056,7 +2060,7 @@ class QuadraticStrata_d(QuadraticStrata_class):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStrata(dimension=12).__reduce__()
             (<class 'surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStrata_d'>, (12, 0, +Infinity))
@@ -2069,7 +2073,7 @@ class QuadraticStrata_d(QuadraticStrata_class):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStrata(dimension=7,fake_zeros=True)
             sage: all(s in a for s in a)
@@ -2092,7 +2096,7 @@ class QuadraticStrata_d(QuadraticStrata_class):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStrata(dimension=12)._repr_base_()
             'Quadratic strata of dimension 12'
@@ -2105,7 +2109,7 @@ class QuadraticStrata_d(QuadraticStrata_class):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: for q in QuadraticStrata(dimension=6): print(q)
             Q_3(7, 1)
@@ -2159,7 +2163,7 @@ class QuadraticStrata_gd(QuadraticStrata_class):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: s = AbelianStrata(genus=4,dimension=10)
             sage: loads(dumps(s)) == s
@@ -2193,7 +2197,7 @@ class QuadraticStrata_gd(QuadraticStrata_class):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: a = AbelianStrata(dimension=7,fake_zeros=True)
             sage: all(s in a for s in a)
@@ -2217,7 +2221,7 @@ class QuadraticStrata_gd(QuadraticStrata_class):
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStrata(genus=4,dimension=10).__reduce__()
             (<class 'surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStrata_gd'>, (4, 10))
@@ -2228,7 +2232,7 @@ class QuadraticStrata_gd(QuadraticStrata_class):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: QuadraticStrata(genus=2,dimension=4)._repr_base_()
             'Quadratic strata of genus 2 surfaces and dimension 4'
@@ -2241,7 +2245,7 @@ class QuadraticStrata_gd(QuadraticStrata_class):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: for a in QuadraticStrata(genus=1, dimension=6): print(a)
             Q_1(1^3, -1^3)

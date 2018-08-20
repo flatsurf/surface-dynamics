@@ -283,7 +283,7 @@ class Constellation_class(Element):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: c = Constellation([[1,0],[0,1],[1,0]], mutable=True)
             sage: c
             Constellation of length 3 and degree 2
@@ -344,7 +344,7 @@ class Constellation_class(Element):
 
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: c = Constellation([[1,0],[1,0]], mutable=True)
             sage: c._set_g_unsafe(0,0,0)
             sage: c._check()
@@ -380,7 +380,7 @@ class Constellation_class(Element):
         r"""
         TESTS::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: c = Constellation([[0,2,1],[1,0,2],[2,1,0],None])
             sage: c == copy(c)
             True

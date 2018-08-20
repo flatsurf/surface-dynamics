@@ -49,7 +49,7 @@ class OrigamiGenerators():
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
             sage: o = origamis.Escalator(3)
             sage: o
             Escalator with 3 steps
@@ -76,7 +76,7 @@ class OrigamiGenerators():
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = origamis.EierlegendeWollmilchsau()
             sage: o
@@ -113,7 +113,7 @@ class OrigamiGenerators():
 
         EXAMPLES:
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         There are two well known cyclic covers with completely degenerated
         Lyapunov spectrum::
@@ -213,7 +213,7 @@ class OrigamiGenerators():
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = origamis.Stair(4)
             sage: o
@@ -257,7 +257,7 @@ class OrigamiGenerators():
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: o = origamis.Podium([3,3,2,1])
             sage: o
@@ -311,7 +311,7 @@ class OrigamiGenerators():
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
         By default, the matrix used to generate the projective line origami are
         given by `z -> z+1` and `z -> 1/z` which gives a family of origamis
@@ -437,7 +437,7 @@ class OrigamiGenerators():
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import *
+            sage: from surface_dynamics import *
 
             sage: h2 = origamis.Heisenberg(2)
             sage: h2.stratum_component()

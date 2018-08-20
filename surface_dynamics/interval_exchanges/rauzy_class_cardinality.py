@@ -368,7 +368,7 @@ def gamma_std(profile, marking=None):
 
     The Rauzy classes associated to connected strata in genus 3::
 
-        sage: from surface_dynamics.all import AbelianStratum
+        sage: from surface_dynamics import AbelianStratum
         sage: cc = AbelianStratum(1,1,1,1).unique_component()
         sage: d = cc.rauzy_diagram()
         sage: d
@@ -514,7 +514,7 @@ def delta_std(profile, marking=None):
     Non connected strata in genus 3 has two connected components distinguished
     by their spin parity::
 
-        sage: from surface_dynamics.all import AbelianStratum
+        sage: from surface_dynamics import AbelianStratum
         sage: cc_odd = AbelianStratum(2,2).odd_component()
         sage: cc_hyp = AbelianStratum(2,2).hyperelliptic_component()
         sage: d_odd = cc_odd.rauzy_diagram()
@@ -671,7 +671,7 @@ def gamma_irr(profile=None, marking=None):
 
     The connected strata in genus 3::
 
-        sage: from surface_dynamics.all import AbelianStratum
+        sage: from surface_dynamics import AbelianStratum
 
         sage: c = AbelianStratum(1,1,1,1).unique_component()
         sage: c.rauzy_diagram()
@@ -804,7 +804,7 @@ def delta_irr(profile, marking=None):
 
     The non connecte strata in genus 3::
 
-        sage: from surface_dynamics.all import AbelianStratum
+        sage: from surface_dynamics import AbelianStratum
 
         sage: c_odd = AbelianStratum(2,2).odd_component()
         sage: c_hyp = AbelianStratum(2,2).hyperelliptic_component()
