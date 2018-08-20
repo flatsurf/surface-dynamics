@@ -1081,25 +1081,32 @@ class GenusOneQuadraticStratumComponent(QSC):
             ...
             EmptySetError: The stratum is empty
 
-            sage: QuadraticStratum(2,-1,-1,0).permutation_representative()
+            sage: Q = QuadraticStratum(2,-1,-1,0)
+            sage: p = Q.permutation_representative()
+            sage: p
+            0 1 2 3 3
+            2 4 4 0 1
+            sage: p.stratum() == Q
+            True
         """
         p = self._stratum.nb_poles()
         f = self._stratum.nb_fake_zeros()
-        z = self._stratum.zeros(fake_zeros=False,poles=False)
+        z = self._stratum.zeros(fake_zeros=False, poles=False)
 
-        if f: ll = map(lambda x:'0'+str(x),range(f+1))
-        else: ll = [0]
 
-        l0 = ll + [1]
+        l0 = [0,1]
         for k in xrange(1,p):
-            l0.extend([2*k,2*k+1,2*k+1])
+            l0.extend([2*k, 2*k+1, 2*k+1])
         l1 = [2 * (sum(z[:k])) for k in xrange(1,len(z))]
-        l1.extend([1, 2*p, 2*p])
-        l1.extend(ll)
+        l1.extend([1, 2*p, 2*p, 0])
 
         for k in xrange(len(z)):
             for i in xrange(sum(z[:k])+1,sum(z[:k+1])):
                 del l0[2*i+k]
+
+        if f:
+            l0[:1] = ['0%d' % i for i in range(f+1)]
+            l1[-1:] = ['0%d' % i for i in range(f+1)]
 
         from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
         p = GeneralizedPermutation(l0, l1, reduced=reduced)
