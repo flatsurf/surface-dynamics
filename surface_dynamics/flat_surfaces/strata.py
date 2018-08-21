@@ -148,12 +148,12 @@ class Stratum(SageObject):
 
             sage: from surface_dynamics import *
 
-            sage: hash(AbelianStratum(0)) == hash(AbelianStratum(0))
-            True
-            sage: hash(AbelianStratum(2,2)) == hash(AbelianStratum(1,1))
+            sage: A = AbelianStratum(2,2)
+            sage: B = AbelianStratum(1,1)
+            sage: hash(A) == hash(B)
             False
         """
-        return hash(self._name) ^ hash(tuple(self.zeros()))
+        return hash(self._name) ^ hash(self.zeros())
 
     def __eq__(self, other):
         r"""
