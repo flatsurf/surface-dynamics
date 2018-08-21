@@ -772,7 +772,7 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
             sage: from surface_dynamics import *
 
             sage: p = iet.Permutation([1,2,3],[3,2,1])
-            sage: p.lyapunov_exponents_approx()
+            sage: p.lyapunov_exponents_approx()  # abs tol .05
             [1.000]
         """
         if self._flips:
