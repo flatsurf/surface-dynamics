@@ -2178,17 +2178,13 @@ class QuadraticStrata_d(QuadraticStrata_class):
             Q_0(1, -1^5)
             Q_1(2, 0, -1^2)
             Q_0(0^2, -1^4)
-            Q_2(2^2)
-            Q_2(5, -1)
-            Q_1(1^2, -1^2)
-            Q_1(3, -1^3)
-            Q_0(1, -1^5)
         """
         if self._fake_zeros:
             for nb_fake_zeros in range(self._dimension - 1):
                 d = self._dimension - nb_fake_zeros
                 for Q in QuadraticStrata_d(d, self._min_nb_poles, self._max_nb_poles, False):
                     yield QuadraticStratum(Q.zeros() + (0,) * nb_fake_zeros)
+            return
 
         from sage.combinat.partition import Partitions
 
@@ -2339,13 +2335,14 @@ class QuadraticStrata_gd(QuadraticStrata_class):
             [Q_0(1, -1^5)]
 
             sage: QuadraticStrata(genus=0, dimension=4, fake_zeros=True).list()
-            [Q_0(1, -1^5), Q_0(0^2, -1^4), Q_0(1, -1^5)]
+            [Q_0(1, -1^5), Q_0(0^2, -1^4)]
         """
         if self._fake_zeros:
             for n in range(self._dimension - 1):
                 for q in QuadraticStrata_gd(self._genus, self._dimension - n,
                         self._min_nb_poles, self._max_nb_poles, False):
                     yield QuadraticStratum(q.zeros() + (0,)*n)
+            return
 
         from sage.combinat.partition import Partitions
         d = self._dimension
