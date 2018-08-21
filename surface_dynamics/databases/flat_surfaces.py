@@ -645,14 +645,14 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             sage: C.update(AbelianStratum(4), verbose=True)
             computation for H_3(4)
              ncyls = 1
-             2 cyl. diags for H_3(4)^odd
              1 cyl. diags for H_3(4)^hyp
+             2 cyl. diags for H_3(4)^odd
              ncyls = 2
-             4 cyl. diags for H_3(4)^odd
              2 cyl. diags for H_3(4)^hyp
+             4 cyl. diags for H_3(4)^odd
              ncyls = 3
-             4 cyl. diags for H_3(4)^odd
              2 cyl. diags for H_3(4)^hyp
+             4 cyl. diags for H_3(4)^odd
             sage: sorted(os.listdir(C.path))
             ['cyl_diags-4-hyp-1',
              'cyl_diags-4-hyp-2',
