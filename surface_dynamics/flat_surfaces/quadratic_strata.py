@@ -17,7 +17,7 @@ A stratum corresponds to the Sage object
 The classification of connected components of strata of quadratic
 differentials was established by Erwan Lanneau in [Lan08],
 after a similar classification was established by Kontsevich
-and Zorich in [KonZor03]_.
+and Zorich in [KonZor03]_ in the Abelian case.
 
 Each stratum has one or two connected components and each
 component is associated to an extended Rauzy class. The
@@ -299,11 +299,6 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
         EXAMPLES::
 
             sage: from surface_dynamics import *
-
-            sage: AbelianStratum([1,2,3]).zeros()
-            (3, 2, 1)
-            sage: AbelianStratum({2:4}).zeros()
-            (2, 2, 2, 2)
 
             sage: QuadraticStratum({-1:4}).zeros()
             (-1, -1, -1, -1)
@@ -782,16 +777,21 @@ class QuadraticStratumComponent(StratumComponent):
             sage: Q = QuadraticStratum({1:1,-1:5})
             sage: c = Q.unique_component().one_cylinder_diagram()
             sage: c
-            (0,0)-(1,1,2,2,3,3)
+            (0,0,1,1,2,2)-(3,3)
             sage: c.stratum() == Q
             True
 
             sage: Q = QuadraticStratum(5,-1)
             sage: c = Q.unique_component().one_cylinder_diagram()
             sage: c
-            (0,1,1,2)-(2,3,0,3)
+            (0,1,1,2)-(3,0,3,2)
             sage: c.stratum() == Q
             True
+
+            sage: QuadraticStratum({-1:4}).unique_component().one_cylinder_diagram()
+            (0,0)-(1,1)
+            sage: QuadraticStratum({-1:4,0:1}).unique_component().one_cylinder_diagram()
+            (0,0)-(1,1,2,2)
         """
         from surface_dynamics.flat_surfaces.separatrix_diagram import QuadraticCylinderDiagram
         p = self.permutation_representative(reduced=True).to_cylindric()
@@ -1602,7 +1602,7 @@ class IrregularExceptionalQuadraticStratumComponent(QSC):
 IEQSC = IrregularExceptionalQuadraticStratumComponent
 
 
-def QuadraticStrata(genus=None, dimension=None, min_nb_poles=None, max_nb_poles=None,nb_poles=None):
+def QuadraticStrata(genus=None, dimension=None, min_nb_poles=None, max_nb_poles=None, nb_poles=None, fake_zeros=False):
     r"""
     Quadratic strata.
 
@@ -1617,6 +1617,8 @@ def QuadraticStrata(genus=None, dimension=None, min_nb_poles=None, max_nb_poles=
 
     - ``nb_poles`` - integer - the number of poles (if the option is set then
       the options ``min_nb_poles`` and ``max_nb_poles`` are ignored)
+
+    - ``fake_zeros`` - boolean - whether to allow fake zeros or not
 
     EXAMPLES::
 
@@ -1676,8 +1678,15 @@ def QuadraticStrata(genus=None, dimension=None, min_nb_poles=None, max_nb_poles=
         Q_2(5, 2, -1^3)
         Q_2(4, 3, -1^3)
 
-        sage: QuadraticStrata(dimension=6,genus=0)
+        sage: Q = QuadraticStrata(dimension=6, genus=0)
+        sage: Q
         Quadratic strata of genus 0 surfaces and dimension 6
+        sage: for q in Q: print(q)
+        Q_0(1^2, -1^6)
+        Q_0(3, -1^7)
+
+        sage: Q = QuadraticStrata(dimension=5, genus=1, fake_zeros=True, nb_poles=0)
+        sage: for q in Q: print(q)
     """
     if nb_poles is not None:
         min_nb_poles = max_nb_poles = Integer(nb_poles)
@@ -1702,20 +1711,25 @@ def QuadraticStrata(genus=None, dimension=None, min_nb_poles=None, max_nb_poles=
         if dimension is None:
             return QuadraticStrata_all()
         dimension = Integer(dimension)
-        return QuadraticStrata_d(dimension,min_nb_poles,max_nb_poles)
+        return QuadraticStrata_d(dimension,min_nb_poles,max_nb_poles,fake_zeros)
 
     genus = Integer(genus)
 
     if dimension is None:
+        if fake_zeros:
+            raise ValueError('fake_zeros only allowed if dimension is fixed')
         return QuadraticStrata_g(genus,min_nb_poles,max_nb_poles)
 
     dimension = Integer(dimension)
 
-    return QuadraticStrata_gd(genus,dimension,min_nb_poles,max_nb_poles)
+    return QuadraticStrata_gd(genus,dimension,min_nb_poles,max_nb_poles,fake_zeros)
 
+# TODO: there is no need to have multiple class
+# just let the attribute be None when this is not set
+# as a constraint
 class QuadraticStrata_class(Strata):
     r"""
-    Generic class for strata of quadratic differentials.
+    Base class for strata of quadratic differentials.
     """
     def _repr_(self):
         r"""
@@ -1761,12 +1775,6 @@ class QuadraticStrata_g(QuadraticStrata_class):
     r"""
     Stratas of genus g surfaces.
 
-    INPUT:
-
-    - ``genus`` - a non negative integer
-
-    - ``min_nb_poles``, ``max_nb_poles`` - the number of poles
-
     EXAMPLES::
 
         sage: from surface_dynamics import *
@@ -1789,8 +1797,14 @@ class QuadraticStrata_g(QuadraticStrata_class):
         sage: Q.cardinality()
         176
     """
-    def __init__(self,genus,min_nb_poles=None,max_nb_poles=None):
+    def __init__(self, genus, min_nb_poles=None, max_nb_poles=None):
         r"""
+        INPUT:
+
+        - ``genus`` - a non negative integer
+
+        - ``min_nb_poles``, ``max_nb_poles`` - the number of poles
+
         TESTS::
 
             sage: from surface_dynamics import *
@@ -1892,12 +1906,10 @@ class QuadraticStrata_g(QuadraticStrata_class):
 
             sage: from surface_dynamics import *
 
-            sage: list(AbelianStrata(genus=1))
-            [H_1(0)]
+            sage: QuadraticStrata(genus=2, nb_poles=0).list()
+            [Q_2(2^2), Q_2(2, 1^2), Q_2(1^4)]
             sage: list(QuadraticStrata(genus=0, nb_poles=4))
             [Q_0(-1^4)]
-            sage: list(QuadraticStrata(genus=1, nb_poles=0))
-            []
         """
         from itertools import count
         from sage.combinat.partition import Partitions
@@ -2004,13 +2016,6 @@ class QuadraticStrata_d(QuadraticStrata_class):
     r"""
     Strata with prescribed dimension.
 
-    INPUT:
-
-    - ``dimension`` - an integer greater than 1
-
-    - ``min_nb_poles``, ``max_nb_poles`` - integers (optional) - the min or max
-      number of poles
-
     EXAMPLES::
 
         sage: from surface_dynamics import *
@@ -2032,17 +2037,27 @@ class QuadraticStrata_d(QuadraticStrata_class):
         Q_2(3, 1^2, -1)
         Q_2(2^2, 1, -1)
     """
-    def __init__(self,dimension,min_nb_poles,max_nb_poles):
+    def __init__(self, dimension, min_nb_poles, max_nb_poles, fake_zeros):
         r"""
+
+        INPUT:
+
+        - ``dimension`` - an integer greater than 1
+
+        - ``min_nb_poles``, ``max_nb_poles`` - integers - the min or max
+          number of poles
+
+        - ``fake_zeros`` - boolean - whether fake singularities are allowed
+
         TESTS::
 
             sage: from surface_dynamics import *
 
-            sage: s = AbelianStrata(dimension=10,fake_zeros=True)
+            sage: s = QuadraticStrata(dimension=10,fake_zeros=True)
             sage: loads(dumps(s)) == s
             True
 
-            sage: s = AbelianStrata(dimension=10,fake_zeros=False)
+            sage: s = QuadraticStrata(dimension=10, min_nb_poles=2, max_nb_poles=5, fake_zeros=True)
             sage: loads(dumps(s)) == s
             True
         """
@@ -2051,15 +2066,26 @@ class QuadraticStrata_d(QuadraticStrata_class):
         self._dimension = dimension
         self._min_nb_poles = min_nb_poles
         self._max_nb_poles = max_nb_poles
+        self._fake_zeros = fake_zeros
 
     def __eq__(self, other):
         r"""
         Equality test.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import *
+
+            sage: QuadraticStrata(dimension=4) == QuadraticStrata(dimension=4)
+            True
+            sage: QuadraticStrata(dimension=4) == QuadraticStrata(dimension=4, fake_zeros=True)
+            False
         """
-        return (isinstance(other, QuadraticStrata_g) and
+        return (isinstance(other, QuadraticStrata_d) and
                 self._dimension == other._dimension and
                 self._min_nb_poles == other._min_nb_poles and
-                self._max_nb_poles == other._max_nb_poles)
+                self._max_nb_poles == other._max_nb_poles and
+                self._fake_zeros == other._fake_zeros)
 
     def __reduce__(self):
         r"""
@@ -2070,32 +2096,37 @@ class QuadraticStrata_d(QuadraticStrata_class):
             sage: from surface_dynamics import *
 
             sage: QuadraticStrata(dimension=12).__reduce__()
-            (<class 'surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStrata_d'>, (12, 0, +Infinity))
+            (<class 'surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStrata_d'>, (12, 0, +Infinity, False))
         """
-        return (QuadraticStrata_d,(self._dimension,self._min_nb_poles,self._max_nb_poles))
+        return (QuadraticStrata_d, (self._dimension,self._min_nb_poles,self._max_nb_poles, self._fake_zeros))
 
     def __contains__(self, c):
         r"""
-        Containance test
+        Containment test.
 
         TESTS::
 
             sage: from surface_dynamics import *
 
-            sage: a = AbelianStrata(dimension=7,fake_zeros=True)
-            sage: all(s in a for s in a)
+            sage: q = QuadraticStrata(dimension=7, fake_zeros=False)
+            sage: QuadraticStratum(5, 2, 1) in q
             True
+            sage: QuadraticStratum(7, 1, 0) in q
+            False
 
-            sage: a = AbelianStrata(dimension=7,fake_zeros=False)
-            sage: all(s in a for s in a)
+            sage: q = QuadraticStrata(dimension=7, fake_zeros=True)
+            sage: QuadraticStratum(5, 2, 1) in q
+            True
+            sage: QuadraticStratum(7, 1, 0) in q
             True
         """
-        if not isinstance(c, QuadraticStratum):
-            return False
+        return (isinstance(c, QuadraticStratum) and
+                c.dimension() == self._dimension and
+                c.nb_poles() >= self._min_nb_poles and
+                c.nb_poles() <= self._max_nb_poles and
+                (self._fake_zeros or not c.nb_fake_zeros()))
 
-        return (c.dimension() == self._dimension and
-                c.nb_poles() >= self._min_nb_zeros and
-                c.nb_poles() <= self._max_nb_zeros)
+        z = c.zeros()
 
     def _repr_base_(self):
         r"""
@@ -2137,42 +2168,71 @@ class QuadraticStrata_d(QuadraticStrata_class):
             Q_1(5, -1^5)
             Q_0(1^2, -1^6)
             Q_0(3, -1^7)
+
+            sage: for q in QuadraticStrata(dimension=4, fake_zeros=True):
+            ....:     print(q)
+            Q_2(2^2)
+            Q_2(5, -1)
+            Q_1(1^2, -1^2)
+            Q_1(3, -1^3)
+            Q_0(1, -1^5)
+            Q_1(2, 0, -1^2)
+            Q_0(0^2, -1^4)
+            Q_2(2^2)
+            Q_2(5, -1)
+            Q_1(1^2, -1^2)
+            Q_1(3, -1^3)
+            Q_0(1, -1^5)
         """
+        if self._fake_zeros:
+            for nb_fake_zeros in range(self._dimension - 1):
+                d = self._dimension - nb_fake_zeros
+                for Q in QuadraticStrata_d(d, self._min_nb_poles, self._max_nb_poles, False):
+                    yield QuadraticStratum(Q.zeros() + (0,) * nb_fake_zeros)
+
         from sage.combinat.partition import Partitions
 
         d = self._dimension
         if d == 2:
             yield QuadraticStratum(-1,-1,-1,-1)
         else:
-            m = max(0,self._min_nb_poles)
-            M = min(2*d-2,self._max_nb_poles+1)
+            m = max(0, self._min_nb_poles)
+            M = min(2*d-2, self._max_nb_poles+1)
             for p in xrange(m,M):
                 for z in xrange((d+p)%2,min(d+3-p,(2*d-p)//3+1),2):
                     # d+z+p is 0 mod 2
                     # 2d-2z-2p >= -4 (or z <= d+2-p)
-                    for Z in Partitions(2*d-2*z-p,length=z):
+                    for Z in Partitions(2*d-2*z-p, length=z):
                         Q = QuadraticStratum(Z+[-1]*p)
                         if not Q.is_empty():
                             yield Q
 
 class QuadraticStrata_gd(QuadraticStrata_class):
     r"""
-    Abelian strata with presrcribed genus and dimension.
-
-    INPUT:
-
-    - ``genus`` - an integer - the genus of the surfaces
-
-    - ``dimension`` - an integer - the dimension of strata
-
+    Quadratic strata with presrcribed genus and dimension.
     """
-    def __init__(self,genus,dimension,min_nb_poles,max_nb_poles):
+    def __init__(self, genus, dimension, min_nb_poles, max_nb_poles, fake_zeros):
         r"""
+        INPUT:
+
+        - ``genus`` - an integer - the genus of the surfaces
+
+        - ``dimension`` - an integer - the dimension of strata
+
+        - ``min_nb_poles``, ``max_nb_poles - integers - minimum and maximum number of
+          poles
+
+        - ``fake_zeros`` - boolean - whether fake zeros are allowed
+
         TESTS::
 
             sage: from surface_dynamics import *
 
-            sage: s = AbelianStrata(genus=4,dimension=10)
+            sage: s = QuadraticStrata(genus=4, dimension=10)
+            sage: loads(dumps(s)) == s
+            True
+
+            sage: s = QuadraticStrata(genus=4, dimension=8, min_nb_poles=2, max_nb_poles=3, fake_zeros=True)
             sage: loads(dumps(s)) == s
             True
         """
@@ -2181,6 +2241,7 @@ class QuadraticStrata_gd(QuadraticStrata_class):
         self._dimension = dimension
         self._min_nb_poles = min_nb_poles
         self._max_nb_poles = max_nb_poles
+        self._fake_zeros = fake_zeros
 
     def __eq__(self, other):
         r"""
@@ -2190,13 +2251,21 @@ class QuadraticStrata_gd(QuadraticStrata_class):
                 self._genus == other._genus and
                 self._dimension == other._dimension and
                 self._min_nb_poles == other._min_nb_poles and
-                self._max_nb_poles == other._max_nb_poles)
+                self._max_nb_poles == other._max_nb_poles and
+                self._fake_zeros == other._fake_zeros)
 
-    def __reduce__(self, other):
+    def __reduce__(self):
         r"""
         Pickling support.
+
+        TESTS::
+
+            sage: from surface_dynamics import *
+
+            sage: QuadraticStrata(genus=4,dimension=10).__reduce__()
+            (<class 'surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStrata_gd'>, (4, 10, 0, +Infinity, False))
         """
-        return (QuadraticStrata_gd, (self._genus, self._dimension, self._min_nb_poles, self._max_nb_poles))
+        return (QuadraticStrata_gd, (self._genus, self._dimension, self._min_nb_poles, self._max_nb_poles, self._fake_zeros))
 
     def __contains__(self, c):
         r"""
@@ -2206,34 +2275,38 @@ class QuadraticStrata_gd(QuadraticStrata_class):
 
             sage: from surface_dynamics import *
 
-            sage: a = AbelianStrata(dimension=7,fake_zeros=True)
-            sage: all(s in a for s in a)
+            sage: Q1 = QuadraticStrata(dimension=7, genus=2, fake_zeros=True)
+            sage: Q2 = QuadraticStrata(dimension=7, genus=2, fake_zeros=False)
+
+            sage: all(s in Q1 for s in Q1)
+            True
+            sage: all(s in Q2 for s in Q2)
+            True
+            sage: all(s in Q2 for s in Q1)
+            False
+
+            sage: q = QuadraticStratum({-1:4})
+            sage: q in QuadraticStrata(genus=0, dimension=2, fake_zeros=False)
+            True
+            sage: q in QuadraticStrata(genus=0, dimension=2, fake_zeros=True)
             True
 
-            sage: a = AbelianStrata(dimension=7,fake_zeros=False)
-            sage: all(s in a for s in a)
+            sage: q = QuadraticStratum({-1:4,0:1})
+            sage: q in QuadraticStrata(genus=0, dimension=3, fake_zeros=False)
+            False
+            sage: q in QuadraticStrata(genus=0, dimension=3, fake_zeros=True)
+            True
+
+            sage: Q = QuadraticStrata(dimension=6, genus=1, max_nb_poles=2, fake_zeros=False)
+            sage: all(s in Q for s in Q)
             True
         """
-        if not isinstance(c, QuadraticStratum):
-            return False
-
-        return (c.dimension() == self._dimension and
+        return (isinstance(c, QuadraticStratum) and
+                c.dimension() == self._dimension and
                 c.genus() == self._genus and
-                c.nb_poles() >= c._min_nb_poles and
-                c.nb_poles() <= c._max_nb_poles)
-
-    def __reduce__(self):
-        r"""
-        Support for pickling.
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import *
-
-            sage: QuadraticStrata(genus=4,dimension=10).__reduce__()
-            (<class 'surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStrata_gd'>, (4, 10))
-        """
-        return (QuadraticStrata_gd, (self._genus,self._dimension))
+                c.nb_poles() >= self._min_nb_poles and
+                c.nb_poles() <= self._max_nb_poles and
+                (self._fake_zeros or not c.nb_fake_zeros()))
 
     def _repr_base_(self):
         r"""
@@ -2254,7 +2327,7 @@ class QuadraticStrata_gd(QuadraticStrata_class):
 
             sage: from surface_dynamics import *
 
-            sage: for a in QuadraticStrata(genus=1, dimension=6): print(a)
+            sage: for q in QuadraticStrata(genus=1, dimension=6): print(q)
             Q_1(1^3, -1^3)
             Q_1(3, 1, -1^4)
             Q_1(2^2, -1^4)
@@ -2264,7 +2337,16 @@ class QuadraticStrata_gd(QuadraticStrata_class):
             []
             sage: QuadraticStrata(genus=0, dimension=4, nb_poles=5).list()
             [Q_0(1, -1^5)]
+
+            sage: QuadraticStrata(genus=0, dimension=4, fake_zeros=True).list()
+            [Q_0(1, -1^5), Q_0(0^2, -1^4), Q_0(1, -1^5)]
         """
+        if self._fake_zeros:
+            for n in range(self._dimension - 1):
+                for q in QuadraticStrata_gd(self._genus, self._dimension - n,
+                        self._min_nb_poles, self._max_nb_poles, False):
+                    yield QuadraticStratum(q.zeros() + (0,)*n)
+
         from sage.combinat.partition import Partitions
         d = self._dimension
         g = self._genus
@@ -2280,4 +2362,3 @@ class QuadraticStrata_gd(QuadraticStrata_class):
                     Q = QuadraticStratum(Z+[-1]*p)
                     if not Q.is_empty():
                         yield Q
-
