@@ -795,8 +795,14 @@ class QuadraticStratumComponent(StratumComponent):
         """
         from surface_dynamics.flat_surfaces.separatrix_diagram import QuadraticCylinderDiagram
         p = self.permutation_representative(reduced=True).to_cylindric()
-        top = [x-1 for x in p[0][1:]]
-        bot = [x-1 for x in p[1][-2::-1]]
+        if p[0][0] == p[1][-1]:
+            top = [x-1 for x in p[0][1:]]
+            bot = [x-1 for x in p[1][-2::-1]]
+        elif p[0][-1] == p[1][0]:
+            top = p[0][:-1]
+            bot = p[1][1:]
+        else:
+            raise RuntimeError('non cylindric permutation for {}\n{}'.format(self, p))
         return QuadraticCylinderDiagram([(bot,top)])
 
 # The code below can be used to compute a *covering*!!
