@@ -2753,15 +2753,27 @@ class PermutationLI(Permutation):
             sage: p.to_cylindric().is_cylindric()
             True
 
+        TESTS::
+
+            sage: from surface_dynamics import *
+
+            sage: p = iet.GeneralizedPermutation([[0,1,1],[2,2,0]], reduced=True)
+            sage: p.to_cylindric()
+            0 1 1
+            2 2 0
+
         ALGORITHM:
 
         The algorithm is naive. It computes the extended Rauzy class until it
         finds a cylindric permutation.
         """
-        wait = []
+        if self.is_cylindric():
+            return self
+
+        wait = [self]
         rauzy_class = set([self])
-        q = self
-        while True:
+        while wait:
+            q = wait.pop()
             if q.has_rauzy_move('t'): # top rauzy move
                 qq = q.rauzy_move('t')
                 if qq not in rauzy_class:
@@ -2782,9 +2794,8 @@ class PermutationLI(Permutation):
                     return qq
                 wait.append(qq)
                 rauzy_class.add(qq)
-            q = wait.pop()
 
-        raise ValueError, "no cylindric permutation in the extended Rauzy class"
+        raise RuntimeError("no cylindric permutation in the extended Rauzy class")
 
     def is_cylindric(self):
         r"""
