@@ -2364,9 +2364,9 @@ class EvenAbelianStratumComponent(ASC):
                 raise ValueError("left_degree (=%d) should be one of the degree"%left_degree)
             if left_degree == 0:
                 if n == 0:
-                    raise ValueError, "left_degree (=%d) should be one of the degree"%left_degree
+                    raise ValueError("left_degree (=%d) should be one of the degree" % left_degree)
             elif left_degree not in z:
-                raise ValueError("left_degree (=%d) should be one of the degree"%left_degree)
+                raise ValueError("left_degree (=%d) should be one of the degree" % left_degree)
             else:
                 z.remove(left_degree)
                 z.insert(0,left_degree)
@@ -2654,12 +2654,12 @@ class OddAbelianStratumComponent(ASC):
 
         if left_degree is not None:
             if not isinstance(left_degree, (int,Integer)):
-                raise ValueError("left_degree (=%d) should be one of the degree"%left_degree)
+                raise ValueError("left_degree (=%d) should be one of the degree" % left_degree)
             if left_degree == 0:
                 if n == 0:
-                    raise ValueError, "left_degree (=%d) should be one of the degree"%left_degree
+                    raise ValueError("left_degree (=%d) should be one of the degree" % left_degree)
             elif left_degree not in zeros:
-                raise ValueError("left_degree (=%d) should be one of the degree"%left_degree)
+                raise ValueError("left_degree (=%d) should be one of the degree" % left_degree)
             else:
                 zeros.remove(left_degree)
                 zeros.insert(0,left_degree)
