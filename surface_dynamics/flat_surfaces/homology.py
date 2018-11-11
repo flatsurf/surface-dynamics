@@ -7,10 +7,11 @@ surfaces. There are three main classes:
 - :class:`RibbonGraph`: decomposition of a surface into polygons. The
   combinatorics is stored as a triple of permutations `v` (vertices), `e`
   (edges), `f` (faces) so that the product `vef` is the identity. The domain of
-  the permutations correspond to the half edges or *darts*. The permutation `e` is
-  an involution without fixed point so that `e(i)` is the other half of the edge
-  starting at `i`. The permutation `v` is obtained by turning around a vertex,
-  while `f` turning around a face.
+  the permutations correspond to the half edges or *darts*. The permutation `e`
+  is an involution so that `e(i)` is the other half of the edge starting at
+  `i`. The fixed points of `e` corresponds to edge glued to themselves. The
+  permutation `v` is obtained by turning around a vertex, while `f` turning
+  around a face.
 
 - :class:`RibbonGraphWithAngles`: a ribbon graph with an additional angle
   structure.
@@ -83,7 +84,7 @@ TODO:
 """
 from __future__ import print_function
 
-from surface_dynamics.misc.permutation import (init_perm, perm_cycle_tuples, perm_invert,
+from surface_dynamics.misc.permutation import (perm_init, constellation_init, perm_cycle_tuples, perm_invert,
         perm_check, perm_compose, equalize_perms, perm_orbit)
 
 from sage.misc.cachefunc import cached_method
@@ -94,69 +95,6 @@ from sage.matrix.constructor import matrix, identity_matrix
 from sage.structure.sage_object import SageObject
 from sage.rings.integer_ring import ZZ
 from sage.rings.rational_field import QQ
-
-
-def clean_perm_data(vertices, edges, faces, check):
-    r"""
-    TESTS::
-
-        sage: from surface_dynamics.flat_surfaces.homology import clean_perm_data
-        sage: clean_perm_data([2,1,0],[1,2,0],None, check=True)
-        ([2, 1, 0], [1, 2, 0], [0, 2, 1])
-        sage: clean_perm_data([1,0,2],[2,1,0],None, check=True)
-        ([1, None, 2], [2, None, 0], [2, None, 1])
-    """
-    if vertices is not None:
-        vertices = init_perm(vertices)
-        if check: perm_check(vertices)
-
-    if edges is not None:
-        edges = init_perm(edges)
-        if check: perm_check(edges)
-
-    if faces is not None:
-        faces = init_perm(faces)
-        if check: perm_check(faces)
-
-    if edges is None:
-        if vertices is None and faces is None:
-            raise ValueError("at least vertices or faces should be not None")
-        if not (vertices is None or faces is None):
-            equalize_perms([vertices,faces])
-            edges = perm_compose(perm_invert(vertices),perm_invert(faces))
-        else:
-            if vertices is None:
-                n = len(faces)
-            elif faces is None:
-                n = len(vertices)
-            if n%2:
-                raise ValueError("there should be an even number of darts")
-            edges = []
-            for i in xrange(n//2):
-                edges.append(2*i+1)
-                edges.append(2*i)
-            if vertices is None:
-                vertices = perm_compose(perm_invert(faces),perm_invert(edges))
-            elif faces is None:
-                faces = perm_compose(perm_invert(edges),perm_invert(vertices))
-    elif vertices is None:
-        if edges is None or faces is None:
-            raise ValueError("at least two of the entries should be not None")
-        equalize_perms([edges,faces])
-        vertices = perm_compose(perm_invert(faces),perm_invert(edges))
-    elif faces is None:
-        if vertices is None or edges is None:
-            raise ValueError("at least two of the entries should be not None")
-        equalize_perms([vertices,edges])
-        faces = perm_compose(perm_invert(edges),perm_invert(vertices))
-    else:
-        equalize_perms([vertices,edges,faces])
-
-    for i in range(len(edges)):
-        if edges[i] == i:
-            vertices[i] = edges[i] = faces[i] = None
-
-    return (vertices, edges, faces)
 
 
 # TODO: introduce an oriented ribbon graph class
@@ -240,13 +178,13 @@ class RibbonGraph(SageObject):
     """
     def __init__(self, vertices=None, edges=None, faces=None, connected=True, check=True):
 
-        vertices, edges, faces = clean_perm_data(vertices, edges, faces, check)
+        vertices, edges, faces = constellation_init(vertices, edges, faces, check=check)
 
         self._total_darts = total_darts = len(vertices)
         num_darts = 0
         self._active_darts = [True] * total_darts
         for i,j in enumerate(edges):
-            if j is None or i == j:
+            if j is None:
                 vertices[i] = edges[i] = faces[i] = None
                 self._active_darts[i] = False
             else:
@@ -264,9 +202,9 @@ class RibbonGraph(SageObject):
         self._edges = edges
         self._edge_cycles = perm_cycle_tuples(edges, singletons=True)
         self._dart_to_edge_index = [None] * total_darts
-        for i,e in enumerate(self._edge_cycles):
-            self._dart_to_edge_index[e[0]] = i
-            self._dart_to_edge_index[e[1]] = i
+        for i,edge in enumerate(self._edge_cycles):
+            for e in edge:
+                self._dart_to_edge_index[e] = i
 
         self._faces = faces
         self._face_cycles = perm_cycle_tuples(faces, singletons=True)
@@ -491,8 +429,6 @@ class RibbonGraph(SageObject):
 
                 if self._faces[self._edges[self._vertices[i]]] != i:
                     raise ValueError("the Ribbon graph condition vef=() is not satisfied for %d" %i)
-                if self._edges[i] == i or self._edges[self._edges[i]] != i:
-                    raise ValueError("edges is not an involution without fixed point for %d" %i)
 
             else:
                 if self._vertices[i] is not None or self._vertices_inv[i] is not None:
@@ -718,7 +654,7 @@ class RibbonGraph(SageObject):
 
             sage: from surface_dynamics import *
 
-            sage: r = RibbonGraph(edges='(0,1)(2,3)(4,5)',faces='(0,2,4)(3,5)')
+            sage: r = RibbonGraph(edges='(0,1)(2,3)(4,5)',faces='(0,2,4)(1)(3,5)')
             sage: r.euler_characteristic()
             2
 

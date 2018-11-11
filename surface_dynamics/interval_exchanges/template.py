@@ -1930,9 +1930,9 @@ class Permutation(SageObject):
         if len(perms) != len(self):
             raise ValueError("wrong number of permutations")
 
-        from surface_dynamics.misc.permutation import init_perm, equalize_perms
+        from surface_dynamics.misc.permutation import perm_init, equalize_perms
         if as_tuple:
-            perms = [init_perm(p) for p in perms]
+            perms = [perm_init(p) for p in perms]
         else:
             from sage.groups.perm_gps.permgroup_element import PermutationGroupElement
             perms = [PermutationGroupElement(p,check=True) for p in perms]

@@ -98,7 +98,7 @@ from sage.rings.integer import Integer
 
 from sage.graphs.digraph import DiGraph
 
-from surface_dynamics.misc.permutation import (perm_check, equalize_perms, init_perm,
+from surface_dynamics.misc.permutation import (perm_check, equalize_perms, perm_init,
         perm_cycle_tuples, perm_cycle_string, perm_compose, perm_compose_i,
         perm_orbit, perm_invert, perms_canonical_labels,
         perms_transitive_components, canonical_perm, canonical_perm_i,
@@ -215,8 +215,8 @@ class SeparatrixDiagram(SageObject):
             else:
                 bot = data
 
-            bot = init_perm(bot)
-            top = init_perm(top)
+            bot = perm_init(bot)
+            top = perm_init(top)
             equalize_perms([bot, top])
         else:
             bot = data
@@ -3868,8 +3868,7 @@ class QuadraticCylinderDiagram(SageObject):
             if not isinstance(g, RibbonGraph):
                 raise ValueError
 
-            from surface_dynamics.misc.permutation import init_perm
-            p = init_perm(p)
+            p = perm_init(p)
 
         self._g = g
         self._p = p

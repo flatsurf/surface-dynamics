@@ -2,6 +2,10 @@ r"""
 Permutation on `\{0, 1, ..., n-1\}` as lists.
 """
 
+from __future__ import print_function, absolute_import
+
+import numbers
+
 def argmin(l):
     r"""
     Return the position of the minimal element in the list ``l``.
@@ -56,42 +60,46 @@ def perm_to_permutation(l):
     return PermutationGroupElement(map(lambda x: x+1, l))
 
 
-def init_perm(data):
+def perm_init(data, n=None, partial=False):
     """
     Returns a permutation from ``data``.
 
     EXAMPLES::
 
-        sage: from surface_dynamics.misc.permutation import init_perm
-        sage: init_perm([3,2,1,4])
+        sage: from surface_dynamics.misc.permutation import perm_init
+        sage: perm_init([3,2,1,4])
         [3, 2, 1, 4]
-        sage: init_perm(([2,1],[3,4,0]))
+        sage: perm_init(([2,1],[3,4,0]))
         [3, 2, 1, 4, 0]
-        sage: init_perm('(0,1)(3,2)')
+        sage: perm_init('(0,1)(3,2)')
         [1, 0, 3, 2]
-        sage: init_perm([3,1,None,0])
+        sage: perm_init([3,1,None,0])
         [3, 1, None, 0]
-        sage: init_perm([[2,1],[3,4,0]])
+        sage: perm_init([[2,1],[3,4,0]])
         [3, 2, 1, 4, 0]
-        sage: init_perm([])
+        sage: perm_init([])
         []
-        sage: init_perm([[]])
+        sage: perm_init([[]])
         []
     """
     if isinstance(data, (tuple,list)):
         if not data:
             return []
         if isinstance(data[0], (tuple,list)):
-            return cycles_to_list(data)
+            return cycles_to_list(data, n, partial)
         else:
             return [x if (x is None or isinstance(x,int)) else int(x) for x in data]
 
     if isinstance(data, str):
         c = str_to_cycles(data)
-        return cycles_to_list(c)
+        return cycles_to_list(c, n, partial)
 
     raise TypeError("The input must be list, tuple or string")
 
+def init_perm(l):
+    from warnings import warn
+    warn('[surface_dynamics] init_perm is deprecated use perm_init instead', Warning, 3)
+    return perm_init(l)
 
 def equalize_perms(l):
     """
@@ -152,18 +160,44 @@ def perm_check(l):
             raise ValueError("{} is repeated".format(l[i]))
         seen[l[i]] = True
 
+def perm_is_one(l):
+    r"""
+    Test whether ``l`` is the identity on its domain.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_is_one
+        sage: perm_is_one([])
+        True
+        sage: perm_is_one([None])
+        True
+        sage: perm_is_one([0])
+        True
+        sage: perm_is_one([1, 0])
+        False
+    """
+    for i in range(len(l)):
+        if l[i] is not None and l[i] != i:
+            return False
+    return True
 
 #####################################################################
 # Conversion
 #####################################################################
 
-def cycles_to_list(t):
+def cycles_to_list(t, n=None, partial=False):
     r"""
     Returns a permutation on `[0, n-1]` from a list of cycles on `[0, n-1]`
 
     EXAMPLES::
 
         sage: from surface_dynamics.misc.permutation import cycles_to_list
+
+        sage: cycles_to_list([[1,3,5]])
+        [0, 3, 2, 5, 4, 1]
+        sage: cycles_to_list([[1,3,5]], partial=True)
+        [None, 3, None, 5, None, 1]
+
         sage: cycles_to_list([[1,3,5],[0,2,4],[6]])
         [2, 3, 4, 5, 0, 1, 6]
 
@@ -175,7 +209,12 @@ def cycles_to_list(t):
     if not any(tt for tt in t):
         return []
 
-    res = range(max(map(max, t))+1)
+    if n is None:
+        n = max(map(max, t)) + 1
+    if partial:
+        res = [None] * n
+    else:
+        res = range(n)
 
     for c in t:
         for j in xrange(len(c)-1):
@@ -260,6 +299,123 @@ def perm_cycle_string(p, singletons=False):
     """
     return ''.join(map(lambda x: '('+','.join(map(str, x))+')',
                        perm_cycle_tuples(p, singletons)))
+
+
+def _canonical_reg_perm(n, k):
+    r"""
+    Return a standard product of disjoint k-cycles on {0, 1, ..., n-1}
+
+    TESTS::
+
+        sage: from surface_dynamics.misc.permutation import _canonical_reg_perm
+        sage: _canonical_reg_perm(6, 2)
+        [1, 0, 3, 2, 5, 4]
+        sage: _canonical_reg_perm(6, 3)
+        [1, 2, 0, 4, 5, 3]
+    """
+    if not isinstance(n, numbers.Integral) or not isinstance(k, numbers.Integral):
+        raise ValueError
+    if n <= 0 or k <= 0 or n % k:
+        raise ValueError
+
+    p = []
+    for i in range(0,n,k):
+        p.extend(range(i+1, i+k))
+        p.append(i)
+    return p
+
+
+def constellation_init(vertices, edges, faces, n=None, check=True):
+    r"""
+    Each of ``vertices``, ``edges`` or ``faces can be ``None``, an
+    integer or an object to initialize a (partial) permutation.
+
+    INPUT:
+
+    - ``n`` - number of darts
+
+    - ``check`` - boolean default ``True``)
+
+    TESTS::
+
+        sage: from surface_dynamics.misc.permutation import constellation_init
+        sage: constellation_init([2,1,0], [1,2,0], None)
+        [[2, 1, 0], [1, 2, 0], [0, 2, 1]]
+
+        sage: constellation_init(3, 2, None, 6)
+        [[1, 2, 0, 4, 5, 3], [1, 0, 3, 2, 5, 4], [0, 2, 5, 1, 4, 3]]
+
+        sage: constellation_init('(0,1)', '(0,1)', '()')
+        [[1, 0], [1, 0], [0, 1]]
+
+        sage: constellation_init('(0,2,3,6)(1,4,5,7)', None, None)
+        [[2, 4, 3, 6, 5, 7, 0, 1], [1, 0, 3, 2, 5, 4, 7, 6], [7, 6, 2, 0, 4, 1, 5, 3]]
+
+    Each number (including fixed point) should be specified otherwise they are just
+    ignored::
+
+        sage: constellation_init('(1,6,5)(2,3,4)', '(1,2)(3,4)(5,6)', '(1,4,2,5)(3)(6)')
+        [[None, 6, 3, 4, 2, 1, 5], [None, 2, 1, 4, 3, 6, 5], [None, 4, 5, 3, 2, 1, 6]]
+
+    TESTS::
+
+        sage: constellation_init(None, '(0,1)(2,3)(4,5)', '(0,2,4)(1)(3,5)')
+        [[5, 0, 1, 4, 3, 2], [1, 0, 3, 2, 5, 4], [2, 1, 4, 5, 0, 3]]
+    """
+    nones = [p is None for p in [vertices, edges, faces]]
+    if sum(nones) > 1:
+        if edges is None:
+            edges = 2
+            nones[1] = False
+        else:
+            raise ValueError("at least two of the three data should be provided")
+
+    nums = [isinstance(p, numbers.Integral) for p in [vertices, edges, faces]]
+    if sum(nums) == 3 and n is None:
+        raise ValueError("numbers not enough to construct a constellation")
+
+    if not (nones[0] or nums[0]):
+        vertices = perm_init(vertices, n, partial=True)
+        if check: perm_check(vertices)
+
+    if not (nones[1] or nums[1]):
+        edges = perm_init(edges, n, partial=True)
+        if check: perm_check(edges)
+
+    if not (nones[2] or nums[2]):
+        faces = perm_init(faces, n, partial=True)
+        if check: perm_check(faces)
+
+    P = [vertices, edges, faces]
+    perms = [p for i,p in enumerate(P) if not (nones[i] or nums[i])]
+    if perms:
+        equalize_perms(perms)
+        j = 0
+        for i in range(3):
+            if not (nones[i] or nums[i]):
+                P[i] = perms[j]
+                j += 1
+        if n is None:
+            n = len(perms[0])
+
+    for i in range(3):
+        if nums[i]:
+            P[i] = _canonical_reg_perm(n, P[i])
+
+    for i in range(3):
+        if nones[i]:
+            j = (i - 1) % 3
+            k = (i + 1) % 3
+            P[i] = perm_compose(perm_invert(P[j]), perm_invert(P[k]))
+
+    if check:
+        if set(P[0]) != set(P[1]) or set(P[0]) != set(P[2]):
+            print(P)
+            raise ValueError("permutations defined on different domains")
+        if not perm_is_one(perm_compose(perm_compose(P[0], P[1]), P[2])):
+            raise ValueError("product is not identity")
+
+    return P
 
 #####################################################################
 # Group operations

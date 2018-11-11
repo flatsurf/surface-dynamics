@@ -1051,7 +1051,7 @@ class Constellations_all(UniqueRepresentation, Parent):
             else:
                 raise ValueError("only one permutation must be None")
 
-            gg = map(init_perm, g)
+            gg = map(perm_init, g)
             equalize_perms(gg)
 
             if i is not None:
