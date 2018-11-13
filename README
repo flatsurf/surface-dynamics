@@ -33,16 +33,72 @@ running on Windows) or compiled from source, run the following command::
 The --user option is optional and allows to install the module in your user space
 (and does not require administrator rights).
 
-If you use Debian or Ubuntu and you installed Sage through the operating system
+If you use Debian, Ubuntu and you installed Sage through the operating system
 (that is the package sagemath) run these two commands::
 
     $ source /usr/share/sagemath/bin/sage-env
     $ pip install surface_dynamics --user
 
-If you use archlinux and installed sagemath throught the operating system, run
-this command::
+If you use Archlinux, you need to install from source (see next section).
 
-    $ pip2 install git+https://gitlab.com/videlec/surface_dynamics --user
+Install and use source version
+------------------------------
+
+In this section, we provide detailed instruction on how to download, modify
+and install the development version of `surface_dynamics`. In all command
+lines
+
+* `PIP` has to be replaced by either `pip`, `pip2` or `sage -pip`
+* `PYTHON` has to be replaced by either `python`, `python2` or `sage -python`
+
+If you are an Archlinux user with the sagemath package install, use
+`PIP=pip2` and `PYTHON=python2`. If you downloaded SageMath as a tarball
+or installed it from source use `PIP=sage -pip` and `PYTHON=sage -python`.
+
+You can install the latest development version in one line with::
+
+    $ PIP install git+https://gitlab.com/videlec/surface_dynamics [--user]
+
+As before, the --user option is optional and when specified will
+install the module in your user space. 
+
+You can also perform a two stage installation that will allow you to
+modify the source code. The first step is to clone the repository
+
+    $ git clone https://gitlab.com/videlec/surface_dynamics
+
+The above command creates a repository surface_dynamics with the source code,
+documentation and miscellaneous files. If you cd into the created directory
+you can install the surface dynamics module with::
+
+    $ PIP install . [--user]
+
+Do not forget the `.` that refers to the current directory.
+
+When you don't want to install the package or you are testing some
+modifications to the source code, a more convenient way of using
+surface dynamics is to do everything locally. To do so, you need
+to compile the module in place via
+
+    $ PYTHON setup.py build_ext --inplace
+
+Once done, you can import the `surface_dynamics` module. To check that you
+are actually using the right module (i.e. the local one) you can do in a
+SageMath session
+
+    sage: import surface_dynamics
+    sage: surface_dynamics.__path__
+    ['/home/robert/surface_dynamics/surface_dynamics/']
+
+The result of the command must correspond to the path of the repository
+created by the command `git clone` given above. The compilation step
+`PYTHON setup.py build_ext` has to be redone each time you modify
+a C or Cython source file (i.e. with `.c`, .h`, `.pxd` or `.pyx`
+extension). In other words, it is not needed if you only
+modify or create Python files (ie `.py` files).
+
+If you wish to install your custom version of surface dynamics
+just use `PIP` as indicated before.
 
 Documentation
 -------------
