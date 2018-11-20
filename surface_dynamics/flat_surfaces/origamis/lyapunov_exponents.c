@@ -37,30 +37,30 @@
 
 
 /* random uniform double in [0,1] */
-static double drand()
+static inline double drand()
 {
 	return (((double) random() + (double) random() / ( (double) RAND_MAX) ) / ((double) RAND_MAX+1) );
 }
 
 /* random uniform long double in [0,1] */
-static long double ldrand()
+static inline long double ldrand()
 {
 	return ((long double) random() + (((long double) random() + (long double) random() / ((long double) RAND_MAX)) / ((long double) RAND_MAX))) / ((long double) RAND_MAX+1);
 }
 
 /* Gauss distribution in [0,1] with double precision */
-static double drandGauss()
+static inline double drandGauss()
 {
 	return exp(LOG2 * drand()) - 1.;
 }
 
 /* Gauss distribution in [0,1] with long double precision */
-static double ldrandGauss()
+static inline double ldrandGauss()
 {
 	return expl(LOG2l * ldrand()) - 1.;
 }
 
-inline size_t lcm(size_t a, size_t b)
+static inline size_t lcm(size_t a, size_t b)
 /* the least common multiple of a and b */
 {
 	size_t aa = a, r=b, bb;

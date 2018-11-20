@@ -23,5 +23,5 @@ int pillowcase_cover_diff(int *g1, int *g2, unsigned int n);
 /* Modify x and y in order to make the origami (x,y) in */
 /* normal form                                          */
 /* renum is set to the permutation used to renumerote   */
-int origami_normal_form(int *x, int *y, int *renum, unsigned int n);
-int pillowcase_cover_normal_form(int *g, int *renum, unsigned int n);
+void origami_normal_form(int *x, int *y, int *renum, unsigned int n);
+/* int pillowcase_cover_normal_form(int *g, int *renum, unsigned int n); */

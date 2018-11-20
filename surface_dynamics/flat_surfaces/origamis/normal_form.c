@@ -109,7 +109,7 @@ void SF_free(void)
 }
 
 /* TODO: add in argument the list of potential 0 squares */
-int origami_normal_form(int *x, int *y, int *renum, unsigned int n)
+void origami_normal_form(int *x, int *y, int *renum, unsigned int n)
 {
 	int i,j,k,cmax;
 	int mi,m;
@@ -237,49 +237,3 @@ int origami_normal_form(int *x, int *y, int *renum, unsigned int n)
 		renum[i] = SF_rren[i];
 	}
 }
-	
-
-int projective_normal_form(int *x, int *y, int *renum, unsigned int n)
-{
-	int * xx = (int *) malloc(n*sizeof(int));
-	int * yy = (int *) malloc(n*sizeof(int));
-	int * rrenum = (int *) malloc(n*sizeof(int));
-	int i,test;
-
-    SF_realloc(n);
-
-	for(i=0; i<n; ++i)
-	{
-		xx[x[i]] = i;
-		yy[y[i]] = i;
-	}
-
-	origami_normal_form(x,y,renum,n);
-	origami_normal_form(xx,yy,rrenum,n);
-
-	test = 1;
-	for(i=0; i<n-1; ++i)
-		if(x[i] < xx[i])
-		{
-			test=0;
-			break;
-		}
-	if(test)
-		for(i=0; i<n-1; ++i)
-			if(y[i] < yy[i])
-			{
-				test=0;
-				break;
-			}
-	if(test)
-	{
-		memcpy(x,xx,n*sizeof(int));
-		memcpy(y,yy,n*sizeof(int));
-		memcpy(renum,rrenum,n*sizeof(int));
-	}
-
-	free(xx);
-	free(yy);
-	free(rrenum);
-}
-
