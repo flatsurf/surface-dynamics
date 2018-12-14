@@ -621,7 +621,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
             for d in ee: degrees.extend([d]*ee[d])
 
             s = sum(degrees)
-            for nb_poles in xrange(s%4,s+5,4):
+            for nb_poles in range(s%4,s+5,4):
                 q = QuadraticStratum(degrees + [-1]*nb_poles)
                 if not q.is_empty() and (not fake_zeros or q.nb_poles() <= self.nb_fake_zeros()):
                     res.append(q)
@@ -1110,7 +1110,7 @@ class AbelianStratumComponent(StratumComponent):
             nsteps = 64 * self.stratum().dimension()
         d = len(p)-1
 
-        for _ in xrange(nsteps):
+        for _ in range(nsteps):
             rd = prandom.random()
             if rd < 0.1:   # (inplace) symmetric with proba 1/10
                 p._inversed_twin()
@@ -2364,7 +2364,7 @@ class EvenAbelianStratumComponent(ASC):
                 raise ValueError("left_degree (=%d) should be one of the degree"%left_degree)
             if left_degree == 0:
                 if n == 0:
-                    raise ValueError, "left_degree (=%d) should be one of the degree"%left_degree
+                    raise ValueError("left_degree (=%d) should be one of the degree" % left_degree)
             elif left_degree not in z:
                 raise ValueError("left_degree (=%d) should be one of the degree"%left_degree)
             else:
@@ -2657,7 +2657,7 @@ class OddAbelianStratumComponent(ASC):
                 raise ValueError("left_degree (=%d) should be one of the degree"%left_degree)
             if left_degree == 0:
                 if n == 0:
-                    raise ValueError, "left_degree (=%d) should be one of the degree"%left_degree
+                    raise ValueError("left_degree (=%d) should be one of the degree" % left_degree)
             elif left_degree not in zeros:
                 raise ValueError("left_degree (=%d) should be one of the degree"%left_degree)
             else:
@@ -3308,7 +3308,7 @@ class AbelianStrata_d(AbelianStrata):
             if n == 2:
                 yield AbelianStratum([0])
             else:
-                for s in xrange(1+n%2, n, 2):
+                for s in range(1+n%2, n, 2):
                     for p in Partitions(n-1,length=s,min_part=2):
                         yield AbelianStratum([k-1 for k in p])
 
@@ -3353,10 +3353,10 @@ class AbelianStrata_d(AbelianStrata):
             return Integer(0)
 
         if self._fake_zeros:
-            return sum(Partitions(n-1,length=s).cardinality() for s in xrange(1+n%2,n,2))
+            return sum(Partitions(n-1,length=s).cardinality() for s in range(1+n%2,n,2))
         if n == 2:
             return Integer(1)
-        return sum(Partitions(n-1,length=s,min_part=2).cardinality() for s in xrange(1+n%2,n,2))
+        return sum(Partitions(n-1,length=s,min_part=2).cardinality() for s in range(1+n%2,n,2))
 
 class AbelianStrata_gd(AbelianStrata):
     r"""
