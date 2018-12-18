@@ -345,8 +345,8 @@ def sl_orbit_from_gl_orbit(o, L, I):
         else:
             break
 
-    for o in l: # s = l ~r l
-        s[o] = l[ri[l[o]]]
+    for o in l: # ~s = l ~r l
+        s[l[ri[l[o]]]] = o
 
     return l, r, s
 
@@ -1466,22 +1466,19 @@ cdef class Origami_dense_pyx(object):
         [1 0]
         [1 1]
 
-        S = L~RL =
-        0 -1
-        1 0
+        S = R * ~L * R = ~L * R * ~L =
+        [0 -1]
+        [1  0]
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
-
-            sage: o = Origami('(1,2)','(2,3)')
-            sage: l,r,s = o.sl2z_edges()
-            sage: len(l)
-            3
-            sage: len(r)
-            3
-            sage: len(s)
-            3
+            sage: from surface_dynamics.all import Origami
+            sage: o = Origami('(1)(2,3)(4,5)', '(1,2,3,4)(5)')
+            sage: l, r, s = o.sl2z_edges()
+            sage: len(l), len(r), len(s)
+            (12, 12, 12)
+            sage: all(l[s[l[s[l[s[o]]]]]] == s[s[o]] for o in l)
+            True
         """
         o = self.to_standard_form()
         L, I = self.gl2z_edges()
