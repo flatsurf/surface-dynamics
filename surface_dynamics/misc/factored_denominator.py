@@ -2,8 +2,11 @@ r"""
 Factored denominators
 """
 
+from __future__ import absolute_import, print_function
+
 from sage.rings.integer_ring import ZZ
 from sage.modules.vector_integer_dense import Vector_integer_dense
+from sage.structure.element import parent
 
 def vector_to_monomial_string(u, var_names):
     r"""
@@ -106,11 +109,17 @@ class FactoredDenominator(object):
 
     def __init__(self, data, V=None):
         if isinstance(data, (tuple, list)):
+            if V is None:
+                raise ValueError("a ZZ-free module V must be provided")
+            d = V.dimension()
             self._dict = {}
             for mon, mult in data:
                 mon = V(mon)
                 if mon.is_zero():
                     raise ValueError('zero in denominator')
+                for i in range(d):
+                    if mon[i]:
+                        break
                 mult = ZZ(mult)
                 if mult <= 0:
                     raise ValueError('non-positive multiplicity in denominator')
@@ -119,10 +128,14 @@ class FactoredDenominator(object):
 
         elif isinstance(data, dict):
             self._dict = data
+            if V is not None:
+                for k in self._dict:
+                    if parent(k) is not V:
+                        raise ValueError("invalid dictionary")
 
         elif isinstance(data, FactoredDenominator):
-            self._dict = data._dict
-            self._tuple = data._tuple
+            self._dict = data._dict.copy()
+            self._tuple = data._tuple[:]
             return
 
         elif isinstance(data, Vector_integer_dense):
@@ -320,6 +333,7 @@ class FactoredDenominator(object):
         for mon, mult in self._tuple:
             if mon[j]:
                 v = mon.__copy__()
+                mult *= v[j]
                 v[j] -= 1
                 yield (mult, v, mon)
 
@@ -352,6 +366,12 @@ class FactoredDenominator(object):
             return TypeError
         return self._tuple != other._tuple
 
+    def copy(self):
+        res = FactoredDenominator.__new__(FactoredDenominator)
+        res._dict = self._dict.copy()
+        res._tuple = self._tuple
+        return res
+
     def __mul__(self, other):
         r"""
         Multiplication
@@ -377,6 +397,37 @@ class FactoredDenominator(object):
 
         return FactoredDenominator(new_data, None)
 
+    def __div__(self, other):
+        r"""
+        (Partial) division.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.factored_denominator import FactoredDenominator
+            sage: V = ZZ**3
+
+            sage: f1 = FactoredDenominator([((1,0,0), 3)], V)
+            sage: f2 = FactoredDenominator([((1,0,0), 1)], V)
+            sage: f1/f2
+            {(1, 0, 0): 2}
+        """
+        if type(self) != type(other):
+            raise TypeError
+
+        sd = self._dict
+        od = other._dict
+        nd = sd.copy()
+        for i,j in od.items():
+            jj = sd.get(i, -1)
+            if j > jj:
+                raise ArithmeticError
+            elif j == jj:
+                del nd[i]
+            else:
+                nd[i] -= j
+
+        return FactoredDenominator(nd, None)
+
     def __nonzero__(self):
         return bool(self._dict)
 
@@ -391,6 +442,86 @@ class FactoredDenominator(object):
 
     def __hash__(self):
         return hash(self._tuple)
+
+    def lcm_update(self, other):
+        if type(self) is not type(other):
+            raise TypeError
+
+        sd = self._dict
+        od = other._dict
+        for i,j in od.items():
+            if j > sd.get(i, -1):
+                sd[i] = j
+
+        self._tuple = tuple(sorted(self._dict.items()))
+
+    def lcm(self, other):
+        r"""
+        Return the lcm of two factored denomiator.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.factored_denominator import FactoredDenominator
+
+            sage: V = ZZ**3
+
+            sage: f1 = FactoredDenominator([((1,0,0), 2),((0,1,0),1)], V)
+            sage: f2 = FactoredDenominator([((1,0,0), 1),((0,1,0),2)], V)
+            sage: f3 = FactoredDenominator([((1,0,0), 1),((0,1,0),1),((0,0,1),1)], V)
+            sage: f4 = FactoredDenominator([], V)
+
+            sage: f1.lcm(f2)
+            {(1, 0, 0): 2, (0, 1, 0): 2}
+            sage: f1.lcm(f3)
+            {(1, 0, 0): 2, (0, 1, 0): 1, (0, 0, 1): 1}
+            sage: f2.lcm(f3)
+            {(1, 0, 0): 1, (0, 1, 0): 2, (0, 0, 1): 1}
+
+            sage: f1.lcm(f4) == f1 and f4.lcm(f1) == f1
+            True
+        """
+        res = self.copy()
+        res.lcm_update(other)
+        return res
+
+    def gcd_update(self, other):
+        if type(self) is not type(other):
+            raise TypeError
+
+        sd = self._dict
+        od = other._dict
+        for i,j in od.items():
+            if j < sd.get(i, j):
+                sd[i] = j
+
+        self._tuple = tuple(sorted(self._dict.items()))
+
+    def gcd(self, other):
+        r"""
+        Return the gcd of two factored denominator.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.factored_denominator import FactoredDenominator
+
+            sage: V = ZZ**3
+
+            sage: f1 = FactoredDenominator([((1,0,0), 2),((0,1,0),1)], V)
+            sage: f2 = FactoredDenominator([((1,0,0), 1),((0,1,0),2)], V)
+            sage: f3 = FactoredDenominator([((1,0,0), 1),((0,1,0),1),((0,0,1),1)], V)
+            sage: f4 = FactoredDenominator([], V)
+
+            sage: f1.gcd(f2)
+            {(1, 0, 0): 1, (0, 1, 0): 1}
+            sage: f1.gcd(f2) == f1.gcd(f3) == f2.gcd(f3)
+            True
+
+            sage: f4.gcd(f1) == f4 and f1.gcd(f4) == f1
+            True
+        """
+        res = self.copy()
+        res.gcd_update(other)
+        return res
 
     # TODO
     # this does not make much sense here

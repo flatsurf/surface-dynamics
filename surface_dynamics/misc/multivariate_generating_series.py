@@ -12,10 +12,20 @@ are equivalently when `F` is a finite sum of rational functions of the form
 
 where the `m_i` are monomials and `d_i` are positive integers.
 
+REFERENCES:
+
 DH:03
-De Loera, R. Hemmecke, J. Tauzer, R. Yoshida
-"Effective lattice point counting in rational convex polytopes"
-(LattE)
+
+[LHTY] De Loera, R. Hemmecke, J. Tauzer, R. Yoshida
+ "Effective lattice point counting in rational convex polytopes"
+ (LattE)
+
+[Ba] Barvinok
+
+[St] Stanley
+"Enumerative Combinatorics"
+Volume I
+Cambridge Studies in Advanced Mathematics 49 (1997)
 
 .. TODO::
 
@@ -284,8 +294,6 @@ def monomial_projection(num, den, i, M):
 
 
 
-
-
 # This should be a real number!
 # ... and we need an algebra to handle all these values properly
 class _OLD_TOTO_(object):
@@ -374,7 +382,8 @@ class AbstractMSum(Element):
             if num.is_zero():
                 continue
 
-            den = FactoredDenominator(den, V)
+            if not isinstance(den, FactoredDenominator):
+                den = FactoredDenominator(den, V)
 
             if den in self._data:
                 if not allow_multiple:
@@ -488,12 +497,16 @@ class AbstractMSum(Element):
         if op != op_EQ and op != op_NE:
             raise TypeError('no comparison available for multivariate series')
 
-        if self._data == other._data and op == op_EQ:
-            return True
+        if self._data == other._data:
+            return op == op_EQ
+
+        (sden,snum), = self.factor()._data.items()
+        (oden,onum), = other.factor()._data
+
+        if sden == oden and snum == onum:
+            return op == op_EQ
+
         raise NotImplementedError
-
-
-
                 
 
 class GeneralizedMultiZetaElement(AbstractMSum):
@@ -540,7 +553,8 @@ class GeneralizedMultiZetaElement(AbstractMSum):
         """
         terms = []
         var_names = ['n%d'%n for n in range(self.parent().laurent_polynomial_ring().ngens())]
-        for den, num in self._data.iteritems():
+        for den in sorted(self._data.keys()):
+            num = self._data[den]
             fraction = str(num)
             if not den.is_one():
                 fraction += ' * Sum( 1 / '
@@ -554,16 +568,29 @@ class MultivariateGeneratingSeries(AbstractMSum):
     def __nonzero__(self):
         return bool(self._data)
 
-    def factor(self):
-        r"""
-        Return self as a unique
-        """
-        raise NotImplementedError
-        lcm_den = {}
-        for den, _ in self._data.items():
-            for mon, mul in den._tuple:
-                lcm_den[mon] = max(lcm_den.get(mon, 0), mul)
 
+    def summands(self):
+        r"""
+        Return the list of elementary summands
+
+        EXAMPLES::
+
+           sage: from surface_dynamics.misc.multivariate_generating_series import * 
+           sage: M = MultivariateGeneratingSeriesRing(2)
+           sage: m1 = M.term(1, [((1,-1),1), ((0,1),1)])
+           sage: m2 = M.term(1, [((-1,1),1), ((1,0),1)])
+           sage: f = (m1 + m2)**2
+           sage: for s in f.summands(): print(s)
+           (1)/((1 - x1)^2*(1 - x0*x1^-1)^2)
+           (2)/((1 - x0^-1*x1)*(1 - x1)*(1 - x0*x1^-1)*(1 - x0))
+           (1)/((1 - x0^-1*x1)^2*(1 - x0)^2)
+        """
+        M = self.parent()
+        res = []
+        for den in sorted(self._data):
+            num = self._data[den]
+            res.append(M.term(num,den))
+        return res
 
     # TODO: this is only working term by term. It completely ignores pole cancellation between
     # the terms
@@ -699,7 +726,7 @@ class MultivariateGeneratingSeries(AbstractMSum):
 
             sage: f = M.term(x0 * x1, [((1,1),2)])
             sage: f.derivative(0)
-            (2*x0*x1^2)/((1 - x0*x1)^3) + (x1)/((1 - x0*x1)^2)
+            (x1)/((1 - x0*x1)^2) + (2*x0*x1^2)/((1 - x0*x1)^3)
             sage: f.derivative(0).taylor(10) - f.taylor(10).derivative(xx0)
             30*x0^5*x1^6
 
@@ -712,6 +739,9 @@ class MultivariateGeneratingSeries(AbstractMSum):
             sage: f = M.term(1, [((1,0),2), ((1,1),1)])
             sage: f.taylor(10).derivative(xx0).derivative(xx1) - f.derivative(0).derivative(1).taylor(9)
             -18*x0^9*x1 - 42*x0^8*x1^2 - ... - 72*x0^5*x1^3 - 25*x0^4*x1^4
+
+            sage: f = M.zero() + M.term(1/1*x0^2 * x1, [((1,0),1), ((1,1),1)])
+            sage: f.derivative(0)
 
         You can indistinctly use integers, strings or polynomial variables for ``var``::
 
@@ -912,7 +942,8 @@ class MultivariateGeneratingSeries(AbstractMSum):
 
         var_names = self.parent().laurent_polynomial_ring().variable_names()
         terms = []
-        for den, num in self._data.items():
+        for den in sorted(self._data):
+            num = self._data[den]
             fraction = '(' + str(num) + ')'
             if not den.is_one():
                 fraction += '/'
@@ -921,6 +952,72 @@ class MultivariateGeneratingSeries(AbstractMSum):
             terms.append(fraction)
 
         return ' + '.join(terms)
+
+    def subs_numerator(self, *args, **kwds):
+        r"""
+        TESTS::
+
+            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)
+            sage: R = M.laurent_polynomial_ring()
+            sage: x0, x1 = R.gens()
+            sage: f = M.term(-x0 + 2*x0*x1^3, [((1,1), 1), ((1,2),2)])
+            sage: f.subs_numerator(x0=1, x1=1)
+            (1)/((1 - x0*x1)*(1 - x0*x1^2)^2)
+        """
+        M = self.parent()
+        res = M.zero()
+        for den, num in self._data.items():
+            res += M.term(num.subs(*args, **kwds), den)
+        return res
+
+    def factor(self, simplify=False):
+        """
+        Group all the partial fractions into a unique fraction.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
+            sage: M = MultivariateGeneratingSeriesRing('x', 3)
+            sage: f = M.term(1, [([1,3,0],1),([1,0,-1],1)])
+            sage: g = M.term(1, [([1,1,0],1),([1,0,-1],2)])
+            sage: (f + g).factor()
+            (-x0*x1^3 + x0^2*x1*x2^-1 - x0*x1 - x0*x2^-1 + 2)/((1 - x0*x2^-1)^2*(1 - x0*x1)*(1 - x0*x1^3))
+        """
+        M = self.parent()
+
+        # compute the product of denominators
+        V = M.free_module()
+        D = FactoredDenominator([], V)
+        for den, num in self._data.items():
+            D.lcm_update(den)
+
+        R = M.laurent_polynomial_ring()
+        N = R.zero()
+        for den,num in self._data.items():
+            N += (D / den).to_polynomial(R)
+
+        # TODO: look more carefully for simplification
+        # note: (1 - x0x1) and (1 - x0^-1 x1^-1) are the same things up
+        # to sign and division by x0x1. We can canonicalize as soon as the numerator
+        # is gentle enough... we should really introduce the polynomial version!
+
+        gt = False
+        for mon,mult in D._dict.items():
+            pmon = laurent_monomial(R, mon)
+            q,r = N.quo_rem(pmon)
+            while mult and not r:
+                gt = True
+                mult -= 1
+                N = q
+                q,r = N.quo_rem(pmon)
+
+            D._dict[mon] = mult
+
+        if gt:
+            D._tuple = tuple(sorted(self._dict.items()))
+
+        return M.term(N, D)
 
     def as_symbolic(self):
         from sage.symbolic.ring import SR
@@ -1023,8 +1120,33 @@ class AbstractMSumRing(Parent):
             (1)/((1 - x0*x2^-1)^2*(1 - x0*x1))
             sage: M.term(1, {(1,1,0): 1, (1,0,-1): 2})
             (1)/((1 - x0*x2^-1)^2*(1 - x0*x1))
+
+        Also works if the denominator is already a factored denominator::
+
+            sage: from surface_dynamics.misc.factored_denominator import FactoredDenominator
+            sage: M = MultivariateGeneratingSeriesRing('x', 3)
+            sage: den = FactoredDenominator({(1,0,0): 2, (1,1,1):1})
+            sage: M.term(1, den)
+            (1)/((1 - x0)^2*(1 - x0*x1*x2))
+
+        TESTS::
+
+
+            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)
+            sage: R = M.laurent_polynomial_ring()
+            sage: x0, x1 = R.gens()
+            sage: d = {}
+            sage: v0 = vector(QQ, (1,0)); v0.set_immutable()
+            sage: v1 = vector(QQ, (1,1)); v1.set_immutable()
+            sage: d[v1] = 1
+            sage: d[v0] = 1
+            sage: f = M.term(1*x0^2*x1, d)
+            Traceback (most recent call last):
+            ...
+            ValueError: invalid dictionary
         """
-        return self.element_class(self, [(den, num)])
+        return self.element_class(self, [(den, num)], self.free_module())
 
     def _element_constructor_(self, arg):
         r"""
@@ -1041,7 +1163,7 @@ class AbstractMSumRing(Parent):
             (x0)
         """
         num = self._laurent_polynomial_ring(arg)
-        return self.element_class(self, [([], num)])
+        return self.element_class(self, [([], num)], self.free_module())
 
 class GeneralizedMultiZetaRing(AbstractMSumRing):
     Element = GeneralizedMultiZetaElement
@@ -1072,6 +1194,9 @@ class GeneralizedMultiZetaRing(AbstractMSumRing):
 
 
 # TODO: this should actually be an algebra over QQ[x0, x1, ..., xn]
+# TODO: we should have two versions, as an algebra over the polynomial
+#       ring QQ[x0, x1, ..., xn] and as an algebra over the Laurent
+#       polynomial ring QQ[x0, x0^-1, x1, x1^-1, ..., xn, xn^-1]
 class MultivariateGeneratingSeriesRing(AbstractMSumRing):
     r"""
     EXAMPLES::
@@ -1135,5 +1260,4 @@ class MultivariateGeneratingSeriesRing(AbstractMSumRing):
         """
         if self.laurent_polynomial_ring().has_coerce_map_from(other):
             return True
-
 
