@@ -1,14 +1,12 @@
 r"""
 Even permutations
 
-We call even permutation, a permutation on the set of even size `_n = \{-n, -n+1, \ldots, n-1\}`.
-The set `X_n` comes with a canonical involution `i \mapsto -i-1` (note that `-i-1` is the bit
-complement to `i`). The commutator of this canonical involution are the signed permutations.
+We call even permutation, a permutation on the set of even size
+`X_n = \{-n, -n+1, \ldots, n-1\}`. The set `X_n` comes with a canonical
+involution without fixed points `i \mapsto -i-1` (note that `-i-1` is
+the bit complement to `i`). The commutator of this canonical involution
+are the signed permutations.
 """
-
-# as a datastructure it would be much more efficient to store
-# a permutation
-# a list of n signs
 
 from __future__ import absolute_import, print_function
 from array import array
@@ -44,7 +42,6 @@ def signed_permutations(n):
                     q[i] = ~q[i]
                     q[~i] = ~q[~i]
                 yield q
-
 
 def even_permutations(n):
     from itertools import permutations
