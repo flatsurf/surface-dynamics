@@ -130,8 +130,8 @@ You can get an overview of the content of the database::
     sage: D.info()
     genus 2
     =======
-     H_2(2)^hyp        : 116 T. curves (up to 80 squares)
-     H_2(1^2)^hyp      : 452 T. curves (up to 80 squares)
+     H_2(2)^hyp        : 133 T. curves (up to 91 squares)
+     H_2(1^2)^hyp      : 441 T. curves (up to 79 squares)
     <BLANKLINE>
     genus 3
     =======
@@ -145,7 +145,7 @@ You can get an overview of the content of the database::
      H_6(10)^even      :  33 T. curves (up to 12 squares)
     <BLANKLINE>
     <BLANKLINE>
-    Total: 4599 Teichmueller curves
+    Total: 4605 Teichmueller curves
 
 Here is a last example of the list of regular origamis (i.e. such that their
 group of translation acts transitively on the set of squares)::
@@ -553,13 +553,15 @@ def data_to_rational(s):
     """
     return QQ(str(s))
 
-# representative (ie origami)
+def square_num_to_str(i):
+    if i < 80:
+        return chr(c+48)
+    else:
+        return ' ' + Integer(i).str(16) + ' '
 
 def representative_to_data(o):
     r"""
-    Convert an origami into a string.
-
-    The maximum number of squares is 207. The encoding consists of the
+    The maximum number of squares is 95. The encoding consists of the
     concatenation of the two permutations that define the origami.
 
     TESTS::
@@ -576,11 +578,27 @@ def representative_to_data(o):
         True
         sage: o == odb.data_to_representative(s)
         True
+
+    Try examples in the critical range 75-85:
+
+        sage: for n in range(75,85):
+        ....:     r = range(1,n) + [0]
+        ....:     u = range(n)
+        ....:     shuffle(u)
+        ....:     o = Origami(r, u, as_tuple=True)
+        ....:     s = odb.representative_to_data(o)
+        ....:     assert o == odb.data_to_representative(s)
     """
-    assert o.nb_squares() < 129
-    rs = map(lambda t: chr(48+t), o.r_tuple())
-    us = map(lambda t: chr(48+t), o.u_tuple())
-    return ''.join(rs)+''.join(us)
+    if o.nb_squares() < 80:
+        # for the first 79 characters we simply use chr(48+i) that is
+        # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 etc
+        rs = ''.join(chr(48+i) for i in o.r_tuple())
+        us = ''.join(chr(48+i) for i in o.u_tuple())
+    else:
+        # for 80 or more squares we use the space to separate base 36 encodings
+        rs = integer_tuple_to_data(o.r_tuple())
+        us = integer_tuple_to_data(o.u_tuple())
+    return rs + us
 
 def data_to_representative(s):
     r"""
@@ -589,8 +607,14 @@ def data_to_representative(s):
     For encoding convention, see meth:`representative_to_data`.
     """
     n = len(s) // 2
-    r = tuple(ord(i)-48 for i in s[:n])
-    u = tuple(ord(i)-48 for i in s[n:])
+    rs = s[:n]
+    us = s[n:]
+    if n < 80:
+        r = tuple(ord(i)-48 for i in rs)
+        u = tuple(ord(i)-48 for i in us)
+    else:
+        r = data_to_integer_tuple(rs)
+        u = data_to_integer_tuple(us)
     return Origami_dense_pyx(r,u)
 
 def format_representative(s):
@@ -1879,7 +1903,7 @@ class OrigamiDatabase(SQLDatabase):
 
             sage: O = OrigamiDatabase()
             sage: O.max_nb_squares(AbelianStratum(2))
-            80
+            91
             sage: O.max_nb_squares()
             11
         """
