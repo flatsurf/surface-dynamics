@@ -1432,7 +1432,10 @@ class IntervalExchangeTransformation(object):
         """
         from sage.plot.plot import Graphics
         from sage.plot.plot import line2d
-        from sage.plot.plot import text
+        try:
+            from sage.plot.plot import text
+        except ImportError:
+            from sage.plot.text import text
         from sage.plot.colors import rainbow
 
         G = Graphics()
