@@ -3838,7 +3838,7 @@ class QuadraticCylinderDiagram(SageObject):
             seen = [None] * n
             p = []
             for i ,bt in enumerate(data):
-                # constructing p
+                # constructing p (= face matching)
                 p.append(2*i+1)
                 p.append(2*i)
 
