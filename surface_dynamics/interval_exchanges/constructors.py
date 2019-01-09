@@ -601,11 +601,11 @@ def Permutations_iterator(
 
     if nintervals is None:
         if alphabet is None:
-            raise ValueError, "You must specify an alphabet or a length"
+            raise ValueError("You must specify an alphabet or a length")
         else:
             alphabet = Alphabet(alphabet)
             if alphabet.cardinality() is Infinity:
-                raise ValueError, "You must sepcify a length with infinite alphabet"
+                raise ValueError("You must sepcify a length with infinite alphabet")
             nintervals = alphabet.cardinality()
 
     elif alphabet is None:

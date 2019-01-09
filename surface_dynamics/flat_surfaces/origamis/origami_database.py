@@ -906,7 +906,7 @@ class OrigamiQuery:
             assert t[1] == 1 or t[1] == -1
             tt.append((t[0],int(t[1])))
         if not len(set(x[0] for x in tt)) == len(tt):
-            raise ValueError, "duplicate in your list"
+            raise ValueError("duplicate in your list")
         self._order = tt
 
     def get_query_string(self):
@@ -1940,7 +1940,7 @@ class OrigamiDatabase(SQLDatabase):
             return max(query.list())
 
         else:
-            raise ValueError, "\"comp\" shoud be None, a stratum of Abelian differential or a component of stratum"
+            raise ValueError("\"comp\" shoud be None, a stratum of Abelian differential or a component of stratum")
 
     def _get_format(self, cols):
         r"""

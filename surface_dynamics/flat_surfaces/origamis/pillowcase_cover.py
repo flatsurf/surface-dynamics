@@ -1,4 +1,4 @@
-from origami_dense import PillowcaseCover_dense_pyx
+from .origami_dense import PillowcaseCover_dense_pyx
 from sage.groups.perm_gps.permgroup import PermutationGroupElement
 
 

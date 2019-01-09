@@ -1146,7 +1146,7 @@ class SeparatrixDiagram(SageObject):
             return SymmetricGroup(self.nseps()).centralizer(PermutationGroup([self.top_perm(),self.bot_perm()]))
 
         else:
-            raise ValueError, "implementation should be either 'graph' or 'gap'"
+            raise ValueError("implementation should be either 'graph' or 'gap'")
 
     def homological_dimension_of_cylinders(self):
         r"""

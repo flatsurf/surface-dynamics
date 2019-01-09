@@ -8,7 +8,7 @@ from sage.structure.parent import Parent
 
 from sage.rings.infinity import Infinity
 from sage.rings.integer import Integer
-from origami import Origami
+from .origami import Origami
 
 from sage.modular.arithgroup.congroup_sl2z import SL2Z
 from sage.modular.arithgroup.arithgroup_perm import Lm,Rm,S2m,S3m,EvenArithmeticSubgroup_Permutation, OddArithmeticSubgroup_Permutation
@@ -416,7 +416,7 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
                     reps[e1] = m * reps[e0]
                     reps_o[e1] = o
                 else:
-                    raise ValueError, "does know how to do only with slr"
+                    raise ValueError("does know how to do only with slr")
 
         m_gens = []
 
@@ -435,7 +435,7 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
                 m = copy(l_mat)
                 m[:n,n:] = (~oo.r()).matrix().transpose()
             else:
-                raise ValueError, "does know how to do only with slr"
+                raise ValueError("does know how to do only with slr")
 
             ooo = reps_o[e1]
             ot, oo_renum = oo.standard_form(True)

@@ -154,7 +154,7 @@ def Origami(r, u,
     o = Origami_dense_pyx(tuple(r),tuple(u))
 
     if check and not o.is_connected():
-        print "Warning: the origami is not connected"
+        print("Warning: the origami is not connected")
 
     if name is not None:
         o.rename(name)
