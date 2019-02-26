@@ -133,12 +133,12 @@ class OrigamiGenerators():
             ....:     o = origamis.CyclicCover(a)
             ....:     assert o.veech_group().index() == 1
             ....:     print(o.nb_squares(), o.stratum_component())
-            (16, H_7(3^4)^c)
-            (20, H_9(4^4)^odd)
-            (20, H_9(4^4)^odd)
-            (24, H_10(5^3, 1^3)^c)
-            (28, H_13(6^4)^odd)
-            (28, H_13(6^4)^odd)
+            16 H_7(3^4)^c
+            20 H_9(4^4)^odd
+            20 H_9(4^4)^odd
+            24 H_10(5^3, 1^3)^c
+            28 H_13(6^4)^odd
+            28 H_13(6^4)^odd
         """
         from sage.arith.all import gcd
 
@@ -503,7 +503,7 @@ class OrigamiGenerators():
         EXAMPLES::
 
             sage: from surface_dynamics import origamis
-            sage: o = origamis.ShresthaWangNonCharacteristic()
+            sage: o = origamis.ShresthaWang()
             sage: o.nb_squares()
             16
             sage: o
