@@ -125,6 +125,20 @@ class OrigamiGenerators():
             sage: o = origamis.CyclicCover([1,1,1,3])
             sage: o.sum_of_lyapunov_exponents()
             1
+
+        Some examples with Veech group SL(2,Z) (this happen if and only
+        if the entries of the vector is of the form ``[x,x,x,y]``)::
+
+            sage: for a in [[1,1,1,5],[1,1,1,7],[1,3,3,3],[1,1,1,9],[1,1,1,11],[3,3,3,5]]:
+            ....:     o = origamis.CyclicCover(a)
+            ....:     assert o.veech_group().index() == 1
+            ....:     print(o.nb_squares(), o.stratum_component())
+            (16, H_7(3^4)^c)
+            (20, H_9(4^4)^odd)
+            (20, H_9(4^4)^odd)
+            (24, H_10(5^3, 1^3)^c)
+            (28, H_13(6^4)^odd)
+            (28, H_13(6^4)^odd)
         """
         from sage.arith.all import gcd
 
@@ -139,7 +153,7 @@ class OrigamiGenerators():
             raise ValueError("ai should be odd")
             
         if gcd([M]+a) != 1:
-            raise ValueError("gcd(M,a) should be 0")
+            raise ValueError("gcd(M,a) should be 1")
             
         if M%2:
             raise ValueError("M should be even")
@@ -479,5 +493,35 @@ class OrigamiGenerators():
         return Origami(r,u,
                 as_tuple=True,
                 name="Heisenberg origami on GF(%d)"%p)
+
+    def ShresthaWang(self):
+        r"""
+        An origami with Veech group SL(2,Z) that is not normal.
+
+        This is the second example page 9 of https://arxiv.org/abs/1902.08214
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import origamis
+            sage: o = origamis.ShresthaWangNonCharacteristic()
+            sage: o.nb_squares()
+            16
+            sage: o
+            (1,2,3,4,5,6)(7,8,9,10,11,12)(13,14)(15,16)
+            (1,8,5,15,13,12)(2,16,14,9,6,7)(3,10)(4,11)
+            sage: o.stratum_component()
+            H_4(2^3)^odd
+            sage: o.veech_group().index()
+            1
+            sage: o.automorphism_group().cardinality()
+            1
+
+        And this example is not a cyclic cover::
+
+            sage: o.is_isomorphic(origamis.CyclicCover([1,1,1,5]))
+            False
+        """
+        return Origami("(1,2,3,4,5,6)(7,8,9,10,11,12)(13,14)(15,16)",
+                       "(1,8,5,15,13,12)(2,16,14,9,6,7)(3,10)(4,11)")
 
 origamis = OrigamiGenerators()
