@@ -733,8 +733,8 @@ def RauzyDiagram(arg1, arg2=None, reduced=False, flips=None, alphabet=None,
         sage: w1 = []
         sage: x = 0
         sage: for i in range(20):
-        ...    w1.append(T.in_which_interval(x))
-        ...    x = T(x)
+        ....:  w1.append(T.in_which_interval(x))
+        ....:  x = T(x)
         sage: w1 = Word(w1)
         sage: w1
         word: acbbcacbcacbbcbbcacb
