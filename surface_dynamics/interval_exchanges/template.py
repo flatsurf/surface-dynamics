@@ -5585,8 +5585,8 @@ class RauzyDiagram(SageObject):
                 sage: p = iet.Permutation('a b','b a')
                 sage: r = p.rauzy_diagram()
                 sage: def f(i,t):
-                ...       if t is None: return []
-                ...       return [t]
+                ....:     if t is None: return []
+                ....:     return [t]
                 sage: g = r.path(p)
                 sage: g.composition(f,list.__add__)
                 []
@@ -5626,8 +5626,8 @@ class RauzyDiagram(SageObject):
                 sage: p = iet.Permutation('a b','b a')
                 sage: r = p.rauzy_diagram()
                 sage: def f(i,t):
-                ...       if t is None: return []
-                ...       return [t]
+                ....:     if t is None: return []
+                ....:     return [t]
                 sage: g = r.path(p)
                 sage: g.right_composition(f,list.__add__)
                 []
@@ -5775,7 +5775,7 @@ class RauzyDiagram(SageObject):
 
             sage: r = iet.RauzyDiagram('a b c d','d c b a')
             sage: for p in r:
-            ...       p.rauzy_diagram() == r
+            ....:     p.rauzy_diagram() == r
             True
             True
             True
