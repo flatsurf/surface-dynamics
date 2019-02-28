@@ -1072,8 +1072,7 @@ class SQLDatabase(SageObject):
             sage: SD.create_table('simon', {'n':{'sql':'INTEGER', 'index':True}})
             sage: print(SD)
             table simon:
-                column n: index: True; unique: False; primary_key: False;
-                    sql: INTEGER;
+                column n: index: True; primary_key: False; sql: INTEGER; unique: False; 
         """
         s = ''
         for table in self.__skeleton__:
