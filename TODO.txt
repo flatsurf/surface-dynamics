@@ -1,13 +1,17 @@
 - affine group of an origami
 
+- compute cylinder decompositions for integral interval exchanges for
+  arbitrary precision integers (use fmpz_t/mpz_t from flint/GMP)
+
 - representation of the affine group in homology. Together with
 nice examples
  -> Wollmilchsau
  -> other cyclic covers
 
-- sparse permutation to encode origamis
+- "sparse permutation" to encode origamis and square tiled surfaces
+  (including the quadratic differential case)
 
-- include Charles Fougeron code about Lyapunov exponents
+- quartic differentials and higher order differentials
 
 - generic flat and translation surfaces (built from a triangulation or more
   generally a decomposition into convex polygons).
@@ -39,3 +43,5 @@ nice examples
 - more on geometry of surfaces (uniformization, quasi-conformal mappings, etc)
 
 - Ribbon graphs https://github.com/riccardomurri/fatghol
+
+- Ricci flow https://github.com/safnuk/facegraph
