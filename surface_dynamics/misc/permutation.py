@@ -1,10 +1,16 @@
 r"""
-Permutation on `\{0, 1, ..., n-1\}` as lists.
+Partial permutation on `\{0, 1, ..., n-1\}` as lists.
+
+Permutations are implemented as lists or arrays. When
+the image is undefined, the number -1 is used.
 """
 
 from __future__ import print_function, absolute_import
 
+from sage.rings.integer import Integer
+from sage.misc.prandom import shuffle, randint
 import numbers
+
 
 def argmin(l):
     r"""
@@ -28,7 +34,6 @@ def argmin(l):
             imin = i
     return imin
 
-
 #####################################################################
 # Initialization
 #####################################################################
@@ -44,7 +49,6 @@ def permutation_to_perm(p):
         [2, 0, 1]
     """
     return map(lambda x: x-1, p.domain())
-
 
 def perm_to_permutation(l):
     r"""
@@ -67,28 +71,43 @@ def perm_init(data, n=None, partial=False):
     EXAMPLES::
 
         sage: from surface_dynamics.misc.permutation import perm_init
-        sage: perm_init([3,2,1,4])
-        [3, 2, 1, 4]
+        sage: perm_init([3,2,1,0])
+        [3, 2, 1, 0]
+        sage: perm_init([3,2,1,0], 5)
+        [3, 2, 1, 0, 4]
         sage: perm_init(([2,1],[3,4,0]))
         [3, 2, 1, 4, 0]
         sage: perm_init('(0,1)(3,2)')
         [1, 0, 3, 2]
-        sage: perm_init([3,1,None,0])
-        [3, 1, None, 0]
+        sage: perm_init([3,1,-1,0])
+        [3, 1, -1, 0]
         sage: perm_init([[2,1],[3,4,0]])
         [3, 2, 1, 4, 0]
+
+        sage: perm_init([0r])
+        [0]
+
+    Zerology::
+
         sage: perm_init([])
         []
+        sage: perm_init([], 4)
+        [0, 1, 2, 3]
         sage: perm_init([[]])
         []
+        sage: perm_init([[]], 4)
+        [0, 1, 2, 3]
     """
     if isinstance(data, (tuple,list)):
         if not data:
-            return []
+            return list(range(n)) if n is not None else []
         if isinstance(data[0], (tuple,list)):
             return cycles_to_list(data, n, partial)
         else:
-            return [x if (x is None or isinstance(x,int)) else int(x) for x in data]
+            p = [int(x) for x in data]
+            if n is not None:
+                p.extend(range(len(p),n))
+            return p
 
     if isinstance(data, str):
         c = str_to_cycles(data)
@@ -118,9 +137,13 @@ def equalize_perms(l):
     return n
 
 
-def perm_check(l):
+def perm_check(l, n=None):
     r"""
-    Checks that ``l`` is a permutation of `[0, n-1]` for some ``n``.
+    Checks that ``l`` is a partial permutation of `\{0, 1, ..., n-1\}`.
+
+    INPUT:
+
+    - ``n`` - integer (optional)
 
     EXAMPLES::
 
@@ -128,39 +151,56 @@ def perm_check(l):
 
     Good permutations::
 
-        sage: perm_check([1r, 0r, 3r, 2r])
-        sage: perm_check([None, None])
-        sage: perm_check([None, 3r, None, 1r])
+        sage: perm_check([1, 0, 3, 2], 4)
+        True
+        sage: perm_check([-1], 1)
+        True
+        sage: perm_check([-1, 3, -1, 1], 4)
+        True
+
+        sage: perm_check([1,0,-1,-1,-1], 2)
+        True
+
+        sage: perm_check([0,-1])
+        True
+        sage: perm_check([-1,1])
+        True
 
     Bad permutations::
 
-        sage: perm_check([1, 0, 3, 2])
-        Traceback (most recent call last):
-        ...
-        TypeError: entries must be int or None, not Integer
-        sage: perm_check([2r, 0r])
-        Traceback (most recent call last):
-        ...
-        ValueError: permutation value 2 out of range
-        sage: perm_check([1r,0r,1r])
-        Traceback (most recent call last):
-        ...
-        ValueError: 1 is repeated
-    """
-    n = len(l)
-    seen = [False]*n
-    for i in xrange(n):
-        if l[i] is None:
-            continue
-        if type(l[i]) != int:
-            raise TypeError("entries must be int or None, not {}".format(type(l[i]).__name__))
-        if l[i] < 0 or l[i] >= n:
-            raise ValueError("permutation value {} out of range".format(l[i]))
-        if seen[l[i]]:
-            raise ValueError("{} is repeated".format(l[i]))
-        seen[l[i]] = True
+        sage: perm_check([1, 0, 3, 2], 3)
+        False
+        sage: perm_check([2, 0])
+        False
+        sage: perm_check([1, 0, 1])
+        False
 
-def perm_is_one(l):
+        sage: perm_check([1,-1])
+        False
+        sage: perm_check([-1,0])
+        False
+    """
+    if not isinstance(l, list):
+        return False
+    if n is None:
+        n = len(l)
+    else:
+        n = int(n)
+
+    im_seen = [False] * n
+    ra_seen = [False] * n
+    for i in range(n):
+        if l[i] == -1:
+            continue
+        if type(l[i]) != int and type(l[i]) != Integer:
+            raise TypeError("entries must be integers >= -1, not {}".format(type(l[i]).__name__))
+        if l[i] < 0 or l[i] >= n or im_seen[l[i]]:
+            return False
+        ra_seen[i] = True
+        im_seen[l[i]] = True
+    return ra_seen == im_seen
+
+def perm_is_one(l, n=None):
     r"""
     Test whether ``l`` is the identity on its domain.
 
@@ -169,15 +209,25 @@ def perm_is_one(l):
         sage: from surface_dynamics.misc.permutation import perm_is_one
         sage: perm_is_one([])
         True
-        sage: perm_is_one([None])
+        sage: perm_is_one([-1])
         True
         sage: perm_is_one([0])
         True
         sage: perm_is_one([1, 0])
         False
+
+        sage: perm_is_one([0, -1])
+        True
+        sage: perm_is_one([-1, 1])
+        True
+
+        sage: perm_is_one([0, 2, 1], 1)
+        True
     """
-    for i in range(len(l)):
-        if l[i] is not None and l[i] != i:
+    if n is None:
+        n = len(l)
+    for i in range(n):
+        if l[i] != -1 and l[i] != i:
             return False
     return True
 
@@ -196,7 +246,7 @@ def cycles_to_list(t, n=None, partial=False):
         sage: cycles_to_list([[1,3,5]])
         [0, 3, 2, 5, 4, 1]
         sage: cycles_to_list([[1,3,5]], partial=True)
-        [None, 3, None, 5, None, 1]
+        [-1, 3, -1, 5, -1, 1]
 
         sage: cycles_to_list([[1,3,5],[0,2,4],[6]])
         [2, 3, 4, 5, 0, 1, 6]
@@ -205,14 +255,17 @@ def cycles_to_list(t, n=None, partial=False):
         []
         sage: cycles_to_list([[],[]])
         []
+
+        sage: cycles_to_list([[1,4,2,5],[3],[6]], partial=True)
+        [-1, 4, 5, 3, 2, 1, 6]
     """
     if not any(tt for tt in t):
-        return []
+        return list(range(n)) if n is not None else []
 
     if n is None:
         n = max(map(max, t)) + 1
     if partial:
-        res = [None] * n
+        res = [-1] * n
     else:
         res = range(n)
 
@@ -247,9 +300,9 @@ def str_to_cycles(s):
     return r
 
 
-def perm_cycle_tuples(p, singletons=False):
+def perm_cycles(p, singletons=False, n=None):
     r"""
-    Return the cycle decomposition of `p`
+    Return the cycle decomposition of ``p``
 
     INPUT:
 
@@ -257,22 +310,35 @@ def perm_cycle_tuples(p, singletons=False):
 
     - ``singletons`` -- bool (default: ``False``) - return or not the singletons
 
+    - ``n`` - (optional) only use the first ``n`` elements of the permutation ``p``
+
     EXAMPLES::
 
-        sage: from surface_dynamics.misc.permutation import perm_cycle_tuples
-        sage: perm_cycle_tuples([0,2,1])
-        ([1, 2],)
-        sage: perm_cycle_tuples([0,2,1],True)
-        ([0], [1, 2])
+        sage: from surface_dynamics.misc.permutation import perm_cycles, perm_init
+        sage: perm_cycles([0,2,1])
+        [[1, 2]]
+        sage: perm_cycles([0,2,1],True)
+        [[0], [1, 2]]
 
-        sage: perm_cycle_tuples([2,None,0])
-        ([0, 2],)
+        sage: perm_cycles([2,-1,0])
+        [[0, 2]]
+
+        sage: perm_cycles([2,0,1,-1,-1], n=3)
+        [[0, 2, 1]]
+
+        sage: perm_cycles([-1,3,-1,1], singletons=True)
+        [[1, 3]]
+
+        sage: perm_cycles(perm_init('(1,3)', partial=True))
+        [[1, 3]]
     """
-    seen = [1]*len(p)
+    if n is None:
+        n = len(p)
+    seen = [1] * n
     res = []
 
-    for i in xrange(len(p)):
-        if seen[i] and p[i] is not None:
+    for i in xrange(n):
+        if seen[i] and p[i] != -1:
             cycle = []
             j = i
             while seen[j]:
@@ -282,10 +348,135 @@ def perm_cycle_tuples(p, singletons=False):
             if singletons or len(cycle) > 1:
                 res.append(cycle)
 
-    return tuple(res)
+    return res
+
+def perm_cycle_tuples(*args, **kwds):
+    print("WARNING: perm_cycle_tuples is deprecated, use perm_cycles")
+    return perm_cycles(*args, **kwds)
+
+def perm_num_cycles(p, n=None):
+    r"""
+    Return the number of cycles of the permutation ``p``.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_num_cycles
+        sage: perm_num_cycles([1,2,3,0])
+        1
+        sage: perm_num_cycles([0,2,3,1])
+        2
+        sage: perm_num_cycles([3,2,1,0])
+        2
+        sage: perm_num_cycles([3,1,2,0])
+        3
+        sage: perm_num_cycles([0,1,2,3])
+        4
+    """
+    if n is None:
+        n = len(p)
+    seen = [False] * n
+    ans = 0
+    for i in range(n):
+        if seen[i] or p[i] == -1:
+            continue
+        ans += 1
+        j = i
+        while not seen[j]:
+            seen[j] = True
+            j = p[j]
+    return ans
+
+def perm_cycle_type(p, n=None):
+    r"""
+    Return the lengths of the cycles of the permutation ``p`` in size of
+    decreasing order.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_cycle_type
+        sage: perm_cycle_type([1,2,3,0])
+        [4]
+        sage: perm_cycle_type([0,2,3,1])
+        [3, 1]
+        sage: perm_cycle_type([3,2,1,0])
+        [2, 2]
+        sage: perm_cycle_type([3,1,2,0])
+        [2, 1, 1]
+        sage: perm_cycle_type([0,1,2,3])
+        [1, 1, 1, 1]
+    """
+    if n is None:
+        n = len(p)
+    seen = [False] * n
+    c = []
+    for i in range(n):
+        if seen[i] or p[i] == -1:
+            continue
+        k = 0
+        j = i
+        while not seen[j]:
+            seen[j] = True
+            k += 1
+            j = p[j]
+        c.append(k)
+    c.sort(reverse=True)
+    return c
+
+def perm_dense_cycles(p, n=None):
+    r"""
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_dense_cycles
+
+        sage: perm_dense_cycles([1,2,0])
+        ([0, 0, 0], [3])
+
+        sage: perm_dense_cycles([0,2,1])
+        ([0, 1, 1], [1, 2])
+
+        sage: perm_dense_cycles([2,1,0])
+        ([0, 1, 0], [2, 1])
+    """
+    if n is None:
+        n = len(p)
+    deg = []
+    res = [-1] * n
+    k = 0
+    for i in range(n):
+        if res[i] != -1:
+            continue
+        d = 0
+        while res[i] == -1:
+            res[i] = k
+            i = p[i]
+            d += 1
+        k += 1
+        deg.append(d)
+    return res, deg
 
 
-def perm_cycle_string(p, singletons=False):
+def perm_dense_cycles_and_angles(p, n=None):
+    if n is None:
+        n = len(p)
+
+    lab = [-1] * n  # labels
+    ang = [-1] * n  # angle
+    deg = []          # degrees
+    k = 0
+    for i in range(n):
+        if p[i] == -1 or lab[i] != -1:
+            continue
+        d = 0
+        while lab[i] == -1:
+            lab[i] = k
+            ang[i] = d
+            d += 1
+            i = p[i]
+        k += 1
+        deg.append(d)
+    return lab, ang, deg
+
+def perm_cycle_string(p, singletons=False, n=None):
     r"""
     Returns a string representing the cycle decomposition of `p`
 
@@ -294,12 +485,16 @@ def perm_cycle_string(p, singletons=False):
         sage: from surface_dynamics.misc.permutation import perm_cycle_string
         sage: perm_cycle_string([0,2,1])
         '(1,2)'
-        sage: perm_cycle_string([0,2,1],True)
+        sage: perm_cycle_string([0,2,1], True)
         '(0)(1,2)'
+        sage: perm_cycle_string([0,1,2,-1], False, 3)
+        '()'
     """
-    return ''.join(map(lambda x: '('+','.join(map(str, x))+')',
-                       perm_cycle_tuples(p, singletons)))
-
+    c = perm_cycles(p, singletons, n)
+    if not c:
+        return '()'
+    else:
+        return ''.join(map(lambda x: '('+','.join(map(str, x))+')', c))
 
 def _canonical_reg_perm(n, k):
     r"""
@@ -339,6 +534,12 @@ def constellation_init(vertices, edges, faces, n=None, check=True):
     TESTS::
 
         sage: from surface_dynamics.misc.permutation import constellation_init
+
+        sage: constellation_init([0,1], [1,0], [1,0])
+        [[0, 1], [1, 0], [1, 0]]
+        sage: constellation_init([0r,1r],[1r,0r], [1r,0r])
+        [[0, 1], [1, 0], [1, 0]]
+
         sage: constellation_init([2,1,0], [1,2,0], None)
         [[2, 1, 0], [1, 2, 0], [0, 2, 1]]
 
@@ -355,7 +556,7 @@ def constellation_init(vertices, edges, faces, n=None, check=True):
     ignored::
 
         sage: constellation_init('(1,6,5)(2,3,4)', '(1,2)(3,4)(5,6)', '(1,4,2,5)(3)(6)')
-        [[None, 6, 3, 4, 2, 1, 5], [None, 2, 1, 4, 3, 6, 5], [None, 4, 5, 3, 2, 1, 6]]
+        [[-1, 6, 3, 4, 2, 1, 5], [-1, 2, 1, 4, 3, 6, 5], [-1, 4, 5, 3, 2, 1, 6]]
 
     TESTS::
 
@@ -376,15 +577,18 @@ def constellation_init(vertices, edges, faces, n=None, check=True):
 
     if not (nones[0] or nums[0]):
         vertices = perm_init(vertices, n, partial=True)
-        if check: perm_check(vertices)
+        if check and not perm_check(vertices):
+            raise ValueError("invalid vertex permutation")
 
     if not (nones[1] or nums[1]):
         edges = perm_init(edges, n, partial=True)
-        if check: perm_check(edges)
+        if check and not perm_check(edges):
+            raise ValueError("invalid edge permutation")
 
     if not (nones[2] or nums[2]):
         faces = perm_init(faces, n, partial=True)
-        if check: perm_check(faces)
+        if check and not perm_check(faces):
+            raise ValueError("invalid face permutation")
 
     P = [vertices, edges, faces]
     perms = [p for i,p in enumerate(P) if not (nones[i] or nums[i])]
@@ -410,7 +614,6 @@ def constellation_init(vertices, edges, faces, n=None, check=True):
 
     if check:
         if set(P[0]) != set(P[1]) or set(P[0]) != set(P[2]):
-            print(P)
             raise ValueError("permutations defined on different domains")
         if not perm_is_one(perm_compose(perm_compose(P[0], P[1]), P[2])):
             raise ValueError("product is not identity")
@@ -421,27 +624,37 @@ def constellation_init(vertices, edges, faces, n=None, check=True):
 # Group operations
 #####################################################################
 
-def perm_invert(l):
+def perm_invert(l, n=None):
     r"""
     Returns the inverse of the permutation ``l``.
 
     TESTS::
 
         sage: from itertools import permutations
-        sage: from surface_dynamics.misc.permutation import perm_invert, perm_compose
-        sage: all(perm_compose(perm_invert(p),p) == range(3) for p in permutations(range(3)))
+        sage: from surface_dynamics.misc.permutation import perm_init, perm_invert, perm_compose, perm_is_one
+        sage: all(perm_is_one(perm_compose(perm_invert(p),p)) for p in permutations(range(3)))
         True
-        sage: all(perm_compose(p,perm_invert(p)) == range(3) for p in permutations(range(3)))
+        sage: all(perm_is_one(perm_compose(p,perm_invert(p))) for p in permutations(range(3)))
         True
 
-        sage: perm_invert([2, None, 5, 0, None, 3])
-        [3, None, 0, 5, None, 2]
+        sage: perm_invert([2, -1, 5, 0, -1, 3])
+        [3, -1, 0, 5, -1, 2]
+
+        sage: p = perm_init('(1,3,5)(2,9)', partial=True)
+        sage: q = perm_invert(p)
+        sage: q
+        [-1, 5, 9, 1, -1, 3, -1, -1, -1, 2]
+        sage: perm_is_one(perm_compose(p, q))
+        True
+
+        sage: perm_invert([2,1,0,-1,-1], 3)
+        [2, 1, 0]
     """
-    res = [0]*len(l)
-    for i in xrange(len(l)):
-        if l[i] is None:
-            res[i] = None
-        else:
+    if n is None:
+        n = len(l)
+    res = [-1] * n
+    for i in xrange(n):
+        if l[i] != -1:
             res[l[i]] = i
     return res
 
@@ -452,15 +665,20 @@ def perm_compose(p1, p2):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.misc.permutation import perm_compose
+        sage: from surface_dynamics.misc.permutation import perm_init, perm_compose
         sage: perm_compose([0,2,1],[0,2,1])
         [0, 1, 2]
-        sage: perm_compose([None,2,3,1],[None,2,1,3])
-        [None, 1, 3, 2]
+        sage: perm_compose([-1,2,3,1],[-1,2,1,3])
+        [-1, 1, 3, 2]
+
+        sage: p1 = perm_init('(1,3,5)', partial=True)
+        sage: p2 = perm_init('(1,5)(3)', partial=True)
+        sage: perm_compose(p1, p2)
+        [-1, 3, -1, 1, -1, 5]
     """
-    r = [None] * len(p1)
+    r = [-1] * len(p1)
     for i in xrange(len(p1)):
-        if p1[i] is not None and p1[i] < len(p2):
+        if p1[i] != -1 and p1[i] < len(p2):
             r[i] = p2[p1[i]]
     return r
 
@@ -488,6 +706,134 @@ def perm_compose_i(p1, p2):
         res[p1[p2[i]]] = i
 
     return res
+
+def perm_conjugate(p1, p2, n=None):
+    r"""
+    Conjugate ``p1`` by ``p2``.
+
+    Let call ``res`` the output of this function. If ``p1`` was
+    mapping ``a`` to ``b`` then ``res`` will map ``p2[a]``
+    to ``p2[b]``.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_random, perm_conjugate
+
+        sage: p1 = perm_random(23)
+        sage: p2 = perm_random(23)
+        sage: res = perm_conjugate(p1, p2)
+        sage: res[p2[14]] == p2[p1[14]]
+        True
+        sage: res[p2[19]] == p2[p1[19]]
+        True
+    """
+    if n is None:
+        n = len(p1)
+    res = [-1] * n
+    for i in range(n):
+        res[p2[i]] = p2[p1[i]]
+    return res
+
+################################################################
+# Various permutation constructors (including randomized ones) #
+################################################################
+
+def perm_one(n):
+    r"""
+    The identity permutation
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_one
+        sage: perm_one(0)
+        []
+        sage: perm_one(3)
+        [0, 1, 2]
+    """
+    return list(range(n))
+
+def perm_random(n):
+    r"""
+    Return a random permutation.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_random, perm_check
+        sage: perm_check(perm_random(13), 13)
+        True
+    """
+    r = list(range(n))
+    shuffle(r)
+    return r
+
+def perm_random_centralizer(p):
+    r"""
+    Return a random permutation in the centralizer of ``p``.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_random, perm_compose, perm_random_centralizer
+        sage: p = perm_random(10)
+        sage: q = perm_random_centralizer(p)
+        sage: perm_compose(p, q) == perm_compose(q, p)
+        True
+    """
+    if not p:
+        return p
+
+    cyc = perm_cycles(p)
+    cyc.sort(key = lambda c: len(c))
+    i = 0
+    ans = [-1] * len(p)
+    while i < len(cyc):
+        j = i + 1
+        s = len(cyc[i])
+        while j < len(cyc) and len(cyc[j]) == s:
+            j += 1
+
+        # permutation of the cycles i, i+1, ..., j-1
+        m = perm_random(j - i)
+
+        for ii in range(i, j):
+            jj = i + m[ii - i]
+            shift = randint(0, s - 1)  # random shift
+            for k in range(len(cyc[i])):
+                ans[cyc[ii][k]] = cyc[jj][(k + shift) % s]
+
+        # next round
+        i = j
+
+    return ans
+
+def perm_random_conjugacy_class(c):
+    r"""
+    Return a random permutation with given conjugacy class ``c``.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import (perm_random_conjugacy_class,
+        ....:     perm_cycle_type)
+
+        sage: p = perm_random_conjugacy_class([5,2])
+        sage: perm_cycle_type(p)
+        [5, 2]
+
+        sage: p = perm_random_conjugacy_class([7,3,3,1])
+        sage: perm_cycle_type(p)
+        [7, 3, 3, 1]
+    """
+    n = sum(c)
+    r = list(range(n))
+    shuffle(r)
+    p = [-1] * n
+    i = 0
+    for k in c:
+        # add a k-cycle following the list r
+        for j in range(i, i+k-1):
+            p[r[j]] = r[j+1]
+        p[r[i+k-1]] = r[i]
+        i += k
+    return p
 
 #####################################################################
 # Actions
@@ -848,3 +1194,172 @@ def perms_canonical_labels(p, e=None):
 
     return c_win, m_win
 
+
+#######################################################################
+# Dynamical permutation groups
+#######################################################################
+# TODO: redesign
+# when adding a generator we need to check the orbit under what was already computed
+class PermutationGroupOrbit(object):
+    r"""
+    Dynamical orbit generation.
+
+    This is to be used when computing the automorphism group of an object (e.g.
+    a ribbon graph). It allows to iterate through orbit representatives
+    dynamically (i.e. group generators can be added on the fly).
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import PermutationGroupOrbit
+        sage: P1 = PermutationGroupOrbit(7, ['(0,1)', '(0,1,2,3,4,5,6)'])
+        sage: P2 = PermutationGroupOrbit(4, ['(0,1)', '(2,3)'])
+    """
+    __slots__ = ['_n', '_gens', '_S', '_s', '_seen', '_elts']
+
+    def __init__(self, n, gens, S=None, check=True):
+        if check:
+            gens = [perm_init(g, n=n) for g in gens]
+        if S is None:
+            S = list(range(n))
+
+        self._n = n              # underlying set is {0, 1, ..., n-1}
+        self._gens = gens        # group generators
+        self._S = S              # the set we are interested in
+        self._s = 0              # index in the set S
+        self._seen = [False] * n # the elements that we already visited (dense version)
+        self._elts = []          # the elements that we already visited (sparse version)
+
+    def __iter__(self):
+        return self
+
+    def libgap_group(self):
+        from sage.libs.gap.libgap import libgap
+        if not self._gens:
+            return libgap.Group([libgap.PermList([])])
+        gens = []
+        for a in self._gens:
+            gens.append(libgap.PermList([a[i]+1 for i in range(self._n)]))
+        return libgap.Group(gens)
+
+    def group_cardinality(self):
+        return self.libgap_group().Size().sage()
+
+    def __repr__(self):
+        n = self._n
+        return "PermutationGroupOrbit({}, [{}])".format(
+                n,
+                ', '.join(perm_cycle_string(g, singletons=False, n=n) for g in self._gens))
+
+    def num_gens(self):
+        return len(self._gens)
+
+    def gens(self):
+        return self._gens
+
+    def reset_iterator(self, S=None):
+        r"""
+        Reset the self we iterate over with.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.permutation import PermutationGroupOrbit
+
+            sage: O = PermutationGroupOrbit(4, [])
+            sage: list(O)
+            [0, 1, 2, 3]
+            sage: list(O)
+            []
+            sage: O.reset_iterator()
+            sage: list(O)
+            [0, 1, 2, 3]
+            sage: list(O)
+            []
+
+            sage: O.add_generator('(0,1)(2,3)')
+            sage: list(O)
+            []
+            sage: O.reset_iterator()
+            sage: list(O)
+            [0, 2]
+        """
+        n = self._n
+        if S is None:
+            S = list(range(n))
+        self._S = S
+        self._seen = [False] * n
+        del self._elts[:]
+        self._s = 0
+
+    def next(self):
+        S = self._S        # candidates
+        s = self._s        # current index in S
+        if s == len(S):
+            raise StopIteration
+
+        seen = self._seen  # already visited elements (dense)
+        i = S[s]
+        s += 1
+        while seen[i] and s < len(S):
+            i = S[s]
+            s += 1
+
+        # update s and remove the orbit of i
+        self._s = s
+        if seen[i]:
+            raise StopIteration
+
+        elts = self._elts  # already visited elements (sparse)
+        k = len(elts)
+        elts.append(i)
+        while k < len(elts):
+            u = elts[k]
+            for g in self._gens:
+                v = g[u]
+                if not seen[v]:
+                    seen[v] = True
+                    elts.append(v)
+            k += 1
+
+        return i
+
+    def add_generator(self, g, check=True):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.permutation import PermutationGroupOrbit
+
+            sage: O = PermutationGroupOrbit(4, [])
+            sage: next(O)
+            0
+            sage: O.add_generator('(0,1)(2,3)')
+            sage: next(O)
+            2
+            sage: next(O)
+            Traceback (most recent call last):
+            ...
+            StopIteration
+        """
+        if check:
+            g = perm_init(g, n=self._n)
+        self._gens.append(g)
+        elts = self._elts
+        seen = self._seen
+
+        k = 0
+        K = len(elts)
+        while k < K:
+            u = elts[k]
+            v = g[u]
+            if not seen[v]:
+                seen[v] = True
+                elts.append(v)
+            k += 1
+
+        while k < len(elts):
+            u = elts[k]
+            for g in self._gens:
+                v = g[u]
+                if not seen[v]:
+                    seen[v] = True
+                    elts.append(v)
+            k += 1
