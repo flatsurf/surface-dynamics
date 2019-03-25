@@ -350,7 +350,7 @@ class Constellation_class(Element):
             sage: c._check()
             Traceback (most recent call last):
             ...
-            ValueError: 0 is repeated
+            ValueError: permutation 0 invalid
             sage: c._set_g_unsafe(0,1,1)
             sage: c._check()
             Traceback (most recent call last):
@@ -364,14 +364,14 @@ class Constellation_class(Element):
             ValueError: not connected
         """
         for i in xrange(self.length()):
-            perm_check(self._g[i])
+            if not perm_check(self._g[i]):
+                raise ValueError("permutation {} invalid".format(i))
 
-        h = range(self.degree())
+        h = perm_one(self.degree())
         for p in self._g:
             h = perm_compose(h, p)
-        for i in xrange(self.degree()):
-            if h[i] != i:
-                raise ValueError("The product is not identity")
+        if not perm_is_one(h):
+            raise ValueError("The product is not identity")
 
         if self._connected and not perms_are_transitive(self._g):
             raise ValueError("not connected")
@@ -650,7 +650,7 @@ class Constellation_class(Element):
         if i is None:
             return tuple(self.profile(j) for j in xrange(self.length()))
         else:
-            return Partition(sorted(map(len, perm_cycle_tuples(self._g[i], True)), reverse=True))
+            return Partition(sorted(map(len, perm_cycles(self._g[i], True)), reverse=True))
 
     passport = profile
 
@@ -688,14 +688,14 @@ class Constellation_class(Element):
 
             sage: c = Constellation(['(0,1)(2,3,4)','(0,4)(1,3)',None])
             sage: c.g_cycle_tuples(0)
-            ([0, 1], [2, 3, 4])
+            [[0, 1], [2, 3, 4]]
             sage: c.g_cycle_tuples(1)
-            ([0, 4], [1, 3])
+            [[0, 4], [1, 3]]
         """
         if i is None:
-            return map(lambda i: perm_cycle_tuples(i, singletons), self._g)
+            return map(lambda i: perm_cycles(i, singletons), self._g)
         else:
-            return perm_cycle_tuples(self._g[i], singletons)
+            return perm_cycles(self._g[i], singletons)
 
     def g_cycle_string(self, i, singletons=False):
         r"""
