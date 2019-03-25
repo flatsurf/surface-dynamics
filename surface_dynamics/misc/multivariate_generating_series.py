@@ -59,6 +59,8 @@ from sage.rings.integer_ring import ZZ
 from sage.rings.rational_field import QQ
 from sage.modules.vector_integer_dense import Vector_integer_dense
 
+
+
 def laurent_monomial(R, arg):
     r"""
     EXAMPLES::
@@ -139,7 +141,7 @@ def parse_latte_generating_series(M, s):
                 else:
                     mult = 1
 
-                assert v.startswith('x[') and v.endswith(']')
+                assert v.startswith('x[') and v.endswith(']'), (s, term, v)
                 i = int(v[2:-1])
                 mon[i] += mult
             mon.set_immutable()
@@ -372,7 +374,7 @@ class AbstractMSum(Element):
         elif isinstance(data, AbstractMSum):
             self._data = data.copy()
             return
-        
+
         for term in data:
             if not isinstance(term, (tuple,list)) or len(term) != 2:
                 raise ValueError
@@ -501,13 +503,13 @@ class AbstractMSum(Element):
             return op == op_EQ
 
         (sden,snum), = self.factor()._data.items()
-        (oden,onum), = other.factor()._data
+        (oden,onum), = other.factor()._data.items()
 
         if sden == oden and snum == onum:
             return op == op_EQ
 
         raise NotImplementedError
-                
+
 
 class GeneralizedMultiZetaElement(AbstractMSum):
     def simplify(self):
@@ -557,9 +559,10 @@ class GeneralizedMultiZetaElement(AbstractMSum):
             num = self._data[den]
             fraction = str(num)
             if not den.is_one():
-                fraction += ' * Sum( 1 / '
+                fraction += ' * Sum(1/'
+                linterm = den.str_linear(var_names)
                 fraction += '(' + den.str_linear(var_names) + '), '
-                fraction += ', '.join(var_names) + ')'
+                fraction += ', '.join("%s=1..+oo"%v for v in var_names) + ')'
             terms.append(fraction)
 
         return ' + '.join(terms)
@@ -575,8 +578,8 @@ class MultivariateGeneratingSeries(AbstractMSum):
 
         EXAMPLES::
 
-           sage: from surface_dynamics.misc.multivariate_generating_series import * 
-           sage: M = MultivariateGeneratingSeriesRing(2)
+           sage: from surface_dynamics.misc.multivariate_generating_series import *
+           sage: M = MultivariateGeneratingSeriesRing(2, 'x')
            sage: m1 = M.term(1, [((1,-1),1), ((0,1),1)])
            sage: m2 = M.term(1, [((-1,1),1), ((1,0),1)])
            sage: f = (m1 + m2)**2
@@ -726,7 +729,7 @@ class MultivariateGeneratingSeries(AbstractMSum):
 
             sage: f = M.term(x0 * x1, [((1,1),2)])
             sage: f.derivative(0)
-            (x1)/((1 - x0*x1)^2) + (2*x0*x1^2)/((1 - x0*x1)^3)
+            (2*x0*x1^2)/((1 - x0*x1)^3) + (x1)/((1 - x0*x1)^2)
             sage: f.derivative(0).taylor(10) - f.taylor(10).derivative(xx0)
             30*x0^5*x1^6
 
@@ -742,6 +745,7 @@ class MultivariateGeneratingSeries(AbstractMSum):
 
             sage: f = M.zero() + M.term(1/1*x0^2 * x1, [((1,0),1), ((1,1),1)])
             sage: f.derivative(0)
+            (x0^2*x1^2)/((1 - x0)*(1 - x0*x1)^2) + (x0^2*x1)/((1 - x0)^2*(1 - x0*x1)) + (2*x0*x1)/((1 - x0)*(1 - x0*x1))
 
         You can indistinctly use integers, strings or polynomial variables for ``var``::
 
@@ -843,7 +847,7 @@ class MultivariateGeneratingSeries(AbstractMSum):
 
         TODO: this is only working term by term but for example containing negative
         powers as::
-    
+
             sage: M = MultivariateGeneratingSeriesRing('x', 2)   # not tested
             sage: m1 = M.term(1, [((1,-1),1), ((0,1),1)])   # not tested
             sage: m2 = M.term(1, [((-1,1),1), ((1,0),1)])   # not tested
@@ -1118,8 +1122,8 @@ class AbstractMSumRing(Parent):
             sage: M = MultivariateGeneratingSeriesRing('x', 3)
             sage: M.term(1, [([1,1,0],1),([1,0,-1],2)])
             (1)/((1 - x0*x2^-1)^2*(1 - x0*x1))
-            sage: M.term(1, {(1,1,0): 1, (1,0,-1): 2})
-            (1)/((1 - x0*x2^-1)^2*(1 - x0*x1))
+            sage: M.term(1, {(1,1,0): 1, (1,0,2): 2})
+            (1)/((1 - x0*x2^2)^2*(1 - x0*x1))
 
         Also works if the denominator is already a factored denominator::
 
@@ -1141,10 +1145,8 @@ class AbstractMSumRing(Parent):
             sage: v1 = vector(QQ, (1,1)); v1.set_immutable()
             sage: d[v1] = 1
             sage: d[v0] = 1
-            sage: f = M.term(1*x0^2*x1, d)
-            Traceback (most recent call last):
-            ...
-            ValueError: invalid dictionary
+            sage: M.term(1*x0^2*x1, d)
+            (x0^2*x1)/((1 - x0)*(1 - x0*x1))
         """
         return self.element_class(self, [(den, num)], self.free_module())
 
@@ -1169,26 +1171,6 @@ class GeneralizedMultiZetaRing(AbstractMSumRing):
     Element = GeneralizedMultiZetaElement
 
     def _coerce_map_from_(self, other):
-        r"""
-        EXAMPLES::
-
-            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
-
-            sage: M = MultivariateGeneratingSeriesRing('x', 2)
-
-            sage: M.has_coerce_map_from(ZZ)
-            True
-            sage: M.coerce_map_from(ZZ)
-            Co...ion map:
-              From: Integer Ring
-              To:   Multivariate quasi-polynomial generating series on x0, x1
-
-            sage: M.has_coerce_map_from(QQ)
-            True
-
-            sage: M.has_coerce_map_from(M.laurent_polynomial_ring())
-            True
-        """
         if self.laurent_polynomial_ring().base_ring().has_coerce_map_from(other):
             return True
 
@@ -1260,4 +1242,3 @@ class MultivariateGeneratingSeriesRing(AbstractMSumRing):
         """
         if self.laurent_polynomial_ring().has_coerce_map_from(other):
             return True
-

@@ -127,11 +127,14 @@ class FactoredDenominator(object):
                 self._dict[mon] = mult
 
         elif isinstance(data, dict):
-            self._dict = data
             if V is not None:
-                for k in self._dict:
-                    if parent(k) is not V:
-                        raise ValueError("invalid dictionary")
+                self._dict = {}
+                for k,v in data.items():
+                    k = V(k)
+                    k.set_immutable()
+                    self._dict[k] = v
+            else:
+                self._dict = data
 
         elif isinstance(data, FactoredDenominator):
             self._dict = data._dict.copy()
@@ -256,7 +259,7 @@ class FactoredDenominator(object):
             sage: from surface_dynamics.misc.factored_denominator import FactoredDenominator
 
             sage: V = ZZ**3
-            sage: FactoredDenominator([], None).degree()
+            sage: FactoredDenominator([], V).degree()
             0
             sage: FactoredDenominator([((1,0,0), 2)], V).degree()
             2
@@ -267,7 +270,7 @@ class FactoredDenominator(object):
 
         TESTS::
 
-            sage: parent(FactoredDenominator([], None).degree())
+            sage: parent(FactoredDenominator([], V).degree())
             Integer Ring
             sage: parent(FactoredDenominator([((1,0,0), 2)], V).degree())
             Integer Ring
