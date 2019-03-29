@@ -84,12 +84,7 @@ for name, data in extensions_data.items():
         headers = [os.path.join(full_dir, data['dir'], head) for head in data['headers']]
         ext = Extension(data['name'],
             sources = sources,
-            include_dirs = [
-                os.path.join(SAGE_SRC, 'sage', 'libs', 'ntl'),  # apparently needed for Sage on archlinux
-                os.path.join(SAGE_SRC, 'sage', 'cpython'),      # idem
-                CYSIGNALS_SRC,                                  # idem
-                full_dir
-                ],
+            include_dirs = [full_dir],
             depends = headers,
         )
         extensions.append(ext)
