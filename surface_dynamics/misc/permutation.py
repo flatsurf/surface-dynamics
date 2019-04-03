@@ -7,10 +7,15 @@ the image is undefined, the number -1 is used.
 
 from __future__ import print_function, absolute_import
 
-from sage.rings.integer import Integer
-from sage.misc.prandom import shuffle, randint
 import numbers
 
+try:
+    import sage.all
+except ImportError:
+    from random import shuffle, randint
+else:
+    from sage.misc.prandom import shuffle, randint
+    from sage.arith.functions import lcm
 
 def argmin(l):
     r"""
@@ -192,7 +197,7 @@ def perm_check(l, n=None):
     for i in range(n):
         if l[i] == -1:
             continue
-        if type(l[i]) != int and type(l[i]) != Integer:
+        if not isinstance(l[i], numbers.Integral):
             raise TypeError("entries must be integers >= -1, not {}".format(type(l[i]).__name__))
         if l[i] < 0 or l[i] >= n or im_seen[l[i]]:
             return False
@@ -258,6 +263,11 @@ def cycles_to_list(t, n=None, partial=False):
 
         sage: cycles_to_list([[1,4,2,5],[3],[6]], partial=True)
         [-1, 4, 5, 3, 2, 1, 6]
+
+        sage: cycles_to_list([[0,5]], 3)
+        Traceback (most recent call last):
+        ...
+        ValueError: cycle value out of range
     """
     if not any(tt for tt in t):
         return list(range(n)) if n is not None else []
@@ -271,7 +281,11 @@ def cycles_to_list(t, n=None, partial=False):
 
     for c in t:
         for j in xrange(len(c)-1):
+            if not isinstance(c[j], numbers.Integral) or c[j] < 0 or c[j] >= n:
+                raise ValueError("cycle values out of range")
             res[c[j]] = int(c[j+1])
+        if not isinstance(c[-1], numbers.Integral) or c[-1] < 0 or c[-1] >= n:
+            raise ValueError("cycle value out of range")
         res[c[-1]] = int(c[0])
 
     return res
@@ -1198,6 +1212,19 @@ def perms_canonical_labels(p, e=None):
 #######################################################################
 # Dynamical permutation groups
 #######################################################################
+def perm_order(p, n=None):
+    r"""
+    Return the multiplicative order of the permutation ``p``.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_init, perm_order
+        sage: p = perm_init('(1,3)(2,4,6)(5)')
+        sage: perm_order(p)
+        6
+    """
+    return lcm(perm_cycle_type(p))
+
 # TODO: redesign
 # when adding a generator we need to check the orbit under what was already computed
 class PermutationGroupOrbit(object):
@@ -1242,7 +1269,22 @@ class PermutationGroupOrbit(object):
         return libgap.Group(gens)
 
     def group_cardinality(self):
-        return self.libgap_group().Size().sage()
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.permutation import PermutationGroupOrbit
+            sage: PermutationGroupOrbit(7, []).group_cardinality()
+            1
+            sage: PermutationGroupOrbit(5, ['(0,2)(3,4)']).group_cardinality()
+            2
+            sage: PermutationGroupOrbit(7, ['(0,1)', '(0,1,2,3,4,5,6)']).group_cardinality()
+            5040
+        """
+        if not self._gens:
+            return 1
+        elif len(self._gens) == 1:
+            return perm_order(self._gens[0])
+        return int(self.libgap_group().Size())
 
     def __repr__(self):
         n = self._n
