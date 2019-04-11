@@ -2,11 +2,11 @@ image: ubuntu:18.04
 before_script:
 - export DEBIAN_FRONTEND=noninteractive   # avoid tzdata interactive configuration
 - apt-get -qq update
-- apt-get install -y apt-utils git cython libgmp-dev libmpfr-dev libppl-dev libmpc-dev sagemath
-- source /usr/share/sagemath/bin/sage-env
-- pip install gmpy2==2.1.0a4 --disable-pip-version-check
-- pip install pplpy
-- pip install .
+- wget http://mirrors.mit.edu/sage/linux/32bit/sage-8.7-Ubuntu_18.04-i686.tar.bz2
+- tar xzf sage-8.7-Ubuntu_18.04-i686.tar.bz2
+- cd SageMath
+- ./sage -c "print(hello)"
+- ./sage -pip install ../
 - export SURFACE_DYNAMICS_PATH="$(sage -c 'import surface_dynamics; print(surface_dynamics.__path__[0])')"
 
 python2.7:
