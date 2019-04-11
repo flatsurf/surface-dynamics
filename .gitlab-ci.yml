@@ -2,7 +2,7 @@ image: ubuntu:18.04
 before_script:
 - export DEBIAN_FRONTEND=noninteractive   # avoid tzdata interactive configuration
 - apt-get -qq update
-- apt-get -y install wget
+- apt-get -y install wget python
 - wget http://mirrors.mit.edu/sage/linux/32bit/sage-8.7-Ubuntu_18.04-i686.tar.bz2
 - bzip2 -d sage-8.7-Ubuntu_18.04-i686.tar.bz2
 - tar xf sage-8.7-Ubuntu_18.04-i686.tar
