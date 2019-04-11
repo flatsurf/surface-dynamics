@@ -2,7 +2,7 @@ image: ubuntu:18.04
 before_script:
 - export DEBIAN_FRONTEND=noninteractive   # avoid tzdata interactive configuration
 - apt-get -qq update
-- apt-get install wget
+- apt-get -y install wget
 - wget http://mirrors.mit.edu/sage/linux/32bit/sage-8.7-Ubuntu_18.04-i686.tar.bz2
 - tar xzf sage-8.7-Ubuntu_18.04-i686.tar.bz2
 - cd SageMath
