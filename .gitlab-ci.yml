@@ -4,7 +4,8 @@ before_script:
 - apt-get -qq update
 - apt-get -y install wget
 - wget http://mirrors.mit.edu/sage/linux/32bit/sage-8.7-Ubuntu_18.04-i686.tar.bz2
-- tar xzf sage-8.7-Ubuntu_18.04-i686.tar.bz2
+- bzip2 -d sage-8.7-Ubuntu_18.04-i686.tar.bz2
+- tar xf sage-8.7-Ubuntu_18.04-i686.tar
 - cd SageMath
 - ./sage -c "print(hello)"
 - ./sage -pip install ../
