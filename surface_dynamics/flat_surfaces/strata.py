@@ -427,7 +427,7 @@ class Stratum(SageObject):
             sage: QuadraticStratum(6,-1,-1).components()
             [Q_2(6, -1^2)^hyp, Q_2(6, -1^2)^nonhyp]
         """
-        return map(lambda x: x(self), self._cc)
+        return list(map(lambda x: x(self), self._cc))
 
 class StratumComponent(SageObject):
     r"""
