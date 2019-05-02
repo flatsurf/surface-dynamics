@@ -231,7 +231,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
         if isinstance(l, dict):
             l = sum(([v]*e for v,e in l.iteritems()), [])
 
-        zeros = map(Integer, filter(lambda x: x, l))
+        zeros = list(map(Integer, filter(lambda x: x, l)))
         if any(z < 0 for z in zeros):
             raise ValueError("the degrees must be non negative")
         nb_fake_zeros = sum(1 for x in l if not x)
@@ -990,7 +990,7 @@ class AbelianStratumComponent(StratumComponent):
         if alphabet is None:
             alphabet = range(stratum.dimension())
 
-        l0 = range(0, 4*g-3)
+        l0 = list(range(0, 4*g-3))
         l1 = [4, 3, 2]
         for k in range(5, 4*g-6, 4):
             l1 += [k, k+3, k+2, k+1]
@@ -1232,7 +1232,7 @@ class AbelianStratumComponent(StratumComponent):
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = map(lambda x: x+1, self.stratum().zeros())
+        profile = list(map(lambda x: x+1, self.stratum().zeros()))
         s = self.stratum().nb_zeros()
 
         if left_degree is not None:
@@ -1483,29 +1483,29 @@ class AbelianStratumComponent(StratumComponent):
             sage: C_hyp = C.hyperelliptic_component()
             sage: C_odd = C.odd_component()
             sage: C_even = C.even_component()
-            sage: for i in xrange(1,5): print(C.cylinder_diagrams_number(i))
+            sage: for i in range(1,5): print(C.cylinder_diagrams_number(i))
             16
             76
             130
             67
-            sage: for i in xrange(1,5): print(C_hyp.cylinder_diagrams_number(i))
+            sage: for i in range(1,5): print(C_hyp.cylinder_diagrams_number(i))
             1
             3
             8
             4
-            sage: for i in xrange(1,5): print(C_odd.cylinder_diagrams_number(i))
+            sage: for i in range(1,5): print(C_odd.cylinder_diagrams_number(i))
             11
             49
             80
             42
 
-            sage: for i in xrange(1,5):
+            sage: for i in range(1,5):
             ....:     print(C_even.cylinder_diagrams_number(i, False))
             4
             24
             42
             21
-            sage: for i in xrange(1,5):                               # long time
+            sage: for i in range(1,5):                               # long time
             ....:     print(C_even.cylinder_diagrams_number(i, True)) # long time
             4
             24
@@ -2167,7 +2167,7 @@ class NonHypAbelianStratumComponent(ASC):
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = map(lambda x: x+1,self.stratum().zeros())
+        profile = list(map(lambda x: x+1,self.stratum().zeros()))
         hyp = self.stratum().hyperelliptic_component()
 
 
@@ -2217,7 +2217,7 @@ class NonHypAbelianStratumComponent(ASC):
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = map(lambda x: x+1, self.stratum().zeros())
+        profile = list(map(lambda x: x+1, self.stratum().zeros()))
         return rdc.number_of_standard_permutations(profile) - self.stratum().hyperelliptic_component().standard_permutations_number()
 
     def _cylinder_diagram_iterator(self, ncyls=None):
@@ -2465,7 +2465,7 @@ class EvenAbelianStratumComponent(ASC):
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = map(lambda x: x+1, self.stratum().zeros())
+        profile = list(map(lambda x: x+1, self.stratum().zeros()))
         if left_degree is not None:
             assert isinstance(left_degree, (int,Integer)), "if not None, left_degree should be an integer"
             left_degree = int(left_degree) + 1
@@ -2666,7 +2666,7 @@ class OddAbelianStratumComponent(ASC):
 
         z = [x//2 for x in zeros]
 
-        l0 = range(3*g-2)
+        l0 = list(range(3*g-2))
         l1 = [3, 2]
         for k in range(4, 3*g-4, 3):
             l1 += [k, k+2, k+1]
@@ -2682,7 +2682,7 @@ class OddAbelianStratumComponent(ASC):
 
         # marked points
         if n != 0:
-            interval = range(3*g-2, 3*g-2+n)
+            interval = list(range(3*g-2, 3*g-2+n))
 
             if left_degree == 0:
                 k = l0.index(3)
@@ -2776,7 +2776,7 @@ class OddAbelianStratumComponent(ASC):
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = map(lambda x: x+1, self.stratum().zeros())
+        profile = list(map(lambda x: x+1, self.stratum().zeros()))
         if left_degree is not None:
             assert isinstance(left_degree, (int,Integer)), "if not None, left_degree should be an integer"
             left_degree = int(left_degree) + 1
@@ -3301,7 +3301,7 @@ class AbelianStrata_d(AbelianStrata):
         if n < 2:
             pass
         elif self._fake_zeros:
-            for s in xrange(1+n%2, n, 2):
+            for s in range(1+n%2, n, 2):
                 for p in Partitions(n-1, length=s):
                     yield AbelianStratum([k-1 for k in p])
         else:

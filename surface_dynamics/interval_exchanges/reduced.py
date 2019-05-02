@@ -52,6 +52,8 @@ TESTS::
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************
 
+from __future__ import print_function, absolute_import
+
 from sage.structure.sage_object import SageObject
 
 from copy import copy
@@ -59,11 +61,11 @@ from copy import copy
 from sage.combinat.words.alphabet import Alphabet
 from sage.rings.integer import Integer
 
-from template import OrientablePermutationIET, OrientablePermutationLI   # permutations
-from template import FlippedPermutationIET, FlippedPermutationLI         # flipped permutations
-from template import RauzyDiagram, FlippedRauzyDiagram
+from .template import OrientablePermutationIET, OrientablePermutationLI   # permutations
+from .template import FlippedPermutationIET, FlippedPermutationLI         # flipped permutations
+from .template import RauzyDiagram, FlippedRauzyDiagram
 
-from template import interval_conversion, side_conversion
+from .template import interval_conversion, side_conversion
 
 class ReducedPermutation(SageObject) :
     r"""
@@ -126,7 +128,7 @@ def ReducedPermutationsIET_iterator(
 
     if irreducible is False:
         if nintervals is None:
-            raise NotImplementedError, "choose a number of intervals"
+            raise NotImplementedError("choose a number of intervals")
         else:
             assert(isinstance(nintervals,(int,Integer)))
             assert(nintervals > 0)
@@ -410,7 +412,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
                     elif mp.left() == d-1:
                         nb_hyp = binomial(d+k,k) * (2**(d-1)-1)
                     else:
-                        raise ValueError, "this should not happen"
+                        raise ValueError("this should not happen")
 
                 if cc == s.hyperelliptic_component(): # hyp
                     return nb_hyp

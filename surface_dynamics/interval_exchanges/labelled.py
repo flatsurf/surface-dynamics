@@ -99,6 +99,16 @@ REFERENCES:
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************
 
+from __future__ import print_function, absolute_import
+try:
+    # Python 2
+    from future_builtins import filter
+except ImportError:
+    # Python 3
+    pass
+
+from six.moves import map
+
 from sage.structure.sage_object import SageObject
 from sage.misc.lazy_attribute import lazy_attribute
 
@@ -115,10 +125,10 @@ from sage.rings.integer import Integer
 from sage.combinat.words.alphabet import Alphabet
 from sage.rings.infinity import Infinity
 
-from template import OrientablePermutationIET, OrientablePermutationLI
-from template import FlippedPermutationIET, FlippedPermutationLI
-from template import RauzyDiagram, FlippedRauzyDiagram
-from template import interval_conversion, side_conversion
+from .template import (OrientablePermutationIET, OrientablePermutationLI,
+                       FlippedPermutationIET, FlippedPermutationLI,
+                       RauzyDiagram, FlippedRauzyDiagram,
+                       interval_conversion, side_conversion)
 
 class LabelledPermutation(SageObject):
     r"""
@@ -152,7 +162,7 @@ class LabelledPermutation(SageObject):
             sage: p[1]
             ['t', 't', 'c']
         """
-        return map(self._alphabet.unrank, self._labels[i])
+        return list(map(self._alphabet.unrank, self._labels[i]))
 
     def list(self, flips=False):
         r"""
@@ -457,12 +467,12 @@ def LabelledPermutationsIET_iterator(
         b a c
         *****
     """
-    from itertools import imap, ifilter, product
+    from itertools import product
     from sage.combinat.permutation import Permutations
 
     if irreducible is False:
         if nintervals is None:
-            raise ValueError, "choose a number of intervals"
+            raise ValueError("choose a number of intervals")
         else:
             assert(isinstance(nintervals,(int,Integer)))
             assert(nintervals > 0)
@@ -472,7 +482,7 @@ def LabelledPermutationsIET_iterator(
             alphabet = Alphabet(alphabet)
             g = lambda x: [alphabet.unrank(k-1) for k in x]
             P = map(g, Permutations(nintervals))
-            return imap(f,product(P,P))
+            return map(f,product(P,P))
     else:
         return ifilter(
             lambda x: x.is_irreducible(),
@@ -1796,15 +1806,13 @@ class LabelledRauzyDiagram(RauzyDiagram):
             [1 1]
             *****
         """
-        from itertools import ifilter, imap
-
         g = self.path(start)
 
-        ifull = ifilter(
+        ifull = filter(
             lambda x: x.is_loop() and x.is_full(),
             self._all_path_extension(g,max_length))
 
-        return imap(copy,ifull)
+        return map(copy,ifull)
 
     def full_nloop_iterator(self, start=None, length=1):
         r"""
@@ -1835,15 +1843,13 @@ class LabelledRauzyDiagram(RauzyDiagram):
             [1 1]
             *****
         """
-        from itertools import ifilter, imap
-
         g = self.path(start)
 
-        ifull = ifilter(
+        ifull = filter(
             lambda x: x.is_loop() and x.is_full(),
             self._all_npath_extension(g,length))
 
-        return imap(copy, ifull)
+        return map(copy, ifull)
 
     def _permutation_to_vertex(self, p):
         r"""
