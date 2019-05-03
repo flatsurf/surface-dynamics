@@ -134,7 +134,9 @@ List the connected components of a stratum::
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import print_function
+from __future__ import print_function, absolute_import
+
+from six.moves import map, range
 
 import numbers
 
@@ -198,8 +200,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
             raise ValueError("the list must be nonempty")
         if isinstance(l, dict):
             l = sum(([v]*e for v,e in l.iteritems()),[])
-        allzeros = map(Integer, l)
-        allzeros.sort(reverse=True)
+        allzeros = sorted(map(Integer, l), reverse=True)
         nb_poles = allzeros.count(-1)
         nb_fake_zeros = allzeros.count(0)
         zeros = tuple(allzeros[:len(allzeros)-nb_fake_zeros-nb_poles])
@@ -1024,7 +1025,7 @@ class GenusZeroQuadraticStratumComponent(QSC):
         z = self._stratum.zeros(fake_zeros=False,poles=False)
 
         ll = [0]
-        if f: ll = map(lambda x:'0'+str(x),range(f+1))
+        if f: ll = list(map(lambda x:'0'+str(x),range(f+1)))
 
         l0 = ll + [2*p-6,2*p-6]
         l1 = []
@@ -1166,7 +1167,7 @@ class GenusTwoHyperellipticQuadraticStratumComponent(QSC):
         f = self._stratum.nb_fake_zeros()
         z = self._stratum.zeros(fake_zeros=False,poles=False)
 
-        if f: ll = map(lambda x:'0'+str(x),range(f+1))
+        if f: ll = list(map(lambda x:'0'+str(x),range(f+1)))
         else: ll = [0]
 
         if z == (2,2):
@@ -1237,7 +1238,7 @@ class GenusTwoNonhyperellipticQuadraticStratumComponent(QSC):
         if z in [(2,2),(2,1,1),(1,1,1,1)]:
             raise ValueError("This stratum has no non-hyperelliptic component!")
 
-        if f: ll = map(lambda x:'0'+str(x),range(f+1))
+        if f: ll = list(map(lambda x:'0'+str(x),range(f+1)))
         else: ll = [0]
 
         l0 = ll + [2*p+6,1,2*p+5,2*p+6,p+4,p+3]
@@ -1298,7 +1299,7 @@ class HyperellipticQuadraticStratumComponent(QSC):
         f = self._stratum.nb_fake_zeros()
         z = self._stratum.zeros(fake_zeros=False,poles=True)
 
-        if f: ll = map(lambda x:'0'+str(x),range(f+1))
+        if f: ll = list(map(lambda x:'0'+str(x),range(f+1)))
         else: ll = [0]
 
         if len(z) == 2: r = z[0]//2; s = z[1]//2
@@ -1399,7 +1400,7 @@ class ConnectedQuadraticStratumComponent(QSC):
         z = self._stratum.zeros(fake_zeros=False,poles=False)
         g = (sum(z)-p)//4+1
 
-        if f: ll = map(lambda x:'0'+str(x),range(f+1))
+        if f: ll = list(map(lambda x:'0'+str(x),range(f+1)))
         else: ll = [0]
 
         l0 = ll + [1,2,3]
@@ -1478,7 +1479,7 @@ class RegularExceptionalQuadraticStratumComponent(QSC):
         f = self._stratum.nb_fake_zeros()
         z = self._stratum.zeros(fake_zeros=False,poles=True)
 
-        if f: ll = map(lambda x: '0' + str(x), range(f+1))
+        if f: ll = list(map(lambda x: '0' + str(x), range(f+1)))
         else: ll = [0]
 
         if z == (12,):
@@ -1564,7 +1565,7 @@ class IrregularExceptionalQuadraticStratumComponent(QSC):
         f = self._stratum.nb_fake_zeros()
         z = self._stratum.zeros(fake_zeros=False,poles=True)
 
-        if f: ll = map(lambda x:'0'+str(x),range(f+1))
+        if f: ll = list(map(lambda x:'0'+str(x),range(f+1)))
         else: ll = [0]
 
         if z == (12,):
