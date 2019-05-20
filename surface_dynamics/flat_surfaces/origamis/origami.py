@@ -33,6 +33,10 @@ EXAMPLES::
     sage: G.diameter()
     16
 """
+from __future__ import print_function, absolute_import
+from six.moves import range, map, filter, zip
+from six import iteritems
+
 from surface_dynamics.flat_surfaces.origamis.origami_dense import Origami_dense_pyx
 
 from sage.structure.sage_object import SageObject
@@ -136,8 +140,8 @@ def Origami(r, u,
         u = [i-1 for i in u.domain()]
 
         N = max(len(r),len(u))
-        r.extend(xrange(len(r),N))
-        u.extend(xrange(len(u),N))
+        r.extend(range(len(r),N))
+        u.extend(range(len(u),N))
 
     elif check:
         sr = set(r)
@@ -145,7 +149,7 @@ def Origami(r, u,
         N = len(r)
         if len(u) != N:
             raise ValueError("the two tuples must be of the same length")
-        for i in xrange(N):
+        for i in range(N):
             if not i in sr:
                 raise ValueError("%d is not in r=%s" %(i,str(r)))
             if not i in su:
@@ -221,7 +225,7 @@ class OrigamiFaces(OrigamiObjects):
         ri = self._origami.r_inv_tuple()
         ui = self._origami.u_inv_tuple()
         der = matrix(2*n,n,ring=QQ)
-        for i in xrange(n):
+        for i in range(n):
             if ui[i] != i: # horiz sides
                 der[i,i] = -1
                 der[ui[i],i] = 1
@@ -242,7 +246,7 @@ class OrigamiEdges(OrigamiObjects):
 
         self._starts = [None]*(2*n)
         self._ends = [None]*(2*n)
-        for i in xrange(n):
+        for i in range(n):
             self._ends[i] = origami.vertex(i+1).index()
             self._starts[i] = origami.vertex(ri[i]+1).index()
 
@@ -273,7 +277,7 @@ class OrigamiEdges(OrigamiObjects):
         m = self._origami.nb_vertices(True)
         n = 2*self._origami.nb_squares()
         der = matrix(m,n,ring=QQ)
-        for i in xrange(n):
+        for i in range(n):
             if self._starts[i] != self._ends[i]:
                 der[self._ends[i], i] = 1
                 der[self._starts[i], i] = -1
@@ -311,7 +315,7 @@ class OrigamiEdges(OrigamiObjects):
         """
         c_in = {}
         c_out = {}
-        for i,j in c.dict().iteritems():
+        for i,j in iteritems(c.dict()):
             if j == 1:
                 c_in[self.start(i)] = i
                 c_out[self.end(i)] = i
@@ -330,7 +334,7 @@ class OrigamiEdges(OrigamiObjects):
         C = self.chain_space()
         G = DiGraph(multiedges=True,loops=True,implementation='c_graph')
 
-        for i in xrange(2*n):
+        for i in range(2*n):
             G.add_edge(self._starts[i], self._ends[i], i)
 
         waiting = [0]
@@ -654,7 +658,7 @@ class OrigamiVertex(Element):
         e_in = self.incoming_edge_indices()
         e_out = self.outgoing_edge_indices()
         k = 0
-        for i in xrange(0,len(e_in),2):
+        for i in range(0,len(e_in),2):
             d_in[e_in[i]] = k
             d_in[e_in[i+1]] = k+1
             d_out[e_out[i]] = k+2
