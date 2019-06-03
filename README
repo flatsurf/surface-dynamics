@@ -1,4 +1,4 @@
-================
+    ================
 Surface dynamics
 ================
 
@@ -60,7 +60,7 @@ You can install the latest development version in one line with::
     $ PIP install git+https://gitlab.com/videlec/surface_dynamics [--user]
 
 As before, the --user option is optional and when specified will
-install the module in your user space. 
+install the module in your user space.
 
 You can also perform a two stage installation that will allow you to
 modify the source code. The first step is to clone the repository
@@ -180,13 +180,28 @@ Authors
 -------
 
 * Vincent Delecroix: maintainer
-* Samuel Lelièvre: contribution for origamis and permutation representative 
+* Samuel Lelièvre: contribution for origamis and permutation representative
   of quadratic strata
 * Charles Fougeron: Lyapunov exponents for strata coverings
+
+Citation
+--------
+
+To cite the software, follow the following Bibtex entry
+
+    @manual{ Sdyn,
+      Author = { Delecroix, V. et al. },
+      Month  = { March },
+      Year   = { 2019 },
+      Title  = { surface_dynamics - SageMath package, Version 0.4.1 },
+      Doi    = { 10.5281/zenodo.3237923 },
+      Url    = { https://doi.org/10.5281/zenodo.3237923 }
+    }
 
 Versions
 --------
 
+* flatsurf 0.4.1 was released on 2019-03-26 (as a Python package on PyPI)
 * flatsurf 0.4.0 was released on 2018-05-14 (as a Python package on PyPI)
 * flatsurf 0.3 was released on 2017-08-11 (as a Python package on PyPI)
 * flatsurf 0.2 was released on 2015-11-15 (as a Sage spkg).
