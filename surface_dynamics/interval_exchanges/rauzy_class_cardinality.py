@@ -31,6 +31,9 @@ REFERENCES:
 
 """
 
+from __future__ import print_function, absolute_import
+from six.moves import range
+
 from sage.misc.cachefunc import cached_function
 
 from sage.rings.integer import Integer
@@ -56,9 +59,9 @@ def marking_iterator(profile,left=None,standard=False):
          (1, 3, 0),
          (1, 3, 1),
          (1, 3, 2),
-         (2, 2, 2),
+         (2, 3, 2),
          (2, 2, 3),
-         (2, 3, 2)]
+         (2, 2, 2)]
     """
     e = Partition(sorted(profile,reverse=True)).to_exp_dict()
 
@@ -68,7 +71,7 @@ def marking_iterator(profile,left=None,standard=False):
     if left is not None: keys = [left]
     else: keys = e.keys()
 
-    for m in keys:
+    for m in sorted(keys):
         if standard: angles = range(1,m-1)
         else: angles = range(0,m)
         for a in angles:
@@ -178,7 +181,7 @@ def check_std_marking(p, marking):
 
     elif marking[0] == 2:
         if marking[1] == marking[2]:
-            if not p.to_exp(marking[1]) > 1:
+            if not p.to_exp()[marking[1]-1] > 1:
                 raise ValueError("wrong marking type 2")
         elif marking[1] not in p or marking[2] not in p:
             raise ValueError("marking not in p")
@@ -229,7 +232,7 @@ def check_marking(p, marking):
 
     elif marking[0] == 2:
         if marking[1] == marking[2]:
-            if not p.to_exp_dict()[marking[1]] > 1:
+            if not p.to_exp_dict()[marking[1]-1] > 1:
                 raise ValueError("wrong marking type 2")
         elif marking[1] not in p or marking[2] not in p:
             raise ValueError("marking not in p")
@@ -259,9 +262,9 @@ def bidecompositions(p):
     from itertools import product
 
     exp = p.to_exp()
-    for i in product(*tuple(xrange(i+1) for i in exp)):
+    for i in product(*tuple(range(i+1) for i in exp)):
         p1 = Partition(exp=i)
-        p2 = Partition(exp=[exp[j]-i[j] for j in xrange(len(exp))])
+        p2 = Partition(exp=[exp[j]-i[j] for j in range(len(exp))])
         yield p1,p2
 
 #########################
@@ -278,8 +281,8 @@ def _c_rec(p):
     if p[0] == 1: return factorial(len(p)-1)
 
     return (
-         sum(_c_rec(split(p,k)) for k in xrange(1,p[0]-1)) +
-         sum(p[i]*_c_rec(collapse(p,0,i)) for i in xrange(1,len(p))))
+         sum(_c_rec(split(p,k)) for k in range(1,p[0]-1)) +
+         sum(p[i]*_c_rec(collapse(p,0,i)) for i in range(1,len(p))))
 
 def c(p):
     r"""
@@ -303,7 +306,7 @@ def c(p):
         sage: n = 7
         sage: rcc.c([n]) == 2 * factorial(n-1) / (n+1)
         True
-        sage: all(rcc.c([n]) == 2 * factorial(n-1) / (n+1) for n in xrange(11,18,2))
+        sage: all(rcc.c([n]) == 2 * factorial(n-1) / (n+1) for n in range(11,18,2))
         True
 
     Partitions of length 2 with two odd numbers::
@@ -338,7 +341,7 @@ def c(p):
 
         sage: p = [3,2,2]
         sage: n = sum(p)
-        sage: all(rcc.c(p + [1]*k) == factorial(n+k-1) / factorial(n-1) * rcc.c(p) for k in xrange(1,6))
+        sage: all(rcc.c(p + [1]*k) == factorial(n+k-1) / factorial(n-1) * rcc.c(p) for k in range(1,6))
         True
     """
     return _c_rec(Partition(p))
@@ -373,21 +376,21 @@ def gamma_std(profile, marking=None):
         sage: d = cc.rauzy_diagram()
         sage: d
         Rauzy diagram with 1255 permutations
-        sage: len(filter(lambda x: x.is_standard(), d)) == rcc.gamma_std([2,2,2,2])
+        sage: sum(1 for _ in filter(lambda x: x.is_standard(), d)) == rcc.gamma_std([2,2,2,2])
         True
 
         sage: cc = AbelianStratum(2,1,1).unique_component()
         sage: d = cc.rauzy_diagram()
         sage: d
         Rauzy diagram with 2177 permutations
-        sage: len(filter(lambda x: x.is_standard(), d)) == rcc.gamma_std([3,2,2])
+        sage: sum(1 for _ in filter(lambda x: x.is_standard(), d)) == rcc.gamma_std([3,2,2])
         True
 
         sage: cc = AbelianStratum(3,1).unique_component()
         sage: d = cc.rauzy_diagram()
         sage: d
         Rauzy diagram with 770 permutations
-        sage: len(filter(lambda x: x.is_standard(), d)) == rcc.gamma_std([4,2])
+        sage: sum(1 for _ in filter(lambda x: x.is_standard(), d)) == rcc.gamma_std([4,2])
         True
 
     The non connected strata in genus 3::
@@ -400,8 +403,8 @@ def gamma_std(profile, marking=None):
         Rauzy diagram with 294 permutations
         sage: d_hyp
         Rauzy diagram with 63 permutations
-        sage: n_odd = len(filter(lambda x: x.is_standard(), d_odd))
-        sage: n_hyp = len(filter(lambda x: x.is_standard(), d_hyp))
+        sage: n_odd = sum(1 for _ in filter(lambda x: x.is_standard(), d_odd))
+        sage: n_hyp = sum(1 for _ in filter(lambda x: x.is_standard(), d_hyp))
         sage: n_odd + n_hyp == rcc.gamma_std([3,3])
         True
 
@@ -413,14 +416,14 @@ def gamma_std(profile, marking=None):
         Rauzy diagram with 134 permutations
         sage: d_hyp
         Rauzy diagram with 31 permutations
-        sage: n_odd = len(filter(lambda x: x.is_standard(), d_odd))
-        sage: n_hyp = len(filter(lambda x: x.is_standard(), d_hyp))
+        sage: n_odd = sum(1 for _ in filter(lambda x: x.is_standard(), d_odd))
+        sage: n_hyp = sum(1 for _ in filter(lambda x: x.is_standard(), d_hyp))
         sage: n_odd + n_hyp == rcc.gamma_std([5])
         True
     """
     p = Partition(sorted(profile,reverse=True))
     if (sum(p) + len(p)) % 2 != 0:
-        raise ValueError, "the sum of the profile (=%s) plus its length must be congruent to 0 modulo 2" %p
+        raise ValueError("the sum of the profile (=%s) plus its length must be congruent to 0 modulo 2" % p)
 
     if len(p) == 0 and marking==(1,0,0):
         return 1
@@ -481,7 +484,7 @@ def d(p):
 
         sage: p = [5,3,3]
         sage: n = sum(p)
-        sage: all(rcc.d(p + [1]*k) == factorial(n+k-1) / factorial(n-1) * rcc.d(p) for k in xrange(1,6))
+        sage: all(rcc.d(p + [1]*k) == factorial(n+k-1) / factorial(n-1) * rcc.d(p) for k in range(1,6))
         True
     """
     n = sum(p)
@@ -523,8 +526,8 @@ def delta_std(profile, marking=None):
         Rauzy diagram with 294 permutations
         sage: d_hyp
         Rauzy diagram with 63 permutations
-        sage: n_odd = len(filter(lambda x: x.is_standard(), d_odd))
-        sage: n_hyp = len(filter(lambda x: x.is_standard(), d_hyp))
+        sage: n_odd = sum(1 for _ in filter(lambda x: x.is_standard(), d_odd))
+        sage: n_hyp = sum(1 for _ in filter(lambda x: x.is_standard(), d_hyp))
         sage: n_odd - n_hyp == rcc.delta_std([3,3])
         True
 
@@ -536,15 +539,15 @@ def delta_std(profile, marking=None):
         Rauzy diagram with 134 permutations
         sage: d_hyp
         Rauzy diagram with 31 permutations
-        sage: n_odd = len(filter(lambda x: x.is_standard(), d_odd))
-        sage: n_hyp = len(filter(lambda x: x.is_standard(), d_hyp))
+        sage: n_odd = sum(1 for _ in filter(lambda x: x.is_standard(), d_odd))
+        sage: n_hyp = sum(1 for _ in filter(lambda x: x.is_standard(), d_hyp))
         sage: n_odd - n_hyp == rcc.delta_std([5])
         True
     """
     p = Partition(sorted(profile,reverse=True))
 
     if any(not x%2 for x in p):
-        raise ValueError, "the profile (=%s) must contain only odd numbers"%p
+        raise ValueError("the profile (=%s) must contain only odd numbers" % p)
 
     if marking is None:
         return sum(delta_std(p,m) for m in marking_iterator(p,left=None,standard=True))
@@ -594,9 +597,9 @@ def _gamma_irr_rec(p, marking):
 
         N = gamma_std(pp._list + [m+2],(1,m+2,m-a))
 
-        for m1 in xrange(1,m-1):
+        for m1 in range(1,m-1):
             m2 = m-m1-1
-            for a1 in xrange(max(0,a-m2),min(a,m1)):
+            for a1 in range(max(0,a-m2),min(a,m1)):
                 a2 = a - a1 - 1
                 for p1,p2 in bidecompositions(pp):
                     l1 = sorted([m1]+p1._list,reverse=True)
@@ -619,21 +622,21 @@ def _gamma_irr_rec(p, marking):
         N = gamma_std(pp._list + [m1+1,m2+1],(2,m1+1,m2+1))
 
         for p1,p2 in bidecompositions(pp):
-            for k1 in xrange(1,m1): # remove (m'_1|.) (m''_1 o m_2)
+            for k1 in range(1,m1): # remove (m'_1|.) (m''_1 o m_2)
                 k2 = m1-k1-1
                 l1 = sorted(p1._list+[k1],reverse=True)
                 l2 = sorted(p2._list+[k2+1,m2+1],reverse=True)
                 if (sum(l1)+len(l1)) %2 == 0 and (sum(l2)+len(l2)) %2 == 0:
-                    for a in xrange(k1): # a is an angle
+                    for a in range(k1): # a is an angle
                         N -= (_gamma_irr_rec(Partition(l1), (1,k1,a))*
                               gamma_std(Partition(l2),(2,k2+1,m2+1)))
 
-            for k1 in xrange(1,m2): # remove (m_1 o m'_2) (m''_2|.)
+            for k1 in range(1,m2): # remove (m_1 o m'_2) (m''_2|.)
                 k2 = m2-k1-1
                 l1 = sorted(p1._list+[m1,k1],reverse=True)
                 l2 = sorted(p2._list+[k2+2],reverse=True)
                 if (sum(l1)+len(l1)) %2 == 0 and (sum(l2)+len(l2)) %2 == 0:
-                    for a in xrange(1,k2+1): # a is an angle for standard perm
+                    for a in range(1,k2+1): # a is an angle for standard perm
                         N -= (_gamma_irr_rec(Partition(l1), (2,m1,k1)) *
                               gamma_std(Partition(l2),(1,k2+2,a)))
 
@@ -641,7 +644,7 @@ def _gamma_irr_rec(p, marking):
             q = pp._list[:]
             del q[q.index(m)]
             for p1,p2 in bidecompositions(Partition(q)):
-                for k1 in xrange(1,m):
+                for k1 in range(1,m):
                     k2 = m-k1-1
                     l1 = sorted(p1._list+[m1,k1],reverse=True)
                     l2 = sorted(p2._list+[k2+1,m2+1],reverse=True)
@@ -652,7 +655,7 @@ def _gamma_irr_rec(p, marking):
         return N
 
     else:
-        raise ValueError, "marking must be a 3-tuple of the form (1,m,a) or (2,m1,m2)"
+        raise ValueError("marking must be a 3-tuple of the form (1,m,a) or (2,m1,m2)")
 
 def gamma_irr(profile=None, marking=None):
     r"""
@@ -742,9 +745,9 @@ def _delta_irr_rec(p, marking):
                 pp._list + [m+2],
                 (1,m+2,m-a))
 
-        for m1 in xrange(1,m-1,2):
+        for m1 in range(1,m-1,2):
             m2 = m-m1-1
-            for a1 in xrange(max(0,a-m2),min(a,m1)):
+            for a1 in range(max(0,a-m2),min(a,m1)):
                 a2 = a - a1 - 1
                 for p1,p2 in bidecompositions(pp):
                     l1 = sorted([m1]+p1._list,reverse=True)
@@ -767,18 +770,18 @@ def _delta_irr_rec(p, marking):
         # guys
 
         for p1,p2 in bidecompositions(Partition(pp)):
-            for k1 in xrange(1,m1,2): # remove (k1|.) (k2 o m_2)
+            for k1 in range(1,m1,2): # remove (k1|.) (k2 o m_2)
                 k2 = m1-k1-1
                 q1 = Partition(sorted(p1._list+[k1],reverse=True))
                 q2 = Partition(sorted(p2._list+[k2+m2+1],reverse=True))
-                for a in xrange(k1): # a is a angle
+                for a in range(k1): # a is a angle
                     N += _delta_irr_rec(q1, (1,k1,a)) * d(q2) / p2.centralizer_size()
 
-            for k1 in xrange(1,m2,2): # remove (m_1 o k1) (k2|.)
+            for k1 in range(1,m2,2): # remove (m_1 o k1) (k2|.)
                 k2 = m2-k1-1
                 l1 = sorted(p1._list+[m1,k1],reverse=True)
                 l2 = sorted(p2._list+[k2+2],reverse=True)
-                for a in xrange(1,k2+1): # a is an angle for standard perm
+                for a in range(1,k2+1): # a is an angle for standard perm
                     N += (_delta_irr_rec(Partition(l1), (2,m1,k1)) *
                         spin_difference_for_standard_permutations(Partition(l2), (1,k2+2,a)))
 
@@ -786,7 +789,7 @@ def _delta_irr_rec(p, marking):
             q = pp._list[:]
             del q[q.index(m)]
             for p1,p2 in bidecompositions(Partition(q)):
-                for k1 in xrange(1,m,2):
+                for k1 in range(1,m,2):
                     k2 = m-k1-1
                     q1 = Partition(sorted(p1._list+[m1,k1],reverse=True))
                     q2 = Partition(sorted(p2._list+[k2+m2+1],reverse=True))
