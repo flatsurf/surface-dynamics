@@ -137,8 +137,8 @@ def rooted_tree_iterator(n,verbose=False):
     """
     assert n >= 3
 
-    l = range(n)
-    prev = range(n)  # function: level -> ?
+    l = list(range(n))
+    prev = list(range(n))  # function: level -> ?
     save = [0]*n
     p = n-1
 
@@ -205,7 +205,7 @@ def rooted_plane_tree_iterator(nmin,nmax=None, verbose=False):
     else:
         nmax = int(nmax)
         if nmin > nmax:
-            raise ValueError, "nmin (=%d) should be lesser than nmax (=%d)"%(nmin,nmax)
+            raise ValueError("nmin (=%d) should be lesser than nmax (=%d)"%(nmin,nmax))
     l = [0]
     b = [] # current branch
     while True:
@@ -266,13 +266,13 @@ def cmp_halves(t,i=None):
     """
     t1 = [j-1 for j in t[2:i]]
     t2 = t[i:]
-    return cmp(t1,t2)
+    return (t1 > t2) - (t1 < t2)
 
 def cmp_subtree(t1,d1,t2,d2):
-    test = cmp(d1,d2)
+    test = (d1 > d2) - (d1 < d2)
     if test: return test
 
-    return cmp(t1,t2)
+    return (t1 > t2) - (t1 < t2)
 
 def is_lyndon(t,s=None,d=None,verbose=False):
     r"""
@@ -327,11 +327,11 @@ def is_lyndon(t,s=None,d=None,verbose=False):
         False
     """
     if s is None:
-        s = [i for i in xrange(len(t)) if t[i] == 1]
+        s = [i for i in range(len(t)) if t[i] == 1]
     n = len(s)
     if n <= 1:
         return True
-    w = [t[s[i]+1:s[i+1]] for i in xrange(len(s)-1)]
+    w = [t[s[i]+1:s[i+1]] for i in range(len(s)-1)]
     w.append(t[s[-1]+1:])
     if d is None:
         d = [max([1]+ww) for ww in w]
@@ -408,7 +408,7 @@ def unrooted_plane_tree_iterator(nmin,nmax=None,verbose=False, check=False):
         [0, 1, 1, 1]
         [0, 1, 1, 1, 1]
 
-        sage: [sum(1 for _ in unrooted_plane_tree_iterator(i)) for i in xrange(1,13)]
+        sage: [sum(1 for _ in unrooted_plane_tree_iterator(i)) for i in range(1,13)]
         [1, 1, 1, 2, 3, 6, 14, 34, 95, 280, 854, 2694]
     """
     nmin = int(nmin)
@@ -417,7 +417,7 @@ def unrooted_plane_tree_iterator(nmin,nmax=None,verbose=False, check=False):
     else:
         nmax = int(nmax)
         if nmin > nmax:
-            raise ValueError, "nmin (=%d) should be lesser than nmax (=%d)"%(nmin,nmax)
+            raise ValueError("nmin (=%d) should be lesser than nmax (=%d)"%(nmin,nmax))
     nnmax = nmax//2
 
     #TODO: start at the right place and remove trivial cases in recursion
@@ -445,7 +445,7 @@ def unrooted_plane_tree_iterator(nmin,nmax=None,verbose=False, check=False):
                 m = d[0]       # depth of first subtree
                 m_nb = 1       # nb of subtrees with depth m
                 has_mm = False # is there a subtree with depth m-1
-                for i in xrange(1,len(d)):
+                for i in range(1,len(d)):
                     if d[i] > m: # the deepest branch is not the first one
                         break
                     elif d[i] == m:
@@ -501,7 +501,7 @@ def unrooted_plane_tree_iterator(nmin,nmax=None,verbose=False, check=False):
                                  # the one before if t[-1] == 1
                 i = 1
                 d[-1] = 1
-                for i in xrange(s[-1]+1,len(t)-1):
+                for i in range(s[-1]+1,len(t)-1):
                     if t[i] > d[-1]:
                         d[-1] = t[i]
                 if verbose: print(" updated length of rightmost which is now %d"%d[-1])
@@ -624,7 +624,7 @@ def admissible_plane_tree_iterator(a,verbose=False):
             m = d[0]       # depth of first subtree
             m_nb = 1       # nb of subtrees with depth m
             has_mm = False # is there a subtree with depth m-1
-            for i in xrange(1,len(d)):
+            for i in range(1,len(d)):
                 if d[i] > m: # the deepest branch is not the first one
                     break
                 elif d[i] == m:
@@ -680,7 +680,7 @@ def admissible_plane_tree_iterator(a,verbose=False):
                                  # the one before if t[-1] == 1
                 i = 1
                 d[-1] = 1
-                for i in xrange(s[-1]+1,len(t)-1):
+                for i in range(s[-1]+1,len(t)-1):
                     if t[i] > d[-1]:
                         d[-1] = t[i]
                 if verbose: print(" updated length of rightmost which is now %d"%d[-1])
