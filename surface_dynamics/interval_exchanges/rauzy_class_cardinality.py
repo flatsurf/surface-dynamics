@@ -232,7 +232,7 @@ def check_marking(p, marking):
 
     elif marking[0] == 2:
         if marking[1] == marking[2]:
-            if not p.to_exp_dict()[marking[1]-1] > 1:
+            if not p.to_exp()[marking[1]-1] > 1:
                 raise ValueError("wrong marking type 2")
         elif marking[1] not in p or marking[2] not in p:
             raise ValueError("marking not in p")
