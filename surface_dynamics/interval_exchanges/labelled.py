@@ -100,14 +100,7 @@ REFERENCES:
 #*****************************************************************************
 
 from __future__ import print_function, absolute_import
-try:
-    # Python 2
-    from future_builtins import filter
-except ImportError:
-    # Python 3
-    pass
-
-from six.moves import map
+from six.moves import range, map, filter, zip
 
 from sage.structure.sage_object import SageObject
 from sage.misc.lazy_attribute import lazy_attribute

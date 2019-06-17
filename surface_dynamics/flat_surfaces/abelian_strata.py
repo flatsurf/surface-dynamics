@@ -149,7 +149,9 @@ Obtains the connected components of a stratum::
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import print_function
+from __future__ import print_function, absolute_import
+from six.moves import range, map, filter, zip
+from six import iteritems
 
 import numbers
 
@@ -229,7 +231,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
             l = tuple(l[0]) + (0,) * l[1]
 
         if isinstance(l, dict):
-            l = sum(([v]*e for v,e in l.iteritems()), [])
+            l = sum(([v]*e for v,e in iteritems(l)), [])
 
         zeros = list(map(Integer, filter(lambda x: x, l)))
         if any(z < 0 for z in zeros):
@@ -600,14 +602,14 @@ class AbelianStratum(UniqueRepresentation, Stratum):
             return []
 
         pairings = []
-        for d,m in e.iteritems():
+        for d,m in iteritems(e):
             if d%2: # if the degree is odd it is necessarily non ramified
                 pairings.append([(d,m//2)])
             else: # if the degree is even ramified and non ramified are possible
                 pairings.append([(d,k) for k in range(m//2+1)])
 
         import itertools
-        from quadratic_strata import QuadraticStratum
+        from .quadratic_strata import QuadraticStratum
         res = []
 
         for p in itertools.product(*pairings):
@@ -643,7 +645,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
 
         - ``ncyls`` -- an optional number of cylinders
         """
-        from separatrix_diagram import separatrix_diagram_iterator
+        from .separatrix_diagram import separatrix_diagram_iterator
         return separatrix_diagram_iterator([m+1 for m in self.zeros()],ncyls)
 
     def separatrix_diagrams(self, ncyls=None):
@@ -1353,7 +1355,7 @@ class AbelianStratumComponent(StratumComponent):
             sage: c.stratum_component()
             H_4(3^2)^nonhyp
         """
-        from separatrix_diagram import CylinderDiagram
+        from .separatrix_diagram import CylinderDiagram
         t = self.permutation_representative(reduced=True).to_standard()
         return CylinderDiagram([(t[1][1:],t[0][-2::-1])],check=True)
 
@@ -1831,13 +1833,13 @@ class HypAbelianStratumComponent(ASC):
                 l0 = [0, 1, 2]
                 l1 = [2, 1, 0]
             else:
-                l0 = range(1, n+2)
-                l1 = [n+1] + range(1, n+1)
+                l0 = list(range(1, n+2))
+                l1 = [n+1] + list(range(1, n+1))
 
         elif m == 1:  # H(2g-2,0^n) or H(0,2g-2,0^(n-1))
-            l0 = range(1, 2*g+1)
-            l1 = range(2*g, 0, -1)
-            interval = range(2*g+1, 2*g+n+1)
+            l0 = list(range(1, 2*g+1))
+            l1 = list(range(2*g, 0, -1))
+            interval = list(range(2*g+1, 2*g+n+1))
 
             if left_degree == 0:
                 l0[-1:-1] = interval
@@ -1847,9 +1849,9 @@ class HypAbelianStratumComponent(ASC):
                 l1[1:1] = interval
 
         else:  # H(g-1,g-1,0^n) or H(0,g-1,g-1,0^(n-1))
-            l0 = range(1, 2*g+2)
-            l1 = range(2*g+1, 0, -1)
-            interval = range(2*g+2, 2*g+n+2)
+            l0 = list(range(1, 2*g+2))
+            l1 = list(range(2*g+1, 0, -1))
+            interval = list(range(2*g+2, 2*g+n+2))
 
             if left_degree == 0:
                 l0[-1:-1] = interval
@@ -2027,8 +2029,8 @@ class HypAbelianStratumComponent(ASC):
         """
         if not self.stratum().nb_fake_zeros():
             d = self.stratum().dimension()
-            l0 = range(d)
-            l1 = range(d-1,-1,-1)
+            l0 = list(range(d))
+            l1 = list(range(d-1,-1,-1))
 
             if reduced:
                 from surface_dynamics.interval_exchanges.reduced import ReducedPermutationIET
@@ -2085,7 +2087,7 @@ class HypAbelianStratumComponent(ASC):
             sage: c.ncyls()
             10
         """
-        from separatrix_diagram import hyperelliptic_cylinder_diagram_iterator
+        from .separatrix_diagram import hyperelliptic_cylinder_diagram_iterator
 
         if ncyls is not None:
             from itertools import ifilter
@@ -2371,7 +2373,7 @@ class EvenAbelianStratumComponent(ASC):
                 z.remove(left_degree)
                 z.insert(0,left_degree)
 
-        l0 = range(3*g-2)
+        l0 = list(range(3*g-2))
         l1 = [6, 5, 4, 3, 2, 7, 9, 8]
         for k in range(10, 3*g-4, 3):
             l1 += [k, k+2, k+1]
@@ -2387,7 +2389,7 @@ class EvenAbelianStratumComponent(ASC):
 
         # if there are marked points we transform 0 in [3g-2, 3g-3, ...]
         if n != 0:
-            interval = range(3*g-2, 3*g - 2 + n)
+            interval = list(range(3*g-2, 3*g - 2 + n))
 
             if left_degree == 0:
                 k = l0.index(6)

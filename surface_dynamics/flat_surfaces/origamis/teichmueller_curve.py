@@ -2,6 +2,9 @@ r"""
 Teichmueller curves of Origamis.
 """
 
+from __future__ import print_function, absolute_import
+from six.moves import range, map, filter, zip
+
 from sage.structure.sage_object import SageObject
 from sage.structure.element import Element
 from sage.structure.parent import Parent
@@ -98,7 +101,7 @@ def TeichmuellerCurveOfOrigami(origami):
     mapping.remove(origami)
     mapping = sorted(mapping)
     mapping.insert(0,origami)
-    inv_mapping = dict((mapping[i],i) for i in xrange(len(mapping)))
+    inv_mapping = dict((mapping[i],i) for i in range(len(mapping)))
 
     # consider dL and dR as lists and
     # compute the action of s2 and s3
@@ -148,7 +151,7 @@ def TeichmuellerCurvesOfOrigamis(origamis, assume_normal_form=False, limit=0, ve
         # find numerotation for the elements of the SL2Z-orbit
         mapping = set(dL)
         mapping = sorted(mapping)
-        inv_mapping = dict((mapping[i],i) for i in xrange(len(mapping)))
+        inv_mapping = dict((mapping[i],i) for i in range(len(mapping)))
 
         # consider dL and dR as lists and
         # compute the action of s2 and s3
@@ -176,7 +179,7 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
         ss3 = [None] * len(s3_edges)
         ll = [None] * len(l_edges)
         rr = [None] * len(r_edges)
-        for i in xrange(N):
+        for i in range(N):
             ss2[s2_edges[i]] = i
             ss3[s3_edges[i]] = i
             ll[l_edges[i]] = i
@@ -311,7 +314,7 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
         n = len(self._mapping)
         seen = [True]*n
         l = self._l_edges
-        for i in xrange(n):
+        for i in range(n):
             if seen[i]:
                 k=1
                 seen[i] = False

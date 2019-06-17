@@ -12,6 +12,9 @@ This file gather common code used in
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************
 
+from __future__ import print_function, absolute_import
+from six.moves import range, map, filter, zip
+
 from sage.structure.sage_object import SageObject
 from sage.structure.parent import Parent
 

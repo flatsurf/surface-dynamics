@@ -21,7 +21,8 @@ The constructors available in this database are organized as follows
 - :meth:`ProjectiveLine <OrigamiGenerators.ProjectiveLine>`
 """
 
-from __future__ import absolute_import, print_function
+from __future__ import print_function, absolute_import
+from six.moves import range, map, filter, zip
 
 from .origami import Origami
 from sage.rings.integer import Integer

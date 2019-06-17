@@ -172,7 +172,8 @@ AUTHORS:
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import absolute_import
+from __future__ import print_function, absolute_import
+from six.moves import range, map, filter, zip
 
 from sage.rings.integer import Integer
 

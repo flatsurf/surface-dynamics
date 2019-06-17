@@ -161,13 +161,22 @@ group of translation acts transitively on the set of squares)::
     10                   H_5(4^2)             D10                 
     12                   H_4(1^6)             A4                  
 
+.. TODO::
+
+    Compute also the index of the image in SL_2(Z/NZ) where N is the congruence
+    level. This can be discriminated by looking at the action on (Z/NZ)^2 (which
+    should be transitive in the case of SL_2(Z/NZ). There are some inverse theorem
+    in Gaby thesis.
+
 AUTHOR:
 
 - Vincent Delecroix (2011-2014): initial version
 
 """
 
-from __future__ import absolute_import, print_function
+from __future__ import print_function, absolute_import
+from six.moves import range, map, filter, zip
+from six import iteritems
 
 from sage.rings.integer import Integer
 from sage.rings.real_mpfr import RealField
@@ -949,11 +958,10 @@ class OrigamiQuery:
         The function essentially wraps the iteration of SQLQuery in order to
         perform some data conversion.
         """
-        from itertools import izip
         db = self._db
         for result in self.sql_query():
             r = []
-            for i,j in izip(self._cols,result):
+            for i,j in zip(self._cols,result):
                 if i in db._data_to_entry:
                     r.append(db._data_to_entry[i](j))
                 elif ORIGAMI_DB_skeleton['origamis'][i]['sql'] == 'BOOLEAN':
@@ -2008,7 +2016,7 @@ class OrigamiDatabase(SQLDatabase):
             cols = [cols]
 
         query_list = list(query_list)
-        query_list.extend((entry,'=',value) for entry,value in kwds.iteritems())
+        query_list.extend((entry,'=',value) for entry,value in iteritems(kwds))
 
         qq = []
         for entry,sign,value in query_list:

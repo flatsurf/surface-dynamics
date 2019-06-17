@@ -53,6 +53,7 @@ TESTS::
 #*****************************************************************************
 
 from __future__ import print_function, absolute_import
+from six.moves import range, map, filter, zip
 
 from sage.structure.sage_object import SageObject
 
@@ -211,8 +212,8 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
             True
         """
         return [
-            map(lambda x: self._alphabet.unrank(x), range(len(self._twin[0]))),
-            map(lambda x: self._alphabet.unrank(x), self._twin[1])]
+            list(map(lambda x: self._alphabet.unrank(x), range(len(self._twin[0])))),
+            list(map(lambda x: self._alphabet.unrank(x), self._twin[1]))]
 
     def rauzy_move_relabel(self, winner, side='right'):
         r"""

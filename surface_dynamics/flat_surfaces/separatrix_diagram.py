@@ -89,7 +89,10 @@ They can also be built from separatrix diagram::
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import print_function
+from __future__ import print_function, absolute_import
+from six.moves import range, map, filter, zip
+from six import iteritems
+
 from sage.structure.sage_object import SageObject
 
 import itertools
@@ -146,7 +149,7 @@ def two_non_connected_perms_canonical_labels(bot, top):
     keys = cs_type_nb.keys()
     keys.sort()
     for key in keys:
-        for _ in xrange(cs_type_nb[key]):
+        for _ in range(cs_type_nb[key]):
             bot.extend(shift+i for i in key[0])
             top.extend(shift+i for i in key[1])
             shift += len(key[0])
@@ -231,7 +234,7 @@ class SeparatrixDiagram(SageObject):
         top_to_cycle = [None]*n
         bot_cycles = []
         top_cycles = []
-        for i in xrange(n):
+        for i in range(n):
             if bot_seen[i]:
                 c=[]
                 k = len(bot_cycles)
@@ -330,8 +333,8 @@ class SeparatrixDiagram(SageObject):
             [(0, 1, 'b'), (0, 3, 't'), (1, 0, 'b'), (1, 4, 't'), (2, 0, 't'), (2, 3, 'b'), (3, 2, 't'), (3, 4, 'b'), (4, 1, 't'), (4, 2, 'b')]
         """
         G = DiGraph(multiedges=True, loops=True)
-        G.add_edges((i, self._top[i], 't') for i in xrange(self.nseps()))
-        G.add_edges((i, self._bot[i], 'b') for i in xrange(self.nseps()))
+        G.add_edges((i, self._top[i], 't') for i in range(self.nseps()))
+        G.add_edges((i, self._bot[i], 'b') for i in range(self.nseps()))
         return G
 
     def _repr_(self):
@@ -366,10 +369,10 @@ class SeparatrixDiagram(SageObject):
             m = 360. / (2*n)
             d = dict([i,(v.index(i),v.index(-i))] for i in range(1,self._n+1))
             s = "\\begin{tikzpicture}\n"
-            for i,(vout,vin) in d.iteritems():
-                s += "    \draw [-triangle 45] (0,0) -- (%f:0.8cm);\n" %(vout*m)
-                s += "    \draw (%f:0.8cm) -- (%f:1cm);\n" %(vout*m,vout*m)
-                s += "    \draw (%f:1cm) \n" %(vout*m)
+            for i,(vout,vin) in iteritems(d):
+                s += "    \\draw [-triangle 45] (0,0) -- (%f:0.8cm);\n" %(vout*m)
+                s += "    \\draw (%f:0.8cm) -- (%f:1cm);\n" %(vout*m,vout*m)
+                s += "    \\draw (%f:1cm) \n" %(vout*m)
                 v1 = Integer(vout+vin)/2
                 if vout+vin > 2*n:
                     v2 = v1 - n
@@ -398,8 +401,8 @@ class SeparatrixDiagram(SageObject):
                 s += "    (%f:%s)\n" %(vint*m,dint)
                 s += "    ..controls +(%f:%s) and +(%f:%s) ..\n" %((vint+n/2.)*m,ct3,vin*m,ct1)
                 s += "    (%f:1cm);\n" %(vin*m)
-                s += "    \draw [-open triangle 45] (%f:1cm) -- (%f:0.6cm);\n" %(vin*m,vin*m)
-                s += "    \draw (%f:0.6cm) -- (0,0);\n" %(vin*m)
+                s += "    \\draw [-open triangle 45] (%f:1cm) -- (%f:0.6cm);\n" %(vin*m,vin*m)
+                s += "    \\draw (%f:0.6cm) -- (0,0);\n" %(vin*m)
             s += "\\end{tikzpicture}"
             return s
         else:
@@ -469,7 +472,7 @@ class SeparatrixDiagram(SageObject):
             ....:      '(0)(1)(2)-(0)(1)(2)']
             sage: s0 = map(SeparatrixDiagram,s)
             sage: s1 = s0[:]
-            sage: for _ in xrange(10):
+            sage: for _ in range(10):
             ....:     shuffle(s1)
             ....:     assert sorted(s1) == s0
         """
@@ -505,14 +508,14 @@ class SeparatrixDiagram(SageObject):
             sage: m = [3,0,1,2]
             sage: bot2 = [0]*4
             sage: top2 = [0]*4
-            sage: for i in xrange(4):
+            sage: for i in range(4):
             ....:     bot2[m[i]] = m[bot[i]]
             ....:     top2[m[i]] = m[top[i]]
             sage: ss = SeparatrixDiagram(bot2,top2)
             sage: s.is_isomorphic(ss)
             True
             sage: m = [1,2,0,3]
-            sage: for i in xrange(4):
+            sage: for i in range(4):
             ....:   bot2[m[i]] = m[bot[i]]
             ....:   top2[m[i]] = m[top[i]]
             sage: ss = SeparatrixDiagram(bot2,top2)
@@ -540,11 +543,11 @@ class SeparatrixDiagram(SageObject):
             (0,3,4)(1)(2)-(0,1,3)(2)(4)
         """
         n = self.degree()
-        perm.extend(xrange(len(perm),n))
+        perm.extend(range(len(perm),n))
         bot = [None] * self.degree()
         top = [None] * self.degree()
 
-        for i in xrange(n):
+        for i in range(n):
             bot[perm[i]] = perm[self._bot[i]]
             top[perm[i]] = perm[self._top[i]]
 
@@ -588,7 +591,7 @@ class SeparatrixDiagram(SageObject):
             sage: top = [1,0,3,4,2]
             sage: b = [None]*5; t = [None]*5
             sage: for p in Permutations([0,1,2,3,4]):
-            ....:     for i in xrange(5):
+            ....:     for i in range(5):
             ....:         b[p[i]] = p[bot[i]]
             ....:         t[p[i]] = p[top[i]]
             ....:     s = SeparatrixDiagram(b,t)
@@ -1328,7 +1331,7 @@ class SeparatrixDiagram(SageObject):
         other._bot_to_cyl = [None]*self.nseps()
         other._top_to_cyl = [None]*self.nseps()
 
-        for i in xrange(len(pairing)):
+        for i in range(len(pairing)):
             b = bots[pairing[i][0]]
             t = tops[pairing[i][1]]
             cyl = (b[0],t[0])
@@ -1557,24 +1560,24 @@ def separatrix_diagram_fast_iterator(profile,ncyls=None):
                 raise ValueError("%d is not possible as number of cylinders"%i)
 
     # build the list of admissible tops up to conjugacy class
-    for k in xrange(1,d+1):
+    for k in range(1,d+1):
         tops.append([])
         if k in ncyls:
             for p in Partitions(n,length=k):
                 tops[-1].append((canonical_perm(p),canonical_perm_i(p)))
 
     for s in conjugacy_class_iterator(part,range(n)):
-        for k in xrange(len(tops)):
+        for k in range(len(tops)):
             for top,top_i in tops[k]:
                 bot = range(len(top_i))
                 for cycle in s:
-                    for i in xrange(len(cycle)-1):
+                    for i in range(len(cycle)-1):
                         bot[cycle[i]] = top_i[cycle[i+1]]
                     bot[cycle[-1]] = top_i[cycle[0]]
 
                 seen = [True]*len(bot)
                 nb_cycles = 0
-                for i in xrange(len(bot)):
+                for i in range(len(bot)):
                     if seen[i]:
                         seen[i] = False
                         nb_cycles += 1
@@ -1686,7 +1689,7 @@ def orientation_cover(alpha,phi,a,verbose=0):
     cyls = []
     todo = [True]*a
 
-    for i in xrange(a):
+    for i in range(a):
         if todo[i]:
             todo[i] = False
             b = [i]
@@ -1773,9 +1776,9 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
         if verbose:
             print("n = %d,  l = %d,  p = %d" % (n, l, p))
             print("t =", t)
-        for k in xrange(1,n+2):
+        for k in range(1,n+2):
             if verbose: print(" k = %d" % k)
-            for kk in xrange(t[k-1],t[k]-1,-1): # close current loops
+            for kk in range(t[k-1],t[k]-1,-1): # close current loops
                 if B[kk] is not False:
                     if verbose:
                         print(" close loop from %d to %d" % (B[kk], s))
@@ -1818,7 +1821,7 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
             print(" alpha =", alpha)
             print(" phi =", phi)
 
-        for pp in xrange(a+p,2*a+2,2):
+        for pp in range(a+p,2*a+2,2):
             if verbose: print(" paired poles (%d,%d)" % (pp, pp+1))
             alpha[pp] = phi[pp] = pp+1
             alpha[pp+1] = phi[pp+1] = pp
@@ -1907,10 +1910,10 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
                     print(" phi   =", phi)
                     print(" =" * (3*a+7))
 
-                for i in xrange(2*a+2):
+                for i in range(2*a+2):
                     ii = phi[alpha[sigma[i]]]
                     assert ii == i, "f_a_s(%d) == %d != %d"%(i,ii,i)
-                for i in xrange(a,2*a+2):
+                for i in range(a,2*a+2):
                     assert sigma[i] == i, "sigma[%d] = %d != %d"%(i,sigma[i],i)
                 c = orientation_cover(alpha,phi,a,verbose=verbose)
                 c.canonical_label(inplace=True)
@@ -2189,8 +2192,8 @@ class CylinderDiagram(SeparatrixDiagram):
             ....:    b  = c.bot() ; t  = c.top()
             ....:    bb = cc.bot(); tt = cc.top()
             ....:    print(cc)
-            ....:    print(all(bb[m[i]] == m[b[i]] for i in xrange(c.nseps())))
-            ....:    print(all(tt[m[i]] == m[t[i]] for i in xrange(c.nseps())))
+            ....:    print(all(bb[m[i]] == m[b[i]] for i in range(c.nseps())))
+            ....:    print(all(tt[m[i]] == m[t[i]] for i in range(c.nseps())))
             (0,1)-(2,3) (2)-(1) (3)-(0)
             True
             True
@@ -2230,8 +2233,8 @@ class CylinderDiagram(SeparatrixDiagram):
             ....:    b  = c.bot() ; t  = c.top()
             ....:    bb = cc.bot(); tt = cc.top()
             ....:    print(cc)
-            ....:    print(all(bb[m[i]] == m[b[i]] for i in xrange(c.nseps())))
-            ....:    print(all(tt[m[i]] == m[t[i]] for i in xrange(c.nseps())))
+            ....:    print(all(bb[m[i]] == m[b[i]] for i in range(c.nseps())))
+            ....:    print(all(tt[m[i]] == m[t[i]] for i in range(c.nseps())))
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
             True
             True
@@ -2268,7 +2271,7 @@ class CylinderDiagram(SeparatrixDiagram):
         if not hasattr(self,'_normal_form'):
             G = self.to_directed_graph()
             _,m = G.canonical_label(certificate=True,edge_labels=True)
-            # m = [m[i] for i in xrange(self.nseps())]
+            # m = [m[i] for i in range(self.nseps())]
             # GG the new digraph
             # m from the digraph to its canonic labels
             cyls = []
@@ -2375,7 +2378,7 @@ class CylinderDiagram(SeparatrixDiagram):
         from sage.misc.misc_c import prod
 
         import re
-        re_var = re.compile('w(\d+)')
+        re_var = re.compile('w(\\d+)')
 
         C = self.lengths_cone()
         F = C.ambient_space()
@@ -2554,8 +2557,8 @@ class CylinderDiagram(SeparatrixDiagram):
         from sage.graphs.graph import Graph
         G = Graph(multiedges=True, loops=True)
         for b,t in self.cylinders():
-            G.add_edges((b[0],b[j]) for j in xrange(1,len(b)))
-            G.add_edges((t[0],t[j]) for j in xrange(1,len(t)))
+            G.add_edges((b[0],b[j]) for j in range(1,len(b)))
+            G.add_edges((t[0],t[j]) for j in range(1,len(t)))
             G.add_edge(b[0],t[0])
         return G.num_verts() == self.nseps() and G.is_connected()
 
@@ -2808,13 +2811,13 @@ class CylinderDiagram(SeparatrixDiagram):
             # build list of seps in cyclic order around zero, starting by outgoing sep 0
             lout = [0]
             lin = []
-            for _ in xrange(ns):
+            for _ in range(ns):
                 lin.append(t[lout[-1]])
                 lout.append(b[lin[-1]])
             if verbose: print('lin  ', lin); print('lout', lout)
             # build involution on separatrices
             p = [None]*ns
-            for a in xrange(ns):
+            for a in range(ns):
                 p[lout[a]] = lin[(a+ns//2)%ns]
             if verbose: print("involution on seps", p)
             # wsep = counter of sepatrices with a wpt
@@ -2844,7 +2847,7 @@ class CylinderDiagram(SeparatrixDiagram):
             # build list of seps in cyclic order around first zero, starting by outgoing sep 0
             lout = [0]
             lin = []
-            for _ in xrange(ns//2):
+            for _ in range(ns//2):
                 lin.append(t[lout[-1]])
                 lout.append(b[lin[-1]])
             if verbose: print('lin  ', lin); print('lout', lout)
@@ -2853,16 +2856,16 @@ class CylinderDiagram(SeparatrixDiagram):
             while a in lout: a += 1
             llout = [a]
             llin = []
-            for _ in xrange(ns//2):
+            for _ in range(ns//2):
                 llin.append(t[llout[-1]])
                 llout.append(b[llin[-1]])
             if verbose: print('llin  ', llin); print('llout', llout)
             # now, try each way the involution could send lout to llout
-            for j in xrange(ns//2):
+            for j in range(ns//2):
                 test = True
                 # build involution on separatrices
                 p = [None]*ns
-                for a in xrange(ns//2):
+                for a in range(ns//2):
                     p[lout[a]] = llin[(j+a)%(ns//2)]
                     p[llout[a]] = lin[(a-j-1)%(ns//2)]
                 if verbose: print("involution on seps", p)
@@ -2940,7 +2943,7 @@ class CylinderDiagram(SeparatrixDiagram):
         V.add_vertices('%db' %c[0] for c in cb)
         V.add_vertices('%dt' %c[0] for c in ct)
 
-        for i in xrange(self.nseps()):
+        for i in range(self.nseps()):
             V.add_edge(
                 ('%db' %self._bot_to_cyl[i][0]),
                 ('%dt' %self._top_to_cyl[i][1]))
@@ -3079,8 +3082,8 @@ class CylinderDiagram(SeparatrixDiagram):
 
         p = MixedIntegerLinearProgram(maximization=False)
         scl = p.new_variable(nonnegative=True)
-        p.set_objective(sum(scl[i] for i in xrange(n)))
-        for i in xrange(n):
+        p.set_objective(sum(scl[i] for i in range(n)))
+        for i in range(n):
             p.add_constraint(scl[i],min=1)
         for b,t in itertools.izip(bot,top):
             p.add_constraint(
@@ -3090,7 +3093,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         try:
             total = Integer(p.solve())
-            lengths = [Integer(p.get_values(scl[i])) for i in xrange(n)]
+            lengths = [Integer(p.get_values(scl[i])) for i in range(n)]
             return total, lengths
         except MIPSolverException:
             return False
@@ -3136,12 +3139,12 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: all(f(c).rank() == 4 for c in a.cylinder_diagrams())
             True
         """
-        from homology import RibbonGraphWithAngles
+        from .homology import RibbonGraphWithAngles
 
         n = self.nseps()
         m = self.ncyls()
 
-        edges = [(i,n+i) for i in xrange(n)] + [(2*(n+i),2*(n+i)+1) for i in xrange(m)]
+        edges = [(i,n+i) for i in range(n)] + [(2*(n+i),2*(n+i)+1) for i in range(m)]
         faces = []
         angles = [1] * (2*(n+m))
         half = Integer(1)/Integer(2)
@@ -3154,12 +3157,12 @@ class CylinderDiagram(SeparatrixDiagram):
         return RibbonGraphWithAngles(edges=edges,faces=faces,angles=angles)
 
     def to_ribbon_graph_with_holonomies(self, lengths, heights, twists):
-        from homology import RibbonGraphWithHolonomies
+        from .homology import RibbonGraphWithHolonomies
 
         n = self.nseps()
         m = self.ncyls()
 
-        edges = [(i,n+i) for i in xrange(n)] + [(2*(n+i),2*(n+i)+1) for i in xrange(m)]
+        edges = [(i,n+i) for i in range(n)] + [(2*(n+i),2*(n+i)+1) for i in range(m)]
         faces = []
         half = Integer(1)/Integer(2)
         for j,(b,t) in enumerate(self.cylinders()):
@@ -3167,10 +3170,10 @@ class CylinderDiagram(SeparatrixDiagram):
             faces.append(tuple(face))
 
         holonomies = [None] * (2*(n+m))
-        for i in xrange(n):
+        for i in range(n):
             holonomies[i]   = (lengths[i],0)
             holonomies[n+i] = (-lengths[i],0)
-        for i in xrange(m):
+        for i in range(m):
             holonomies[2*(n+i)]   = (twists[i], heights[i])
             holonomies[2*(n+i)+1] = (-twists[i], -heights[i])
 
@@ -3256,7 +3259,7 @@ class CylinderDiagram(SeparatrixDiagram):
         m,lengths = res
 
         widths = [sum(lengths[i] for i in bot) for bot in self.bot_cycle_tuples()]
-        areas = [widths[i] for i in xrange(self.ncyls())]
+        areas = [widths[i] for i in range(self.ncyls())]
 
         v = [0]
         for a in areas:
@@ -3272,13 +3275,13 @@ class CylinderDiagram(SeparatrixDiagram):
 
         # initialization of sigma_h which remains constant
         lx = range(1, v[-1]+1)
-        for i in xrange(self.ncyls()):
-            for j in xrange(v[i], v[i+1], widths[i]):
+        for i in range(self.ncyls()):
+            for j in range(v[i], v[i+1], widths[i]):
                 lx[j+widths[i]-1] = j
 
         # initialization of y except the top
         ly = []
-        for i in xrange(self.ncyls()):
+        for i in range(self.ncyls()):
             ly.extend([None]*widths[i])
 
         # build the top interval without twist
@@ -3391,7 +3394,7 @@ class CylinderDiagram(SeparatrixDiagram):
         m = self.matrix_relation()
 
         min_lengths = [1] * self.nseps()
-        for i in xrange(self.ncyls()):
+        for i in range(self.ncyls()):
             pos = m.nonzero_positions_in_row(i)
             pos_m = filter(lambda j: m[i,j] == -1, pos)
             pos_p = filter(lambda j: m[i,j] == 1, pos)
@@ -3407,21 +3410,21 @@ class CylinderDiagram(SeparatrixDiagram):
                 sum(min_lengths[j] for j in bot)))
 
         for a in itertools.ifilter(
-              lambda x: all(x[i] >= min_widths[i] for i in xrange(self.ncyls())),
+              lambda x: all(x[i] >= min_widths[i] for i in range(self.ncyls())),
               IntegerListsLex(n=n, length=self.ncyls(), min_part=1)):
-            area_div = tuple(filter(lambda d: d >= min_widths[i],arith.divisors(a[i])) for i in xrange(self.ncyls()))
+            area_div = tuple(filter(lambda d: d >= min_widths[i],arith.divisors(a[i])) for i in range(self.ncyls()))
             for w in itertools.product(*area_div):
-                h = [Integer(a[i]/w[i]) for i in xrange(self.ncyls())]
+                h = [Integer(a[i]/w[i]) for i in range(self.ncyls())]
 
                 # from here the resolution becomes linear and convex ...
                 #TODO: program a linear and convex solution
                 seps_b = [c[0] for c in self.cylinders()]
                 nseps_b = map(len, seps_b)
-                lengths = tuple(IntegerListsLex(n=w[i], length=nseps_b[i], min_part=1) for i in xrange(self.ncyls()))
+                lengths = tuple(IntegerListsLex(n=w[i], length=nseps_b[i], min_part=1) for i in range(self.ncyls()))
                 for l_by_cyl in itertools.product(*lengths):
                     l = copy(V.zero())
-                    for i in xrange(self.ncyls()):
-                        for j in xrange(nseps_b[i]):
+                    for i in range(self.ncyls()):
+                        for j in range(nseps_b[i]):
                             l[seps_b[i][j]] = l_by_cyl[i][j]
                     if not m*l:
                         yield l,h
@@ -3463,7 +3466,7 @@ class CylinderDiagram(SeparatrixDiagram):
         from sage.combinat.gray_codes import product
 
         widths = [sum(lengths[i] for i in bot) for bot in self.bot_cycle_tuples()]
-        areas = [heights[i]*widths[i] for i in xrange(self.ncyls())]
+        areas = [heights[i]*widths[i] for i in range(self.ncyls())]
 
         # intialization of partial volumes: the set of squares in cylinder i is range(v[i],v[i+1])
         v = [0]
@@ -3480,13 +3483,13 @@ class CylinderDiagram(SeparatrixDiagram):
 
         # initialization of sigma_h which remains constant
         lx = range(1, v[-1]+1)
-        for i in xrange(self.ncyls()):
-            for j in xrange(v[i], v[i+1], widths[i]):
+        for i in range(self.ncyls()):
+            for j in range(v[i], v[i+1], widths[i]):
                 lx[j+widths[i]-1] = j
 
         # initialization of y except the top
         ly = []
-        for i in xrange(self.ncyls()):
+        for i in range(self.ncyls()):
             ly.extend(range(v[i]+widths[i],v[i+1]))
             ly.extend([None]*widths[i])
 
@@ -3588,9 +3591,9 @@ class CylinderDiagram(SeparatrixDiagram):
         elif len(twists) != self.ncyls():
             raise ValueError("the 'twists' vector has wrong length")
         else:
-            twists = [(-twists[i])%widths[i] for i in xrange(len(widths))]
+            twists = [(-twists[i])%widths[i] for i in range(len(widths))]
 
-        areas = [heights[i]*widths[i] for i in xrange(self.ncyls())]
+        areas = [heights[i]*widths[i] for i in range(self.ncyls())]
 
         # intialization of partial volumes: the set of squares in cylinder i is range(v[i],v[i+1])
         v = [0]
@@ -3607,8 +3610,8 @@ class CylinderDiagram(SeparatrixDiagram):
 
         # build the permutation r
         lx = range(1, v[-1]+1)
-        for i in xrange(self.ncyls()):
-            for j in xrange(v[i], v[i+1], widths[i]):
+        for i in range(self.ncyls()):
+            for j in range(v[i], v[i+1], widths[i]):
                 lx[j+widths[i]-1] = j
 
         # build permutation u with the given twists
@@ -3817,7 +3820,7 @@ class QuadraticCylinderDiagram(SageObject):
 
         - ``pairing`` -- the pairing of faces of g (= permutation)
         """
-        from homology import RibbonGraph
+        from .homology import RibbonGraph
 
         if arg2 is None:
             if isinstance(arg1, str):
@@ -4507,7 +4510,7 @@ class QuadraticCylinderDiagram(SageObject):
                 raise ValueError('sum of lengths on top and bottom differ')
             widths.append(w1)
 
-        areas = [heights[i] * widths[i] for i in xrange(self.ncyls())]
+        areas = [heights[i] * widths[i] for i in range(self.ncyls())]
         N = sum(areas)  # number of squares
         if N % 2:
             raise ValueError('got an odd area')

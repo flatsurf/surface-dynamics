@@ -34,7 +34,9 @@ Cambridge Studies in Advanced Mathematics 49 (1997)
    series is a ``struct gen_fun``
 """
 
-from __future__ import absolute_import
+from __future__ import print_function, absolute_import
+from six.moves import range, map, filter, zip
+from six import iteritems
 
 from .factored_denominator import FactoredDenominator
 
@@ -521,7 +523,7 @@ class GeneralizedMultiZetaElement(AbstractMSum):
         P = self.parent()
         new_data = []
         n = P.ngens()
-        for den,num in self._data.iteritems():
+        for den,num in iteritems(self._data):
             # TODO: this is stupidly innefficient
             L = [list(k) + [v] for k,v in den._tuple]
             L.sort()

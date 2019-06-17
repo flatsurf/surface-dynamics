@@ -1,7 +1,8 @@
 r"""
 Testing abelian strata and related combinatorics
 """
-from __future__ import print_function
+from __future__ import print_function, absolute_import
+from six.moves import range, map, filter, zip
 
 import sage.misc.prandom as prandom
 from sage.misc.misc import cputime

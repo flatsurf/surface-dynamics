@@ -28,7 +28,7 @@ TODO:
 #*****************************************************************************
 
 from __future__ import print_function, absolute_import
-
+from six.moves import range, map, filter, zip
 from six import iterkeys, iteritems
 
 from sage.structure.sage_object import SageObject

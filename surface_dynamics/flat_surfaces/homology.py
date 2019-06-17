@@ -82,7 +82,8 @@ TODO:
   graphs is a choice of orientation for each vertex so that each face has all of its
   edges oriented in the same direction as we go along the boundaries.
 """
-from __future__ import print_function
+from __future__ import print_function, absolute_import
+from six.moves import range, map, filter, zip
 
 from surface_dynamics.misc.permutation import (perm_init, constellation_init, perm_cycles, perm_invert,
         perm_check, perm_compose, equalize_perms, perm_orbit)
@@ -231,7 +232,7 @@ class RibbonGraph(SageObject):
         self._vertices_inv = [None] * total_darts
         self._edges_inv = [None] * total_darts
         self._faces_inv = [None] * total_darts
-        for i in xrange(total_darts):
+        for i in range(total_darts):
             if self._vertices[i] != -1:
                 self._vertices_inv[self._vertices[i]] = i
                 self._edges_inv[self._edges[i]] = i
@@ -430,7 +431,7 @@ class RibbonGraph(SageObject):
         if self._active_darts.count(True) != self._num_darts:
             raise ValueError("the number of darts do not coincide with active darts")
 
-        for i in xrange(self._total_darts):
+        for i in range(self._total_darts):
             if self._active_darts[i]:
                 if self._vertices[i] == -1 or self._vertices_inv[i] is None:
                     raise ValueError("dart %d is active but has no vertex" %i)
@@ -466,7 +467,7 @@ class RibbonGraph(SageObject):
 
         from sage.graphs.graph import Graph
         G = Graph(loops=True, multiedges=True)
-        for i in xrange(self._total_darts):
+        for i in range(self._total_darts):
             if self._active_darts[i]:
                 G.add_edge(i,self._vertices[i])
                 G.add_edge(i,self._edges[i])
@@ -483,7 +484,7 @@ class RibbonGraph(SageObject):
         if perm is None:
             perm=[None]*self.num_darts()
             k = 0
-            for i in xrange(self.num_darts()):
+            for i in range(self.num_darts()):
                 if self._active_darts[i]:
                     perm[i] = k
                     k += 1
@@ -491,7 +492,7 @@ class RibbonGraph(SageObject):
         vertices = [None] * self.num_darts()
         edges = [None] * self.num_darts()
         faces = [None] * self.num_darts()
-        for i in xrange(self.num_darts()):
+        for i in range(self.num_darts()):
             if self._active_darts[i]:
                 vertices[perm[i]] = perm[self._vertices[i]]
                 edges[perm[i]] = perm[self._edges[i]]
@@ -513,7 +514,7 @@ class RibbonGraph(SageObject):
         r"""
         Return the list of darts
         """
-        return [i for i in xrange(self._total_darts) if self._active_darts[i]]
+        return [i for i in range(self._total_darts) if self._active_darts[i]]
 
     def num_vertices(self):
         r"""
@@ -978,7 +979,7 @@ class RibbonGraph(SageObject):
             [[[1, 3]], [[2, 4]], [[5, 7]], [[6, 8]]]
 
             sage: f = '(0,10,13)(6,17,11)(2,14,7)(15,12,3)(16,20,19)(18,1,9)(4,22,21)(23,8,5)'
-            sage: e = tuple((i,i+1) for i in xrange(0,24,2))
+            sage: e = tuple((i,i+1) for i in range(0,24,2))
             sage: r = RibbonGraph(edges=e,faces=f); r
             Ribbon graph with 2 vertices, 12 edges and 8 faces
             sage: c,m = r.cycle_basis(intersection=True)
@@ -1071,8 +1072,8 @@ class RibbonGraph(SageObject):
 
         if intersection:
             m = matrix(len(cycles))
-            for j in xrange(len(I)):
-                for jj in xrange(len(I[j])):
+            for j in range(len(I)):
+                for jj in range(len(I[j])):
                     m[j,jj] = I[j][jj]
                     m[jj,j] = -I[j][jj]
 
@@ -1087,7 +1088,7 @@ class RibbonGraph(SageObject):
         where the preceding one ends. A *cycle* is a path which starts where it
         ends.
         """
-        for i in xrange(len(c)-1):
+        for i in range(len(c)-1):
             if self.dart_to_vertex(c[i][1]) != self.dart_to_vertex(c[i+1][0]):
                 return False
         if self.dart_to_vertex(c[-1][1]) != self.dart_to_vertex(c[0][0]):
@@ -1162,7 +1163,7 @@ class RibbonGraphWithAngles(RibbonGraph):
         on the left or on the right at singularity.
         """
         a = 0
-        for i in xrange(len(c)-1):
+        for i in range(len(c)-1):
             d1 = c[i][1]
             d2 = c[i+1][0]
             if self.dart_to_vertex(d1) != self.dart_to_vertex(d2):
@@ -1196,7 +1197,7 @@ class RibbonGraphWithAngles(RibbonGraph):
 
         The standard cube::
 
-            sage: e = tuple((i,i+1) for i in xrange(0,24,2))
+            sage: e = tuple((i,i+1) for i in range(0,24,2))
             sage: f = '(0,20,7,10)(16,22,19,21)(2,9,5,23)(14,3,17,1)(12,8,15,11)(18,4,13,6)'
             sage: a = [1/2]*24
             sage: r = RibbonGraphWithAngles(edges=e,faces=f,angles=a)
@@ -1220,7 +1221,7 @@ class RibbonGraphWithAngles(RibbonGraph):
         from sage.functions.other import floor
 
         l1 = []
-        for c in xrange(self.num_vertices()):
+        for c in range(self.num_vertices()):
             w = self.angle_at_vertex(c)
             l1.append(w - 2*floor(w/2))
 
@@ -1333,7 +1334,7 @@ class RibbonGraphWithAngles(RibbonGraph):
 
         if verbose:
             print("cycles with winding")
-            for i in xrange(len(c)):
+            for i in range(len(c)):
                 print(c[i], winding[i])
             print("intersection matrix on Z")
             print(M)
@@ -1349,25 +1350,25 @@ class RibbonGraphWithAngles(RibbonGraph):
         g = self.genus()
 
         s = GF2(0)
-        for i in xrange(g):
+        for i in range(g):
             # 1. computation of q(P.row(i))
             a = P.row(i)
-            a_indices = [j for j in xrange(2*g) if a[j] != 0]
+            a_indices = [j for j in range(2*g) if a[j] != 0]
             ## winding + nb_components
             t_a = sum(winding[i]+1 for i in a_indices)
             ## self intersection
-            for j1 in xrange(len(a_indices)):
-                for j2 in xrange(j1+1,len(a_indices)):
+            for j1 in range(len(a_indices)):
+                for j2 in range(j1+1,len(a_indices)):
                     t_a += M[a_indices[j1],a_indices[j2]]
 
             # 2. computation of q(P.row(g+i))
             b = P.row(g+i)
-            b_indices = [j for j in xrange(2*g) if b[j] != 0]
+            b_indices = [j for j in range(2*g) if b[j] != 0]
             ## winding + nb_components
             t_b = sum(winding[i]+1 for i in b_indices)
             ## self intersection
-            for j1 in xrange(len(b_indices)):
-                for j2 in xrange(j1+1,len(b_indices)):
+            for j1 in range(len(b_indices)):
+                for j2 in range(j1+1,len(b_indices)):
                     t_b += M[b_indices[j1],b_indices[j2]]
 
             # 3. add to s the contribution of the couple

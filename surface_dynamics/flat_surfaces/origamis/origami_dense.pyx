@@ -1,3 +1,5 @@
+# distutils: sources = surface_dynamics/flat_surfaces/origamis/normal_form.c surface_dynamics/flat_surfaces/origamis/lyapunov_exponents.c
+# distutils: include_dirs = surface_dynamics/flat_surfaces/origamis
 """
 Dense origamis
 
@@ -22,6 +24,8 @@ from cpython.tuple cimport *
 
 from cpython cimport bool
 
+from sage.structure.coerce import CoercionModel
+
 from sage.rings.integer cimport Integer, smallInteger
 from sage.rings.integer import GCD_list
 
@@ -34,7 +38,6 @@ from sage.misc.cachefunc import cached_method
 from sage.interfaces.gap import gap
 
 from sage.misc.decorators import options
-
 
 cdef extern from "normal_form.h":
     int origami_normal_form(int *x, int *y, int *ren, unsigned int n)
@@ -1028,7 +1031,6 @@ cdef class Origami_dense_pyx(object):
         oo = self.__copy__()
 
         if return_map:
-            from sage.groups.perm_gps.permgroup_element import PermutationGroupElement
             m = oo._set_standard_form(return_map=True)
             return oo, PermutationGroupElement([i+1 for i in m])
         else:
@@ -1622,7 +1624,6 @@ cdef class Origami_dense_pyx(object):
                 assert A.order() == 2, "The automorphism group is not of order 2"
                 involution = A.list()[1]
             else:
-                from sage.groups.perm_gps.permgroup_element import PermutationGroupElement
                 if not isinstance(involution, PermutationGroupElement):
                     involution = PermutationGroupElement(involution)
 

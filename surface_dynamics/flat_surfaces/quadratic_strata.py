@@ -135,8 +135,8 @@ List the connected components of a stratum::
 #*****************************************************************************
 
 from __future__ import print_function, absolute_import
-
-from six.moves import map, range
+from six.moves import range, map, filter, zip
+from six import iteritems
 
 import numbers
 
@@ -199,7 +199,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
         if not l:
             raise ValueError("the list must be nonempty")
         if isinstance(l, dict):
-            l = sum(([v]*e for v,e in l.iteritems()),[])
+            l = sum(([v]*e for v,e in iteritems(l)),[])
         allzeros = sorted(map(Integer, l), reverse=True)
         nb_poles = allzeros.count(-1)
         nb_fake_zeros = allzeros.count(0)
@@ -735,7 +735,7 @@ class QuadraticStratumComponent(StratumComponent):
 
         p = self.permutation_representative()
 
-        for _ in xrange(nsteps):
+        for _ in range(nsteps):
             while not p.has_rauzy_move(0):
                 p = p.rauzy_move(1)
                 continue
@@ -1029,12 +1029,12 @@ class GenusZeroQuadraticStratumComponent(QSC):
 
         l0 = ll + [2*p-6,2*p-6]
         l1 = []
-        for k in xrange(1,p-3):
+        for k in range(1,p-3):
             l1.extend([2*k,2*k,2*k+1])
-        for k in xrange(len(z)):
-            for i in xrange(sum(z[:k])+1,sum(z[:k+1])):
+        for k in range(len(z)):
+            for i in range(sum(z[:k])+1,sum(z[:k+1])):
                 del l1[2*i+k]
-        l2 = [2 * sum(z[:k+1]) + 1 for k in xrange(len(z))]
+        l2 = [2 * sum(z[:k+1]) + 1 for k in range(len(z))]
         l2.reverse()
         l1.extend(l2)
         l1.extend([1,1])
@@ -1102,13 +1102,13 @@ class GenusOneQuadraticStratumComponent(QSC):
 
 
         l0 = [0,1]
-        for k in xrange(1,p):
+        for k in range(1,p):
             l0.extend([2*k, 2*k+1, 2*k+1])
-        l1 = [2 * (sum(z[:k])) for k in xrange(1,len(z))]
+        l1 = [2 * (sum(z[:k])) for k in range(1,len(z))]
         l1.extend([1, 2*p, 2*p, 0])
 
-        for k in xrange(len(z)):
-            for i in xrange(sum(z[:k])+1,sum(z[:k+1])):
+        for k in range(len(z)):
+            for i in range(sum(z[:k])+1,sum(z[:k+1])):
                 del l0[2*i+k]
 
         if f:
@@ -1242,14 +1242,14 @@ class GenusTwoNonhyperellipticQuadraticStratumComponent(QSC):
         else: ll = [0]
 
         l0 = ll + [2*p+6,1,2*p+5,2*p+6,p+4,p+3]
-        l1 = range(1,p+5)
-        for k in xrange(p+5,2*p+5):
+        l1 = list(range(1,p+5))
+        for k in range(p+5,2*p+5):
             l1.extend([2*p+7-k,k,k])
         l1.extend([2,2*p+5])
         l1.extend(ll)
 
-        for k in xrange(len(z)):
-            for i in xrange(sum(z[:k])+1,sum(z[:k+1])):
+        for k in range(len(z)):
+            for i in range(sum(z[:k])+1,sum(z[:k+1])):
                 if i in l0: del l0[l0.index(i)]
                 if i in l0: del l0[l0.index(i)]
                 if i in l1: del l1[l1.index(i)]
@@ -1312,7 +1312,7 @@ class HyperellipticQuadraticStratumComponent(QSC):
         l0.extend(range(1,r+1))
         l0.append('A')
         l0.extend(range(r+1,r+s+1))
-        l1 = range(r+s,r,-1)
+        l1 = list(range(r+s,r,-1))
         l1.append('B')
         l1.extend(range(r,0,-1))
         l1.append('B')
@@ -1406,16 +1406,16 @@ class ConnectedQuadraticStratumComponent(QSC):
         l0 = ll + [1,2,3]
         l1 = [4*g-3+p,3,4*g-2+p,2,4*g-3+p,1,4*g-2+p]
 
-        for k in xrange(g-2):  # V(k) in Zorich 2008
+        for k in range(g-2):  # V(k) in Zorich 2008
             l0.extend([4+4*k,4*g-1+p+2*k,7+4*k,4*g+p+2*k,6+4*k,4*g-1+p+2*k,5+4*k,4*g+p+2*k])
-        for l in xrange(p):    # W(l) in Zorich 2008
+        for l in range(p):    # W(l) in Zorich 2008
             l0.extend([4*g-4+l,6*g+p-5+l,6*g+p-5+l])
         l0.append(4*g-4+p)
-        l1.extend(xrange(4,4*g-3+p))
+        l1.extend(range(4,4*g-3+p))
         l1.extend(ll)
 
-        for k in xrange(len(z)):
-            for i in xrange(sum(z[:k])+1,sum(z[:k+1])):
+        for k in range(len(z)):
+            for i in range(sum(z[:k])+1,sum(z[:k+1])):
                 del l0[l0.index(i)]
                 del l1[l1.index(i)]
 
@@ -2201,8 +2201,8 @@ class QuadraticStrata_d(QuadraticStrata_class):
         else:
             m = max(0, self._min_nb_poles)
             M = min(2*d-2, self._max_nb_poles+1)
-            for p in xrange(m,M):
-                for z in xrange((d+p)%2,min(d+3-p,(2*d-p)//3+1),2):
+            for p in range(m,M):
+                for z in range((d+p)%2,min(d+3-p,(2*d-p)//3+1),2):
                     # d+z+p is 0 mod 2
                     # 2d-2z-2p >= -4 (or z <= d+2-p)
                     for Z in Partitions(2*d-2*z-p, length=z):
@@ -2360,7 +2360,7 @@ class QuadraticStrata_gd(QuadraticStrata_class):
         else:
             m = max(0,self._min_nb_poles)
             M = min(2*d-2,self._max_nb_poles+1)
-            for p in xrange(m,M):
+            for p in range(m,M):
                 z = d - p - 2*g + 2
                 for Z in Partitions(2*d-2*z-p,length=z):
                     Q = QuadraticStratum(Z+[-1]*p)

@@ -15,6 +15,9 @@ compute Lyapunov exponents.
 #  The full text of the GPL is available at http://www.gnu.org/licenses/
 # *************************************************************************
 
+from __future__ import print_function, absolute_import
+from six.moves import range, map, filter, zip
+
 from sage.structure.sage_object import SageObject
 
 from sage.misc.cachefunc import cached_method

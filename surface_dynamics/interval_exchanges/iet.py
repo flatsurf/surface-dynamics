@@ -44,6 +44,16 @@ There are two plotting methods for iet::
     sage: T.plot_function()  # not tested (problem with matplotlib font cache)
     Graphics object consisting of 3 graphics primitives
 """
+#*****************************************************************************
+#       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
+#
+#  Distributed under the terms of the GNU General Public License (GPL)
+#                  http://www.gnu.org/licenses/
+#*****************************************************************************
+
+from __future__ import print_function, absolute_import
+from six.moves import range, map, filter, zip
+
 from copy import copy
 from sage.modules.free_module_element import free_module_element
 from sage.rings.all import ZZ, QQ
