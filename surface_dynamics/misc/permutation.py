@@ -6,6 +6,9 @@ the image is undefined, the number -1 is used.
 """
 
 from __future__ import print_function, absolute_import
+from six.moves import range
+
+from math import log
 
 import numbers
 
@@ -53,7 +56,7 @@ def permutation_to_perm(p):
         sage: permutation_to_perm(PermutationGroupElement([3,1,2]))
         [2, 0, 1]
     """
-    return map(lambda x: x-1, p.domain())
+    return list(map(lambda x: x-1, p.domain()))
 
 def perm_to_permutation(l):
     r"""
@@ -66,7 +69,7 @@ def perm_to_permutation(l):
         (1,3)
     """
     from sage.groups.perm_gps.permgroup_element import PermutationGroupElement
-    return PermutationGroupElement(map(lambda x: x+1, l))
+    return PermutationGroupElement(list(map(lambda x: x+1, l)))
 
 
 def perm_init(data, n=None, partial=False):
@@ -138,7 +141,7 @@ def equalize_perms(l):
     """
     n = max(map(len, l))
     for p in l:
-        p.extend(xrange(len(p), n))
+        p.extend(range(len(p), n))
     return n
 
 
@@ -277,10 +280,10 @@ def cycles_to_list(t, n=None, partial=False):
     if partial:
         res = [-1] * n
     else:
-        res = range(n)
+        res = list(range(n))
 
     for c in t:
-        for j in xrange(len(c)-1):
+        for j in range(len(c)-1):
             if not isinstance(c[j], numbers.Integral) or c[j] < 0 or c[j] >= n:
                 raise ValueError("cycle values out of range")
             res[c[j]] = int(c[j+1])
@@ -310,7 +313,7 @@ def str_to_cycles(s):
     for c_str in s[1:-1].split(')('):
         if not c_str:
             continue
-        r.append(map(int, c_str.replace(' ', '').split(',')))
+        r.append(list(map(int, c_str.replace(' ', '').split(','))))
     return r
 
 
@@ -351,7 +354,7 @@ def perm_cycles(p, singletons=False, n=None):
     seen = [1] * n
     res = []
 
-    for i in xrange(n):
+    for i in range(n):
         if seen[i] and p[i] != -1:
             cycle = []
             j = i
@@ -534,14 +537,16 @@ def _canonical_reg_perm(n, k):
     return p
 
 
-def constellation_init(vertices, edges, faces, n=None, check=True):
+def constellation_init(vertices, edges, faces, n=None, domain=None, check=True):
     r"""
     Each of ``vertices``, ``edges`` or ``faces can be ``None``, an
     integer or an object to initialize a (partial) permutation.
 
     INPUT:
 
-    - ``n`` - number of darts
+    - ``vertices``, ``edges``, ``faces`` - permutations given as strings or lists
+
+    - ``n`` - (optional) number of darts
 
     - ``check`` - boolean default ``True``)
 
@@ -667,11 +672,25 @@ def perm_invert(l, n=None):
     if n is None:
         n = len(l)
     res = [-1] * n
-    for i in xrange(n):
+    for i in range(n):
         if l[i] != -1:
             res[l[i]] = i
     return res
 
+def perm_invert_inplace(p, n=None):
+    r"""
+    Inverse in place the permutation p
+    """
+    if n is None:
+        n = len(l)
+    seen = [0] * n
+    for i in range(n):
+        if seen[i]:
+            continue
+        j = p[i]
+        while not seen[i]:
+            seen[i] = 1
+            i, p[j] = p[j], i
 
 def perm_compose(p1, p2):
     r"""
@@ -691,7 +710,7 @@ def perm_compose(p1, p2):
         [-1, 3, -1, 1, -1, 5]
     """
     r = [-1] * len(p1)
-    for i in xrange(len(p1)):
+    for i in range(len(p1)):
         if p1[i] != -1 and p1[i] < len(p2):
             r[i] = p2[p1[i]]
     return r
@@ -716,11 +735,12 @@ def perm_compose_i(p1, p2):
     assert(len(p1) == len(p2))
 
     res = [None]*len(p1)
-    for i in xrange(len(p1)):
+    for i in range(len(p1)):
         res[p1[p2[i]]] = i
 
     return res
 
+# can we do that inplace?
 def perm_conjugate(p1, p2, n=None):
     r"""
     Conjugate ``p1`` by ``p2``.
@@ -747,6 +767,78 @@ def perm_conjugate(p1, p2, n=None):
     for i in range(n):
         res[p2[i]] = p2[p1[i]]
     return res
+
+def perm_conjugate_inplace(p1, p2, n=None):
+    r"""
+    we want
+
+    p1[p2[i]] <- p2[p1[i]]
+
+    save tmp = p1[p2[0]]
+    set  p1[p2[0]] = p2[p1[0]]
+
+    """
+    if n is None:
+        n = len(p1)
+    unseen = [True] * n
+    for i in range(n):
+        if not unseen[i]:
+            continue
+        unseen[i] = True
+
+def perm_on_list_inplace(p, a, n=None, swap=None):
+    r"""
+    Inplace action of permutation on list-like objects.
+
+    INPUT:
+
+    - ``p`` - permutation
+
+    - ``a`` - list, array
+
+    - ``n`` - (optional) size of permutation
+
+    - ``swap`` - (optional) a swap function
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import *
+        sage: l = [0,1,2,3,4]
+        sage: p = [4,2,3,0,1]
+        sage: perm_on_list_inplace(p,l)
+        sage: l
+        [3, 4, 1, 2, 0]
+
+    Permutation action on matrix rows::
+
+        sage: m1 = matrix(ZZ, 5, 5, 1)
+        sage: m2 = matrix(ZZ, 5, 5, 1)
+        sage: m = matrix(ZZ, 5, 5, 1)
+        sage: p1 = perm_init([4,1,3,2,0])
+        sage: p2 = perm_init([1,0,3,4,2])
+        sage: perm_on_list_inplace(p1, m1, swap=sage.matrix.matrix0.Matrix.swap_rows)
+        sage: perm_on_list_inplace(p2, m2, swap=sage.matrix.matrix0.Matrix.swap_rows)
+        sage: perm_on_list_inplace(perm_compose(p1, p2), m, swap=sage.matrix.matrix0.Matrix.swap_rows)
+        sage: m == m2 * m1
+        True
+    """
+    if n is None:
+        n = len(p)
+    seen = [False] * n
+    for i in range(n):
+        if seen[i]:
+            continue
+        seen[i] = True
+        j = p[i]
+        while seen[j] is False:
+            if swap:
+                swap(a, i, j)
+            else:
+                tmp = a[i]
+                a[i] = a[j]
+                a[j] = tmp
+            seen[j] = True
+            j = p[j]
 
 ################################################################
 # Various permutation constructors (including randomized ones) #
@@ -939,7 +1031,7 @@ def canonical_perm(part, i=0):
     """
     res = []
     for p in part:
-        res.extend(xrange(i+1,i+p))
+        res.extend(range(i+1,i+p))
         res.append(i)
         i += p
     return res
@@ -962,7 +1054,7 @@ def canonical_perm_i(part, i=0):
     res = []
     for p in part:
         res.append(i+p-1)
-        res.extend(xrange(i,i+p-1))
+        res.extend(range(i,i+p-1))
         i += p
     return res
 
@@ -1099,8 +1191,8 @@ def perms_relabel(p, m):
         [[0, 1, 2], [1, 0, 2]]
     """
     q = [k[:] for k in p]
-    for i in xrange(len(m)):
-        for j in xrange(len(p)):
+    for i in range(len(m)):
+        for j in range(len(p)):
             q[j][m[i]] = m[p[j][i]]
     return q
 
@@ -1142,7 +1234,7 @@ def perms_canonical_labels_from(x, y, j0):
 
     k = 0
     mapping = [None] * n
-    waiting = [[] for i in xrange(len(y))]
+    waiting = [[] for i in range(len(y))]
 
     while k < n:
         # initialize at j0
@@ -1332,7 +1424,7 @@ class PermutationGroupOrbit(object):
         del self._elts[:]
         self._s = 0
 
-    def next(self):
+    def __next__(self):
         S = self._S        # candidates
         s = self._s        # current index in S
         if s == len(S):
@@ -1405,3 +1497,135 @@ class PermutationGroupOrbit(object):
                     seen[v] = True
                     elts.append(v)
             k += 1
+
+#################################3
+# Serialization
+
+# the first 64 characters are used for integer encoding
+# the last one is used for "undefined" (corresponds to -1 in arrays)
+CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-.'
+CHARS_INV = {j:i for i,j in enumerate(CHARS)}
+
+def uint_base64_str(n, l=None):
+    r"""
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import uint_base64_str
+
+        sage: uint_base64_str(15)
+        'f'
+        sage: uint_base64_str(15, 3)
+        '00f'
+
+        sage: uint_base64_str(-1)
+        '.'
+        sage: uint_base64_str(-1, 3)
+        '...'
+    """
+    n = int(n)
+    if n == -1:
+        if l is None:
+            return CHARS[64]
+        else:
+            return CHARS[64] * l
+    elif n < -1:
+        raise ValueError("invalid negative integer")
+    s = ''
+    while n:
+        s = CHARS[n % 64] + s
+        n //= 64
+    if l is not None:
+        if len(s) > l:
+            raise ValueError
+        else:
+            s = CHARS[0] * (l - len(s)) + s
+    return s
+
+def uint_from_base64_str(s):
+    r"""
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import uint_from_base64_str, uint_base64_str
+
+        sage: uint_from_base64_str('mqb')
+        91787
+        sage: uint_base64_str(91787)
+        'mqb'
+
+        sage: uint_from_base64_str('00mqb')
+        91787
+
+        sage: uint_from_base64_str('...')
+        -1
+    """
+    if not s or not isinstance(s, str):
+        raise ValueError
+    if s[0] == CHARS[64]:
+        assert all(i == CHARS[64] for i in s)
+        return -1
+    n = 0
+    d = 1
+    for c in reversed(s):
+        n += CHARS_INV[c] * d
+        d *= 64
+    return n
+
+def perm_base64_str(p, n=None):
+    r"""
+    Make a canonical ASCII string out of ``p``.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_base64_str, perm_from_base64_str
+        sage: from array import array
+
+        sage: perm_base64_str([])
+        ''
+        sage: perm_base64_str([3,1,0,2])
+        '3102'
+        sage: s = perm_base64_str(range(2048))
+        sage: s
+        '00010203...v+v-'
+        sage: perm_from_base64_str(s, 2048) == list(range(2048))
+        True
+    """
+    if n is None:
+        n = len(p)
+    if not n:
+        return ''
+    l = int(log(n, 64)) + 1 # number of digits used for each entry
+    return ''.join(uint_base64_str(p[i], l) for i in range(n))
+
+def perm_from_base64_str(s, n):
+    r"""
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_from_base64_str, perm_base64_str
+        sage: from array import array
+
+        sage: p = [3,0,2,1]
+        sage: s = perm_base64_str(p)
+        sage: perm_from_base64_str(s, 4) == p
+        True
+
+        sage: perm_base64_str([-1,-1])
+        '..'
+        sage: perm_from_base64_str('..', 2)
+        [-1, -1]
+
+        sage: p = list(range(3000))
+        sage: shuffle(p)
+        sage: perm_from_base64_str(perm_base64_str(p), 3000) == p
+        True
+        sage: p[18] = p[2003] = -1
+        sage: perm_from_base64_str(perm_base64_str(p), 3000) == p
+        True
+    """
+    if not n:
+        if s:
+            raise ValueError("invalid input")
+        return []
+    l = int(log(n, 64)) + 1 # number of digits used for each entry
+    if len(s) != n * l:
+        raise ValueError('wrong length')
+    return [uint_from_base64_str(s[i:i+l]) for i in range(0,len(s),l)]
