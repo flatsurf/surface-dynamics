@@ -242,7 +242,7 @@ def _two_lists(arg1, arg2):
         elif isinstance(arg1, (tuple,list)):
             try:
                 t = CombinatPermutation(arg1)
-            except StandardError:
+            except Exception:
                 if len(arg1) != 2:
                     raise ValueError('argument not accepted')
                 arg1, arg2 = arg1

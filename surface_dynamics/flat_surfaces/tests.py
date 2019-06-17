@@ -57,7 +57,7 @@ class Test:
         n = random.randint(self.min_num_seps,self.max_num_seps)
         S = SymmetricGroup(2*n)
 
-        e = S([(2*i+1,2*i+2) for i in xrange(n)])
+        e = S([(2*i+1,2*i+2) for i in range(n)])
         f = S.random_element()
         P = PermutationGroup([e,f])
 
@@ -66,8 +66,8 @@ class Test:
             P = PermutationGroup([e,f])
 
         return RibbonGraph(
-                 edges=[e(i+1)-1 for i in xrange(2*n)],
-                 faces=[f(i+1)-1 for i in xrange(2*n)])
+                 edges=[e(i+1)-1 for i in range(2*n)],
+                 faces=[f(i+1)-1 for i in range(2*n)])
 
     def _get_random_cylinder_diagram(self):
         r"""

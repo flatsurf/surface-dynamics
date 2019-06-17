@@ -59,7 +59,7 @@ def real_characters(G):
     n = G.ConjugacyClasses().Length()
     Tgap = G.CharacterTable().Irr()
     degrees = [chi.Degree().sage() for chi in Tgap]
-    Tgap = [tuple(UCF(chi[j]) for j in xrange(n)) for chi in Tgap]
+    Tgap = [tuple(UCF(chi[j]) for j in range(n)) for chi in Tgap]
 
     real_T = []
     real_degrees = []
@@ -76,7 +76,7 @@ def real_characters(G):
             seen.add(chi)
             chi_bar = tuple(z.conjugate() for z in chi)
             seen.add(chi_bar)
-            real_T.append(tuple(chi[j] + chi[j].conjugate() for j in xrange(n)))
+            real_T.append(tuple(chi[j] + chi[j].conjugate() for j in range(n)))
 
     return (real_T, real_degrees)
 

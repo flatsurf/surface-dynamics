@@ -93,6 +93,8 @@ from __future__ import print_function, absolute_import
 from six.moves import range, map, filter, zip
 from six import iteritems
 
+import numbers
+
 from sage.structure.sage_object import SageObject
 
 import itertools
@@ -427,17 +429,6 @@ class SeparatrixDiagram(SageObject):
             True
             sage: d1 == d2 or d1 == d3 or d2 == d3 or d3 == d2
             False
-        """
-        return (isinstance(other, SeparatrixDiagram) and
-                self._bot == other._bot and self._top == other._top)
-
-    def __ne__(self,other):
-        r"""
-        Difference test
-
-        TESTS::
-
-            sage: from surface_dynamics import *
 
             sage: d1 = SeparatrixDiagram('(0)','(0)')
             sage: d2 = SeparatrixDiagram('(0,1)(2)','(0,1)(2)')
@@ -447,11 +438,12 @@ class SeparatrixDiagram(SageObject):
             sage: d1 != d2 and d1 != d3 and d2 != d3 and d3 != d2
             True
         """
-        return not self.__eq__(other)
+        return (isinstance(other, SeparatrixDiagram) and
+                self._bot == other._bot and self._top == other._top)
 
-    def __cmp__(self,other):
+    def __lt__(self, other):
         r"""
-        Comparison
+        Test whether self is lesser or equal than other
 
         TESTS::
 
@@ -479,19 +471,10 @@ class SeparatrixDiagram(SageObject):
         if not isinstance(other, SeparatrixDiagram):
             raise TypeError("only separatrix diagram can be compared to separatrix diagrams")
 
-        test = cmp(self.nseps(), other.nseps())
-        if test: return test
-
-        test = cmp(self.ncyls(),other.ncyls())
-        if test: return test
-
-        test = cmp(self._bot_cycles, other._bot_cycles)
-        if test: return test
-
-        test = cmp(self._top_cycles, other._top_cycles)
-        if test: return test
-
-        return 0
+        return self.nseps() < other.nseps() or \
+               self.ncyls() < other.ncyls() or \
+               self._bot_cycles < other._bot_cycles or \
+               self._top_cycles < other._top_cycles
 
     def is_isomorphic(self, other, return_map=False):
         r"""
@@ -961,7 +944,7 @@ class SeparatrixDiagram(SageObject):
             sage: SeparatrixDiagram('(0,1)(2)','(0,2)(1)').stratum()
             H_2(2)
         """
-        from abelian_strata import AbelianStratum
+        from .abelian_strata import AbelianStratum
 
         return AbelianStratum([i-1 for i in self.profile()])
 
@@ -1551,7 +1534,7 @@ def separatrix_diagram_fast_iterator(profile,ncyls=None):
     if ncyls is None:
         ncyls = range(1,d+1)
     else:
-        if isinstance(ncyls,(int,long,Integer)):
+        if isinstance(ncyls, numbers.Integral):
             ncyls = set([int(ncyls)])
         else:
             ncyls = set(map(int,ncyls))
@@ -3032,7 +3015,7 @@ class CylinderDiagram(SeparatrixDiagram):
         if len(cc) == 1:
             return cc[0](stratum)
 
-        from abelian_strata import HypASC
+        from .abelian_strata import HypASC
         if cc[0] is HypASC:
             if self.is_hyperelliptic():
                 return HypASC(stratum)
@@ -3040,10 +3023,10 @@ class CylinderDiagram(SeparatrixDiagram):
                 return cc[1](stratum)
 
         if self.spin_parity() == 0:
-            from abelian_strata import EvenASC
+            from .abelian_strata import EvenASC
             return EvenASC(stratum)
         else:
-            from abelian_strata import OddASC
+            from .abelian_strata import OddASC
             return OddASC(stratum)
 
     def smallest_integer_lengths(self):

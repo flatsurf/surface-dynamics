@@ -84,7 +84,7 @@ Teichmueller curves. Let us first check the classification of arithmetic
 Teichmueller curves in H(2) from Hubert-Lelievre and McMullen::
 
     sage: A = AbelianStratum(2)
-    sage: for n in xrange(3, 17):
+    sage: for n in range(3, 17):
     ....:     q = D.query(stratum=A, nb_squares=n)
     ....:     print("%2d %d"%(n, q.number_of()))
      3 1
@@ -105,7 +105,7 @@ Teichmueller curves in H(2) from Hubert-Lelievre and McMullen::
 And look at the conjecture of Delecroix-Lelievre in the stratum H(1,1)::
 
     sage: A = AbelianStratum(1,1)
-    sage: for n in xrange(4,20):
+    sage: for n in range(4,20):
     ....:     q = D.query(stratum=A, nb_squares=n, primitive=True)
     ....:     print("%2d %d"%(n, q.number_of()))
      4 1
@@ -454,7 +454,7 @@ def data_to_real_tuple(s):
     s = s[1:]
     R = RealField(prec)
     res = []
-    for i in xrange(0,len(s),3):
+    for i in range(0,len(s),3):
         sign,mantissa,exponent = data_to_integer_tuple(s[i] + ' ' + s[i+1] + ' ' + s[i+2])
         res.append(R(sign * mantissa * 2**exponent))
     return tuple(res)
@@ -1341,7 +1341,7 @@ class OrigamiDatabase(SQLDatabase):
     Hubert-Lelievre and McMullen::
 
         sage: A = AbelianStratum(2)
-        sage: for n in xrange(3, 15):
+        sage: for n in range(3, 15):
         ....:     q = D.query(stratum=A, nb_squares=n)
         ....:     print("%2d %d"%(n, q.number_of()))
          3 1
@@ -1526,7 +1526,7 @@ class OrigamiDatabase(SQLDatabase):
         if verbose:
             T0 = time()
 
-        for n in xrange(m, N):
+        for n in range(m, N):
             if verbose:
                 sys.stdout.write("nb_squares: %2d\n"%n)
                 sys.stdout.write("==============\n")

@@ -323,7 +323,7 @@ class Constellation_class(Element):
         """
         return Integer(self.degree()*2 -
                        sum(sum(i-1 for i in self.profile(i))
-                           for i in xrange(self.length())))
+                           for i in range(self.length())))
 
     def genus(self):
         r"""
@@ -363,7 +363,7 @@ class Constellation_class(Element):
             ...
             ValueError: not connected
         """
-        for i in xrange(self.length()):
+        for i in range(self.length()):
             if not perm_check(self._g[i]):
                 raise ValueError("permutation {} invalid".format(i))
 
@@ -472,17 +472,17 @@ class Constellation_class(Element):
         for mm in m:
             mm.sort()
         m.sort()
-        g = [[] for _ in xrange(len(m))]
+        g = [[] for _ in range(len(m))]
         m_inv = [None]*self.degree()
-        for t in xrange(len(m)):
-            for i in xrange(len(m[t])):
+        for t in range(len(m)):
+            for i in range(len(m[t])):
                 m_inv[m[t][i]] = i
-            for k in xrange(self.length()):
+            for k in range(self.length()):
                 tmp = [None]*len(m[t])
-                for i in xrange(len(m[t])):
+                for i in range(len(m[t])):
                     tmp[i] = m_inv[self._g[k][m[t][i]]]
                 g[t].append(tmp)
-        return [Constellation(g=g[i], check=False) for i in xrange(len(m))]
+        return [Constellation(g=g[i], check=False) for i in range(len(m))]
 
     def __eq__(self, other):
         r"""
@@ -570,8 +570,8 @@ class Constellation_class(Element):
             return self.length().__cmp__(other.length())
         if self.degree() != other.degree():
             return self.degree().__cmp__(other.degree())
-        for i in xrange(self.length()-1):
-            for j in xrange(self.degree()-1):
+        for i in range(self.length()-1):
+            for j in range(self.degree()-1):
                 if self._g[i][j] != other._g[i][j]:
                     return self._g[i][j].__cmp__(other._g[i][j])
         return 0
@@ -589,7 +589,7 @@ class Constellation_class(Element):
             'Constellation of length 4 and degree 3\ng0 (0,1)(2)\ng1 (0,2)(1)\ng2 (0)(1,2)\ng3 (0,2)(1)'
         """
         s = "Constellation of length %d and degree %d" % (self.length(), self.degree())
-        for i in xrange(self.length()):
+        for i in range(self.length()):
             s += "\ng%d %s" % (i, perm_cycle_string(self._g[i], True))
         return s
 
@@ -648,7 +648,7 @@ class Constellation_class(Element):
             ([3, 2], [2, 1, 1, 1], [5])
         """
         if i is None:
-            return tuple(self.profile(j) for j in xrange(self.length()))
+            return tuple(self.profile(j) for j in range(self.length()))
         else:
             return Partition(sorted(map(len, perm_cycles(self._g[i], True)), reverse=True))
 
@@ -731,7 +731,7 @@ class Constellation_class(Element):
             sage: c = Constellation(['(1,2,0,5)','(2,3,4)(5,1)',None])
             sage: c.g_next(0,0)
             5
-            sage: all(c.g(i)[j] == c.g_next(i,j) for i in xrange(3) for j in xrange(6))
+            sage: all(c.g(i)[j] == c.g_next(i,j) for i in range(3) for j in range(6))
             True
         """
         if i is None:
@@ -750,15 +750,15 @@ class Constellation_class(Element):
             sage: c = Constellation(['(0,1,2)(3,4)','(0,4,2)',None])
             sage: c.g_prev(0,0)
             2
-            sage: all(c.g(i)[c.g_prev(i,j)] == j for i in xrange(3) for j in xrange(5))
+            sage: all(c.g(i)[c.g_prev(i,j)] == j for i in range(3) for j in range(5))
             True
         """
         if i is None:
-            return [self.g_prev(k, j) for k in xrange(self.length())]
+            return [self.g_prev(k, j) for k in range(self.length())]
         else:
-            for k in xrange(i+1, self.length()):
+            for k in range(i+1, self.length()):
                 j = self._g[k][j]
-            for k in xrange(0, i):
+            for k in range(0, i):
                 j = self._g[k][j]
             return j
 
@@ -777,7 +777,7 @@ class Constellation_class(Element):
             [0]
         """
         if i is None:
-            return [self.g_orbit(k, j) for k in xrange(self.length())]
+            return [self.g_orbit(k, j) for k in range(self.length())]
         else:
             return perm_orbit(self._g[i], j)
 
@@ -835,10 +835,10 @@ class Constellation_class(Element):
             True
         """
         if perm is not None:
-            perm.extend(xrange(len(perm), self.degree()))
-            g = [[None]*self.degree() for _ in xrange(self.length())]
-            for i in xrange(len(perm)):
-                for k in xrange(self.length()):
+            perm.extend(range(len(perm), self.degree()))
+            g = [[None]*self.degree() for _ in range(self.length())]
+            for i in range(len(perm)):
+                for k in range(self.length()):
                     g[k][perm[i]] = perm[self._g[k][i]]
             return Constellation(g=g, check=False, mutable=self.is_mutable())
 
@@ -966,7 +966,7 @@ class Constellation_class(Element):
         while waiting:
             c = waiting.pop()
             G.add_vertex(c)
-            for i in xrange(self.length()):
+            for i in range(self.length()):
                 cc = self.braid_group_action(i).relabel()
                 if cc not in G:
                     waiting.append(cc)
@@ -1086,7 +1086,7 @@ class Constellations_all(UniqueRepresentation, Parent):
             sage: from surface_dynamics.misc.constellation import Constellations
 
             sage: I = iter(Constellations())
-            sage: for _ in xrange(100): print(I.next())
+            sage: for _ in range(100): print(I.next())
             Constellation of length 1 and degree 1
             g0 (0)
             Constellation of length 2 and degree 1
@@ -1113,7 +1113,7 @@ class Constellations_all(UniqueRepresentation, Parent):
         """
         n = 2
         while True:
-            for d in xrange(1,n):
+            for d in range(1,n):
                 l = n-d
                 for c in Constellations(l,d,connected=self._connected):
                     yield c
@@ -1300,10 +1300,10 @@ class Constellations_ld(UniqueRepresentation, Parent):
         l = self._length
         d = self._degree
 
-        g = [SymmetricGroup(d).random_element() for _ in xrange(l-1)]
+        g = [SymmetricGroup(d).random_element() for _ in range(l-1)]
         G = PermutationGroup(g)
         while not G.degree() == d or (self._connected and not G.is_transitive()):
-            g = [SymmetricGroup(d).random_element() for _ in xrange(l-1)]
+            g = [SymmetricGroup(d).random_element() for _ in range(l-1)]
             G = PermutationGroup(g)
 
         return self(map(permutation_to_perm, g)+[None], mutable=mutable)

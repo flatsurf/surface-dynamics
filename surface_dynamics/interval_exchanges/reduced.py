@@ -124,7 +124,6 @@ def ReducedPermutationsIET_iterator(
         a b c
         c b a
     """
-    from itertools import imap,ifilter
     from sage.combinat.permutation import Permutations
 
     if irreducible is False:
@@ -137,9 +136,9 @@ def ReducedPermutationsIET_iterator(
             a0 = range(1,nintervals+1)
             f = lambda x: ReducedPermutationIET([a0,list(x)],
                 alphabet=alphabet, reduced=True)
-            return imap(f, Permutations(nintervals))
+            return map(f, Permutations(nintervals))
     else:
-        return ifilter(lambda x: x.is_irreducible(),
+        return filter(lambda x: x.is_irreducible(),
         ReducedPermutationsIET_iterator(nintervals,False,alphabet))
 
 class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
@@ -382,7 +381,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
             sage: p.rauzy_class_cardinality(extended=True)
             254
         """
-        from rauzy_class_cardinality import gamma_irr,delta_irr
+        from .rauzy_class_cardinality import gamma_irr,delta_irr
         from sage.arith.all import binomial
 
         s = self.stratum()
@@ -614,12 +613,12 @@ class FlippedReducedPermutationIET(
             True
         """
         if flips:
-            a0 = zip(map(self.alphabet().unrank, range(0,len(self))), self._flips[0])
-            a1 = zip(map(self.alphabet().unrank, self._twin[1]), self._flips[1])
+            a0 = list(zip(map(self.alphabet().unrank, range(0,len(self))), self._flips[0]))
+            a1 = list(zip(map(self.alphabet().unrank, self._twin[1]), self._flips[1]))
 
         else:
-            a0 = map(self.alphabet().unrank, range(0,len(self)))
-            a1 = map(self.alphabet().unrank, self._twin[1])
+            a0 = list(map(self.alphabet().unrank, range(0,len(self))))
+            a1 = list(map(self.alphabet().unrank, self._twin[1]))
 
         return [a0,a1]
 
@@ -678,7 +677,7 @@ class FlippedReducedPermutationLI(
             sage: p.list(flips=False)
             [['a', 'a', 'b'], ['b', 'c', 'c']]
 
-        one can rebuild the permutation from the list::
+        One can rebuild the permutation from the list::
 
             sage: p = iet.GeneralizedPermutation('a a b','b c c',flips='a',reduced=True)
             sage: iet.GeneralizedPermutation(p.list(),flips=p.flips(),reduced=True) == p

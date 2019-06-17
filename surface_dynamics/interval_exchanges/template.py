@@ -471,20 +471,6 @@ class Permutation(SageObject):
             False
             sage: p1.reduced() == p3.reduced()
             True
-        """
-        return type(self) == type(other) and \
-               self._twin == other._twin and \
-               self._labels == other._labels and \
-               self._flips == other._flips and \
-               (self._labels is None or self._alphabet == other._alphabet)
-
-    def __ne__(self, other):
-        r"""
-        Tests difference
-
-        TESTS::
-
-            sage: from surface_dynamics import *
 
             sage: p1 = iet.Permutation('a b', 'a b', reduced=True, alphabet='ab')
             sage: p2 = iet.Permutation('a b', 'a b', reduced=True, alphabet='ba')
@@ -592,13 +578,13 @@ class Permutation(SageObject):
             sage: p1.reduced() != p3.reduced()
             False
         """
-        return type(self) != type(other) or \
-               self._twin != other._twin or \
-               self._labels != other._labels or \
-               self._flips != other._flips or \
-               (self._labels is not None and self._alphabet != other._alphabet)
+        return type(self) == type(other) and \
+               self._twin == other._twin and \
+               self._labels == other._labels and \
+               self._flips == other._flips and \
+               (self._labels is None or self._alphabet == other._alphabet)
 
-    def __cmp__(self, other):
+    def __lt__(self, other):
         r"""
         Defines a natural lexicographic order.
 
@@ -697,10 +683,10 @@ class Permutation(SageObject):
         if type(self) != type(other):
             raise TypeError("Permutations must be of the same type")
 
-        return cmp(len(self), len(other)) or \
-               cmp(self._twin, other._twin) or \
-               cmp(self._labels, other._labels) or \
-               cmp(self._flips, other._flips)
+        return len(self) < len(other) or \
+               self._twin < other._twin or \
+               (self._labels is not None and self._labels < other._labels) or \
+               (self._flips is not None and self._flips < other._flips)
 
     def _check(self):
         r"""
@@ -1944,7 +1930,7 @@ class Permutation(SageObject):
 
         d = equalize_perms(perms)
 
-        from cover import PermutationCover
+        from .cover import PermutationCover
         return PermutationCover(self, d, perms)
 
 
@@ -2027,9 +2013,9 @@ class PermutationIET(Permutation):
         We may check that it is actually an involution without fixed point::
 
             sage: t = p.twin_list()
-            sage: all(t[i][j] != (i,j) for i in xrange(2) for j in xrange(len(t[i])))
+            sage: all(t[i][j] != (i,j) for i in range(2) for j in range(len(t[i])))
             True
-            sage: all(t[t[i][j][0]][t[i][j][1]] == (i,j) for i in xrange(2) for j in xrange(len(t[i])))
+            sage: all(t[t[i][j][0]][t[i][j][1]] == (i,j) for i in range(2) for j in range(len(t[i])))
             True
         """
         twin0 = [(1,i) for i in self._twin[0]]
@@ -2361,7 +2347,7 @@ class PermutationLI(Permutation):
         self._twin = [self._twin[1], self._twin[0]]
 
         for interval in (0,1):
-            for j in xrange(self.length(interval)):
+            for j in range(self.length(interval)):
                 self._twin[interval][j] = (
                     1-self._twin[interval][j][0],
                     self._twin[interval][j][1])
@@ -2565,9 +2551,9 @@ class PermutationLI(Permutation):
         And we may check that it is actually an involution without fixed point::
 
             sage: t = p.twin_list()
-            sage: all(t[i][j] != (i,j) for i in xrange(2) for j in xrange(len(t[i])))
+            sage: all(t[i][j] != (i,j) for i in range(2) for j in range(len(t[i])))
             True
-            sage: all(t[t[i][j][0]][t[i][j][1]] == (i,j) for i in xrange(2) for j in xrange(len(t[i])))
+            sage: all(t[t[i][j][0]][t[i][j][1]] == (i,j) for i in range(2) for j in range(len(t[i])))
             True
 
         A slightly more complicated example::
@@ -2581,7 +2567,7 @@ class PermutationLI(Permutation):
         ::
 
             sage: t = q.twin_list()
-            sage: all(t[t[i][j][0]][t[i][j][1]] == (i,j) for i in xrange(2) for j in xrange(len(t[i])))
+            sage: all(t[t[i][j][0]][t[i][j][1]] == (i,j) for i in range(2) for j in range(len(t[i])))
             True
         """
         return [self._twin[0][:],self._twin[1][:]]
@@ -2711,17 +2697,17 @@ class PermutationLI(Permutation):
                 break
             A11 = s0[:i11]
 
-            for i21 in xrange(0, l1) :
+            for i21 in range(0, l1) :
                 if i21 > 0 and s1[i21-1] in A21:
                     break
                 A21 = s1[:i21]
 
-                for i12 in xrange(l0 - 1, i11 - 1, -1) :
+                for i12 in range(l0 - 1, i11 - 1, -1) :
                     if s0[i12] in A12 or s0[i12] in A21:
                         break
                     A12 = s0[i12:]
 
-                    for i22 in xrange(l1 - 1, i21 - 1, -1) :
+                    for i22 in range(l1 - 1, i21 - 1, -1) :
                         if s1[i22] in A22 or s1[i22] in A11:
                             break
                         A22 = s1[i22:]
@@ -2872,7 +2858,7 @@ class PermutationLI(Permutation):
             2
         """
         p = self.profile()
-        return Integer((sum(p)-2*len(p))/4+1)
+        return Integer((sum(p)-2*len(p)) // 4 + 1)
 
     def marking(self):
         r"""
@@ -2955,7 +2941,7 @@ class PermutationLI(Permutation):
         if self._flips:
             raise ValueError('not available on permutations with flips')
 
-        from marked_partition import MarkedPartition
+        from .marked_partition import MarkedPartition
 
         if len(self) == 1:
             return MarkedPartition([],2,(0,0))
@@ -3144,10 +3130,10 @@ class PermutationLI(Permutation):
         if any(x[0] == 1 for x in l0):
             if verbose: print("potential form 1")
             i0 = []; i1 = []
-            for i in xrange(len(l0)):
+            for i in range(len(l0)):
                 if l0[i][0] == 0:
                     i0.append(i)
-            for i in xrange(len(l1)):
+            for i in range(len(l1)):
                 if l1[i][0] == 1:
                     i1.append(i)
             if len(i0) != 2 or len(i1) != 2:
@@ -3173,12 +3159,12 @@ class PermutationLI(Permutation):
             if any(i==1 for i,_ in l0) or any(i==0 for i,_ in l1):
                 return False
             j = len(l0) // 2
-            for i in xrange(j):
+            for i in range(j):
                 if l0[i][1] != j+i:
                     return False
 
             j = len(l1) // 2
-            for i in xrange(j):
+            for i in range(j):
                 if l1[i][1] != j+i:
                     return False
 
@@ -3707,7 +3693,7 @@ class OrientablePermutationIET(PermutationIET):
             sage: p.marked_profile()
             4o2 [4, 2]
         """
-        from marked_partition import MarkedPartition
+        from .marked_partition import MarkedPartition
 
         if len(self) == 1:
             return MarkedPartition([],2,(0,0))
@@ -3727,7 +3713,7 @@ class OrientablePermutationIET(PermutationIET):
 
         else:
             m_l = len(c_left) // 2
-            m_r = len(c_right) //2
+            m_r = len(c_right) // 2
             return MarkedPartition(p, 2, (m_l,m_r))
 
     def stratum(self):
@@ -3775,7 +3761,7 @@ class OrientablePermutationIET(PermutationIET):
         from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum
 
         if not self.is_irreducible():
-            return map(lambda x: x.stratum(), self.decompose())
+            return list(map(lambda x: x.stratum(), self.decompose()))
 
         if len(self) == 1:
             return AbelianStratum([])
@@ -3884,24 +3870,24 @@ class OrientablePermutationIET(PermutationIET):
         M = self.intersection_matrix(GF2)
         F, C = M.symplectic_form()
 
-        g = F.rank()/2
+        g = F.rank() // 2
         n = F.ncols()
 
         s = GF2(0)
         for i in range(g):
             a = C.row(i)
 
-            a_indices = [k for k in xrange(n) if a[k]]
+            a_indices = [k for k in range(n) if a[k]]
             t_a = GF2(len(a_indices))
-            for j1 in xrange(len(a_indices)):
-                for j2 in xrange(j1+1,len(a_indices)):
+            for j1 in range(len(a_indices)):
+                for j2 in range(j1+1,len(a_indices)):
                     t_a += M[a_indices[j1], a_indices[j2]]
 
             b = C.row(g+i)
-            b_indices = [k for k in xrange(n) if b[k]]
+            b_indices = [k for k in range(n) if b[k]]
             t_b = GF2(len(b_indices))
-            for j1 in xrange(len(b_indices)):
-                for j2 in xrange(j1+1,len(b_indices)):
+            for j1 in range(len(b_indices)):
+                for j2 in range(j1+1,len(b_indices)):
                     t_b += M[b_indices[j1],b_indices[j2]]
 
             s += t_a * t_b
@@ -4328,7 +4314,7 @@ class OrientablePermutationIET(PermutationIET):
         bot_labs = self[1]
         top = []
         bot = []
-        for i in xrange(len(self)):
+        for i in range(len(self)):
             if tops[i]:
                 top.append(top_labs[i])
             if bots[i]:
@@ -4539,7 +4525,7 @@ class OrientablePermutationIET(PermutationIET):
             True
         """
         from sage.combinat.permutation import Permutation
-        return Permutation(map(lambda x: x+1,self._twin[1]))
+        return Permutation(list(map(lambda x: x+1,self._twin[1])))
 
 class OrientablePermutationLI(PermutationLI):
     r"""
@@ -5851,14 +5837,12 @@ class RauzyDiagram(SageObject):
         ::
 
             sage: r = iet.RauzyDiagram('a b c d','d c b a')
-            sage: from itertools import ifilter
-            sage: r_1n = ifilter(lambda x: x.is_standard(), r)
+            sage: r_1n = filter(lambda x: x.is_standard(), r)
             sage: for p in r_1n: print(p)
             a b c d
             d c b a
         """
-        from itertools import imap
-        return imap(
+        return map(
             lambda x: self._vertex_to_permutation(x),
             self._succ.keys())
 

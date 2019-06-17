@@ -108,8 +108,8 @@ Obtains the connected components of a stratum::
     sage: @cached_function
     ....: def nb_irred_perm(n):
     ....:     if n == 0 or n == 1: return 1
-    ....:     return factorial(n) - sum(nb_irred_perm(k) * factorial(n - k) for k in xrange(1,n))
-    sage: [nb_irred_perm(i) for i in xrange(10)]
+    ....:     return factorial(n) - sum(nb_irred_perm(k) * factorial(n - k) for k in range(1,n))
+    sage: [nb_irred_perm(i) for i in range(10)]
     [1, 1, 1, 3, 13, 71, 461, 3447, 29093, 273343]
 
 ::
@@ -703,7 +703,7 @@ class AbelianStratum(UniqueRepresentation, Stratum):
             6
         """
         if ncyls is not None:
-            if not isinstance(ncyls, (int,long,Integer)):
+            if not isinstance(ncyls, numbers.Integral):
                 raise TypeError("ncyls should be None or an integer")
             if ncyls < 0 or ncyls > self.genus() + self.nb_zeros()-1:
                 raise ValueError("ncyls is not valid")
@@ -1377,7 +1377,7 @@ class AbelianStratumComponent(StratumComponent):
             sage: A = AbelianStratum(1,1,1,1)
             sage: cc = A.unique_component()
             sage: it = cc.cylinder_diagram_iterator(3)
-            sage: cyl = it.next(); cyl
+            sage: cyl = next(it); cyl
             (0,7)-(0,5) (1,6)-(1,4) (2,4,3,5)-(2,7,3,6)
             sage: cyl.stratum_component()
             H_3(1^4)^c
@@ -1388,7 +1388,7 @@ class AbelianStratumComponent(StratumComponent):
         iteration might be different (and not sorted)::
 
             sage: it = cc.cylinder_diagram_iterator(3, force_computation=True)
-            sage: it.next()
+            sage: next(it)
             (0,1,3,2,4)-(0,2,1,5,6,7) (5,7)-(4) (6)-(3)
 
         But up to this order the list are exactly the same::
@@ -1572,7 +1572,7 @@ class AbelianStratumComponent(StratumComponent):
 
             sage: cc = AbelianStratum(6).even_component()
             sage: it = cc.origami_iterator(13)
-            sage: o = it.next()
+            sage: o = next(it)
             sage: o
             (1,2,3,4,5,6,7,8,9,10,11,12,13)
             (1,8,2)(3,12,6,11,5,13,7,9)(4,10)
@@ -1651,7 +1651,7 @@ class AbelianStratumComponent(StratumComponent):
 
             sage: A = AbelianStratum(2).hyperelliptic_component(); A
             H_2(2)^hyp
-            sage: for i in xrange(3,10):
+            sage: for i in range(3,10):
             ....:     print("%d %d" % (i,len(A.arithmetic_teichmueller_curves(i))))
             3 1
             4 1
@@ -1663,7 +1663,7 @@ class AbelianStratumComponent(StratumComponent):
 
             sage: A = AbelianStratum(1,1).hyperelliptic_component(); A
             H_2(1^2)^hyp
-            sage: for i in xrange(4,10):
+            sage: for i in range(4,10):
             ....:    T = A.arithmetic_teichmueller_curves(i)
             ....:    T_prim = filter(lambda t:t.origami().is_primitive(), T)
             ....:    print("%d %d %d" % (i,len(T),len(T_prim)))
@@ -1676,7 +1676,7 @@ class AbelianStratumComponent(StratumComponent):
 
             sage: A = AbelianStratum(4).hyperelliptic_component(); A
             H_3(4)^hyp
-            sage: for i in xrange(5,10):
+            sage: for i in range(5,10):
             ....:    print("%d %d" % (i,len(A.arithmetic_teichmueller_curves(i))))
             5 2
             6 4
@@ -1684,7 +1684,7 @@ class AbelianStratumComponent(StratumComponent):
             8 3
             9 4
         """
-        from origamis.teichmueller_curve import TeichmuellerCurvesOfOrigamis
+        from .origamis.teichmueller_curve import TeichmuellerCurvesOfOrigamis
         tcurves = TeichmuellerCurvesOfOrigamis(self.origamis(n),assume_normal_form=True)
         if primitive:
             return [tcurve for tcurve in tcurves if tcurve.origami().is_primitive()]
@@ -2080,7 +2080,7 @@ class HypAbelianStratumComponent(ASC):
 
             sage: C = AbelianStratum(10,10).hyperelliptic_component()
             sage: it = C.cylinder_diagram_iterator()
-            sage: c = it.next(); c
+            sage: c = next(it); c
             (0,2,5,1)-(0,2,21,1) (3,4)-(3,6) (6,19)-(4,20) (7,9)-(8,10) (8,12)-(7,11) (10,14)-(9,13) (11,15)-(12,16) (13,17)-(14,18) (16,20)-(15,19) (18,21)-(5,17)
             sage: c.stratum_component()
             H_11(10^2)^hyp
@@ -2090,9 +2090,8 @@ class HypAbelianStratumComponent(ASC):
         from .separatrix_diagram import hyperelliptic_cylinder_diagram_iterator
 
         if ncyls is not None:
-            from itertools import ifilter
             ncyls = int(ncyls)
-            return ifilter(lambda c: c.ncyls() == ncyls, self.cylinder_diagram_iterator())
+            return filter(lambda c: c.ncyls() == ncyls, self.cylinder_diagram_iterator())
 
         stratum = self.stratum()
 
@@ -2233,21 +2232,20 @@ class NonHypAbelianStratumComponent(ASC):
 
             sage: cc = AbelianStratum(3,3).non_hyperelliptic_component()
             sage: it = cc.cylinder_diagram_iterator()
-            sage: c0 = it.next(); c0
+            sage: c0 = next(it); c0
             (0,1,4,6,2,5,3,7)-(0,1,4,5,3,6,2,7)
             sage: c0.stratum_component()
             H_4(3^2)^nonhyp
 
             sage: it = cc.cylinder_diagram_iterator(4, force_computation=True)
-            sage: c0 = it.next(); c0
+            sage: c0 = next(it); c0
             (0,1,4,3,2)-(0,1,5,6,7) (5)-(3) (6)-(4) (7)-(2)
             sage: c0.stratum_component()
             H_4(3^2)^nonhyp
-            sage: all(it.next().stratum_component() == cc for _ in xrange(10))
+            sage: all(next(it).stratum_component() == cc for _ in range(10))
             True
         """
-        from itertools import ifilter
-        return ifilter(lambda c: not c.is_hyperelliptic(),
+        return filter(lambda c: not c.is_hyperelliptic(),
                 self.stratum().cylinder_diagram_iterator(ncyls,True))
 
 NonHypASC = NonHypAbelianStratumComponent
@@ -2550,20 +2548,19 @@ class EvenAbelianStratumComponent(ASC):
 
             sage: cc = AbelianStratum(4,2).even_component()
             sage: it = cc.cylinder_diagram_iterator(4)
-            sage: it.next().stratum_component()
+            sage: next(it).stratum_component()
             H_4(4, 2)^even
 
             sage: it = cc.cylinder_diagram_iterator(3, force_computation=True)
-            sage: it.next().stratum_component()
+            sage: next(it).stratum_component()
             H_4(4, 2)^even
         """
-        from itertools import ifilter
         if self.stratum().has_hyperelliptic_component():
-            return ifilter(
+            return filter(
                     lambda c: not c.is_hyperelliptic() and c.spin_parity() == 0,
                     self.stratum().cylinder_diagram_iterator(ncyls,True))
 
-        return ifilter(lambda c: c.spin_parity() == 0,
+        return filter(lambda c: c.spin_parity() == 0,
                 self.stratum().cylinder_diagram_iterator(ncyls,True))
 
 EvenASC = EvenAbelianStratumComponent
@@ -2885,13 +2882,12 @@ class OddAbelianStratumComponent(ASC):
             (0,2)-(4) (1,4)-(2,3) (3)-(0,1)
             (0,2,1)-(0,3,4) (3)-(1) (4)-(2)
         """
-        from itertools import ifilter
         if self.stratum().has_hyperelliptic_component():
-            return ifilter(
+            return filter(
                     lambda c: not c.is_hyperelliptic() and c.spin_parity() == 1,
                     self.stratum().cylinder_diagram_iterator(ncyls,True))
 
-        return ifilter(lambda c: c.spin_parity == 1,
+        return filter(lambda c: c.spin_parity == 1,
                 self.stratum().cylinder_diagram_iterator(ncyls,True))
 
 OddASC = OddAbelianStratumComponent
@@ -3344,7 +3340,7 @@ class AbelianStrata_d(AbelianStrata):
 
         TESTS::
 
-            sage: for d in xrange(1,15):
+            sage: for d in range(1,15):
             ....:   A = AbelianStrata(dimension=d,fake_zeros=True)
             ....:   assert len(A.list()) == A.cardinality()
             ....:   A = AbelianStrata(dimension=d,fake_zeros=False)
@@ -3409,7 +3405,7 @@ class AbelianStrata_all(AbelianStrata):
         sage: A = AbelianStrata()
         sage: it = iter(A)
         sage: for _ in range(10):
-        ....:     print(it.next())
+        ....:     print(next(it))
         H_1(0)
         H_2(2)
         H_2(1^2)
@@ -3424,7 +3420,7 @@ class AbelianStrata_all(AbelianStrata):
         sage: A = AbelianStrata(fake_zeros=True)
         sage: it = iter(A)
         sage: for _ in range(10):
-        ....:     print(it.next())
+        ....:     print(next(it))
         H_1(0)
         H_1(0^2)
         H_2(2)
@@ -3442,7 +3438,7 @@ class AbelianStrata_all(AbelianStrata):
 
             sage: from surface_dynamics import *
 
-            sage: iter(AbelianStrata()).next()  # indirect doctest
+            sage: next(iter(AbelianStrata()))  # indirect doctest
             H_1(0)
         """
         from itertools import count

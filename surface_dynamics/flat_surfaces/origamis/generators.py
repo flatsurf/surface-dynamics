@@ -60,9 +60,9 @@ class OrigamiGenerators():
             sage: o.veech_group().index()
             3
         """
-        lr = [(i,i+1) for i in xrange(1,2*n+1,2)]
-        lu = [(1,2*n)] + [(i,i+1) for i in xrange(2,2*n,2)]
-        positions = [((i+1)//2,i//2) for i in xrange(2*n)]
+        lr = [(i,i+1) for i in range(1,2*n+1,2)]
+        lu = [(1,2*n)] + [(i,i+1) for i in range(2,2*n,2)]
+        positions = [((i+1)//2,i//2) for i in range(2*n)]
         name = "Escalator with %d steps" %n
         o = Origami(lr,lu,positions=positions,name=name)
         return o
@@ -246,7 +246,7 @@ class OrigamiGenerators():
         r = []
         u = [0]
 
-        for i in xrange(1,n-1,2):
+        for i in range(1,n-1,2):
             r.append(i)
             r.append(i-1)
             u.append(i+1)
@@ -259,7 +259,7 @@ class OrigamiGenerators():
             r.append(n-2)
             u.append(n-1)
 
-        positions = [((i+1)//2,i//2) for i in xrange(n)]
+        positions = [((i+1)//2,i//2) for i in range(n)]
         o = Origami(r,u,as_tuple=True,positions=positions,name="Stair origami with %d squares" %n)
         return o
 
@@ -284,7 +284,7 @@ class OrigamiGenerators():
         from sage.combinat.partition import Partition
 
         if isinstance(data, (int,Integer)):
-            p = Partition([i for i in xrange(data,0,-1)])
+            p = Partition([i for i in range(data,0,-1)])
         else:
             p = Partition(data)
 
@@ -295,15 +295,15 @@ class OrigamiGenerators():
         positions = []
         i = 0
         for j,jj in enumerate(p):
-            r.extend(xrange(i+1,i+jj))
+            r.extend(range(i+1,i+jj))
             r.append(i)
             i += jj
-            positions.extend((k,j) for k in xrange(jj))
+            positions.extend((k,j) for k in range(jj))
 
         u = [None]*sum(p)
-        for j in xrange(len(q)):
+        for j in range(len(q)):
             k = j
-            for jj in xrange(q[j]-1):
+            for jj in range(q[j]-1):
                 u[k] = k+p[jj]
                 k += p[jj]
             u[k] = j
@@ -408,13 +408,13 @@ class OrigamiGenerators():
         mu = mu
 
         if r is None and u is None:
-            positions = [(i,0) for i in xrange(p+1)]
+            positions = [(i,0) for i in range(p+1)]
         else:
             positions = None
 
         r = []
         u = []
-        for i in xrange(p):
+        for i in range(p):
             v = V((i,1)) * mr
             if v[1]:
                 r.append(int(v[0]/v[1]))
@@ -485,9 +485,9 @@ class OrigamiGenerators():
         pp = p*p
         r = [None]*N
         u = [None]*N
-        for a in xrange(p):
-            for b in xrange(p):
-                for d in xrange(p):
+        for a in range(p):
+            for b in range(p):
+                for d in range(p):
                     n = a*pp + b*p + d
                     r[n] = ((a+1)%p)*pp + b*p + d
                     u[n] = a*pp + ((b+1)%p)*p + ((a+d)%p)

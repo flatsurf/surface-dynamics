@@ -366,10 +366,10 @@ class PermutationCover(SageObject):
         B = []
         p = self._base
         signs = p._canonical_signs()[1]
-        for k in xrange(self._degree_cover):
+        for k in range(self._degree_cover):
             border = [0] * len(gens)
-            for i in xrange(2):
-                for j in xrange(len(p[i])):
+            for i in range(2):
+                for j in range(len(p[i])):
                     if signs[i][j] == -1:
                         perm_cover = self.covering_data_tuple(p[i][j])
                         border[gen_indices[(perm_cover.index(k),p[i][j])]] += -1
@@ -846,7 +846,7 @@ class PermutationCover(SageObject):
 
             H = self._delta1().left_kernel().matrix()
             B = self._delta2()
-            for i_char in xrange(na):
+            for i_char in range(na):
                 if all_characters[i_char] not in characters:
                     continue
                 M = self.isotypic_projection_matrix(i_char)
@@ -857,8 +857,8 @@ class PermutationCover(SageObject):
                             "  i_char = {}\n".format(i_char) +
                             "  dim    = {}".format(2*dimension))
                 dimensions[ii] = dimension//2
-                for i in xrange(dim):
-                    for j in xrange(dim):
+                for i in range(dim):
+                    for j in range(dim):
                         projections[ii * (dim**2) + i * dim + j] = float(M[j][i])
                 ii += 1
         else:
@@ -888,13 +888,13 @@ class PermutationCover(SageObject):
 
         if isotypic_decomposition:
             i_0 = 1
-            for i_char in xrange(nc):
+            for i_char in range(nc):
                 res_int = []
                 if verbose:
                     output_file.write("##### char_%d #####\n"%(i_char))
                     output_file.write("chi = {}\n".format(self._real_characters()[0][i_char]))
                     output_file.write("dim = {}\n".format(dimensions[i_char]))
-                for i in xrange(i_0, i_0 + dimensions[i_char]):
+                for i in range(i_0, i_0 + dimensions[i_char]):
                     m,d = mean_and_std_dev(res[i])
                     res_int.append(m)
                     if verbose:
@@ -904,7 +904,7 @@ class PermutationCover(SageObject):
                 i_0 += dimensions[i_char]
 
         else:
-            for i in xrange(1,nb_vectors+1):
+            for i in range(1,nb_vectors+1):
                 m,d = mean_and_std_dev(res[i])
                 if verbose:
                     output_file.write("theta%d           : %f (std. dev. = %f, conf. rad. 0.01 = %f)\n"%(i,m,d, 2.576*d/sqrt(nb_experiments)))

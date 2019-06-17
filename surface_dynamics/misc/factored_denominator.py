@@ -400,7 +400,7 @@ class FactoredDenominator(object):
 
         return FactoredDenominator(new_data, None)
 
-    def __div__(self, other):
+    def __truediv__(self, other):
         r"""
         (Partial) division.
 
@@ -430,6 +430,8 @@ class FactoredDenominator(object):
                 nd[i] -= j
 
         return FactoredDenominator(nd, None)
+
+    __div__ = __truediv__
 
     def __nonzero__(self):
         return bool(self._dict)

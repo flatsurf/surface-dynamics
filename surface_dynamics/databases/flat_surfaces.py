@@ -539,7 +539,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             from itertools import chain
             g = comp.stratum().genus()
             s = comp.stratum().nb_zeros()
-            return chain(*(self.get_iterator(comp,i) for i in xrange(1,g+s)))
+            return chain(*(self.get_iterator(comp,i) for i in range(1,g+s)))
 
         filename = os.path.join(self.path, self.filename(comp,ncyls))
         if not os.path.isfile(filename):
@@ -667,7 +667,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             print("computation for %s"%stratum)
             sys.stdout.flush()
 
-        for ncyls in xrange(1, stratum.genus() + stratum.nb_zeros()):
+        for ncyls in range(1, stratum.genus() + stratum.nb_zeros()):
             if verbose:
                 print(" ncyls = %d"%ncyls)
                 sys.stdout.flush()
@@ -693,6 +693,6 @@ class CylinderDiagrams(GenericRepertoryDatabase):
         if ncyls is None:
             g = comp.stratum().genus()
             s = comp.stratum().nb_zeros()
-            return sum((self.count(comp,i) for i in xrange(1,g+s)))
+            return sum((self.count(comp,i) for i in range(1,g+s)))
 
         return line_count(os.path.join(self.path, self.filename(comp, ncyls)))

@@ -33,10 +33,10 @@ def PillowcaseCover(g0, g1, g2, g3=None,
         g3 = [i-1 for i in g3.domain()]
 
         N = max([len(g0),len(g1),len(g2),len(g3)])
-        g0.extend(xrange(len(g0),N))
-        g1.extend(xrange(len(g1),N))
-        g2.extend(xrange(len(g2),N))
-        g3.extend(xrange(len(g3),N))
+        g0.extend(range(len(g0),N))
+        g1.extend(range(len(g1),N))
+        g2.extend(range(len(g2),N))
+        g3.extend(range(len(g3),N))
 
     elif check:
         s0 = set(g0)
@@ -46,7 +46,7 @@ def PillowcaseCover(g0, g1, g2, g3=None,
         N = len(g0)
         if len(g1) != N or len(g2) != N or len(g3) != N:
             raise ValueError("the four tuples must be of the same length")
-        for i in xrange(N):
+        for i in range(N):
             if not i in g0:
                 raise ValueError("%d is not in g0=%s" %(i,str(g0)))
             if not i in g1:
@@ -81,7 +81,7 @@ class PillowcaseCover_dense(PillowcaseCover_dense_pyx):
             g2 = (1)(2)(3)(4)
             g3 = (1,4,3,2)
         """
-        return '\n'.join("g%d = %s"%(i,self.g(i).cycle_string(True)) for i in xrange(4))
+        return '\n'.join("g%d = %s"%(i,self.g(i).cycle_string(True)) for i in range(4))
 
     def g(self, i=None):
         r"""
@@ -119,9 +119,9 @@ class PillowcaseCover_dense(PillowcaseCover_dense_pyx):
 
         G = DiGraph(multiedges=True,loops=True)
         d = self.degree()
-        g = [self.g_tuple(i) for i in xrange(4)]
-        for i in xrange(d):
-            for j in xrange(4):
+        g = [self.g_tuple(i) for i in range(4)]
+        for i in range(d):
+            for j in range(4):
                 G.add_edge(i,g[j][i],j)
         return G
 
@@ -139,15 +139,15 @@ class PillowcaseCover_dense(PillowcaseCover_dense_pyx):
         Return the list of connected origami that composes this origami.
         """
         cc = self.as_graph().connected_components()
-        g = [self.g_tuple(i) for i in xrange(4)]
+        g = [self.g_tuple(i) for i in range(4)]
         if len(cc) == 1:
             return [self]
         l = []
         for c in cc:
-            gg = [[None] * len(c) for _ in xrange(4)]
-            d = dict((c[i],i) for i in xrange(len(c)))
+            gg = [[None] * len(c) for _ in range(4)]
+            d = dict((c[i],i) for i in range(len(c)))
             for i in c:
-                for j in xrange(4):
+                for j in range(4):
                     gg[j][d[i]] = d[g[j][i]]
             l.append(Pillowcase_cover(g[0],g[1],g[2],g[3],check=True,as_tuple=True))
         return l
@@ -163,7 +163,7 @@ class PillowcaseCover_dense(PillowcaseCover_dense_pyx):
         Return the profile (= ramification type above each pole).
         """
         if i is None:
-            return [self.profile(i) for i in xrange(4)]
+            return [self.profile(i) for i in range(4)]
         return sorted((len(c) for c in self.g(i).cycle_tuples(singletons=True)),reverse=True)
 
     def stratum(self,fake_zeros=False):

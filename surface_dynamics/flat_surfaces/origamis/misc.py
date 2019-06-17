@@ -25,7 +25,7 @@ Old code that might moved or be removed.
 #    """
 #    if k == 1: return ()
 #    rec = _fact_and_irr(k-1)
-#    return (number_of_irreducible_permutations(k-1),) + tuple((j+2)*rec[j] for j in xrange(k-2))
+#    return (number_of_irreducible_permutations(k-1),) + tuple((j+2)*rec[j] for j in range(k-2))
 #
 #@cached_function
 #def number_of_irreducible_permutations(k):
@@ -36,7 +36,7 @@ Old code that might moved or be removed.
 #
 #    EXAMPLES::
 #
-#        sage: for i in xrange(6): print i, number_of_irreducible_permutations(i)
+#        sage: for i in range(6): print i, number_of_irreducible_permutations(i)
 #        0 1
 #        1 1
 #        2 1
@@ -150,13 +150,13 @@ Old code that might moved or be removed.
 #    phi = K.gen()
 #
 #    ltop = []
-#    for k in xrange(1,n+1):
+#    for k in range(1,n+1):
 #        ltop.extend([(k,0),(k,1)])
 #    lbot = []
-#    for k in xrange(1,n+1):
+#    for k in range(1,n+1):
 #        lbot.extend([(sigma.inverse()(k),1),(tau.inverse()(k),0)])
 #    l = {}
-#    for k in xrange(1,n+1):
+#    for k in range(1,n+1):
 #        l[k,0] = 2 - RR(phi)
 #        l[k,1] = RR(phi) - 1
 #
@@ -259,7 +259,7 @@ Old code that might moved or be removed.
 #        The space of cycles.
 #        """
 #        if degree is None:
-#            return [self.cycle_space(i) for i in xrange(3)]
+#            return [self.cycle_space(i) for i in range(3)]
 #        return self._derivatives[degree].right_kernel()
 #
 #    @cached_method
@@ -268,7 +268,7 @@ Old code that might moved or be removed.
 #        Return the boundary space of the given ``degree``.
 #        """
 #        if degree is None:
-#            return [self.boundary_space(i) for i in xrange(3)]
+#            return [self.boundary_space(i) for i in range(3)]
 #        if degree == 2:
 #            return self.chain_space(2).submodule([])
 #        else:
