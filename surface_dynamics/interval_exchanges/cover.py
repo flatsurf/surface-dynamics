@@ -810,7 +810,8 @@ class PermutationCover(SageObject):
             output_file.write("Stratum: {}\n".format(self.stratum()))
 
         k = int(len(self[0]))
-        gp, twin = range(2*n), range(2*n)
+        gp= list(range(2*n))
+        twin = list(range(2*n))
         base_twin = self._base.twin_list()
         rank = self._base.alphabet().rank
         for i in range(2):
@@ -840,8 +841,8 @@ class PermutationCover(SageObject):
             nc = len(characters)
             na = len(all_characters)
             dim = len(self._base) * self._degree_cover
-            projections = range(dim**2 * nc)
-            dimensions = range(nc)
+            projections = list(range(dim**2 * nc))
+            dimensions = list(range(nc))
             ii = 0
 
             H = self._delta1().left_kernel().matrix()

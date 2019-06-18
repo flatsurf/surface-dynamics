@@ -176,7 +176,7 @@ AUTHOR:
 
 from __future__ import print_function, absolute_import
 from six.moves import range, map, filter, zip
-from six import iteritems
+from six import iteritems, string_types
 
 from sage.rings.integer import Integer
 from sage.rings.real_mpfr import RealField
@@ -1713,7 +1713,7 @@ class OrigamiDatabase(SQLDatabase):
             q.cols(ORIGAMI_DB_cols)
             q = q.sql_query()
         else:
-            if isinstance(other, str):
+            if isinstance(other, string_types):
                 other = OrigamiDatabase(other)
             assert isinstance(other, OrigamiDatabase)
             q = SQLQuery(other, 'SELECT ' + ','.join(ORIGAMI_DB_cols) + ' FROM origamis')
@@ -2012,7 +2012,7 @@ class OrigamiDatabase(SQLDatabase):
         else:
             cols = ['representative']
 
-        if isinstance(cols,str):
+        if isinstance(cols, string_types):
             cols = [cols]
 
         query_list = list(query_list)

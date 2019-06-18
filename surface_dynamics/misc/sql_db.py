@@ -74,7 +74,7 @@ AUTHORS:
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************
 from __future__ import print_function
-from six import text_type
+from six import string_types
 
 import sqlite3 as sqlite
 import os
@@ -430,7 +430,7 @@ class SQLQuery(SageObject):
             if isinstance(x,dict):
                 if 'query_dict' not in kwds:
                     kwds['query_dict'] = x
-            elif isinstance(x, text_type):
+            elif isinstance(x, string_types):
                 if 'query_string' not in kwds:
                     kwds['query_string'] = x
             elif isinstance(x, tuple):

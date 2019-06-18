@@ -31,6 +31,8 @@ from __future__ import print_function, absolute_import
 from six.moves import range, map, filter, zip
 from six import iterkeys, iteritems
 
+from functools import total_ordering
+
 from sage.structure.sage_object import SageObject
 
 from copy import copy
@@ -181,6 +183,7 @@ def labelize_flip(couple):
 # CLASSES FOR PERMUTATIONS
 #
 
+@total_ordering
 class Permutation(SageObject):
     r"""
     Template for all permutations.
@@ -683,10 +686,30 @@ class Permutation(SageObject):
         if type(self) != type(other):
             raise TypeError("Permutations must be of the same type")
 
-        return len(self) < len(other) or \
-               self._twin < other._twin or \
-               (self._labels is not None and self._labels < other._labels) or \
-               (self._flips is not None and self._flips < other._flips)
+        if len(self) < len(other):
+            return True
+        elif len(self) > len(other):
+            return False
+
+        if self._twin < other._twin:
+            return True
+        elif self._twin > other._twin:
+            return False
+
+        if self._labels is not None:
+            if self._labels < other._labels:
+                return True
+            elif self._labels > other._labels:
+                return False
+
+        if self._flips is not None:
+            if self._flips < other._flips:
+                return True
+            elif self._flips > other._flips:
+                return False
+
+        # equality
+        return False
 
     def _check(self):
         r"""
@@ -4378,7 +4401,7 @@ class OrientablePermutationIET(PermutationIET):
 
         n = test.length_top()
         cylindric = test.to_standard()
-        return cylindric._twin[0] == range(n-1,-1,-1)
+        return cylindric._twin[0] == list(range(n-1,-1,-1))
 
     def to_cylindric(self):
         r"""

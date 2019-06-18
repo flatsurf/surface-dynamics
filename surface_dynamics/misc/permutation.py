@@ -1281,13 +1281,13 @@ def perms_canonical_labels(p, e=None):
     n = len(p[0])
 
     c_win = None
-    m_win = range(n)
+    m_win = list(range(n))
 
     x = p[0]
     y = p[1:]
 
     if e is None:
-        e = range(n)
+        e = list(range(n))
 
     # get canonical label from i in to_test and compare
     while e:
@@ -1455,6 +1455,8 @@ class PermutationGroupOrbit(object):
             k += 1
 
         return i
+
+    next = __next__  # Python2 support
 
     def add_generator(self, g, check=True):
         r"""

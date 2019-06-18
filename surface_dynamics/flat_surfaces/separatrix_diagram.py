@@ -93,6 +93,8 @@ from __future__ import print_function, absolute_import
 from six.moves import range, map, filter, zip
 from six import iteritems
 
+from functools import total_ordering
+
 import numbers
 
 from sage.structure.sage_object import SageObject
@@ -160,7 +162,7 @@ def two_non_connected_perms_canonical_labels(bot, top):
 
 
 # main class
-
+@total_ordering
 class SeparatrixDiagram(SageObject):
     r"""
     Separatrix diagram of oriented foliation.
@@ -438,8 +440,10 @@ class SeparatrixDiagram(SageObject):
             sage: d1 != d2 and d1 != d3 and d2 != d3 and d3 != d2
             True
         """
-        return (isinstance(other, SeparatrixDiagram) and
-                self._bot == other._bot and self._top == other._top)
+        if type(self) != type(other):
+            raise TypeError
+
+        return self._bot == other._bot and self._top == other._top
 
     def __lt__(self, other):
         r"""
@@ -468,13 +472,31 @@ class SeparatrixDiagram(SageObject):
             ....:     shuffle(s1)
             ....:     assert sorted(s1) == s0
         """
-        if not isinstance(other, SeparatrixDiagram):
+        if type(self) != type(other):
             raise TypeError("only separatrix diagram can be compared to separatrix diagrams")
 
-        return self.nseps() < other.nseps() or \
-               self.ncyls() < other.ncyls() or \
-               self._bot_cycles < other._bot_cycles or \
-               self._top_cycles < other._top_cycles
+        if self.nseps() < other.nseps():
+            return True
+        elif self.nseps() > other.nseps():
+            return False
+        
+        if self.ncyls() < other.ncyls():
+            return True
+        elif self.ncyls() > other.ncyls():
+            return False
+
+        if self._bot_cycles < other._bot_cycles:
+            return True
+        elif self._bot_cycles > other._bot_cycles:
+            return False
+
+        if self._top_cycles < other._top_cycles:
+            return True
+        elif self._top_cycles > other._top_cycles:
+            return False
+
+        # equal
+        return False
 
     def is_isomorphic(self, other, return_map=False):
         r"""
@@ -1381,7 +1403,7 @@ class SeparatrixDiagram(SageObject):
             s = set([])
             hsym, vsym, isym = self.symmetries()
             for ctop in itertools.permutations(ctop0):
-                c = CylinderDiagram(zip(cbot,ctop),check=False)
+                c = CylinderDiagram(zip(cbot,ctop), check=False)
                 c.canonical_label(inplace=True)
                 if c in s:
                     continue
@@ -1552,7 +1574,7 @@ def separatrix_diagram_fast_iterator(profile,ncyls=None):
     for s in conjugacy_class_iterator(part,range(n)):
         for k in range(len(tops)):
             for top,top_i in tops[k]:
-                bot = range(len(top_i))
+                bot = list(range(len(top_i)))
                 for cycle in s:
                     for i in range(len(cycle)-1):
                         bot[cycle[i]] = top_i[cycle[i+1]]
@@ -1746,7 +1768,7 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
     aa = a//2
     B = [False]*(2*a+2)  # open loops indicator
                          # if B[k] is not False, it is where loop k starts
-    sigma = range(1,a) + [0] + range(a,2*a+2)
+    sigma = list(range(1,a)) + [0] + list(range(a,2*a+2))
     for t,n,l in admissible_plane_tree_iterator(a):
         # Build the initial tree
         L = []
@@ -1913,8 +1935,9 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
                     yield c
 
             # reinitialize sigma
-            sigma = range(1,a) + [0] + range(a,2*a+2)
+            sigma = list(range(1,a)) + [0] + list(range(a,2*a+2))
 
+@total_ordering
 class CylinderDiagram(SeparatrixDiagram):
     r"""
     Separatrix diagram with pairing.
@@ -1983,6 +2006,8 @@ class CylinderDiagram(SeparatrixDiagram):
 
         if isinstance(data,str):
             data = [(string_to_cycle(b),string_to_cycle(t)) for b,t in (w.split('-') for w in data.split(' '))]
+        else:
+            data = list(data)
 
         for b,t in data:
             bot.append(tuple(b))
@@ -2100,7 +2125,7 @@ class CylinderDiagram(SeparatrixDiagram):
             l.append('(' + ','.join(map(str,b)) + ')-(' + ','.join(map(str,t)) + ')')
         return ' '.join(l)
 
-    def __cmp__(self,other):
+    def __lt__(self, other):
         r"""
         Comparison
 
@@ -2109,27 +2134,32 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: from surface_dynamics import *
 
             sage: C = AbelianStratum(4).cylinder_diagrams()
-            sage: for c in C:
-            ....:     assert sum(1 for cc in C if cmp(c,cc) == 0) == 1
             sage: for c1 in C:
             ....:     for c2 in C:
             ....:         if c1 != c2:
             ....:             assert ((c1 < c2) is False) or ((c2 < c1) is False)
             ....:             assert ((c1 > c2) is False) or ((c2 > c1) is False)
         """
-        if not isinstance(other, CylinderDiagram):
-            raise ValueError
+        if type(self) is not type(other):
+            raise TypeError
 
-        test = SeparatrixDiagram.__cmp__(self,other)
-        if test: return test
+        if SeparatrixDiagram.__lt__(self, other):
+            return True
+        if SeparatrixDiagram.__lt__(other, self):
+            return False
 
-        test = cmp(self._bot_to_cyl,other._bot_to_cyl)
-        if test: return test
+        if self._bot_to_cyl < other._bot_to_cyl:
+            return True
+        elif self._bot_to_cyl > other._bot_to_cyl:
+            return False
 
-        test = cmp(self._top_to_cyl,other._top_to_cyl)
-        if test: return test
+        if self._top_to_cyl < other._top_to_cyl:
+            return True
+        elif self._top_to_cyl > other._top_to_cyl:
+            return False
 
-        return 0
+        # equality
+        return False
 
     #
     # access to attribute
@@ -3257,7 +3287,7 @@ class CylinderDiagram(SeparatrixDiagram):
                 w += lengths[j]
 
         # initialization of sigma_h which remains constant
-        lx = range(1, v[-1]+1)
+        lx = list(range(1, v[-1]+1))
         for i in range(self.ncyls()):
             for j in range(v[i], v[i+1], widths[i]):
                 lx[j+widths[i]-1] = j
@@ -3379,8 +3409,8 @@ class CylinderDiagram(SeparatrixDiagram):
         min_lengths = [1] * self.nseps()
         for i in range(self.ncyls()):
             pos = m.nonzero_positions_in_row(i)
-            pos_m = filter(lambda j: m[i,j] == -1, pos)
-            pos_p = filter(lambda j: m[i,j] == 1, pos)
+            pos_m = list(filter(lambda j: m[i,j] == -1, pos))
+            pos_p = list(filter(lambda j: m[i,j] == 1, pos))
             if len(pos_m) == 1:
                 min_lengths[pos_m[0]] = max(min_lengths[pos_m[0]], len(pos_p))
             if len(pos_p) == 1:
@@ -3402,7 +3432,7 @@ class CylinderDiagram(SeparatrixDiagram):
                 # from here the resolution becomes linear and convex ...
                 #TODO: program a linear and convex solution
                 seps_b = [c[0] for c in self.cylinders()]
-                nseps_b = map(len, seps_b)
+                nseps_b = list(map(len, seps_b))
                 lengths = tuple(IntegerListsLex(n=w[i], length=nseps_b[i], min_part=1) for i in range(self.ncyls()))
                 for l_by_cyl in itertools.product(*lengths):
                     l = copy(V.zero())
@@ -3465,7 +3495,7 @@ class CylinderDiagram(SeparatrixDiagram):
                 w += lengths[j]
 
         # initialization of sigma_h which remains constant
-        lx = range(1, v[-1]+1)
+        lx = list(range(1, v[-1]+1))
         for i in range(self.ncyls()):
             for j in range(v[i], v[i+1], widths[i]):
                 lx[j+widths[i]-1] = j
@@ -3592,7 +3622,7 @@ class CylinderDiagram(SeparatrixDiagram):
                 w += lengths[j]
 
         # build the permutation r
-        lx = range(1, v[-1]+1)
+        lx = list(range(1, v[-1]+1))
         for i in range(self.ncyls()):
             for j in range(v[i], v[i+1], widths[i]):
                 lx[j+widths[i]-1] = j
@@ -3605,7 +3635,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
             # the top
             k = top_seps[0]
-            top = range(sep_bottom_pos[k],sep_bottom_pos[k]+lengths[k])
+            top = list(range(sep_bottom_pos[k],sep_bottom_pos[k]+lengths[k]))
             for k in reversed(top_seps[1:]):
                 top.extend(range(sep_bottom_pos[k],sep_bottom_pos[k]+lengths[k]))
             ly.extend(top[twists[i]:] + top[:twists[i]])

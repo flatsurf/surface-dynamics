@@ -1547,7 +1547,7 @@ class AbelianStratumComponent(StratumComponent):
         from surface_dynamics.flat_surfaces.origamis.origami_dense import Origami_dense_pyx
         t = self.permutation_representative(reduced=True).to_standard()
         t.alphabet(range(len(t)))
-        h_perm = range(1,len(t)-1) + [0]
+        h_perm = list(range(1,len(t)-1)) + [0]
         v_perm = t[1][1:]
         return Origami_dense_pyx(tuple(h_perm), tuple(v_perm))
 

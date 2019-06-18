@@ -233,7 +233,7 @@ def _two_lists(arg1, arg2):
             return [t[0].split(), t[1].split()]
 
         elif isinstance(arg1, CombinatPermutation):
-            return [range(1,len(arg1)+1), list(arg1)]
+            return [list(range(1,len(arg1)+1)), list(arg1)]
 
         elif isinstance(arg1, PermutationGroupElement):
             dom = list(arg1.parent().domain())
@@ -247,7 +247,7 @@ def _two_lists(arg1, arg2):
                     raise ValueError('argument not accepted')
                 arg1, arg2 = arg1
             else:
-                return [range(1, len(t) + 1), list(t)]
+                return [list(range(1, len(t) + 1)), list(t)]
 
     if arg2 is None:
         raise ValueError("argument can not be split into two parts")

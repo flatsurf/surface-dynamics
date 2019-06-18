@@ -181,31 +181,6 @@ def augment2(cm, aut_grp, depth, callback):
     Because of the chosen canonical labellings, we only need to consider the
     faces with maximal degree and split in such way that the secondly created
     face is still at least as big as the second biggest.
-
-    EXAMPLES::
-
-        sage: from surface_dynamics.topology.fat_graph import FatGraph, \
-        ....:          augment2, num_and_weighted_num
-
-        sage: cm0 = FatGraph.from_unicellular_word([0,1,0,1,2,3,2,3])
-        sage: cm1 = FatGraph.from_unicellular_word([0,1,0,2,1,3,2,3])
-        sage: cm2 = FatGraph.from_unicellular_word([0,1,0,2,3,1,2,3])
-        sage: cm3 = FatGraph.from_unicellular_word([0,1,2,3,0,1,2,3])
-        sage: cm0._realloc(10)
-        sage: cm1._realloc(10)
-        sage: cm2._realloc(10)
-        sage: cm3._realloc(10)
-        sage: P0 = cm0.automorphism_group()
-        sage: P1 = cm1.automorphism_group()
-        sage: P2 = cm2.automorphism_group()
-        sage: P3 = cm3.automorphism_group()
-        sage: from itertools import chain
-        sage: I = chain(augment2(cm0,P0,1,False),
-        ....:           augment2(cm1,P1,1,False),
-        ....:           augment2(cm2,P2,1,False),
-        ....:           augment2(cm3,P3,1,False))
-        sage: num_and_weighted_num(I)
-        (53, 483/10)
     """
     n = cm._n
     nf = cm._nf
@@ -407,24 +382,6 @@ class FatGraphsTrace(object):
         return 'FatGraphs trace for {%s}' % (', '.join('%s=%s' % (k,v) for k,v in sorted(self._properties.items())))
 
     def summary(self, filename=None):
-        r"""
-
-        EXAMPLES::
-
-            sage: from surface_dynamics.topology.fat_graph import FatGraphs_g_nf_nv
-            sage: from surface_dynamics.topology.fat_graph_generation_trace import FatGraphsTrace
-            sage: T = FatGraphsTrace()
-            sage: T.summary()
-            FatGraphs trace for {}
-            num fat graphs: 0
-            max depth     : 0
-            mean depth    : 0.000000
-
-            sage: T = FatGraphsTrace()
-            sage: for cm,a in FatGraphs_g_nf_nv(2, 2, 2, intermediate=True, trace=T): pass
-            sage: T.summary()
-
-        """
         if filename is None:
             from sys import stdout
             f = stdout
@@ -632,7 +589,7 @@ class FatGraphs_g_nf_nv(object):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.topology.fat_graph import FatGraphs_g_nf_nv
+        sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs_g_nf_nv
 
     Trees and their dual (maps with single vertex) in genus zero are counted by
     Catalan numbers::
@@ -777,7 +734,7 @@ class FatGraphs_g_nf_nv(object):
         EXAMPLES::
 
             sage: from __future__ import print_function
-            sage: from surface_dynamics.topology.fat_graph import FatGraphs_g_nf_nv
+            sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs_g_nf_nv
             sage: FatGraphs_g_nf_nv(1, 2, 2).map_reduce(lambda x,y: print(x))
             FatGraph('(0,6,5,4,1,2,3)(7)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,3,4,6,7)(5)')
             FatGraph('(0,6,1,2,3)(4,7,5)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,3,6,4,7)(5)')
@@ -860,17 +817,18 @@ class FatGraphs_g_nf_nv(object):
         r"""
         EXAMPLES::
 
-            sage: from surface_dynamics.topology.fat_graph import FatGraphs_g_nf_nv
+            sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs_g_nf_nv
             sage: L21 = FatGraphs_g_nf_nv(0, 2, 1).list()
-            sage: L21[0].num_vertices()
-            2
             sage: L21[0].num_faces()
+            2
+            sage: L21[0].num_vertices()
             1
 
+
             sage: L12 = FatGraphs_g_nf_nv(0, 1, 2).list()
-            sage: L12[0].num_vertices()
+            sage: L12[0].num_faces()
             1
-            sage: L12[1].num_faces()
+            sage: L12[0].num_vertices()
             2
         """
         L = ListCallback()

@@ -146,7 +146,7 @@ class OrigamiGenerators():
         if M is None:
             M = sum(a)
 
-        a = map(Integer,a)
+        a = list(map(Integer,a))
         if len(a) != 4:
             raise ValueError("a should be of length 4")
             

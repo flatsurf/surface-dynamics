@@ -1112,7 +1112,7 @@ class RibbonGraphWithAngles(RibbonGraph):
 
         if len(angles) != self.num_darts():
             raise ValueError("there are %d angles and %d darts" %(len(angles),self.num_darts()))
-        self._angles = map(QQ,angles)
+        self._angles = list(map(QQ,angles))
           # angle between a dart and its vertex-neighbour
           # (rational number as multiple of pi)
 
@@ -1412,7 +1412,7 @@ class RibbonGraphWithHolonomies(RibbonGraph):
 
         from sage.modules.free_module import FreeModule
         V = FreeModule(ZZ,2)
-        self._holonomies = map(V, holonomies)
+        self._holonomies = list(map(V, holonomies))
 
         #self._angles = map(angle, self._holonomies)
 

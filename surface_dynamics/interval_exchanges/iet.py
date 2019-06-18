@@ -58,7 +58,7 @@ from copy import copy
 from sage.modules.free_module_element import free_module_element
 from sage.rings.all import ZZ, QQ
 
-from template import side_conversion, interval_conversion
+from .template import side_conversion, interval_conversion
 
 
 def wedge(u, v):
@@ -141,7 +141,7 @@ class IntervalExchangeTransformation(object):
             sage: p == loads(dumps(p))
             True
         """
-        from labelled import LabelledPermutationIET
+        from .labelled import LabelledPermutationIET
         from sage.modules.free_module_element import free_module_element as vector
 
         if permutation is None or lengths is None:
@@ -586,7 +586,7 @@ class IntervalExchangeTransformation(object):
             isinstance(other, IntervalExchangeTransformation) and
             self.length() == other.length())
 
-        from labelled import LabelledPermutationIET
+        from .labelled import LabelledPermutationIET
         from sage.combinat.words.words import Words
 
         other_sg = other.range_singularities()[1:]
@@ -763,7 +763,7 @@ class IntervalExchangeTransformation(object):
         bot = cuts
         bot = [''.join(str(unrank(i)) for i in x) for x,y in bot]
 
-        from labelled import LabelledPermutationIET
+        from .labelled import LabelledPermutationIET
         p = LabelledPermutationIET((top,bot))
         return IntervalExchangeTransformation(p,lengths)
 

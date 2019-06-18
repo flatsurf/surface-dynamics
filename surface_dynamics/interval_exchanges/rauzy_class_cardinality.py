@@ -59,9 +59,9 @@ def marking_iterator(profile,left=None,standard=False):
          (1, 3, 0),
          (1, 3, 1),
          (1, 3, 2),
-         (2, 3, 2),
+         (2, 2, 2),
          (2, 2, 3),
-         (2, 2, 2)]
+         (2, 3, 2)]
     """
     e = Partition(sorted(profile,reverse=True)).to_exp_dict()
 

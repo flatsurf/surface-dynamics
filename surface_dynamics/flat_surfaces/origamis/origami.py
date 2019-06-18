@@ -419,8 +419,8 @@ class OrigamiVertices(OrigamiObjects):
         vperm = ru*~r*~u
 
         for ur in vperm.cycle_tuples(singletons=True):
-            dl = map(ru,ur)
-            v = OrigamiVertex(self, ur, tuple(dl))
+            dl = tuple(map(ru,ur))
+            v = OrigamiVertex(self, ur, dl)
             self._vertices_inv[v] = len(self._vertices)
             self._vertices.append(v)
             for i in ur:

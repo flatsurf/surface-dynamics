@@ -52,7 +52,7 @@ TESTS::
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import print_function, absolute_import
+from __future__ import print_function, absolute_import, division
 from six.moves import range, map, filter, zip
 
 from sage.structure.sage_object import SageObject
@@ -422,17 +422,17 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
 
                 else: # others are odd and even
                     t = (-1)**(1-cc.spin())
-                    N = (gamma_irr(p,mp.left()) + t * delta_irr(p,mp.left()))/2
+                    N = (gamma_irr(p,mp.left()) + t * delta_irr(p,mp.left())) // 2
 
                 return N - nb_hyp
 
             else: # cc.spin() != s.hyperelliptic_component().spin()
                 t = (-1)**(1-cc.spin())
-                return (gamma_irr(p,mp.left()) + t * delta_irr(p,mp.left()))/2
+                return (gamma_irr(p,mp.left()) + t * delta_irr(p,mp.left())) // 2
 
         else:   # odd and even components
             t = (-1)**(1-cc.spin())  # 1 if odd and -1 if even
-            return (gamma_irr(p,mp.left()) + t * delta_irr(p,mp.left()))/2
+            return (gamma_irr(p,mp.left()) + t * delta_irr(p,mp.left())) // 2
 
 class ReducedPermutationLI(ReducedPermutation, OrientablePermutationLI):
     r"""

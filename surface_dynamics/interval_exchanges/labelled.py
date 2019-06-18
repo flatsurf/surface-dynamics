@@ -227,11 +227,11 @@ class LabelledPermutation(SageObject):
                 flips = [[1] * len(self._labels[0]), [1] * len(self._labels[1])]
             else:
                 flips = self._flips
-            a0 = zip(map(self._alphabet.unrank, self._labels[0]), flips[0])
-            a1 = zip(map(self._alphabet.unrank, self._labels[1]), flips[1])
+            a0 = list(zip(map(self._alphabet.unrank, self._labels[0]), flips[0]))
+            a1 = list(zip(map(self._alphabet.unrank, self._labels[1]), flips[1]))
         else:
-            a0 = map(self._alphabet.unrank, self._labels[0])
-            a1 = map(self._alphabet.unrank, self._labels[1])
+            a0 = list(map(self._alphabet.unrank, self._labels[0]))
+            a1 = list(map(self._alphabet.unrank, self._labels[1]))
 
         return [a0,a1]
 
@@ -477,7 +477,7 @@ def LabelledPermutationsIET_iterator(
             P = map(g, Permutations(nintervals))
             return map(f,product(P,P))
     else:
-        return ifilter(
+        return filter(
             lambda x: x.is_irreducible(),
             LabelledPermutationsIET_iterator(nintervals,False,alphabet))
 
@@ -538,7 +538,7 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
             sage: p.reduced() == q
             True
         """
-        from reduced import ReducedPermutationIET
+        from .reduced import ReducedPermutationIET
 
         return ReducedPermutationIET(self.list(), alphabet=self._alphabet, reduced=True)
 
@@ -1069,7 +1069,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
             sage: p.rauzy_move(0).reduced() == q.rauzy_move(0)
             True
         """
-        from reduced import ReducedPermutationLI
+        from .reduced import ReducedPermutationLI
 
         return ReducedPermutationLI(self.list(),alphabet=self._alphabet, reduced=True)
 
@@ -1691,7 +1691,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
             # a submodule of R^d)
             lengths = lengths.parent().ambient_vector_space()(lengths)
 
-            from iet import IntervalExchangeTransformation
+            from .iet import IntervalExchangeTransformation
             return IntervalExchangeTransformation(self.start(), lengths)
 
     def edge_to_interval_substitution(self, p=None, edge_type=None):
