@@ -141,7 +141,7 @@ def TeichmuellerCurvesOfOrigamis(origamis, assume_normal_form=False, limit=0, ve
     if not assume_normal_form:
         origamis = set(o.relabel() for o in origamis)
     try:
-        n = iter(origamis).next().nb_squares()
+        n = next(iter(origamis)).nb_squares()
     except StopIteration:
         return []
 

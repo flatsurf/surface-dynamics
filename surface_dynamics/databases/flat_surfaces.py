@@ -457,9 +457,9 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             sage: C._files()
             <generator object _files at ...>
             sage: it = C._files()
-            sage: it.next()  # random
+            sage: next(it)  # random
             'cyl_diags-...'
-            sage: it.next()  # random
+            sage: next(it)  # random
             'cyl_diags-...'
         """
         for f in os.listdir(self.path):

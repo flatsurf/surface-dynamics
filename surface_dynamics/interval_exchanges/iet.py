@@ -1463,7 +1463,7 @@ class IntervalExchangeTransformation(object):
         elif horizontal_alignment == 'right':
             s = position[0] - total_length
         else:
-            raise ValueError, "horizontal_alignement must be left, center or right"
+            raise ValueError("horizontal_alignement must be left, center or right")
 
         top_height = position[1] + interval_height
         for i in self._permutation._labels[0]:
@@ -1485,7 +1485,7 @@ class IntervalExchangeTransformation(object):
         elif horizontal_alignment == 'right':
             s = position[0] - total_length
         else:
-            raise ValueError, "horizontal_alignement must be left, center or right"
+            raise ValueError("horizontal_alignement must be left, center or right")
 
         bottom_height = position[1] - interval_height
         for i in self._permutation._labels[1]:

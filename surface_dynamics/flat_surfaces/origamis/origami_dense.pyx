@@ -18,6 +18,7 @@ is computed by an independent C program in ``normal_form.c``.
 
 from __future__ import print_function
 from six import iteritems, iterkeys
+from builtins import range
 
 from cpython.list cimport *
 from cpython.tuple cimport *
@@ -236,7 +237,7 @@ cdef tuple projectivize_edges(l):
     cdef int *xx
     cdef int *yy
 
-    o1 = iterkeys(l[0]).next() # pick a random element in l[0] !!!!
+    o1 = next(iterkeys(l[0])) # pick a random element in l[0] !!!!
     oo1 = o1.inverse()
     oo1._set_standard_form()
 
@@ -247,7 +248,7 @@ cdef tuple projectivize_edges(l):
 
     # Case 2: -Id does not preserve the orbit
     elif oo1 not in l[0]:
-        ll = [{} for _ in xrange(len(l))]
+        ll = [{} for _ in range(len(l))]
         for o in l[0]:
             o1 = o
             o2 = o.inverse()
@@ -255,7 +256,7 @@ cdef tuple projectivize_edges(l):
             if o2 < o1:
                 o = o2
 
-            for i in xrange(len(l)):
+            for i in range(len(l)):
                 oo1 = l[i][o1]
                 oo2 = oo1.inverse()
                 oo2._set_standard_form()
@@ -265,7 +266,7 @@ cdef tuple projectivize_edges(l):
                     ll[i][o] == oo2
 
     # Case 3: -Id preserves the orbit (but not pointwise)
-    ll = [{} for _ in xrange(len(l))]
+    ll = [{} for _ in range(len(l))]
     waiting = set(l[0])
     while waiting:
         o1 = waiting.pop()
@@ -277,7 +278,7 @@ cdef tuple projectivize_edges(l):
             o1 = o2
             o2 = ooo
 
-        for i in xrange(len(l)):
+        for i in range(len(l)):
             oo1 = l[i][o1]
             oo2 = l[i][o2]
             if oo1 < oo2:
@@ -1063,9 +1064,9 @@ cdef class Origami_dense_pyx(object):
             sage: old_u = o.u_tuple()
             sage: new_r = o2.r_tuple()
             sage: new_u = o2.u_tuple()
-            sage: all(p[old_r[i]] == new_r[p[i]] for i in xrange(6))
+            sage: all(p[old_r[i]] == new_r[p[i]] for i in range(6))
             True
-            sage: all(p[old_u[i]] == new_u[p[i]] for i in xrange(6))
+            sage: all(p[old_u[i]] == new_u[p[i]] for i in range(6))
             True
         """
         if inplace:
@@ -1346,7 +1347,7 @@ cdef class Origami_dense_pyx(object):
                 print("loop from %s %s" % (str(o.r_tuple()), str(o.u_tuple())))
                 print("len(l) = %d len(i) = %d" % (len(l_edges), len(i_edges)))
             if o in l_edges:
-                raise ValueError, "%s seen before" % str(o)
+                raise ValueError("%s seen before" % str(o))
 
             # we compute backwards the l-cusp of o
             for i from 0 <= i < n:
@@ -1671,11 +1672,11 @@ cdef class Origami_dense_pyx(object):
         if n_m == 1: n_m=2
         n = n_p + n_m
 
-        res = [[] for _ in xrange(n)]
+        res = [[] for _ in range(n)]
         theta = <double *> malloc((n+1)*sizeof(double))
         s = <int *> malloc((self.nb_squares()) * sizeof(int))
 
-        for i in xrange(self.nb_squares()):
+        for i in range(self.nb_squares()):
             s[i] = involution[i]
 
         o = new_origami_with_involution_data(
@@ -1690,9 +1691,9 @@ cdef class Origami_dense_pyx(object):
         # would be better to feed the function with the angles
         from sage.rings.real_mpfr import RealField
         R = RealField()
-        for _ in xrange(nb_experiments):
+        for _ in range(nb_experiments):
             lyapunov_exponents_with_involution(o, nb_iterations, theta)
-            for i in xrange(n):
+            for i in range(n):
                 res[i].append(R(theta[i+1] / (2*theta[0])))
 
         free_origami_with_involution_data(o)
@@ -1701,7 +1702,7 @@ cdef class Origami_dense_pyx(object):
 
         if only_mean:
             rres = []
-            for i in xrange(n):
+            for i in range(n):
                 rres.append(sum(res[i]) / nb_experiments)
 
             return rres[:nb_vectors_p], rres[n_p:n_p+nb_vectors_m]
@@ -1716,7 +1717,7 @@ cdef class Origami_dense_pyx(object):
         cdef double * theta
         n = max(2, nb_vectors)
 
-        res = [[] for _ in xrange(n)]
+        res = [[] for _ in range(n)]
         theta = <double *> malloc((n+1)*sizeof(double))
 
         o = new_origami_data(
@@ -1727,9 +1728,9 @@ cdef class Origami_dense_pyx(object):
 
         from sage.rings.real_mpfr import RealField
         R = RealField()
-        for _ in xrange(nb_experiments):
+        for _ in range(nb_experiments):
             lyapunov_exponents(o, nb_iterations, theta)
-            for i in xrange(n):
+            for i in range(n):
                 res[i].append(R(theta[i+1] / (2*theta[0])))
 
         free_origami_data(o)
@@ -1737,7 +1738,7 @@ cdef class Origami_dense_pyx(object):
 
         if only_mean:
             rres = []
-            for i in xrange(n):
+            for i in range(n):
                 rres.append(sum(res[i]) / nb_experiments)
 
             return rres[:nb_vectors]
@@ -1769,7 +1770,7 @@ cdef class Origami_dense_pyx(object):
         N = self.nb_squares()
         r = self.r_tuple()
         u = self.u_tuple()
-        for i in xrange(N):
+        for i in range(N):
             G.add_edge(i, r[i], 'r')
             G.add_edge(i, u[i], 'u')
         return G
@@ -1807,7 +1808,7 @@ cdef class Origami_dense_pyx(object):
         for c in cc:
             rr = [None] * len(c)
             uu = [None] * len(c)
-            d = dict((c[i], i) for i in xrange(len(c)))
+            d = dict((c[i], i) for i in range(len(c)))
             for i in c:
                 rr[d[i]] = d[r[i]]
                 uu[d[i]] = d[u[i]]
@@ -2008,7 +2009,7 @@ cdef class Origami_dense_pyx(object):
 
             # Fixed points which are not integer points
             squares = []; h_edges = []; v_edges = []
-            for i in xrange(1, self.nb_squares()+1):
+            for i in range(1, self.nb_squares()+1):
                 if mm(i) == i: squares.append(i)
                 if mm(i) == u(i): h_edges.append(i)
                 if mm(i) == r(i): v_edges.append(i)
@@ -2448,16 +2449,16 @@ cdef class Origami_dense_pyx(object):
 
             d = max(max(len(x) for x in sr), max(len(x) for x in su))
 
-            for p in sr: p.extend(xrange(len(p), d))
-            for p in su: p.extend(xrange(len(p), d))
+            for p in sr: p.extend(range(len(p), d))
+            for p in su: p.extend(range(len(p), d))
         else:
             d = len(sr[0])
 
         cdef list rr = [None]*N*d
         cdef list uu = [None]*N*d
 
-        for i in xrange(N):
-            for j in xrange(d):
+        for i in range(N):
+            for j in range(d):
                 rr[i+N*j] = self._r[i] + N*sr[i][j]
                 uu[i+N*j] = self._u[i] + N*su[i][j]
 
@@ -2681,8 +2682,8 @@ cdef class Origami_dense_pyx(object):
             k = 0
             for cyl in cyls:
                 _, _, w, h, _, _ = cyl
-                for j in xrange(h):
-                    for i in xrange(w):
+                for j in range(h):
+                    for i in range(w):
                         pos[rel[k]] = (i, H)
                         k += 1
                     H += 1
@@ -2695,7 +2696,7 @@ cdef class Origami_dense_pyx(object):
 
         rl_frontiers = []
         tb_frontiers = []
-        for i in xrange(self.nb_squares()):
+        for i in range(self.nb_squares()):
             x, y = pos[i]
             xx, yy = pos[r[i]]
             if y != yy or x+1 != xx:
@@ -2759,7 +2760,7 @@ cdef class Origami_dense_pyx(object):
         dlvertices = {}
         vv = self.vertices()
         colors = rainbow(len(vv), 'rgbtuple')
-        for j in xrange(len(vv)):
+        for j in range(len(vv)):
             v = vv[j]
             for i in v.up_right_tuple():
                 urvertices[i-1] = colors[j]
@@ -2767,7 +2768,7 @@ cdef class Origami_dense_pyx(object):
                 dlvertices[i-1] = colors[j]
 
         G = Graphics()
-        for i in xrange(self.nb_squares()):
+        for i in range(self.nb_squares()):
             x0, y0 = self._pos[i]
             x1 = x0+1; y1 = y0+1
             if args['square']:
@@ -2775,7 +2776,7 @@ cdef class Origami_dense_pyx(object):
             if args['text_square']:
                 G += text("%d" % (i+1), (x0+0.5, y0+0.5), **d['text_square'])
 
-        for i in xrange(self.nb_squares()):
+        for i in range(self.nb_squares()):
             x0, y0 = self._pos[i]
             x1 = x0+1; y1 = y0+1
 
@@ -3002,7 +3003,7 @@ cdef class Origami_dense_pyx(object):
             cyl_ren.append((cyl[0][0][0], i))
 
         edges.sort()   # index to edge
-        e2i = dict((edges[i], i) for i in xrange(len(edges)))  # edge to index
+        e2i = dict((edges[i], i) for i in range(len(edges)))  # edge to index
         cyl_ren.sort()
         cyl_ren = dict((j[0], i) for i, j in enumerate(cyl_ren))
 
@@ -3014,7 +3015,7 @@ cdef class Origami_dense_pyx(object):
         for b, t, w, h, _, _ in cyl_dec:
             ww = w
             n = cyl_ren[b[0][0]]
-            for i in xrange(len(b)-1):
+            for i in range(len(b)-1):
                 lengths[e2i[b[i]]] = b[i+1][0] - b[i][0]
                 ww -= lengths[e2i[b[i]]]
             lengths[e2i[b[-1]]] = ww
@@ -3465,7 +3466,7 @@ cpdef sl2z_orbits(origamis, int n, int limit):
     glorbits = gl2z_orbits(origamis, n, limit)
 
     for L, I in glorbits:
-        o = iterkeys(L).next()
+        o = next(iterkeys(L))
         l, r, s = sl_orbit_from_gl_orbit(o, L, I)
         slorbits.append((l, r, s))
         if len(l) != len(L):
@@ -3507,7 +3508,7 @@ cdef class PillowcaseCover_dense_pyx:
         self._g = <int *> malloc(4*self._n*sizeof(int))
 
         if self._g == NULL:
-            raise MemoryError, "not able to allocate"
+            raise MemoryError("not able to allocate")
 
         for i from 0 <= i < self._n:
             self._g[i]     = g0[i]

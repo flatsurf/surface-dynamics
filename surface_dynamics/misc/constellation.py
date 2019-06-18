@@ -1086,7 +1086,7 @@ class Constellations_all(UniqueRepresentation, Parent):
             sage: from surface_dynamics.misc.constellation import Constellations
 
             sage: I = iter(Constellations())
-            sage: for _ in range(100): print(I.next())
+            sage: for _ in range(100): print(next(I))
             Constellation of length 1 and degree 1
             g0 (0)
             Constellation of length 2 and degree 1

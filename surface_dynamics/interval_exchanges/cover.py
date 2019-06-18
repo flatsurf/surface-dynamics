@@ -498,7 +498,7 @@ class PermutationCover(SageObject):
             sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
             sage: from itertools import product
             sage: it = iter(product(('()', '(1,2)'), repeat=3))
-            sage: it.next()
+            sage: next(it)
             ('()', '()', '()')
 
             sage: for cov in it:

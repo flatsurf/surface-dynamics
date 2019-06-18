@@ -150,8 +150,7 @@ def two_non_connected_perms_canonical_labels(bot, top):
     shift = 0
     bot = []
     top = []
-    keys = cs_type_nb.keys()
-    keys.sort()
+    keys = sorted(cs_type_nb.keys())
     for key in keys:
         for _ in range(cs_type_nb[key]):
             bot.extend(shift+i for i in key[0])
@@ -466,7 +465,7 @@ class SeparatrixDiagram(SageObject):
             ....:      '(0,2)(1)-(0,1)(2)',
             ....:      '(0,2)(1)-(0,2)(1)',
             ....:      '(0)(1)(2)-(0)(1)(2)']
-            sage: s0 = map(SeparatrixDiagram,s)
+            sage: s0 = list(map(SeparatrixDiagram, s))
             sage: s1 = s0[:]
             sage: for _ in range(10):
             ....:     shuffle(s1)
@@ -1751,7 +1750,7 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
 
         sage: from surface_dynamics.flat_surfaces.separatrix_diagram import hyperelliptic_cylinder_diagram_iterator
         sage: it = hyperelliptic_cylinder_diagram_iterator(3)
-        sage: c = it.next(); c
+        sage: c = next(it); c
         (0,1)-(0,2) (2)-(1)
         sage: c.stratum_component()
         H_2(2)^hyp
@@ -3098,7 +3097,7 @@ class CylinderDiagram(SeparatrixDiagram):
         p.set_objective(sum(scl[i] for i in range(n)))
         for i in range(n):
             p.add_constraint(scl[i],min=1)
-        for b,t in itertools.izip(bot,top):
+        for b,t in zip(bot,top):
             p.add_constraint(
                     p.sum(scl[i] for i in set(b).difference(t)) ==
                     p.sum(scl[i] for i in set(t).difference(b))
@@ -3388,7 +3387,7 @@ class CylinderDiagram(SeparatrixDiagram):
             (0,1)-(0,2) (2)-(1)
 
             sage: it = cyl.widths_and_heights_iterator(10)
-            sage: l,h = it.next()
+            sage: l,h = next(it)
             sage: print(l)
             (2, 1, 1)
             sage: print(h)
@@ -3422,7 +3421,7 @@ class CylinderDiagram(SeparatrixDiagram):
                 sum(min_lengths[j] for j in top),
                 sum(min_lengths[j] for j in bot)))
 
-        for a in itertools.ifilter(
+        for a in filter(
               lambda x: all(x[i] >= min_widths[i] for i in range(self.ncyls())),
               IntegerListsLex(n=n, length=self.ncyls(), min_part=1)):
             area_div = tuple(filter(lambda d: d >= min_widths[i],arith.divisors(a[i])) for i in range(self.ncyls()))

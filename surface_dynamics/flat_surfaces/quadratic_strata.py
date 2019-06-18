@@ -1636,13 +1636,13 @@ def QuadraticStrata(genus=None, dimension=None, min_nb_poles=None, max_nb_poles=
         sage: Q.cardinality()
         +Infinity
         sage: i = iter(Q)
-        sage: i.next()
+        sage: next(i)
         Q_2(2^2)
-        sage: i.next()
+        sage: next(i)
         Q_2(2, 1^2)
-        sage: i.next()
+        sage: next(i)
         Q_2(1^4)
-        sage: i.next()
+        sage: next(i)
         Q_2(5, -1)
 
         sage: Q = QuadraticStrata(dimension=5); Q
@@ -1791,7 +1791,7 @@ class QuadraticStrata_g(QuadraticStrata_class):
         sage: Q.cardinality()
         +Infinity
         sage: i = iter(Q)
-        sage: i.next()
+        sage: next(i)
         Q_3(8)
 
         sage: Q = QuadraticStrata(genus=2,max_nb_poles=1); Q

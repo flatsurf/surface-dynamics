@@ -2,6 +2,8 @@ r"""
 Python bindings for various computation of Lyapunov exponents.
 """
 
+from builtins import range
+
 from libc.stdlib cimport malloc,free
 from math import isnan, isinf
 
@@ -158,11 +160,11 @@ def lyapunov_exponents_H_plus_cover(
     res = [[] for _ in range(nn)]
 
     if nb_vectors == 1:
-        for i in xrange(nb_experiments):
+        for i in range(nb_experiments):
             top_lyapunov_exponents_H_plus(qcc, theta, nb_iterations)
-            if any(isnan(theta[j]) or isinf(theta[j]) for j in xrange(nn)):
+            if any(isnan(theta[j]) or isinf(theta[j]) for j in range(nn)):
                 raise RuntimeError('got NaN or Inf')
-            for j in xrange(nn):
+            for j in range(nn):
                 res[j].append(theta[j])
     else:
         init_GS(nb_vectors)
@@ -179,9 +181,9 @@ def lyapunov_exponents_H_plus_cover(
             for i in range(nb_experiments):
                 lyapunov_exponents_isotypic(qcc, theta, nb_iterations, nc, dim, proj)
                 #cleaning some experiments which return NaN or inf as a lyapunov exponent
-                if any(isnan(theta[j]) or isinf(theta[j]) for j in xrange(nn)):
+                if any(isnan(theta[j]) or isinf(theta[j]) for j in range(nn)):
                     raise RuntimeError('got NaN or Inf')
-                for j in xrange(nn):
+                for j in range(nn):
                     res[j].append(theta[j])
             free(proj)
             free(dim)
@@ -189,10 +191,10 @@ def lyapunov_exponents_H_plus_cover(
         else:
             for i in range(nb_experiments):
                 lyapunov_exponents_H_plus(qcc, theta, nb_iterations)
-                if any(isnan(theta[j]) or isinf(theta[j]) for j in xrange(nn)):
+                if any(isnan(theta[j]) or isinf(theta[j]) for j in range(nn)):
                     raise RuntimeError('got NaN or Inf')
                 else:
-                    for j in xrange(nn):
+                    for j in range(nn):
                         res[j].append(theta[j])
 
     free(s[0])
