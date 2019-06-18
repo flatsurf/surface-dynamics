@@ -24,7 +24,11 @@ from cpython.tuple cimport *
 
 from cpython cimport bool
 
-from sage.structure.coerce import CoercionModel
+try:
+    from sage.structure.coerce import CoercionModel
+except ImportError:
+    # before Sage 8.6, CoercionModel used to be somewhere else
+    from sage.structure.element import CoercionModel
 
 from sage.rings.integer cimport Integer, smallInteger
 from sage.rings.integer import GCD_list
