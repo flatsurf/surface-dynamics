@@ -1,4 +1,5 @@
 # distutils: language=c++
+# distutils: extra_compile_args=-std=c++11
 # distutils: libraries=ppl gmp
 r"""
 Linear families of interval exchange transformations
