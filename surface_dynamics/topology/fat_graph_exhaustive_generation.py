@@ -89,6 +89,8 @@ A profiler for one face many vertices (genus 3)
 from __future__ import absolute_import, print_function
 from six.moves import range, map, zip
 
+import numbers
+
 from sage.rings.integer_ring import ZZ
 from sage.rings.rational_field import QQ
 
@@ -465,7 +467,8 @@ class FatGraphsTrace(object):
             f.close()
 
     def __call__(self, cm, aut):
-            add_vertex(self, s, aut_grp, depth):
+        pass
+    def add_vertex(self, s, aut_grp, depth):
         if self._verbosity >= 1:
             print('add_vertex(s={}, depth={})'.format(s, depth))
         if s in self._vdepth:
@@ -574,8 +577,8 @@ class StackCallback(object):
         self._callback = callback
         self._min_degree = min_degree
         self._filter = filter
-        print("StackCallback(gmin={}, gdepth={}, nfmin={}, nfdepth={}, nvmin={}, nvdepth={}".format(
-            self._gmin, self._gdepth, self._nfmin, self._nfdepth, self._nvmin, self._nvdepth))
+        # print("StackCallback(gmin={}, gdepth={}, nfmin={}, nfdepth={}, nvmin={}, nvdepth={}".format(
+        #    self._gmin, self._gdepth, self._nfmin, self._nfdepth, self._nvmin, self._nvdepth))
 
     def __call__(self, caller, test, cm, aut, depth):
         if test:

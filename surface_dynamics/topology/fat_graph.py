@@ -132,6 +132,7 @@ class FatGraph(object):
         """
         EXAMPLES::
 
+            sage: from surface_dynamics import FatGraph
             sage: F = FatGraph.from_unicellular_word([0,1,0,2,3,4,1,4,3,2])
             sage: G = F.copy()
             sage: G._check()
@@ -316,7 +317,9 @@ class FatGraph(object):
             sage: FatGraph(vp, ep, fp).is_face_bipartite()
             False
 
-            sage: num_and_weighted_num((F,A) for (F,A) in FatGraphs_g_nf_nv(1, 3, 3, vertex_min_degree=3) if F.is_face_bipartite())
+            sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs_g_nf_nv
+            sage: F = FatGraphs_g_nf_nv(1, 3, 3, vertex_min_degree=3)
+            sage: F.cardinality_and_weighted_cardinality(filter=lambda x,a: x.is_face_bipartite())
             (3, 5/3)
         """
         # trivial cases
@@ -517,19 +520,20 @@ class FatGraph(object):
             sage: F = FatGraph(vp=None,ep='(0,1)',fp='(0)(1)')
             sage: F.dual()
             sage: F
-            FatGraph('(0,1)', '(0,1)', '(0)(1)')
+            FatGraph('(0)(1)', '(0,1)', '(0,1)')
             sage: F._check()
             sage: s = '20_i23017546b98jchedfag_2301547698badcfehgji_12346758ab9igdhfejc0'
             sage: F = FatGraph.from_string(s)
             sage: F.dual()
-            sage: F.check()
+            sage: F._check()
             sage: F.dual()
-            sage: F.check()
+            sage: F._check()
             sage: F == FatGraph.from_string(s)
             True
         """
         # TODO: invert in place !!!!
         self._vp, self._fp = perm_invert(self._fp, self._n), perm_invert(self._vp, self._n)
+        self._nv, self._nf = self._nf, self._nv
         self._vl, self._fl = self._fl, self._vl
         self._vd, self._fd = self._fd, self._vd
 
