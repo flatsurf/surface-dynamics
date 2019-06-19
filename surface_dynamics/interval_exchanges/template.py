@@ -812,16 +812,6 @@ class Permutation(SageObject):
 
         ::
 
-            sage: p._repr_type = 'interval_diagram'
-            sage: p._repr_options = (False,)
-            sage: p   #indirect doctest
-            [['a', 'b', 'c'], ['c', 'a', 'b']]
-            sage: p._repr_options = (True,)
-            sage: p
-            [['b', ('c', 'a')], [('c', 'a'), 'b']]
-
-        ::
-
             sage: p._repr_type = '_twin'
             sage: p   #indirect doctest
             [[2, 1, 0], [2, 1, 0]]
@@ -1543,6 +1533,8 @@ class Permutation(SageObject):
         r"""
         Return the interval diagram of self.
 
+        The result is in random order.
+
         INPUT:
 
         - ``glue_ends`` - bool (default: True)
@@ -1555,33 +1547,32 @@ class Permutation(SageObject):
 
             sage: p = iet.Permutation('a b c','c b a')
             sage: p.interval_diagram()
-            [['b', ('c', 'a')], [('c', 'a'), 'b']]
+            [['b', ('c', 'a')], ['b', ('c', 'a')]]
 
             sage: p = iet.Permutation('a b c','c a b')
             sage: p.interval_diagram()
-            [[('c', 'b'), ('c', 'a')], ['b', 'a']]
+            [['a', 'b'], [('c', 'b'), ('c', 'a')]]
 
             sage: p = iet.GeneralizedPermutation('a a','b b c c')
             sage: p.interval_diagram()
-            [[('b', 'a', 'c')], ['c'], ['b'], ['a']]
+            [['a'], [('b', 'a', 'c')], ['b'], ['c']]
 
             sage: p = iet.GeneralizedPermutation('a a b b','c c')
             sage: p.interval_diagram()
-            [[('b', 'c', 'a')], ['c'], ['b'], ['a']]
+            [['a'], [('b', 'c', 'a')], ['b'], ['c']]
             sage: p.interval_diagram(sign=True)
-            [[(('b', 1), ('c', 1), ('a', 1))], [('c', -1)], [('b', -1)], [('a', -1)]]
+            [[('a', -1)], [(('b', 1), ('c', 1), ('a', 1))], [('b', -1)], [('c', -1)]]
 
             sage: p = iet.GeneralizedPermutation((0,1,0,2),(3,2,4,1,4,3))
             sage: p.interval_diagram()
-            [[2, 3, 4, (2, 3, 0)], [4, 1, 0, 1]]
+            [[0, 1, 4, 1], [2, 3, 4, (2, 3, 0)]]
             sage: p.interval_diagram(sign=True)
-            [[(2, 1), (3, -1), (4, 1), ((2, -1), (3, 1), (0, 1))],
-             [(4, -1), (1, -1), (0, -1), (1, 1)]]
+            [[(0, -1), (1, 1), (4, -1), (1, -1)],
+             [(2, 1), (3, -1), (4, 1), ((2, -1), (3, 1), (0, 1))]]
 
             sage: p = iet.GeneralizedPermutation('a b c d b', 'e d f e a f c', flips='bdf')
             sage: p.interval_diagram()
-            [[('e', 'a')], ['d', 'e', 'f', 'c', ('b', 'c'), 'd', 'f', 'a', 'b']]
-
+            [['a', 'b', 'd', 'e', 'f', 'c', ('b', 'c'), 'd', 'f'], [('e', 'a')]]
 
         TESTS::
 
@@ -1589,29 +1580,31 @@ class Permutation(SageObject):
 
             sage: p = iet.GeneralizedPermutation('0 1 2 3 2','4 3 4 1 0')
             sage: p.interval_diagram(sign=True)
-            [[('4', -1), ('3', -1), ('2', -1), ('3', 1)],
-             [('1', -1), (('2', 1), ('0', -1)), ('1', 1), (('4', 1), ('0', 1))]]
+            [[('1', 1), (('4', 1), ('0', 1)), ('1', -1), (('2', 1), ('0', -1))],
+             [('2', -1), ('3', 1), ('4', -1), ('3', -1)]]
 
             sage: p = iet.Permutation('a b c', 'c b a', flips='a')
             sage: p.interval_diagram(glue_ends=False, sign=True)
-            [[('a', 1), ('c', -1), ('b', 1), ('a', -1), ('b', -1), ('c', 1)]]
+            [[('a', -1), ('b', -1), ('c', 1), ('a', 1), ('c', -1), ('b', 1)]]
             sage: p.interval_diagram(glue_ends=True, sign=False)
-            [['b', 'a', 'b', ('c', 'a', 'c')]]
+            [['a', 'b', ('c', 'a', 'c'), 'b']]
 
             sage: iet.Permutation('a b c', 'c b a', flips='b').interval_diagram(glue_ends=False, sign=True)
-            [[('a', 1), ('b', 1), ('a', -1), ('c', -1), ('b', -1), ('c', 1)]]
+            [[('a', -1), ('b', 1), ('a', 1), ('c', 1), ('b', -1), ('c', -1)]]
             sage: iet.Permutation('a b c', 'c b a', flips='c').interval_diagram(glue_ends=False, sign=True)
-            [[('a', 1), ('b', -1), ('c', 1), ('b', 1), ('a', -1), ('c', -1)]]
+            [[('a', -1), ('b', 1), ('c', 1), ('b', -1), ('a', 1), ('c', -1)]]
 
             sage: iet.Permutation('a b c', 'c b a', flips='bc').interval_diagram(glue_ends=False, sign=True)
-            [[('a', 1), ('b', 1), ('a', -1), ('c', -1)], [('c', 1), ('b', -1)]]
+            [[('a', -1), ('b', 1), ('a', 1), ('c', -1)], [('b', -1), ('c', 1)]]
+
             sage: iet.Permutation('a b c', 'c b a', flips='ac').interval_diagram(glue_ends=False, sign=True)
-            [[('a', 1), ('c', -1)], [('b', 1), ('c', 1), ('b', -1), ('a', -1)]]
+            [[('a', -1), ('b', -1), ('c', 1), ('b', 1)], [('a', 1), ('c', -1)]]
+
             sage: iet.Permutation('a b c', 'c b a', flips='ab').interval_diagram(glue_ends=False, sign=True)
-            [[('a', 1), ('c', -1), ('b', -1), ('c', 1)], [('b', 1), ('a', -1)]]
+            [[('a', -1), ('b', 1)], [('a', 1), ('c', -1), ('b', -1), ('c', 1)]]
 
             sage: iet.Permutation('a b c', 'c b a', flips='abc').interval_diagram(glue_ends=False, sign=True)
-            [[('a', 1), ('c', -1)], [('b', 1), ('a', -1)], [('c', 1), ('b', -1)]]
+            [[('a', -1), ('b', 1)], [('a', 1), ('c', -1)], [('b', -1), ('c', 1)]]
         """
         # NOTE: each interval comes with an orientation (obtained from the
         # method ._canonical_signs(). We label each side of each interval
@@ -1634,7 +1627,16 @@ class Permutation(SageObject):
         glued_at_begin = False # True iff the 1st elt in singularity is paired
         flip = 1
         while letters:
-            label,j = letters.pop()                  # pick a remaining letter at random
+            # pick a remaining letter
+            try:
+                # try picking the minimum
+                t = min(letters)
+                letters.remove(t)
+                label, j = t
+            except TypeError:
+                # pick a random one
+                print('failure')
+                label,j = letters.pop()
             (i0,p0),(i1,p1) = label_to_twins[label]  # its two positions in the interval
 
             # try to see if one of (i0, p0) fits for anti-clockwise order
@@ -3040,14 +3042,14 @@ class PermutationLI(Permutation):
             sage: p.erase_marked_points()
             Traceback (most recent call last):
             ...
-            NotImplementedError: Not yet implemented! Do it!
+            NotImplementedError: not yet implemented! Do it!
         """
         if self.stratum().nb_fake_zeros():
             raise NotImplementedError("not yet implemented! Do it!")
         else:
             return self
 
-    def is_hyperelliptic(self,verbose=False):
+    def is_hyperelliptic(self, verbose=False):
         r"""
         Test if this permutation is in an hyperelliptic connected component.
 
@@ -3688,31 +3690,31 @@ class OrientablePermutationIET(PermutationIET):
 
             sage: p = iet.Permutation('a b c d e f g','b g a c f e d')
             sage: p.interval_diagram()
-            [[('g', 'd'), 'e', 'f', 'g', 'b', 'c', 'a', ('b', 'a')], ['c', 'd', 'e', 'f']]
+            [['a', ('b', 'a'), ('g', 'd'), 'e', 'f', 'g', 'b', 'c'], ['c', 'd', 'e', 'f']]
             sage: p.marked_profile()
             4|0 [4, 2]
 
             sage: p = iet.Permutation('a b c d e f g','c a g d f b e')
             sage: p.interval_diagram()
-            [['c', 'd', ('g', 'e'), 'f', 'd', 'e', 'b', ('c', 'a')], ['g', 'a', 'b', 'f']]
+            [['a', 'b', 'f', 'g'], ['c', 'd', ('g', 'e'), 'f', 'd', 'e', 'b', ('c', 'a')]]
             sage: p.marked_profile()
             4|1 [4, 2]
 
             sage: p = iet.Permutation('a b c d e f g','e b d g c a f')
             sage: p.interval_diagram()
-            [['c', 'd', 'b', 'c', ('g', 'f'), 'g', 'd', ('e', 'a')], ['f', 'a', 'b', 'e']]
+            [['a', 'b', 'e', 'f'], ['c', 'd', 'b', 'c', ('g', 'f'), 'g', 'd', ('e', 'a')]]
             sage: p.marked_profile()
             4|2 [4, 2]
 
             sage: p = iet.Permutation('a b c d e f g', 'e c g b a f d')
             sage: p.interval_diagram()
-            [['b', 'c', 'e', 'f', 'a', 'b', ('g', 'd'), ('e', 'a')], ['c', 'd', 'f', 'g']]
+            [['a', 'b', ('g', 'd'), ('e', 'a'), 'b', 'c', 'e', 'f'], ['c', 'd', 'f', 'g']]
             sage: p.marked_profile()
             4|3 [4, 2]
 
             sage: p = iet.Permutation('a b c d e f g', 'f d c a g e b')
             sage: p.interval_diagram()
-            [['c', 'd', 'f', 'g', 'a', 'b', 'e', ('f', 'a')], ['d', 'e', ('g', 'b'), 'c']]
+            [['a', 'b', 'e', ('f', 'a'), 'c', 'd', 'f', 'g'], ['c', 'd', 'e', ('g', 'b')]]
             sage: p.marked_profile()
             4o2 [4, 2]
         """

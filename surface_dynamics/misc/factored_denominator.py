@@ -366,8 +366,28 @@ class FactoredDenominator(object):
 
     def __ne__(self, other):
         if type(self) is not type(other):
-            return TypeError
+            raise TypeError
         return self._tuple != other._tuple
+
+    def __lt__(self, other):
+        if type(self) is not type(other):
+            raise TypeError
+        return self._tuple < other._tuple
+
+    def __le__(self, other):
+        if type(self) is not type(other):
+            raise TypeError
+        return self._tuple <= other._tuple
+
+    def __gt__(self, other):
+        if type(self) is not type(other):
+            raise TypeError
+        return self._tuple > other._tuple
+
+    def __ge__(self, other):
+        if type(self) is not type(other):
+            raise TypeError
+        return self._tuple >= other._tuple
 
     def copy(self):
         res = FactoredDenominator.__new__(FactoredDenominator)

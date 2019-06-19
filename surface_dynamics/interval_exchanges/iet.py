@@ -183,7 +183,7 @@ class IntervalExchangeTransformation(object):
             sage: sqrt2 = QuadraticField(2).gen()
             sage: T = iet.IntervalExchangeTransformation(p, [1, sqrt2])
             sage: T.base_ring()
-            Number Field in a with defining polynomial x^2 - 2
+            Number Field in a ...
         """
         return self._base_ring
 

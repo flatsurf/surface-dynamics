@@ -2031,7 +2031,7 @@ cdef class Origami_dense_pyx(object):
 
             qdegrees = dict((d-1, ramifications[d]) for d in ramifications)
             qdegrees[-1] += len(squares) + len(h_edges) + len(v_edges)
-            qdegrees.update((2*d, (degrees[d]-ramifications[d])/2) for d in degrees)
+            qdegrees.update((2*d, (degrees[d]-ramifications[d]) // 2) for d in degrees)
 
             if points:
                 res.append((
@@ -2467,7 +2467,6 @@ cdef class Origami_dense_pyx(object):
         r"""
         Return the normal cover of this origami.
         """
-        from itertools import imap
         G = self.monodromy()
         A = gap.Action(G, G, gap.OnRight)
         r, u = gap.GeneratorsOfGroup(A)

@@ -455,7 +455,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
             sage: C = CylinderDiagrams()
             sage: C._files()
-            <generator object _files at ...>
+            <generator object ...>
             sage: it = C._files()
             sage: next(it)  # random
             'cyl_diags-...'

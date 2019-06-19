@@ -910,7 +910,7 @@ class MultivariateGeneratingSeries(AbstractMSum):
         """
         if len(self._data) != 1:
             return False
-        (den, num) = self._data.items()[0]
+        (den, num) = next(iteritems(self._data))
         return num.is_one() and den.is_one()
 
     def is_zero(self):

@@ -33,7 +33,7 @@ def signed_permutations(n):
     """
     from itertools import permutations, combinations
 
-    R = range(n)
+    R = list(range(n))
     for p in permutations(R):
         for k in range(n+1):
             for s in combinations(R, k):
@@ -109,7 +109,7 @@ def even_perm_identity(n):
         sage: even_perm_identity(0)
         array('l')
     """
-    return array('l', range(n) + range(-n,0))
+    return array('l', list(range(n)) + list(range(-n,0)))
 
 def even_perm_minus(n):
     r"""
@@ -119,7 +119,7 @@ def even_perm_minus(n):
         sage: even_perm_minus(2)
         array('l', [-1, -2, 1, 0])
     """
-    return array('l', [~i for i in range(n)] + [~i for i in range(-n,0)])
+    return array('l', [~i for i in list(range(n))] + [~i for i in list(range(-n,0))])
 
 def even_perm_is_orientable(p):
     r"""
@@ -190,7 +190,7 @@ def even_perm_invert(p):
 
         sage: for _ in range(10):
         ....:     n = randint(1, 20)
-        ....:     p = range(-n, n)
+        ....:     p = list(range(-n, n))
         ....:     shuffle(p)
         ....:     q = even_perm_invert(p)
         ....:     assert even_perm_compose(p, q) == even_perm_compose(q, p) == even_perm_identity(n)

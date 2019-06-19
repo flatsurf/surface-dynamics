@@ -2801,13 +2801,13 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: C = AbelianStratum(4).cylinder_diagrams()
             sage: len(C)
             15
-            sage: len(filter(lambda c: c.is_hyperelliptic(), C))
+            sage: sum(c.is_hyperelliptic() for c in C)
             5
 
             sage: C = AbelianStratum(2,2).cylinder_diagrams()
             sage: len(C)
             41
-            sage: len(filter(lambda c: c.is_hyperelliptic(), C))
+            sage: sum(c.is_hyperelliptic() for c in C)
             11
         """
         z = self.stratum().zeros()

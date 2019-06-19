@@ -1659,7 +1659,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
                 sage: g = R.path(p, 't', 'b')
                 sage: T = g.self_similar_iet()
                 sage: T.lengths().parent()
-                Vector space of dimension 2 over Number Field in a with defining polynomial x^2 - 3*x + 1
+                Vector space of dimension 2 over Number Field ...
                 sage: T.lengths().n()
                 (1.00000000000000, 1.61803398874989)
 
