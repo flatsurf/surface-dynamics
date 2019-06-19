@@ -476,7 +476,7 @@ def small_positive_integer_tuple_to_data(t):
         sage: s = odb.small_positive_integer_tuple_to_data(t)
         sage: s
         '0zp2c'
-        sage: map(lambda x: Integer(x, 36), s)
+        sage: list(map(lambda x: Integer(x, 36), s))
         [0, 35, 25, 2, 12]
     """
     if not t:
@@ -520,7 +520,7 @@ def integer_tuple_to_data(t):
         sage: s = odb.integer_tuple_to_data(t)
         sage: s
         '0 -7ej03 3'
-        sage: map(lambda x: Integer(x,36), s.split(' '))
+        sage: list(map(lambda x: Integer(x,36), s.split(' ')))
         [0, -12435123, 3]
     """
     if not t:
@@ -591,8 +591,8 @@ def representative_to_data(o):
     Try examples in the critical range 75-85:
 
         sage: for n in range(75,85):
-        ....:     r = range(1,n) + [0]
-        ....:     u = range(n)
+        ....:     r = list(range(1,n)) + [0]
+        ....:     u = list(range(n))
         ....:     shuffle(u)
         ....:     o = Origami(r, u, as_tuple=True)
         ....:     s = odb.representative_to_data(o)

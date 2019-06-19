@@ -12,9 +12,12 @@ This file gather common code used in
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import print_function, absolute_import
+from __future__ import print_function, absolute_import, division
 from six.moves import range, map, filter, zip
 
+from functools import total_ordering
+
+from sage.structure.unique_representation import UniqueRepresentation
 from sage.structure.sage_object import SageObject
 from sage.structure.parent import Parent
 
@@ -45,7 +48,7 @@ def list_to_exp_list(l):
 # Stratum, stratum component
 #
 
-class Stratum(SageObject):
+class Stratum(UniqueRepresentation, SageObject):
     r"""
     Generic class for stratum of flat surfaces.
 
@@ -72,6 +75,14 @@ class Stratum(SageObject):
     - an attribute ``._latex_name`` which corresponds to the begining of the latex
       string representation (uses ``_name`` by default)
 
+    TESTS::
+
+            sage: from surface_dynamics import *
+
+            sage: A = AbelianStratum(2,2)
+            sage: B = AbelianStratum(1,1)
+            sage: hash(A) == hash(B)
+            False
     """
     _name = ''
     _latex_name = ''
@@ -143,49 +154,7 @@ class Stratum(SageObject):
     # Equality and comparisons
     #
 
-    def __hash__(self):
-        r"""
-        Hash value for self
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import *
-
-            sage: A = AbelianStratum(2,2)
-            sage: B = AbelianStratum(1,1)
-            sage: hash(A) == hash(B)
-            False
-        """
-        return hash(self._name) ^ hash(self.zeros())
-
-    def __eq__(self, other):
-        r"""
-        Equality test
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import *
-
-            sage: AbelianStratum(0) == AbelianStratum(0)
-            True
-            sage: QuadraticStratum(5,-1) == QuadraticStratum(5,-1)
-            True
-            sage: AbelianStratum(12) == QuadraticStratum(12)
-            False
-            sage: QuadraticStratum(12,0,0) == QuadraticStratum(12,0)
-            False
-            sage: AbelianStratum(2,0) == AbelianStratum(2)
-            False
-        """
-        return type(self) == type(other) and self.zeros() == other.zeros()
-
-    def __ne__(self, other):
-        r"""
-        Difference test.
-        """
-        return not self.__eq__(other)
-
-    def __cmp__(self, other):
+    def __lt__(self, other):
         r"""
         Comparison
 
@@ -196,6 +165,23 @@ class Stratum(SageObject):
         TESTS::
 
             sage: from surface_dynamics import *
+
+            sage: AbelianStratum(0) == AbelianStratum(0)
+            True
+            sage: QuadraticStratum(5,-1) == QuadraticStratum(5,-1)
+            True
+            sage: QuadraticStratum(5,-1) != QuadraticStratum(5,-1)
+            False
+
+            sage: AbelianStratum(12) == QuadraticStratum(12)
+            False
+            sage: QuadraticStratum(12,0,0) == QuadraticStratum(12,0)
+            False
+
+            sage: AbelianStratum(2,0) == AbelianStratum(2)
+            False
+            sage: AbelianStratum(2,0) != AbelianStratum(2)
+            True
 
             sage: AbelianStratum(1,1) < AbelianStratum(1,1,0)
             True
@@ -222,26 +208,58 @@ class Stratum(SageObject):
             True
             sage: QuadraticStratum(4,0) > QuadraticStratum(1,1,1,1)
             False
-            sage: QuadraticStratum(4,0,0,0) > QuadraticStratum(1,1,1,1)
+
+            sage: Q1 = QuadraticStratum(4,0,0,0)
+            sage: Q2 = QuadraticStratum(1,1,1,1)
+            sage: Q1 > Q2
             True
+            sage: Q1 >= Q2
+            True
+            sage: Q1 < Q2
+            False
+            sage: Q1 <= Q2
+            False
         """
-        if not isinstance(other,Stratum):
-            return NotImplemented
+        if not isinstance(self, Stratum) or not isinstance(other, Stratum):
+            raise TypeError
 
-        # compare the type of stratum
-        test = cmp(type(self), type(other))
-        if test: return test
+        if type(self) is type(other):
+            # compare the dimension
+            if self.dimension() < other.dimension():
+                return True
+            elif self.dimension() > other.dimension():
+                return False
 
-        # compare the dimension
-        test = cmp(self.dimension(), other.dimension())
-        if test: return test
+            # compare the list of zeros
+            if self.zeros() < other.zeros():
+                return True
+            elif self.zeros() > other.zeros():
+                return False
 
-        # compare the list of zeros
-        test = cmp(self.zeros(),other.zeros())
-        if test: return test
+            # equality
+            return False
 
-        # they are equal
-        return 0
+        else:
+            sname = type(self).__name__
+            oname = type(other).__name__
+            if sname < oname:
+                return True
+            elif sname > oname:
+                return False
+
+            return False
+    
+    def __ne__(self, other):
+        return not self == other
+
+    def __le__(self, other):
+        return self == other or self < other
+
+    def __ge__(self, other):
+        return not self < other
+
+    def __gt__(self, other):
+        return not self <= other
 
     #
     # Connected components
@@ -575,12 +593,12 @@ class StratumComponent(SageObject):
             sage: c_hyp == c_odd
             False
         """
-        if not isinstance(other, StratumComponent):
+        if not isinstance(self, StratumComponent) or not isinstance(other, StratumComponent):
             return NotImplemented
 
-        return (type(self) == type(other) and self._stratum == other._stratum)
+        return type(self) == type(other) and self._stratum == other._stratum
 
-    def __cmp__(self, other):
+    def __lt__(self, other):
         r"""
         Comparison
 
@@ -607,14 +625,18 @@ class StratumComponent(SageObject):
             sage: c2_hyp != c2_odd
             True
         """
-        if not isinstance(other, StratumComponent):
+        if not isinstance(self, StratumComponent) or not isinstance(other, StratumComponent):
             return NotImplemented
 
-        test = cmp(self._stratum, other._stratum)
+        if self._stratum < other._stratum:
+            return True
+        elif self._stratum > other._stratum:
+            return False
 
-        if test: return test
-
-        return cmp(type(self),type(other))
+        if type(self) < type(other):
+            return True
+        elif type(self) > type(other):
+            return False
 
 #
 # Strata (family of strata)

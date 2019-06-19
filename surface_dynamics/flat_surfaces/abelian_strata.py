@@ -149,14 +149,13 @@ Obtains the connected components of a stratum::
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import print_function, absolute_import
+from __future__ import print_function, absolute_import, division
 from six.moves import range, map, filter, zip
 from six import iteritems
 
 import numbers
 
 from sage.structure.unique_representation import UniqueRepresentation
-
 from sage.structure.parent import Parent
 from sage.categories.finite_enumerated_sets import FiniteEnumeratedSets
 from sage.categories.infinite_enumerated_sets import InfiniteEnumeratedSets
@@ -168,7 +167,7 @@ from sage.rings.infinity import Infinity
 
 from surface_dynamics.flat_surfaces.strata import Stratum, StratumComponent, Strata
 
-class AbelianStratum(UniqueRepresentation, Stratum):
+class AbelianStratum(Stratum):
     """
     Stratum of Abelian differentials.
 
@@ -1665,7 +1664,7 @@ class AbelianStratumComponent(StratumComponent):
             H_2(1^2)^hyp
             sage: for i in range(4,10):
             ....:    T = A.arithmetic_teichmueller_curves(i)
-            ....:    T_prim = filter(lambda t:t.origami().is_primitive(), T)
+            ....:    T_prim = list(filter(lambda t:t.origami().is_primitive(), T))
             ....:    print("%d %d %d" % (i,len(T),len(T_prim)))
             4 2 1
             5 1 1

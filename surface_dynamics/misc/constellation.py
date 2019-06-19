@@ -39,7 +39,8 @@ REFERENCES:
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import print_function
+from __future__ import print_function, absolute_import, division
+from six.moves import range, zip, filter
 
 from sage.structure.parent import Parent
 from sage.structure.element import Element
@@ -495,9 +496,7 @@ class Constellation_class(Element):
             sage: Constellation(['(0,1)','(0,2)',None]) == Constellation(['(0,1)',None,'(0,2)'])
             False
         """
-        if not isinstance(other, Constellation_class):
-            return False
-        return (self._g == other._g)
+        return type(self) == type(other) and self._g == other._g
 
     def __ne__(self, other):
         r"""
@@ -511,9 +510,7 @@ class Constellation_class(Element):
             sage: Constellation(['(0,1)','(0,2)',None]) != Constellation(['(0,1)',None,'(0,2)'])
             True
         """
-        if not isinstance(other, Constellation_class):
-            return True
-        return (self._g != other._g)
+        return type(self) != type(other) or self._g != other._g
 
     def is_isomorphic(self, other, return_map=False):
         r"""
@@ -553,7 +550,7 @@ class Constellation_class(Element):
                 self.length() == other.length() and
                 self.relabel() == other.relabel())
 
-    def __cmp__(self, other):
+    def __lt__(self, other):
         r"""
         TESTS::
 
@@ -561,20 +558,45 @@ class Constellation_class(Element):
 
             sage: c1 = Constellation([[1,2,0],None])
             sage: c2 = Constellation([[2,0,1],None])
-            sage: c1 < c2
+            sage: c1 == c2
+            False
+            sage: c1 != c2
             True
-            sage: c2 > c1
+            sage: c1 < c2 or c1 <= c2
+            True
+            sage: c1 > c2 or c1 >= c2
+            False
+            sage: c2 < c1 or c2 <= c1
+            False
+            sage: c2 > c1 and c2 >= c1
             True
         """
-        if self.length() != other.length():
-            return self.length().__cmp__(other.length())
-        if self.degree() != other.degree():
-            return self.degree().__cmp__(other.degree())
+        if type(self) != type(other):
+            raise TypeError
+
+        if self.length() < other.length():
+            return True
+        elif self.length() > other.length():
+            return False
+
+        if self.degree() < other.degree():
+            return True
+        elif self.degree() > other.degree():
+            return False
+
         for i in range(self.length()-1):
             for j in range(self.degree()-1):
-                if self._g[i][j] != other._g[i][j]:
-                    return self._g[i][j].__cmp__(other._g[i][j])
-        return 0
+                if self._g[i][j] < other._g[i][j]:
+                    return True
+                elif self._g[i][j] > other._g[i][j]:
+                    return False
+
+        # equality
+        return False
+
+    def __le__(self, other): return self == other or self < other
+    def __ge__(self, other): return not self < other
+    def __gt__(self, other): return not self <= other
 
     def _repr_(self):
         r"""
@@ -674,7 +696,7 @@ class Constellation_class(Element):
         """
         from copy import copy
         if i is None:
-            return map(copy, self._g)
+            return list(map(copy, self._g))
         else:
             return copy(self._g[i])
 
@@ -693,7 +715,7 @@ class Constellation_class(Element):
             [[0, 4], [1, 3]]
         """
         if i is None:
-            return map(lambda i: perm_cycles(i, singletons), self._g)
+            return [perm_cycles(p, singletons) for p in self._g]
         else:
             return perm_cycles(self._g[i], singletons)
 
@@ -716,7 +738,7 @@ class Constellation_class(Element):
             '(0,3)(1,2,4)'
         """
         if i is None:
-            return map(lambda i: perm_cycle_string(i, singletons), self._g)
+            return [perm_cycle_string(p, singletons) for p in self._g]
         else:
             return perm_cycle_string(self._g[i], singletons)
 
@@ -735,7 +757,7 @@ class Constellation_class(Element):
             True
         """
         if i is None:
-            return map(lambda x: x[j], self._g)
+            return [p[j] for p in  self._g]
         else:
             return self._g[i][j]
 
@@ -1051,7 +1073,7 @@ class Constellations_all(UniqueRepresentation, Parent):
             else:
                 raise ValueError("only one permutation must be None")
 
-            gg = map(perm_init, g)
+            gg = list(map(perm_init, g))
             equalize_perms(gg)
 
             if i is not None:
@@ -1274,7 +1296,7 @@ class Constellations_ld(UniqueRepresentation, Parent):
         for p in product(permutations(srange(self._degree)), repeat=self._length-1):
             if self._connected and not perms_are_transitive(p):
                 continue
-            yield self(map(list,p)+[None], check=False)
+            yield self(list(map(list,p))+[None], check=False)
 
     def random_element(self, mutable=False):
         r"""
@@ -1306,7 +1328,7 @@ class Constellations_ld(UniqueRepresentation, Parent):
             g = [SymmetricGroup(d).random_element() for _ in range(l-1)]
             G = PermutationGroup(g)
 
-        return self(map(permutation_to_perm, g)+[None], mutable=mutable)
+        return self(list(map(permutation_to_perm, g))+[None], mutable=mutable)
 
     def _element_constructor_(self, *data, **options):
         r"""
@@ -1365,9 +1387,9 @@ class Constellations_ld(UniqueRepresentation, Parent):
 
         d = self._degree
         if self._connected:
-            g = [[d-1] + range(d-1), range(1,d) + [0]] + [range(d)]*(self._length-2)
+            g = [[d-1] + list(range(d-1)), list(range(1,d)) + [0]] + [list(range(d))]*(self._length-2)
         else:
-            g = [range(d)]*self._length
+            g = [list(range(d))]*self._length
         return self(g)
 
     def braid_group_action(self):
@@ -1610,7 +1632,7 @@ class Constellations_p(UniqueRepresentation, Parent):
         for p in product(permutations(srange(self._degree)), repeat=self._length-1):
             if self._connected and not perms_are_transitive(p):
                 continue
-            c = Constellations(connected=self._connected)(map(list,p)+[None], check=False)
+            c = Constellations(connected=self._connected)(list(map(list,p))+[None], check=False)
             if c.profile() == self._profile:
                 yield c
 

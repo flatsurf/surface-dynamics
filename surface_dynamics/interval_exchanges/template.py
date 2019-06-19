@@ -1481,7 +1481,7 @@ class Permutation(SageObject):
             sage: orientation
             [[1, 1, 1, -1, 1, -1], [-1, -1, 1, -1]]
 
-            sage: for a, ((ip,jp),(im,jm)) in twins.iteritems():
+            sage: for a, ((ip,jp),(im,jm)) in twins.items():
             ....:     assert p[ip][jp] == p[im][jm] == a
             ....:     assert orientation[ip][jp] == +1
             ....:     assert orientation[im][jm] == -1
@@ -3759,7 +3759,7 @@ class OrientablePermutationIET(PermutationIET):
             sage: p.stratum()
             H_1(0^3)
 
-            sage: p = iet.Permutation(range(9), [8,5,2,7,4,1,6,3,0])
+            sage: p = iet.Permutation(list(range(9)), [8,5,2,7,4,1,6,3,0])
             sage: p.stratum()
             H_3(1^4)
 
@@ -3853,7 +3853,7 @@ class OrientablePermutationIET(PermutationIET):
 
         Permutations from the odd and even component of H(2,2,2)::
 
-            sage: a = range(10)
+            sage: a = list(range(10))
             sage: b1 = [3,2,4,6,5,7,9,8,1,0]
             sage: b0 = [6,5,4,3,2,7,9,8,1,0]
             sage: p1 = iet.Permutation(a,b1)
@@ -3865,7 +3865,7 @@ class OrientablePermutationIET(PermutationIET):
 
         Permutations from the odd and even component of H(4,4)::
 
-            sage: a = range(11)
+            sage: a = list(range(11))
             sage: b1 = [3,2,5,4,6,8,7,10,9,1,0]
             sage: b0 = [5,4,3,2,6,8,7,10,9,1,0]
             sage: p1 = iet.Permutation(a,b1)
@@ -3927,7 +3927,7 @@ class OrientablePermutationIET(PermutationIET):
 
         Permutations from the stratum H(6)::
 
-            sage: a = range(8)
+            sage: a = list(range(8))
             sage: b_hyp = [7,6,5,4,3,2,1,0]
             sage: b_odd = [3,2,5,4,7,6,1,0]
             sage: b_even = [5,4,3,2,7,6,1,0]
@@ -3943,7 +3943,7 @@ class OrientablePermutationIET(PermutationIET):
 
         Permutations from the stratum H(4,4)::
 
-            sage: a = range(11)
+            sage: a = list(range(11))
             sage: b_hyp = [10,9,8,7,6,5,4,3,2,1,0]
             sage: b_odd = [3,2,5,4,6,8,7,10,9,1,0]
             sage: b_even = [5,4,3,2,6,8,7,10,9,1,0]
@@ -3966,7 +3966,7 @@ class OrientablePermutationIET(PermutationIET):
         As for stratum you can specify that you want to attach the singularity
         on the left of the interval using the option marked_separatrix::
 
-            sage: a = range(1,10)
+            sage: a = list(range(1,10))
             sage: b_odd = [4,3,6,5,7,9,8,2,1]
             sage: b_even = [6,5,4,3,7,9,8,2,1]
             sage: p_odd = iet.Permutation(a,b_odd)
@@ -5161,7 +5161,7 @@ class RauzyDiagram(SageObject):
                 False
             """
             return (
-                isinstance(self, type(other)) and
+                type(self) == type(other) and
                 self._parent == other._parent and
                 self._start == other._start and
                 self._edge_types == other._edge_types)
@@ -5185,11 +5185,7 @@ class RauzyDiagram(SageObject):
                 sage: r1.path(p1,1) != r1.path(p1,0)
                 True
             """
-            return (
-                not isinstance(self, type(other)) or
-                self._parent != other._parent or
-                self._start != other._start or
-                self._edge_types != other._edge_types)
+            return not self == other
 
         def __copy__(self):
             r"""
@@ -5797,10 +5793,9 @@ class RauzyDiagram(SageObject):
             True
             True
         """
-        return (
-            isinstance(self, type(other)) and
-            self._edge_types == other._edge_types and
-            self._succ.keys()[0] in other._succ)
+        return type(self) == type(other) and \
+               self._edge_types == other._edge_types and \
+               next(iterkeys(self._succ)) in other._succ
 
     def __ne__(self, other):
         r"""
@@ -5822,10 +5817,7 @@ class RauzyDiagram(SageObject):
             sage: r1 != r2
             False
         """
-        return (
-            not isinstance(self, type(other)) or
-            self._edge_types != other._edge_types or
-            self._succ.keys()[0] not in other._succ)
+        return not self == other
 
     def vertices(self):
         r"""

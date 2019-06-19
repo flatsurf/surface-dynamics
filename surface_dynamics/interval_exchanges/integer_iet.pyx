@@ -160,10 +160,10 @@ cdef set_int_iet(int_iet_t t, top, bot, lengths):
     cdef int i,j
 
     # checks and twin construction
-    lengths = map(int, lengths)
+    lengths = list(map(int, lengths))
     if len(lengths) != n:
         raise ValueError('invalid lengths')
-    p = map(int, top + bot)
+    p = list(map(int, top + bot))
     if len(p) != 2*n:
         raise ValueError('invalid top, bot')
     python_twin = perm_to_twin(top + bot)
@@ -531,7 +531,7 @@ def cylinder_widths_and_heights(top, bot, lengths):
         sage: cylinder_widths_and_heights([0,1,2],[2,1,0],[5,3,2])
         [(1L, 10L)]
 
-        sage: cylinder_widths_and_heights(range(8),range(7,-1,-1),[1386,924,660,495,385,308,252,210])
+        sage: cylinder_widths_and_heights(list(range(8)), list(range(7,-1,-1)), [1386,924,660,495,385,308,252,210])
         [(2L, 930L), (3L, 920L)]
     """
     cdef int_iet_t t

@@ -141,7 +141,6 @@ from six import iteritems
 import numbers
 
 from sage.structure.unique_representation import UniqueRepresentation
-
 from sage.rings.infinity import Infinity
 from sage.structure.parent import Parent
 
@@ -155,7 +154,7 @@ from sage.rings.rational import Rational
 
 from surface_dynamics.flat_surfaces.strata import Stratum, StratumComponent,Strata
 
-class QuadraticStratum(UniqueRepresentation, Stratum):
+class QuadraticStratum(Stratum):
     r"""
     Stratum of quadratic differentials.
 
@@ -189,7 +188,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
         if kwds:
             raise ValueError('unsupported keyword arguments')
 
-        if len(l) == 1 and isinstance(l[0], (tuple,list,dict)):
+        if len(l) == 1 and not isinstance(l[0], numbers.Integral):
             l = l[0]
         elif len(l) == 3 and isinstance(l[0], tuple) and \
              isinstance(l[1], numbers.Integral) and \
@@ -200,6 +199,7 @@ class QuadraticStratum(UniqueRepresentation, Stratum):
             raise ValueError("the list must be nonempty")
         if isinstance(l, dict):
             l = sum(([v]*e for v,e in iteritems(l)),[])
+
         allzeros = sorted(map(Integer, l), reverse=True)
         nb_poles = allzeros.count(-1)
         nb_fake_zeros = allzeros.count(0)
@@ -1772,12 +1772,6 @@ class QuadraticStrata_class(Strata):
 
         return s
 
-    def __ne__(self, other):
-        r"""
-        Difference test.
-        """
-        return not self.__eq__(other)
-
 class QuadraticStrata_g(QuadraticStrata_class):
     r"""
     Stratas of genus g surfaces.
@@ -1857,10 +1851,13 @@ class QuadraticStrata_g(QuadraticStrata_class):
             sage: QuadraticStrata(genus=1) == QuadraticStrata(genus=1,max_nb_poles= 3)
             False
         """
-        return (isinstance(other, QuadraticStrata_g) and
+        return (type(self) == type(other) and
                 self._genus == other._genus and
                 self._min_nb_poles == other._min_nb_poles and
                 self._max_nb_poles == other._max_nb_poles)
+
+    def __ne__(self, other):
+        return not self == other
 
     def __reduce__(self):
         r"""
@@ -2088,11 +2085,14 @@ class QuadraticStrata_d(QuadraticStrata_class):
             sage: QuadraticStrata(dimension=4) == QuadraticStrata(dimension=4, fake_zeros=True)
             False
         """
-        return (isinstance(other, QuadraticStrata_d) and
+        return (type(self) == type(other) and
                 self._dimension == other._dimension and
                 self._min_nb_poles == other._min_nb_poles and
                 self._max_nb_poles == other._max_nb_poles and
                 self._fake_zeros == other._fake_zeros)
+
+    def __ne__(self, other):
+        return not self == other
 
     def __reduce__(self):
         r"""
@@ -2250,12 +2250,15 @@ class QuadraticStrata_gd(QuadraticStrata_class):
         r"""
         Equality test.
         """
-        return (isinstance(other, QuadraticStrata_gd) and
+        return (type(self) == type(other) and
                 self._genus == other._genus and
                 self._dimension == other._dimension and
                 self._min_nb_poles == other._min_nb_poles and
                 self._max_nb_poles == other._max_nb_poles and
                 self._fake_zeros == other._fake_zeros)
+
+    def __ne__(self, other):
+        return not self == other
 
     def __reduce__(self):
         r"""

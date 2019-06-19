@@ -16,9 +16,8 @@ is computed by an independent C program in ``normal_form.c``.
 #from sage.ext.interrupt.interrupt cimport sig_on, sig_off
 #from sage.ext.memory cimport sage_malloc, sage_free
 
-from __future__ import print_function
+from __future__ import print_function, absolute_import, division
 from six import iteritems, iterkeys
-from builtins import range
 
 from cpython.list cimport *
 from cpython.tuple cimport *
@@ -2895,8 +2894,8 @@ cdef class Origami_dense_pyx(object):
             l = min(x[1] for x in udr_tot)
 
             h = (l-jj)//w + 1
-            top = filter(lambda i: jj+(h-1)*w <= i[1] and i[1] < jj+h*w, udr_tot)
-            top.sort(cmp=lambda x, y: -x[1].__cmp__(y[1]))
+            top = list(filter(lambda i: jj+(h-1)*w <= i[1] and i[1] < jj+h*w, udr_tot))
+            top.sort(key=lambda x: -x[1])
 
             top_twist = min(t[1] for t in top) - (jj+(h-1)*w)
 
@@ -3197,7 +3196,7 @@ cdef class Origami_dense_pyx(object):
         """
         if not self.is_connected():
             raise ValueError("the origami is not connected! The Veech group computation is disabled in that case.")
-        from teichmueller_curve import TeichmuellerCurveOfOrigami
+        from .teichmueller_curve import TeichmuellerCurveOfOrigami
         return TeichmuellerCurveOfOrigami(self)
 
     def sum_of_lyapunov_exponents(self):

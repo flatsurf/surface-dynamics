@@ -73,8 +73,9 @@ AUTHORS:
 #  the License, or (at your option) any later version.
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************
-from __future__ import print_function
+from __future__ import print_function, absolute_import, division
 from six import string_types
+from six.moves import range, zip, filter
 
 import sqlite3 as sqlite
 import os
@@ -317,7 +318,7 @@ def _create_print_table(cur, cols, **kwds):
 
         sage: DB = SQLDatabase()
         sage: DB.create_table('simon',{'a1':{'sql':'bool', 'primary_key':False}, 'b2':{'sql':'int'}})
-        sage: DB.add_data('simon',[(0,0),(1,1),(1,2)])
+        sage: DB.add_rows('simon',[(0,0),(1,1),(1,2)])
         sage: r = SQLQuery(DB, {'table_name':'simon', 'display_cols':['a1'], 'expression':['b2','<=', 6]})
         sage: from sage.databases.sql_db import _create_print_table
         sage: cur = r.__database__.__connection__.cursor()
@@ -325,8 +326,6 @@ def _create_print_table(cur, cols, **kwds):
         sage: _create_print_table(cur, [des[0] for des in cur.description])
         'a1                  \n--------------------\n0                  \n1                  \n1                  '
     """
-    from itertools import izip
-
     format_cols    = kwds.get('format_cols', {})
     plot_cols      = kwds.get('plot_cols', {})
     max_field_size = kwds.get('max_field_size', 20)
@@ -338,7 +337,7 @@ def _create_print_table(cur, cols, **kwds):
 
     def row_str(row, html, id_row):
         cur_str = []
-        for col, value in izip(cols, row):
+        for col, value in zip(cols, row):
             if col in plot_cols:
                 if html:
                     graphic = pcol_cols[col](value)
@@ -409,7 +408,7 @@ class SQLQuery(SageObject):
 
             sage: D = SQLDatabase()
             sage: D.create_table('simon',{'a1':{'sql':'bool', 'primary_key':False}, 'b2':{'sql':'int'}})
-            sage: D.add_data('simon',[(0,0),(1,2),(2,4)])
+            sage: D.add_rows('simon',[(0,0),(1,2),(2,4)])
             sage: r = SQLQuery(D, {'table_name':'simon', 'display_cols':['a1'], 'expression':['b2','<=', 3]})
             sage: r.show()
             a1
@@ -529,8 +528,7 @@ class SQLQuery(SageObject):
             sage: SQLQuery(G,r).get_query_string()
             'SELECT graph6 FROM graph_data WHERE num_vertices<=3'
         """
-        from copy import copy
-        return copy(self.__query_string__)
+        return self.__query_string__
 
     def __iter__(self):
         """
@@ -610,7 +608,7 @@ class SQLQuery(SageObject):
 
             sage: DB = SQLDatabase()
             sage: DB.create_table('simon',{'a1':{'sql':'bool', 'primary_key':False}, 'b2':{'sql':'int'}})
-            sage: DB.add_data('simon',[(0,0),(1,1),(1,2)])
+            sage: DB.add_rows('simon',[(0,0),(1,1),(1,2)])
             sage: r = SQLQuery(DB, {'table_name':'simon', 'display_cols':['a1'], 'expression':['b2','<=', 6]})
             sage: r.show()
             a1
@@ -696,8 +694,8 @@ class SQLQuery(SageObject):
             sage: DB = SQLDatabase()
             sage: DB.create_table('simon',{'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
             sage: DB.create_table('lucy',{'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
-            sage: DB.add_data('simon', [(0,5),(1,4)])
-            sage: DB.add_data('lucy', [(1,1),(1,4)])
+            sage: DB.add_rows('simon', [(0,5),(1,4)])
+            sage: DB.add_rows('lucy', [(1,1),(1,4)])
             sage: q = SQLQuery(DB, {'table_name':'lucy', 'display_cols':['b2'], 'expression':['a1','=',1]})
             sage: r = SQLQuery(DB, {'table_name':'simon', 'display_cols':['a1'], 'expression':['b2','<=', 6]})
             sage: s = q.intersect(r, 'simon', {'lucy':('a1','a1')})
@@ -749,8 +747,8 @@ class SQLQuery(SageObject):
             sage: DB = SQLDatabase()
             sage: DB.create_table('simon',{'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
             sage: DB.create_table('lucy',{'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
-            sage: DB.add_data('simon', [(0,5),(1,4)])
-            sage: DB.add_data('lucy', [(1,1),(1,4)])
+            sage: DB.add_rows('simon', [(0,5),(1,4)])
+            sage: DB.add_rows('lucy', [(1,1),(1,4)])
             sage: q = SQLQuery(DB, {'table_name':'lucy', 'display_cols':['b2'], 'expression':['a1','=',1]})
             sage: r = SQLQuery(DB, {'table_name':'simon', 'display_cols':['a1'], 'expression':['b2','<=', 6]})
             sage: s = q._merge_queries(r, copy(q), 'simon', {'lucy':('a1','a1')}, 'OR')
@@ -826,8 +824,8 @@ class SQLQuery(SageObject):
             sage: DB = SQLDatabase()
             sage: DB.create_table('simon',{'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
             sage: DB.create_table('lucy',{'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
-            sage: DB.add_data('simon', [(0,5),(1,4)])
-            sage: DB.add_data('lucy', [(1,1),(1,4)])
+            sage: DB.add_rows('simon', [(0,5),(1,4)])
+            sage: DB.add_rows('lucy', [(1,1),(1,4)])
             sage: q = SQLQuery(DB, {'table_name':'lucy', 'display_cols':['b2'], 'expression':['a1','=',1]})
             sage: r = SQLQuery(DB, {'table_name':'simon', 'display_cols':['a1'], 'expression':['b2','<=', 6]})
             sage: s = q.union(r, 'simon', {'lucy':('a1','a1')})
@@ -1243,7 +1241,7 @@ class SQLDatabase(SageObject):
 
             sage: DB = SQLDatabase()
             sage: DB.create_table('simon',{'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
-            sage: DB.add_data('simon',[(0,0),(1,1),(1,2)])
+            sage: DB.add_rows('simon',[(0,0),(1,1),(1,2)])
             sage: DB.show('simon')
             a1                   b2
             ----------------------------------------
@@ -2123,8 +2121,8 @@ class SQLDatabase(SageObject):
             sage: DB = SQLDatabase()
             sage: DB.create_table('simon',{'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
             sage: DB.add_row('simon',(0,1))
-            sage: DB.add_data('simon',[(0,0),(1,1),(1,2)])
-            sage: DB.add_data('simon',[(0,0),(4,0),(5,1)], ['b2','a1'])
+            sage: DB.add_rows('simon',[(0,0),(1,1),(1,2)])
+            sage: DB.add_rows('simon',[(0,0),(4,0),(5,1)], ['b2','a1'])
             sage: DB.drop_column('simon','b2')
             sage: DB.commit()
             sage: DB.vacuum()
@@ -2140,8 +2138,8 @@ class SQLDatabase(SageObject):
             sage: DB = SQLDatabase()
             sage: DB.create_table('simon',{'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
             sage: DB.add_row('simon',(0,1))
-            sage: DB.add_data('simon',[(0,0),(1,1),(1,2)])
-            sage: DB.add_data('simon',[(0,0),(4,0),(5,1)], ['b2','a1'])
+            sage: DB.add_rows('simon',[(0,0),(1,1),(1,2)])
+            sage: DB.add_rows('simon',[(0,0),(4,0),(5,1)], ['b2','a1'])
             sage: DB.drop_column('simon','b2')
             sage: DB.commit()
             sage: DB.vacuum()
