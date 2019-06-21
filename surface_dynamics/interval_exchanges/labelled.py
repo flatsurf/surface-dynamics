@@ -393,9 +393,9 @@ def LabelledPermutationsIET_iterator(
 
     TESTS::
 
-        sage: from surface_dynamics import *
+        sage: from surface_dynamics import iet
 
-        sage: for p in iet.Permutations_iterator(2, alphabet="ab"):
+        sage: for p in sorted(iet.Permutations_iterator(2, alphabet="ab")):
         ....:     print("%s\n****" % p)  #indirect doctest
         a b
         b a
@@ -475,7 +475,7 @@ def LabelledPermutationsIET_iterator(
             alphabet = Alphabet(alphabet)
             g = lambda x: [alphabet.unrank(k-1) for k in x]
             P = map(g, Permutations(nintervals))
-            return map(f,product(P,P))
+            return map(f,product(P,repeat=2))
     else:
         return filter(
             lambda x: x.is_irreducible(),
