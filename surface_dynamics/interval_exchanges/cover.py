@@ -400,9 +400,9 @@ class PermutationCover(SageObject):
             sage: c = p.cover(['', '', ''])
             sage: m = c._delta1()
             sage: m
+            [-1  1  0  0]
             [ 1  0 -1  0]
-            [ 0  0  1 -1]
-            [ 1 -1  0  0]
+            [ 0  1  0 -1]
             sage: m.ncols() == len(c.profile())
             True
             sage: m.nrows() == len(c) * c._degree_cover
