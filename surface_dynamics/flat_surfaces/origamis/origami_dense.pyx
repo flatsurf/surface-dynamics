@@ -1961,7 +1961,7 @@ cdef class Origami_dense_pyx(object):
             [(Q_0(3, -1^7), (4,), (5, 1, 1))]
 
             sage: o = Origami('(1,2,4)(3,6,5)', '(1,3)(2,5)(4,6)')
-            sage: for q, _, _ in o.orientation_data(): print(q)
+            sage: for q, _, _ in sorted(o.orientation_data()): print(q)
             Q_1(4, -1^4)
             Q_1(4, -1^4)
             Q_1(4, -1^4)

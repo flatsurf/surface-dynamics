@@ -236,10 +236,17 @@ def construct_skeleton(database):
 
     EXAMPLES::
 
+        sage: from surface_dynamics.misc.sql_db import SQLDatabase
+
         sage: G = SQLDatabase(GraphDatabase().__dblocation__, False)
         sage: from sage.databases.sql_db import construct_skeleton
-        sage: construct_skeleton(G).keys()
-        [u'aut_grp', u'degrees', u'spectrum', u'misc', u'graph_data']
+        sage: for k in sorted(construct_skeleton(G).keys()):
+        ....:     print(k)
+        aut_grp
+        degrees
+        graph_data
+        misc
+        spectrum
     """
     skeleton = {}
     cur = database.__connection__.cursor()
@@ -1074,11 +1081,11 @@ class SQLDatabase(SageObject):
                 column n: index: True; primary_key: False; sql: INTEGER; unique: False; 
         """
         s = ''
-        for table in self.__skeleton__:
+        for table in sorted(self.__skeleton__):
             s += 'table ' + table + ':\n'
-            for column in self.__skeleton__[table]:
+            for column in sorted(self.__skeleton__[table]):
                 s += '    column ' + column + ': '
-                for data in self.__skeleton__[table][column]:
+                for data in sorted(self.__skeleton__[table][column]):
                     s += data + ': ' \
                         + str(self.__skeleton__[table][column][data]) + '; '
                 s += '\n'
