@@ -64,21 +64,22 @@ def marking_iterator(profile,left=None,standard=False):
          (2, 3, 2)]
     """
     e = Partition(sorted(profile,reverse=True)).to_exp_dict()
+    ek = sorted(e)
 
     if left is not None:
         assert(left in e)
 
     if left is not None: keys = [left]
-    else: keys = e.keys()
+    else: keys = ek
 
-    for m in sorted(keys):
+    for m in keys:
         if standard: angles = range(1,m-1)
         else: angles = range(0,m)
         for a in angles:
             yield (1,m,a)
 
     for m_l in keys:
-        for m_r in e:
+        for m_r in ek:
             if m_l != m_r or e[m_l] > 1:
                 yield (2,m_l,m_r)
 
