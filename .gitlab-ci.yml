@@ -4,13 +4,13 @@ before_script:
 test: &test
   image: sagemath/sagemath-develop
   script:
-    - sage -c "print(\"hello\")"
     - sage -pip install .
-    - export SURFACE_DYNAMICS_PATH="$(sage -c 'import surface_dynamics; print(surface_dynamics.__path__[0])')"
+    - export SURFACE_DYNAMICS_PATH=$(pwd)
+    - export SURFACE_DYNAMICS_INSTALL="$(sage -c 'import surface_dynamics; print(surface_dynamics.__path__[0])')"
     - cd
-    - sage -t --force-lib --long ${SURFACE_DYNAMICS_PATH}
-    - cp README README.rst
-    - sage -t README.rst
+    - sage -t --force-lib --long $SURFACE_DYNAMICS_INSTALL
+    - cp $SURFACE_DYNAMICS_PATH/README README.rst
+    - sage -t --force-lib --long README.rst
     - cd doc/
     - make html
 
