@@ -188,7 +188,7 @@ Authors
 Citation
 --------
 
-To cite the software, follow the following Bibtex entry
+To cite the software, follow the following Bibtex entry::
 
     @manual{ Sdyn,
       Author = { Delecroix, V. et al. },
