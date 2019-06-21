@@ -1553,7 +1553,7 @@ def separatrix_diagram_fast_iterator(profile,ncyls=None):
 
     tops = [[]]
     if ncyls is None:
-        ncyls = range(1,d+1)
+        ncyls = list(range(1,d+1))
     else:
         if isinstance(ncyls, numbers.Integral):
             ncyls = set([int(ncyls)])
@@ -1570,7 +1570,7 @@ def separatrix_diagram_fast_iterator(profile,ncyls=None):
             for p in Partitions(n,length=k):
                 tops[-1].append((canonical_perm(p),canonical_perm_i(p)))
 
-    for s in conjugacy_class_iterator(part,range(n)):
+    for s in conjugacy_class_iterator(part, list(range(n))):
         for k in range(len(tops)):
             for top,top_i in tops[k]:
                 bot = list(range(len(top_i)))
@@ -1920,7 +1920,7 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
                 for i in range(a,2*a+2):
                     assert sigma[i] == i, "sigma[%d] = %d != %d"%(i,sigma[i],i)
                 c = orientation_cover(alpha,phi,a,verbose=verbose)
-                c.canonical_label(inplace=True)
+                c.  canonical_label(inplace=True)
                 if c not in cyl_diags:
                     c_sym = [c]
                     cc = c.horizontal_symmetry()
@@ -3360,6 +3360,18 @@ class CylinderDiagram(SeparatrixDiagram):
             5
             sage: o5[2].stratum_component()
             H_2(1^2)^hyp
+
+        TESTS::
+
+            sage: c1 = CylinderDiagram("(0,1)-(0,3,4,5) (2,3,5)-(1) (4)-(2)")
+            sage: c2 = CylinderDiagram("(0,1)-(0,5) (2)-(4) (3,4)-(1) (5)-(2,3)")
+            sage: c3 = CylinderDiagram("(0,3)-(5) (1)-(0) (2,5)-(3,4) (4)-(1,2)")
+            sage: len(c1.origamis(8))
+            12
+            sage: len(c2.origamis(8))
+            12
+            sage: len(c3.origamis(8))
+            12
         """
         if n is None:
             res = self.smallest_integer_lengths()
@@ -3395,6 +3407,18 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: cyl.cylcoord_to_origami(l,h)
             (1,2,3)(4,5,6)(7,8,9)(10)
             (1,4,7)(2,5,8)(3,6,9,10)
+
+        TESTS::
+
+            sage: c1 = CylinderDiagram("(0,1)-(0,3,4,5) (2,3,5)-(1) (4)-(2)")
+            sage: c2 = CylinderDiagram("(0,1)-(0,5) (2)-(4) (3,4)-(1) (5)-(2,3)")
+            sage: c3 = CylinderDiagram("(0,3)-(5) (1)-(0) (2,5)-(3,4) (4)-(1,2)")
+            sage: list(c1.widths_and_heights_iterator(8))
+            [((1, 3, 1, 1, 1, 1), [1, 1, 1])]
+            sage: list(c2.widths_and_heights_iterator(8))
+            [((1, 2, 1, 1, 1, 2), [1, 1, 1, 1])]
+            sage: list(c3.widths_and_heights_iterator(8))
+            [((1, 1, 1, 1, 2, 2), [1, 1, 1, 1])]
         """
         from sage.combinat.integer_lists import IntegerListsLex
         from sage.rings.integer_ring import ZZ
@@ -3424,7 +3448,7 @@ class CylinderDiagram(SeparatrixDiagram):
         for a in filter(
               lambda x: all(x[i] >= min_widths[i] for i in range(self.ncyls())),
               IntegerListsLex(n=n, length=self.ncyls(), min_part=1)):
-            area_div = tuple(filter(lambda d: d >= min_widths[i],arith.divisors(a[i])) for i in range(self.ncyls()))
+            area_div = tuple(list(filter(lambda d: d >= min_widths[i],arith.divisors(a[i]))) for i in range(self.ncyls()))
             for w in itertools.product(*area_div):
                 h = [Integer(a[i]/w[i]) for i in range(self.ncyls())]
 

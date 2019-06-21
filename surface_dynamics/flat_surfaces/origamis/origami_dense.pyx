@@ -3459,6 +3459,14 @@ cpdef sl2z_orbits(origamis, int n, int limit):
         sage: slorbits = sl2z_orbits(origamis, 10, 0)
         sage: len(slorbits)
         19
+        sage: sum(len(o[0]) for o in slorbits)
+        8955
+        sage: for n in range(6, 10):
+        ....:     print(len(C.origamis(n)))
+        69
+        270
+        1260
+        3384
     """
     slorbits = []
     glorbits = gl2z_orbits(origamis, n, limit)
