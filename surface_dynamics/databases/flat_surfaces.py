@@ -642,7 +642,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
 
             sage: C = CylinderDiagrams(tmp_dir(), read_only=False)
-            sage: C.update(AbelianStratum(4), verbose=True)
+            sage: C.update(AbelianStratum(4), verbose=True) # random
             computation for H_3(4)
              ncyls = 1
              1 cyl. diags for H_3(4)^hyp
