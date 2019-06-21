@@ -1437,10 +1437,10 @@ cdef class Origami_dense_pyx(object):
             sage: from surface_dynamics.all import Origami
             sage: o = Origami('(1,2)', '(1,3)')
             sage: l, i = o.gl2z_edges()
-            sage: for oo in l: print("(%s,%s) -> (%s,%s)" % (oo.r(), oo.u(), l[oo].r(), l[oo].u()))
-            ((1,2,3),(2,3)) -> ((1,2,3),(2,3))
+            sage: for oo in sorted(l): print("(%s,%s) -> (%s,%s)" % (oo.r(), oo.u(), l[oo].r(), l[oo].u()))
             ((2,3),(1,2)) -> ((2,3),(1,2,3))
             ((2,3),(1,2,3)) -> ((2,3),(1,2))
+            ((1,2,3),(2,3)) -> ((1,2,3),(2,3))
 
         TESTS::
 
@@ -1964,8 +1964,8 @@ cdef class Origami_dense_pyx(object):
             sage: for q, _, _ in o.orientation_data(): print(q)
             Q_1(4, -1^4)
             Q_1(4, -1^4)
-            Q_0(1^2, -1^6)
             Q_1(4, -1^4)
+            Q_0(1^2, -1^6)
         """
         sf1, m1 = self.to_standard_form(return_map=True)
         sf2, m2 = self.inverse().to_standard_form(return_map=True)
