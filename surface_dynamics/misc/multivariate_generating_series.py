@@ -407,7 +407,7 @@ class AbstractMSum(Element):
             sage: m1 = M.term(1, [((1,1,0),1)])
             sage: m2 = M.term(-2, [((1,0,0),1),((0,1,0),2)])
             sage: m1 + m2
-            (1)/((1 - x0*x1)) + (-2)/((1 - x1)^2*(1 - x0))
+            (-2)/((1 - x1)^2*(1 - x0)) + (1)/((1 - x0*x1))
         """
         if self.is_trivial_zero():
             return other
@@ -586,9 +586,9 @@ class MultivariateGeneratingSeries(AbstractMSum):
            sage: m2 = M.term(1, [((-1,1),1), ((1,0),1)])
            sage: f = (m1 + m2)**2
            sage: for s in f.summands(): print(s)
-           (1)/((1 - x1)^2*(1 - x0*x1^-1)^2)
            (2)/((1 - x0^-1*x1)*(1 - x1)*(1 - x0*x1^-1)*(1 - x0))
            (1)/((1 - x0^-1*x1)^2*(1 - x0)^2)
+           (1)/((1 - x1)^2*(1 - x0*x1^-1)^2)
         """
         M = self.parent()
         res = []
@@ -685,11 +685,13 @@ class MultivariateGeneratingSeries(AbstractMSum):
             sage: f.residue()
             (2, [(1, {(1, 1): 2})])
             sage: f = M.term(x0, [((1,1),2)]) + M.term(1, [((1,0),1),((0,1),1),((1,1),1)])
-            sage: f.residue()
-            (3, [(1, {(0, 1): 1, (1, 0): 1, (1, 1): 1})])
+            sage: r = f.residue()
+            sage: r # random
+            (3, [(1, {(1, 0): 1, (0, 1): 1, (1, 1): 1})])
             sage: f = M.term(x0, [((1,1),2)]) + M.term(1, [((1,0),1),((1,1),1)])
-            sage: f.residue()
-            (2, [(1, {(1, 0): 1, (1, 1): 1}), (1, {(1, 1): 2})])
+            sage: r = f.residue()
+            sage: r # random
+            (2, [(1, {(1, 1): 2}), (1, {(1, 0): 1, (1, 1): 1})])
         """
         R = self.parent().laurent_polynomial_ring()
         one = QQ.one()
@@ -731,7 +733,7 @@ class MultivariateGeneratingSeries(AbstractMSum):
 
             sage: f = M.term(x0 * x1, [((1,1),2)])
             sage: f.derivative(0)
-            (2*x0*x1^2)/((1 - x0*x1)^3) + (x1)/((1 - x0*x1)^2)
+            (x1)/((1 - x0*x1)^2) + (2*x0*x1^2)/((1 - x0*x1)^3)
             sage: f.derivative(0).taylor(10) - f.taylor(10).derivative(xx0)
             30*x0^5*x1^6
 
@@ -747,7 +749,7 @@ class MultivariateGeneratingSeries(AbstractMSum):
 
             sage: f = M.zero() + M.term(1/1*x0^2 * x1, [((1,0),1), ((1,1),1)])
             sage: f.derivative(0)
-            (x0^2*x1^2)/((1 - x0)*(1 - x0*x1)^2) + (x0^2*x1)/((1 - x0)^2*(1 - x0*x1)) + (2*x0*x1)/((1 - x0)*(1 - x0*x1))
+            (2*x0*x1)/((1 - x0)*(1 - x0*x1)) + (x0^2*x1^2)/((1 - x0)*(1 - x0*x1)^2) + (x0^2*x1)/((1 - x0)^2*(1 - x0*x1))
 
         You can indistinctly use integers, strings or polynomial variables for ``var``::
 
