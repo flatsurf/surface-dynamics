@@ -1920,7 +1920,7 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
                 for i in range(a,2*a+2):
                     assert sigma[i] == i, "sigma[%d] = %d != %d"%(i,sigma[i],i)
                 c = orientation_cover(alpha,phi,a,verbose=verbose)
-                c.  canonical_label(inplace=True)
+                c.canonical_label(inplace=True)
                 if c not in cyl_diags:
                     c_sym = [c]
                     cc = c.horizontal_symmetry()
