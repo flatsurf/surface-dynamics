@@ -2237,12 +2237,16 @@ class NonHypAbelianStratumComponent(ASC):
             H_4(3^2)^nonhyp
 
             sage: it = cc.cylinder_diagram_iterator(4, force_computation=True)
-            sage: c0 = next(it); c0
-            (0,1,4,3,2)-(0,1,5,6,7) (5)-(3) (6)-(4) (7)-(2)
+            sage: c0 = next(it); c0  # random
+            (0,4,2)-(0,6) (1,5,3)-(1,7) (6)-(4,5) (7)-(2,3)
             sage: c0.stratum_component()
             H_4(3^2)^nonhyp
-            sage: all(next(it).stratum_component() == cc for _ in range(10))
+            sage: c0.ncyls()
+            4
+            sage: all(cd.stratum_component() == cc and cd.ncyls() == 4 for cd in it)
             True
+            sage: sum(1 for _ in cc.cylinder_diagram_iterator(4, force_computation=True))
+            184
         """
         return filter(lambda c: not c.is_hyperelliptic(),
                 self.stratum().cylinder_diagram_iterator(ncyls,True))
