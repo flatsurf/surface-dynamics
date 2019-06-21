@@ -233,20 +233,6 @@ def construct_skeleton(database):
     column::
 
         {'table1':{'col1':{'primary_key':False, 'unique': True, 'index':True, 'sql':'REAL'}}}
-
-    EXAMPLES::
-
-        sage: from surface_dynamics.misc.sql_db import SQLDatabase
-
-        sage: G = SQLDatabase(GraphDatabase().__dblocation__, False)
-        sage: from sage.databases.sql_db import construct_skeleton
-        sage: for k in sorted(construct_skeleton(G).keys()):
-        ....:     print(k)
-        aut_grp
-        degrees
-        graph_data
-        misc
-        spectrum
     """
     skeleton = {}
     cur = database.__connection__.cursor()
@@ -323,6 +309,7 @@ def _create_print_table(cur, cols, **kwds):
 
     EXAMPLES::
 
+        sage: from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
         sage: DB = SQLDatabase()
         sage: DB.create_table('simon',{'a1':{'sql':'bool', 'primary_key':False}, 'b2':{'sql':'int'}})
         sage: DB.add_rows('simon',[(0,0),(1,1),(1,2)])
@@ -413,6 +400,7 @@ class SQLQuery(SageObject):
 
         EXAMPLES::
 
+            sage: from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
             sage: D = SQLDatabase()
             sage: D.create_table('simon',{'a1':{'sql':'bool', 'primary_key':False}, 'b2':{'sql':'int'}})
             sage: D.add_rows('simon',[(0,0),(1,2),(2,4)])
@@ -496,21 +484,6 @@ class SQLQuery(SageObject):
         """
         Overrides the print output to display useful info regarding the
         query.
-
-        EXAMPLES::
-
-            sage: G = GraphDatabase()
-            sage: q = 'SELECT graph_id,graph6,num_vertices,num_edges FROM graph_data WHERE graph_id<=(?) AND num_vertices=(?)'
-            sage: param = (22,5)
-            sage: SQLQuery(G,q,param)
-            Query for sql database: ...graphs.db
-            Query string: SELECT graph_id,graph6,num_vertices,num_edges FROM
-                graph_data WHERE graph_id<=(?) AND num_vertices=(?)
-            Parameter tuple: ('22', '5')
-            sage: r = 'SELECT graph6 FROM graph_data WHERE num_vertices<=3'
-            sage: SQLQuery(G,r)
-            Query for sql database: ...graphs.db
-            Query string: SELECT graph6 FROM graph_data WHERE num_vertices<=3
         """
         if not self.__query_string__:
             return 'Empty query on %s.'%self.__database__.__dblocation__
@@ -522,39 +495,12 @@ class SQLQuery(SageObject):
     def get_query_string(self):
         """
         Returns a copy of the query string.
-
-        EXAMPLES::
-
-            sage: G = GraphDatabase()
-            sage: q = 'SELECT graph_id,graph6,num_vertices,num_edges FROM graph_data WHERE graph_id<=(?) AND num_vertices=(?)'
-            sage: param = (22,5)
-            sage: SQLQuery(G,q,param).get_query_string()
-            'SELECT graph_id,graph6,num_vertices,num_edges FROM graph_data
-            WHERE graph_id<=(?) AND num_vertices=(?)'
-            sage: r = 'SELECT graph6 FROM graph_data WHERE num_vertices<=3'
-            sage: SQLQuery(G,r).get_query_string()
-            'SELECT graph6 FROM graph_data WHERE num_vertices<=3'
         """
         return self.__query_string__
 
     def __iter__(self):
         """
         Returns an iterator over the results of the query.
-
-        EXAMPLES::
-
-            sage: G = GraphDatabase()
-            sage: q = 'SELECT graph_id,graph6 FROM graph_data WHERE num_vertices=(?)'
-            sage: param = (5,)
-            sage: Q = SQLQuery(G,q,param)
-            sage: it = Q.__iter__()
-            sage: next(it)
-            (18, u'D??')
-            sage: next(it)
-            (19, u'D?C')
-            sage: skip = [next(it) for _ in range(15)]
-            sage: next(it)
-            (35, u'DBk')
         """
         try:
             cur = self.__database__.__connection__.cursor()
@@ -566,20 +512,6 @@ class SQLQuery(SageObject):
         """
         Runs the query by executing the ``__query_string__``. Returns the
         results of the query in a list.
-
-        EXAMPLES::
-
-            sage: G = GraphDatabase()
-            sage: q = 'SELECT graph_id,graph6,num_vertices,num_edges FROM graph_data WHERE graph_id<=(?) AND num_vertices=(?)'
-            sage: param = (22,5)
-            sage: Q = SQLQuery(G,q,param)
-            sage: Q.query_results()
-            [(18, u'D??', 5, 0), (19, u'D?C', 5, 1), (20, u'D?K', 5, 2),
-             (21, u'D@O', 5, 2), (22, u'D?[', 5, 3)]
-            sage: R = SQLQuery(G,{'table_name':'graph_data', 'display_cols':['graph6'], 'expression':['num_vertices','=',4]})
-            sage: R.query_results()
-            [(u'C?',), (u'C@',), (u'CB',), (u'CK',), (u'CF',), (u'CJ',),
-             (u'CL',), (u'CN',), (u'C]',), (u'C^',), (u'C~',)]
         """
         return list(self)
 
@@ -613,6 +545,7 @@ class SQLQuery(SageObject):
 
         EXAMPLES::
 
+            sage: from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
             sage: DB = SQLDatabase()
             sage: DB.create_table('simon',{'a1':{'sql':'bool', 'primary_key':False}, 'b2':{'sql':'int'}})
             sage: DB.add_rows('simon',[(0,0),(1,1),(1,2)])
@@ -623,26 +556,6 @@ class SQLQuery(SageObject):
             0
             1
             1
-            sage: D = GraphDatabase()
-            sage: from sage.graphs.graph_database import valid_kwds, data_to_degseq
-            sage: relabel = {}
-            sage: for col in valid_kwds:
-            ....:     relabel[col] = ' '.join([word.capitalize() for word in col.split('_')])
-            sage: q = GraphQuery(display_cols=['graph6','degree_sequence'], num_vertices=4)
-            sage: SQLQuery.show(q, format_cols={'degree_sequence':(lambda x,y: data_to_degseq(x,y))}, relabel_cols=relabel, id_col='graph6')
-            Graph6               Degree Sequence
-            ----------------------------------------
-            C?                   [0, 0, 0, 0]
-            C@                   [0, 0, 1, 1]
-            CB                   [0, 1, 1, 2]
-            CF                   [1, 1, 1, 3]
-            CJ                   [0, 2, 2, 2]
-            CK                   [1, 1, 1, 1]
-            CL                   [1, 1, 2, 2]
-            CN                   [1, 2, 2, 3]
-            C]                   [2, 2, 2, 2]
-            C^                   [2, 2, 3, 3]
-            C~                   [3, 3, 3, 3]
         """
         if not self.__query_string__: return self.__database__.show()
 
@@ -658,15 +571,6 @@ class SQLQuery(SageObject):
     def __copy__(self):
         """
         Returns a copy of itself.
-
-        EXAMPLES::
-
-            sage: G = GraphDatabase()
-            sage: Q = SQLQuery(G, {'table_name':'graph_data', 'display_cols':['graph_id','graph6','num_vertices'], 'expression':['num_edges','<',3]})
-            sage: R = copy(Q)
-            sage: R.__query_string__ = ''
-            sage: Q.__query_string__ == ''
-            False
         """
         d = SQLQuery(self.__database__)
         d.__query_dict__ = self.__query_dict__
@@ -698,6 +602,7 @@ class SQLQuery(SageObject):
 
         EXAMPLES::
 
+            sage: from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
             sage: DB = SQLDatabase()
             sage: DB.create_table('simon',{'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
             sage: DB.create_table('lucy',{'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
@@ -751,6 +656,7 @@ class SQLQuery(SageObject):
 
         EXAMPLES::
 
+            sage: from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
             sage: DB = SQLDatabase()
             sage: DB.create_table('simon',{'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
             sage: DB.create_table('lucy',{'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
@@ -828,6 +734,7 @@ class SQLQuery(SageObject):
 
         EXAMPLES::
 
+            sage: from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
             sage: DB = SQLDatabase()
             sage: DB.create_table('simon',{'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
             sage: DB.create_table('lucy',{'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
@@ -894,6 +801,7 @@ class SQLDatabase(SageObject):
         For example, we create a new database for storing isomorphism classes
         of simple graphs::
 
+            sage: from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
             sage: D = SQLDatabase()
 
         In order to generate representatives for the classes, we will import a
@@ -1073,6 +981,7 @@ class SQLDatabase(SageObject):
 
         EXAMPLES::
 
+            sage: from surface_dynamics.misc.sql_db import SQLDatabase
             sage: replace_with_filepath = tmp_dir() + 'test.db'
             sage: SD = SQLDatabase(replace_with_filepath, False)
             sage: SD.create_table('simon', {'n':{'sql':'INTEGER', 'index':True}})
@@ -1193,20 +1102,6 @@ class SQLDatabase(SageObject):
 
         - ``check`` -- if True, checks to make sure the database's actual
           structure matches the skeleton on record.
-
-        EXAMPLES::
-
-            sage: GDB = GraphDatabase()
-            sage: GDB.get_skeleton()             # slightly random output
-            {u'aut_grp': {u'aut_grp_size': {'index': True,
-                                            'unique': False,
-                                            'primary_key': False,
-                                            'sql': u'INTEGER'},
-                          ...
-                          u'num_vertices': {'index': True,
-                                            'unique': False,
-                                            'primary_key': False,
-                                            'sql': u'INTEGER'}}}
         """
         if check:
             d = construct_skeleton(self)
@@ -1223,6 +1118,7 @@ class SQLDatabase(SageObject):
 
         EXAMPLES::
 
+            sage: from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
             sage: D = SQLDatabase()
             sage: D.create_table('simon', {'wolf':{'sql':'BOOLEAN'}, 'tag':{'sql':'INTEGER'}})
             sage: q = D.query({'table_name':'simon', 'display_cols':['tag'], 'expression':['wolf','=',1]})
@@ -2039,6 +1935,8 @@ class SQLDatabase(SageObject):
           run).
 
         EXAMPLES::
+
+            sage: from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
 
             sage: DB = SQLDatabase()
             sage: DB.create_table('lucy',{'id':{'sql':'INTEGER', 'primary_key':True, 'index':True}, 'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
