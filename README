@@ -64,7 +64,7 @@ As before, the --user option is optional and when specified will
 install the module in your user space.
 
 You can also perform a two stage installation that will allow you to
-modify the source code. The first step is to clone the repository
+modify the source code. The first step is to clone the repository::
 
     $ git clone https://gitlab.com/videlec/surface_dynamics
 
@@ -79,13 +79,13 @@ Do not forget the `.` that refers to the current directory.
 When you don't want to install the package or you are testing some
 modifications to the source code, a more convenient way of using
 surface dynamics is to do everything locally. To do so, you need
-to compile the module in place via
+to compile the module in place via::
 
     $ PYTHON setup.py build_ext --inplace
 
 Once done, you can import the `surface_dynamics` module. To check that you
 are actually using the right module (i.e. the local one) you can do in a
-SageMath session
+SageMath session::
 
     sage: import surface_dynamics
     sage: surface_dynamics.__path__
