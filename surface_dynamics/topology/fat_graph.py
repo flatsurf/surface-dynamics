@@ -1,6 +1,7 @@
 r"""
 Fat graph.
 
+This module is experimental.
 """
 
 from __future__ import absolute_import, print_function

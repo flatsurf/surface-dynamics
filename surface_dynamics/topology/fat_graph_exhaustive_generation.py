@@ -1,89 +1,8 @@
 r"""
 Exhaustive generation of fat graphs.
 
-This is done following the McKay canonical augmentation.
-
-Experience in genus 3, one face and min_degree = 3 shows
-that the iteration does not scale as O(1) per element to iterate::
-
-nv=1
-41.2ms # old 46.4 ms
-(131, 495/4)
-
-nv=2
-345ms # old 349 ms
-(1841, 25443/14)
-
-nv=3
-2.47s # old 2.5 s
-(10883, 10813)
-
-nv=4
-9.8s # old 10.9 s
-(35448, 317735/9)
-
-nv=5
-26.3s # old 29.5 s
-(71145, 283767/4)
-
-nv=6
-51.1s # old 50.7 s (was faster!)
-(92225, 183955/2)
-
-nv=7
-1min 15s
-(77737, 929929/12)   # from here, numbers go down because of the degree constraint
-
-nv=8
-1min 33s # old 1min 51s
-(41308, 41118)
-
-nv=9
-1min 40s # old 1min 57s
-(12594, 25025/2)
-
-nv=10
-1min 43 # old 2min
-(1726, 5005/3)
-
-nv=11
-1min 43 # old 2min 2s
-(0, 0)
-
-The reason is that some paths lead to combinatorial maps in which we can not
-add any further edges... (when we impose degree >= 3 we have a tree)
-
-A profiler for one face many vertices (genus 3)
-
-   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-  7151787   24.341    0.000   25.351    0.000 fat_graph.py:1268(_good_starts)
-  2725902   21.256    0.000   25.916    0.000 fat_graph.py:1494(_canonical_labelling_from_if_better)
-  7150855   19.534    0.000   29.138    0.000 fat_graph.py:745(split_vertex)
-  7150855   16.837    0.000   19.031    0.000 fat_graph.py:864(contract_edge)
-2438349/345336   15.128    0.000  162.217    0.000 fat_graph.py:1905(augment3)
-  1179672   14.732    0.000   17.944    0.000 fat_graph.py:1404(_canonical_labelling_from)
- 10783013   12.864    0.000   15.605    0.000 permutation.py:1408(next)
-  7151784    8.942    0.000   88.895    0.000 fat_graph.py:1649(_is_canonical)
-  7151784    7.344    0.000    9.605    0.000 fat_graph.py:445(_check_alloc)
- 84692794    5.792    0.000    5.792    0.000 {method 'append' of 'list' objects}
-122029328    5.735    0.000    5.735    0.000 {len}
-        1    3.067    3.067  168.984  168.984 masur_veech.py:44(masur_veech_separating_curve)
-  1179672    2.722    0.000    2.793    0.000 permutation.py:641(perm_invert)
-   347727    1.884    0.000    2.509    0.000 permutation.py:403(perm_cycle_type)
- 29892240    1.615    0.000    1.615    0.000 {method 'append' of 'collections.deque' objects}
-  7150855    1.207    0.000    1.207    0.000 {min}
- 23603301    1.035    0.000    1.035    0.000 {method 'popleft' of 'collections.deque' objects}
-  1179672    1.003    0.000    1.003    0.000 permutation.py:1319(__init__)
-  7150858    0.986    0.000    0.986    0.000 {max}
-   286110    0.544    0.000    0.628    0.000 permutation.py:1374(reset_iterator)
-  1179672    0.478    0.000    2.441    0.000 {next}
-   347727    0.384    0.000    0.384    0.000 {method 'sort' of 'list' objects}
-   345373    0.330    0.000    0.424    0.000 misc.py:385(factorial)
-  2438349    0.287    0.000    0.287    0.000 masur_veech.py:97(<genexpr>)
-   345200    0.240    0.000    2.730    0.000 fat_graph.py:364(vertex_profile)
-   639707    0.180    0.000    0.180    0.000 {range}
-  1465782    0.133    0.000    0.133    0.000 permutation.py:1332(__iter__)
-   345203    0.118    0.000  162.378    0.000 fat_graph.py:1956(FatGraphs_g_nf_nv)
+This is done following the McKay canonical augmentation. This module
+is experimental.
 """
 
 from __future__ import absolute_import, print_function
@@ -95,7 +14,6 @@ from sage.rings.integer_ring import ZZ
 from sage.rings.rational_field import QQ
 
 from sage.stats.basic_stats import mean
-
 
 from .fat_graph import FatGraph
 
