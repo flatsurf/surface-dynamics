@@ -12,8 +12,6 @@ test: &test
     - sage -t --force-lib --long ${SURFACE_DYNAMICS_INSTALL}
     - cp ${SURFACE_DYNAMICS_PATH}/README README.rst
     - sage -t --force-lib --long README.rst
-    - cd ${SURFACE_DYNAMICS_PATH}/doc/
-    - make html
 
 test:8.7:
   << : *test
