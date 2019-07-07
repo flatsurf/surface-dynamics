@@ -41,6 +41,13 @@ from sage.groups.perm_gps.permgroup_element cimport PermutationGroupElement
 from sage.misc.cachefunc import cached_method
 from sage.libs.gap.libgap import libgap
 
+try:
+    # only works after https://trac.sagemath.org/ticket/27946
+    # (merged in 8.9.beta1)
+    AllBlocks = libgap.AllBlocks
+except AttributeError:
+    AllBlocks = libgap.eval("AllBlocks")
+
 from sage.misc.decorators import options
 
 cdef extern from "normal_form.h":
@@ -2262,7 +2269,7 @@ cdef class Origami_dense_pyx(object):
         n = self.nb_squares()
         r = self.r()
         u = self.u()
-        blocks = map(list, libgap.AllBlocks(G))
+        blocks = map(list, AllBlocks(G))
         if degree is not None:
             degree = int(degree)
             n_div_d = n // degree
@@ -2518,7 +2525,7 @@ cdef class Origami_dense_pyx(object):
             d = self.optimal_degree()
 
             G = self.monodromy()
-            B = map(list, libgap.AllBlocks(G))
+            B = map(list, AllBlocks(G))
             B = [b for b in B if len(b) == d]
             if len(B) != 1:
                 for b in B:
