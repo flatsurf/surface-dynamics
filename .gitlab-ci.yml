@@ -10,6 +10,9 @@ test: &test
     - export SURFACE_DYNAMICS_INSTALL="$(sage -c 'import surface_dynamics; print(surface_dynamics.__path__[0])')"
     - cd
     - sage -t --force-lib --long ${SURFACE_DYNAMICS_INSTALL}
+    - sage -i gap_packages
+    - sage -i latte_int
+    - sage -t --force-lib --long ${SURFACE_DYNAMICS_INSTALL}
     - cp ${SURFACE_DYNAMICS_PATH}/README README.rst
     - sage -t --force-lib --long README.rst
 
