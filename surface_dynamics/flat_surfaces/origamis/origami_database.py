@@ -1078,14 +1078,14 @@ def build_local_data(o):
 
         sage: o = Origami('(1,2)','(1,3)')
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
-        sage: data = odb.build_local_data(o) # optional - database_gap
-        sage: data['stratum']                # optional - database_gap
+        sage: data = odb.build_local_data(o) # optional - gap_packages
+        sage: data['stratum']                # optional - gap_packages
         H_2(2)
-        sage: data['nb_squares']             # optional - database_gap
+        sage: data['nb_squares']             # optional - gap_packages
         3
     """
     from sage.functions.other import factorial
-    from sage.interfaces.gap import gap
+    from sage.libs.gap.libgap import libgap
 
     data = {}
 
@@ -1110,7 +1110,7 @@ def build_local_data(o):
         data['automorphism_group_order'] = 1
         data['automorphism_group_name'] = '1'
         data['regular'] = data['quasi_regular'] = False
-        data['monodromy_name'] = gap.StructureDescription(G)
+        data['monodromy_name'] = libgap.StructureDescription(G)
         data['optimal_degree'] = o.nb_squares()
 
         d = o.orientation_data()
@@ -1131,7 +1131,7 @@ def build_local_data(o):
             data['pole_partition'] = data['orientation_stratum'] = data['orientation_genus'] = None
 
         if G.order() < 2500:
-            data['monodromy_gap_primitive_id'] = gap.PrimitiveIdentification(G)
+            data['monodromy_gap_primitive_id'] = libgap.PrimitiveIdentification(G)
         else:
             data['monodromy_gap_primitive_id'] = None
 
@@ -1154,8 +1154,8 @@ def build_local_data(o):
         data['relative_monodromy_signature'] = any(g.sign() == -1 for g in H.gens())
         data['relative_monodromy_solvable']  = H.is_solvable()
         data['relative_monodromy_nilpotent'] = H.is_nilpotent()
-        data['relative_monodromy_gap_primitive_id'] = gap.PrimitiveIdentification(H) if H.order() < 2500 else None
-        data['relative_monodromy_name'] = gap.StructureDescription(H) if quasi_primitive else None
+        data['relative_monodromy_gap_primitive_id'] = libgap.PrimitiveIdentification(H) if H.order() < 2500 else None
+        data['relative_monodromy_name'] = libgap.StructureDescription(H) if quasi_primitive else None
 
         a,t,u = o.lattice_of_absolute_periods()
         data['optimal_degree'] = a*u
@@ -1184,7 +1184,7 @@ def build_local_data(o):
             data['orientation_stratum'] = data['orientation_genus'] = data['pole_partition'] = None
             data['hyperelliptic'] = any(x[0].genus() == 0 for x in d)
             if data['hyperelliptic']:
-                dd = filter(lambda x: x[0].genus() == 0, d)
+                dd = list(filter(lambda x: x[0].genus() == 0, d))
                 assert len(dd) == 1
                 dd = dd[0]
                 p0 = dd[1].count(0)
@@ -1200,7 +1200,7 @@ def build_local_data(o):
             data['regular'] = data['quasi_regular'] = False
 
         data['automorphism_group_order'] = A.order()
-        data['automorphism_group_name'] = gap.StructureDescription(A)
+        data['automorphism_group_name'] = libgap.StructureDescription(A)
 
     return data
 
@@ -1497,8 +1497,8 @@ class OrigamiDatabase(SQLDatabase):
             sage: import os
             sage: db_name = os.path.join(SAGE_TMP, 'my_db.db')
             sage: D = OrigamiDatabase(db_name, read_only=False)
-            sage: D.build(AbelianStratum(4).odd_component(), 8) # optional - database_gap
-            sage: D.info()                                      # optional - database_gap
+            sage: D.build(AbelianStratum(4).odd_component(), 8) # optional - gap_packages
+            sage: D.info()                                      # optional - gap_packages
             genus 2
             =======
             <BLANKLINE>
@@ -1612,7 +1612,7 @@ class OrigamiDatabase(SQLDatabase):
         """
         assert not self.__read_only__, "the database should not be in read only mode"
 
-        from sage.interfaces.gap import gap
+        from sage.libs.gap.libgap import libgap
 
         if isinstance(other, OrigamiQuery):
             old_db = other.database()
@@ -1656,8 +1656,8 @@ class OrigamiDatabase(SQLDatabase):
                     x['relative_monodromy_signature'] = any(g.sign() == -1 for g in H.gens())
                     x['relative_monodromy_solvable']  = H.is_solvable()
                     x['relative_monodromy_nilpotent'] = H.is_nilpotent()
-                    x['relative_monodromy_gap_primitive_id'] = gap.PrimitiveIdentification(H) if H.order() < 2500 and gap.IsPrimitive(H) else None
-                    x['relative_monodromy_name'] = gap.StructureDescription(H) if quasi_primitive else None
+                    x['relative_monodromy_gap_primitive_id'] = libgap.PrimitiveIdentification(H) if H.order() < 2500 and libgap.IsPrimitive(H) else None
+                    x['relative_monodromy_name'] = libgap.StructureDescription(H) if quasi_primitive else None
 
             for key in x:
                 if key in self._data_to_entry:
@@ -1694,10 +1694,10 @@ class OrigamiDatabase(SQLDatabase):
             sage: db2_name = os.path.join(SAGE_TMP, 'the_second_one.db')
             sage: D1 = OrigamiDatabase(db1_name, read_only=False)
             sage: D2 = OrigamiDatabase(db2_name, read_only=False)
-            sage: D1.build(AbelianStratum(1,1).unique_component(), 7)  # optional - database_gap
-            sage: D2.build(AbelianStratum(2).unique_component(), 5)    # optional - database_gap
-            sage: D2.update(D1)                                        # optional - database_gap
-            sage: D2.info()                                            # optional - database_gap
+            sage: D1.build(AbelianStratum(1,1).unique_component(), 7)  # optional - gap_packages
+            sage: D2.build(AbelianStratum(2).unique_component(), 5)    # optional - gap_packages
+            sage: D2.update(D1)                                        # optional - gap_packages
+            sage: D2.info()                                            # optional - gap_packages
             genus 2
             =======
              H_2(2)^hyp  :   2 T. curves (up to  4 squares)
