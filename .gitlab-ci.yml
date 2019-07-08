@@ -1,7 +1,7 @@
 before_script:
   - export MAKEFLAGS="-j2"
 
-test: &test
+test:dev: &test
   image: sagemath/sagemath-develop
   script:
     - sage -c "print(\"hello\")"
