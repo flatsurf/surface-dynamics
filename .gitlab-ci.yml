@@ -4,7 +4,7 @@ before_script:
 test:dev: &test
   image: sagemath/sagemath-develop
   script:
-    - sage -c "print(\"hello\")"
+    - sage -c 'import sage.env; print(sage.env.SAGE_VERSION)'
     - sage -pip install .
     - export SURFACE_DYNAMICS_PATH="$(pwd)"
     - export SURFACE_DYNAMICS_INSTALL="$(sage -c 'import surface_dynamics; print(surface_dynamics.__path__[0])')"
