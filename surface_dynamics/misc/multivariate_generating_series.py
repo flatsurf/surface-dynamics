@@ -151,7 +151,7 @@ def parse_latte_generating_series(M, s):
                 m_den[mon] += 1
             else:
                 m_den[mon] = 1
-        m += M.term(R(num), m_den.items())
+        m += M.term(R(num), list(m_den.items()))
 
     return m
 
@@ -371,7 +371,7 @@ class AbstractMSum(Element):
             if not check:
                 self._data = data
                 return
-            data = data.items()
+            data = list(data.items())
 
         elif isinstance(data, AbstractMSum):
             self._data = data.copy()
@@ -396,6 +396,47 @@ class AbstractMSum(Element):
                     self._data[den] += num
             else:
                 self._data[den] = num
+
+    def is_trivial_zero(self):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
+
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)
+            sage: M.term(0, []).is_trivial_zero()
+            True
+            sage: M.term(0, [((1,1),1)]).is_trivial_zero()
+            True
+            sage: M.term(1, []).is_trivial_zero()
+            False
+        """
+        return not self._data
+
+    def is_trivial_one(self):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
+
+            sage: M = MultivariateGeneratingSeriesRing('x', 2)
+            sage: M.term(0, []).is_trivial_one()
+            False
+            sage: M.term(0, [((1,1),1)]).is_trivial_one()
+            False
+            sage: M.term(1, []).is_trivial_one()
+            True
+            sage: M.term(1, [((1,1),1)]).is_trivial_one()
+            False
+
+            sage: f = M.term(1, [((1,0),1)]) + M.term(1, [((0,1),1)])
+            sage: f.is_trivial_one()
+            False
+        """
+        if len(self._data) != 1:
+            return False
+        (den, num) = next(iteritems(self._data))
+        return num.is_one() and den.is_one()
 
     def _add_(self, other):
         r"""
@@ -512,7 +553,9 @@ class AbstractMSum(Element):
 
         raise NotImplementedError
 
-
+# TODO: here the elements are not necessarily with the same number of variables
+# we want the following to work
+# 1/3 * Sum(1/((n0)^4), n0=1..+oo) + 2/3 * Sum(1/((n0)*(n0 + n1)^3), n0=1..+oo, n1=1..+oo) + 1/3 * Sum(1/((n0)^2*(n0 + n1)^2), n0=1..+oo, n1=1..+oo)
 class GeneralizedMultiZetaElement(AbstractMSum):
     def simplify(self):
         r"""
@@ -543,7 +586,7 @@ class GeneralizedMultiZetaElement(AbstractMSum):
         Apply 1 / (L1 L2) = 1/(L1+L2) * (1/L1 + 1/L2) to try getting
         multiple zeta values
         """
-
+        raise NotImplementedError
 
     def weights(self):
         r"""
@@ -572,7 +615,6 @@ class GeneralizedMultiZetaElement(AbstractMSum):
 class MultivariateGeneratingSeries(AbstractMSum):
     def __nonzero__(self):
         return bool(self._data)
-
 
     def summands(self):
         r"""
@@ -873,47 +915,6 @@ class MultivariateGeneratingSeries(AbstractMSum):
         for den, num in self._data.items():
             ans += (S(num) * den.inverse_series_trunc(S, prec)).truncate(prec)
         return R(ans.subs({S.gen(): R.one()}))
-
-    def is_trivial_zero(self):
-        r"""
-        EXAMPLES::
-
-            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
-
-            sage: M = MultivariateGeneratingSeriesRing('x', 2)
-            sage: M.term(0, []).is_trivial_zero()
-            True
-            sage: M.term(0, [((1,1),1)]).is_trivial_zero()
-            True
-            sage: M.term(1, []).is_trivial_zero()
-            False
-        """
-        return not self._data
-
-    def is_trivial_one(self):
-        r"""
-        EXAMPLES::
-
-            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
-
-            sage: M = MultivariateGeneratingSeriesRing('x', 2)
-            sage: M.term(0, []).is_trivial_one()
-            False
-            sage: M.term(0, [((1,1),1)]).is_trivial_one()
-            False
-            sage: M.term(1, []).is_trivial_one()
-            True
-            sage: M.term(1, [((1,1),1)]).is_trivial_one()
-            False
-
-            sage: f = M.term(1, [((1,0),1)]) + M.term(1, [((0,1),1)])
-            sage: f.is_trivial_one()
-            False
-        """
-        if len(self._data) != 1:
-            return False
-        (den, num) = next(iteritems(self._data))
-        return num.is_one() and den.is_one()
 
     def is_zero(self):
         if self.is_trivial_zero():

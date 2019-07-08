@@ -2380,7 +2380,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
             sage: c = CylinderDiagram('(0,1,3)-(0,2,5) (2,4)-(1,3) (5)-(4)')
             sage: c.widths_generating_series()   # optional - latte_int
-            (1)/((1 - w0)*(1 - w0*w1)^2*(1 - w0*w1*w2)) + (1)/((1 - w0)*(1 - w0*w1)*(1 - w0*w1*w2)^2)
+            (1)/((1 - w0)*(1 - w0*w1)*(1 - w0*w1*w2)^2) + (1)/((1 - w0)*(1 - w0*w1)^2*(1 - w0*w1*w2))
         """
         from sage.interfaces.latte import count
         from sage.matrix.constructor import matrix
@@ -2438,19 +2438,19 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: c0, c1 = AbelianStratum(2).cylinder_diagrams()
             sage: v0 = c0.volume_contribution()   # optional - latte_int
             sage: v0                              # optional - latte_int
-            [(1/3, Z((n1)^4))]
+            1/3 * Sum(1/((n0)^4), n0=1..+oo)
             sage: v1 = c1.volume_contribution()   # optional - latte_int
             sage: v1                              # optional - latte_int
-            [(1/3, Z((n1)^2, (n1 + n2)^2)), (2/3, Z((n1), (n1 + n2)^3))]
+            2/3 * Sum(1/((n0)*(n0 + n1)^3), n0=1..+oo, n1=1..+oo) + 1/3 * Sum(1/((n0)^2*(n0 + n1)^2), n0=1..+oo, n1=1..+oo)
             sage: v0 + v1                         # optional - latte_int
             [(1/3, Z((n1)^4)), (1/3, Z((n1)^2, (n1 + n2)^2)), (2/3, Z((n1), (n1 + n2)^3))]
 
             sage: for c in AbelianStratum(1,1).cylinder_diagrams():  # optional - latte_int
             ....:     print(c.volume_contribution())
-            (1/6 * Sum( 1 / ((n0)^5), n0=1..+oo)
-            1/3 * Sum( 1 / ((n0)^2*(n0 + n1)^3), n0=1..+oo, n1=1..+oo) + 1/3 * Sum( 1 / ((n0)^3*(n0 + n1)^2), n0=1..+oo, n1=1..+oo)
-            1/12 * Sum( 1 / ((n1)^2*(n0)^2*(n0 + n1)), n0=1..+oo, n1=1..+oo) + 1/6 * Sum( 1 / ((n1)*(n0)*(n0 + n1)^3), n0=1..+oo, n1=1..+oo) + 1/12 * Sum( 1 / ((n1)^2*(n0)*(n0 + n1)^2), n0=1..+oo, n1=1..+oo) + 1/12 * Sum( 1 / ((n1)*(n0)^2*(n0 + n1)^2), n0=1..+oo, n1=1..+oo)
-            1/6 * Sum( 1 / ((n0 + n2)^2*(n0 + n1)^3), n0=1..+oo, n1=1..+oo, n2=1..+oo) + 1/6 * Sum( 1 / ((n0 + n2)^3*(n0 + n1)^2), n0=1..+oo, n1=1..+oo, n2=1..+oo)
+            1/6 * Sum(1/((n0)^5), n0=1..+oo)
+            1/3 * Sum(1/((n0)^2*(n0 + n1)^3), n0=1..+oo, n1=1..+oo) + 1/3 * Sum(1/((n0)^3*(n0 + n1)^2), n0=1..+oo, n1=1..+oo)
+            1/6 * Sum(1/((n1)*(n0)*(n0 + n1)^3), n0=1..+oo, n1=1..+oo) + 1/12 * Sum(1/((n1)*(n0)^2*(n0 + n1)^2), n0=1..+oo, n1=1..+oo) + 1/12 * Sum(1/((n1)^2*(n0)*(n0 + n1)^2), n0=1..+oo, n1=1..+oo) + 1/12 * Sum(1/((n1)^2*(n0)^2*(n0 + n1)), n0=1..+oo, n1=1..+oo)
+            1/6 * Sum(1/((n0 + n2)^2*(n0 + n1)^3), n0=1..+oo, n1=1..+oo, n2=1..+oo) + 1/6 * Sum(1/((n0 + n2)^3*(n0 + n1)^2), n0=1..+oo, n1=1..+oo, n2=1..+oo)
         """
         from surface_dynamics.misc.multivariate_generating_series import GeneralizedMultiZetaElement
 
@@ -4139,11 +4139,11 @@ class QuadraticCylinderDiagram(SageObject):
 
             sage: q = QuadraticCylinderDiagram('(0,0,1,2,3)-(1,4,4,5,6) (2,5,7,7,8)-(3,6,8,9,9)')
             sage: q.widths_generating_series()                             # optional - latte_int
+            (3)/((1 - w1)*(1 - w1^2)*(1 - w0)*(1 - w0*w1)*(1 - w0*w1^2)*(1 - w0^2)*(1 - w0^2*w1)*(1 - w0^2*w1^2)) + ... + (1)/((1 - w1)*(1 - w0)*(1 - w0*w1)^2*(1 - w0^2)*(1 - w0^2*w1)*(1 - w0^2*w1^2)^2)
 
             sage: q = QuadraticCylinderDiagram('(0,0,1,2,3)-(1,4,4,5,6) (2,5,7,8,8)-(3,6,7,9,9)')
             sage: q.widths_generating_series()                             # optional - latte_int
-
-
+            (2)/((1 - w1)*(1 - w1^2)*(1 - w0)*(1 - w0*w1)*(1 - w0*w1^2)*(1 - w0^2)*(1 - w0^2*w1)*(1 - w0^2*w1^2)) + ... + (1)/((1 - w1)*(1 - w0)*(1 - w0*w1)^2*(1 - w0^2)*(1 - w0^2*w1)*(1 - w0^2*w1^2)^2)
         """
         from sage.interfaces.latte import count
         from sage.matrix.constructor import matrix
@@ -4195,8 +4195,8 @@ class QuadraticCylinderDiagram(SageObject):
                 else:
                     den2[v2] = 1
 
-            f1 = M.term(num, den1.items())
-            f2 = M.term(num, den2.items())
+            f1 = M.term(num, list(den1.items()))
+            f2 = M.term(num, list(den2.items()))
 
             assert f1 == f2, (t, f1, f2)
 
