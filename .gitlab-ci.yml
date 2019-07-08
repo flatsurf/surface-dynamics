@@ -16,6 +16,10 @@ test:dev: &test
     - cp ${SURFACE_DYNAMICS_PATH}/README README.rst
     - sage -t --force-lib --long README.rst
 
+test:8.8:
+  << : *test
+  image: sagemath/sagemath-dev:8.8
+
 test:8.7:
   << : *test
   image: sagemath/sagemath-dev:8.7
@@ -23,7 +27,3 @@ test:8.7:
 test:8.6:
   << : *test
   image: sagemath/sagemath-dev:8.6
-
-test:8.5:
-  << : *test
-  image: sagemath/sagemath-dev:8.5
