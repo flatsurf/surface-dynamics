@@ -2,7 +2,7 @@ before_script:
   - export MAKEFLAGS="-j2"
 
 test:dev: &test
-  image: sagemath/sagemath-develop
+  image: sagemath/sagemath-dev:develop
   script:
     - sage -c 'import sage.env; print(sage.env.SAGE_VERSION)'
     - sage -pip install .
