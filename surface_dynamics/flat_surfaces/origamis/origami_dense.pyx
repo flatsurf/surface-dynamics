@@ -39,14 +39,13 @@ from libc.limits cimport UINT_MAX
 
 from sage.groups.perm_gps.permgroup_element cimport PermutationGroupElement
 from sage.misc.cachefunc import cached_method
-from sage.libs.gap.libgap import libgap
 
-try:
-    # only works after https://trac.sagemath.org/ticket/27946
-    # (merged in 8.9.beta1)
-    AllBlocks = libgap.AllBlocks
-except AttributeError:
-    AllBlocks = libgap.eval("AllBlocks")
+# TODO:
+# only works after https://trac.sagemath.org/ticket/27946
+# from sage.libs.gap.libgap import libgap as gap
+from sage.interfaces.gap import gap
+def gap_eval(arg):
+    return gap(arg)
 
 from sage.misc.decorators import options
 
@@ -2198,7 +2197,7 @@ cdef class Origami_dense_pyx(object):
         if is_prime(self.nb_squares()):
             return True
 
-        return libgap.IsPrimitive(self.monodromy()).sage()
+        return gap.IsPrimitive(self.monodromy()).sage()
 
     def is_quasi_primitive(self):
         r"""
@@ -2269,7 +2268,7 @@ cdef class Origami_dense_pyx(object):
         n = self.nb_squares()
         r = self.r()
         u = self.u()
-        blocks = map(list, AllBlocks(G))
+        blocks = map(list, gap.AllBlocks(G))
         if degree is not None:
             degree = int(degree)
             n_div_d = n // degree
@@ -2279,9 +2278,9 @@ cdef class Origami_dense_pyx(object):
 
         covers = []
         for b in blocks:
-            orbit = libgap.Orbit(G, b, libgap.OnSets)
-            action = libgap.Action(G, orbit, libgap.OnSets)
-            rr, uu = libgap.GeneratorsOfGroup(action)
+            orbit = gap.Orbit(G, b, gap.OnSets)
+            action = gap.Action(G, orbit, gap.OnSets)
+            rr, uu = gap.GeneratorsOfGroup(action)
             covers.append(origami_from_gap_permutations(rr, uu))
         if degree is None or degree == 1:
             covers.append(Origami_dense_pyx((0,), (0,)))
@@ -2320,7 +2319,7 @@ cdef class Origami_dense_pyx(object):
             Finite lattice containing 3 elements
         """
         from sage.combinat.posets.lattices import LatticePoset
-        G = libgap(self.monodromy())
+        G = gap(self.monodromy())
         n = self.nb_squares()
         r = self.r()
         u = self.u()
@@ -2329,9 +2328,9 @@ cdef class Origami_dense_pyx(object):
             print(blocks)
         d = {}
         for b in blocks:
-            orbit = G.Orbit(b, libgap.OnSets)
-            action = G.Action(orbit, libgap.OnSets)
-            rr, uu = libgap.GeneratorsOfGroup(action)
+            orbit = G.Orbit(b, gap.OnSets)
+            action = G.Action(orbit, gap.OnSets)
+            rr, uu = gap.GeneratorsOfGroup(action)
             d[frozenset(map(Integer, b))] = origami_from_gap_permutations(rr, uu)
         d[frozenset(range(1, n+1))] = Origami_dense_pyx((0,), (0,))
         d[frozenset([1])] = self
@@ -2365,9 +2364,9 @@ cdef class Origami_dense_pyx(object):
             sage: o.is_normal()
             False
         """
-        return libgap.IsTransitive(
+        return gap.IsTransitive(
                         self.automorphism_group(),
-                        libgap.eval("[1..%d]" % (self.nb_squares()))
+                        gap_eval("[1..%d]" % (self.nb_squares()))
                         ).sage()
 
     def is_quasi_regular(self):
@@ -2384,8 +2383,8 @@ cdef class Origami_dense_pyx(object):
         #A = self.automorphism_group()
         #r = self.r(); u = self.u()
         #C = G.subgroup([r*u*~r*~u])
-        #NC = libgap.NormalClosure(G, C)
-        #return libgap.IsSubgroup(A, NC)
+        #NC = gap.NormalClosure(G, C)
+        #return gap.IsSubgroup(A, NC)
 
     def is_normal(self):
         r"""
@@ -2481,8 +2480,8 @@ cdef class Origami_dense_pyx(object):
         Return the normal cover of this origami.
         """
         G = self.monodromy()
-        A = libgap.Action(G, G, libgap.OnRight)
-        r, u = libgap.GeneratorsOfGroup(A)
+        A = gap.Action(G, G, gap.OnRight)
+        r, u = gap.GeneratorsOfGroup(A)
         return origami_from_gap_permutations(r, u)
 
     def rename(self, name):
@@ -2525,21 +2524,21 @@ cdef class Origami_dense_pyx(object):
             d = self.optimal_degree()
 
             G = self.monodromy()
-            B = map(list, AllBlocks(G))
+            B = map(list, gap.AllBlocks(G))
             B = [b for b in B if len(b) == d]
             if len(B) != 1:
                 for b in B:
-                    orbit = libgap.Orbit(G, b, libgap.OnSets)
-                    action = libgap.Action(G, orbit, libgap.OnSets)
-                    if libgap.IsAbelian(action):
+                    orbit = gap.Orbit(G, b, gap.OnSets)
+                    action = gap.Action(G, orbit, gap.OnSets)
+                    if gap.IsAbelian(action):
                         break
                 else:
                     raise RuntimeError("an error occurred... please contact 20100.delecroix@gmail.com")
             else:
                 b = B[0]
-            H = libgap.Stabilizer(G, b, libgap.OnSets)
-            action = libgap.Action(H, b, libgap.OnPoints)
-            return PermutationGroup(list(libgap.GeneratorsOfGroup(action)), canonicalize=False)
+            H = gap.Stabilizer(G, b, gap.OnSets)
+            action = gap.Action(H, b, gap.OnPoints)
+            return PermutationGroup(list(gap.GeneratorsOfGroup(action)), canonicalize=False)
         else:
             raise ValueError("relative must be a boolean")
 
@@ -2577,9 +2576,9 @@ cdef class Origami_dense_pyx(object):
         """
         from sage.all import SymmetricGroup
         Sn = SymmetricGroup(self.nb_squares())
-        G = libgap.Subgroup(Sn, [self.r(), self.u()])
-        C = libgap.Centralizer(Sn, G)
-        return Sn.subgroup(list(libgap.GeneratorsOfGroup(C)))
+        G = gap.Subgroup(Sn, [self.r(), self.u()])
+        C = gap.Centralizer(Sn, G)
+        return Sn.subgroup(list(gap.GeneratorsOfGroup(C)))
 
     translation_group = automorphism_group
 
