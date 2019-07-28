@@ -246,7 +246,7 @@ class MarkedPartition(SageObject):
             self.m = copy(args[0].m)
         elif len(args) == 1 and isinstance(args[0], str):
             import re
-            x = re.compile("(?P<mark>[^[]*)[^[]*\[(?P<parts>[^]]*)]")
+            x = re.compile("(?P<mark>[^[]*)[^[]*\\[(?P<parts>[^]]*)]")
             m = x.match(args[0])
             self.m = Marking(m.groupdict()["mark"])
             self.p = Partition(sorted(map(Integer,m.groupdict()["parts"].split(',')),reverse=True))
