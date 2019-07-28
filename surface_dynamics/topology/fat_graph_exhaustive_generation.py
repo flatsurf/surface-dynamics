@@ -219,10 +219,10 @@ def augment3(cm, aut_grp, depth, min_degree, callback):
             j = vp[j]
 
 # TODO
-def augment4(cm):
-    r"""
-    Plant vertices of degree 1,2.
-    """
+# def augment4(cm):
+#    r"""
+#    Plant vertices of degree 1,2.
+#    """
 
 ########################################
 # Callbacks for the various map reduce #
@@ -653,7 +653,31 @@ class FatGraphs_g_nf_nv(object):
         return vmin, vmax
 
     def __repr__(self):
-        return "Fat graphs of genus %d, %d faces and %d vertices" % (self._g, self._nf, self._nv)
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs_g_nf_nv
+            sage: FatGraphs_g_nf_nv(0, 5, 1, vertex_min_degree=3)
+            Fat graphs of genus 0, with 5 faces and 1 vertices
+            sage: FatGraphs_g_nf_nv(0, nf_min=2, nf_max=5, nv_min=1, nv_max=5, vertex_min_degree=3)
+            Fat graphs of genus 0, with between 2 and 5 faces and between 1 and 5 vertices
+        """
+        if self._gmax == self._gmin + 1:
+            genus = '%d' % self._gmin
+        else:
+            genus = 'between %d and %d' % (self._gmin, self._gmax)
+
+        if self._fmax == self._fmin + 1:
+            faces = '%d' % self._fmin
+        else:
+            faces = 'between %d and %d' % (self._fmin, self._fmax)
+
+        if self._vmax == self._vmin + 1:
+            vertices = '%d' % self._vmin
+        else:
+            vertices = 'between %d and %d' % (self._vmin, self._vmax)
+
+        return "Fat graphs of genus %s, with %s faces and %s vertices" % (genus, faces, vertices)
 
     def map_reduce(self, callback, filter=None):
         r"""
