@@ -498,7 +498,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             g = f[10:]
             s.add(g[:g.index('-')])
 
-        return [AbelianStratum(map(Integer, g.split('_'))) for g in s]
+        return [AbelianStratum(map(Integer, g.split('_'))) for g in sorted(s, reverse=True)]
 
     def get_iterator(self, comp, ncyls=None):
         r"""
