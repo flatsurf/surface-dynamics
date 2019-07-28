@@ -12,6 +12,14 @@ such that the product `g_0 g_1 g_2 g_3` is the identity. It is sometimes
 called a 4-constellation. The canonical representative of a pillowcase cover
 is computed by an independent C program in ``normal_form.c``.
 """
+# ****************************************************************************
+#       Copyright (C) 2011-2019 Vincent Delecroix <20100.delecroix@gmail.com>
+#
+#  Distributed under the terms of the GNU General Public License (GPL)
+#  as published by the Free Software Foundation; either version 2 of
+#  the License, or (at your option) any later version.
+#                  https://www.gnu.org/licenses/
+# ****************************************************************************
 
 #from sage.ext.interrupt.interrupt cimport sig_on, sig_off
 #from sage.ext.memory cimport sage_malloc, sage_free

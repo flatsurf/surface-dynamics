@@ -4,6 +4,14 @@ Some extra ppl utilities
 ppl is a library to deal with rational polytopes. pplpy is a thin
 Python wrapper. This file provides some helper functions to use it.
 """
+#*****************************************************************************
+#       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
+#
+#  Distributed under the terms of the GNU General Public License (GPL)
+#  as published by the Free Software Foundation; either version 2 of
+#  the License, or (at your option) any later version.
+#                  https://www.gnu.org/licenses/
+#*****************************************************************************
 
 import ppl
 

@@ -13,7 +13,9 @@ and the marking is of type two.
 #       Copyright (C) 2012 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
-#                  http://www.gnu.org/licenses/
+#  as published by the Free Software Foundation; either version 2 of
+#  the License, or (at your option) any later version.
+#                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
 from __future__ import print_function, absolute_import
