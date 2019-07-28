@@ -12,9 +12,6 @@ except ImportError:
                      "If you are using Ubuntu with Sage installed from the official apt repository, run\n"
                      "first in a console \"$ source /usr/share/sagemath/bin/sage-env\"\n")
 
-import cysignals
-CYSIGNALS_SRC = cysignals.__path__[0]
-
 from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Build import cythonize
@@ -101,7 +98,7 @@ setup(name='surface_dynamics',
       author='Vincent Delecroix',
       author_email='vincent.delecroix@u-bordeaux.fr',
       url='http://www.labri.fr/perso/vdelecro/surface-dynamics/latest/',
-      license="GPL v3",
+      license="GPL v2",
       packages=['surface_dynamics',
                 'surface_dynamics/misc',
                 'surface_dynamics/topology',
