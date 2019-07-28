@@ -7,6 +7,8 @@
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
+from sage.cpython.string import bytes_to_str, str_to_bytes
+
 def iscc_rg_string(r):
     r"""
     EXAMPLES::
@@ -77,11 +79,11 @@ def iscc_card(arg):
         sage: from surface_dynamics.misc.iscc import iscc_card
         sage: cd = CylinderDiagram('(0,1)-(0,2) (2)-(1)')
         sage: iscc_card(cd)  # optional - barvinok
-        '[w0, w1] -> { [l0, l1, l2] : l0 >= 0 and l1 >= 0 and l2 >= 0 and w0 = l0 + l1 = l0 + l2 and w1 = l2 = l1 }'
+        '[w0, w1] -> { 1 : 0 <= w1 <= w0 }'
 
         sage: r = RibbonGraph(faces='(0,2,4,6,7)(8,9,5,3,1)', edges='(0,1)(2,3)(4,5)(6,7)(8,9)')
         sage: iscc_card(r)   # optional - barvinok
-        '[b0, b1] -> { ((1 + 25/12 * b0 + 35/24 * b0^2 + 5/12 * b0^3 + 1/24 * b0^4) + (25/12 + 625/144 * b0 + 875/288 * b0^2 + 125/144 * b0^3 + 25/288 * b0^4) * b1 + (35/24 + 875/288 * b0 + 1225/576 * b0^2 + 175/288 * b0^3 + 35/576 * b0^4) * b1^2 + (5/12 + 125/144 * b0 + 175/288 * b0^2 + 25/144 * b0^3 + 5/288 * b0^4) * b1^3 + (1/24 + 25/288 * b0 + 35/576 * b0^2 + 5/288 * b0^3 + 1/576 * b0^4) * b1^4) : b0 >= 0 and b1 >= 0 }\n'
+        '[b0, b1] -> { (((1 - 1/8 * b0) + 17/12 * b1 + 5/8 * b1^2 + 1/12 * b1^3) + 1/4 * floor((2b0)/4)) : (b0 + b1) mod 2 = 0 and 0 <= b1 <= -2 + b0; ((1 + 31/24 * b0 + 5/8 * b0^2 + 1/12 * b0^3) + 1/4 * floor((2b0)/4)) : (b0 + b1) mod 2 = 0 and b0 >= 0 and b1 >= b0 }'
     """
     from surface_dynamics.flat_surfaces.separatrix_diagram import CylinderDiagram
     from surface_dynamics.flat_surfaces.homology import RibbonGraph
@@ -98,9 +100,9 @@ def iscc_card(arg):
     cmd += 'q;'
     
     proc = Popen(['iscc'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    ans, err = proc.communicate(cmd)
+    ans, err = proc.communicate(str_to_bytes(cmd))
     
-    return ans
+    return bytes_to_str(ans).strip()
 
 def parse_iscc_result(ans, d):
     R = PolynomialRing(QQ, ['w%d'%i for i in range(d)], d)
