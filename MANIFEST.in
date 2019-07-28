@@ -2,6 +2,7 @@ exclude surface_dynamics/databases/cylinder_diagrams/cyl_diags-10-*
 exclude surface_dynamics/databases/cylinder_diagrams/cyl_diags-5_2_1-*
 exclude surface_dynamics/databases/cylinder_diagrams/cyl_diags-6_1_1-*
 exclude surface_dynamics/databases/cylinder_diagrams/cyl_diags-4_3_1-*
-exclude surface_dynamics/flat_surfaces/origami_dense.c
+exclude surface_dynamics/flat_surfaces/origamis/origami_dense.c
 exclude surface_dynamics/interval_exchanges/integer_iet.c
 exclude surface_dynamics/interval_exchanges/lyapunov_exponents.c
+exclude surface_dynamics/interval_exchanges/iet_family.c
