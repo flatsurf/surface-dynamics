@@ -2444,8 +2444,6 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: v1 = c1.volume_contribution()   # optional - latte_int
             sage: v1                              # optional - latte_int
             2/3 * Sum(1/((n0)*(n0 + n1)^3), n0=1..+oo, n1=1..+oo) + 1/3 * Sum(1/((n0)^2*(n0 + n1)^2), n0=1..+oo, n1=1..+oo)
-            sage: v0 + v1                         # optional - latte_int
-            [(1/3, Z((n1)^4)), (1/3, Z((n1)^2, (n1 + n2)^2)), (2/3, Z((n1), (n1 + n2)^3))]
 
             sage: for c in AbelianStratum(1,1).cylinder_diagrams():  # optional - latte_int
             ....:     print(c.volume_contribution())
