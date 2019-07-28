@@ -95,7 +95,7 @@ are actually using the right module (i.e. the local one) you can do in a
 SageMath session::
 
     sage: import surface_dynamics
-    sage: surface_dynamics.__path__
+    sage: surface_dynamics.__path__        # random
     ['/home/you/surface_dynamics/surface_dynamics/']
 
 The result of the command must correspond to the path of the repository
