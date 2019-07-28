@@ -574,7 +574,7 @@ class FatGraph(object):
         r"""
         EXAMPLES::
 
-            from surface_dynamics.topology.fat_graph import FatGraph
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
             sage: vp = '(0,4,2,5,1,3)'
             sage: ep = '(0,1)(2,3)(4,5)'
             sage: fp = '(0,5)(1,3,4,2)'
@@ -591,7 +591,7 @@ class FatGraph(object):
         r"""
         EXAMPLES::
 
-            from surface_dynamics.topology.fat_graph import FatGraph
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
             sage: vp = '(0,4,2,5,1,3)'
             sage: ep = '(0,1)(2,3)(4,5)'
             sage: fp = '(0,5)(1,3,4,2)'
