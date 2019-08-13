@@ -294,7 +294,7 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
         The graph corresponds to the action of the generators on the cosets
         determined by the Veech group in PSL(2,ZZ).
         """
-        return self.orbit_graph.plot()
+        return self.orbit_graph().plot()
 
 #    def plot_fundamental_domain(self):
 #        from sage.geometry.hyperbolic_geometry import HH
