@@ -9,6 +9,7 @@ def cylinder_concatenation(perm_1,perm_2):
 	EXAMPLES::
 	
 		sage: from surface_dynamics import *
+		sage: from surface_dynamics.flat_surfaces.single_cylinder_concatenation import cylinder_concatenation
 		
 		sage: perm_1 = AbelianStratum(4).odd_component().single_cylinder_representative()
 		sage: perm_2 = AbelianStratum(6).even_component().single_cylinder_representative()
@@ -25,7 +26,6 @@ def cylinder_concatenation(perm_1,perm_2):
 		sage: perm_3.stratum_component()
 		H_6(6, 4)^even
 	"""
-	from surface_dynamics.flat_surfaces.single_cylinder_concatenation import cylinder_concatenation
 	from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
 	
 	
