@@ -16,6 +16,10 @@ test:dev: &test
     - cp ${SURFACE_DYNAMICS_PATH}/README README.rst
     - sage -t --force-lib --long README.rst
 
+test:dev3:
+  << : *test
+  image: sagemath/sagemath-dev:develop-py3
+
 test:8.8:
   << : *test
   image: sagemath/sagemath-dev:8.8
