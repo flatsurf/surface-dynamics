@@ -707,9 +707,9 @@ def perm_compose(p1, p2):
     EXAMPLES::
 
         sage: from surface_dynamics.misc.permutation import perm_init, perm_compose
-        sage: perm_compose([0,2,1],[0,2,1])
+        sage: perm_compose([0,2,1], [0,2,1])
         [0, 1, 2]
-        sage: perm_compose([-1,2,3,1],[-1,2,1,3])
+        sage: perm_compose([-1,2,3,1], [-1,2,1,3])
         [-1, 1, 3, 2]
 
         sage: p1 = perm_init('(1,3,5)', partial=True)
@@ -724,7 +724,7 @@ def perm_compose(p1, p2):
     return r
 
 
-def perm_compose_i(p1, p2):
+def perm_compose_i(p1, p2, n=None):
     r"""
     Returns the product `p1^{-1} p2^{-1}`.
 
@@ -740,12 +740,51 @@ def perm_compose_i(p1, p2):
         ....:     for p2 in permutations(range(4)):
         ....:         assert perm_compose_i(p1, p2) == perm_compose(perm_invert(p1), perm_invert(p2))
     """
-    assert(len(p1) == len(p2))
+    if n is None:
+        n = len(p1)
 
-    res = [None]*len(p1)
+    res = [-1] * n
     for i in range(len(p1)):
-        res[p1[p2[i]]] = i
+        if p2[i] != -1 and p1[p2[i]] != -1:
+            res[p1[p2[i]]] = i
 
+    return res
+
+def perm_commutator(p1, p2, n=None):
+    r"""
+    Return the commutator ``~p1 ~p2 p1 p2``.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_commutator, perm_compose, perm_compose_i
+
+        sage: p1 = [1, 2, 0, 3]
+        sage: p2 = [0, 3, 1, 2]
+        sage: perm_commutator(p1, p2)
+        [2, 3, 0, 1]
+        sage: perm_compose(perm_compose_i(p1, p2), perm_compose(p1, p2))
+        [2, 3, 0, 1]
+
+        sage: p1 = [3, 2, 0, 5, 1, 4]
+        sage: p2 = [5, 2, 1, 0, 4, 3]
+        sage: perm_commutator(p1, p2)
+        [1, 2, 5, 3, 0, 4]
+        sage: perm_compose(perm_compose_i(p1, p2), perm_compose(p1, p2))
+        [1, 2, 5, 3, 0, 4]
+
+        sage: p1 = [-1, 4, -1, -1, 1, 5, 8, -1, 6]
+        sage: p2 = [-1, 8, -1, -1, 4, 6, 5, -1, 1]
+        sage: perm_commutator(p1, p2)
+        [-1, 8, -1, -1, 5, 1, 4, -1, 6]
+        sage: perm_compose(perm_compose_i(p1, p2), perm_compose(p1, p2))
+        [-1, 8, -1, -1, 5, 1, 4, -1, 6]
+    """
+    if n is None:
+        n = len(p1)
+    res = [-1] * n
+    for i in range(n):
+        if p1[i] != -1 and p2[i] != -1 and p1[p2[i]] != -1 and p2[p1[i]] != -1:
+            res[p1[p2[i]]] = p2[p1[i]]
     return res
 
 # can we do that inplace?
