@@ -137,61 +137,6 @@ class FatGraph(object):
             self._vd.extend([-1] * (max_num_dart - self._nv))
             self._fd.extend([-1] * (max_num_dart - self._nf))
 
-    def integral_points(self, b):
-        r"""
-        Return the edge lengths solution to the face lengths constraint.
-
-        EXAMPLES::
-
-            sage: from surface_dynamics.topology.fat_graph import FatGraph
-            sage: vp = '(0,4,2,5,1,3)'
-            sage: ep = '(0,1)(2,3)(4,5)'
-            sage: fp = '(0,5)(1,3,4,2)'
-            sage: cm = FatGraph(vp, ep, fp)
-            sage: cm.integral_points((2,4))
-            ((1, 1, 1, 1, 1, 1),)
-            sage: cm.integral_points((3,5))
-            ((1, 1, 1, 1, 2, 2), (2, 2, 1, 1, 1, 1))
-            sage: cm.integral_points((5,11))
-            ((1, 1, 3, 3, 4, 4),
-             (2, 2, 3, 3, 3, 3),
-             (3, 3, 3, 3, 2, 2),
-             (4, 4, 3, 3, 1, 1))
-        """
-        # we want to count solutions in integral edges of the face stuff
-        if self.num_faces() != len(b):
-            raise ValueError
-
-        ep = self._ep
-        fp = self._fp
-
-        ieqs = []
-        # positivity
-        for i in range(self._n):
-            l = [0] * self._n
-            l[i] = 1
-            ieqs.append([-1] + l)
-
-        eqns = []
-        # half edge equations
-        for i in range(self._n):
-            if ep[i] < i:
-                continue
-            l = [0] * self._n
-            l[i] = 1
-            l[ep[i]] = -1
-            eqns.append([0] + l)
-
-        # face equations
-        for c,f in zip(b,self.faces()):
-            l = [0] * self._n
-            for i in f:
-                l[i] = 1
-            eqns.append([-c] + l)
-
-        from sage.geometry.polyhedron.constructor import Polyhedron
-        return Polyhedron(ieqs=ieqs, eqns=eqns).integral_points()
-
     def copy(self):
         """
         EXAMPLES::
@@ -496,6 +441,13 @@ class FatGraph(object):
         else:
             return self._vp
 
+    def is_trivalent(self):
+        vp = self._vp
+        for i in range(self._n):
+            if vp[i] == i or vp[vp[i]] == i or vp[vp[vp[i]]] != i:
+                return False
+        return True
+
     def edge_permutation(self, copy=True):
         if copy:
             return self._ep[:self._n]
@@ -604,7 +556,32 @@ class FatGraph(object):
     def face_degrees(self):
         return self._fd[:self._nf]
 
+    def genus(self):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
+            sage: vp = '(0,4,2,5,1,3)'
+            sage: ep = '(0,1)(2,3)(4,5)'
+            sage: fp = '(0,5)(1,3,4,2)'
+            sage: cm = FatGraph(vp, ep, fp)
+            sage: cm.genus()
+            1
+        """
+        return (2 - self._nf + self._n//2 - self._nv) // 2
+
     def euler_characteristic(self):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
+            sage: vp = '(0,4,2,5,1,3)'
+            sage: ep = '(0,1)(2,3)(4,5)'
+            sage: fp = '(0,5)(1,3,4,2)'
+            sage: cm = FatGraph(vp, ep, fp)
+            sage: cm.euler_characteristic()
+            0
+        """
         return self._nf - self._n//2 + self._nv
 
     def dual(self):
@@ -633,6 +610,82 @@ class FatGraph(object):
         self._nv, self._nf = self._nf, self._nv
         self._vl, self._fl = self._fl, self._vl
         self._vd, self._fd = self._fd, self._vd
+
+    def polytope(self, b, min_length=0):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
+            sage: vp = '(0,4,2,5,1,3)'
+            sage: ep = '(0,1)(2,3)(4,5)'
+            sage: fp = '(0,5)(1,3,4,2)'
+            sage: cm = FatGraph(vp, ep, fp)
+
+            sage: cm.polytope([3,5]).vertices_list()
+            [[1, 1, 1, 1, 2, 2], [2, 2, 1, 1, 1, 1]]
+
+
+            sage: vp = '(0,3,4)(1,2,6)(5)(7)'
+            sage: ep = '(0,1)(2,3)(4,5)(6,7)'
+            sage: fp = '(0,6,7,2)(1,4,5,3)'
+            sage: cm = FatGraph(vp, ep, fp)
+            sage: cm.polytope([5,7])
+
+        """
+        # we want to count solutions in integral edges of the face stuff
+        if self.num_faces() != len(b):
+            raise ValueError
+
+        ep = self._ep
+        fp = self._fp
+
+        ieqs = []
+        # positivity
+        for i in range(self._n):
+            l = [0] * self._n
+            l[i] = 1
+            ieqs.append([-min_length] + l)
+
+        eqns = []
+        # half edge equations
+        for i,j in self.edges():
+            l = [0] * self._n
+            l[i] = 1
+            l[j] = -1
+            eqns.append([0] + l)
+
+        # face equations
+        for bb,f in zip(b,self.faces()):
+            l = [0] * self._n
+            for i in f:
+                l[i] = 1
+            eqns.append([-bb] + l)
+
+        from sage.geometry.polyhedron.constructor import Polyhedron
+        return Polyhedron(ieqs=ieqs, eqns=eqns)
+
+    def integral_points(self, b):
+        r"""
+        Return the edge lengths solution to the face lengths constraint.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
+            sage: vp = '(0,4,2,5,1,3)'
+            sage: ep = '(0,1)(2,3)(4,5)'
+            sage: fp = '(0,5)(1,3,4,2)'
+            sage: cm = FatGraph(vp, ep, fp)
+            sage: cm.integral_points((2,4))
+            ((1, 1, 1, 1, 1, 1),)
+            sage: cm.integral_points((3,5))
+            ((1, 1, 1, 1, 2, 2), (2, 2, 1, 1, 1, 1))
+            sage: cm.integral_points((5,11))
+            ((1, 1, 3, 3, 4, 4),
+             (2, 2, 3, 3, 3, 3),
+             (3, 3, 3, 3, 2, 2),
+             (4, 4, 3, 3, 1, 1))
+        """
+        self.polytope(b).integral_points()
 
     def kontsevich_volume_rational_function(self, R=None):
         r"""
