@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 r"""
 Installation script for the flatsurf module
 
@@ -6,7 +5,7 @@ It depends on distutils
 """
 
 try:
-    from sage.env import SAGE_SRC, SAGE_VERSION
+    import sage.all
 except ImportError:
     raise ValueError("this package currently installs only inside SageMath (http://www.sagemath.org)\n"
                      "If you are using Ubuntu with Sage installed from the official apt repository, run\n"
@@ -50,13 +49,12 @@ extensions_data = {
         'headers': ['lyapunov_exponents.h']
         },
 
-    # build integer_iet only from sage 8.0 (troubles with cysignals)
+    # this will not compile on sage < 8.0 (troubles with cysignals)
     'integer_iet': {
         'name': 'surface_dynamics.interval_exchanges.integer_iet',
         'dir': 'interval_exchanges',
         'sources': ['integer_iet.pyx', 'int_iet.c', 'int_vector.c'],
         'headers': ['integer_iet.pxd', 'int_iet.h'],
-        'condition': LooseVersion(SAGE_VERSION) >= LooseVersion('8.0')
         },
 
     # build iet_family only if pplpy is available
