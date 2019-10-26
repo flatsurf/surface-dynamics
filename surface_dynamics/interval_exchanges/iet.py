@@ -1033,6 +1033,36 @@ class IntervalExchangeTransformation(object):
         else:
             return res
 
+    def backward_rauzy_move(self, winner, side='right'):
+        r"""
+        Return a new interval exchange transformation obtained by performing a backward rauzy move.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import iet
+            sage: perm = iet.Permutation('a b c d e f', 'f c b e d a')
+            sage: x = polygen(QQ)
+            sage: poly = x^3 - x^2 - x - 1
+            sage: root = AA.polynomial_root(poly, RIF(1.8, 1.9))
+            sage: K.<a> = NumberField(poly, embedding=root)
+            sage: T = iet.IntervalExchangeTransformation(perm, [a**2, a-1, a + 2, 3, 2*a - 3, 1])
+            Interval exchange transformation of [0, a^2 + 4*a + 2[ with permutation
+            a b c d e f
+            f c b e d a
+            sage: S = T.backward_rauzy_move(0).backward_rauzy_move(1).backward_rauzy_move(1)
+            sage: S
+            Interval exchange transformation of [0, a^2 + 7*a + 4[ with permutation
+            a b c f d e
+            f b e d a c
+            sage: S.rauzy_move(iterations=3) == T
+            True
+        """
+        winner = interval_conversion(winner)
+        side = side_conversion(side)
+        res = copy(self)
+        res._backward_rauzy_move(winner, side)
+        return res
+
     def zorich_move(self, side='right', iterations=1, data=False):
         r"""
         Performs a Rauzy move.
@@ -1222,6 +1252,43 @@ class IntervalExchangeTransformation(object):
         self._lengths[winner_interval] -= self._lengths[loser_interval]
 
         return winner, abc
+
+    def _backward_rauzy_move(self, winner, side=-1):
+        r"""
+        Inplace backward rauzy move.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import iet
+            sage: x = polygen(QQ)
+            sage: K.<cbrt2> = NumberField(x^3 - 2, embedding=AA(2)**(1/3))
+            sage: p = iet.Permutation("a b c d", "d c b a")
+            sage: T0 = iet.IntervalExchangeTransformation(p, [1, cbrt2, cbrt2**2, cbrt2 - 1])
+            sage: T1 = copy(T0)
+            sage: T1.lengths()
+            (1, cbrt2, cbrt2^2, cbrt2 - 1)
+            sage: T1._backward_rauzy_move(0)
+            sage: T1.lengths()
+            (1, cbrt2, cbrt2^2, cbrt2^2 + cbrt2 - 1)
+            sage: _ = T1._rauzy_move()
+            sage: T1 == T0
+            True
+
+            sage: T1._backward_rauzy_move(0)
+            sage: T1._backward_rauzy_move(1)
+            sage: T1._backward_rauzy_move(1)
+            sage: T1._backward_rauzy_move(0)
+            sage: _ = T1._rauzy_move()
+            sage: _ = T1._rauzy_move()
+            sage: _ = T1._rauzy_move()
+            sage: _ = T1._rauzy_move()
+            sage: T1 == T0
+            True
+        """
+        self._permutation = self._permutation.backward_rauzy_move(winner=winner, side=side, inplace=True)
+        winner_interval = self._permutation._labels[winner][side]
+        loser_interval = self._permutation._labels[1-winner][side]
+        self._lengths[winner_interval] += self._lengths[loser_interval]
 
     def _zorich_move(self, side=-1):
         r"""
@@ -1439,7 +1506,7 @@ class IntervalExchangeTransformation(object):
             sage: from surface_dynamics import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1,1])
-            sage: t.plot_two_intervals()  # not tested (problem with matplotlib font cache)
+            sage: t.plot_two_intervals()
             Graphics object consisting of 8 graphics primitives
         """
         from sage.plot.plot import Graphics
@@ -1452,7 +1519,7 @@ class IntervalExchangeTransformation(object):
 
         G = Graphics()
 
-        lengths = map(float,self._lengths)
+        lengths = list(map(float, self._lengths))
         total_length = sum(lengths)
 
         if colors is None:
