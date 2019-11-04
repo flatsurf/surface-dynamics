@@ -884,36 +884,58 @@ class AbelianStratum(Stratum):
         
     def single_cylinder_representative(self):
         r"""
-        Returns the permutation representative of a square-tiled surface in this stratum having a single vertical cylinder and a single horizontal cylinder.
+        Returns a single cylinder permutation representative.
         
-        Such permutation representatives were constructed for every connected component of every stratum of Abelian differentials by Jeffreys [Jef19].
+        Returns a permutation representative of a square-tiled surface in this
+        component having a single vertical cylinder and a single horizontal cylinder.
+        
+        Such representatives were constructed for every stratum of Abelian
+        differentials by Jeffreys [Jef19].
         
         EXAMPLES::
         
             sage: from surface_dynamics import *
+            sage: from surface_dynamics.flat_surfaces.single_cylinder import cylinder_check
             
             sage: C = AbelianStratum(2,0)
             sage: p = C.single_cylinder_representative()
-            sage: p.stratum()
-            H_2(2, 0)
+            sage: p.stratum() == C
+            True
+            sage: cylinder_check(p)
+            True
             sage: C = AbelianStratum(3,1)
             sage: p = C.single_cylinder_representative()
-            sage: p.stratum()
-            H_3(3, 1)
+            sage: p.stratum() == C
+            True
+            sage: cylinder_check(p)
+            True
+            sage: C = AbelianStratum(2)
+            sage: C.single_cylinder_representative()
+            Traceback (most recent call last):
+               ...
+            ValueError: no 1,1-square-tiled surfaces in this stratum try again with H_2(2, 0)
+            sage: C = AbelianStratum(1,1)
+            sage: C.single_cylinder_representative()
+            Traceback (most recent call last):
+               ...
+            ValueError: no 1,1-square-tiled surfaces in this stratum try again with H_2(1^2, 0^2)
         """
         genus = self.genus()
         nb_real_zeros = self.nb_zeros()-self.nb_fake_zeros()
         
-        if genus==2 and nb_real_zeros==1 and self.nb_fake_zeros()<1:
-            raise ValueError("No 1,1-square-tiled surfaces in this stratum. 1,1-square-tiled surfaces in H_2(2) require at least one marked point. Try again with H_2(2, 0).")
-        elif genus==2 and nb_real_zeros==2 and self.nb_fake_zeros()<    2:
-            raise ValueError("No 1,1-square-tiled surfaces in this stratum. 1,1-square-tiled surfaces in H_2(1^2) require at least two marked points. Try again with H_2(1^2, 0^2).")
+        if genus == 2 and nb_real_zeros == 1 and self.nb_fake_zeros() < 1:
+            raise ValueError("no 1,1-square-tiled surfaces in this stratum try again with H_2(2, 0)")
+        elif genus == 2 and nb_real_zeros == 2 and self.nb_fake_zeros() < 2:
+            raise ValueError("no 1,1-square-tiled surfaces in this stratum try again with H_2(1^2, 0^2)")
         else:
             return self.one_component().single_cylinder_representative()
     
     def single_cylinder_origami(self):
         r"""
-        Returns the orgami associated to the single cylinder permutation representative of this stratum.
+        Returns an orgami associated to a single cylinder permutation representative.
+        
+        Returns an origami in this connected component having a single vertical
+        cylinder and a single horizontal cylinder.
         
         Examples::
         
@@ -924,11 +946,16 @@ class AbelianStratum(Stratum):
             sage: O
             (1,2,3,4,5)
             (1,4,3,5,2)
+            sage: O.stratum() == AbelianStratum(4)
+            True
             sage: C = AbelianStratum(2,0)
             sage: O = C.single_cylinder_origami()
             sage: O
             (1,2,3,4)
-            (1,3,2,4)    
+            (1,3,2,4)
+            sage: O.stratum() == AbelianStratum(2)
+            True
+                
         """
         return self.one_component().single_cylinder_origami()
 
@@ -1748,429 +1775,72 @@ class AbelianStratumComponent(StratumComponent):
         
     def single_cylinder_representative(self):
         r"""
-        Returns the permutation representative of a square-tiled surface in this connected component having a single vertical cylinder and a single horizontal cylinder.
+        Returns a single cylinder permutation representative.
         
-        Such permutation representatives were constructed for every connected component of every stratum of Abelian differentials by Jeffreys [Jef19].
+        Returns a permutation representative of a square-tiled surface in this
+        component having a single vertical cylinder and a single horizontal cylinder.
         
-        This method will be called on the components of connected strata and on instances of the NonHypAbelianStratumComponent class.
+        Such representatives were constructed for every stratum of Abelian
+        differentials by Jeffreys [Jef19].
         
         EXAMPLES::
         
             sage: from surface_dynamics import *
+            sage: from surface_dynamics.flat_surfaces.single_cylinder import cylinder_check
             
             sage: cc = AbelianStratum(1,1,1,1).unique_component()
             sage: p = cc.single_cylinder_representative()
             sage: p
             0 1 2 3 4 5 6 7 8
             2 6 5 3 1 8 4 7 0
+            sage: p.stratum_component() == cc
+            True
+            sage: cylinder_check(p)
+            True
             sage: cc = AbelianStratum(2,1,1).unique_component()
             sage: p = cc.single_cylinder_representative()
             sage: p
             0 1 2 3 4 5 6 7
             2 6 4 1 7 5 3 0
+            sage: p.stratum_component() == cc
+            True
+            sage: cylinder_check(p)
+            True
             sage: cc = AbelianStratum(3,3).non_hyperelliptic_component()
             sage: p = cc.single_cylinder_representative()
             sage: p
             0 1 2 3 4 5 6 7 8
             2 8 6 5 7 4 1 3 0
+            sage: p.stratum_component() == cc
+            True
+            sage: cylinder_check(p)
+            True
+            
         """
-        from surface_dynamics.flat_surfaces.single_cylinder_concatenation import cylinder_concatenation
+        from surface_dynamics.flat_surfaces.single_cylinder import cylinder_concatenation
+        from surface_dynamics.flat_surfaces.single_cylinder import only_even_2
+        from surface_dynamics.flat_surfaces.single_cylinder import only_odds_11
+        from surface_dynamics.flat_surfaces.single_cylinder import odd_zeros_one_one
         from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
-        from surface_dynamics.flat_surfaces import abelian_strata
         
         zeros = self.stratum().zeros()
-        real_zeros = [z for z in zeros if z!=0]
-        odd_zeros = [z for z in real_zeros if z%2==1]
-        even_zeros = [z for z in real_zeros if z%2==0]
+        real_zeros = [z for z in zeros if z != 0]
+        odd_zeros = [z for z in real_zeros if z%2 == 1]
+        even_zeros = [z for z in real_zeros if z%2 == 0]
         
         fk_zeros_perm = GeneralizedPermutation([0],[0])
         mk_pt_perm = GeneralizedPermutation([0,1],[1,0])
         for i in range(self.stratum().nb_fake_zeros()):
             fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)
-        if real_zeros==[]:
+        if real_zeros == []:
             return fk_zeros_perm
             
-        def odds_right_swap(zero_pair):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the Abelian stratum having a pair of zeros of the given odd orders.
-            
-            Performs a column swap on another permutation to achieve this.
-            """
-            if zero_pair==[3,3]:
-                return GeneralizedPermutation([0,1,2,3,4,5,6,7,8],[2,8,6,5,7,4,1,3,0])
-            else:
-                dif = abs(zero_pair[0]-zero_pair[1])
-                if dif==0:
-                    j = (min(zero_pair)-3)//2
-                else:
-                    j = (min(zero_pair)-1)//2
-                perm_1 = AbelianStratum(4*j+2-dif).odd_component().single_cylinder_representative()
-                perm_2 = AbelianStratum(4).odd_component().single_cylinder_representative()
-                perm = cylinder_concatenation(perm_1,perm_2)
-                top_row = perm[0][1:]
-                bot_row = perm[1][:-1]
-                top_row = top_row[:-5]+[top_row[-4],top_row[-5]]+top_row[-3:]
-                bot_row = bot_row[:-5]+[bot_row[-4],bot_row[-5]]+bot_row[-3:]
-                top_row_new = [i for i in range(1,len(top_row)+1)]
-                bot_row_new = ['x' for i in range(1,len(bot_row)+1)]
-                for i in range(1,len(top_row)+1):
-                    for k in range(len(bot_row)):
-                        if bot_row[k]==top_row[i-1]:
-                            bot_row_new[k]=i
-                top_row = [0]+top_row_new
-                bot_row = bot_row_new+[0]
-                return GeneralizedPermutation(top_row,bot_row)
-        
-        def odds_left_swap(zero_pair):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the Abelian stratum having a pair of zeros of the given odd orders.
-            
-            Performs a column swap on another permutation to achieve this.
-            """
-            dif = abs(zero_pair[0]-zero_pair[1])
-            j = (min(zero_pair)-1)//2
-            perm_1 = AbelianStratum(4*j+2).odd_component().single_cylinder_representative()
-            perm_2 = AbelianStratum(dif).odd_component().single_cylinder_representative()
-            perm = cylinder_concatenation(perm_1,perm_2)
-            swap_point = len(perm_2[0])-1
-            top_row = perm[0][1:]
-            bot_row = perm[1][:-1]
-            top_row = top_row[:-(swap_point+1)]+[top_row[-(swap_point)],top_row[-(swap_point+1)]]+top_row[-(swap_point-1):]
-            bot_row = bot_row[:-(swap_point+1)]+[bot_row[-(swap_point)],bot_row[-(swap_point+1)]]+bot_row[-(swap_point-1):]
-            top_row_new = [i for i in range(1,len(top_row)+1)]
-            bot_row_new = ['x' for i in range(1,len(bot_row)+1)]
-            for i in range(1,len(top_row)+1):
-                for k in range(len(bot_row)):
-                    if bot_row[k]==top_row[i-1]:
-                        bot_row_new[k]=i
-            top_row = [0]+top_row_new
-            bot_row = bot_row_new+[0]
-            return GeneralizedPermutation(top_row,bot_row)
-            
-        def no_ones_odds(odd_zeros):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the Abelian stratum having zeros of the given odd orders, none of which are of order 1.
-            """
-            if len(odd_zeros)==2 and abs(odd_zeros[0]-odd_zeros[1])<=2:
-                return odds_right_swap(odd_zeros)
-            elif len(odd_zeros)==2 and abs(odd_zeros[0]-odd_zeros[1])>2:
-                return odds_left_swap(odd_zeros)
-            else:
-                perm = no_ones_odds(odd_zeros[:2])
-                for i in range(2,len(odd_zeros),2):
-                    perm = cylinder_concatenation(perm,no_ones_odds(odd_zeros[i:i+2]))
-                return perm    
-                
-        def one_one_odds(odd_zeros):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the Abelian stratum having zeros of the given odd orders, only one of which is of order 1.
-            """
-            num = odd_zeros[0]
-            if num==3:
-                perm = GeneralizedPermutation([0,1,2,3,4,5,6],[2,5,1,6,4,3,0])
-                odd_zeros.remove(1)
-                if len(odd_zeros)==1:
-                    return perm
-                else:
-                    return cylinder_concatenation(perm,no_ones_odds(odd_zeros[1:]))
-            elif num==5:
-                perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8],[2,4,7,3,1,8,6,5,0])
-                odd_zeros.remove(1)
-                if len(odd_zeros)==1:
-                    return perm
-                else:
-                    return cylinder_concatenation(perm,no_ones_odds(odd_zeros[1:]))
-            else:
-                odd_zeros.remove(1)
-                perm_1 = AbelianStratum(num-3).odd_component().single_cylinder_representative()
-                length_1 = len(perm_1[0])-1
-                top_row_1 = perm_1[0]
-                bot_row_1 = perm_1[1][:-1]
-                for i in range(length_1):
-                    if bot_row_1[i]==1:
-                        bot_row_1[i] = 4+length_1
-                top_row_2 = [i+length_1 for i in range(1,6)]
-                bot_row_2 = [3+length_1,1+length_1,1,5+length_1,2+length_1,0]
-                top_row = top_row_1 + top_row_2
-                bot_row = bot_row_1 + bot_row_2
-                perm = GeneralizedPermutation(top_row,bot_row)
-                if len(odd_zeros)==1:
-                    return perm
-                else:
-                    return cylinder_concatenation(perm,no_ones_odds(odd_zeros[1:]))    
-                    
-        def two_ones_odds(odd_zeros):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the Abelian stratum having zeros of the given odd orders, only two of which are of order 1.
-            """
-            odd_zeros.remove(1)
-            odd_zeros.remove(1)
-            perm = cylinder_concatenation(one_one_odds([odd_zeros[0],1]),one_one_odds([odd_zeros[1],1]))
-            if len(odd_zeros)==2:
-                return perm
-            else:
-                return cylinder_concatenation(perm,no_ones_odds(odd_zeros[2:]))
-            
-        def three_ones_odds(odd_zeros):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the Abelian stratum having zeros of the given odd orders, only three of which are of order 1.
-            """
-            if len(odd_zeros)>4:    
-                num = odd_zeros[0]
-                odd_zeros.remove(1)
-                odd_zeros.remove(num)
-                perm = one_one_odds([num,1])
-                return cylinder_concatenation(perm,two_ones_odds(odd_zeros))
-            else:
-                num = odd_zeros[0]
-                res_4 = num%4
-                if num==3:
-                    return GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10],[2,10,6,5,1,8,4,7,3,9,0])
-                elif num==5:
-                    return GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10,11,12],[2,12,9,8,1,7,3,6,10,5,4,11,0])
-                elif res_4==3:
-                    top_row = [i for i in range(num+8)]
-                    bot_row = [2,num+7,num+3,num+2,1]
-                    for i in range(4,num+1,2):
-                        bot_row += [i,i-1]
-                    bot_row += [num+5,num+1,num+4,num,num+6,0]
-                    return GeneralizedPermutation(top_row,bot_row)
-                else:
-                    top_row = [i for i in range(num+8)]
-                    bot_row = [2,num+7,num+4,num+3,1]
-                    for i in range(4,num-1,2):
-                        bot_row += [i,i-1]
-                    bot_row += [num+2,num-2,num+1,num+5,num,num-1,num+6,0]
-                    return GeneralizedPermutation(top_row,bot_row)
-                    
-        def even_ones_odds(odd_zeros,one_count):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the Abelian stratum having zeros of the given odd orders, an even number of which are of order 1.
-            """
-            for i in range(one_count):
-                odd_zeros.remove(1)
-            four_ones = GeneralizedPermutation([0,1,2,3,4,5,6,7,8],[2,6,5,3,1,8,4,7,0])
-            six_ones = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10,11,12],[2,8,1,5,11,7,3,10,6,12,9,4,0])
-            if one_count%4==0:
-                perm = four_ones
-                for i in range((one_count-4)//4):
-                    perm = cylinder_concatenation(perm,four_ones)
-            else:
-                perm = six_ones
-                for i in range((one_count-6)//4):
-                    perm = cylinder_concatenation(perm,four_ones)
-            if len(odd_zeros)==0:
-                return perm
-            else:
-                return cylinder_concatenation(perm,no_ones_odds(odd_zeros))
-                
-        def odd_ones_odds(odd_zeros,one_count):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the Abelian stratum having zeros of the given odd orders, an odd number of which are of order 1.
-            """
-            for i in range(one_count-1):
-                odd_zeros.remove(1)    
-            even_ones = [1 for i in range(one_count-1)]
-            return cylinder_concatenation(one_one_odds(odd_zeros),even_ones_odds(even_ones,one_count-1))
-            
-        def min_on_bot(zero_pair):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the AbelianStratum having a pair of zeros of the given odd orders.
-            
-            This permutation has a particular form required for use in only_even_2 below.
-            """
-            if zero_pair==[3,1]:
-                return GeneralizedPermutation([0,1,2,3,4,5,6],[2,6,5,1,4,3,0])
-            elif zero_pair==[5,3]:
-                return GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10],[2,6,4,10,8,3,1,9,7,5,0])
-            else:
-                num = max(zero_pair)
-                top_row = [i for i in range(2*num+1)]
-                bot_row = [2,6,4,10,8,3,12,9,7,5]
-                for i in range(14,2*num+2,2):
-                    bot_row = bot_row + [i,i-3]
-                bot_row = bot_row + [1,2*num-1,0]
-                return GeneralizedPermutation(top_row,bot_row)
-                
-        def odd_zeros_one_one(odd_zeros):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the Abelian stratum 
-            """
-            one_count = odd_zeros.count(1)
-            if one_count==0:
-                return no_ones_odds(odd_zeros)
-            elif one_count==1:
-                return one_one_odds(odd_zeros)
-            elif one_count==2:
-                return two_ones_odds(odd_zeros)
-            elif one_count==3:
-                return three_ones_odds(odd_zeros)
-            elif one_count>=4 and one_count%2==0:
-                return even_ones_odds(odd_zeros,one_count)
-            else:
-                return odd_ones_odds(odd_zeros,one_count)
-            
-        def only_even_2(odd_zeros):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the AbelianStratum having zeros of the given odd orders and a single zero of order 2.
-            """
-            if odd_zeros.count(1)==len(odd_zeros) and odd_zeros.count(1)%4==2:
-                perm = GeneralizedPermutation([0,1,2,3,4,5,6,7],[2,6,4,1,7,5,3,0])
-                if len(odd_zeros)==2:
-                    return perm
-                else:
-                    odd_zeros.remove(1)
-                    odd_zeros.remove(1)
-                    one_count = odd_zeros.count(1)
-                    return cylinder_concatenation(perm,even_ones_odds(odd_zeros,one_count))
-            elif odd_zeros.count(1)==len(odd_zeros) and odd_zeros.count(1)%4==0:
-                perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10,11],[2,7,11,6,3,9,5,1,8,4,10,0])
-                if len(odd_zeros)==4:
-                    return perm
-                else:
-                    odd_zeros.remove(1)
-                    odd_zeros.remove(1)
-                    odd_zeros.remove(1)
-                    odd_zeros.remove(1)
-                    one_count = odd_zeros.count(1)
-                    return cylinder_concatenation(perm,even_ones_odds(odd_zeros,one_count))
-            elif odd_zeros.count(1)==2 and len(odd_zeros)==4:
-                perm = GeneralizedPermutation([0,1,2,3,4,5,6,7],[2,6,4,1,7,5,3,0])
-                return cylinder_concatenation(perm,no_ones_odds(odd_zeros[:2]))
-            else:
-                if len(odd_zeros)==4 and odd_zeros.count(1)==3:
-                    perm = GeneralizedPermutation([0,1,2,3,4,5,6,7],[2,6,4,1,7,5,3,0])    
-                    return cylinder_concatenation(perm,one_one_odds([odd_zeros[0],1]))
-                else:
-                    pair_zeros = odd_zeros[:2]
-                    odd_zeros = odd_zeros[2:]
-                    dif = abs(pair_zeros[0]-pair_zeros[1])
-                    if 1 in pair_zeros:
-                        if pair_zeros==[3,1]:
-                            perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9],[2,6,8,3,7,4,1,9,5,0])
-                            if len(odd_zeros)==0:
-                                return perm
-                            else:
-                                one_count = odd_zeros.count(1)
-                                return cylinder_concatenation(perm,even_ones_odds(odd_zeros,one_count))
-                        else:
-                            perm_1 = one_one_odds([pair_zeros[0]-2,1])
-                            length_1 = len(perm_1[0])-1
-                            top_row_1 = perm_1[0]
-                            bot_row_1 = perm_1[1][:-1]
-                            for i in range(length_1):
-                                if bot_row_1[i]==1:
-                                    bot_row_1[i] += length_1
-                            top_row_2 = [i+length_1 for i in range(1,6)]
-                            bot_row_2 = [3+length_1,5+length_1,2+length_1,1,4+length_1,0]
-                            top_row = top_row_1 + top_row_2
-                            bot_row = bot_row_1 + bot_row_2
-                            perm = GeneralizedPermutation(top_row,bot_row)
-                            if len(odd_zeros)==0:
-                                return perm
-                            else:
-                                one_count = odd_zeros.count(1)
-                                return cylinder_concatenation(perm,even_ones_odds(odd_zeros,one_count))
-                    elif dif>0:
-                        pair_zeros[0] += -2
-                        perm_1 = no_ones_odds(pair_zeros)
-                        length_1 = len(perm_1[0])-1
-                        top_row_1 = perm_1[0]
-                        bot_row_1 = perm_1[1][:-1]
-                        for i in range(length_1):
-                            if bot_row_1[i]==1:
-                                bot_row_1[i] += length_1
-                        top_row_2 = [i+length_1 for i in range(1,6)]
-                        bot_row_2 = [3+length_1,5+length_1,2+length_1,1,4+length_1,0]
-                        top_row = top_row_1 + top_row_2
-                        bot_row = bot_row_1 + bot_row_2
-                        perm = GeneralizedPermutation(top_row,bot_row)
-                        if len(odd_zeros)==0:
-                            return perm    
-                        else:
-                            perm_odd = odd_zeros_one_one(odd_zeros)
-                            return cylinder_concatenation(perm,perm_odd)
-                    else:
-                        pair_zeros[1] += -2
-                        perm_1 = min_on_bot(pair_zeros)
-                        length_1 = len(perm_1[0])-1
-                        top_row_1 = perm_1[0]
-                        bot_row_1 = perm_1[1][:-1]
-                        for i in range(length_1):
-                            if bot_row_1[i]==1:
-                                bot_row_1[i] += length_1
-                        top_row_2 = [i+length_1 for i in range(1,6)]
-                        bot_row_2 = [3+length_1,5+length_1,2+length_1,1,4+length_1,0]
-                        top_row = top_row_1 + top_row_2
-                        bot_row = bot_row_1 + bot_row_2
-                        perm = GeneralizedPermutation(top_row,bot_row)
-                        if len(odd_zeros)==0:
-                            return perm    
-                        else:
-                            odd_perm = odd_zeros_one_one(odd_zeros)
-                            return cylinder_concatenation(perm,odd_perm)    
-            
-        def only_odds_11(even_zeros):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the AbelianStratum having zeros of the given even orders and two zeros of order 1.
-            """
-            if set(even_zeros)=={2} and len(even_zeros)%2==1:
-                perm = GeneralizedPermutation([0,1,2,3,4,5,6,7],[2,6,4,1,7,5,3,0])
-                if len(even_zeros)==1:
-                    return perm
-                else:
-                    even_zeros.remove(2)
-                    even_perm = AbelianStratum(even_zeros).odd_component().single_cylinder_representative()
-                    return cylinder_concatenation(perm,even_perm)
-            elif set(even_zeros)=={2} and len(even_zeros)%2==0:
-                perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10],[2,4,9,7,3,8,5,1,10,6,0])
-                if len(even_zeros)==2:
-                    return perm
-                else:
-                    even_zeros.remove(2)
-                    even_zeros.remove(2)
-                    even_perm = AbelianStratum(even_zeros).odd_component().single_cylinder_representative()
-                    return cylinder_concatenation(perm,even_perm)
-            elif even_zeros.count(2)==1 and len(even_zeros)==2:
-                perm = GeneralizedPermutation([0,1,2,3,4,5,6,7],[2,6,4,1,7,5,3,0])
-                even_perm = AbelianStratum(even_zeros[0]).odd_component().single_cylinder_representative()
-                return cylinder_concatenation(perm,even_perm)
-            else:
-                num = even_zeros[0]
-                if num%4==2:
-                    top_row = [i for i in range(num+6)]
-                    bot_row = [2,6,4,1]
-                    for i in range(8,num+6,2):
-                        bot_row += [i,i-1]
-                    bot_row += [num+5,5,3,0]
-                    perm = GeneralizedPermutation(top_row,bot_row)
-                    if len(even_zeros)==1:
-                        return perm
-                    else:
-                        even_perm = AbelianStratum(even_zeros[1:]).odd_component().single_cylinder_representative()
-                        return cylinder_concatenation(perm,even_perm)
-                else:
-                    if num==4:
-                        perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9],[2,7,4,1,9,5,8,6,3,0])
-                    else: 
-                        top_row = [i for i in range(num+6)]
-                        bot_row = [2,7,4,1]
-                        for i in range(9,num+5,2):
-                            bot_row += [i,i-1]
-                        bot_row += [num+5,5,num+4,6,3,0]
-                        perm = GeneralizedPermutation(top_row,bot_row)
-                    if len(even_zeros)==1:
-                        return perm
-                    else:
-                        even_perm = AbelianStratum(even_zeros[1:]).odd_component().single_cylinder_representative()
-                        return cylinder_concatenation(perm,even_perm)
-        
-        if even_zeros==[2]:
+        if even_zeros == [2]:
             perm = only_even_2(odd_zeros)
-        elif odd_zeros==[1,1]:
+        elif odd_zeros == [1,1]:
             perm = only_odds_11(even_zeros)
         else:
-            if even_zeros!=[]:
+            if even_zeros != []:
                 even_perm = AbelianStratum(even_zeros).odd_component().single_cylinder_representative()
             else:
                 even_perm = GeneralizedPermutation([0],[0])
@@ -2181,22 +1851,37 @@ class AbelianStratumComponent(StratumComponent):
         
     def single_cylinder_origami(self):
         r"""
-        Returns the orgami associated to the single cylinder permutation representative of this component.
+        Returns an orgami associated to a single cylinder permutation representative.
+        
+        Returns an origami in this connected component having a single vertical
+        cylinder and a single horizontal cylinder.
         
         Examples::
         
             sage: from surface_dynamics import *
             
-            sage: c = AbelianStratum(4).odd_component()
-            sage: O = c.single_cylinder_origami()
+            sage: cc = AbelianStratum(4).odd_component()
+            sage: O = cc.single_cylinder_origami()
             sage: O
             (1,2,3,4,5)
             (1,4,3,5,2)
-            sage: c = AbelianStratum(2,0).hyperelliptic_component()
-            sage: O = c.single_cylinder_origami()
+            sage: O.stratum_component() == cc
+            True
+            sage: cc = AbelianStratum(5,3).unique_component()
+            sage: O = cc.single_cylinder_origami()
             sage: O
-            (1,2,3,4)
-            (1,3,2,4)    
+            (1,2,3,4,5,6,7,8,9,10)
+            (1,9,8,10,6,7,4,3,5,2)
+            sage: O.stratum_component() == cc
+            True
+            sage: cc = AbelianStratum(4,2).even_component()
+            sage: O = cc.single_cylinder_origami()
+            sage: O
+            (1,2,3,4,5,6,7,8)
+            (1,3,7,5,6,8,4,2)
+            sage: O.stratum_component() == cc
+            True
+                
         """
         from surface_dynamics.flat_surfaces.origamis.origami import Origami
         
@@ -2619,24 +2304,47 @@ class HypAbelianStratumComponent(ASC):
         
     def single_cylinder_representative(self):
         r"""
-        Returns the permutation representative of a square-tiled surface in this connected component having a single vertical cylinder and a single horizontal cylinder.
+        Returns a single cylinder permutation representative.
         
-        Such permutation representatives were constructed for every connected component of every stratum of Abelian differentials by Jeffreys [Jef19].
+        Returns a permutation representative of a square-tiled surface in this
+        component having a single vertical cylinder and a single horizontal cylinder.
+        
+        Such representatives were constructed for every stratum of Abelian
+        differentials by Jeffreys [Jef19].
         
         EXAMPLES::
         
             sage: from surface_dynamics import *
+            sage: from surface_dynamics.flat_surfaces.single_cylinder import cylinder_check
             
             sage: cc = AbelianStratum(2,0).hyperelliptic_component()
             sage: p = cc.single_cylinder_representative()
             sage: p
             0 1 2 3 4
             4 3 1 2 0
+            sage: p.stratum_component() == cc
+            True
+            sage: cylinder_check(p)
+            True
             sage: cc = AbelianStratum({3:2,0:6}).hyperelliptic_component()
             sage: p = cc.single_cylinder_representative()
             sage: p
             0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
             14 12 13 10 11 8 9 7 5 6 3 4 1 2 0
+            sage: p.stratum_component() == cc
+            True
+            sage: cylinder_check(p)
+            True
+            sage: cc = AbelianStratum(2).hyperelliptic_component()
+            sage: cc.single_cylinder_representative()
+            Traceback (most recent call last):
+              ...
+            ValueError: no 1,1-square-tiled surfaces in this connected component try again with H_2(2, 0)^hyp
+            sage: cc = AbelianStratum({3:2,0:5}).hyperelliptic_component()
+            sage: cc.single_cylinder_representative()
+            Traceback (most recent call last):
+              ...
+            ValueError: no 1,1-square-tiled surfaces in this connected component try again with H_4(3^2, 0^6)^hyp
         """
         stratum = self.stratum()
         genus = stratum.genus()
@@ -2646,12 +2354,10 @@ class HypAbelianStratumComponent(ASC):
         
         from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
         
-        if nb_real_zeros==1 and add_fk_zeros<0:
-            from surface_dynamics.flat_surfaces import abelian_strata
-            raise ValueError("No 1,1-square-tiled surfaces in this connected component. 1,1-square-tiled surfaces in %s^hyp require at least %d marked points. Try again with %s^hyp." %(str(AbelianStratum(2*genus-2)),2*genus-3,str(AbelianStratum({2*genus-2:1,0:2*genus-3}))))
-        elif nb_real_zeros==2 and add_fk_zeros<0:
-            from surface_dynamics.flat_surfaces import abelian_strata
-            raise ValueError("No 1,1-square-tiled surfaces in this connected component. 1,1-square-tiled surfaces in %s^hyp require at least %d marked points. Try again with %s^hyp." %(str(AbelianStratum(genus-1,genus-1)),2*genus-2,str(AbelianStratum({genus-1:2,0:2*genus-2}))))
+        if nb_real_zeros == 1 and add_fk_zeros < 0:
+            raise ValueError("no 1,1-square-tiled surfaces in this connected component try again with %s^hyp" %(str(AbelianStratum({2*genus-2:1,0:2*genus-3}))))
+        elif nb_real_zeros == 2 and add_fk_zeros < 0:
+            raise ValueError("no 1,1-square-tiled surfaces in this connected component try again with %s^hyp" %(str(AbelianStratum({genus-1:2,0:2*genus-2}))))
         else:
             top_row = [i for i in range(0,4*genus-3+2*(nb_real_zeros-1)+add_fk_zeros)]
             bot_row = [4*genus-4+2*(nb_real_zeros-1)+add_fk_zeros]
@@ -3131,187 +2837,65 @@ class EvenAbelianStratumComponent(ASC):
                 
     def single_cylinder_representative(self):
         r"""
-        Returns the permutation representative of a square-tiled surface in this connected component having a single vertical cylinder and a single horizontal cylinder.
+        Returns a single cylinder permutation representative.
         
-        Such permutation representatives were constructed for every connected component of every stratum of Abelian differentials by Jeffreys [Jef19].
-        
+        Returns a permutation representative of a square-tiled surface in this
+        component having a single vertical cylinder and a single horizontal cylinder.
+                
+        Such representatives were constructed for every stratum of Abelian
+        differentials by Jeffreys [Jef19].
+                
         EXAMPLES::
         
             sage: from surface_dynamics import *
+            sage: from surface_dynamics.flat_surfaces.single_cylinder import cylinder_check
             
             sage: cc = AbelianStratum(6).even_component()
             sage: p = cc.single_cylinder_representative()
             sage: p
             0 1 2 3 4 5 6 7
             2 7 6 5 3 1 4 0
+            sage: p.stratum_component() == cc
+            True
+            sage: cylinder_check(p)
+            True
             sage: cc = AbelianStratum(4,4).even_component()
             sage: p = cc.single_cylinder_representative()
             sage: p
             0 1 2 3 4 5 6 7 8 9 10
             2 10 7 5 8 1 9 6 4 3 0
+            sage: p.stratum_component() == cc
+            True
+            sage: cylinder_check(p)
+            True
+            
         """
-        from surface_dynamics.flat_surfaces.single_cylinder_concatenation import cylinder_concatenation
+        from surface_dynamics.flat_surfaces.single_cylinder import cylinder_concatenation
+        from surface_dynamics.flat_surfaces.single_cylinder import no_two_even
+        from surface_dynamics.flat_surfaces.single_cylinder import one_two_even
+        from surface_dynamics.flat_surfaces.single_cylinder import two_twos_even
+        from surface_dynamics.flat_surfaces.single_cylinder import even_twos_even
+        from surface_dynamics.flat_surfaces.single_cylinder import odd_twos_even
         from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
-        from surface_dynamics.flat_surfaces import abelian_strata
-        
+                
         zeros = self.stratum().zeros()
-        real_zeros = [z for z in zeros if z!=0]
+        real_zeros = [z for z in zeros if z != 0]
         
         fk_zeros_perm = GeneralizedPermutation([0],[0])
         mk_pt_perm = GeneralizedPermutation([0,1],[1,0])
         for i in range(self.stratum().nb_fake_zeros()):
             fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)
-        if real_zeros==[]:
+        if real_zeros == []:
             return fk_zeros_perm
-            
-        def even_zero_even(num):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the even component of the Abelian stratum with a single zero of order num.
-            """
-            genus = (num+2)//2
-            if genus==4:
-                top_row = [0,1,2,3,4,5,6,7]
-                bot_row = [2,7,6,5,3,1,4,0]
-                return GeneralizedPermutation(top_row,bot_row)
-            else:
-                top_row = [i for i in range(2*genus)]
-                bot_row = [2,7,6,5,3,9,4]
-                for i in range(11,2*genus+1,2):
-                    bot_row = bot_row + [i,i-3]
-                bot_row = bot_row + [1,2*genus-2,0]
-                return GeneralizedPermutation(top_row,bot_row)
-                
-        def no_two_even(real_zeros):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the even component of the Abelian stratum with no zeros of order 2 and no fake zeros.
-            """
-            if set(real_zeros)=={4}:
-                four_count = real_zeros.count(4)
-                even_4_4 = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10],[2,10,7,5,8,1,9,6,4,3,0])
-                real_zeros.remove(4)
-                real_zeros.remove(4)
-                
-                if real_zeros!=[]:
-                    odd_perm = AbelianStratum(real_zeros).odd_component().single_cylinder_representative()
-                    return cylinder_concatenation(even_4_4,odd_perm)
-                else:    
-                    return even_4_4
-            else:
-                perm = even_zero_even(real_zeros[0])
-                if len(real_zeros)==1:
-                    return perm    
-                else:
-                    odd_perm = AbelianStratum(real_zeros[1:]).odd_component().single_cylinder_representative()
-                    return cylinder_concatenation(perm,odd_perm)
-                    
-            
-        def one_two_even(real_zeros):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the even component of the Abelian stratum with only one zero of order 2 and no fake zeros.                
-            These cases must be built separately as there is no 1,1-square-tiled surface in H(2).
-            """
-            if real_zeros==[6,2]:
-                top_row = [0,1,2,3,4,5,6,7,8,9,10]
-                bot_row = [2,10,9,8,6,3,5,1,4,7,0]
-                return GeneralizedPermutation(top_row,bot_row)
-            elif real_zeros==[4,2]:
-                top_row = [0,1,2,3,4,5,6,7,8]
-                bot_row = [2,4,1,8,7,5,3,6,0]
-                return GeneralizedPermutation(top_row,bot_row)
-            else:    
-                real_zeros.remove(2)
-                if set(real_zeros)=={4}:
-                    perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8],[2,4,1,8,7,5,3,6,0])
-                    odd_perm = AbelianStratum(real_zeros[1:]).odd_component().single_cylinder_representative()
-                    return cylinder_concatenation(perm,odd_perm)
-                elif set(real_zeros)=={6} or set(real_zeros)=={6,4}:
-                    perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10],[2,10,9,8,6,3,5,1,4,7,0])
-                    odd_perm = AbelianStratum(real_zeros[1:]).odd_component().single_cylinder_representative()
-                    return cylinder_concatenation(perm,odd_perm)    
-                else:    
-                    perm_1 = even_zero_even(real_zeros[0]-2)
-                    length_1 = len(perm_1[0])-1
-                    top_row_1 = perm_1[0]
-                    bot_row_1 = perm_1[1][:-1]
-                    for i in range(length_1):
-                        if bot_row_1[i]==1:
-                            bot_row_1[i] += length_1
-                    top_row_2 = [i+length_1 for i in range(1,6)]
-                    bot_row_2 = [3+length_1,5+length_1,2+length_1,1,4+length_1,0]
-                    top_row = top_row_1 + top_row_2
-                    bot_row = bot_row_1 + bot_row_2
-                    perm = GeneralizedPermutation(top_row,bot_row)
-                    if len(real_zeros)==1:
-                        return perm
-                    else:
-                        odd_perm = AbelianStratum(real_zeros[1:]).odd_component().single_cylinder_representative()
-                        return cylinder_concatenation(perm,odd_perm)
-        
-        def two_twos_even(real_zeros):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the even component of the Abelian stratum with two zeroz of order 2 and no fake zeros.                
-            These cases must be built separately as there is no 1,1-square-tiled surface in H(2).
-            """
-            real_zeros.remove(2)
-            real_zeros.remove(2)
-            if set(real_zeros)=={4}:
-                perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10,11],[2,8,5,3,1,10,9,6,4,11,7,0])
-                if len(real_zeros)==1:
-                    return perm
-                else:    
-                    odd_perm = AbelianStratum(real_zeros[1:]).odd_component().single_cylinder_representative()
-                    return cylinder_concatenation(perm,odd_perm)
-            else:
-                odd_2_2 = GeneralizedPermutation([0,1,2,3,4,5,6],[2,4,6,3,1,5,0])
-                perm = cylinder_concatenation(even_zero_even(real_zeros[0]),odd_2_2)
-                if len(real_zeros)==1:
-                    return perm
-                else:
-                    odd_perm = AbelianStratum(real_zeros[1:]).odd_component().single_cylinder_representative()
-                    return cylinder_concatenation(perm,odd_perm)
-                    
-        def even_twos_even(real_zeros,two_count):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the even component of the Abelian stratum with an even, at least 4, number of zeros of order 2.
-            """
-            for i in range(two_count):
-                real_zeros.remove(2)
-            odd_2_2 = GeneralizedPermutation([0,1,2,3,4,5,6],[2,4,6,3,1,5,0])
-            even_2_2_2_2 = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10,11,12],[2,5,4,1,12,3,10,7,11,9,6,8,0])
-            twos_perm = even_2_2_2_2
-            for i in range((two_count-4)//2):
-                twos_perm = cylinder_concatenation(twos_perm,odd_2_2)
-            if len(real_zeros)==0:
-                return twos_perm
-            else:
-                odd_perm = AbelianStratum(real_zeros).odd_component().single_cylinder_representative()
-                return cylinder_concatenation(twos_perm,odd_perm)
-                            
-        def odd_twos_even(real_zeros,two_count):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the odd component of the Abelian stratum with an odd, at least 3, number of zeros of order 2.
-            """
-            for i in range(two_count):
-                real_zeros.remove(2)
-            odd_2_2 = GeneralizedPermutation([0,1,2,3,4,5,6],[2,4,6,3,1,5,0])
-            even_2_2_2 = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9],[2,9,8,7,6,3,5,1,4,0])
-            twos_perm = even_2_2_2
-            for i in range((two_count-3)//2):
-                twos_perm = cylinder_concatenation(twos_perm,odd_2_2)
-            if len(real_zeros)==0:
-                return twos_perm
-            else:
-                odd_perm = AbelianStratum(real_zeros).odd_component().single_cylinder_representative()
-                return cylinder_concatenation(twos_perm,odd_perm)
                 
         two_count = real_zeros.count(2)
-        if two_count==0:
+        if two_count == 0:
             return cylinder_concatenation(fk_zeros_perm,no_two_even(real_zeros))
-        elif two_count==1:
+        elif two_count == 1:
             return cylinder_concatenation(fk_zeros_perm,one_two_even(real_zeros))
-        elif two_count==2:
+        elif two_count == 2:
             return cylinder_concatenation(fk_zeros_perm,two_twos_even(real_zeros))
-        elif two_count>2 and two_count%2==0:
+        elif two_count > 2 and two_count%2 == 0:
             return cylinder_concatenation(fk_zeros_perm,even_twos_even(real_zeros,two_count))
         else:
             return cylinder_concatenation(fk_zeros_perm,odd_twos_even(real_zeros,two_count))
@@ -3645,145 +3229,62 @@ class OddAbelianStratumComponent(ASC):
                 
     def single_cylinder_representative(self):
         r"""
-        Returns the permutation representative of a square-tiled surface in this connected component having a single vertical cylinder and a single horizontal cylinder (called a 1,1-square-tiled surface).
+        Returns a single cylinder permutation representative.
         
-        Such permutation representatives were constructed for every connected component of every stratum of Abelian differentials by Jeffreys [Jef19].
+        Returns a permutation representative of a square-tiled surface in this
+        component having a single vertical cylinder and a single horizontal cylinder.
+        
+        Such representatives were constructed for every stratum of Abelian
+        differentials by Jeffreys [Jef19].
         
         EXAMPLES::
         
             sage: from surface_dynamics import *
+            sage: from surface_dynamics.flat_surfaces.single_cylinder import cylinder_check
             
             sage: cc = AbelianStratum(4).odd_component()
             sage: p = cc.single_cylinder_representative()
             sage: p
             0 1 2 3 4 5
             2 5 4 1 3 0
+            sage: p.stratum_component() == cc
+            True
+            sage: cylinder_check(p)
+            True
             sage: cc = AbelianStratum(6,2).odd_component()
             sage: p = cc.single_cylinder_representative()
             sage: p
             0 1 2 3 4 5 6 7 8 9 10
             2 5 4 6 3 8 10 7 1 9 0
+            sage: p.stratum_component() == cc
+            True
+            sage: cylinder_check(p)
+            True
+            
         """
-        from surface_dynamics.flat_surfaces.single_cylinder_concatenation import cylinder_concatenation
+        from surface_dynamics.flat_surfaces.single_cylinder import cylinder_concatenation
+        from surface_dynamics.flat_surfaces.single_cylinder import no_two_odd
+        from surface_dynamics.flat_surfaces.single_cylinder import one_two_odd
+        from surface_dynamics.flat_surfaces.single_cylinder import even_twos_odd
+        from surface_dynamics.flat_surfaces.single_cylinder import odd_twos_odd
         from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
         
         zeros = self.stratum().zeros()
-        real_zeros = [z for z in zeros if z!=0]
+        real_zeros = [z for z in zeros if z != 0]
         
         fk_zeros_perm = GeneralizedPermutation([0],[0])
         mk_pt_perm = GeneralizedPermutation([0,1],[1,0])
         for i in range(self.stratum().nb_fake_zeros()):
             fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)
-        if real_zeros==[]:
-            return fk_zeros_perm
-        
-        def even_zero_odd(num):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the odd component of the Abelian stratum with a single zero of order num.
-            """
-            genus = (num+2)//2
-            if genus==3:
-                top_row = [0,1,2,3,4,5]
-                bot_row = [2,5,4,1,3,0]
-                return GeneralizedPermutation(top_row,bot_row)
-            else:
-                top_row = [i for i in range(2*genus)]
-                bot_row = [2,5,4,7,3]
-                for i in range(9,2*genus+1,2):
-                    bot_row += [i,i-3]
-                bot_row += [1,2*genus-2,0]
-                return GeneralizedPermutation(top_row,bot_row)
-        
-        def no_two_odd(real_zeros):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the odd component of the Abelian stratum with no zeros of order 2 and no fake zeros.
-            """
-            perm = even_zero_odd(real_zeros[0])
-            if len(real_zeros)==1:
-                return perm
-            else:
-                for i in range(1,len(real_zeros)):
-                    perm = cylinder_concatenation(perm,even_zero_odd(real_zeros[i]))
-                return perm
-        
-        def one_two_odd(real_zeros):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the odd component of the Abelian stratum with only one zero of order 2 and no fake zeros.                
-            These cases must be built separately as there is no 1,1-square-tiled surface in H(2).
-            """
-            real_zeros.remove(2)
-            if set(real_zeros)=={4}:            
-                perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8],[2,5,8,3,6,4,1,7,0])
-                if len(real_zeros)==1:
-                    return perm
-                else:    
-                    return cylinder_concatenation(perm,no_two_odd(real_zeros[1:]))
-            else:            
-                perm_1 = even_zero_odd(real_zeros[0]-2)
-                length_1 = len(perm_1[0])-1
-                top_row_1 = perm_1[0]
-                bot_row_1 = perm_1[1][:-1]
-                    
-                for i in range(length_1):
-                    if bot_row_1[i]==1:    
-                        bot_row_1[i] += length_1
-                
-                top_row_2 = [i+length_1 for i in range(1,6)]
-                bot_row_2 = [3+length_1,5+length_1,2+length_1,1,4+length_1,0]
-                top_row = top_row_1 + top_row_2
-                bot_row = bot_row_1 + bot_row_2
-                perm = GeneralizedPermutation(top_row,bot_row)
-                    
-                if len(real_zeros)==1:
-                    return perm
-                else:
-                    return cylinder_concatenation(perm,no_two_odd(real_zeros[1:]))
-                    
-        def even_twos_odd(real_zeros,two_count):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the odd component of the Abelian stratum with an even number of zeros of order 2.
-            """
-            for i in range(two_count):
-                real_zeros.remove(2)
-                    
-            odd_2_2 = GeneralizedPermutation([0,1,2,3,4,5,6],[2,4,6,3,1,5,0])
-            twos_perm = odd_2_2    
-                    
-            for i in range((two_count-2)//2):
-                twos_perm = cylinder_concatenation(twos_perm,odd_2_2)
-                    
-            if len(real_zeros)==0:
-                return twos_perm
-            else:
-                return cylinder_concatenation(twos_perm,no_two_odd(real_zeros))
-                
-        def odd_twos_odd(real_zeros,two_count):
-            r"""
-            Returns the permutation representative of a 1,1-square-tiled surface in the odd component of the Abelian stratum with an odd, at least 3, number of zeros of order 2.
-            """
-            for i in range(two_count):
-                real_zeros.remove(2)
-                    
-            odd_2_2 = GeneralizedPermutation([0,1,2,3,4,5,6],[2,4,6,3,1,5,0])
-                
-            odd_2_2_2 = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9],[2,8,6,9,4,1,3,5,7,0])
-                
-            twos_perm = odd_2_2_2
-                
-            for i in range((two_count-3)//2):
-                twos_perm = cylinder_concatenation(twos_perm,odd_2_2)
-                    
-            if len(real_zeros)==0:
-                return twos_perm
-            else:
-                return cylinder_concatenation(twos_perm,no_two_odd(real_zeros))        
+        if real_zeros == []:
+            return fk_zeros_perm        
                         
         two_count = real_zeros.count(2)
-        if two_count==0:
+        if two_count == 0:
             return cylinder_concatenation(fk_zeros_perm,no_two_odd(real_zeros))
-        elif two_count==1:
+        elif two_count == 1 :
             return cylinder_concatenation(fk_zeros_perm,one_two_odd(real_zeros))
-        elif two_count>=2 and two_count%2==0:
+        elif two_count >= 2 and two_count%2 == 0:
             return cylinder_concatenation(fk_zeros_perm,even_twos_odd(real_zeros,two_count))
         else:
             return cylinder_concatenation(fk_zeros_perm,odd_twos_odd(real_zeros,two_count))
