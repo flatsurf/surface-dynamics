@@ -13,7 +13,7 @@ REFERENCES:
 
 .. [Jef19] L. Jeffreys "Single-cylinder square-tiled surfaces and the ubiquity
     of ratio-optimising pseudo-Anosovs", Preprint (2019),
-    https://arxiv.org/pdf/1906.02016.pdf
+    (https://arxiv.org/pdf/1906.02016.pdf)
 
 
 """

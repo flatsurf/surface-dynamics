@@ -35,7 +35,9 @@ All the code here was first available on Mathematica [ZS]_.
 
 REFERENCES:
 
-.. [Jef19] L. Jeffreys "Single-cylinder square-tiled surfaces and the ubiquity of ratio-optimising pseudo-Anosovs", Preprint (2019), https://arxiv.org/pdf/1906.02016.pdf
+.. [Jef19] L. Jeffreys "Single-cylinder square-tiled surfaces and the ubiquity
+    of ratio-optimising pseudo-Anosovs", Preprint (2019),
+    (https://arxiv.org/pdf/1906.02016.pdf)
 
 .. [KonZor03] M. Kontsevich, A. Zorich "Connected components of the moduli space
    of Abelian differentials with prescripebd singularities" Invent. math. 153,
@@ -932,7 +934,7 @@ class AbelianStratum(Stratum):
     
     def single_cylinder_origami(self):
         r"""
-        Returns an orgami associated to a single cylinder permutation representative.
+        Returns an origami associated to a single cylinder permutation representative.
         
         Returns an origami in this connected component having a single vertical
         cylinder and a single horizontal cylinder.
@@ -1851,7 +1853,7 @@ class AbelianStratumComponent(StratumComponent):
         
     def single_cylinder_origami(self):
         r"""
-        Returns an orgami associated to a single cylinder permutation representative.
+        Returns an origami associated to a single cylinder permutation representative.
         
         Returns an origami in this connected component having a single vertical
         cylinder and a single horizontal cylinder.
