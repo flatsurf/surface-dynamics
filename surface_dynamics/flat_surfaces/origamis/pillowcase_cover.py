@@ -8,7 +8,12 @@
 # ****************************************************************************
 
 from .origami_dense import PillowcaseCover_dense_pyx
-from sage.groups.perm_gps.permgroup import PermutationGroupElement
+
+try:
+    # Trac #28652: Rework the constructor of PermutationGroupElement
+    from sage.groups.perm_gps.constructor import PermutationGroupElement
+except ImportError:
+    from sage.groups.perm_gps.permgroup import PermutationGroupElement
 
 
 def PillowcaseCover(g0, g1, g2, g3=None,

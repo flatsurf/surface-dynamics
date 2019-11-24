@@ -50,7 +50,12 @@ from surface_dynamics.flat_surfaces.origamis.origami_dense import Origami_dense_
 
 from sage.structure.sage_object import SageObject
 from sage.groups.perm_gps.permgroup import PermutationGroup
-from sage.groups.perm_gps.permgroup import PermutationGroupElement
+
+try:
+    # Trac #28652: Rework the constructor of PermutationGroupElement
+    from sage.groups.perm_gps.constructor import PermutationGroupElement
+except ImportError:
+    from sage.groups.perm_gps.permgroup import PermutationGroupElement
 from sage.misc.cachefunc import cached_method
 from copy import copy
 from sage.matrix.constructor import matrix, identity_matrix

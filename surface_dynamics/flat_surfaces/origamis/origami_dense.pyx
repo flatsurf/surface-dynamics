@@ -45,7 +45,13 @@ from libc.stdlib cimport malloc, free
 from libc.string cimport memset, memcpy
 from libc.limits cimport UINT_MAX
 
-from sage.groups.perm_gps.permgroup_element cimport PermutationGroupElement
+from sage.groups.perm_gps.permgroup import PermutationGroupElement
+try:
+    # Trac #28652: Rework the constructor of PermutationGroupElement
+    from sage.groups.perm_gps.constructor import PermutationGroupElement as PermutationConstructor
+except ImportError:
+    PermutationConstructor = PermutationGroupElement
+
 from sage.misc.cachefunc import cached_method
 
 # TODO:
@@ -92,9 +98,13 @@ def origami_from_gap_permutations(r, u):
         (1,2)(3,4)
         (1)(2,3)(4)
     """
-    r = PermutationGroupElement(r)
-    u = PermutationGroupElement(u)
-    n = max(max(r.domain()), max(u.domain()))
+    r = PermutationConstructor(r)
+    u = PermutationConstructor(u)
+    n = 0
+    if r.domain():
+        n = max(n, max(r.domain()))
+    if u.domain():
+        n = max(n, max(u.domain()))
     r = [r(i+1)-1 for i in range(n)]
     u = [u(i+1)-1 for i in range(n)]
     return Origami_dense_pyx(tuple(r), tuple(u))
@@ -685,7 +695,7 @@ cdef class Origami_dense_pyx(object):
             sage: o.r()
             (1,2,3)
         """
-        return PermutationGroupElement([i+1 for i in self.r_tuple()], check=False)
+        return PermutationConstructor([i+1 for i in self.r_tuple()], check=False)
 
     def r_inv(self):
         r"""
@@ -698,7 +708,7 @@ cdef class Origami_dense_pyx(object):
             sage: o.r_inv()
             (1,3,2)
         """
-        return PermutationGroupElement([i+1 for i in self.r_inv_tuple()], check=False)
+        return PermutationConstructor([i+1 for i in self.r_inv_tuple()], check=False)
 
     def u(self):
         r"""
@@ -711,7 +721,7 @@ cdef class Origami_dense_pyx(object):
             sage: o.u()
             (1,2,3,4)
         """
-        return PermutationGroupElement([i+1 for i in self.u_tuple()], check=False)
+        return PermutationConstructor([i+1 for i in self.u_tuple()], check=False)
 
     def u_inv(self):
         r"""
@@ -724,7 +734,7 @@ cdef class Origami_dense_pyx(object):
             sage: o.u_inv()
             (1,4,3,2)
         """
-        return PermutationGroupElement([i+1 for i in self.u_inv_tuple()], check=False)
+        return PermutationConstructor([i+1 for i in self.u_inv_tuple()], check=False)
 
     def widths_and_heights(self):
         r"""
@@ -1056,7 +1066,7 @@ cdef class Origami_dense_pyx(object):
 
         if return_map:
             m = oo._set_standard_form(return_map=True)
-            return oo, PermutationGroupElement([i+1 for i in m])
+            return oo, PermutationConstructor([i+1 for i in m])
         else:
             oo._set_standard_form(return_map=False)
             return oo
@@ -1649,7 +1659,7 @@ cdef class Origami_dense_pyx(object):
                 involution = A.list()[1]
             else:
                 if not isinstance(involution, PermutationGroupElement):
-                    involution = PermutationGroupElement(involution)
+                    involution = PermutationConstructor(involution)
 
             assert involution * self.r() * involution == self.r(), "srs is different from s"
             assert involution * self.u() * involution == self.u(), "sus is different from u"
@@ -2456,14 +2466,14 @@ cdef class Origami_dense_pyx(object):
             raise ValueError("sr and su should be two lists of length %d" % N)
 
         if not as_tuple:
-            sr = [PermutationGroupElement(x, check=check) for x in sr]
-            su = [PermutationGroupElement(x, check=check) for x in su]
+            sr = [PermutationConstructor(x, check=check) for x in sr]
+            su = [PermutationConstructor(x, check=check) for x in su]
             sr = [[i-1 for i in x.domain()] for x in sr]
             su = [[i-1 for i in x.domain()] for x in su]
 
             #the more direct        
-            #    sr = [[i-1 for i in PermutationGroupElement(x, check=check).domain()] for x in sr]
-            #    su = [[i-1 for i in PermutationGroupElement(x, check=check).domain()] for x in su]
+            #    sr = [[i-1 for i in PermutationConstructor(x, check=check).domain()] for x in sr]
+            #    su = [[i-1 for i in PermutationConstructor(x, check=check).domain()] for x in su]
             #does not work
 
             d = max(max(len(x) for x in sr), max(len(x) for x in su))
