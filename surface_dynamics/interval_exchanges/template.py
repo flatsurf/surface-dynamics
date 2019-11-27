@@ -1919,7 +1919,7 @@ class Permutation(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import iet
             sage: p = iet.Permutation('a b', 'b a')
             sage: p.cover(['(1,2)', '(1,3)'])
             Covering of degree 3 of the permutation:
@@ -1943,6 +1943,15 @@ class Permutation(SageObject):
             ()
             sage: q.covering_data('c')
             (1,3)
+
+        TESTS::
+
+            sage: from surface_dynamics import iet
+            sage: p = iet.Permutation('a b', 'b a')
+            sage: p.cover(['()', '()'])
+            Traceback (most recent call last):
+            ...
+            ValueError: the degree of the cover must be positive
         """
         if len(perms) != len(self):
             raise ValueError("wrong number of permutations")
@@ -1951,12 +1960,15 @@ class Permutation(SageObject):
         if as_tuple:
             perms = [perm_init(p) for p in perms]
         else:
-            from sage.groups.perm_gps.permgroup_element import PermutationGroupElement
+            try:
+                # Trac #28652: Rework the constructor of PermutationGroupElement
+                from sage.groups.perm_gps.constructor import PermutationGroupElement
+            except ImportError:
+                from sage.groups.perm_gps.permgroup_element import PermutationGroupElement
             perms = [PermutationGroupElement(p,check=True) for p in perms]
             perms = [[i-1 for i in p.domain()] for p in perms]
 
         d = equalize_perms(perms)
-
         from .cover import PermutationCover
         return PermutationCover(self, d, perms)
 

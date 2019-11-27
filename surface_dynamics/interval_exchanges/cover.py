@@ -77,9 +77,18 @@ class PermutationCover(SageObject):
             Traceback (most recent call last):
             ...
             ValueError: the base must be irreducible
+
+            sage: p2 = iet.Permutation('a b', 'b a')
+            sage: PermutationCover(p2, 0, [[], []])
+            Traceback (most recent call last):
+            ...
+            ValueError: the degree of the cover must be positive
         """
         if not base.is_irreducible():
             raise ValueError("the base must be irreducible")
+        if degree == 0:
+            raise ValueError("the degree of the cover must be positive")
+
         from surface_dynamics.misc.permutation import perms_are_transitive
         if not perms_are_transitive(perms):
             raise ValueError("the cover is not connected")
@@ -151,11 +160,11 @@ class PermutationCover(SageObject):
             sage: p1 = iet.GeneralizedPermutation('a a b', 'b c c')
             sage: p2 = iet.GeneralizedPermutation('a a b',' b c c')
             sage: p3 = iet.GeneralizedPermutation('a a b b', 'c c')
-            sage: p1.cover(['', '', '']) == p2.cover(['', '', ''])
+            sage: p1.cover(['(1)', '(1)', '(1)']) == p2.cover(['(1)', '(1)', '(1)'])
             True
             sage: p1.cover(['(1,2)', '', '']) == p1.cover(['(1,2)', '(1,2)', ''])
             False
-            sage: p1.cover(['', '', '']) == p3.cover(['', '', ''])
+            sage: p1.cover(['(1)', '(1)', '(1)']) == p3.cover(['(1)', '(1)', '(1)'])
             False
         """
         return type(self) == type(other) and \
@@ -171,11 +180,11 @@ class PermutationCover(SageObject):
             sage: p1 = iet.GeneralizedPermutation('a a b', 'b c c')
             sage: p2 = iet.GeneralizedPermutation('a a b',' b c c')
             sage: p3 = iet.GeneralizedPermutation('a a b b', 'c c')
-            sage: p1.cover(['', '', '']) != p2.cover(['', '', ''])
+            sage: p1.cover(['(1)', '(1)', '(1)']) != p2.cover(['(1)', '(1)', '(1)'])
             False
             sage: p1.cover(['(1,2)', '', '']) != p1.cover(['(1,2)', '(1,2)', ''])
             True
-            sage: p1.cover(['', '', '']) != p3.cover(['', '', ''])
+            sage: p1.cover(['(1)', '(1)', '(1)']) != p3.cover(['(1)', '(1)', '(1)'])
             True
         """
         return type(self) != type(other) or \
@@ -352,7 +361,7 @@ class PermutationCover(SageObject):
 
             sage: from surface_dynamics import *
             sage: p = iet.GeneralizedPermutation('a b b', 'c c a')
-            sage: c = p.cover(['()', '()', '()'])
+            sage: c = p.cover(['(1)', '(1)', '(1)'])
             sage: c._delta2()
             [0 0 0]
             sage: c = p.cover(['(1,2)', '(1,3)', '(1,4)'])
@@ -398,7 +407,7 @@ class PermutationCover(SageObject):
             sage: from surface_dynamics import *
 
             sage: p = iet.GeneralizedPermutation('a b b','c c a')
-            sage: c = p.cover(['', '', ''])
+            sage: c = p.cover(['(1)', '(1)', '(1)'])
             sage: m = c._delta1()
             sage: m
             [-1  1  0  0]

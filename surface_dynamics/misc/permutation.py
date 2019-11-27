@@ -76,7 +76,11 @@ def perm_to_permutation(l):
         sage: perm_to_permutation([2,1,0])
         (1,3)
     """
-    from sage.groups.perm_gps.permgroup_element import PermutationGroupElement
+    try:
+        # Trac #28652: Rework the constructor of PermutationGroupElement
+        from sage.groups.perm_gps.constructor import PermutationGroupElement
+    except ImportError:
+        from sage.groups.perm_gps.permgroup_element import PermutationGroupElement
     return PermutationGroupElement(list(map(lambda x: x+1, l)))
 
 
@@ -1205,6 +1209,8 @@ def perms_are_transitive(p):
         raise ValueError("empty list")
 
     n = len(p[0])
+    if n <= 1:
+        return True
 
     # compute the connected component of 0
     cc0 = [False] * n

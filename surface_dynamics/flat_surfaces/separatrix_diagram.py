@@ -999,7 +999,11 @@ class SeparatrixDiagram(SageObject):
             sage: s.bot_perm()
             (2,3)
         """
-        from sage.groups.perm_gps.permgroup_element import PermutationGroupElement
+        try:
+            # Trac #28652: Rework the constructor of PermutationGroupElement
+            from sage.groups.perm_gps.constructor import PermutationGroupElement
+        except ImportError:
+            from sage.groups.perm_gps.permgroup_element import PermutationGroupElement
 
         return PermutationGroupElement([i+1 for i in self._bot])
 
@@ -1075,8 +1079,11 @@ class SeparatrixDiagram(SageObject):
             sage: s.top_perm()
             (1,3)
         """
-        from sage.groups.perm_gps.permgroup_element import PermutationGroupElement
-
+        try:
+            # Trac #28652: Rework the constructor of PermutationGroupElement
+            from sage.groups.perm_gps.constructor import PermutationGroupElement
+        except ImportError:
+            from sage.groups.perm_gps.permgroup_element import PermutationGroupElement
         return PermutationGroupElement([i+1 for i in self._top])
 
     def top_orbit(self,i):
