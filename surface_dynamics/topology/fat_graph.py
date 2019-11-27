@@ -613,6 +613,9 @@ class FatGraph(object):
 
     def polytope(self, b, min_length=0):
         r"""
+        Return the polytope of edge lengths where the input ``b`` specifies the
+        length of faces.
+
         EXAMPLES::
 
             sage: from surface_dynamics.topology.fat_graph import FatGraph
@@ -621,20 +624,33 @@ class FatGraph(object):
             sage: fp = '(0,5)(1,3,4,2)'
             sage: cm = FatGraph(vp, ep, fp)
 
-            sage: cm.polytope([3,5]).vertices_list()
+            sage: cm.polytope([3, 5], min_length=1).vertices_list()
             [[1, 1, 1, 1, 2, 2], [2, 2, 1, 1, 1, 1]]
-
+            sage: cm.polytope([3, 5], min_length=0).vertices_list()
+            [[0, 0, 1, 1, 3, 3], [3, 3, 1, 1, 0, 0]]
 
             sage: vp = '(0,3,4)(1,2,6)(5)(7)'
             sage: ep = '(0,1)(2,3)(4,5)(6,7)'
             sage: fp = '(0,6,7,2)(1,4,5,3)'
             sage: cm = FatGraph(vp, ep, fp)
-            sage: cm.polytope([5,7])
+            sage: cm.polytope([5, 7])
+            A 2-dimensional polyhedron in QQ^8 defined as the convex hull of 3 vertices
 
+        TESTS::
+
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
+            sage: vp = '(0,4,2,5,1,3)'
+            sage: ep = '(0,1)(2,3)(4,5)'
+            sage: fp = '(0,5)(1,3,4,2)'
+            sage: cm = FatGraph(vp, ep, fp)
+
+            sage: cm.polytope([3, 5, 2])
+            Traceback (most recent call last):
+            ...
+            ValueError: the length of b must be the number of faces
         """
-        # we want to count solutions in integral edges of the face stuff
         if self.num_faces() != len(b):
-            raise ValueError
+            raise ValueError("the length of b must be the number of faces")
 
         ep = self._ep
         fp = self._fp
@@ -664,9 +680,9 @@ class FatGraph(object):
         from sage.geometry.polyhedron.constructor import Polyhedron
         return Polyhedron(ieqs=ieqs, eqns=eqns)
 
-    def integral_points(self, b):
+    def integral_points(self, b, min_length=1):
         r"""
-        Return the edge lengths solution to the face lengths constraint.
+        Return the edge lengths solution to the face lengths constraint ``b``.
 
         EXAMPLES::
 
@@ -685,31 +701,29 @@ class FatGraph(object):
              (3, 3, 3, 3, 2, 2),
              (4, 4, 3, 3, 1, 1))
         """
-        self.polytope(b).integral_points()
+        return self.polytope(b, min_length).integral_points()
 
-    def kontsevich_volume_rational_function(self, R=None):
-        r"""
-        This is not under an appropriate form...
-        """
-        raise NotImplementedError
-        print('This is not quite the form under which we would like it... it should remains factorized')
-        from sage.rings.rational_field import QQ
-        from sage.rings.polynomial.polynomial_ring_constructor import PolynomialRing
-
-        nf = self._nf
-        fl = self._fl
-        n = self._n
-        ep = self._ep
-        if R is None:
-            R = PolynomialRing(QQ, 'b', nf)
-        gens = R.gens()
-        res = R.one()
-        for i in range(self._n):
-            j = ep[i]
-            if j < i:
-                continue
-            res *= 1 / self.automorphism_group().group_cardinality() / (gens[fl[i]] + gens[fl[j]])
-        return res
+#    def kontsevich_volume_rational_function(self, R=None):
+#        r"""
+#        This is not under an appropriate form...
+#        """
+#        from sage.rings.rational_field import QQ
+#        from sage.rings.polynomial.polynomial_ring_constructor import PolynomialRing
+#
+#        nf = self._nf
+#        fl = self._fl
+#        n = self._n
+#        ep = self._ep
+#        if R is None:
+#            R = PolynomialRing(QQ, 'b', nf)
+#        gens = R.gens()
+#        res = R.one()
+#        for i in range(self._n):
+#            j = ep[i]
+#            if j < i:
+#                continue
+#            res *= 1 / self.automorphism_group().group_cardinality() / (gens[fl[i]] + gens[fl[j]])
+#        return res
 
     ##############################
     # Augmentation and reduction #
