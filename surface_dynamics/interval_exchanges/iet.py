@@ -125,7 +125,7 @@ class IntervalExchangeTransformation(object):
         sage: iet.IET(('a b','b a'),[-1,-1])
         Traceback (most recent call last):
         ...
-        ValueError: lengths must be positive
+        ValueError: lengths must be non-negative
     """
     def __init__(self, permutation=None, lengths=None, base_ring=None):
         r"""
@@ -1046,6 +1046,7 @@ class IntervalExchangeTransformation(object):
             sage: root = AA.polynomial_root(poly, RIF(1.8, 1.9))
             sage: K.<a> = NumberField(poly, embedding=root)
             sage: T = iet.IntervalExchangeTransformation(perm, [a**2, a-1, a + 2, 3, 2*a - 3, 1])
+            sage: T
             Interval exchange transformation of [0, a^2 + 4*a + 2[ with permutation
             a b c d e f
             f c b e d a
@@ -1461,7 +1462,7 @@ class IntervalExchangeTransformation(object):
             Graphics object consisting of 4 graphics primitives
         """
         from sage.plot.plot import Graphics
-        from sage.plot.plot import line2d
+        from sage.plot.line import line2d
 
         G = Graphics()
         l = self.singularities()
@@ -1510,7 +1511,7 @@ class IntervalExchangeTransformation(object):
             Graphics object consisting of 8 graphics primitives
         """
         from sage.plot.plot import Graphics
-        from sage.plot.plot import line2d
+        from sage.plot.line import line2d
         try:
             from sage.plot.plot import text
         except ImportError:
