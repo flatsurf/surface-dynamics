@@ -1943,15 +1943,6 @@ class Permutation(SageObject):
             ()
             sage: q.covering_data('c')
             (1,3)
-
-        TESTS::
-
-            sage: from surface_dynamics import iet
-            sage: p = iet.Permutation('a b', 'b a')
-            sage: p.cover(['()', '()'])
-            Traceback (most recent call last):
-            ...
-            ValueError: the degree of the cover must be positive
         """
         if len(perms) != len(self):
             raise ValueError("wrong number of permutations")
