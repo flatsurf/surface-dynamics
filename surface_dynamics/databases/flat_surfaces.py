@@ -523,8 +523,8 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             sage: A = AbelianStratum(2)
             sage: a = A.unique_component()
             sage: C.update(A)
-            sage: list(C.get_iterator(a))
-            [(0,2,1)-(0,2,1), (0,1)-(0,2) (2)-(1)]
+            sage: list(C.get_iterator(a)) == A.cylinder_diagrams()
+            True
 
             sage: C.clean()
             sage: C.get_iterator(a)
@@ -534,7 +534,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
         """
         from surface_dynamics.flat_surfaces.strata import Stratum, StratumComponent
 
-        if not isinstance(comp,StratumComponent):
+        if not isinstance(comp, StratumComponent):
             raise TypeError("comp should be a component of stratum")
 
         if ncyls is None:
