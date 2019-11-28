@@ -566,16 +566,16 @@ class FlippedReducedPermutationIET(
         True
 
         sage: p = iet.Permutation('a b c', 'c a b', flips=['b'], reduced=True)
-        sage: for q in p.rauzy_diagram():
+        sage: for q in sorted(p.rauzy_diagram()):
         ....:     print('%s\n********' % q)
-         a -b  c
-         c  a -b
+        -a  b -c
+         b -a -c
         ********
          a -b -c
         -b  a -c
         ********
-        -a  b -c
-         b -a -c
+         a -b  c
+         c  a -b
         ********
          a  b -c
          b -c  a
@@ -595,7 +595,7 @@ class FlippedReducedPermutationIET(
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import iet
 
             sage: p = iet.Permutation('a b','b a',reduced=True,flips='b')
             sage: p.list(flips=True)
