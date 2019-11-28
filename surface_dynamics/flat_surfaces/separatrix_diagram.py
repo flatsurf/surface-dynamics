@@ -446,6 +446,11 @@ class SeparatrixDiagram(SageObject):
 
         return self._bot == other._bot and self._top == other._top
 
+    def __ne__(self, other):
+        if type(self) is not type(other):
+            raise TypeError
+        return not (self == other)
+
     def __lt__(self, other):
         r"""
         Test whether self is lesser or equal than other
@@ -501,7 +506,7 @@ class SeparatrixDiagram(SageObject):
 
     def is_isomorphic(self, other, return_map=False):
         r"""
-        Test whether self is isomorphic to other.
+        Test whether this separatrix diagram is isomorphic to ``other``.
 
         EXAMPLES::
 
@@ -528,8 +533,10 @@ class SeparatrixDiagram(SageObject):
             sage: s.is_isomorphic(ss)
             True
         """
-        if not isinstance(other, SeparatrixDiagram):
-            raise ValueError("other must be a separatrix diagram")
+        if type(self) is not type(other):
+            raise TypeError("other must be a separatrix diagram")
+        if return_map:
+            raise NotImplementedError
         return self._get_normal_perms() == other._get_normal_perms()
 
     def relabel(self, perm, inplace=False):
@@ -1389,9 +1396,9 @@ class SeparatrixDiagram(SageObject):
             sage: s = SeparatrixDiagram('(0)(1)(2,3)(4,5,6)-(0,1)(2,4)(3,5)(6)')
             sage: s.vertical_symmetry().canonical_label() == s
             True
-            sage: C1 = [CylinderDiagram('(0,1)-(0,4) (2,3,4)-(5,6) (5)-(2) (6)-(1,3)'),
-            ....:       CylinderDiagram('(0,1)-(4) (2,4,3)-(5,6) (5)-(0,2) (6)-(1,3)'),
-            ....:       CylinderDiagram('(0,3,1)-(0,6) (2,6)-(4,5) (4)-(1) (5)-(2,3)')]
+            sage: C1 = [CylinderDiagram('(0,1)-(4) (2,4,3)-(5,6) (5)-(0,2) (6)-(1,3)'),
+            ....:       CylinderDiagram('(0,3,1)-(0,6) (2,6)-(4,5) (4)-(1) (5)-(2,3)'),
+            ....:       CylinderDiagram('(0,1)-(0,4) (2,3,4)-(5,6) (5)-(2) (6)-(1,3)')]
             sage: C2 = s.cylinder_diagrams()
             sage: assert len(C1) == len(C2)
             sage: for (c1, c2) in zip(C1, C2): assert c1.is_isomorphic(c2)
@@ -1479,15 +1486,15 @@ class SeparatrixDiagram(SageObject):
             sage: s = SeparatrixDiagram('(0,3)(1,4,5)(2)','(0)(1,2)(3,4,5)')
             sage: s.automorphism_group()
             Permutation Group with generators [()]
-            sage: C1 = [CylinderDiagram('(0,1,2)-(0,1,5) (3,5)-(2,4) (4)-(3)'),
-            ....:       CylinderDiagram('(0,2,3)-(2,5) (1,4)-(0,1,3) (5)-(4)'),
-            ....:       CylinderDiagram('(0,3,1)-(5) (2,5)-(3,4) (4)-(0,2,1)')]
+            sage: C1 = [CylinderDiagram('(0,3,1)-(5) (2,5)-(3,4) (4)-(0,2,1)'),
+            ....:       CylinderDiagram('(0,1,2)-(0,1,5) (3,5)-(2,4) (4)-(3)'),
+            ....:       CylinderDiagram('(0,2,3)-(2,5) (1,4)-(0,1,3) (5)-(4)')]
             sage: C2 = s.cylinder_diagrams()
             sage: C3 = s.cylinder_diagrams(up_to_isomorphism=False)
             sage: assert len(C1) == len(C2) == len(C3)
             sage: for (c1, c2, c3) in zip(C1, C2, C3): assert c1.is_isomorphic(c2) and c1.is_isomorphic(c3)
         """
-        return sorted(self.cylinder_diagram_iterator(
+        return list(self.cylinder_diagram_iterator(
             connected=connected,
             up_to_isomorphism=up_to_isomorphism))
 
@@ -2022,7 +2029,7 @@ class CylinderDiagram(SeparatrixDiagram):
             bot.append(tuple(b))
             top.append(tuple(t))
 
-        SeparatrixDiagram.__init__(self, tuple(bot), tuple(top), check=True)
+        SeparatrixDiagram.__init__(self, tuple(bot), tuple(top), check=False)
 
         if sum(len(x) for x,y in data) != self.nseps() or\
            sum(len(y) for x,y in data) != self.nseps():
@@ -2038,11 +2045,7 @@ class CylinderDiagram(SeparatrixDiagram):
         self._bot_to_cyl = b2c
         self._top_to_cyl = t2c
 
-        #from sage.misc.latex import latex
-        #if latex.has_file("tikz.sty"):
-            #latex.add_to_preamble('\\usepackage{tikz}')
-            #latex.add_to_preamble('\\usetikzlibrary{arrows}')
-            #latex.add_to_jsmath_avoid_list('\\begin{tikzpicture}')
+        self._check()
 
     def __hash__(self):
         r"""
@@ -2050,6 +2053,19 @@ class CylinderDiagram(SeparatrixDiagram):
         """
         return hash(tuple(self._bot_to_cyl + self._top_to_cyl +
                           self._bot_cycles + self._top_cycles))
+
+    def _check(self):
+        SeparatrixDiagram(self)._check()
+        b2c = self._bot_to_cyl
+        t2c = self._top_to_cyl
+
+        for j in range(self.nseps()):
+            bo = self.bot_orbit(b2c[j][0])
+            if j not in bo or b2c[j][0] != min(bo):
+                raise ValueError("invalid data: j={} bo={} b2c[j]={}".format(j, bo, b2c[j]))
+            to = self.top_orbit(t2c[j][1])
+            if j not in to or t2c[j][1] != min(to):
+                raise ValueError("invalid data: j={} to={} t2c[j]={}".format(j, to, t2c[j]))
 
     def lengths_minimal_solution(self):
         r"""
@@ -2134,6 +2150,37 @@ class CylinderDiagram(SeparatrixDiagram):
             l.append('(' + ','.join(map(str,b)) + ')-(' + ','.join(map(str,t)) + ')')
         return ' '.join(l)
 
+    def __eq__(self, other):
+        r"""
+        TESTS::
+
+            sage: from surface_dynamics import AbelianStratum, CylinderDiagram
+
+            sage: c1 = CylinderDiagram('(0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)')
+            sage: c2 = CylinderDiagram('(0,5)-(1,3) (1,4)-(0,4) (2,3)-(2,5)')
+            sage: c3 = CylinderDiagram('(0,5)-(2,5) (1,4)-(1,3) (2,3)-(0,4)')
+            sage: c1 == c2 or c2 == c3 or c1 == c3
+            False
+            sage: c1 != c2 and c2 != c3 and c1 != c3
+            True
+
+            sage: from operator import not_
+            sage: C = AbelianStratum(4).cylinder_diagrams()
+            sage: for c1 in C:
+            ....:     assert c1 == c1
+            ....:     assert not_(c1 != c1)
+            ....:     for c2 in C:
+            ....:         assert (c1 == c2) == (c2 == c1) == not_(c2 != c1) == not_(c1 != c2)
+        """
+        if type(self) is not type(other):
+            raise TypeError
+        return SeparatrixDiagram.__eq__(self, other) and self._bot_to_cyl == other._bot_to_cyl
+
+    def __ne__(self, other):
+        if type(self) is not type(other):
+            raise TypeError
+        return not (self == other)
+
     def __lt__(self, other):
         r"""
         Comparison
@@ -2198,92 +2245,165 @@ class CylinderDiagram(SeparatrixDiagram):
 
         return G
 
-    def canonical_label(self, inplace=False, return_map=False):
+    def is_isomorphic(self, other, return_map=False):
         r"""
-        Return a cylinder diagram with canonical labels.
+        Test whether this cylinder diagram is isomorphic to ``other``.
 
         EXAMPLES::
 
             sage: from surface_dynamics import *
 
-            sage: c = CylinderDiagram('(0,5,4)-(0,3,2,1) (1,3,2)-(4,5)')
-            sage: c.canonical_label()
+            sage: c1 = CylinderDiagram('(0,2,1)-(3,4,5) (3)-(1) (4)-(2) (5)-(0)')
+            sage: c2 = CylinderDiagram('(0,2,1)-(3,5,4) (3)-(1) (4)-(2) (5)-(0)')
+            sage: c1.is_isomorphic(c2)
+            False
+
+            sage: c3 = CylinderDiagram('(1,3,5)-(2,4,0) (2)-(5) (4)-(3) (0)-(1)')
+            sage: c1.is_isomorphic(c3)
+            True
+            sage: ans, m = c1.is_isomorphic(c3, return_map=True)
+            sage: assert ans is True and c1.relabel(m) == c3
+            
+            sage: c4 = CylinderDiagram('(4,2,3)-(1,5,0) (1)-(3) (0)-(2) (5)-(4)')
+            sage: c2.is_isomorphic(c4)
+            True
+            sage: ans, m = c2.is_isomorphic(c4, return_map=True)
+            sage: assert ans is True and c2.relabel(m) == c4
+
+            sage: c1 = CylinderDiagram('(0,5)-(3,4) (1,4)-(2,5) (2)-(0) (3)-(1)')
+            sage: c2 = CylinderDiagram('(0,5)-(3,4) (1,4)-(2,5) (2)-(1) (3)-(0)')
+            sage: c1.is_isomorphic(c2)
+            False
+
+            sage: c1 = CylinderDiagram('(0,1)-(4,5) (2,4)-(0,3) (3,5)-(1,2)')
+            sage: c2 = CylinderDiagram('(0,1)-(2,3) (2,4)-(1,4) (3,5)-(0,5)')
+            sage: c3 = CylinderDiagram('(0,5)-(2,5) (1,4)-(0,4) (2,3)-(1,3)')
+            sage: c1.is_isomorphic(c2)
+            False
+            sage: c1.is_isomorphic(c3)
+            False
+            sage: c2.is_isomorphic(c3)
+            False
+
+        TESTS::
+
+            sage: from surface_dynamics import CylinderDiagram
+            sage: c = CylinderDiagram('(0,3)-(3,7) (1,6,4)-(0,2,4,6,8) (2,8,7,5)-(1,5)')
+            sage: c1 = c.relabel([4,7,0,3,2,1,6,8,5])
+            sage: c2 = c.relabel([6,3,1,8,2,0,4,5,7])
+            sage: assert c.is_isomorphic(c1) and c.is_isomorphic(c2) and c1.is_isomorphic(c2)
+            sage: _, m1 = c1.is_isomorphic(c, return_map=True)
+            sage: assert c1.relabel(m1) == c
+            sage: _, m2 = c2.is_isomorphic(c, return_map=True)
+            sage: assert c2.relabel(m2) == c
+        """
+        if type(self) is not type(other):
+            raise TypeError
+        if return_map:
+            s, sm = self.canonical_label(return_map=True)
+            o, om = other.canonical_label(return_map=True)
+            if s != o:
+                return (False, None)
+            else:
+                ominv = {j:i for i,j in om.items()}
+                return (True, {i: ominv[sm[i]] for i in sm})
+        else:
+            return self.canonical_label() == other.canonical_label()
+
+    def relabel(self, perm, inplace=False):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics import CylinderDiagram
+            sage: c = CylinderDiagram('(0,3)-(3,7) (1,6,4)-(0,2,4,6,8) (2,8,7,5)-(1,5)')
+            sage: c.relabel([3,1,2,6,4,5,0,7,8])
+            (0,4,1)-(0,8,3,2,4) (2,8,7,5)-(1,5) (3,6)-(6,7)
+            sage: c
+            (0,3)-(3,7) (1,6,4)-(0,2,4,6,8) (2,8,7,5)-(1,5)
+            sage: c.relabel([3,1,2,6,4,5,0,7,8], inplace=True)
+            (0,4,1)-(0,8,3,2,4) (2,8,7,5)-(1,5) (3,6)-(6,7)
+            sage: c
+            (0,4,1)-(0,8,3,2,4) (2,8,7,5)-(1,5) (3,6)-(6,7)
+
+        TESTS::
+
+            sage: c = CylinderDiagram('(0,3)-(3,7) (1,6,4)-(0,2,4,6,8) (2,8,7,5)-(1,5)')
+            sage: c1 = c.relabel([3,1,2,6,4,5,0,7,8], inplace=False)
+            sage: c2 = c.relabel([3,1,2,6,4,5,0,7,8], inplace=True)
+            sage: assert c is c2 and c1 == c2
+            sage: c1._check()
+            sage: c2._check()
+
+            sage: c1 = c.relabel([1,5,0,6,8,3,2,7,4], inplace=False)
+            sage: c2 = c.relabel([1,5,0,6,8,3,2,7,4], inplace=True)
+            sage: assert c is c2 and c1 == c2
+            sage: c1._check()
+            sage: c2._check()
+        """
+        if inplace:
+            n = self.nseps()
+
+            # find new (bot min, top min) in each cylinder
+            new_mins = {}
+            for b, t in self.cylinders():
+                bb = [perm[i] for i in b]
+                tt = [perm[i] for i in t]
+
+                new_mins[(min(b), min(t))] = (min(bb), min(tt))
+
+            b2c = [None] * n
+            t2c = [None] * n
+            for i in range(n):
+                b2c[perm[i]] = new_mins[self._bot_to_cyl[i]]
+                t2c[perm[i]] = new_mins[self._top_to_cyl[i]]
+
+            self._bot_to_cyl = b2c
+            self._top_to_cyl = t2c
+
+            SeparatrixDiagram.relabel(self, perm, True)
+
+            return self
+
+        else:
+            return CylinderDiagram([(tuple(perm[i] for i in b), tuple(perm[i] for i in t)) for b,t in self.cylinders()])
+
+    def canonical_label(self, inplace=False, return_map=False):
+        r"""
+        Return a cylinder diagram with canonical labels.
+
+        .. NOTE::
+
+            The canonical label might change depending on your Sage version and the
+            optional packages available.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import CylinderDiagram
+            sage: c1 = CylinderDiagram('(0,5,4)-(0,3,2,1) (1,3,2)-(4,5)')
+            sage: c1.canonical_label()   # random
             (0,4,5)-(1,3,2,5) (1,3,2)-(0,4)
-
-            sage: import itertools
-            sage: for p in itertools.permutations([0,1,2,3]): # not tested
-            ....:    c = CylinderDiagram([((p[0],),(p[1],)),((p[1],p[2]),(p[0],p[3])),((p[3],),(p[2],))])
-            ....:    cc,m = c.canonical_label(return_map=True)
-            ....:    b  = c.bot() ; t  = c.top()
-            ....:    bb = cc.bot(); tt = cc.top()
-            ....:    print(cc)
-            ....:    print(all(bb[m[i]] == m[b[i]] for i in range(c.nseps())))
-            ....:    print(all(tt[m[i]] == m[t[i]] for i in range(c.nseps())))
-            (0,1)-(2,3) (2)-(1) (3)-(0)
-            True
-            True
-            (0,1)-(2,3) (2)-(1) (3)-(0)
-            True
-            True
-            (0,1)-(2,3) (2)-(1) (3)-(0)
-            True
-            True
-            (0,1)-(2,3) (2)-(1) (3)-(0)
-            True
-            True
-            (0,1)-(2,3) (2)-(1) (3)-(0)
-            True
-            True
-            (0,1)-(2,3) (2)-(1) (3)-(0)
-            True
-            True
-            (0,1)-(2,3) (2)-(1) (3)-(0)
-            True
-            True
-            (0,1)-(2,3) (2)-(1) (3)-(0)
-            True
-            True
-            ...
-            (0,1)-(2,3) (2)-(1) (3)-(0)
-            True
-            True
-
-            sage: import itertools
-            sage: for p in itertools.permutations([0,1,2,3,4,5]): # not tested
-            ....:    c1 = ((p[0],p[4]),(p[0],p[3]))
-            ....:    c2 = ((p[1],p[3]),(p[1],p[5]))
-            ....:    c3 = ((p[2],p[5]),(p[2],p[4]))
-            ....:    c = CylinderDiagram([c1,c2,c3])
-            ....:    cc,m = c.canonical_label(return_map=True)
-            ....:    b  = c.bot() ; t  = c.top()
-            ....:    bb = cc.bot(); tt = cc.top()
-            ....:    print(cc)
-            ....:    print(all(bb[m[i]] == m[b[i]] for i in range(c.nseps())))
-            ....:    print(all(tt[m[i]] == m[t[i]] for i in range(c.nseps())))
-            (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True
-            True
-            (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True
-            True
-            (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True
-            True
-            (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True
-            True
-            (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True
-            True
-            ...
-            (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True
-            True
-            (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
-            True
+            sage: c2 = c1.relabel([2,4,5,1,3,0])
+            sage: c3 = c1.relabel([5,3,0,1,4,2])
+            sage: c1.canonical_label() == c2.canonical_label() == c3.canonical_label()
             True
 
         TESTS::
+
+            sage: import itertools
+            sage: from surface_dynamics import CylinderDiagram
+            sage: c = CylinderDiagram('(0)-(1) (1,2)-(0,3) (3)-(2)')
+            sage: can = c.canonical_label()
+            sage: for p in itertools.permutations([0,1,2,3]):
+            ....:    cc = c.relabel(p)
+            ....:    ccan, m = cc.canonical_label(return_map=True)
+            ....:    assert cc.relabel(m) == can == ccan
+
+            sage: c = CylinderDiagram('(0,4)-(0,3) (1,3)-(1,5) (2,5)-(2,4)')
+            sage: can = c.canonical_label()
+            sage: for p in itertools.permutations([0,1,2,3,4,5]):
+            ....:    cc = c.relabel(p)
+            ....:    ccan, m = cc.canonical_label(return_map=True)
+            ....:    assert cc.relabel(m) == can == ccan
 
             sage: c = CylinderDiagram('(0,1)-(0,2) (3,5,4)-(1,4,6) (2,6)-(3,5)')
             sage: c is c.canonical_label()
