@@ -421,7 +421,7 @@ class SQLQuery(SageObject):
             self.__query_dict__ = {}
             return
         for x in args:
-            if isinstance(x,dict):
+            if isinstance(x, dict):
                 if 'query_dict' not in kwds:
                     kwds['query_dict'] = x
             elif isinstance(x, string_types):
@@ -814,39 +814,40 @@ class SQLDatabase(SageObject):
         we specify its structure with a Python dictionary, each of whose keys
         is the name of a column::
 
-            sage: table_skeleton = {
-            ....: 'graph6':{'sql':'TEXT', 'index':True, 'primary_key':True},
-            ....: 'vertices':{'sql':'INTEGER'},
-            ....: 'edges':{'sql':'INTEGER'}
-            ....: }
+            sage: from collections import OrderedDict
+            sage: table_skeleton = OrderedDict([
+            ....:  ('graph6', {'sql':'TEXT', 'index':True, 'primary_key':True}),
+            ....:  ('vertices', {'sql':'INTEGER'}),
+            ....:  ('edges', {'sql':'INTEGER'})])
 
         Then we create the table::
 
+            sage: D = SQLDatabase()
             sage: D.create_table('simon', table_skeleton)
             sage: D.show('simon')
-            edges                graph6               vertices
+            graph6               vertices             edges
             ------------------------------------------------------------
 
         Now that we have the table, we will begin to populate the table with
         rows. First, add the graph on zero vertices.::
 
             sage: G = Graph()
-            sage: D.add_row('simon',(0, G.graph6_string(), 0))
+            sage: D.add_row('simon', (G.graph6_string(), 0, 0))
             sage: D.show('simon')
-            edges                graph6               vertices
+            graph6               vertices             edges
             ------------------------------------------------------------
-            0                    ?                    0
+            ?                    0                    0
 
         Next, add the graph on one vertex.::
 
             sage: G.add_vertex()
             0
-            sage: D.add_row('simon',(0, G.graph6_string(), 1))
+            sage: D.add_row('simon', (G.graph6_string(), 1, 0))
             sage: D.show('simon')
-            edges                graph6               vertices
+            graph6               vertices             edges
             ------------------------------------------------------------
-            0                    ?                    0
-            0                    @                    1
+            ?                    0                    0
+            @                    1                    0
 
         Say we want a database of graphs on four or less vertices::
 
@@ -857,41 +858,43 @@ class SQLDatabase(SageObject):
             ....:         g = g.canonical_label()
             ....:         if g not in labels[i]:
             ....:             labels[i].append(g)
-            ....:             D.add_row('simon', (g.size(), g.graph6_string(), g.order()))
+            ....:             D.add_row('simon', (g.graph6_string(), g.num_verts(), g.num_edges()))
             sage: D.show('simon') # random
-            edges                graph6               vertices
+            graph6               vertices             edges
             ------------------------------------------------------------
-            0                    ?                    0
-            0                    @                    1
-            0                    A?                   2
-            1                    A_                   2
-            0                    B?                   3
-            1                    BG                   3
-            2                    BW                   3
-            3                    Bw                   3
-            0                    C?                   4
-            1                    C@                   4
-            2                    CB                   4
-            3                    CF                   4
-            3                    CJ                   4
-            2                    CK                   4
-            3                    CL                   4
-            4                    CN                   4
-            4                    C]                   4
-            5                    C^                   4
-            6                    C~                   4
+            ?                    0                    0
+            @                    1                    0
+            A?                   2                    0
+            A_                   2                    1
+            B?                   3                    0
+            BG                   3                    1
+            BW                   3                    2
+            Bw                   3                    3
+            C?                   4                    0
+            C@                   4                    1
+            CB                   4                    2
+            CF                   4                    3
+            CJ                   4                    3
+            C`                   4                    2
+            CR                   4                    3
+            CN                   4                    4
+            Cr                   4                    4
+            C^                   4                    5
+            C~                   4                    6
 
         We can then query the database -- let's ask for all the graphs on four
         vertices with three edges. We do so by creating two queries and asking
         for rows that satisfy them both::
 
-            sage: Q = SQLQuery(D, {'table_name':'simon', 'display_cols':['graph6'], 'expression':['vertices','=',4]})
-            sage: Q2 = SQLQuery(D, {'table_name':'simon', 'display_cols':['graph6'], 'expression':['edges','=',3]})
+            sage: Q = SQLQuery(D, {'table_name': 'simon', 'display_cols': ['graph6'], 'expression': ['vertices','=', 4]})
+            sage: Q2 = SQLQuery(D, {'table_name': 'simon', 'display_cols': ['graph6'], 'expression': ['edges','=', 3]})
             sage: Q = Q.intersect(Q2)
             sage: len(Q.query_results())
             3
-            sage: Q.query_results() # random
-            [(u'CF', u'CF'), (u'CJ', u'CJ'), (u'CL', u'CL')]
+            sage: sorted(Q.query_results())   # py2
+            [(u'CF', u'CF'), (u'CJ', u'CJ'), (u'CR', u'CR')]
+            sage: sorted(Q.query_results())   # py3
+            [('CF', 'CF'), ('CJ', 'CJ'), ('CR', 'CR')]
 
         NOTE: The values of ``display_cols`` are always concatenated in
         intersections and unions.
@@ -987,7 +990,7 @@ class SQLDatabase(SageObject):
             sage: SD.create_table('simon', {'n':{'sql':'INTEGER', 'index':True}})
             sage: print(SD)
             table simon:
-                column n: index: True; primary_key: False; sql: INTEGER; unique: False; 
+                column n: index: True; primary_key: False; sql: INTEGER; unique: False;
         """
         s = ''
         for table in sorted(self.__skeleton__):
@@ -1007,28 +1010,33 @@ class SQLDatabase(SageObject):
 
         EXAMPLES::
 
+            sage: from collections import OrderedDict
             sage: DB = SQLDatabase()
-            sage: DB.create_table('lucy',{'id':{'sql':'INTEGER', 'primary_key':True, 'index':True}, 'a1':{'sql':'bool'}, 'b2':{'sql':'int', 'primary_key':False}})
-            sage: DB.add_rows('lucy', [(0,1,1),(1,1,4),(2,0,7),(3,1,384), (4,1,978932)],['id','a1','b2'])
+            sage: skeleton = OrderedDict([
+            ....:   ('id', {'sql':'INTEGER', 'primary_key':True, 'index':True}),
+            ....:   ('a1', {'sql':'bool'}),
+            ....:   ('b2', {'sql':'int', 'primary_key':False})])
+            sage: DB.create_table('lucy', skeleton)
+            sage: DB.add_rows('lucy', [(0,1,1),(1,1,4),(2,0,7),(3,1,384), (4,1,978932)])
             sage: d = copy(DB)
             sage: d == DB
             False
             sage: d.show('lucy')
-            a1                   id                   b2
+            id                   a1                   b2
             ------------------------------------------------------------
-            1                    0                    1
+            0                    1                    1
             1                    1                    4
-            0                    2                    7
-            1                    3                    384
-            1                    4                    978932
+            2                    0                    7
+            3                    1                    384
+            4                    1                    978932
             sage: DB.show('lucy')
-            a1                   id                   b2
+            id                   a1                   b2
             ------------------------------------------------------------
-            1                    0                    1
+            0                    1                    1
             1                    1                    4
-            0                    2                    7
-            1                    3                    384
-            1                    4                    978932
+            2                    0                    7
+            3                    1                    384
+            4                    1                    978932
         """
         # copy .db file
         new_loc = tmp_filename() + '.db'
@@ -1269,15 +1277,15 @@ class SQLDatabase(SageObject):
 
         EXAMPLES::
 
+            sage: from collections import OrderedDict
             sage: D = SQLDatabase()
-            sage: table_skeleton = {
-            ....: 'graph6':{'sql':'TEXT', 'index':True, 'primary_key':True},
-            ....: 'vertices':{'sql':'INTEGER'},
-            ....: 'edges':{'sql':'INTEGER'}
-            ....: }
+            sage: table_skeleton = OrderedDict([
+            ....:  ('graph6', {'sql':'TEXT', 'index':True, 'primary_key':True}),
+            ....:  ('vertices', {'sql':'INTEGER'}),
+            ....:  ('edges', {'sql':'INTEGER'})])
             sage: D.create_table('simon', table_skeleton)
             sage: D.show('simon')
-            edges                graph6               vertices
+            graph6               vertices             edges
             ------------------------------------------------------------
         """
         if self.__read_only__:
@@ -1345,33 +1353,34 @@ class SQLDatabase(SageObject):
 
         EXAMPLES::
 
+            sage: from collections import OrderedDict
             sage: MonicPolys = SQLDatabase()
-            sage: MonicPolys.create_table('simon', {'n':{'sql':'INTEGER', 'index':True}})
+            sage: MonicPolys.create_table('simon', OrderedDict([('n', {'sql':'INTEGER', 'index':True})]))
             sage: for n in range(20): MonicPolys.add_row('simon', (n,))
             sage: MonicPolys.add_column('simon', 'n_squared', {'sql':'INTEGER', 'index':False}, 0)
             sage: MonicPolys.show('simon')
-            n_squared            n
+            n                    n_squared
             ----------------------------------------
             0                    0
-            0                    1
-            0                    2
-            0                    3
-            0                    4
-            0                    5
-            0                    6
-            0                    7
-            0                    8
-            0                    9
-            0                    10
-            0                    11
-            0                    12
-            0                    13
-            0                    14
-            0                    15
-            0                    16
-            0                    17
-            0                    18
-            0                    19
+            1                    0
+            2                    0
+            3                    0
+            4                    0
+            5                    0
+            6                    0
+            7                    0
+            8                    0
+            9                    0
+            10                   0
+            11                   0
+            12                   0
+            13                   0
+            14                   0
+            15                   0
+            16                   0
+            17                   0
+            18                   0
+            19                   0
         """
         if self.__read_only__:
             raise RuntimeError('Cannot add columns to a read only database.')
@@ -1561,7 +1570,7 @@ class SQLDatabase(SageObject):
         EXAMPLES::
 
             sage: D = SQLDatabase()
-            sage: D.create_table('simon',{'col1':{'sql':'INTEGER'}})
+            sage: D.create_table('simon', {'col1':{'sql':'INTEGER'}})
             sage: D.show('simon')
             col1
             --------------------
@@ -1937,26 +1946,30 @@ class SQLDatabase(SageObject):
         EXAMPLES::
 
             sage: from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
+            sage: from collections import OrderedDict
 
             sage: DB = SQLDatabase()
-            sage: DB.create_table('lucy',{'id':{'sql':'INTEGER', 'primary_key':True, 'index':True}, 'a1':{'sql':'bool'}, 'b2':{'sql':'int'}})
-            sage: DB.add_rows('lucy', [(0,1,1),(1,1,4),(2,0,7),(3,1,384), (4,1,978932)],['id','a1','b2'])
+            sage: skeleton = OrderedDict([('id', {'sql':'INTEGER', 'primary_key':True, 'index':True}),
+            ....:     ('a1', {'sql':'bool'}),
+            ....:     ('b2', {'sql':'int'})])
+            sage: DB.create_table('lucy', skeleton)
+            sage: DB.add_rows('lucy', [(0,1,1),(1,1,4),(2,0,7),(3,1,384), (4,1,978932)])
             sage: DB.show('lucy')
-            a1                   id                   b2
+            id                   a1                   b2
             ------------------------------------------------------------
-            1                    0                    1
+            0                    1                    1
             1                    1                    4
-            0                    2                    7
-            1                    3                    384
-            1                    4                    978932
+            2                    0                    7
+            3                    1                    384
+            4                    1                    978932
             sage: Q = SQLQuery(DB, {'table_name':'lucy', 'display_cols':['id','a1','b2'], 'expression':['id','>=',3]})
             sage: DB.delete_rows(Q)
             sage: DB.show('lucy')
-            a1                   id                   b2
+            id                   a1                   b2
             ------------------------------------------------------------
-            1                    0                    1
+            0                    1                    1
             1                    1                    4
-            0                    2                    7
+            2                    0                    7
         """
         if self.__read_only__:
             raise RuntimeError('Cannot delete rows from a read only database.')
