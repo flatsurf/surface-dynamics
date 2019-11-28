@@ -647,10 +647,10 @@ class SeparatrixDiagram(SageObject):
             sage: print(sh)
             (0,5,4)(1,3,2)-(0,3,2,1)(4,5)
 
-            sage: sh.cylinder_diagrams()
-            [(0,2,4)-(1,5) (1,3,5)-(0,2,3,4)]
-            sage: [c.horizontal_symmetry().canonical_label() for c in s.cylinder_diagrams()]
-            [(0,2,4)-(1,5) (1,3,5)-(0,2,3,4)]
+            sage: c = s.cylinder_diagrams(up_to_isomorphism=False)[0].horizontal_symmetry()
+            sage: ch = sh.cylinder_diagrams(up_to_isomorphism=False)[0]
+            sage: c.is_isomorphic(ch)
+            True
         """
         return SeparatrixDiagram(tuple(t[::-1] for t in self._top_cycles),
                                  tuple(b[::-1] for b in self._bot_cycles))
@@ -668,10 +668,10 @@ class SeparatrixDiagram(SageObject):
             sage: print(sv)
             (0,3,2,1)(4,5)-(0,5,4)(1,3,2)
 
-            sage: sv.cylinder_diagrams()
-            [(0,1,3,4)-(2,3,5) (2,5)-(0,1,4)]
-            sage: [c.vertical_symmetry().canonical_label() for c in sv.cylinder_diagrams()]
-            [(0,1,3,4)-(2,3,5) (2,5)-(0,1,4)]
+            sage: c = sv.cylinder_diagrams(up_to_isomorphism=False)[0].vertical_symmetry()
+            sage: cv = sv.cylinder_diagrams(up_to_isomorphism=False)[0]
+            sage: c.is_isomorphic(cv)
+            True
         """
         return SeparatrixDiagram(tuple(b[::-1] for b in self._bot_cycles),
                                  tuple(t[::-1] for t in self._top_cycles))
@@ -1356,7 +1356,7 @@ class SeparatrixDiagram(SageObject):
 
         return other
 
-    def cylinder_diagram_iterator(self,connected=True,up_to_isomorphism=True):
+    def cylinder_diagram_iterator(self, connected=True, up_to_isomorphism=True):
         r"""
         Construct all cylinder diagrams from given separatrix diagram (i.e. a pair
         of permutations).
@@ -1375,26 +1375,26 @@ class SeparatrixDiagram(SageObject):
             sage: from surface_dynamics import *
 
             sage: s = SeparatrixDiagram('(0,1)(2,3)(4,5)','(1,2)(3,4)(5,0)')
-            sage: for c in s.cylinder_diagram_iterator(): print(c)
+            sage: for c in s.cylinder_diagram_iterator(): print(c)  # random
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
             (0,3)-(0,5) (1,2)-(1,4) (4,5)-(2,3)
             (0,5)-(3,4) (1,4)-(0,2) (2,3)-(1,5)
-            sage: G = s.automorphism_group(); G
-            Permutation Group with generators [(0,1)(2,5)(3,4), (0,2,4)(1,3,5)]
-            sage: G.order()
-            6
             sage: sum(1 for _ in s.cylinder_diagram_iterator(up_to_isomorphism=False))
             6
+            sage: sum(1 for _ in s.cylinder_diagram_iterator(up_to_isomorphism=True))
+            3
 
         Here is an example with some symmetry::
 
             sage: s = SeparatrixDiagram('(0)(1)(2,3)(4,5,6)-(0,1)(2,4)(3,5)(6)')
             sage: s.vertical_symmetry().canonical_label() == s
             True
-            sage: s.cylinder_diagrams()
-            [(0,1)-(0,4) (2,3,4)-(5,6) (5)-(2) (6)-(1,3),
-             (0,1)-(4) (2,4,3)-(5,6) (5)-(0,2) (6)-(1,3),
-             (0,3,1)-(0,6) (2,6)-(4,5) (4)-(1) (5)-(2,3)]
+            sage: C1 = [CylinderDiagram('(0,1)-(0,4) (2,3,4)-(5,6) (5)-(2) (6)-(1,3)'),
+            ....:       CylinderDiagram('(0,1)-(4) (2,4,3)-(5,6) (5)-(0,2) (6)-(1,3)'),
+            ....:       CylinderDiagram('(0,3,1)-(0,6) (2,6)-(4,5) (4)-(1) (5)-(2,3)')]
+            sage: C2 = s.cylinder_diagrams()
+            sage: assert len(C1) == len(C2)
+            sage: for (c1, c2) in zip(C1, C2): assert c1.is_isomorphic(c2)
         """
         cbot = self.bot_cycle_tuples()
         ctop0 = self.top_cycle_tuples()
@@ -1440,7 +1440,7 @@ class SeparatrixDiagram(SageObject):
                 if (connected or c.is_connected()) and c.smallest_integer_lengths():
                     yield c
 
-    def cylinder_diagrams(self, connected=True,up_to_isomorphism=True):
+    def cylinder_diagrams(self, connected=True, up_to_isomorphism=True):
         r"""
         Return the list of cylinder diagrams associated to this separatrix
         diagram.
@@ -1468,23 +1468,24 @@ class SeparatrixDiagram(SageObject):
             (0)-(2) (1)-(0) (2)-(1)
 
             sage: s = SeparatrixDiagram('(0,1)(2)','(0)(1,2)')
-            sage: for c in s.cylinder_diagrams(): print(c)
-            (0,1)-(0,2) (2)-(1)
+            sage: C1 = [CylinderDiagram('(0,1)-(0,2) (2)-(1)')]
+            sage: C2 = s.cylinder_diagrams()
+            sage: assert len(C1) == len(C2)
+            sage: for (c1, c2) in zip(C1, C2): assert c1.is_isomorphic(c2)
 
         In the example below, there is no isomorphism problem for the cylinder
         diagram generation as the separatrix diagram admit no automorphism::
 
             sage: s = SeparatrixDiagram('(0,3)(1,4,5)(2)','(0)(1,2)(3,4,5)')
-            sage: for c in s.cylinder_diagrams(): print(c)
-            (0,1,2)-(0,1,5) (3,5)-(2,4) (4)-(3)
-            (0,2,3)-(2,5) (1,4)-(0,1,3) (5)-(4)
-            (0,3,1)-(5) (2,5)-(3,4) (4)-(0,2,1)
-            sage: for c in s.cylinder_diagrams(up_to_isomorphism=False): print(c)
-            (0,3)-(1,2) (1,4,5)-(0) (2)-(3,4,5)
-            (0,3)-(1,2) (1,4,5)-(3,4,5) (2)-(0)
-            (0,3)-(3,4,5) (1,4,5)-(1,2) (2)-(0)
             sage: s.automorphism_group()
             Permutation Group with generators [()]
+            sage: C1 = [CylinderDiagram('(0,1,2)-(0,1,5) (3,5)-(2,4) (4)-(3)'),
+            ....:       CylinderDiagram('(0,2,3)-(2,5) (1,4)-(0,1,3) (5)-(4)'),
+            ....:       CylinderDiagram('(0,3,1)-(5) (2,5)-(3,4) (4)-(0,2,1)')]
+            sage: C2 = s.cylinder_diagrams()
+            sage: C3 = s.cylinder_diagrams(up_to_isomorphism=False)
+            sage: assert len(C1) == len(C2) == len(C3)
+            sage: for (c1, c2, c3) in zip(C1, C2, C3): assert c1.is_isomorphic(c2) and c1.is_isomorphic(c3)
         """
         return sorted(self.cylinder_diagram_iterator(
             connected=connected,
@@ -1759,8 +1760,8 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
 
         sage: from surface_dynamics.flat_surfaces.separatrix_diagram import hyperelliptic_cylinder_diagram_iterator
         sage: it = hyperelliptic_cylinder_diagram_iterator(3)
-        sage: c = next(it); c
-        (0,1)-(0,2) (2)-(1)
+        sage: c = next(it); c.is_isomorphic(CylinderDiagram('(0,1)-(0,2) (2)-(1)'))
+        True
         sage: c.stratum_component()
         H_2(2)^hyp
 
@@ -2139,14 +2140,13 @@ class CylinderDiagram(SeparatrixDiagram):
 
         TESTS::
 
-            sage: from surface_dynamics import *
-
+            sage: from surface_dynamics import AbelianStratum
+            sage: from operator import not_
             sage: C = AbelianStratum(4).cylinder_diagrams()
             sage: for c1 in C:
             ....:     for c2 in C:
-            ....:         if c1 != c2:
-            ....:             assert ((c1 < c2) is False) or ((c2 < c1) is False)
-            ....:             assert ((c1 > c2) is False) or ((c2 > c1) is False)
+            ....:         assert (c1 < c2) == (c2 > c1) == not_(c1 >= c2) == not_(c2 <= c1)
+            ....:         assert (c1 <= c2) == (c2 >= c1) == not_(c1 > c2) == not_(c2 < c1)
         """
         if type(self) is not type(other):
             raise TypeError
@@ -2206,8 +2206,12 @@ class CylinderDiagram(SeparatrixDiagram):
 
             sage: from surface_dynamics import *
 
+            sage: c = CylinderDiagram('(0,5,4)-(0,3,2,1) (1,3,2)-(4,5)')
+            sage: c.canonical_label()
+            (0,4,5)-(1,3,2,5) (1,3,2)-(0,4)
+
             sage: import itertools
-            sage: for p in itertools.permutations([0,1,2,3]):
+            sage: for p in itertools.permutations([0,1,2,3]): # not tested
             ....:    c = CylinderDiagram([((p[0],),(p[1],)),((p[1],p[2]),(p[0],p[3])),((p[3],),(p[2],))])
             ....:    cc,m = c.canonical_label(return_map=True)
             ....:    b  = c.bot() ; t  = c.top()
@@ -2245,7 +2249,7 @@ class CylinderDiagram(SeparatrixDiagram):
             True
 
             sage: import itertools
-            sage: for p in itertools.permutations([0,1,2,3,4,5]):
+            sage: for p in itertools.permutations([0,1,2,3,4,5]): # not tested
             ....:    c1 = ((p[0],p[4]),(p[0],p[3]))
             ....:    c2 = ((p[1],p[3]),(p[1],p[5]))
             ....:    c3 = ((p[2],p[5]),(p[2],p[4]))
@@ -2289,17 +2293,17 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: c.canonical_label().canonical_label() is c.canonical_label()
             True
         """
-        if not hasattr(self,'_normal_form'):
+        if not hasattr(self, '_normal_form'):
             G = self.to_directed_graph()
-            _,m = G.canonical_label(certificate=True,edge_labels=True)
+            _, m = G.canonical_label(certificate=True, edge_labels=True)
             # m = [m[i] for i in range(self.nseps())]
             # GG the new digraph
             # m from the digraph to its canonic labels
             cyls = []
             for b,t in self.cylinders():
-                cyls.append((tuple(m[i] for i in b),tuple(m[i] for i in t)))
+                cyls.append((tuple(m[i] for i in b), tuple(m[i] for i in t)))
 
-            self._normal_form = CylinderDiagram(cyls,check=False)
+            self._normal_form = CylinderDiagram(cyls, check=False)
             self._normal_labels = m
 
             self._normal_form._normal_form = self._normal_form
@@ -2447,17 +2451,17 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: c0, c1 = AbelianStratum(2).cylinder_diagrams()
             sage: v0 = c0.volume_contribution()   # optional - latte_int
             sage: v0                              # optional - latte_int
-            1/3 * Sum(1/((n0)^4), n0=1..+oo)
+            1/3 * Sum...
             sage: v1 = c1.volume_contribution()   # optional - latte_int
             sage: v1                              # optional - latte_int
-            2/3 * Sum(1/((n0)*(n0 + n1)^3), n0=1..+oo, n1=1..+oo) + 1/3 * Sum(1/((n0)^2*(n0 + n1)^2), n0=1..+oo, n1=1..+oo)
+            2/3 * Sum...
 
             sage: for c in AbelianStratum(1,1).cylinder_diagrams():  # optional - latte_int
             ....:     print(c.volume_contribution())
-            1/6 * Sum(1/((n0)^5), n0=1..+oo)
-            1/3 * Sum(1/((n0)^2*(n0 + n1)^3), n0=1..+oo, n1=1..+oo) + 1/3 * Sum(1/((n0)^3*(n0 + n1)^2), n0=1..+oo, n1=1..+oo)
-            1/6 * Sum(1/((n1)*(n0)*(n0 + n1)^3), n0=1..+oo, n1=1..+oo) + 1/12 * Sum(1/((n1)*(n0)^2*(n0 + n1)^2), n0=1..+oo, n1=1..+oo) + 1/12 * Sum(1/((n1)^2*(n0)*(n0 + n1)^2), n0=1..+oo, n1=1..+oo) + 1/12 * Sum(1/((n1)^2*(n0)^2*(n0 + n1)), n0=1..+oo, n1=1..+oo)
-            1/6 * Sum(1/((n0 + n2)^2*(n0 + n1)^3), n0=1..+oo, n1=1..+oo, n2=1..+oo) + 1/6 * Sum(1/((n0 + n2)^3*(n0 + n1)^2), n0=1..+oo, n1=1..+oo, n2=1..+oo)
+            1/6 * Sum...
+            1/3 * Sum...
+            1/6 * Sum...
+            1/6 * Sum...
         """
         from surface_dynamics.misc.multivariate_generating_series import GeneralizedMultiZetaElement
 
@@ -2688,6 +2692,17 @@ class CylinderDiagram(SeparatrixDiagram):
             True
             sage: c.inverse().is_isomorphic(c)
             False
+
+            sage: CylinderDiagram('(0,2,1,4,3)-(0,4,2,1,3)').symmetries()
+            (True, True, True)
+            sage: CylinderDiagram('(0,3)-(0,4,5) (1,4,2)-(1,3) (5)-(2)').symmetries()
+            (False, False, True)
+            sage: CylinderDiagram('(0,2,3,1)-(0,2,1,4) (4)-(3)').symmetries()
+            (True, False, False)
+            sage: CylinderDiagram('(0,1,2)-(0,3,1,4) (3,4)-(2)').symmetries()
+            (False, True, False)
+            sage: CylinderDiagram('(0,1)-(0,3,4) (2,3)-(1) (4)-(2)').symmetries()
+            (False, False, False)
         """
         n = len(self._top)
 
@@ -2784,24 +2799,16 @@ class CylinderDiagram(SeparatrixDiagram):
         In genus 2, strata H(2) and H(1,1), all surfaces are hyperelliptic::
 
             sage: for c in AbelianStratum(2).cylinder_diagrams():
-            ....:     print(c)
-            ....:     print(c.is_hyperelliptic())
-            (0,2,1)-(0,2,1)
-            True
-            (0,1)-(0,2) (2)-(1)
-            True
+            ....:     print("%d %s" % (c.ncyls(), c.is_hyperelliptic()))
+            1 True
+            2 True
 
             sage: for c in AbelianStratum(1,1).cylinder_diagrams():
-            ....:     print(c)
-            ....:     print(c.is_hyperelliptic())
-            (0,3,1,2)-(0,3,1,2)
-            True
-            (0,1,2)-(0,1,3) (3)-(2)
-            True
-            (0,3)-(0,2) (1,2)-(1,3)
-            True
-            (0,1)-(2,3) (2)-(1) (3)-(0)
-            True
+            ....:     print("%d %s" % (c.ncyls(), c.is_hyperelliptic()))
+            1 True
+            2 True
+            2 True
+            3 True
 
         In higher genera, some of them are, some of them are not::
 
