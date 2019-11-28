@@ -891,9 +891,7 @@ class SQLDatabase(SageObject):
             sage: Q = Q.intersect(Q2)
             sage: len(Q.query_results())
             3
-            sage: sorted(Q.query_results())   # py2
-            [(u'CF', u'CF'), (u'CJ', u'CJ'), (u'CR', u'CR')]
-            sage: sorted(Q.query_results())   # py3
+            sage: sorted(Q.query_results())   # random
             [('CF', 'CF'), ('CJ', 'CJ'), ('CR', 'CR')]
 
         NOTE: The values of ``display_cols`` are always concatenated in
