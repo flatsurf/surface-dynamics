@@ -667,6 +667,16 @@ class AbelianStratum(Stratum):
             sage: for s in a.separatrix_diagrams(): print(s)
             (0,1,2)-(0,1,2)
             (0)(1,2)-(0,1)(2)
+
+        TESTS::
+
+            sage: from surface_dynamics import *
+
+            sage: for (zeros, ncyl) in [((4,), 3), ((2,2), 4)]:
+            ....:     S = AbelianStratum(4).separatrix_diagrams(3)
+            ....:     for i in range(len(S)):
+            ....:         for j in range(i):
+            ....:              assert not S[i].is_isomorphic(S[j])
         """
         return sorted(self.separatrix_diagram_iterator(ncyls))
 
@@ -689,14 +699,19 @@ class AbelianStratum(Stratum):
             sage: from surface_dynamics import *
 
             sage: A = AbelianStratum(4)
-            sage: for c in A.cylinder_diagram_iterator(3,force_computation=True):
-            ....:     print(c)
-            (0,2,1)-(0,3,4) (3)-(2) (4)-(1)
-            (0,2,1)-(0,3,4) (3)-(1) (4)-(2)
-            (0,1)-(0,3,4) (2,3)-(1) (4)-(2)
-            (0,2)-(4) (1,4)-(2,3) (3)-(0,1)
-            (0,2)-(0,3) (1,3)-(1,4) (4)-(2)
-            (0,1)-(0,3) (2,3)-(1,4) (4)-(2)
+            sage: C1 = [CylinderDiagram('(0,2,1)-(0,3,4) (3)-(2) (4)-(1)'),
+            ....:       CylinderDiagram('(0,2,1)-(0,3,4) (3)-(1) (4)-(2)'),
+            ....:       CylinderDiagram('(0,1)-(0,3,4) (2,3)-(1) (4)-(2)'),
+            ....:       CylinderDiagram('(0,2)-(4) (1,4)-(2,3) (3)-(0,1)'),
+            ....:       CylinderDiagram('(0,2)-(0,3) (1,3)-(1,4) (4)-(2)'),
+            ....:       CylinderDiagram('(0,1)-(0,3) (2,3)-(1,4) (4)-(2)')]
+            sage: C2 = list(A.cylinder_diagram_iterator(3, force_computation=True))
+            sage: assert len(C1) == len(C2)
+            sage: for (c1, c2) in zip(C1, C2):
+            ....:     assert c1.is_isomorphic(c2) or \
+            ....:            c1.is_isomorphic(c2.horizontal_symmetry()) or \
+            ....:            c1.is_isomorphic(c2.vertical_symmetry()) or \
+            ....:            c1.is_isomorphic(c2.inverse())
 
             sage: sum(1 for _ in A.cylinder_diagram_iterator(3, force_computation=True))
             6
@@ -711,7 +726,7 @@ class AbelianStratum(Stratum):
 
         if not force_computation:
             for cc in self.components():
-                for cd in cc.cylinder_diagram_iterator(ncyls,False):
+                for cd in cc.cylinder_diagram_iterator(ncyls, False):
                     yield cd
         else:
             for sd in self.separatrix_diagram_iterator(ncyls):
@@ -734,17 +749,27 @@ class AbelianStratum(Stratum):
             sage: from surface_dynamics import *
 
             sage: A = AbelianStratum(2,2)
-            sage: c4 = A.cylinder_diagrams(4)
-            sage: c4
-            [(0,1)-(0,5) (2)-(4) (3,4)-(1) (5)-(2,3),
-             (0,2,1)-(3,4,5) (3)-(1) (4)-(2) (5)-(0),
-             (0,2,1)-(3,5,4) (3)-(1) (4)-(2) (5)-(0),
-             (0,3)-(5) (1)-(0) (2,5)-(3,4) (4)-(1,2),
-             (0,3)-(0,5) (1,2)-(1,4) (4)-(3) (5)-(2),
-             (0,5)-(3,4) (1,4)-(2,5) (2)-(0) (3)-(1),
-             (0,5)-(3,4) (1,4)-(2,5) (2)-(1) (3)-(0)]
-            sage: sorted(c4) == sorted(A.cylinder_diagrams(4,force_computation=True))
-            True
+            sage: C1 = [CylinderDiagram('(0,1)-(0,5) (2)-(4) (3,4)-(1) (5)-(2,3)'),
+            ....:       CylinderDiagram('(0,2,1)-(3,4,5) (3)-(1) (4)-(2) (5)-(0)'),
+            ....:       CylinderDiagram('(0,2,1)-(3,5,4) (3)-(1) (4)-(2) (5)-(0)'),
+            ....:       CylinderDiagram('(0,3)-(5) (1)-(0) (2,5)-(3,4) (4)-(1,2)'),
+            ....:       CylinderDiagram('(0,3)-(0,5) (1,2)-(1,4) (4)-(3) (5)-(2)'),
+            ....:       CylinderDiagram('(0,5)-(3,4) (1,4)-(2,5) (2)-(0) (3)-(1)'),
+            ....:       CylinderDiagram('(0,5)-(3,4) (1,4)-(2,5) (2)-(1) (3)-(0)')]
+            sage: C2 = A.cylinder_diagrams(4)
+            sage: assert len(C1) == len(C2)
+            sage: isoms = []
+            sage: for c in A.cylinder_diagrams(4):
+            ....:     isom = []
+            ....:     for i,cc in enumerate(C1):
+            ....:         if c.is_isomorphic(cc) or \
+            ....:            c.is_isomorphic(cc.horizontal_symmetry()) or \
+            ....:            c.is_isomorphic(cc.vertical_symmetry()) or \
+            ....:            c.is_isomorphic(cc.inverse()):
+            ....:              isom.append(i)
+            ....:     assert len(isom) == 1, isom
+            ....:     isoms.extend(isom)
+            sage: assert sorted(isoms) == [0, 1, 2, 3, 4, 5, 6]
         """
         return sorted(self.cylinder_diagram_iterator(ncyls, force_computation))
 
@@ -767,13 +792,10 @@ class AbelianStratum(Stratum):
             sage: cyls = A.cylinder_diagrams_by_component(ncyls=2, force_computation=True)
             sage: A_hyp = A.hyperelliptic_component()
             sage: A_odd = A.odd_component()
-            sage: cyls[A_odd]
-            [(0,1,2,3)-(2,4) (4)-(0,1,3),
-             (0,2,3)-(2,4) (1,4)-(0,1,3),
-             (0,2,3,1)-(0,2,1,4) (4)-(3),
-             (0,3,1,2)-(0,4,1) (4)-(2,3)]
-            sage: cyls[A_hyp]
-            [(0,1,3)-(0,1,4) (2,4)-(2,3), (0,2,3,1)-(0,2,4,1) (4)-(3)]
+            sage: len(cyls[A_odd])
+            4
+            sage: len(cyls[A_hyp])
+            2
 
             sage: all(c.ncyls() == 2 for c in cyls[A_hyp])
             True
@@ -1386,19 +1408,24 @@ class AbelianStratumComponent(StratumComponent):
             3
 
         Note that if you set ``force_computation`` to ``True`` the order of the
-        iteration might be different (and not sorted)::
+        iteration might be different and you might obtain cylinder diagram with some
+        symmetries applied::
 
-            sage: it = cc.cylinder_diagram_iterator(3, force_computation=True)
-            sage: next(it)
-            (0,1,3,2,4)-(0,2,1,5,6,7) (5,7)-(4) (6)-(3)
-
-        But up to this order the list are exactly the same::
-
-            sage: s1 = list(cc.cylinder_diagram_iterator(3, force_computation=False))
-            sage: s2 = list(cc.cylinder_diagram_iterator(3, force_computation=True))
-            sage: s2.sort()
-            sage: s1 == s2   # not tested (not yet working)
-            True
+            sage: C1 = list(cc.cylinder_diagram_iterator(3, force_computation=False))  # long time
+            sage: C2 = list(cc.cylinder_diagram_iterator(3, force_computation=True))   # long time
+            sage: assert len(C1) == len(C2)                                            # long time
+            sage: isoms = []                                                           # long time
+            sage: for c in C1:                                                         # long time
+            ....:     isom = []
+            ....:     for i,cc in enumerate(C2):
+            ....:         if c.is_isomorphic(cc) or \
+            ....:            c.is_isomorphic(cc.horizontal_symmetry()) or \
+            ....:            c.is_isomorphic(cc.vertical_symmetry()) or \
+            ....:            c.is_isomorphic(cc.inverse()):
+            ....:              isom.append(i)
+            ....:     assert len(isom) == 1, isom
+            ....:     isoms.extend(isom)
+            sage: assert sorted(isoms) == list(range(len(C1)))                         # long time
         """
         if ncyls is not None:
             if not isinstance(ncyls, (int,Integer)):
@@ -2068,21 +2095,17 @@ class HypAbelianStratumComponent(ASC):
             sage: from surface_dynamics import *
 
             sage: C = AbelianStratum(2,2).hyperelliptic_component()
-            sage: for c in C.cylinder_diagram_iterator(1): print(c)
-            (0,5,3,1,2,4)-(0,5,3,1,2,4)
-
-            sage: for c in C.cylinder_diagram_iterator(2): print(c)
-            (0,2,4,1)-(0,2,5,1) (3,5)-(3,4)
-            (0,3,4)-(0,3,5) (1,2,5)-(1,2,4)
-            (0,1,3,4,2)-(0,1,3,5,2) (5)-(4)
+            sage: [sum(1 for c in C.cylinder_diagram_iterator(n)) for n in range(1,5)]
+            [1, 3, 5, 2]
 
         When ``ncyls`` is set to ``None``, the iterator can reasonably be used
         with very large data::
 
             sage: C = AbelianStratum(10,10).hyperelliptic_component()
             sage: it = C.cylinder_diagram_iterator()
-            sage: c = next(it); c
-            (0,2,5,1)-(0,2,21,1) (3,4)-(3,6) (6,19)-(4,20) (7,9)-(8,10) (8,12)-(7,11) (10,14)-(9,13) (11,15)-(12,16) (13,17)-(14,18) (16,20)-(15,19) (18,21)-(5,17)
+            sage: c = next(it)
+            sage: c.is_isomorphic(CylinderDiagram('(0,2,5,1)-(0,2,21,1) (3,4)-(3,6) (6,19)-(4,20) (7,9)-(8,10) (8,12)-(7,11) (10,14)-(9,13) (11,15)-(12,16) (13,17)-(14,18) (16,20)-(15,19) (18,21)-(5,17)'))
+            True
             sage: c.stratum_component()
             H_11(10^2)^hyp
             sage: c.ncyls()
