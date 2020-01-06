@@ -884,7 +884,7 @@ class AbelianStratum(Stratum):
 
         return sum(1 for _ in self.cylinder_diagram_iterator(ncyls, True))
         
-    def single_cylinder_representative(self):
+    def single_cylinder_representative(self, alphabet=None):
         r"""
         Returns a single cylinder permutation representative.
         
@@ -893,6 +893,11 @@ class AbelianStratum(Stratum):
         
         Such representatives were constructed for every stratum of Abelian
         differentials by Jeffreys [Jef19].
+        
+        INPUT::
+        
+            - ``alphabet`` - alphabet or ``None`` (defaut: ``None``):
+            whether you want to specify an alphabet for your representative.
         
         EXAMPLES::
         
@@ -930,7 +935,7 @@ class AbelianStratum(Stratum):
         elif genus == 2 and nb_real_zeros == 2 and self.nb_fake_zeros() < 2:
             raise ValueError("no 1,1-square-tiled surfaces in this stratum try again with H_2(1^2, 0^2)")
         else:
-            return self.one_component().single_cylinder_representative()
+            return self.one_component().single_cylinder_representative(alphabet)
     
     def single_cylinder_origami(self):
         r"""
@@ -1775,7 +1780,7 @@ class AbelianStratumComponent(StratumComponent):
     def lyapunov_exponents(self, **kargs):
         return(self.permutation_representative(reduced=False).lyapunov_exponents_H_plus(**kargs))
         
-    def single_cylinder_representative(self):
+    def single_cylinder_representative(self, alphabet=None):
         r"""
         Returns a single cylinder permutation representative.
         
@@ -1784,6 +1789,11 @@ class AbelianStratumComponent(StratumComponent):
         
         Such representatives were constructed for every stratum of Abelian
         differentials by Jeffreys [Jef19].
+        
+        INPUT::
+        
+            - ``alphabet`` - alphabet or ``None`` (defaut: ``None``):
+            whether you want to specify an alphabet for your representative.
         
         EXAMPLES::
         
@@ -1834,8 +1844,6 @@ class AbelianStratumComponent(StratumComponent):
         mk_pt_perm = GeneralizedPermutation([0,1],[1,0])
         for i in range(self.stratum().nb_fake_zeros()):
             fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)
-        if real_zeros == []:
-            return fk_zeros_perm
             
         if even_zeros == [2]:
             perm = only_even_2(odd_zeros)
@@ -1848,8 +1856,14 @@ class AbelianStratumComponent(StratumComponent):
                 even_perm = GeneralizedPermutation([0],[0])
             odd_perm = odd_zeros_one_one(odd_zeros)
             perm = cylinder_concatenation(even_perm,odd_perm)
+        
+        perm = cylinder_concatenation(fk_zeros_perm,perm)
+        
+        if not alphabet == None:
+            perm.alphabet(alphabet)
             
-        return cylinder_concatenation(fk_zeros_perm,perm)
+        return perm
+            
         
     def single_cylinder_origami(self):
         r"""
@@ -2304,7 +2318,7 @@ class HypAbelianStratumComponent(ASC):
 
         return hyperelliptic_cylinder_diagram_iterator(len(z)+sum(z))
         
-    def single_cylinder_representative(self):
+    def single_cylinder_representative(self, alphabet=None):
         r"""
         Returns a single cylinder permutation representative.
         
@@ -2313,6 +2327,11 @@ class HypAbelianStratumComponent(ASC):
         
         Such representatives were constructed for every stratum of Abelian
         differentials by Jeffreys [Jef19].
+        
+        INPUT::
+        
+            - ``alphabet`` - alphabet or ``None`` (defaut: ``None``):
+            whether you want to specify an alphabet for your representative.
         
         EXAMPLES::
         
@@ -2355,11 +2374,20 @@ class HypAbelianStratumComponent(ASC):
         add_fk_zeros = nb_fk_zeros - 2*genus+4-nb_real_zeros
         
         from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
+        from surface_dynamics.flat_surfaces.single_cylinder import cylinder_concatenation
         
         if nb_real_zeros == 1 and add_fk_zeros < 0:
             raise ValueError("no 1,1-square-tiled surfaces in this connected component try again with %s^hyp" %(str(AbelianStratum({2*genus-2:1,0:2*genus-3}))))
         elif nb_real_zeros == 2 and add_fk_zeros < 0:
             raise ValueError("no 1,1-square-tiled surfaces in this connected component try again with %s^hyp" %(str(AbelianStratum({genus-1:2,0:2*genus-2}))))
+        elif nb_real_zeros == 0:
+            fk_zeros_perm = GeneralizedPermutation([0],[0])
+            mk_pt_perm = GeneralizedPermutation([0,1],[1,0])
+            for i in range(nb_fk_zeros):
+                fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)
+            if not alphabet == None:
+                fk_zeros_perm.alphabet(alphabet)
+            return fk_zeros_perm
         else:
             top_row = [i for i in range(0,4*genus-3+2*(nb_real_zeros-1)+add_fk_zeros)]
             bot_row = [4*genus-4+2*(nb_real_zeros-1)+add_fk_zeros]
@@ -2370,6 +2398,8 @@ class HypAbelianStratumComponent(ASC):
                 bot_row = bot_row + [i,i+1]
             bot_row = bot_row + [0]
             perm = GeneralizedPermutation(top_row,bot_row)
+            if not alphabet == None:
+                perm.alphabet(alphabet)
             return perm
 
 
@@ -2837,7 +2867,7 @@ class EvenAbelianStratumComponent(ASC):
         return filter(lambda c: c.spin_parity() == 0,
                 self.stratum().cylinder_diagram_iterator(ncyls,True))
                 
-    def single_cylinder_representative(self):
+    def single_cylinder_representative(self, alphabet=None):
         r"""
         Returns a single cylinder permutation representative.
         
@@ -2846,6 +2876,11 @@ class EvenAbelianStratumComponent(ASC):
                 
         Such representatives were constructed for every stratum of Abelian
         differentials by Jeffreys [Jef19].
+        
+        INPUT::
+        
+            - ``alphabet`` - alphabet or ``None`` (defaut: ``None``):
+            whether you want to specify an alphabet for your representative.
                 
         EXAMPLES::
         
@@ -2887,20 +2922,22 @@ class EvenAbelianStratumComponent(ASC):
         mk_pt_perm = GeneralizedPermutation([0,1],[1,0])
         for i in range(self.stratum().nb_fake_zeros()):
             fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)
-        if real_zeros == []:
-            return fk_zeros_perm
                 
         two_count = real_zeros.count(2)
         if two_count == 0:
-            return cylinder_concatenation(fk_zeros_perm,no_two_even(real_zeros))
+            perm = cylinder_concatenation(fk_zeros_perm,no_two_even(real_zeros))
         elif two_count == 1:
-            return cylinder_concatenation(fk_zeros_perm,one_two_even(real_zeros))
+            perm = cylinder_concatenation(fk_zeros_perm,one_two_even(real_zeros))
         elif two_count == 2:
-            return cylinder_concatenation(fk_zeros_perm,two_twos_even(real_zeros))
+            perm = cylinder_concatenation(fk_zeros_perm,two_twos_even(real_zeros))
         elif two_count > 2 and two_count%2 == 0:
-            return cylinder_concatenation(fk_zeros_perm,even_twos_even(real_zeros,two_count))
+            perm = cylinder_concatenation(fk_zeros_perm,even_twos_even(real_zeros,two_count))
         else:
-            return cylinder_concatenation(fk_zeros_perm,odd_twos_even(real_zeros,two_count))
+            perm = cylinder_concatenation(fk_zeros_perm,odd_twos_even(real_zeros,two_count))
+            
+        if not alphabet == None:
+            perm.alphabet(alphabet)
+        return perm
 
 EvenASC = EvenAbelianStratumComponent
 
@@ -3229,7 +3266,7 @@ class OddAbelianStratumComponent(ASC):
         return filter(lambda c: c.spin_parity == 1,
                 self.stratum().cylinder_diagram_iterator(ncyls,True))
                 
-    def single_cylinder_representative(self):
+    def single_cylinder_representative(self, alphabet=None):
         r"""
         Returns a single cylinder permutation representative.
         
@@ -3238,6 +3275,11 @@ class OddAbelianStratumComponent(ASC):
         
         Such representatives were constructed for every stratum of Abelian
         differentials by Jeffreys [Jef19].
+        
+        INPUT::
+        
+            - ``alphabet`` - alphabet or ``None`` (defaut: ``None``):
+            whether you want to specify an alphabet for your representative.
         
         EXAMPLES::
         
@@ -3277,19 +3319,21 @@ class OddAbelianStratumComponent(ASC):
         fk_zeros_perm = GeneralizedPermutation([0],[0])
         mk_pt_perm = GeneralizedPermutation([0,1],[1,0])
         for i in range(self.stratum().nb_fake_zeros()):
-            fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)
-        if real_zeros == []:
-            return fk_zeros_perm        
+            fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)       
                         
         two_count = real_zeros.count(2)
         if two_count == 0:
-            return cylinder_concatenation(fk_zeros_perm,no_two_odd(real_zeros))
+            perm = cylinder_concatenation(fk_zeros_perm,no_two_odd(real_zeros))
         elif two_count == 1 :
-            return cylinder_concatenation(fk_zeros_perm,one_two_odd(real_zeros))
+            perm = cylinder_concatenation(fk_zeros_perm,one_two_odd(real_zeros))
         elif two_count >= 2 and two_count%2 == 0:
-            return cylinder_concatenation(fk_zeros_perm,even_twos_odd(real_zeros,two_count))
+            perm = cylinder_concatenation(fk_zeros_perm,even_twos_odd(real_zeros,two_count))
         else:
-            return cylinder_concatenation(fk_zeros_perm,odd_twos_odd(real_zeros,two_count))
+            perm = cylinder_concatenation(fk_zeros_perm,odd_twos_odd(real_zeros,two_count))
+            
+        if not alphabet == None:
+            perm.alphabet(alphabet)
+        return perm
 
 OddASC = OddAbelianStratumComponent
 

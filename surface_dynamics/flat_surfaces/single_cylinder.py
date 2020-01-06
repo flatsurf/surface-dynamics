@@ -47,14 +47,33 @@ def cylinder_check(perm):
         2 5 4 1 3 0
         sage: cylinder_check(perm_2)
         True
+        sage: perm_3 = iet.GeneralizedPermutation('a b', 'b a')
+        sage: perm_3
+        a b
+        b a
+        sage: cylinder_check(perm_3)
+        True
+        sage: perm_4 = iet.GeneralizedPermutation([0,3,2,1],[1,3,2,0])
+        sage: perm_4
+        0 3 2 1
+        1 3 2 0
+        sage: cylinder_check(perm_4)
+        True
     
     """
     from sage.combinat.permutation import Permutation
     
-    if len(perm[0]) == len(perm[1]) and perm[0][0] == perm[1][-1] == 0 and len(Permutation(perm[1][:-1]).cycle_tuples()) == 1:
-        return True
-    else:
+    if len(perm[0]) != len(perm[1]) or perm[0][0] != perm[1][-1]:
         return False
+    else:
+        alph = perm.alphabet()
+        perm.alphabet(len(perm[0]))
+        if len(Permutation(perm[1][:-1]).cycle_tuples()[0]) == len(perm[0])-1:
+            perm.alphabet(alph)
+            return True
+        else:
+            perm.alphabet(alph)
+            return False
         
         
 def even_zero_odd(num):
@@ -744,15 +763,11 @@ def odds_right_swap(zero_pair):
         bot_row = perm[1][:-1]
         top_row = top_row[:-5]+[top_row[-4],top_row[-5]]+top_row[-3:]
         bot_row = bot_row[:-5]+[bot_row[-4],bot_row[-5]]+bot_row[-3:]
-        top_row_new = [i for i in range(1,len(top_row)+1)]
-        bot_row_new = ['x' for i in range(1,len(bot_row)+1)]
-        for i in range(1,len(top_row)+1):
-            for k in range(len(bot_row)):
-                if bot_row[k] == top_row[i-1]:
-                    bot_row_new[k]=i
-        top_row = [0]+top_row_new
-        bot_row = bot_row_new+[0]
-        return GeneralizedPermutation(top_row,bot_row)
+        top_row = [0]+top_row
+        bot_row = bot_row+[0]
+        perm_3 = GeneralizedPermutation(top_row,bot_row)
+        perm_3.alphabet(len(perm_3[0]))
+        return perm_3
 
 def odds_left_swap(zero_pair):
     r"""
@@ -804,15 +819,11 @@ def odds_left_swap(zero_pair):
     bot_row = perm[1][:-1]
     top_row = top_row[:-(swap_point+1)]+[top_row[-(swap_point)],top_row[-(swap_point+1)]]+top_row[-(swap_point-1):]
     bot_row = bot_row[:-(swap_point+1)]+[bot_row[-(swap_point)],bot_row[-(swap_point+1)]]+bot_row[-(swap_point-1):]
-    top_row_new = [i for i in range(1,len(top_row)+1)]
-    bot_row_new = ['x' for i in range(1,len(bot_row)+1)]
-    for i in range(1,len(top_row)+1):
-        for k in range(len(bot_row)):
-            if bot_row[k] == top_row[i-1]:
-                bot_row_new[k]=i
-    top_row = [0]+top_row_new
-    bot_row = bot_row_new+[0]
-    return GeneralizedPermutation(top_row,bot_row)
+    top_row = [0]+top_row
+    bot_row = bot_row+[0]
+    perm_3 = GeneralizedPermutation(top_row,bot_row)
+    perm_3.alphabet(len(perm_3[0]))
+    return perm_3
     
 def no_ones_odds(odd_zeros):
     r"""
@@ -1058,7 +1069,7 @@ def three_ones_odds(odd_zeros):
         return cylinder_concatenation(perm,two_ones_odds(odd_zeros))
     else:
         num = odd_zeros[0]
-        res_4 = num%4
+        res_4 = num % 4
         if num == 3:
             return GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10],[2,10,6,5,1,8,4,7,3,9,0])
         elif num == 5:
@@ -1139,7 +1150,7 @@ def even_ones_odds(odd_zeros,one_count):
         odd_zeros.remove(1)
     four_ones = GeneralizedPermutation([0,1,2,3,4,5,6,7,8],[2,6,5,3,1,8,4,7,0])
     six_ones = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10,11,12],[2,8,1,5,11,7,3,10,6,12,9,4,0])
-    if one_count%4 == 0:
+    if one_count % 4 == 0:
         perm = four_ones
         for i in range((one_count-4)//4):
             perm = cylinder_concatenation(perm,four_ones)
@@ -1339,7 +1350,7 @@ def odd_zeros_one_one(odd_zeros):
         return two_ones_odds(odd_zeros)
     elif one_count == 3:
         return three_ones_odds(odd_zeros)
-    elif one_count >= 4 and one_count%2 == 0:
+    elif one_count >= 4 and one_count % 2 == 0:
         return even_ones_odds(odd_zeros,one_count)
     else:
         return odd_ones_odds(odd_zeros,one_count)
@@ -1422,7 +1433,7 @@ def only_even_2(odd_zeros):
         True
     
     """
-    if odd_zeros.count(1) == len(odd_zeros) and odd_zeros.count(1)%4 == 2:
+    if odd_zeros.count(1) == len(odd_zeros) and odd_zeros.count(1) % 4 == 2:
         perm = GeneralizedPermutation([0,1,2,3,4,5,6,7],[2,6,4,1,7,5,3,0])
         if len(odd_zeros) == 2:
             return perm
@@ -1431,7 +1442,7 @@ def only_even_2(odd_zeros):
             odd_zeros.remove(1)
             one_count = odd_zeros.count(1)
             return cylinder_concatenation(perm,even_ones_odds(odd_zeros,one_count))
-    elif odd_zeros.count(1) == len(odd_zeros) and odd_zeros.count(1)%4 == 0:
+    elif odd_zeros.count(1) == len(odd_zeros) and odd_zeros.count(1) % 4 == 0:
         perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10,11],[2,7,11,6,3,9,5,1,8,4,10,0])
         if len(odd_zeros) == 4:
             return perm
@@ -1589,7 +1600,7 @@ def only_odds_11(even_zeros):
         True
     
     """
-    if set(even_zeros) == {2} and len(even_zeros)%2 == 1:
+    if set(even_zeros) == {2} and len(even_zeros) % 2 == 1:
         perm = GeneralizedPermutation([0,1,2,3,4,5,6,7],[2,6,4,1,7,5,3,0])
         if len(even_zeros) == 1:
             return perm
@@ -1597,7 +1608,7 @@ def only_odds_11(even_zeros):
             even_zeros.remove(2)
             even_perm = AbelianStratum(even_zeros).odd_component().single_cylinder_representative()
             return cylinder_concatenation(perm,even_perm)
-    elif set(even_zeros) == {2} and len(even_zeros)%2 == 0:
+    elif set(even_zeros) == {2} and len(even_zeros) % 2 == 0:
         perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10],[2,4,9,7,3,8,5,1,10,6,0])
         if len(even_zeros) == 2:
             return perm
@@ -1612,7 +1623,7 @@ def only_odds_11(even_zeros):
         return cylinder_concatenation(perm,even_perm)
     else:
         num = even_zeros[0]
-        if num%4 == 2:
+        if num % 4 == 2:
             top_row = [i for i in range(num+6)]
             bot_row = [2,6,4,1]
             for i in range(8,num+6,2):
@@ -1640,7 +1651,7 @@ def only_odds_11(even_zeros):
                 even_perm = AbelianStratum(even_zeros[1:]).odd_component().single_cylinder_representative()
                 return cylinder_concatenation(perm,even_perm)
                 
-def cylinder_concatenation(perm_1,perm_2):
+def cylinder_concatenation(perm_1, perm_2, alphabet=None):
     r"""
     Combines two single cylinder permutation representatives.
     
@@ -1653,6 +1664,9 @@ def cylinder_concatenation(perm_1,perm_2):
     INPUT:
     
         - ``perm_1``, ``perm_2`` - two single cylinder permutation representatives.
+        
+        - ``alphabet`` - alphabet or ``None`` (defaut: ``None``):
+        whether you want to specify an alphabet for your representative.
     
     EXAMPLES::
     
@@ -1684,7 +1698,7 @@ def cylinder_concatenation(perm_1,perm_2):
         sage: cylinder_check(perm_3)
         True
         sage: perm_4 = AbelianStratum(6).even_component().single_cylinder_representative()
-        sage: perm_5 = cylinder_concatenation(perm_1,perm_4)
+        sage: perm_5 = cylinder_concatenation(perm_1,perm_4,Alphabet(name='lower'))
         sage: perm_4
         0 1 2 3 4 5 6 7
         2 7 6 5 3 1 4 0
@@ -1693,14 +1707,20 @@ def cylinder_concatenation(perm_1,perm_2):
         sage: cylinder_check(perm_4)
         True
         sage: perm_5
-        0 1 2 3 4 5 6 7 8 9 10 11 12
-        2 5 4 6 3 7 12 11 10 8 1 9 0
+        a b c d e f g h i j k l m
+        c f e g d h m l k i b j a
         sage: perm_5.stratum_component() == AbelianStratum(6,4).even_component()
         True
         sage: cylinder_check(perm_5)
         True
         
     """
+    from sage.combinat.words.alphabet import Alphabet
+    from sage.rings.semirings.non_negative_integer_semiring import NN
+    
+    alph = Alphabet(NN)
+    perm_1.alphabet(alph)
+    perm_2.alphabet(alph)
     length_1 = len(perm_1[0])-1
     length_2 = len(perm_2[0])-1
     top_row = [i for i in range(length_1+length_2+1)]
@@ -1713,4 +1733,7 @@ def cylinder_concatenation(perm_1,perm_2):
         if not bot_row2[j] == 1:
             bot_row2[j] += length_1
     bot_row = bot_row1 + bot_row2 + [0]
-    return GeneralizedPermutation(top_row,bot_row)
+    perm = GeneralizedPermutation(top_row,bot_row)
+    if not alphabet == None:
+        perm.alphabet(alphabet)
+    return perm
