@@ -59,6 +59,9 @@ def cylinder_check(perm):
         1 3 2 0
         sage: cylinder_check(perm_4)
         True
+        sage: perm_5 = iet.GeneralizedPermutation('1 2 3 4', '4 3 1 2')
+        sage: cylinder_check(perm_5)
+        False
     
     """
     from sage.combinat.permutation import Permutation
@@ -1673,9 +1676,10 @@ def cylinder_concatenation(perm_1, perm_2, alphabet=None):
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
         
+    We first take two single cylinder permutation representatives for the odd
+    components of H_3(4)^odd and H_4(6)^odd.
+        
         sage: perm_1 = AbelianStratum(4).odd_component().single_cylinder_representative()
-        sage: perm_2 = AbelianStratum(6).odd_component().single_cylinder_representative()
-        sage: perm_3 = cylinder_concatenation(perm_1,perm_2)
         sage: perm_1
         0 1 2 3 4 5
         2 5 4 1 3 0
@@ -1683,6 +1687,7 @@ def cylinder_concatenation(perm_1, perm_2, alphabet=None):
         True
         sage: cylinder_check(perm_1)
         True
+        sage: perm_2 = AbelianStratum(6).odd_component().single_cylinder_representative()
         sage: perm_2
         0 1 2 3 4 5 6 7
         2 5 4 7 3 1 6 0
@@ -1690,6 +1695,12 @@ def cylinder_concatenation(perm_1, perm_2, alphabet=None):
         True
         sage: cylinder_check(perm_2)
         True
+        
+    We check that the cylinder_concatenation of these permutations produces
+    a single cylinder permutation representative of the connected component
+    H_6(6,4)^odd.    
+        
+        sage: perm_3 = cylinder_concatenation(perm_1,perm_2)
         sage: perm_3
         0 1 2 3 4 5 6 7 8 9 10 11 12
         2 5 4 6 3 7 10 9 12 8 1 11 0
@@ -1697,6 +1708,12 @@ def cylinder_concatenation(perm_1, perm_2, alphabet=None):
         True
         sage: cylinder_check(perm_3)
         True
+        
+    We now instead take the cylinder_concatenation of perm_1 with a single cylinder
+    permutation representative of the connected component H_4(6)^even. We see
+    that the resulting permutation is a single cylinder permutation representative
+    of the connected component H_6(6,4)^even.    
+        
         sage: perm_4 = AbelianStratum(6).even_component().single_cylinder_representative()
         sage: perm_5 = cylinder_concatenation(perm_1,perm_4,Alphabet(name='lower'))
         sage: perm_4

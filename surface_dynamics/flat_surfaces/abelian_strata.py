@@ -906,12 +906,18 @@ class AbelianStratum(Stratum):
             
             sage: C = AbelianStratum(2,0)
             sage: p = C.single_cylinder_representative()
+            sage: p
+            0 1 2 3 4
+            4 3 1 2 0
             sage: p.stratum() == C
             True
             sage: cylinder_check(p)
             True
             sage: C = AbelianStratum(3,1)
-            sage: p = C.single_cylinder_representative()
+            sage: p = C.single_cylinder_representative(alphabet=Alphabet(name='lower'))
+            sage: p
+            a b c d e f g
+            c f b g e d a
             sage: p.stratum() == C
             True
             sage: cylinder_check(p)
@@ -1819,10 +1825,10 @@ class AbelianStratumComponent(StratumComponent):
             sage: cylinder_check(p)
             True
             sage: cc = AbelianStratum(3,3).non_hyperelliptic_component()
-            sage: p = cc.single_cylinder_representative()
+            sage: p = cc.single_cylinder_representative(alphabet=Alphabet(name='lower'))
             sage: p
-            0 1 2 3 4 5 6 7 8
-            2 8 6 5 7 4 1 3 0
+            a b c d e f g h i
+            c i g f h e b d a
             sage: p.stratum_component() == cc
             True
             sage: cylinder_check(p)
@@ -2339,10 +2345,10 @@ class HypAbelianStratumComponent(ASC):
             sage: from surface_dynamics.flat_surfaces.single_cylinder import cylinder_check
             
             sage: cc = AbelianStratum(2,0).hyperelliptic_component()
-            sage: p = cc.single_cylinder_representative()
+            sage: p = cc.single_cylinder_representative(alphabet=Alphabet(name='upper'))
             sage: p
-            0 1 2 3 4
-            4 3 1 2 0
+            A B C D E
+            E D B C A
             sage: p.stratum_component() == cc
             True
             sage: cylinder_check(p)
@@ -2888,10 +2894,10 @@ class EvenAbelianStratumComponent(ASC):
             sage: from surface_dynamics.flat_surfaces.single_cylinder import cylinder_check
             
             sage: cc = AbelianStratum(6).even_component()
-            sage: p = cc.single_cylinder_representative()
+            sage: p = cc.single_cylinder_representative(alphabet=Alphabet(name='lower'))
             sage: p
-            0 1 2 3 4 5 6 7
-            2 7 6 5 3 1 4 0
+            a b c d e f g h
+            c h g f d b e a
             sage: p.stratum_component() == cc
             True
             sage: cylinder_check(p)
@@ -3287,10 +3293,10 @@ class OddAbelianStratumComponent(ASC):
             sage: from surface_dynamics.flat_surfaces.single_cylinder import cylinder_check
             
             sage: cc = AbelianStratum(4).odd_component()
-            sage: p = cc.single_cylinder_representative()
+            sage: p = cc.single_cylinder_representative(alphabet=Alphabet(name='upper'))
             sage: p
-            0 1 2 3 4 5
-            2 5 4 1 3 0
+            A B C D E F
+            C F E B D A
             sage: p.stratum_component() == cc
             True
             sage: cylinder_check(p)
