@@ -10,6 +10,8 @@ Python bindings for various computation of Lyapunov exponents.
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
+cimport numpy as np
+
 from builtins import range
 
 from libc.stdlib cimport malloc,free
@@ -55,7 +57,8 @@ cdef extern from "lyapunov_exponents.h":
 def lyapunov_exponents_H_plus_cover(
     gp, k, twin, sigma,
     nb_experiments, nb_iterations,
-    dimensions, projections, lengths, verbose):
+    dimensions,
+    np.ndarray[np.float64_t, ndim=3] projections, lengths, verbose):
     r"""
     Compute the Lyapunov exponents of the H^+ part of the KZ-cocycle for covering locii.
 
@@ -95,16 +98,17 @@ def lyapunov_exponents_H_plus_cover(
     cdef quad_cover *qcc
     cdef double * theta
     cdef double *proj
+    cdef np.ndarray[np.float64_t, ndim=1] flat_projections
 
-    if not projections and len(dimensions)>1:
+    if projections is None and len(dimensions) > 1:
         raise ValueError("dimensions without projections")
     nc = len(dimensions)
 
     if not isinstance(gp, (tuple, list)) or not isinstance(twin, (tuple,list)):
         raise ValueError("gp and twin should be lists")
-    if len(gp)%2 or len(gp) != len(twin):
+    if len(gp) % 2 or len(gp) != len(twin):
         raise ValueError("gp and twin should have the same even length")
-    n = len(gp)//2
+    n = len(gp) // 2
     if any(gp.count(i) != 2 for i in range(n)):
         raise ValueError("gp is not a generalized permutation")
     if set(twin) != set(range(2*n)) or \
@@ -177,14 +181,15 @@ def lyapunov_exponents_H_plus_cover(
     else:
         init_GS(nb_vectors)
 
-        if projections:
+        if projections is not None:
             dim = <size_t *> malloc(nc * sizeof(size_t))
             for i from 0 <= i < nc:
                 dim[i] = int(dimensions[i])
 
             proj = <double *> malloc((n * degree)**2 * nc * sizeof(double))
+            flat_projections = projections.flatten()
             for i from 0 <= i < (n * degree)**2 * nc:
-                 proj[i] = <double> projections[i]
+                 proj[i] = flat_projections[i]
 
             for i in range(nb_experiments):
                 lyapunov_exponents_isotypic(qcc, theta, nb_iterations, nc, dim, proj)

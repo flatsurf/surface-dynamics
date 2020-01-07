@@ -1155,7 +1155,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
                     nb_vectors=nb_vectors, nb_experiments=nb_experiments,
                     nb_iterations=nb_iterations, return_speed=return_speed,
                     isotypic_decomposition=character,
-                    verbose=verbose, output_file=output_file)
+                    verbose=verbose, output_file=output_file)[0]
 
 
 class FlippedLabelledPermutationIET(FlippedPermutationIET, LabelledPermutationIET):
