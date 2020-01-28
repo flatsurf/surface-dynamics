@@ -905,27 +905,27 @@ class AbelianStratum(Stratum):
             return sum(cc.cylinder_diagrams_number(ncyls) for cc in self.components())
 
         return sum(1 for _ in self.cylinder_diagram_iterator(ncyls, True))
-        
+
     def single_cylinder_representative(self, alphabet=None):
         r"""
         Returns a single cylinder permutation representative.
-        
+
         Returns a permutation representative of a square-tiled surface in this
         component having a single vertical cylinder and a single horizontal cylinder.
-        
+
         Such representatives were constructed for every stratum of Abelian
         differentials by Jeffreys [Jef19].
-        
+
         INPUT::
-        
+
             - ``alphabet`` - alphabet or ``None`` (defaut: ``None``):
             whether you want to specify an alphabet for your representative.
-        
+
         EXAMPLES::
-        
+
             sage: from surface_dynamics import *
             sage: from surface_dynamics.flat_surfaces.single_cylinder import cylinder_check
-            
+
             sage: C = AbelianStratum(2,0)
             sage: p = C.single_cylinder_representative()
             sage: p
@@ -957,25 +957,25 @@ class AbelianStratum(Stratum):
         """
         genus = self.genus()
         nb_real_zeros = self.nb_zeros()-self.nb_fake_zeros()
-        
+
         if genus == 2 and nb_real_zeros == 1 and self.nb_fake_zeros() < 1:
             raise ValueError("no 1,1-square-tiled surfaces in this stratum try again with H_2(2, 0)")
         elif genus == 2 and nb_real_zeros == 2 and self.nb_fake_zeros() < 2:
             raise ValueError("no 1,1-square-tiled surfaces in this stratum try again with H_2(1^2, 0^2)")
         else:
             return self.one_component().single_cylinder_representative(alphabet)
-    
+
     def single_cylinder_origami(self):
         r"""
         Returns an origami associated to a single cylinder permutation representative.
-        
+
         Returns an origami in this connected component having a single vertical
         cylinder and a single horizontal cylinder.
-        
+
         Examples::
-        
+
             sage: from surface_dynamics import *
-            
+
             sage: C = AbelianStratum(4)
             sage: O = C.single_cylinder_origami()
             sage: O
@@ -990,7 +990,7 @@ class AbelianStratum(Stratum):
             (1,3,2,4)
             sage: O.stratum() == AbelianStratum(2)
             True
-                
+
         """
         return self.one_component().single_cylinder_origami()
 
@@ -1160,7 +1160,7 @@ class AbelianStratumComponent(StratumComponent):
             [1.000, 0.428, 0.183]
         """
         perm = self.permutation_representative(reduced=False)
-        return perm.lyapunov_exponents_approx(**kargs) 
+        return perm.lyapunov_exponents_approx(**kargs)
 
     # TODO
     # def sum_of_lyapunov_exponents(self):
@@ -1812,27 +1812,27 @@ class AbelianStratumComponent(StratumComponent):
 
     def lyapunov_exponents(self, **kargs):
         return(self.permutation_representative(reduced=False).lyapunov_exponents_H_plus(**kargs))
-        
+
     def single_cylinder_representative(self, alphabet=None):
         r"""
         Returns a single cylinder permutation representative.
-        
+
         Returns a permutation representative of a square-tiled surface in this
         component having a single vertical cylinder and a single horizontal cylinder.
-        
+
         Such representatives were constructed for every stratum of Abelian
         differentials by Jeffreys [Jef19].
-        
+
         INPUT::
-        
+
             - ``alphabet`` - alphabet or ``None`` (defaut: ``None``):
             whether you want to specify an alphabet for your representative.
-        
+
         EXAMPLES::
-        
+
             sage: from surface_dynamics import *
             sage: from surface_dynamics.flat_surfaces.single_cylinder import cylinder_check
-            
+
             sage: cc = AbelianStratum(1,1,1,1).unique_component()
             sage: p = cc.single_cylinder_representative()
             sage: p
@@ -1860,24 +1860,24 @@ class AbelianStratumComponent(StratumComponent):
             True
             sage: cylinder_check(p)
             True
-            
+
         """
         from surface_dynamics.flat_surfaces.single_cylinder import cylinder_concatenation
         from surface_dynamics.flat_surfaces.single_cylinder import only_even_2
         from surface_dynamics.flat_surfaces.single_cylinder import only_odds_11
         from surface_dynamics.flat_surfaces.single_cylinder import odd_zeros_one_one
         from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
-        
+
         zeros = self.stratum().zeros()
         real_zeros = [z for z in zeros if z != 0]
         odd_zeros = [z for z in real_zeros if z%2 == 1]
         even_zeros = [z for z in real_zeros if z%2 == 0]
-        
+
         fk_zeros_perm = GeneralizedPermutation([0],[0])
         mk_pt_perm = GeneralizedPermutation([0,1],[1,0])
         for i in range(self.stratum().nb_fake_zeros()):
             fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)
-            
+
         if even_zeros == [2]:
             perm = only_even_2(odd_zeros)
         elif odd_zeros == [1,1]:
@@ -1889,26 +1889,26 @@ class AbelianStratumComponent(StratumComponent):
                 even_perm = GeneralizedPermutation([0],[0])
             odd_perm = odd_zeros_one_one(odd_zeros)
             perm = cylinder_concatenation(even_perm,odd_perm)
-        
+
         perm = cylinder_concatenation(fk_zeros_perm,perm)
-        
+
         if not alphabet == None:
             perm.alphabet(alphabet)
-            
+
         return perm
-            
-        
+
+
     def single_cylinder_origami(self):
         r"""
         Returns an origami associated to a single cylinder permutation representative.
-        
+
         Returns an origami in this connected component having a single vertical
         cylinder and a single horizontal cylinder.
-        
+
         Examples::
-        
+
             sage: from surface_dynamics import *
-            
+
             sage: cc = AbelianStratum(4).odd_component()
             sage: O = cc.single_cylinder_origami()
             sage: O
@@ -1930,10 +1930,10 @@ class AbelianStratumComponent(StratumComponent):
             (1,3,7,5,6,8,4,2)
             sage: O.stratum_component() == cc
             True
-                
+
         """
         from surface_dynamics.flat_surfaces.origamis.origami import Origami
-        
+
         perm = self.single_cylinder_representative()
         t0 = tuple([i for i in range(1,len(perm[0]))])
         t1 = [1]
@@ -2346,27 +2346,27 @@ class HypAbelianStratumComponent(ASC):
         z = stratum.zeros()
 
         return hyperelliptic_cylinder_diagram_iterator(len(z)+sum(z))
-        
+
     def single_cylinder_representative(self, alphabet=None):
         r"""
         Returns a single cylinder permutation representative.
-        
+
         Returns a permutation representative of a square-tiled surface in this
         component having a single vertical cylinder and a single horizontal cylinder.
-        
+
         Such representatives were constructed for every stratum of Abelian
         differentials by Jeffreys [Jef19].
-        
+
         INPUT::
-        
+
             - ``alphabet`` - alphabet or ``None`` (defaut: ``None``):
             whether you want to specify an alphabet for your representative.
-        
+
         EXAMPLES::
-        
+
             sage: from surface_dynamics import *
             sage: from surface_dynamics.flat_surfaces.single_cylinder import cylinder_check
-            
+
             sage: cc = AbelianStratum(2,0).hyperelliptic_component()
             sage: p = cc.single_cylinder_representative(alphabet=Alphabet(name='upper'))
             sage: p
@@ -2401,10 +2401,10 @@ class HypAbelianStratumComponent(ASC):
         nb_fk_zeros = stratum.nb_fake_zeros()
         nb_real_zeros = stratum.nb_zeros()-nb_fk_zeros
         add_fk_zeros = nb_fk_zeros - 2*genus+4-nb_real_zeros
-        
+
         from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
         from surface_dynamics.flat_surfaces.single_cylinder import cylinder_concatenation
-        
+
         if nb_real_zeros == 1 and add_fk_zeros < 0:
             raise ValueError("no 1,1-square-tiled surfaces in this connected component try again with %s^hyp" %(str(AbelianStratum({2*genus-2:1,0:2*genus-3}))))
         elif nb_real_zeros == 2 and add_fk_zeros < 0:
@@ -2895,27 +2895,27 @@ class EvenAbelianStratumComponent(ASC):
 
         return filter(lambda c: c.spin_parity() == 0,
                 self.stratum().cylinder_diagram_iterator(ncyls,True))
-                
+
     def single_cylinder_representative(self, alphabet=None):
         r"""
         Returns a single cylinder permutation representative.
-        
+
         Returns a permutation representative of a square-tiled surface in this
         component having a single vertical cylinder and a single horizontal cylinder.
-                
+
         Such representatives were constructed for every stratum of Abelian
         differentials by Jeffreys [Jef19].
-        
+
         INPUT::
-        
+
             - ``alphabet`` - alphabet or ``None`` (defaut: ``None``):
             whether you want to specify an alphabet for your representative.
-                
+
         EXAMPLES::
-        
+
             sage: from surface_dynamics import *
             sage: from surface_dynamics.flat_surfaces.single_cylinder import cylinder_check
-            
+
             sage: cc = AbelianStratum(6).even_component()
             sage: p = cc.single_cylinder_representative(alphabet=Alphabet(name='lower'))
             sage: p
@@ -2934,7 +2934,7 @@ class EvenAbelianStratumComponent(ASC):
             True
             sage: cylinder_check(p)
             True
-            
+
         """
         from surface_dynamics.flat_surfaces.single_cylinder import cylinder_concatenation
         from surface_dynamics.flat_surfaces.single_cylinder import no_two_even
@@ -2943,15 +2943,15 @@ class EvenAbelianStratumComponent(ASC):
         from surface_dynamics.flat_surfaces.single_cylinder import even_twos_even
         from surface_dynamics.flat_surfaces.single_cylinder import odd_twos_even
         from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
-                
+
         zeros = self.stratum().zeros()
         real_zeros = [z for z in zeros if z != 0]
-        
+
         fk_zeros_perm = GeneralizedPermutation([0],[0])
         mk_pt_perm = GeneralizedPermutation([0,1],[1,0])
         for i in range(self.stratum().nb_fake_zeros()):
             fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)
-                
+
         two_count = real_zeros.count(2)
         if two_count == 0:
             perm = cylinder_concatenation(fk_zeros_perm,no_two_even(real_zeros))
@@ -2963,7 +2963,7 @@ class EvenAbelianStratumComponent(ASC):
             perm = cylinder_concatenation(fk_zeros_perm,even_twos_even(real_zeros,two_count))
         else:
             perm = cylinder_concatenation(fk_zeros_perm,odd_twos_even(real_zeros,two_count))
-            
+
         if not alphabet == None:
             perm.alphabet(alphabet)
         return perm
@@ -3294,27 +3294,27 @@ class OddAbelianStratumComponent(ASC):
 
         return filter(lambda c: c.spin_parity == 1,
                 self.stratum().cylinder_diagram_iterator(ncyls,True))
-                
+
     def single_cylinder_representative(self, alphabet=None):
         r"""
         Returns a single cylinder permutation representative.
-        
+
         Returns a permutation representative of a square-tiled surface in this
         component having a single vertical cylinder and a single horizontal cylinder.
-        
+
         Such representatives were constructed for every stratum of Abelian
         differentials by Jeffreys [Jef19].
-        
+
         INPUT::
-        
+
             - ``alphabet`` - alphabet or ``None`` (defaut: ``None``):
             whether you want to specify an alphabet for your representative.
-        
+
         EXAMPLES::
-        
+
             sage: from surface_dynamics import *
             sage: from surface_dynamics.flat_surfaces.single_cylinder import cylinder_check
-            
+
             sage: cc = AbelianStratum(4).odd_component()
             sage: p = cc.single_cylinder_representative(alphabet=Alphabet(name='upper'))
             sage: p
@@ -3333,7 +3333,7 @@ class OddAbelianStratumComponent(ASC):
             True
             sage: cylinder_check(p)
             True
-            
+
         """
         from surface_dynamics.flat_surfaces.single_cylinder import cylinder_concatenation
         from surface_dynamics.flat_surfaces.single_cylinder import no_two_odd
@@ -3341,15 +3341,15 @@ class OddAbelianStratumComponent(ASC):
         from surface_dynamics.flat_surfaces.single_cylinder import even_twos_odd
         from surface_dynamics.flat_surfaces.single_cylinder import odd_twos_odd
         from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
-        
+
         zeros = self.stratum().zeros()
         real_zeros = [z for z in zeros if z != 0]
-        
+
         fk_zeros_perm = GeneralizedPermutation([0],[0])
         mk_pt_perm = GeneralizedPermutation([0,1],[1,0])
         for i in range(self.stratum().nb_fake_zeros()):
-            fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)       
-                        
+            fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)
+
         two_count = real_zeros.count(2)
         if two_count == 0:
             perm = cylinder_concatenation(fk_zeros_perm,no_two_odd(real_zeros))
@@ -3359,7 +3359,7 @@ class OddAbelianStratumComponent(ASC):
             perm = cylinder_concatenation(fk_zeros_perm,even_twos_odd(real_zeros,two_count))
         else:
             perm = cylinder_concatenation(fk_zeros_perm,odd_twos_odd(real_zeros,two_count))
-            
+
         if not alphabet == None:
             perm.alphabet(alphabet)
         return perm

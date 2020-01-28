@@ -24,16 +24,16 @@ from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum
 def cylinder_check(perm):
     r"""
     Checks for a single vertical cylinder and a single horizontal cylinder.
-    
+
     INPUT::
-    
+
         - ``perm`` - a permutation representative of an Abelian stratum
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import cylinder_check
-        
+
         sage: C = AbelianStratum(4)
         sage: perm_1 = C.permutation_representative()
         sage: perm_1
@@ -65,11 +65,11 @@ def cylinder_check(perm):
         sage: perm_6 = iet.GeneralizedPermutation('A B C D', 'B C D A')
         sage: cylinder_check(perm_6)
         True
-    
+
     """
     from sage.combinat.permutation import Permutation
     from surface_dynamics.flat_surfaces.origamis.origami import Origami
-         
+
     if len(perm[0]) != len(perm[1]) or perm[0][0] != perm[1][-1]:
         return False
     else:
@@ -85,28 +85,28 @@ def cylinder_check(perm):
         else:
             perm.alphabet(alph)
             return False
-                  
-        
+
+
 def even_zero_odd(num):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having
     a single vertical cylinder and a single horizontal cylinder in the odd
     component of the Abelian stratum with a single zero of the given order.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``num`` - an even integer at least four.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = even_zero_odd(4)
         sage: perm
         0 1 2 3 4 5
@@ -123,7 +123,7 @@ def even_zero_odd(num):
         True
         sage: cylinder_check(perm)
         True
-        
+
     """
     genus = (num+2)//2
     if genus == 3:
@@ -141,24 +141,24 @@ def even_zero_odd(num):
 def no_two_odd(real_zeros):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in the odd component of an
     Abelian stratum having no zeros of order two.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``real_zeros`` - a list of even positive integers none of which
         are equal to two.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = no_two_odd([6,4])
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
@@ -167,7 +167,7 @@ def no_two_odd(real_zeros):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     perm = even_zero_odd(real_zeros[0])
     if len(real_zeros) == 1:
@@ -180,23 +180,23 @@ def no_two_odd(real_zeros):
 def one_two_odd(real_zeros):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in the odd component of an
     Abelian stratum having one zero of order two.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``real_zeros`` - a list of even positive integers one of which is equal to two.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = one_two_odd([4,2])
         sage: perm
         0 1 2 3 4 5 6 7 8
@@ -213,59 +213,59 @@ def one_two_odd(real_zeros):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     real_zeros.remove(2)
-    if set(real_zeros) == {4}:            
+    if set(real_zeros) == {4}:
         perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8],[2,5,8,3,6,4,1,7,0])
         if len(real_zeros) == 1:
             return perm
-        else:    
+        else:
             return cylinder_concatenation(perm,no_two_odd(real_zeros[1:]))
-    else:            
+    else:
         perm_1 = even_zero_odd(real_zeros[0]-2)
         length_1 = len(perm_1[0])-1
         top_row_1 = perm_1[0]
         bot_row_1 = perm_1[1][:-1]
-            
+
         for i in range(length_1):
-            if bot_row_1[i] == 1:    
+            if bot_row_1[i] == 1:
                 bot_row_1[i] += length_1
-        
+
         top_row_2 = [i+length_1 for i in range(1,6)]
         bot_row_2 = [3+length_1,5+length_1,2+length_1,1,4+length_1,0]
         top_row = top_row_1 + top_row_2
         bot_row = bot_row_1 + bot_row_2
         perm = GeneralizedPermutation(top_row,bot_row)
-            
+
         if len(real_zeros) == 1:
             return perm
         else:
             return cylinder_concatenation(perm,no_two_odd(real_zeros[1:]))
-            
+
 def even_twos_odd(real_zeros,two_count):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in the odd component of an
     Abelian stratum having an even, at least two, number of zeros of order two.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``real_zeros`` - a list of even positive integers an even number of which
         are equal to two.
-        
+
         - ``two_count`` - a positive integer equal to the number of twos in ``real_zeros``.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = even_twos_odd([2,2],2)
         sage: perm
         0 1 2 3 4 5 6
@@ -282,45 +282,45 @@ def even_twos_odd(real_zeros,two_count):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     for i in range(two_count):
         real_zeros.remove(2)
-            
+
     odd_2_2 = GeneralizedPermutation([0,1,2,3,4,5,6],[2,4,6,3,1,5,0])
-    twos_perm = odd_2_2    
-            
+    twos_perm = odd_2_2
+
     for i in range((two_count-2)//2):
         twos_perm = cylinder_concatenation(twos_perm,odd_2_2)
-            
+
     if len(real_zeros) == 0:
         return twos_perm
     else:
         return cylinder_concatenation(twos_perm,no_two_odd(real_zeros))
-        
+
 def odd_twos_odd(real_zeros,two_count):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in the odd component of an
     Abelian stratum having an odd, at least three, number of zeros of order two.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``real_zeros`` - a list of even positive integers an odd number of which
         are equal to two.
-        
+
         - ``two_count`` - a positive integer equal to the number of twos in ``real_zeros``.
-            
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = odd_twos_odd([2,2,2],3)
         sage: perm
         0 1 2 3 4 5 6 7 8 9
@@ -337,45 +337,45 @@ def odd_twos_odd(real_zeros,two_count):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     for i in range(two_count):
         real_zeros.remove(2)
-            
+
     odd_2_2 = GeneralizedPermutation([0,1,2,3,4,5,6],[2,4,6,3,1,5,0])
-        
+
     odd_2_2_2 = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9],[2,8,6,9,4,1,3,5,7,0])
-        
+
     twos_perm = odd_2_2_2
-        
+
     for i in range((two_count-3)//2):
         twos_perm = cylinder_concatenation(twos_perm,odd_2_2)
-            
+
     if len(real_zeros) == 0:
         return twos_perm
     else:
         return cylinder_concatenation(twos_perm,no_two_odd(real_zeros))
-        
+
 def even_zero_even(num):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having
     a single vertical cylinder and a single horizontal cylinder in the even
     component of the Abelian stratum with a single zero of the given order.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``num`` - an even integer at least six.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = even_zero_even(6)
         sage: perm
         0 1 2 3 4 5 6 7
@@ -392,7 +392,7 @@ def even_zero_even(num):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     genus = (num+2)//2
     if genus == 4:
@@ -406,28 +406,28 @@ def even_zero_even(num):
             bot_row = bot_row + [i,i-3]
         bot_row = bot_row + [1,2*genus-2,0]
         return GeneralizedPermutation(top_row,bot_row)
-        
+
 def no_two_even(real_zeros):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in the even component of
     an Abelian stratum having no zeros of order two.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``real_zeros`` - a list of even positive integers none of which
         are equal to two.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = no_two_even([4,4])
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10
@@ -442,48 +442,48 @@ def no_two_even(real_zeros):
         2 7 6 5 3 8 4 9 12 11 1 10 0
         sage: perm.stratum_component() == AbelianStratum(6,4).even_component()
         True
-    
+
     """
     if set(real_zeros) == {4}:
         four_count = real_zeros.count(4)
         even_4_4 = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10],[2,10,7,5,8,1,9,6,4,3,0])
         real_zeros.remove(4)
         real_zeros.remove(4)
-        
+
         if real_zeros != []:
             odd_perm = AbelianStratum(real_zeros).odd_component().single_cylinder_representative()
             return cylinder_concatenation(even_4_4,odd_perm)
-        else:    
+        else:
             return even_4_4
     else:
         perm = even_zero_even(real_zeros[0])
         if len(real_zeros) == 1:
-            return perm    
+            return perm
         else:
             odd_perm = AbelianStratum(real_zeros[1:]).odd_component().single_cylinder_representative()
             return cylinder_concatenation(perm,odd_perm)
-            
-    
+
+
 def one_two_even(real_zeros):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in the even component of
     an Abelian stratum having one zero of order two.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``real_zeros`` - a list of even positive integers one of which is equal to two.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = one_two_even([4,2])
         sage: perm
         0 1 2 3 4 5 6 7 8
@@ -508,7 +508,7 @@ def one_two_even(real_zeros):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     if real_zeros == [6,2]:
         top_row = [0,1,2,3,4,5,6,7,8,9,10]
@@ -518,7 +518,7 @@ def one_two_even(real_zeros):
         top_row = [0,1,2,3,4,5,6,7,8]
         bot_row = [2,4,1,8,7,5,3,6,0]
         return GeneralizedPermutation(top_row,bot_row)
-    else:    
+    else:
         real_zeros.remove(2)
         if set(real_zeros) == {4}:
             perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8],[2,4,1,8,7,5,3,6,0])
@@ -527,8 +527,8 @@ def one_two_even(real_zeros):
         elif set(real_zeros) == {6} or set(real_zeros) == {6,4}:
             perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10],[2,10,9,8,6,3,5,1,4,7,0])
             odd_perm = AbelianStratum(real_zeros[1:]).odd_component().single_cylinder_representative()
-            return cylinder_concatenation(perm,odd_perm)    
-        else:    
+            return cylinder_concatenation(perm,odd_perm)
+        else:
             perm_1 = even_zero_even(real_zeros[0]-2)
             length_1 = len(perm_1[0])-1
             top_row_1 = perm_1[0]
@@ -550,23 +550,23 @@ def one_two_even(real_zeros):
 def two_twos_even(real_zeros):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in the even component of
     an Abelian stratum having two zeros of order two.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``real_zeros`` - a list of even positive integers two of which are equal to two.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = two_twos_even([4,2,2])
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11
@@ -583,7 +583,7 @@ def two_twos_even(real_zeros):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     real_zeros.remove(2)
     real_zeros.remove(2)
@@ -591,7 +591,7 @@ def two_twos_even(real_zeros):
         perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10,11],[2,8,5,3,1,10,9,6,4,11,7,0])
         if len(real_zeros) == 1:
             return perm
-        else:    
+        else:
             odd_perm = AbelianStratum(real_zeros[1:]).odd_component().single_cylinder_representative()
             return cylinder_concatenation(perm,odd_perm)
     else:
@@ -602,30 +602,30 @@ def two_twos_even(real_zeros):
         else:
             odd_perm = AbelianStratum(real_zeros[1:]).odd_component().single_cylinder_representative()
             return cylinder_concatenation(perm,odd_perm)
-            
+
 def even_twos_even(real_zeros,two_count):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in the even component of
     an Abelian stratum having an even, at least four, number of zeros of order two.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``real_zeros`` - a list of even positive integers an even number of which
         are equal to two.
-        
+
         - ``two_count`` - a positive integer equal to the number of twos in ``real_zeros``.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = even_twos_even([2,2,2,2],4)
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
@@ -642,7 +642,7 @@ def even_twos_even(real_zeros,two_count):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     for i in range(two_count):
         real_zeros.remove(2)
@@ -656,30 +656,30 @@ def even_twos_even(real_zeros,two_count):
     else:
         odd_perm = AbelianStratum(real_zeros).odd_component().single_cylinder_representative()
         return cylinder_concatenation(twos_perm,odd_perm)
-                    
+
 def odd_twos_even(real_zeros,two_count):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in the even component of
     an Abelian stratum having an odd, at least three, number of zeros of order two.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``real_zeros`` - a list of even positive integers an even number of which
         are equal to two.
-        
+
         - ``two_count`` - a positive integer equal to the number of twos in ``real_zeros``.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = odd_twos_even([2,2,2],3)
         sage: perm
         0 1 2 3 4 5 6 7 8 9
@@ -696,7 +696,7 @@ def odd_twos_even(real_zeros,two_count):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     for i in range(two_count):
         real_zeros.remove(2)
@@ -710,29 +710,29 @@ def odd_twos_even(real_zeros,two_count):
     else:
         odd_perm = AbelianStratum(real_zeros).odd_component().single_cylinder_representative()
         return cylinder_concatenation(twos_perm,odd_perm)
-        
+
 def odds_right_swap(zero_pair):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in the Abelian stratum
     having a pair of zeros of the given odd orders.
-    
+
     Performs a column swap on another permutation to achieve this.
-    
+
     Such a method was described by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``zero_pair`` - a list of two odd positive integers at least three and
         differing by zero or two.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = odds_right_swap([3,3])
         sage: perm
         0 1 2 3 4 5 6 7 8
@@ -757,7 +757,7 @@ def odds_right_swap(zero_pair):
         True
         sage: cylinder_check(perm)
         True
-        
+
     """
     if zero_pair == [3,3]:
         return GeneralizedPermutation([0,1,2,3,4,5,6,7,8],[2,8,6,5,7,4,1,3,0])
@@ -783,25 +783,25 @@ def odds_right_swap(zero_pair):
 def odds_left_swap(zero_pair):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in the Abelian stratum
     having a pair of zeros of the given odd orders.
-    
+
     Performs a column swap on another permutation to achieve this.
-    
+
     Such a method was described by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``zero_pair`` - a list of two odd positive integers at least three and
         differing by at least four.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = odds_left_swap([7,3])
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
@@ -818,7 +818,7 @@ def odds_left_swap(zero_pair):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     dif = abs(zero_pair[0]-zero_pair[1])
     j = (min(zero_pair)-1)//2
@@ -835,28 +835,28 @@ def odds_left_swap(zero_pair):
     perm_3 = GeneralizedPermutation(top_row,bot_row)
     perm_3.alphabet(len(perm_3[0]))
     return perm_3
-    
+
 def no_ones_odds(odd_zeros):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in an Abelian stratum with odd
     order zeros and no zeros of order 1.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``odd_zeros`` - an even length list of odd positive integers none of which
         are equal to one.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = no_ones_odds([7,3])
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
@@ -873,7 +873,7 @@ def no_ones_odds(odd_zeros):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     if len(odd_zeros) == 2 and abs(odd_zeros[0]-odd_zeros[1]) <= 2:
         return odds_right_swap(odd_zeros)
@@ -883,29 +883,29 @@ def no_ones_odds(odd_zeros):
         perm = no_ones_odds(odd_zeros[:2])
         for i in range(2,len(odd_zeros),2):
             perm = cylinder_concatenation(perm,no_ones_odds(odd_zeros[i:i+2]))
-        return perm    
-        
+        return perm
+
 def one_one_odds(odd_zeros):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in an Abelian stratum with odd
     order zeros and one zero of order 1.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``odd_zeros`` - an even length list of odd positive integers one of which
         is equal to one.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = one_one_odds([3,1])
         sage: perm
         0 1 2 3 4 5 6
@@ -930,7 +930,7 @@ def one_one_odds(odd_zeros):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     num = odd_zeros[0]
     if num == 3:
@@ -964,29 +964,29 @@ def one_one_odds(odd_zeros):
         if len(odd_zeros) == 1:
             return perm
         else:
-            return cylinder_concatenation(perm,no_ones_odds(odd_zeros[1:]))    
-            
+            return cylinder_concatenation(perm,no_ones_odds(odd_zeros[1:]))
+
 def two_ones_odds(odd_zeros):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in an Abelian stratum with odd
     order zeros and two zeros of order 1.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``odd_zeros`` - an even length list of odd positive integers two of which
         are equal to one.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = two_ones_odds([3,3,1,1])
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
@@ -1003,7 +1003,7 @@ def two_ones_odds(odd_zeros):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     odd_zeros.remove(1)
     odd_zeros.remove(1)
@@ -1012,28 +1012,28 @@ def two_ones_odds(odd_zeros):
         return perm
     else:
         return cylinder_concatenation(perm,no_ones_odds(odd_zeros[2:]))
-    
+
 def three_ones_odds(odd_zeros):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in an Abelian stratum with odd
     order zeros and three zeros of order 1.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``odd_zeros`` - an even length list of odd positive integers three of which
         are equal to one.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = three_ones_odds([3,1,1,1])
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10
@@ -1070,9 +1070,9 @@ def three_ones_odds(odd_zeros):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
-    if len(odd_zeros) > 4:    
+    if len(odd_zeros) > 4:
         num = odd_zeros[0]
         odd_zeros.remove(1)
         odd_zeros.remove(num)
@@ -1099,30 +1099,30 @@ def three_ones_odds(odd_zeros):
                 bot_row += [i,i-1]
             bot_row += [num+2,num-2,num+1,num+5,num,num-1,num+6,0]
             return GeneralizedPermutation(top_row,bot_row)
-            
+
 def even_ones_odds(odd_zeros,one_count):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in an Abelian stratum with odd
     order zeros and an even, at least four, number of zeros of order 1.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``odd_zeros`` - an even length list of odd positive integers an even number of which
         are equal to one.
-        
+
         - ``one_count`` - a positive integer equal to the number of ones in ``real_zeros``.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = even_ones_odds([1,1,1,1],4)
         sage: perm
         0 1 2 3 4 5 6 7 8
@@ -1155,7 +1155,7 @@ def even_ones_odds(odd_zeros,one_count):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     for i in range(one_count):
         odd_zeros.remove(1)
@@ -1173,30 +1173,30 @@ def even_ones_odds(odd_zeros,one_count):
         return perm
     else:
         return cylinder_concatenation(perm,no_ones_odds(odd_zeros))
-        
+
 def odd_ones_odds(odd_zeros,one_count):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in an Abelian stratum with odd
     order zeros and an odd, at least five, number of zeros of order 1.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``odd_zeros`` - an even length list of odd positive integers an odd number of which
         are equal to one.
-        
+
         - ``one_count`` - a positive integer equal to the number of ones in ``real_zeros``.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
         sage: perm = odd_ones_odds([5,1,1,1,1,1],5)
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
@@ -1213,36 +1213,36 @@ def odd_ones_odds(odd_zeros,one_count):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     for i in range(one_count-1):
-        odd_zeros.remove(1)    
+        odd_zeros.remove(1)
     even_ones = [1 for i in range(one_count-1)]
     return cylinder_concatenation(one_one_odds(odd_zeros),even_ones_odds(even_ones,one_count-1))
-    
+
 def min_on_bot(zero_pair):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in the Abelian stratum
     having a pair of zeros of the given odd orders which differ by two.
-    
+
     The permutations have a particular form required for the construction
     of other representatives.
-    
+
     Such representatives were constructed by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``zero_pair`` - a list of two odd positive integers at least one and
         differing by two.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-    
+
         sage: perm = min_on_bot([3,1])
         sage: perm
         0 1 2 3 4 5 6
@@ -1267,7 +1267,7 @@ def min_on_bot(zero_pair):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     if zero_pair == [3,1]:
         return GeneralizedPermutation([0,1,2,3,4,5,6],[2,6,5,1,4,3,0])
@@ -1281,27 +1281,27 @@ def min_on_bot(zero_pair):
             bot_row = bot_row + [i,i-3]
         bot_row = bot_row + [1,2*num-1,0]
         return GeneralizedPermutation(top_row,bot_row)
-        
+
 def odd_zeros_one_one(odd_zeros):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in an Abelian stratum
     having odd order zeros of the given orders.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``odd_zeros`` - an even length list of odd positive integers.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-    
+
         sage: perm = odd_zeros_one_one([5,5])
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
@@ -1350,7 +1350,7 @@ def odd_zeros_one_one(odd_zeros):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     one_count = odd_zeros.count(1)
     if one_count == 0:
@@ -1365,27 +1365,27 @@ def odd_zeros_one_one(odd_zeros):
         return even_ones_odds(odd_zeros,one_count)
     else:
         return odd_ones_odds(odd_zeros,one_count)
-    
+
 def only_even_2(odd_zeros):
     r"""
     Returns a single cylinder permutation representative.
-    
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in the Abelian stratum
     having zeros of the given odd orders and a single zero of order two.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``odd_zeros`` - an even length list of odd positive integers.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-    
+
         sage: perm = only_even_2([1,1])
         sage: perm
         0 1 2 3 4 5 6 7
@@ -1442,7 +1442,7 @@ def only_even_2(odd_zeros):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     if odd_zeros.count(1) == len(odd_zeros) and odd_zeros.count(1) % 4 == 2:
         perm = GeneralizedPermutation([0,1,2,3,4,5,6,7],[2,6,4,1,7,5,3,0])
@@ -1469,7 +1469,7 @@ def only_even_2(odd_zeros):
         return cylinder_concatenation(perm,no_ones_odds(odd_zeros[:2]))
     else:
         if len(odd_zeros) == 4 and odd_zeros.count(1) == 3:
-            perm = GeneralizedPermutation([0,1,2,3,4,5,6,7],[2,6,4,1,7,5,3,0])    
+            perm = GeneralizedPermutation([0,1,2,3,4,5,6,7],[2,6,4,1,7,5,3,0])
             return cylinder_concatenation(perm,one_one_odds([odd_zeros[0],1]))
         else:
             pair_zeros = odd_zeros[:2]
@@ -1516,7 +1516,7 @@ def only_even_2(odd_zeros):
                 bot_row = bot_row_1 + bot_row_2
                 perm = GeneralizedPermutation(top_row,bot_row)
                 if len(odd_zeros) == 0:
-                    return perm    
+                    return perm
                 else:
                     perm_odd = odd_zeros_one_one(odd_zeros)
                     return cylinder_concatenation(perm,perm_odd)
@@ -1535,32 +1535,32 @@ def only_even_2(odd_zeros):
                 bot_row = bot_row_1 + bot_row_2
                 perm = GeneralizedPermutation(top_row,bot_row)
                 if len(odd_zeros) == 0:
-                    return perm    
+                    return perm
                 else:
                     odd_perm = odd_zeros_one_one(odd_zeros)
-                    return cylinder_concatenation(perm,odd_perm)    
-    
+                    return cylinder_concatenation(perm,odd_perm)
+
 def only_odds_11(even_zeros):
     r"""
     Returns a single cylinder permutation representative.
-    
-    
+
+
     Returns a permutation representative of a square-tiled surface having a single
     vertical cylinder and a single horizontal cylinder in the Abelian stratum
     having zeros of the given even orders and two zeros of order one.
-    
+
     Such representatives were constructed for every stratum of Abelian
     differentials by Jeffreys [Jef19].
-    
+
     INPUT::
-    
+
         - ``even_zeros`` - a list of even positive integers.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-    
+
         sage: perm = only_odds_11([2])
         sage: perm
         0 1 2 3 4 5 6 7
@@ -1609,7 +1609,7 @@ def only_odds_11(even_zeros):
         True
         sage: cylinder_check(perm)
         True
-    
+
     """
     if set(even_zeros) == {2} and len(even_zeros) % 2 == 1:
         perm = GeneralizedPermutation([0,1,2,3,4,5,6,7],[2,6,4,1,7,5,3,0])
@@ -1649,7 +1649,7 @@ def only_odds_11(even_zeros):
         else:
             if num == 4:
                 perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9],[2,7,4,1,9,5,8,6,3,0])
-            else: 
+            else:
                 top_row = [i for i in range(num+6)]
                 bot_row = [2,7,4,1]
                 for i in range(9,num+5,2):
@@ -1661,32 +1661,32 @@ def only_odds_11(even_zeros):
             else:
                 even_perm = AbelianStratum(even_zeros[1:]).odd_component().single_cylinder_representative()
                 return cylinder_concatenation(perm,even_perm)
-                
+
 def cylinder_concatenation(perm_1, perm_2, alphabet=None):
     r"""
     Combines two single cylinder permutation representatives.
-    
+
     Combines two single cylinder permutation representatives of connected components
     of Abelian strata to produce another single cylinder representative of a
     different stratum.
-    
+
     Such a method was described by Jeffreys [Jef19].
-    
+
     INPUT:
-    
+
         - ``perm_1``, ``perm_2`` - two single cylinder permutation representatives.
-        
+
         - ``alphabet`` - alphabet or ``None`` (defaut: ``None``):
         whether you want to specify an alphabet for your representative.
-    
+
     EXAMPLES::
-    
+
         sage: from surface_dynamics import *
         sage: from surface_dynamics.flat_surfaces.single_cylinder import *
-        
+
     We first take two single cylinder permutation representatives for the odd
     components of H_3(4)^odd and H_4(6)^odd.
-        
+
         sage: perm_1 = AbelianStratum(4).odd_component().single_cylinder_representative()
         sage: perm_1
         0 1 2 3 4 5
@@ -1703,11 +1703,11 @@ def cylinder_concatenation(perm_1, perm_2, alphabet=None):
         True
         sage: cylinder_check(perm_2)
         True
-        
+
     We check that the cylinder_concatenation of these permutations produces
     a single cylinder permutation representative of the connected component
-    H_6(6,4)^odd.    
-        
+    H_6(6,4)^odd.
+
         sage: perm_3 = cylinder_concatenation(perm_1,perm_2)
         sage: perm_3
         0 1 2 3 4 5 6 7 8 9 10 11 12
@@ -1716,12 +1716,12 @@ def cylinder_concatenation(perm_1, perm_2, alphabet=None):
         True
         sage: cylinder_check(perm_3)
         True
-        
+
     We now instead take the cylinder_concatenation of perm_1 with a single cylinder
     permutation representative of the connected component H_4(6)^even. We see
     that the resulting permutation is a single cylinder permutation representative
-    of the connected component H_6(6,4)^even.    
-        
+    of the connected component H_6(6,4)^even.
+
         sage: perm_4 = AbelianStratum(6).even_component().single_cylinder_representative()
         sage: perm_5 = cylinder_concatenation(perm_1,perm_4,Alphabet(name='lower'))
         sage: perm_4
@@ -1738,11 +1738,11 @@ def cylinder_concatenation(perm_1, perm_2, alphabet=None):
         True
         sage: cylinder_check(perm_5)
         True
-        
+
     """
     from sage.combinat.words.alphabet import Alphabet
     from sage.rings.semirings.non_negative_integer_semiring import NN
-    
+
     alph = Alphabet(NN)
     perm_1.alphabet(alph)
     perm_2.alphabet(alph)
