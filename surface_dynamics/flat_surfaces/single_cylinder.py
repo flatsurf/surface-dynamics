@@ -62,22 +62,30 @@ def cylinder_check(perm):
         sage: perm_5 = iet.GeneralizedPermutation('1 2 3 4', '4 3 1 2')
         sage: cylinder_check(perm_5)
         False
+        sage: perm_6 = iet.GeneralizedPermutation('A B C D', 'B C D A')
+        sage: cylinder_check(perm_6)
+        True
     
     """
     from sage.combinat.permutation import Permutation
-    
+    from surface_dynamics.flat_surfaces.origamis.origami import Origami
+         
     if len(perm[0]) != len(perm[1]) or perm[0][0] != perm[1][-1]:
         return False
     else:
         alph = perm.alphabet()
         perm.alphabet(len(perm[0]))
-        if len(Permutation(perm[1][:-1]).cycle_tuples()[0]) == len(perm[0])-1:
+        u = Permutation(perm[1][:-1]).inverse()
+        r = tuple(range(1,len(perm[0])))
+        O = Origami(r,u)
+        RO = O.vertical_twist().horizontal_twist(-1).vertical_twist()
+        if RO.num_cylinders() == 1:
             perm.alphabet(alph)
             return True
         else:
             perm.alphabet(alph)
             return False
-        
+                  
         
 def even_zero_odd(num):
     r"""
