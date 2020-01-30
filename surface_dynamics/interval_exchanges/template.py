@@ -4557,6 +4557,35 @@ class OrientablePermutationIET(PermutationIET):
         from sage.combinat.permutation import Permutation
         return Permutation(list(map(lambda x: x+1,self._twin[1])))
 
+    def to_origami(self):
+        r"""
+        Return the origami associated to a cylindric permutation.
+
+        EXAMPLES::
+
+        sage: from surface_dynamics import iet
+        sage: p = iet.Permutation('a b', 'b a')
+        sage: p.to_origami()
+        (1)
+        (1)
+
+        sage: p = iet.Permutation('a b c e d f g', 'f e b g d c a')
+        sage: p.to_origami()
+        (1,2,3,4,5,6)
+        (1,3,2,6,4,5)
+        sage: assert p.stratum_component() == p.to_origami().stratum_component()
+        """
+        n = len(self._twin[0])
+        if self._twin[1][-1] != 0:
+            raise ValueError("to_origami is only valid for cylindric permutation")
+
+        from surface_dynamics.misc.permutation import perm_invert
+        from surface_dynamics.flat_surfaces.origamis.origami import Origami
+        r = list(range(1, n-1))
+        r.append(0)
+        u = perm_invert([self._twin[1][i]-1 for i in range(n-1)])
+        return Origami(r, u, as_tuple=True)
+
 class OrientablePermutationLI(PermutationLI):
     r"""
     Template for quadratic permutation.
