@@ -32,11 +32,7 @@ from cpython.tuple cimport *
 
 from cpython cimport bool
 
-try:
-    from sage.structure.coerce import CoercionModel
-except ImportError:
-    # before Sage 8.6, CoercionModel used to be somewhere else
-    from sage.structure.element import CoercionModel
+from sage.structure.coerce import CoercionModel
 
 from sage.rings.integer cimport Integer, smallInteger
 from sage.rings.integer import GCD_list
@@ -48,18 +44,14 @@ from libc.limits cimport UINT_MAX
 from sage.groups.perm_gps.permgroup import PermutationGroupElement
 try:
     # Trac #28652: Rework the constructor of PermutationGroupElement
+    # (in 9.1.beta)
     from sage.groups.perm_gps.constructor import PermutationGroupElement as PermutationConstructor
 except ImportError:
     PermutationConstructor = PermutationGroupElement
 
 from sage.misc.cachefunc import cached_method
 
-# TODO:
-# only works after https://trac.sagemath.org/ticket/27946
-# from sage.libs.gap.libgap import libgap as gap
-from sage.interfaces.gap import gap
-def gap_eval(arg):
-    return gap(arg)
+from sage.libs.gap.libgap import libgap
 
 from sage.misc.decorators import options
 
@@ -86,9 +78,9 @@ def origami_from_gap_permutations(r, u):
     TESTS::
 
         sage: from surface_dynamics.flat_surfaces.origamis.origami_dense import origami_from_gap_permutations
-        sage: r = gap("(1,2)(3,4)")
-        sage: u = gap("(2,3)")
-        sage: origami_from_gap_permutations(r, u)
+        sage: r = gap("(1,2)(3,4)")  # not tested
+        sage: u = gap("(2,3)")       # not tested
+        sage: origami_from_gap_permutations(r, u)  # not tested
         (1,2)(3,4)
         (1)(2,3)(4)
 
@@ -340,14 +332,20 @@ def sl_orbit_from_gl_orbit(o, L, I):
         sage: l_edges = {0:1,1:9,2:8,3:0,4:13,5:10,6:5,7:4,8:11,9:3,10:6,11:2,12:7,13:12}
         sage: i_edges = {0:10,1:5,2:12,3:4,4:3,5:1,6:11,7:9,8:13,9:7,10:0,11:6,12:2,13:8}
         sage: from surface_dynamics.flat_surfaces.origamis.origami_dense import sl_orbit_from_gl_orbit
-        sage: s0 = sl_orbit_from_gl_orbit(0, l_edges, i_edges); s0
-        ({0: 1, 1: 9, 2: 8, 3: 0, 8: 11, 9: 3, 11: 2},
-         {0: 11, 1: 0, 2: 9, 3: 8, 8: 2, 9: 3, 11: 1},
-         {0: 2, 1: 8, 2: 0, 3: 9, 8: 1, 9: 3, 11: 11})
-        sage: s4 = sl_orbit_from_gl_orbit(4, l_edges, i_edges); s4
-        ({4: 13, 5: 10, 6: 5, 7: 4, 10: 6, 12: 7, 13: 12},
-         {4: 10, 5: 7, 6: 12, 7: 4, 10: 5, 12: 13, 13: 6},
-         {4: 7, 5: 13, 6: 6, 7: 4, 10: 12, 12: 10, 13: 5})
+        sage: s0 = sl_orbit_from_gl_orbit(0, l_edges, i_edges)
+        sage: print(sorted(s0[0].items()))
+        [(0, 1), (1, 9), (2, 8), (3, 0), (8, 11), (9, 3), (11, 2)]
+        sage: print(sorted(s0[1].items()))
+        [(0, 11), (1, 0), (2, 9), (3, 8), (8, 2), (9, 3), (11, 1)]
+        sage: print(sorted(s0[2].items()))
+        [(0, 2), (1, 8), (2, 0), (3, 9), (8, 1), (9, 3), (11, 11)]
+        sage: s4 = sl_orbit_from_gl_orbit(4, l_edges, i_edges)
+        sage: print(sorted(s4[0].items()))
+        [(4, 13), (5, 10), (6, 5), (7, 4), (10, 6), (12, 7), (13, 12)]
+        sage: print(sorted(s4[1].items()))
+        [(4, 10), (5, 7), (6, 12), (7, 4), (10, 5), (12, 13), (13, 6)]
+        sage: print(sorted(s4[2].items()))
+        [(4, 7), (5, 13), (6, 6), (7, 4), (10, 12), (12, 10), (13, 5)]
         sage: s1 = sl_orbit_from_gl_orbit(1, l_edges, i_edges)
         sage: s0 == s1, s0 == s4
         (True, False)
@@ -1877,9 +1875,14 @@ cdef class Origami_dense_pyx(object):
     # Component of stratum
     #
 
-    def stratum_component(self, verbose=False):
+    def stratum_component(self, fake_zeros=False, verbose=False):
         r"""
         Return the component of stratum this origami belongs to.
+
+        INPUT:
+
+        - ``fake_zeros`` -- (boolean, default ``False``) whether the stratum
+          should include 0 degree order
 
         EXAMPLES::
 
@@ -1901,8 +1904,46 @@ cdef class Origami_dense_pyx(object):
             sage: o = Origami(r, u)
             sage: o.stratum_component()
             H_5(4^2)^odd
+
+            sage: r = '(1,2,3,4,5,6,7,8,9,10,11,12,13)'
+            sage: u1 = '(1,2,3,4,13)(5,12)(6,11)(7,10)(8,9)'
+            sage: u2 = '(1,2,3,4,13)(5,6)(7)(8,9)(10,11)(12)'
+            sage: u3 = '(1,2,3,4,13)(5,12,10,9,6,11,8,7)'
+            sage: o1 = Origami(r, u1)
+            sage: print(o1.stratum_component(), o1.stratum_component(True))
+            H_5(4^2)^hyp H_5(4^2, 0^3)^hyp
+            sage: o2 = Origami(r, u2)
+            sage: print(o2.stratum_component(), o2.stratum_component(True))
+            H_5(4^2)^odd H_5(4^2, 0^3)^odd
+            sage: o3 = Origami(r, u3)
+            sage: print(o3.stratum_component(), o3.stratum_component(True))
+            H_5(4^2)^even H_5(4^2, 0^3)^even
+
+        TESTS::
+
+            sage: from surface_dynamics import AbelianStrata
+            sage: for d in range(2, 10):
+            ....:     for A in AbelianStrata(dimension=d):
+            ....:         for C in A.components():
+            ....:             o = C.one_origami()
+            ....:             assert o.stratum_component() == C
+            ....:             o = o.vertical_twist()
+            ....:             assert o.stratum_component() == C
+            ....:             o = o.horizontal_twist().vertical_twist()
+            ....:             assert o.stratum_component() == C
         """
-        return self.cylinder_diagram().stratum_component()
+        A = self.stratum(fake_zeros)
+        if A.is_connected():
+            return A.unique_component()
+        cyl = self.cylinder_diagram()
+        if cyl.is_hyperelliptic():
+            return A.hyperelliptic_component()
+        elif any(d % 2 for d in A.zeros()):
+            return A.non_hyperelliptic_component()
+        elif cyl.spin_parity() == 0:
+            return A.even_component()
+        else:
+            return A.odd_component()
 
     #
     # Orientation quotient (quad. diff.)
@@ -2215,7 +2256,7 @@ cdef class Origami_dense_pyx(object):
         if is_prime(self.nb_squares()):
             return True
 
-        return gap.IsPrimitive(self.monodromy()).sage()
+        return libgap.IsPrimitive(self.monodromy()).sage()
 
     def is_quasi_primitive(self):
         r"""
@@ -2286,7 +2327,7 @@ cdef class Origami_dense_pyx(object):
         n = self.nb_squares()
         r = self.r()
         u = self.u()
-        blocks = map(list, gap.AllBlocks(G))
+        blocks = map(list, libgap(G).AllBlocks())
         if degree is not None:
             degree = int(degree)
             n_div_d = n // degree
@@ -2296,9 +2337,9 @@ cdef class Origami_dense_pyx(object):
 
         covers = []
         for b in blocks:
-            orbit = gap.Orbit(G, b, gap.OnSets)
-            action = gap.Action(G, orbit, gap.OnSets)
-            rr, uu = gap.GeneratorsOfGroup(action)
+            orbit = libgap.Orbit(G, b, libgap.OnSets)
+            action = libgap.Action(G, orbit, libgap.OnSets)
+            rr, uu = libgap.GeneratorsOfGroup(action)
             covers.append(origami_from_gap_permutations(rr, uu))
         if degree is None or degree == 1:
             covers.append(Origami_dense_pyx((0,), (0,)))
@@ -2337,7 +2378,7 @@ cdef class Origami_dense_pyx(object):
             Finite lattice containing 3 elements
         """
         from sage.combinat.posets.lattices import LatticePoset
-        G = gap(self.monodromy())
+        G = libgap(self.monodromy())
         n = self.nb_squares()
         r = self.r()
         u = self.u()
@@ -2346,9 +2387,9 @@ cdef class Origami_dense_pyx(object):
             print(blocks)
         d = {}
         for b in blocks:
-            orbit = G.Orbit(b, gap.OnSets)
-            action = G.Action(orbit, gap.OnSets)
-            rr, uu = gap.GeneratorsOfGroup(action)
+            orbit = G.Orbit(b, libgap.OnSets)
+            action = G.Action(orbit, libgap.OnSets)
+            rr, uu = libgap.GeneratorsOfGroup(action)
             d[frozenset(map(Integer, b))] = origami_from_gap_permutations(rr, uu)
         d[frozenset(range(1, n+1))] = Origami_dense_pyx((0,), (0,))
         d[frozenset([1])] = self
@@ -2382,9 +2423,9 @@ cdef class Origami_dense_pyx(object):
             sage: o.is_normal()
             False
         """
-        return gap.IsTransitive(
+        return libgap.IsTransitive(
                         self.automorphism_group(),
-                        gap_eval("[1..%d]" % (self.nb_squares()))
+                        libgap.eval("[1..%d]" % (self.nb_squares()))
                         ).sage()
 
     def is_quasi_regular(self):
@@ -2498,8 +2539,8 @@ cdef class Origami_dense_pyx(object):
         Return the normal cover of this origami.
         """
         G = self.monodromy()
-        A = gap.Action(G, G, gap.OnRight)
-        r, u = gap.GeneratorsOfGroup(A)
+        A = libgap.Action(G, G, libgap.OnRight)
+        r, u = libgap.GeneratorsOfGroup(A)
         return origami_from_gap_permutations(r, u)
 
     def rename(self, name):
@@ -2542,21 +2583,21 @@ cdef class Origami_dense_pyx(object):
             d = self.optimal_degree()
 
             G = self.monodromy()
-            B = map(list, gap.AllBlocks(G))
+            B = map(list, libgap(G).AllBlocks())
             B = [b for b in B if len(b) == d]
             if len(B) != 1:
                 for b in B:
-                    orbit = gap.Orbit(G, b, gap.OnSets)
-                    action = gap.Action(G, orbit, gap.OnSets)
-                    if gap.IsAbelian(action):
+                    orbit = libgap.Orbit(G, b, libgap.OnSets)
+                    action = libgap.Action(G, orbit, libgap.OnSets)
+                    if libgap.IsAbelian(action):
                         break
                 else:
                     raise RuntimeError("an error occurred... please contact 20100.delecroix@gmail.com")
             else:
                 b = B[0]
-            H = gap.Stabilizer(G, b, gap.OnSets)
-            action = gap.Action(H, b, gap.OnPoints)
-            return PermutationGroup(list(gap.GeneratorsOfGroup(action)), canonicalize=False)
+            H = libgap.Stabilizer(G, b, libgap.OnSets)
+            action = libgap.Action(H, b, libgap.OnPoints)
+            return PermutationGroup(list(libgap.GeneratorsOfGroup(action)), canonicalize=False)
         else:
             raise ValueError("relative must be a boolean")
 
@@ -2594,9 +2635,9 @@ cdef class Origami_dense_pyx(object):
         """
         from sage.all import SymmetricGroup
         Sn = SymmetricGroup(self.nb_squares())
-        G = gap.Subgroup(Sn, [self.r(), self.u()])
-        C = gap.Centralizer(Sn, G)
-        return Sn.subgroup(list(gap.GeneratorsOfGroup(C)))
+        G = libgap.Subgroup(Sn, [self.r(), self.u()])
+        C = libgap.Centralizer(Sn, G)
+        return Sn.subgroup(list(libgap.GeneratorsOfGroup(C)))
 
     translation_group = automorphism_group
 
@@ -3091,9 +3132,15 @@ cdef class Origami_dense_pyx(object):
                 periods.append(s)
         return periods
 
-    def stratum(self):
+    def stratum(self, fake_zeros=False):
         r"""
         Stratum of this origami.
+
+        INPUT:
+
+        - ``fake_zeros`` -- boolean (default ``False``) whether the stratum should
+          include zeros of order 0 corresponding to the regular corners of the
+          origami.
 
         EXAMPLES::
 
@@ -3102,9 +3149,17 @@ cdef class Origami_dense_pyx(object):
             sage: o = Origami('(1,2)', '(1,3)')
             sage: o.stratum()
             H_2(2)
+
+            sage: r = '(1,2,3,4,5,6,7,8,9,10,11,12)'
+            sage: u = '(1,2,3,4,12)(5,7)(6)(8,10)(9)(11)'
+            sage: o = Origami(r, u)
+            sage: o.stratum()
+            H_4(3, 2, 1)
+            sage: o.stratum(True)
+            H_4(3, 2, 1, 0^3)
         """
         from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum
-        degrees = self.vertex_degrees()
+        degrees = self.vertex_degrees(fake_zeros)
         if degrees:
             return AbelianStratum(degrees)
         return AbelianStratum(0)
@@ -3283,9 +3338,14 @@ cdef class Origami_dense_pyx(object):
         """
         return [v for v in self._vertices() if v.degree()]
 
-    def vertex_degrees(self):
+    def vertex_degrees(self, bint fake_zeros=False):
         r"""
         Return the list of degree of the vertices
+
+        INPUT:
+
+        - ``fake_zeros`` -- boolean (default ``False``) whether we return also the
+          2 pi angle degrees
 
         EXAMPLES::
 
@@ -3298,8 +3358,33 @@ cdef class Origami_dense_pyx(object):
             sage: o = origamis.ProjectiveLine(5)
             sage: o.vertex_degrees()
             [2, 2]
+
+            sage: r = '(1,2,3,4,5,6,7,8,9,10,11,12)'
+            sage: u = '(1,2,3,4,12)(5,7)(6)(8,10)(9)(11)'
+            sage: o = Origami(r, u)
+            sage: o.vertex_degrees()
+            [3, 2, 1]
+            sage: o.vertex_degrees(fake_zeros=True)
+            [3, 2, 1, 0, 0, 0]
         """
-        return sorted((v.degree() for v in self.vertices()), reverse=True)
+        cdef int * c = <int *> malloc(self._n * sizeof(int))
+        cdef int i, d
+        cdef list res = []
+        for i in range(self._n):
+            c[self._r[self._u[i]]] = self._u[self._r[i]]
+        for i in range(self._n):
+            if c[i] >= 0:
+                d = 0
+                while c[i] >= 0:
+                    d += 1
+                    j = c[i]
+                    c[i] = -1
+                    i = j
+                if fake_zeros or d > 1:
+                    res.append(d - 1)
+        free(c)
+        res.sort(reverse=True)
+        return res
 
     def nb_vertices(self):
         r"""

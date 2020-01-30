@@ -1248,20 +1248,20 @@ def build_global_data(o, c=None):
         sage: o = Origami('(1,2)', '(1,3)')
         sage: from surface_dynamics.flat_surfaces.origamis.origami_database import build_global_data
         sage: data = build_global_data(o)
-        sage: data
-        {'max_hom_dim': 2,
-         'max_nb_of_cyls': 2,
-         'min_hom_dim': 1,
-         'min_nb_of_cyls': 1,
-         'minus_identity_invariant': True,
-         'sum_of_L_exp': 4/3,
-         'teich_curve_genus': 0,
-         'teich_curve_ncusps': 2,
-         'teich_curve_nu2': 1,
-         'teich_curve_nu3': 0,
-         'veech_group_congruence': True,
-         'veech_group_index': 3,
-         'veech_group_level': 2}
+        sage: for item in sorted(data): print("%-25s %s" % (item, data[item]))
+        max_hom_dim               2
+        max_nb_of_cyls            2
+        min_hom_dim               1
+        min_nb_of_cyls            1
+        minus_identity_invariant  True
+        sum_of_L_exp              4/3
+        teich_curve_genus         0
+        teich_curve_ncusps        2
+        teich_curve_nu2           1
+        teich_curve_nu3           0
+        veech_group_congruence    True
+        veech_group_index         3
+        veech_group_level         2
     """
     data = {}
 
