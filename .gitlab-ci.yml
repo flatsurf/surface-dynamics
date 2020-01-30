@@ -16,9 +16,15 @@ test:dev: &test
     - cp ${SURFACE_DYNAMICS_PATH}/README README.rst
     - sage -t --force-lib --long README.rst
 
-test:dev3:
+test:9.0:
   << : *test
-  image: sagemath/sagemath-dev:develop-py3
+  image: sagemath/sagemath-dev:9.0
+
+# NOTE: 8.9-dev image is absent or misconfigured in docker hub...
+# We just disable it for now
+#test:8.9:
+#  << : *test
+#  image: sagemath/sagemath-dev:8.9
 
 test:8.8:
   << : *test
