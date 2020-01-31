@@ -2,9 +2,9 @@
 #
 
 # You can set these variables from the command line.
-#SPHINXOPTS    =
+SPHINXOPTS    = "-v"
 SPHINXBUILD   = sphinx-build
-SPHINXPROJ    = pplpy
+SPHINXPROJ    = surface_dynamics
 SOURCEDIR     = source
 BUILDDIR      = build
 
