@@ -1133,22 +1133,22 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
             sage: from surface_dynamics import *
             sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()
             sage: p = Q.permutation_representative(reduced=False)
-            sage: p.lyapunov_exponents_H_plus() # abs tol .05
+            sage: p.lyapunov_exponents_H_plus(nb_iterations=2**20) # abs tol .05
             [0.6666]
 
             sage: Q_reg = QuadraticStratum([12]).regular_component()
             sage: p_reg = Q_reg.permutation_representative(reduced=False)
-            sage: p_reg.lyapunov_exponents_H_plus() # abs tol .05
+            sage: p_reg.lyapunov_exponents_H_plus(nb_iterations=2**20) # abs tol .05
             [0.662, 0.448, 0.230, 0.087]
             sage: sum(_)  # abs tol .05
-            1.43
+            1.428
 
             sage: Q_irr = QuadraticStratum([12]).irregular_component()
             sage: p_irr = Q_irr.permutation_representative(reduced=False)
-            sage: p_irr.lyapunov_exponents_H_plus() # abs tol .05
+            sage: p_irr.lyapunov_exponents_H_plus(nb_iterations=2**20) # abs tol .05
             [0.747, 0.491, 0.245, 0.090]
             sage: sum(_) # abs tol .05
-            1.5727
+            1.572
         """
         if self._flips:
             raise NotImplementedError("Lyapunov exponents not implemented for permutations with flips")
@@ -1165,7 +1165,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
         Compute the H^+ Lyapunov exponents of the stratum associated to this
         permutation.
 
-        This method calls a C library. It might be  significantly faster if
+        This method calls a C library. It might be significantly faster if
         ``nb_vectors=1`` (or if it is not provided but genus is 1).
 
         INPUT:
@@ -1178,7 +1178,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
            confidence interval is accurate enough.
 
          - ``nb_iterations`` -- the number of iteration of the Rauzy-Zorich
-           algorithm to perform for each experiments. The default is 2^15=32768
+           algorithm to perform for each experiments. The default is `2^16=65536`
            which is rather small but provide a good compromise between speed and
            quality of approximation.
 
@@ -1195,19 +1195,19 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
             sage: from surface_dynamics import *
             sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()
             sage: p = Q.permutation_representative(reduced=False)
-            sage: p.lyapunov_exponents_H_minus() # abs tol .05
+            sage: p.lyapunov_exponents_H_minus(nb_iterations=2**20) # abs tol .05
             [1.000, 0.333]
 
             sage: Q_reg = QuadraticStratum([12]).regular_component()
             sage: p_reg = Q_reg.permutation_representative(reduced=False)
-            sage: p_reg.lyapunov_exponents_H_minus() # abs tol .05
-            [1.000, 0.310, 0.120]
+            sage: p_reg.lyapunov_exponents_H_minus(nb_iterations=2**19) # abs tol .05
+            [1.000, 0.309, 0.119]
             sage: sum(_)  # abs tol .05
-            1.430
+            1.428
 
             sage: Q_irr = QuadraticStratum([12]).irregular_component()
             sage: p_irr = Q_irr.permutation_representative(reduced=False)
-            sage: p_irr.lyapunov_exponents_H_minus() # abs tol .05
+            sage: p_irr.lyapunov_exponents_H_minus(nb_iterations=2**19) # abs tol .05
             [1.000, 0.444, 0.128]
             sage: sum(_) # abs tol .05
             1.5725
