@@ -951,14 +951,14 @@ class QuadraticStratumComponent(StratumComponent):
             sage: from surface_dynamics import *
 
             sage: R = QuadraticStratum([3,3,3,-1]).regular_component()
-            sage: R.lyapunov_exponents_H_plus() # abs tol .05
-            [0.596, 0.402, 0.200]
+            sage: R.lyapunov_exponents_H_plus(nb_iterations=2**19) # abs tol .05
+            [0.596, 0.405, 0.202]
             sage: sum(_) # abs tol .05
             1.2
 
             sage: R = QuadraticStratum([2,2,2,2]).unique_component()
-            sage: R.lyapunov_exponents_H_plus() # abs tol .05
-            [0.651, 0.468, 0.243]
+            sage: R.lyapunov_exponents_H_plus(nb_iterations=2**19) # abs tol .05
+            [0.651, 0.469, 0.243]
             sage: sum(_) # abs tol .05
             1.3636
         """
@@ -974,16 +974,11 @@ class QuadraticStratumComponent(StratumComponent):
 
             sage: Q = QuadraticStratum({1:3, -1:3}).unique_component()
             sage: Q.lyapunov_exponents_H_minus(nb_iterations=2**20) # abs tol .05
-            [1.0001340319512813,
-             0.37073449576129014,
-             0.17774577678536208]
+            [1.000, 0.369, 0.176]
 
             sage: R = QuadraticStratum([3,3,3,-1]).regular_component()
             sage: R.lyapunov_exponents_H_minus(nb_iterations=2**19) # abs tol .05
-            [1.0000547531697714,
-             0.32894039954052146,
-             0.19062961312122667,
-             0.0824827258582411]
+            [1.000, 0.328, 0.1899, 0.0820]
         """
         perm = self.permutation_representative(reduced=False).orientation_cover()
         if 'isotypic_decomposition' not in kargs:

@@ -726,10 +726,10 @@ class PermutationCover(SageObject):
             sage: from surface_dynamics import *
 
             sage: q = QuadraticStratum([1,1,-1,-1]).one_component()
-            sage: q.lyapunov_exponents_H_plus() # abs tol 0.05
+            sage: q.lyapunov_exponents_H_plus(nb_iterations=2**19) # abs tol 0.05
             [0.666666]
             sage: p = q.permutation_representative(reduced=False).orientation_cover()
-            sage: c = p.lyapunov_exponents_H_plus(isotypic_decomposition=True)[0]
+            sage: c = p.lyapunov_exponents_H_plus(isotypic_decomposition=True, nb_iterations=2**19)[0]
             sage: c[0] # abs tol 0.05
             1.000000
 
@@ -741,7 +741,7 @@ class PermutationCover(SageObject):
             sage: c = p.cover(['()', '(1,2)', '()', '(1,2)', '(1,2)'])
             sage: c.stratum()
             Q_1(1^2, 0^4, -1^2)
-            sage: c.lyapunov_exponents_H_plus() # abs tol 0.05
+            sage: c.lyapunov_exponents_H_plus(nb_iterations=2**19) # abs tol 0.05
             [0.666666]
 
         Some cyclic covers (see [EKZ]_ for the formulas)::
@@ -753,14 +753,14 @@ class PermutationCover(SageObject):
             ....:     return p.cover([cyclic(n,c), cyclic(n,a), cyclic(n, b)])
 
             sage: c = cyclic_cover(7,1,1,2)
-            sage: c.lyapunov_exponents_H_plus(isotypic_decomposition=True) # abs tol 0.05
+            sage: c.lyapunov_exponents_H_plus(isotypic_decomposition=True, nb_iterations=2**19) # abs tol 0.05
             [[],
              [0.2857, 0.2857],
              [0.5714, 0.5714],
              [0.2857, 0.2857]]
 
             sage: c = cyclic_cover(7, 1, 2, 3)
-            sage: lexp = c.lyapunov_exponents_H_plus(isotypic_decomposition=True, return_char=True)
+            sage: lexp = c.lyapunov_exponents_H_plus(isotypic_decomposition=True, return_char=True, nb_iterations=2**19)
             sage: lexp[0]
             ([], (1, 1, 1, 1, 1, 1, 1))
             sage: lexp[1][0] # abs tol 0.05
@@ -783,7 +783,7 @@ class PermutationCover(SageObject):
             sage: Q = QuaternionGroup()
             sage: a,b = Q.gens()
             sage: c = p.cover([a, b])
-            sage: c.lyapunov_exponents_H_plus()  # abs tol 0.05
+            sage: c.lyapunov_exponents_H_plus(nb_iterations=2**19)  # abs tol 0.05
             [1.0, 0.0, 0.0]
 
         REFERENCES:

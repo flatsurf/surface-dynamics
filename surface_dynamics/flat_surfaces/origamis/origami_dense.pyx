@@ -1631,17 +1631,15 @@ cdef class Origami_dense_pyx(object):
             sage: from surface_dynamics.all import Origami
 
             sage: o = Origami('(1,2)(3,4)(5,6)', '(2,3)(4,5)')
-            sage: lexp = o.lyapunov_exponents_approx()
-            sage: lexp # random
-            [0.665250480769510, 0.332194948308155]
-            sage: 0.6 < lexp[0] < 0.7 and 0.3 < lexp[1] < 0.4
-            True
+            sage: lexp = o.lyapunov_exponents_approx(nb_iterations=2**19)
+            sage: lexp # abs tol 0.05
+            [0.6666, 0.3333]
 
             sage: o = Origami('(1,2)(3,4)(5,6)(7,8)(9,10)', '(2,3)(4,5)(6,7)(8,9)')
             sage: s = SymmetricGroup(10)('(1,10)(2,9)(3,8)(4,7)(5,6)')
-            sage: o.lyapunov_exponents_approx(involution=s)  # random
-            ([0.600372348286643, 0.199902392953331],
-             [0.800242827363281, 0.399695139521823])
+            sage: o.lyapunov_exponents_approx(involution=s, nb_iterations=2**19)  # abs tol 0.05
+            ([0.6000, 0.2000],
+             [0.8000, 0.4000])
         """
         #TODO: use the seed to init.
 

@@ -1163,22 +1163,24 @@ class AbelianStratumComponent(StratumComponent):
 
             sage: from surface_dynamics import *
 
-            sage: AbelianStratum(2).unique_component().lyapunov_exponents_approx()  # abs tol 0.05
+            sage: AbelianStratum(2).unique_component().lyapunov_exponents_approx(nb_iterations=2**19)  # abs tol 0.05
             [1.000, 0.333]
 
             sage: H4hyp, H4odd = AbelianStratum(4).components()
-            sage: H4hyp.lyapunov_exponents_approx() # abs tol 0.05
-            [1.000, 0.621, 0.179]
-            sage: H4odd.lyapunov_exponents_approx() # abs tol 0.05
-            [1.000, 0.428, 0.183]
+            sage: H4hyp.lyapunov_exponents_approx(nb_iterations=2**19) # abs tol 0.05
+            [1.000, 0.616, 0.184]
+            sage: H4odd.lyapunov_exponents_approx(nb_iterations=2**19) # abs tol 0.05
+            [1.000, 0.418, 0.182]
         """
         perm = self.permutation_representative(reduced=False)
         return perm.lyapunov_exponents_approx(**kargs)
 
     # TODO
-    # def sum_of_lyapunov_exponents(self):
+    # def sum_of_lyapunov_exponents(self)
     # TODO
-    # def volume(self):
+    # def volume(self)
+    # TODO
+    # def carea(self)
 
     def random_standard_permutation(self, nsteps=64):
         r"""
