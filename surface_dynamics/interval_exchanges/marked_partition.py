@@ -84,7 +84,7 @@ class Marking(SageObject):
         TESTS::
 
             sage: from surface_dynamics.interval_exchanges.marked_partition import Marking
-            sage: hash(Marking('9o4'))  #indirect doctest
+            sage: hash(Marking('9o4'))  # random
             3713072971714925208
         """
         return hash(self.t) + hash(self.data)
@@ -322,7 +322,7 @@ class MarkedPartition(SageObject):
         TESTS::
 
             sage: from surface_dynamics.interval_exchanges.marked_partition import MarkedPartition
-            sage: MarkedPartition([3,1],1,(3,2)).__hash__()
+            sage: MarkedPartition([3,1],1,(3,2)).__hash__() # random
             7426167593987224238
         """
         return hash(self.m) + hash(self.p)

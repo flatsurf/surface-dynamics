@@ -208,7 +208,7 @@ class Constellation_class(Element):
             sage: from surface_dynamics.misc.constellation import Constellation
 
             sage: c = Constellation(([0,2,1],[2,1,0],[1,2,0]), mutable=False)
-            sage: c.__hash__()
+            sage: c.__hash__() # random
             2148362403144019871
         """
         if self._mutable:
