@@ -53,7 +53,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'flatsurf'
+project = u'surface_dynamics'
 copyright = u'2016, Vincent Delecroix'
 
 # The version info for the project you're documenting, acts as replacement for
