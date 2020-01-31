@@ -4563,17 +4563,17 @@ class OrientablePermutationIET(PermutationIET):
 
         EXAMPLES::
 
-        sage: from surface_dynamics import iet
-        sage: p = iet.Permutation('a b', 'b a')
-        sage: p.to_origami()
-        (1)
-        (1)
+            sage: from surface_dynamics import iet
+            sage: p = iet.Permutation('a b', 'b a')
+            sage: p.to_origami()
+            (1)
+            (1)
 
-        sage: p = iet.Permutation('a b c e d f g', 'f e b g d c a')
-        sage: p.to_origami()
-        (1,2,3,4,5,6)
-        (1,3,2,6,4,5)
-        sage: assert p.stratum_component() == p.to_origami().stratum_component()
+            sage: p = iet.Permutation('a b c e d f g', 'f e b g d c a')
+            sage: p.to_origami()
+            (1,2,3,4,5,6)
+            (1,3,2,6,4,5)
+            sage: assert p.stratum_component() == p.to_origami().stratum_component()
         """
         n = len(self._twin[0])
         if self._twin[1][-1] != 0:
