@@ -13,7 +13,6 @@ test:dev: &test
     - sage -i gap_packages
     - sage -i latte_int
     - sage -t --force-lib --long ${SURFACE_DYNAMICS_INSTALL}
-    - cp ${SURFACE_DYNAMICS_PATH}/README README.rst
     - sage -t --force-lib --long README.rst
 
 test:9.0:

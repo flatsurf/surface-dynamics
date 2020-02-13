@@ -3,7 +3,6 @@
 *.so
 .pypirc
 MANIFEST
-README.rst
 build/
 doc/build/
 dist/
