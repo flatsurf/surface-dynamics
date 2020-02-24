@@ -3512,7 +3512,7 @@ class OrientablePermutationIET(PermutationIET):
 
         return l
 
-    def intersection_matrix(self,ring=None):
+    def intersection_matrix(self, ring=None):
         r"""
         Returns the intersection matrix.
 
@@ -3566,10 +3566,15 @@ class OrientablePermutationIET(PermutationIET):
             ring = ZZ
         n = self.length_top()
         m = matrix(ring,n)
+        # NOTE: because of the extended Rauzy inductions, the labels are just a subset of
+        # {0, 1, ...} not necessarily the first n integers.
+        use_labels = self._labels is not None and \
+                     min(self._labels[0]) == 0 and \
+                     max(self._labels[0]) == n - 1
         for i in range(n):
-            ii = i if self._labels is None else self._labels[0][i]
+            ii = self._labels[0][i] if use_labels else i
             for j in range(i,n):
-                jj = j if self._labels is None else self._labels[0][j]
+                jj = self._labels[0][j] if use_labels else j
                 if self._twin[0][i] > self._twin[0][j]:
                     m[ii,jj] = 1
                     m[jj,ii] = -1
