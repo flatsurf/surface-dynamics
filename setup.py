@@ -23,7 +23,7 @@ with open("surface_dynamics/version.py") as f:
     suffix = "'"
     assert version.startswith(prefix) and version.endswith(suffix)
     version = version[len(prefix):len(version)-len(suffix)]
-with open("README") as f:
+with open("README.rst") as f:
     long_description = f.read()
 
 try:
@@ -109,7 +109,9 @@ setup(name='surface_dynamics',
           'surface_dynamics/databases': ['cylinder_diagrams/cyl_diags*', 'generalized_permutation_twins/twins*'],
           'surface_dynamics/flat_surfaces/origamis': ['origamis.db'],
           },
-      ext_modules=cythonize(extensions),
+      ext_modules=cythonize(extensions,
+          compiler_directives={'embedsignature': True}
+          ),
     classifiers=[
       'Development Status :: 4 - Beta',
       'Intended Audience :: Science/Research',
