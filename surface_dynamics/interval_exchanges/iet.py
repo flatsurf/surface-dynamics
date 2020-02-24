@@ -61,7 +61,7 @@ from sage.modules.free_module_element import free_module_element
 from sage.rings.all import ZZ, QQ
 
 from .template import side_conversion, interval_conversion
-
+from .labelled import LabelledPermutationIET
 
 def wedge(u, v):
     r"""
@@ -143,7 +143,6 @@ class IntervalExchangeTransformation(object):
             sage: p == loads(dumps(p))
             True
         """
-        from .labelled import LabelledPermutationIET
         from sage.modules.free_module_element import free_module_element as vector
 
         if permutation is None or lengths is None:
@@ -153,7 +152,16 @@ class IntervalExchangeTransformation(object):
             self._vector_space = None
         else:
             self._permutation = copy(permutation)
+            if isinstance(lengths, dict):
+                l = [0] * len(permutation)
+                rank = permutation._alphabet.rank
+                for letter, length in lengths.items():
+                    l[rank(letter)] = length
+                lengths = l
             self._lengths = vector(lengths)
+            if self._lengths is lengths:
+                # NOTE: vector(.) never performs copy
+                self._lengths = self._lengths.__copy__()
             V = self._lengths.parent()
             self._base_ring = self._lengths.base_ring()
             self._vector_space = V.ambient_module()
@@ -208,27 +216,31 @@ class IntervalExchangeTransformation(object):
         """
         return copy(self._permutation)
 
-    def length(self):
+    def length(self, label=None):
         r"""
-        Returns the total length of the interval.
-
-        OUTPUT:
-
-        real -- the length of the interval
+        Return the length of a subinterval, or if ``label`` is None the total length.
 
         EXAMPLES::
 
             sage: from surface_dynamics import *
 
-            sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1,1])
+            sage: t = iet.IntervalExchangeTransformation(('a b','b a'), [1,3])
             sage: t.length()
-            2
+            4
+            sage: t.length('a')
+            1
+            sage: t.length('b')
+            3
         """
-        return sum(self._lengths)
+        if label is None:
+            return sum(self._lengths)
+        else:
+            i = self._permutation._alphabet.rank(label)
+            return self._lengths[i]
 
     def lengths(self):
         r"""
-        Returns the list of lengths associated to this iet.
+        Return the list of lengths associated to this iet.
 
         OUTPUT:
 
@@ -497,6 +509,182 @@ class IntervalExchangeTransformation(object):
         res._permutation = self._permutation.top_bottom_inverse()
         return res
 
+    def erase_marked_points(self):
+        """
+        Remove the marked points.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import *
+            sage: p = iet.Permutation([0,1,2,3,4], [4,2,3,0,1])
+            sage: T1 = iet.IntervalExchangeTransformation(p, [13,2,4,5,7])
+            sage: T1.erase_marked_points()
+            Interval exchange transformation of [0, 40[ with permutation
+            0 4
+            4 0
+
+        TESTS:
+
+        Left side fake zero::
+
+            sage: p = iet.Permutation([1,5,3,4,2], [3,2,5,1,4])
+            sage: T1 = iet.IntervalExchangeTransformation(p, [12,3,5,22,7])
+            sage: T2 = T1.erase_marked_points()
+            sage: T2
+            Interval exchange transformation of [0, 52[ with permutation
+            1 3 4 2
+            3 2 1 4
+            sage: T2.permutation().stratum()
+            H_2(2)
+            sage: assert T2.length(1) == T1.length(1) + T1.length(5)
+            sage: assert T2.length(2) == T1.length(2)
+            sage: assert T2.length(3) == T1.length(3) + T1.length(5)
+            sage: assert T2.length(4) == T1.length(4)
+
+        Right side fake zero::
+
+            sage: p = iet.Permutation([1,3,4,5,2], [3,2,5,1,4])
+            sage: T1 = iet.IntervalExchangeTransformation(p, [12,3,5,22,7])
+            sage: T2 = T1.erase_marked_points()
+            sage: T2
+            Interval exchange transformation of [0, 71[ with permutation
+            1 3 4 2
+            3 2 1 4
+            sage: T2.permutation().stratum()
+            H_2(2)
+            sage: assert T2.length(1) == T1.length(1)
+            sage: assert T2.length(2) == T1.length(2) + T1.length(5)
+            sage: assert T2.length(3) == T1.length(3)
+            sage: assert T2.length(4) == T1.length(4) + T1.length(5)
+
+        Left and right sides fake zeros::
+
+            sage: p = iet.Permutation([1,5,3,4,6,2], [3,2,6,5,1,4])
+            sage: T1 = iet.IntervalExchangeTransformation(p, [12,3,5,22,7,9])
+            sage: T2 = T1.erase_marked_points()
+            sage: T2
+            Interval exchange transformation of [0, 68[ with permutation
+            1 3 4 2
+            3 2 1 4
+            sage: T2.permutation().stratum()
+            H_2(2)
+            sage: assert T2.length(1) == T1.length(1) + T1.length(5)
+            sage: assert T2.length(2) == T1.length(2) + T1.length(6)
+            sage: assert T2.length(3) == T1.length(3) + T1.length(5)
+            sage: assert T2.length(4) == T1.length(4) + T1.length(6)
+
+        Left-right fake zero::
+
+            sage: p = iet.Permutation([1,3,4,2,5], [2,3,5,1,4])
+            sage: T1 = iet.IntervalExchangeTransformation(p, [31, 12, 25, 9, 3])
+            sage: T2 = T1.erase_marked_points()
+            sage: T2
+            Interval exchange transformation of [0, 86[ with permutation
+            1 3 4 2
+            2 3 1 4
+            sage: T2.permutation().stratum()
+            H_2(2)
+            sage: assert T2.length(1) == T1.length(1) + T1.length(5)
+            sage: assert T2.length(2) == T1.length(2) + T1.length(5)
+            sage: assert T2.length(3) == T1.length(3)
+            sage: assert T2.length(4) == T1.length(4) + T1.length(5)
+        """
+        p = self._permutation
+        n = len(p)
+        lengths = self._lengths
+        tt, tb = self._permutation._twin
+        lt, lb = self._permutation._labels
+        newlengths = {}
+        relab = {}
+        newtop = []
+        i = 0
+        while i < n:
+            k = 1
+            while i + k < n and tt[i] + k == tt[i + k]:
+                k += 1
+            newlengths[lt[i]] = sum(lengths[j] for j in range(i, i+k))
+            for j in range(i, i+k):
+                relab[lt[j]] = lt[i]
+            newtop.append(lt[i])
+            i += k
+
+        i0 = tb[0] - 1
+        i1 = tt[0] - 1
+        if len(newtop) > 2  and i0 > 0 and i1 > 0 and tt[i0] == i1:
+            # left end fake zero
+            # the permutation looks like
+            # A ... C B ...
+            # B ... C A ...
+            # we do one backward Rauzy move
+            # A ... C B ...
+            # C B ... A ...
+            # and then absorb C inside B.
+            # - remove C
+            # - set length(A) <- length(A) + C
+            # - set lenbgh(B) <- length(B) + C
+            assert lt[i0] == lb[i1]
+            A = lt[0]
+            B = lb[0]
+            C = relab[lt[i0]]
+            newlengths[A] += newlengths[C]
+            newlengths[B] += newlengths[C]
+            del newlengths[C]
+            newtop.pop(newtop.index(C))
+            relab[C] = B
+
+        i0 = tb[-1] + 1
+        i1 = tt[-1] + 1
+        if len(newtop) > 2 and i0 < n and i1 < n and tt[i0] == i1:
+            # right end fake zero
+            # the permutation looks like
+            # ... B C ... A
+            # ... A C ... B
+            assert lt[i0] == lb[i1]
+            A = relab[lt[-1]]
+            B = relab[lb[-1]]
+            C = relab[lt[i0]]
+            newlengths[A] += newlengths[C]
+            newlengths[B] += newlengths[C]
+            del newlengths[C]
+            newtop.pop(newtop.index(C))
+            relab[C] = B
+
+        i0 = tb[0] - 1 # D
+        i1 = tt[0] - 1 # C
+        if len(newtop) > 2 and tb[i1] == tt[i0] == n-1:
+            # left-right end fake zero
+            # the permutation looks like
+            # A ... D B ... C
+            # B ... C A ... D
+            # do backward Rauzy top-left / bottom-right
+            # A ... D ... C B
+            # C B ... A ... D
+            # then remove C
+            # A ... D ... B
+            # B ... A ... D
+            assert lt[-1] == lb[i0] and lb[-1] == lt[i1]
+            A = lt[0]
+            B = lb[0]
+            C = relab[lb[i1]]
+            D = relab[lt[i0]]
+            newlengths[A] += newlengths[C]  # backward rauzy
+            newlengths[D] += newlengths[C]  # backward rauzy
+            newlengths[B] += newlengths[C]  # absorbtion
+            del newlengths[C]
+            newtop.pop(newtop.index(C))
+            newtop.pop(newtop.index(B))
+            newtop.append(B)
+            relab[C] = B
+
+        newbot = [lab for lab in lb if relab[lab] == lab]
+
+        unrank = self._permutation.alphabet().unrank
+        newtop = [unrank(lab) for lab in newtop]
+        newbot = [unrank(lab) for lab in newbot]
+        newlengths = {unrank(lab): length for (lab, length) in newlengths.items()}
+        p = LabelledPermutationIET([newtop, newbot])
+        return IntervalExchangeTransformation(p, newlengths)
+
     def __mul__(self, other):
         r"""
         Composition of iet.
@@ -721,7 +909,6 @@ class IntervalExchangeTransformation(object):
         cuts = [[[i], lengths[i]] for i in bot]     # the refined bottom interval
 
         translations = self.translations()
-
 
         for step in range(n-1):
             i = 0
@@ -1214,6 +1401,19 @@ class IntervalExchangeTransformation(object):
             sage: T.permutation()
             a b
             a b
+
+            sage: p = iet.Permutation([0, 1, 2, 3], [3, 1, 2, 0])
+            sage: T = iet.IntervalExchangeTransformation(p, [13, 2, 22, 13])
+            sage: T._rauzy_move(0, error_on_saddles=False)
+            (None, (3, 3, 0))
+            sage: T
+            Interval exchange transformation of [0, 37[ with permutation
+            1 2 3
+            1 2 3
+            sage: print(T._lengths)
+            (0, 2, 22, 13)
+            sage: print(T._permutation._labels)
+            [[1, 2, 3], [1, 2, 3]]
         """
         top = self._permutation._labels[0][side]
         bot = self._permutation._labels[1][side]
@@ -1243,9 +1443,9 @@ class IntervalExchangeTransformation(object):
             # we do a pseudo-top Rauzy induction and remove the bot interval
             # (the iet get one interval less)
             p = self._permutation
-            top = p._labels[0][-1]
-            bot = p._labels[1][-1]
-            p._identify_intervals(-1)
+            top = p._labels[0][side]
+            bot = p._labels[1][side]
+            p._identify_intervals(side)
             self._lengths[top] = 0
             return None, (bot_letter,bot_letter,top_letter)
 

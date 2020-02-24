@@ -839,18 +839,14 @@ def IntervalExchangeTransformation(permutation=None,lengths=None):
     else:
         p = Permutation(permutation)
 
-    if isinstance(lengths, dict):
-        l = [0] * len(p)
-        alphabet = p._alphabet
-        for letter in lengths:
-            l[alphabet.rank(letter)] = lengths[letter]
-    else:
-        l = list(lengths)
-
-    if len(l) != len(p):
+    if len(lengths) != len(p):
         raise ValueError("bad number of lengths")
 
-    for x in l:
+    if isinstance(lengths, dict):
+        it = lengths.values()
+    else:
+        it = iter(lengths)
+    for x in it:
         try:
             y = float(x)
         except ValueError:
@@ -859,7 +855,7 @@ def IntervalExchangeTransformation(permutation=None,lengths=None):
         if y < 0:
            raise ValueError("lengths must be non-negative")
 
-    return _IET(p,l)
+    return _IET(p,lengths)
 
 IET = IntervalExchangeTransformation
 
