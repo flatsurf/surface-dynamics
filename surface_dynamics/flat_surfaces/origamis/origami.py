@@ -47,6 +47,7 @@ from six.moves import range, map, filter, zip
 from six import iteritems
 
 from surface_dynamics.flat_surfaces.origamis.origami_dense import Origami_dense_pyx
+from surface_dynamics.misc.permutation import perm_init, perm_check
 
 from sage.structure.sage_object import SageObject
 from sage.groups.perm_gps.permgroup import PermutationGroup
@@ -145,6 +146,21 @@ def Origami(r, u,
 
     - ``name`` - an optional name to the origami
 
+    TESTS::
+
+        sage: from surface_dynamics import Origami
+        sage: Origami('(0)(1,3)(2)', '(0,3,2,1)', as_tuple=True)
+        (1)(2,4)(3)
+        (1,4,3,2)
+        sage: Origami('(0)(1,3)(2)', '(0,3,2,1)', as_tuple=True)
+        (1)(2,4)(3)
+        (1,4,3,2)
+        sage: Origami((0,3,2,1), [3,0,1,2], as_tuple=True)
+        (1)(2,4)(3)
+        (1,4,3,2)
+        sage: Origami([0,3,2,1], "(0,3,2,1)", as_tuple=True)
+        (1)(2,4)(3)
+        (1,4,3,2)
     """
     if not as_tuple:
         r = PermutationGroupElement(r, check=check)
@@ -158,16 +174,17 @@ def Origami(r, u,
         u.extend(range(len(u),N))
 
     elif check:
-        sr = set(r)
-        su = set(u)
+        if not isinstance(r, (tuple, list)):
+            r = perm_init(r)
+        if not isinstance(u, (tuple, list)):
+            u = perm_init(u)
         N = len(r)
         if len(u) != N:
             raise ValueError("the two tuples must be of the same length")
-        for i in range(N):
-            if not i in sr:
-                raise ValueError("%d is not in r=%s" %(i,str(r)))
-            if not i in su:
-                raise ValueError("%d is not in u=%s" %(i,str(u)))
+        if not perm_check(r, N):
+            raise ValueError("invalid permutation %s" % (r,))
+        if not perm_check(u, N):
+            raise ValueError("invalid permutation %s" % (u,))
 
     o = Origami_dense_pyx(tuple(r),tuple(u))
 
