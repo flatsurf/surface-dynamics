@@ -356,7 +356,7 @@ class IntervalExchangeTransformation(object):
             sage: T.sah_arnoux_fathi_invariant()
             (0, 0, 0)
 
-        Arnoux-Yoccoz examples in genus 4::
+        Arnoux-Yoccoz examples in genus 4 (an auto-similar iet)::
 
             sage: x = polygen(ZZ)
             sage: poly = x^4 - x^3 - x^2 - x - 1
@@ -371,6 +371,42 @@ class IntervalExchangeTransformation(object):
             (0, 0, 0, 0, 0, 0)
             sage: T.zorich_move(iterations=10).sah_arnoux_fathi_invariant()
             (0, 0, 0, 0, 0, 0)
+
+        A cubic example in genus 4 (H_4(6)^hyp)::
+
+            sage: p = iet.Permutation([0, 1, 2, 3, 4, 5, 6, 7], [7, 6, 5, 4, 3, 2, 1, 0])
+            sage: x = polygen(QQ)
+            sage: poly = x^3 - 6*x^2 + 9*x - 3
+            sage: emb = AA.polynomial_root(poly, RIF(1.64, 1.66))
+            sage: K.<A> = NumberField(poly, embedding=emb)
+            sage: lengths= (-4*A^2 + 4*A + 18, -2*A^2 + 19*A - 25, 168*A^2 - 355*A + 128,
+            ....:           586*A^2 - 1317*A + 576, -725*A^2 + 1626*A - 707,
+            ....:           -11*A^2 - 6*A + 41, -32*A^2 + 100*A - 77, 20*A^2 - 71*A + 63)
+            sage: S = iet.IntervalExchangeTransformation(p, lengths)
+            sage: S.permutation().stratum_component()
+            H_4(6)^hyp
+            sage: S.sah_arnoux_fathi_invariant()
+            (0, 0, 0)
+            sage: S.zorich_move('left', 120).normalize(17) == S
+            True
+
+        A quartic example in genus 4 (H_4(6)^even)::
+
+            sage: p = iet.Permutation([0, 1, 2, 3, 4, 5, 6, 7], [7, 1, 0, 5, 4, 3, 2, 6])
+            sage: poly = x^4 - 7*x^3 + 14*x^2 - 8*x + 1
+            sage: emb = AA.polynomial_root(poly, RIF(0.17, 0.18))
+            sage: K.<A> = NumberField(poly, embedding=emb)
+            sage: lengths = (2*A^3 - 18*A^2 + 44*A - 4, -10*A^3 + 55*A^2 - 60*A + 10,
+            ....:    15*A^3 - 90*A^2 + 120*A - 15, -16*A^3 + 94*A^2 - 132*A + 22,
+            ....:    9*A^3 - 56*A^2 + 88*A - 13, 4*A^3 - 16*A^2 + 3*A + 2,
+            ....:    -8*A^3 + 57*A^2 - 101*A + 16, 4*A^3 - 26*A^2 + 38*A - 3)
+            sage: S = iet.IntervalExchangeTransformation(p, lengths)
+            sage: S.permutation().stratum_component()
+            H_4(6)^even
+            sage: S.sah_arnoux_fathi_invariant()
+            (0, 0, 0, 0, 0, 0)
+            sage: S.zorich_move('left', 38).normalize(15) == S
+            True
         """
         if self.base_ring() is ZZ:
             return free_module_element(ZZ, [])
