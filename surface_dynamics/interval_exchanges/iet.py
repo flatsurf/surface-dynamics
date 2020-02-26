@@ -525,13 +525,15 @@ class IntervalExchangeTransformation(object):
 
         TESTS:
 
+            sage: K.<a> = NumberField(x^5 - 2, embedding=AA(2)**(1/5))
+
         Left side fake zero::
 
-            sage: p = iet.Permutation([1,5,3,4,2], [3,2,5,1,4])
-            sage: T1 = iet.IntervalExchangeTransformation(p, [12,3,5,22,7])
+            sage: p = iet.Permutation([1,5,3,4,6,2], [3,2,5,1,4,6])
+            sage: T1 = iet.IntervalExchangeTransformation(p, [1, a, a**2, a**3, a**4, 1 + a])
             sage: T2 = T1.erase_marked_points()
             sage: T2
-            Interval exchange transformation of [0, 52[ with permutation
+            Interval exchange transformation of [0, a^4 + a^3 + a^2 + 3*a + 2[ with permutation
             1 3 4 2
             3 2 1 4
             sage: T2.permutation().stratum()
@@ -539,15 +541,16 @@ class IntervalExchangeTransformation(object):
             sage: assert T2.length(1) == T1.length(1) + T1.length(5)
             sage: assert T2.length(2) == T1.length(2)
             sage: assert T2.length(3) == T1.length(3) + T1.length(5)
-            sage: assert T2.length(4) == T1.length(4)
+            sage: assert T2.length(4) == T1.length(4) + T1.length(6)
+            sage: assert T1.sah_arnoux_fathi_invariant() == T2.sah_arnoux_fathi_invariant()
 
         Right side fake zero::
 
             sage: p = iet.Permutation([1,3,4,5,2], [3,2,5,1,4])
-            sage: T1 = iet.IntervalExchangeTransformation(p, [12,3,5,22,7])
+            sage: T1 = iet.IntervalExchangeTransformation(p, [1,a,a**2,a**3,a**4])
             sage: T2 = T1.erase_marked_points()
             sage: T2
-            Interval exchange transformation of [0, 71[ with permutation
+            Interval exchange transformation of [0, a^4 + 2*a^3 + a^2 + a + 1[ with permutation
             1 3 4 2
             3 2 1 4
             sage: T2.permutation().stratum()
@@ -556,14 +559,15 @@ class IntervalExchangeTransformation(object):
             sage: assert T2.length(2) == T1.length(2) + T1.length(5)
             sage: assert T2.length(3) == T1.length(3)
             sage: assert T2.length(4) == T1.length(4) + T1.length(5)
+            sage: assert T1.sah_arnoux_fathi_invariant() == T2.sah_arnoux_fathi_invariant()
 
         Left and right sides fake zeros::
 
             sage: p = iet.Permutation([1,5,3,4,6,2], [3,2,6,5,1,4])
-            sage: T1 = iet.IntervalExchangeTransformation(p, [12,3,5,22,7,9])
+            sage: T1 = iet.IntervalExchangeTransformation(p, [1,a+1,a**2+1,a**3,a**4-a,a**3+a+1])
             sage: T2 = T1.erase_marked_points()
             sage: T2
-            Interval exchange transformation of [0, 68[ with permutation
+            Interval exchange transformation of [0, 2*a^4 + 2*a^3 + a^2 + a + 5[ with permutation
             1 3 4 2
             3 2 1 4
             sage: T2.permutation().stratum()
@@ -572,14 +576,15 @@ class IntervalExchangeTransformation(object):
             sage: assert T2.length(2) == T1.length(2) + T1.length(6)
             sage: assert T2.length(3) == T1.length(3) + T1.length(5)
             sage: assert T2.length(4) == T1.length(4) + T1.length(6)
+            sage: assert T1.sah_arnoux_fathi_invariant() == T2.sah_arnoux_fathi_invariant()
 
         Left-right fake zero::
 
             sage: p = iet.Permutation([1,3,4,2,5], [2,3,5,1,4])
-            sage: T1 = iet.IntervalExchangeTransformation(p, [31, 12, 25, 9, 3])
+            sage: T1 = iet.IntervalExchangeTransformation(p, [1, a+1, a**2, a**3, a**4-a])
             sage: T2 = T1.erase_marked_points()
             sage: T2
-            Interval exchange transformation of [0, 86[ with permutation
+            Interval exchange transformation of [0, 2*a^4 + 2*a^3 + a^2 - a + 2[ with permutation
             1 3 4 2
             2 3 1 4
             sage: T2.permutation().stratum()
@@ -587,26 +592,75 @@ class IntervalExchangeTransformation(object):
             sage: assert T2.length(1) == T1.length(1) + T1.length(5)
             sage: assert T2.length(2) == T1.length(2) + T1.length(5)
             sage: assert T2.length(3) == T1.length(3)
-            sage: assert T2.length(4) == T1.length(4) + T1.length(5)
+            sage: assert T2.length(4) == T1.length(4) + T1.length(2)
+            sage: assert T1.sah_arnoux_fathi_invariant() == T2.sah_arnoux_fathi_invariant()
+
+        A small example that end up wrong::
+
+            sage: p = iet.Permutation([0,2,1,3,4], [4,0,1,2,3])
+            sage: K.<a> = NumberField(x^2 - 2, embedding=AA(2)**(1/2))
+            sage: lengths = [1, a + 1, a, a + 1, 2*a - 2]
+            sage: T = iet.IntervalExchangeTransformation(p, lengths)
+            sage: U = T.erase_marked_points()
+            sage: U.permutation().stratum() 
+            H_2(2)
+            sage: assert T.sah_arnoux_fathi_invariant() == U.sah_arnoux_fathi_invariant()
+
+            sage: top = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+            sage: bot = [15, 11, 12, 9, 10, 7, 8, 5, 6, 2, 3, 4, 16, 14, 0, 1, 13]
+            sage: p = iet.Permutation(top, bot)
+            sage: x = polygen(QQ)
+            sage: poly = x^6 - 6*x^4 + 9*x^2 - 3
+            sage: emb = AA.polynomial_root(poly, RIF(1.25, 1.30))
+            sage: K.<a> = NumberField(poly, embedding=emb)
+            sage: lengths = (-2*a^4 + 7*a^2 - 6, 10/3*a^4 - 17*a^2 + 19, -a^4 + 6*a^2 - 7,
+            ....:     -1/3*a^4 + 3*a^2 - 4, -2/3*a^4 + 3*a^2 - 3, 2/3*a^4 + 11*a^2 - 20,
+            ....:     2/3*a^4 + 11*a^2 - 20, 8*a^4 - 35*a^2 + 36, 8*a^4 - 35*a^2 + 36,
+            ....:     -29/3*a^4 + 42*a^2 - 43, -29/3*a^4 + 42*a^2 - 43, 8/3*a^4 - 28*a^2 + 39,
+            ....:     8/3*a^4 - 28*a^2 + 39, -4*a^4 + 20*a^2 - 22, 4/3*a^4 - 4*a^2 + 3,
+            ....:     -8/3*a^4 + 16*a^2 - 19, 8/3*a^4 - 14*a^2 + 16)
+            sage: T = iet.IntervalExchangeTransformation(p, lengths)
+            sage: T.permutation().stratum_component()
+            H_4(6, 0^9)^hyp
+            sage: T.sah_arnoux_fathi_invariant()
+            (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+            sage: U = T.erase_marked_points()
+            sage: U.permutation().stratum_component()
+            H_4(6)^hyp
+            sage: U.sah_arnoux_fathi_invariant()
+            (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         """
-        p = self._permutation
+        p = self._permutation.__copy__()
         n = len(p)
         lengths = self._lengths
         tt, tb = self._permutation._twin
         lt, lb = self._permutation._labels
-        newlengths = {}
-        relab = {}
+        newlengths = list(self._lengths)
+        assert max(lt) < len(newlengths)
+        assert max(lb) < len(newlengths)
+        remove = set()
         newtop = []
         i = 0
+
+        # singularities strictly in the middle
         while i < n:
             k = 1
             while i + k < n and tt[i] + k == tt[i + k]:
                 k += 1
             newlengths[lt[i]] = sum(lengths[j] for j in range(i, i+k))
-            for j in range(i, i+k):
-                relab[lt[j]] = lt[i]
+            for j in range(i+1, i+k):
+                remove.add(lt[j])
             newtop.append(lt[i])
             i += k
+
+        if remove:
+            newbot = [j for j in lb if j not in remove]
+            assert set(newtop) == set(newbot)
+            p._labels = [newtop, newbot]
+            p._init_twin(p._labels)
+            tt, tb = p._twin
+            lt, lb = newtop, newbot
+            n = len(lt)
 
         i0 = tb[0] - 1
         i1 = tt[0] - 1
@@ -615,22 +669,28 @@ class IntervalExchangeTransformation(object):
             # the permutation looks like
             # A ... C B ...
             # B ... C A ...
-            # we do one backward Rauzy move
-            # A ... C B ...
+            # backward top-left
+            # A ... C B ...   l(A) <- l(A) + l(C)
             # C B ... A ...
-            # and then absorb C inside B.
-            # - remove C
-            # - set length(A) <- length(A) + C
-            # - set lenbgh(B) <- length(B) + C
+            # fusion C in B
+            # A ... B ...
+            # B ... A ...
             assert lt[i0] == lb[i1]
             A = lt[0]
             B = lb[0]
-            C = relab[lt[i0]]
+            C = lt[i0]
             newlengths[A] += newlengths[C]
             newlengths[B] += newlengths[C]
-            del newlengths[C]
+            newlengths[C] = 0
             newtop.pop(newtop.index(C))
-            relab[C] = B
+
+            newbot = [i for i in lb if i != C]
+            p._labels = [newtop, newbot]
+            assert set(newtop) == set(newbot)
+            p._init_twin(p._labels)
+            tt, tb = p._twin
+            lt, lb = newtop, newbot
+            n = len(lt)
 
         i0 = tb[-1] + 1
         i1 = tt[-1] + 1
@@ -639,49 +699,118 @@ class IntervalExchangeTransformation(object):
             # the permutation looks like
             # ... B C ... A
             # ... A C ... B
+            # backward top-right
+            # ... B C ... A
+            # ... A ... B C
+            # fusion C in B
+            # ... B ... A
+            # ... A ... B
             assert lt[i0] == lb[i1]
-            A = relab[lt[-1]]
-            B = relab[lb[-1]]
-            C = relab[lt[i0]]
+            A = lt[-1]
+            B = lb[-1]
+            C = lt[i0]
+            assert newtop[-1] == A
             newlengths[A] += newlengths[C]
             newlengths[B] += newlengths[C]
-            del newlengths[C]
+            newlengths[C] = 0
             newtop.pop(newtop.index(C))
-            relab[C] = B
+
+            newbot = [i for i in lb if i != C]
+            assert set(newtop) == set(newbot)
+            p._labels = [newtop, newbot]
+            p._init_twin(p._labels)
+            tt, tb = p._twin
+            lt, lb = newtop, newbot
+            n = len(lt)
 
         i0 = tb[0] - 1 # D
         i1 = tt[0] - 1 # C
         if len(newtop) > 2 and tb[i1] == tt[i0] == n-1:
             # left-right end fake zero
             # the permutation looks like
-            # A ... D B ... C
-            # B ... C A ... D
-            # do backward Rauzy top-left / bottom-right
-            # A ... D ... C B
-            # C B ... A ... D
-            # then remove C
-            # A ... D ... B
-            # B ... A ... D
-            assert lt[-1] == lb[i0] and lb[-1] == lt[i1]
+            # A ... D B ... C  or  A ... D B  or  A B ... C
+            # B ... C A ... D      B A ... D      B ... C A
+            #                      (B=C case)     (A=D case)
+            assert lb[-1] == lt[i0] and lt[-1] == lb[i1]
             A = lt[0]
             B = lb[0]
-            C = relab[lb[i1]]
-            D = relab[lt[i0]]
-            newlengths[A] += newlengths[C]  # backward rauzy
-            newlengths[D] += newlengths[C]  # backward rauzy
-            newlengths[B] += newlengths[C]  # absorbtion
-            del newlengths[C]
-            newtop.pop(newtop.index(C))
-            newtop.pop(newtop.index(B))
-            newtop.append(B)
-            relab[C] = B
+            C = lb[i1]
+            D = lt[i0]
+            assert newtop[0] == A and newtop[-1] == C and B != D
+            assert A in newtop and B in newtop and C in newtop and D in newtop
+            if B == C:
+                # A ... D B
+                # B A ... D
+                # backward bot-left
+                # D A ... B    l(B) <- l(B) + l(D)
+                # B A ... D
+                # backward top-right
+                # D A ... B    l(B) <- l(B) + l(A)
+                # B ... D A
+                # fusion A in D
+                # D ... B
+                # B ... D
+                assert newtop[0] == A and newtop[-1] == B and newtop[-2] == D
+                newlengths[B] += newlengths[A] + newlengths[D]
+                newlengths[D] += newlengths[A]
+                newlengths[A] = 0
+                newtop.pop(0)
+                newtop.pop(-2)
+                newtop.insert(0, D)
+                assert newtop[0] == D and newtop[-1] == B
 
-        newbot = [lab for lab in lb if relab[lab] == lab]
+                newbot = [i for i in lb if i != A]
+
+            elif A == D:
+                # A B ... C
+                # B ... C A
+                # backward bot-right
+                # A ... C B   l(A) <- l(A) + l(B)
+                # B ... C A
+                # backward top-left
+                # A ... C B   l(A) <- l(A) + l(C)
+                # C B ... A
+                # fusion C in B
+                # A ... B
+                # B ... A
+                newlengths[A] += newlengths[B] + newlengths[C]
+                newlengths[B] += newlengths[C]
+                newlengths[C] = 0
+                assert newtop[-1] == C
+                assert newtop[1] == B
+                newtop.pop(-1)
+                newtop.pop(1)
+                newtop.append(B)
+                assert newtop[0] == A and newtop[-1] == B, (newtop, A, B)
+                assert C not in newtop
+                newbot = [i for i in lb if i != C]
+
+            else:
+                # do backward Rauzy top-left / bottom-right
+                # A ... D ... C B     l(A) <- l(A) + l(C)
+                # C B ... A ... D     l(D) <- l(D) + l(B)
+                # fusion C in B
+                # A ... D ... B
+                # B ... A ... D
+                newlengths[A] += newlengths[C]  # backward rauzy
+                newlengths[D] += newlengths[B]  # backward rauzy
+                newlengths[B] += newlengths[C]  # absorbtion
+                newlengths[C] = 0
+                newtop.pop(newtop.index(C))
+                newtop.pop(newtop.index(B))
+                newtop.append(B)
+                newbot = [i for i in lb if i != C]
+
+            assert set(newtop) == set(newbot)
+            p._labels = [newtop, newbot]
+            p._init_twin(p._labels)
+            tt, tb = p._twin
+            lt, lb = newtop, newbot
 
         unrank = self._permutation.alphabet().unrank
-        newtop = [unrank(lab) for lab in newtop]
-        newbot = [unrank(lab) for lab in newbot]
-        newlengths = {unrank(lab): length for (lab, length) in newlengths.items()}
+        newtop = [unrank(lab) for lab in lt]
+        newbot = [unrank(lab) for lab in lb]
+        newlengths = [newlengths[j] for j in lt]
         p = LabelledPermutationIET([newtop, newbot])
         return IntervalExchangeTransformation(p, newlengths)
 
