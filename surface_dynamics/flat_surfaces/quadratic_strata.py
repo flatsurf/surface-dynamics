@@ -444,6 +444,11 @@ class QuadraticStratum(Stratum):
             H_4(4, 2)
             sage: a.dimension()
             9
+
+        TESTS::
+
+            sage: QuadraticStratum({-1:4}).orientation_cover()
+            H_1(0)
         """
         from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum
 
@@ -458,6 +463,8 @@ class QuadraticStratum(Stratum):
                 l.append(z//2)
                 l.append(z//2)
 
+        if not l:
+            l = [0]
         return AbelianStratum(l)
 
     def spin(self):
