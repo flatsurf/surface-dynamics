@@ -428,6 +428,23 @@ class AbelianStratum(Stratum):
         """
         return 2 * self.genus() + self.nb_zeros() - 1
 
+    def rank(self):
+        r"""
+        Return the rank of this manifold (half dimension of the absolute part of the tangent space).
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import AbelianStratum
+
+            sage: AbelianStratum(0,0).rank()
+            1
+            sage: AbelianStratum(2).rank()
+            2
+            sage: AbelianStratum(2,0,0).rank()
+            2
+        """
+        return self.genus()
+
     #
     # Connected component
     #

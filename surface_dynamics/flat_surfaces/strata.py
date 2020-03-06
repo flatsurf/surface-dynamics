@@ -580,6 +580,36 @@ class StratumComponent(SageObject):
         """
         return self._stratum.genus()
 
+    def dimension(self):
+        r"""
+        Return the (complex) dimension of this GL(2,R)-invariant orbifold.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import AbelianStratum, QuadraticStratum
+
+            sage: AbelianStratum(4).odd_component().dimension()
+            6
+            sage: QuadraticStratum(12).regular_component().dimension()
+            7
+        """
+        return self._stratum.dimension()
+
+    def rank(self):
+        r"""
+        Return the rank of this GL(2,R)-invariant orbifold.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import AbelianStratum, QuadraticStratum
+
+            sage: AbelianStratum(4).odd_component().rank()
+            3
+            sage: QuadraticStratum(12).regular_component().rank()
+            3
+        """
+        return self._stratum.rank()
+
     def __eq__(self,other):
         r"""
         Equality test

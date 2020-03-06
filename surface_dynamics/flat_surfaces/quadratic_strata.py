@@ -377,6 +377,33 @@ class QuadraticStratum(Stratum):
         """
         return 2 * self.genus() + self.nb_zeros() - 2
 
+    def rank(self):
+        r"""
+        Return the rank of this GL(2,R)-invariant manifold (half dimension of the
+        absolute part of the tangent space).
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import QuadraticStratum, QuadraticStrata
+
+            sage: QuadraticStratum({-1: 4}).rank()
+            1
+            sage: QuadraticStratum({-1:4, 0:5}).rank()
+            1
+
+        Complete list of rank 2 quadratic strata listed by dimension::
+
+            sage: for dim in range(4, 9):
+            ....:     quad = [Q for Q in QuadraticStrata(dimension=dim) if Q.rank() == 2]
+            ....:     print("%d: %s" % (dim, ", ".join(map(str, quad))))
+            4: Q_2(5, -1), Q_1(1^2, -1^2), Q_1(3, -1^3), Q_0(1, -1^5)
+            5: Q_3(8), Q_2(2, 1^2), Q_2(4, 1, -1), Q_2(3, 2, -1), Q_2(6, -1^2), Q_1(2, 1, -1^3), Q_1(4, -1^4), Q_0(2, -1^6)
+            6: Q_3(6, 2), Q_3(4^2), Q_2(2^2, 1, -1), Q_2(4, 2, -1^2), Q_1(2^2, -1^4)
+            7: Q_3(4, 2^2), Q_2(2^3, -1^2)
+            8: Q_3(2^4)
+        """
+        return self.genus() + sum(z % 2 for z in self.zeros(poles=True))//2 - 1
+
     def orientation_cover(self, fake_zeros=False):
         r"""
         Return the stratum of Abelian differentials which contains the set of
