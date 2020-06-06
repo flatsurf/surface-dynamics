@@ -247,7 +247,8 @@ def _relabel(top, bot):
 
 def interval_exchange_statistics(top, bot, uint64_t L, int kind=0):
     r"""
-    Return statistics about cylinder decomposition of iet.
+    Return the statistics about cylinder decomposition of all the integral iet
+    with given permutation ``top`` and ``bot`` and total length ``L``.
 
     An integral interval exchange transformation (or iet for short)
     decomposes into periodic components. We want to study these
@@ -262,9 +263,9 @@ def interval_exchange_statistics(top, bot, uint64_t L, int kind=0):
     - ``L`` (integer) -- the total length of the integral iet to be
       tested
 
-    - ``kind`` -- if ``0`` return statistics about the number of
-      cylinders and if ``1`` return statistics about the number
-      of components.
+    - ``kind`` -- if ``0`` (default) return statistics about the number of
+      cylinders, if ``1`` return statistics about the number of components, if
+      ``2`` the keys are tuples of cylinder heights
 
     OUTPUT: a dictionary whose keys are integers and the value associated to a
     key ``k`` is the number of length data with sum ``L`` which corresponds to
@@ -285,6 +286,31 @@ def interval_exchange_statistics(top, bot, uint64_t L, int kind=0):
         {1: 4, 2: 4, 5: 1}
         sage: [gcd(k, 10-k) for k in range(1,10)]
         [1, 2, 1, 2, 5, 2, 1, 2, 1]
+
+    Complete information about the heights of cylinders are obtained by setting ``kind=2``::
+
+        sage: s2 = interval_exchange_statistics([0,1,2,3], [3,2,1,0], 10, 2)
+        sage: s2
+        {(1, 1): 16, (1, 2): 16, (1,): 34, (1, 6): 2, (1, 4): 6, (1, 3): 4, (2, 2): 4, (2, 3): 2}
+
+    You can recover ``kind=0`` and ``kind=1`` by looking and lengths and sums::
+
+        sage: from collections import defaultdict
+        sage: s0 = defaultdict(int)
+        sage: s1 = defaultdict(int)
+        sage: for k, v in s2.items():
+        ....:     s0[len(k)] += v
+        ....:     s1[sum(k)] += v
+
+        sage: s0
+        defaultdict(<class 'int'>, {2: 50, 1: 34})
+        sage: interval_exchange_statistics([0,1,2,3], [3,2,1,0], 10, 0)
+        {2: 50, 1: 34}
+
+        sage: s1
+        defaultdict(<class 'int'>, {2: 16, 3: 16, 1: 34, 7: 2, 5: 8, 4: 8})
+        sage: interval_exchange_statistics([0,1,2,3], [3,2,1,0], 10, 1)
+        {2: 16, 3: 16, 1: 34, 7: 2, 5: 8, 4: 8}
     """
     cdef int * labels
     cdef int * twin
@@ -321,13 +347,17 @@ def interval_exchange_statistics(top, bot, uint64_t L, int kind=0):
         int_iet_set_lengths(t, v.x)
         j = int_iet_num_cylinders(widths, NULL, t)
 
-        if kind:
+        if kind == 0:
+            key = j
+        else:
             s = 0
             for i in range(j):
                 s += widths[i]
-        else:
-            s = j
-        statistics[s] += 1
+            if kind == 1:
+                key = s
+            else:
+                key = tuple(sorted(widths[i] for i in range(j)))
+        statistics[key] += 1
 
     sig_free(labels)
     sig_free(twin)
