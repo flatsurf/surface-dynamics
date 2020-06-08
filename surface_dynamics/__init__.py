@@ -21,9 +21,10 @@ warnings.filterwarnings('default',
 # Make sure that sage's imports are going to resolve in the correct order
 import sage.all
 
-from .topology.all import *
 from .flat_surfaces.all import *
 from .interval_exchanges.all import *
 from .misc.constellation import Constellation, Constellations
+from .topological_recursion import *
+from .topology.all import *
 
 del absolute_import
