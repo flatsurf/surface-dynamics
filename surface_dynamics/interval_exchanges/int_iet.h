@@ -57,6 +57,8 @@ typedef struct{
 
 typedef li_vector_iterator li_vector_iterator_t[1];
 
+uint64_t uint64_rand();
+
 /* memory allocation */
 void int_iet_init(int_iet_t t, unsigned int n);
 void int_iet_clear(int_iet_t t);
@@ -67,6 +69,7 @@ int  int_iet_check(int_iet_t t);
 /* set data */
 void int_iet_set_labels_and_twin(int_iet_t t, int * labels, int * twin, int k);
 void int_iet_set_lengths(int_iet_t t, uint64_t * lengths);
+void int_iet_set_random_lengths(int_iet_t t, uint64_t L);
 
 /* output */
 void int_iet_print(int_iet_t t);

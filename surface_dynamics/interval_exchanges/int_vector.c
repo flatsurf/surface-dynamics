@@ -84,7 +84,7 @@ int int_li_vector_prefirst(li_vector_iterator_t t)
 /* we want that "free + 2*top" = "free + 2*bot" = n */
 int int_li_vector_first_or_next(li_vector_iterator_t t)
 {
-    if (t->nfree == -1 && t->nother == -1)
+    if (t->nfree == (uint64_t) -1 && t->nother == (uint64_t) -1)
     {
         if (t->kfree == 0)
             t->nfree = 0;
@@ -92,7 +92,7 @@ int int_li_vector_first_or_next(li_vector_iterator_t t)
             t->nfree = t->n - 2 * t->ktop;
         else
             t->nfree = t->n - 2 * t->kbot;
-        if (t->nfree % 2 != t->n % 2)
+        if (t->nfree % (uint64_t) 2 != t->n % (uint64_t) 2)
             t->nfree -= 1;
         t->nother = (t->n - t->nfree) / 2;
 

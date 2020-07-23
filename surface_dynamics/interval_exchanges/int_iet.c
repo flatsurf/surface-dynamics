@@ -6,6 +6,11 @@
 /* set the thing below to disable safety checks */
 #define INT_IET_CHECK(t) if(int_iet_check(t)) {fprintf(stderr, "check failed\n"); exit(EXIT_FAILURE);}
 
+uint64_t uint64_rand()
+{
+    return ((uint64_t) rand()) | (((uint64_t) rand()) << 16) | (((uint64_t) rand()) << 32) | (((uint64_t) rand()) << 48);
+}
+
 void int_iet_init(int_iet_t t, unsigned int n)
 {
     t->nb_labels = n;
@@ -87,11 +92,56 @@ void int_iet_set_lengths(int_iet_t t, uint64_t * lengths)
     }
 }
 
+/* for all pairs i, j of twins on the same interval: pick random number */
+/* for all pairs of i on the two sides: pick random number */
+void int_iet_set_random_lengths(int_iet_t t, uint64_t L)
+{
+    unsigned int k;
+    uint64_t l;
+    interval * i, *j;
+
+    /* reset */
+    for (k = 0; k < t->nb_labels; ++k)
+    {
+        (t->labels)[k].length = 0;
+        (t->labels)[k].height = 1;
+    }
+
+    for(i = t->top; i != NULL; i = i->next)
+    {
+        if (i->lab->same_interval)
+        {
+            for (j = t->bot; j != NULL; j = j->next)
+            {
+                if (j->lab->same_interval)
+                {
+                    l = uint64_rand() % (L / ((t->nb_labels) * (t->nb_labels)));
+                    if (!l) l = 1;
+                    i->lab->length += l;
+                    j->lab->length += l;
+                }
+            }
+        }
+        else
+        {
+            l = uint64_rand() % (L / (t->nb_labels));
+            if (!l) l = 1;
+            i->lab->length += l;
+        }
+    }
+    for (j = t->bot; j != NULL; j = j->next)
+    {
+        if (!(j->lab->same_interval))
+        {
+            j->lab->length += uint64_rand() % (L / (t->nb_labels));
+        }
+    }
+}
 
 int int_iet_check(int_iet_t t)
 {
     interval * i;
-    int j;
+    unsigned int j;
     int * seen;
     uint64_t ltop, lbot;
 
@@ -173,7 +223,7 @@ int int_iet_check(int_iet_t t)
     ltop = 0;
     for(i=t->top; i!=NULL; i=i->next)
     {
-        j = (int) (i->lab - t->labels);  // integer label of the subinterval
+        j = (unsigned int) (i->lab - t->labels);  // integer label of the subinterval
 
         ltop += i->lab->length;
 
@@ -199,7 +249,7 @@ int int_iet_check(int_iet_t t)
     lbot = 0;
     for(i=t->bot; i!=NULL; i=i->next)
     {
-        j = (int) (i->lab - t->labels);  // integer label of the subinterval
+        j = (unsigned int) (i->lab - t->labels);  // integer label of the subinterval
 
         lbot += i->lab->length;
 
@@ -233,7 +283,7 @@ int int_iet_check(int_iet_t t)
 void int_iet_print(int_iet_t t)
 {
     interval * i;
-    int j;
+    unsigned int j;
 
     // intervals
     for(i=t->top; i!=NULL; i=i->next)
