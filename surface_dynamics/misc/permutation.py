@@ -200,7 +200,7 @@ def perm_check(l, n=None):
         sage: perm_check([-1,0])
         False
     """
-    if not isinstance(l, list):
+    if not isinstance(l, (tuple, list)):
         return False
     if n is None:
         n = len(l)
