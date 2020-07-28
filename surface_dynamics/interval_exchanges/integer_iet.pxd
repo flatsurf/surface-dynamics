@@ -30,6 +30,7 @@ cdef extern from "int_iet.h":
     # set data
     void int_iet_set_labels_and_twin(int_iet_t t, int * labels, int * twin, int k)
     void int_iet_set_lengths(int_iet_t t, uint64_t * lengths)
+    void int_iet_set_random_lengths(int_iet_t t, uint64_t L)
 
     # output
     void int_iet_print(int_iet_t t)
@@ -41,10 +42,11 @@ cdef extern from "int_iet.h":
     int int_vector_first(uint64_t * x, int n, int k)
     int int_vector_next(uint64_t * x, int n, int k)
 
-    #iteration through integer vectors of given sum and length
+    # iteration through integer vectors of given sum and length
     void int_li_vector_init(li_vector_iterator_t t, uint64_t n, int kfree, int ktop, int kbot)
     void int_li_vector_clear(li_vector_iterator_t t);
     int int_li_vector_prefirst(li_vector_iterator_t t)
     int int_li_vector_first_or_next(li_vector_iterator_t t)
     void int_li_vector_info(li_vector_iterator_t t)
 
+cdef void get_stat(object, bint, int_iet_t, uint64_t *, uint64_t *, int)
