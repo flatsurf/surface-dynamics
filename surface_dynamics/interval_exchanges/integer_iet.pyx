@@ -329,7 +329,7 @@ def interval_exchange_statistics(top, bot, uint64_t L, int kind=0, bint flat=Fal
      Though, the widths of this unique cylinder is the gcd of the two lengths::
 
         sage: interval_exchange_statistics([0,1], [1,0], 10, 1)
-        {1: 4, 2: 4, 5: 1}
+        {1L: 4, 2L: 4, 5L: 1}
         sage: [gcd(k, 10-k) for k in range(1,10)]
         [1, 2, 1, 2, 5, 2, 1, 2, 1]
 
@@ -459,7 +459,7 @@ def interval_exchange_statistics_sample(top, bot, uint64_t L, uint64_t sample_si
 
         sage: from surface_dynamics.interval_exchanges.integer_iet import interval_exchange_statistics
         sage: interval_exchange_statistics([0,1],[1,0],10,0)
-        {1L: 9}
+        {1: 9}
 
      Though, the widths of this unique cylinder is the gcd of the two lengths::
 
