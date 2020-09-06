@@ -2982,7 +2982,9 @@ class CylinderDiagram(SeparatrixDiagram):
             for _ in range(ns):
                 lin.append(t[lout[-1]])
                 lout.append(b[lin[-1]])
-            if verbose: print('lin  ', lin); print('lout', lout)
+            if verbose:
+                print('lin  ', lin)
+                print('lout', lout)
             # build involution on separatrices
             p = [None]*ns
             for a in range(ns):
@@ -3018,16 +3020,21 @@ class CylinderDiagram(SeparatrixDiagram):
             for _ in range(ns//2):
                 lin.append(t[lout[-1]])
                 lout.append(b[lin[-1]])
-            if verbose: print('lin  ', lin); print('lout', lout)
+            if verbose:
+                print('lin  ', lin)
+                print('lout', lout)
             # build list of seps in cyclic order around the other zero
             a = 0
-            while a in lout: a += 1
+            while a in lout:
+                a += 1
             llout = [a]
             llin = []
             for _ in range(ns//2):
                 llin.append(t[llout[-1]])
                 llout.append(b[llin[-1]])
-            if verbose: print('llin  ', llin); print('llout', llout)
+            if verbose:
+                print('llin  ', llin)
+                print('llout', llout)
             # now, try each way the involution could send lout to llout
             for j in range(ns//2):
                 test = True
@@ -4364,8 +4371,10 @@ class QuadraticCylinderDiagram(SageObject):
                         l1[k] += c
                     for k in sub2[j]:
                         l2[k] += c
-                v1 = V(l1); v1.set_immutable()
-                v2 = V(l2); v2.set_immutable()
+                v1 = V(l1)
+                v1.set_immutable()
+                v2 = V(l2)
+                v2.set_immutable()
                 if v1 in den1:
                     den1[v1] += 1
                 else:
@@ -4884,8 +4893,10 @@ class QuadraticCylinderDiagram(SageObject):
                 if verbose:
                     print('  filling row k={} from n={}'.format(k, n))
                 for i in range(n, n + w):
-                    h2[i] = i + w; h2[i + w] = i
-                    h3[i] = i + w - 1; h3[i + w - 1] = i
+                    h2[i] = i + w
+                    h2[i + w] = i
+                    h3[i] = i + w - 1
+                    h3[i + w - 1] = i
                     h23[i] = i + 1
                     h01[i + 1] = i
 

@@ -32,14 +32,14 @@ REFERENCES:
 .. [LaZv04] S. Lando and A. Zvonkine, "Graphs on surfaces and their
             applications", Springer-Verlag, 2004.
 """
-#*****************************************************************************
+# ****************************************************************************
 #       Copyright (C) 2010 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
+# ****************************************************************************
 
 from __future__ import print_function, absolute_import, division
 from six.moves import range, zip, filter
@@ -596,9 +596,14 @@ class Constellation_class(Element):
         # equality
         return False
 
-    def __le__(self, other): return self == other or self < other
-    def __ge__(self, other): return not self < other
-    def __gt__(self, other): return not self <= other
+    def __le__(self, other):
+        return self == other or self < other
+
+    def __ge__(self, other):
+        return not self < other
+
+    def __gt__(self, other):
+        return not self <= other
 
     def _repr_(self):
         r"""
@@ -1415,7 +1420,6 @@ class Constellations_ld(UniqueRepresentation, Parent):
              Looped multi-digraph on 1 vertex]
         """
         G = []
-        I = iter(self)
         for c in self:
             c = c.relabel()
             if any(c in g for g in G):
@@ -1658,7 +1662,6 @@ class Constellations_p(UniqueRepresentation, Parent):
              Looped multi-digraph on 1 vertex]
         """
         G = []
-        I = iter(self)
         for c in self:
             c = c.relabel()
             if any(c in g for g in G):
@@ -1686,4 +1689,3 @@ class Constellations_p(UniqueRepresentation, Parent):
             [([3], [3], [3])]
         """
         return [g.vertices() for g in self.braid_group_action()]
-

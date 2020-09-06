@@ -136,8 +136,10 @@ def ReducedPermutationsIET_iterator(
             assert(nintervals > 0)
 
             a0 = range(1,nintervals+1)
-            f = lambda x: ReducedPermutationIET([a0,list(x)],
-                alphabet=alphabet, reduced=True)
+
+            def f(x):
+                return ReducedPermutationIET([a0, list(x)],
+                                             alphabet=alphabet, reduced=True)
             return map(f, Permutations(nintervals))
     else:
         return filter(lambda x: x.is_irreducible(),

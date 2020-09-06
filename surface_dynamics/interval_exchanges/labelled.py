@@ -472,7 +472,9 @@ def LabelledPermutationsIET_iterator(
             assert(isinstance(nintervals,(int,Integer)))
             assert(nintervals > 0)
 
-            f = lambda x: LabelledPermutationIET([list(x[0]),list(x[1])],alphabet=alphabet,reduced=False)
+            def f(x):
+                return LabelledPermutationIET([list(x[0]), list(x[1])],
+                                              alphabet=alphabet, reduced=False)
 
             alphabet = Alphabet(alphabet)
             g = lambda x: [alphabet.unrank(k-1) for k in x]

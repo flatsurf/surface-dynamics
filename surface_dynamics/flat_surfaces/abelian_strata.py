@@ -2048,9 +2048,9 @@ class AbelianStratumComponent(StratumComponent):
             odd_perm = odd_zeros_one_one(odd_zeros)
             perm = cylinder_concatenation(even_perm,odd_perm)
 
-        perm = cylinder_concatenation(fk_zeros_perm,perm)
+        perm = cylinder_concatenation(fk_zeros_perm, perm)
 
-        if not alphabet == None:
+        if alphabet is not None:
             perm.alphabet(alphabet)
 
         return perm
@@ -3112,7 +3112,7 @@ class EvenAbelianStratumComponent(ASC):
         else:
             perm = cylinder_concatenation(fk_zeros_perm,odd_twos_even(real_zeros,two_count))
 
-        if not alphabet == None:
+        if alphabet is not None:
             perm.alphabet(alphabet)
         return perm.reduced() if reduced else perm
 
@@ -3502,7 +3502,7 @@ class OddAbelianStratumComponent(ASC):
         else:
             perm = cylinder_concatenation(fk_zeros_perm,odd_twos_odd(real_zeros,two_count))
 
-        if not alphabet == None:
+        if alphabet is not None:
             perm.alphabet(alphabet)
         return perm.reduced() if reduced else perm
 

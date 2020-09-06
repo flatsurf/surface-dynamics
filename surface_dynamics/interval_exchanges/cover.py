@@ -319,8 +319,10 @@ class PermutationCover(SageObject):
 
         alphabet = self._base.alphabet()
         rank = alphabet.rank
-        perm = lambda ss,label: self._permut_cover[rank(label)] if ss==1 else \
-                                self._inv_permut_cover[rank(label)]
+
+        def perm(ss, label):
+            return self._permut_cover[rank(label)] if ss == 1 else \
+                self._inv_permut_cover[rank(label)]
 
         for orbit in base_diagram:
             init_label = orbit[0][0]

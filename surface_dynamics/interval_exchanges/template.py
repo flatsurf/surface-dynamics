@@ -3159,7 +3159,8 @@ class PermutationLI(Permutation):
 
         if any(x[0] == 1 for x in l0):
             if verbose: print("potential form 1")
-            i0 = []; i1 = []
+            i0 = []
+            i1 = []
             for i in range(len(l0)):
                 if l0[i][0] == 0:
                     i0.append(i)
@@ -6747,7 +6748,7 @@ class FlippedRauzyDiagram(RauzyDiagram):
                   getattr(perm, 'has_' + edge_type[0])(*(edge_type[1]))):
                     q = perm.rauzy_move(t)
                     q = self._permutation_to_vertex(q)
-                    if reducible == True or perm.is_irreducible():
+                    if reducible is True or perm.is_irreducible():
                         if q not in succ:
                             succ[q] = [None] * len(self._edge_types)
                             pred[q] = [None] * len(self._edge_types)

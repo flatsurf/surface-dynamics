@@ -1330,14 +1330,25 @@ class HyperellipticQuadraticStratumComponent(QSC):
         f = self._stratum.nb_fake_zeros()
         z = self._stratum.zeros(fake_zeros=False,poles=True)
 
-        if f: ll = list(map(lambda x:'0'+str(x),range(f+1)))
-        else: ll = [0]
+        if f:
+            ll = ['0' + str(x) for x in range(f + 1)]
+        else:
+            ll = [0]
 
-        if len(z) == 2: r = z[0]//2; s = z[1]//2
-        elif len(z) == 4: r = z[0]+1; s = z[2]+1
-        elif len(z) == 3 and z[0]%2: r = z[0]+1; s = z[2]//2
-        elif len(z) == 3: r = z[0]//2; s = z[2]+1
-        else: raise ValueError("This stratum has no hyperelliptic component!")
+        if len(z) == 2:
+            r = z[0]//2
+            s = z[1]//2
+        elif len(z) == 4:
+            r = z[0]+1
+            s = z[2]+1
+        elif len(z) == 3 and z[0]%2:
+            r = z[0]+1
+            s = z[2]//2
+        elif len(z) == 3:
+            r = z[0]//2
+            s = z[2]+1
+        else:
+            raise ValueError("This stratum has no hyperelliptic component!")
 
         l0 = ll + ['A']
         l0.extend(range(1,r+1))
