@@ -1,20 +1,20 @@
-Welcome to surface_dynamic's documentation!
-===========================================
+Welcome to the surface_dynamics documentation!
+==============================================
 
 Installation
 ------------
 
-The basic way to install the surface_dynamic package is via the pip
+The basic way to install the surface_dynamics package is via the pip
 Python installer that comes with your `SageMath <http://www.sagemath.org/>`_
 installation.
 
-If you installed Sage from a downloaded binary (included the Cygwin version
-on Windows) or compiled Sage from sources then run::
+If you installed Sage from a downloaded binary (including the Cygwin version
+on Windows) or if you compiled Sage from source, then run::
 
     $ sage -pip install surface_dynamics
 
 You might want (or need) to provide the option ``--user`` to this command in order
-to install surface dynamics in your home directory and keep intact your SageMath
+to install surface_dynamics in your home directory and keep intact your SageMath
 installation.
 
 In case you use the sagemath package in a Debian or Ubuntu system you need to perform
@@ -23,15 +23,15 @@ a two step installation::
     $ source /usr/share/sagemath/bin/sage-env
     $ sage -pip install surface_dynamics --user
 
-If you use the sagemath package from Archlinux run::
+If you use the sagemath package from Archlinux, run::
 
-    $ pip2 install git+https://gitlab.com/videlec/surface_dynamics --user
+    $ pip3 install git+https://gitlab.com/videlec/surface_dynamics --user
 
 Other sources of information:
 
-- there is a short tutorial at http://www.labri.fr/perso/vdelecro/flatsurf.html
+- short tutorial: http://www.labri.fr/perso/vdelecro/flatsurf.html
 
-- development webpage (including source code) is available at
+- development webpage (including source code):
   https://gitlab.com/videlec/surface_dynamics
 
 Module documentation
@@ -66,4 +66,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
