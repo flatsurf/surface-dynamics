@@ -624,6 +624,34 @@ class MultivariateGeneratingSeries(AbstractMSum):
     def __nonzero__(self):
         return bool(self._data)
 
+    def numerator(self):
+        r"""
+        Return the numerator if there is at most one summand.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
+            sage: M = MultivariateGeneratingSeriesRing('x', 3)
+            sage: x0, x1, x2 = M.laurent_polynomial_ring().gens()
+
+            sage: f = M.term(x0 + x1^2*x2, [([1,3,0],1),([1,0,-1],1)])
+            sage: f.numerator()
+            x1^2*x2 + x0
+            sage: g = M.term(1 - x2, [([1,1,0],1),([1,0,-1],2)])
+            sage: (f + g).numerator()
+            Traceback (most recent call last):
+            ...
+            ValueError: not a simple fraction
+            sage: (f + g).factor().numerator()
+            x0^2*x1^3 - x0*x1^3 + x0^3*x1*x2^-1 - x0^2*x1 - x0*x1^2 + x1^2*x2 - x0^2*x2^-1 + x0 - x2 + 1
+        """
+        if len(self._data) > 1:
+            raise ValueError("not a simple fraction")
+        if not self._data:
+            return self.parent().laurent_polynomial_ring().zero()
+        else:
+            return list(self._data.values())[0]
+
     def summands(self):
         r"""
         Return the list of elementary summands
@@ -996,10 +1024,27 @@ class MultivariateGeneratingSeries(AbstractMSum):
 
             sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
             sage: M = MultivariateGeneratingSeriesRing('x', 3)
+
             sage: f = M.term(1, [([1,3,0],1),([1,0,-1],1)])
             sage: g = M.term(1, [([1,1,0],1),([1,0,-1],2)])
             sage: (f + g).factor()
             (-x0*x1^3 + x0^2*x1*x2^-1 - x0*x1 - x0*x2^-1 + 2)/((1 - x0*x2^-1)^2*(1 - x0*x1)*(1 - x0*x1^3))
+
+            sage: x0, x1, x2 = M.laurent_polynomial_ring().gens()
+            sage: f = M.term(x0 + x1, [([1,3,0],1),([1,0,1],1)])
+            sage: g = M.term(x2 - 1, [([1,1,0],1),([1,0,1],2)])
+            sage: h = f + g
+            sage: t1 = h.taylor(8)
+            sage: t2 = h.factor().taylor(8)
+            sage: assert all(sum(e) >= 8 for e in (t1 - t2).exponents())
+
+        Simplification::
+
+            sage: f1 = M.term(x0, [([1,0,0],1)])
+            sage: f2 = M.term(x1, [([0,1,0],1)])
+            sage: f3 = M.term(x0*x1 - 1, [([1,0,0],1), ([0,1,0],1)])
+            sage: (f1 + f2 + f3).factor()
+            (-1)
         """
         M = self.parent()
 
@@ -1009,19 +1054,23 @@ class MultivariateGeneratingSeries(AbstractMSum):
         for den, num in self._data.items():
             D.lcm_update(den)
 
-        R = M.laurent_polynomial_ring()
-        N = R.zero()
+        L = M.laurent_polynomial_ring()
+        N = L.zero()
         for den,num in self._data.items():
-            N += (D / den).to_polynomial(R)
+            N += num * (D / den).to_polynomial(L)
 
-        # TODO: look more carefully for simplification
-        # note: (1 - x0x1) and (1 - x0^-1 x1^-1) are the same things up
-        # to sign and division by x0x1. We can canonicalize as soon as the numerator
-        # is gentle enough... we should really introduce the polynomial version!
+        # Look for simplifications. In the case of Laurent polynomials, we do not
+        # do anything.
+        # TODO: do something for Laurent polynomials
+        if any(i < 0 for den in self._data for v in den._dict for i in v) or \
+           any(i < 0 for num in self._data.values() for e in num.exponents() for i in e):
+            return M.term(N, D)
 
+        P = L.polynomial_ring()
+        N = P(N)
         gt = False
-        for mon,mult in D._dict.items():
-            pmon = laurent_monomial(R, mon)
+        for mon,mult in list(D._dict.items()):
+            pmon = P.one() - P.monomial(*mon)
             q,r = N.quo_rem(pmon)
             while mult and not r:
                 gt = True
@@ -1029,10 +1078,13 @@ class MultivariateGeneratingSeries(AbstractMSum):
                 N = q
                 q,r = N.quo_rem(pmon)
 
-            D._dict[mon] = mult
+            if mult:
+                D._dict[mon] = mult
+            else:
+                del D._dict[mon]
 
         if gt:
-            D._tuple = tuple(sorted(self._dict.items()))
+            D._tuple = tuple(sorted(D._dict.items()))
 
         return M.term(N, D)
 
