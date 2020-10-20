@@ -39,7 +39,7 @@ except ImportError:
 from sage.rings.integer cimport Integer, smallInteger
 from sage.rings.integer import GCD_list
 
-from libc.stdlib cimport malloc, free
+from libc.stdlib cimport calloc, malloc, free
 from libc.string cimport memset, memcpy
 from libc.limits cimport UINT_MAX
 
@@ -1238,14 +1238,64 @@ cdef class Origami_dense_pyx(object):
 
         return self._new_c(rr)
 
-    cpdef horizontal_twist(self, width=1):
+    def horizontal_cycle_representatives(self):
         r"""
-        Return the origami `(r, ur^{-k})` which is obtained by the action of an
-        horizontal twist of width ``k`` on this origami
+        EXAMPLES::
+
+            sage: from surface_dynamics import Origami
+            sage: Origami('(1,2)', '(1,3)').horizontal_cycle_representatives()
+            [0, 2]
+        """
+        cdef list l = []
+        cdef int * seen  = <int *> calloc(self._n, sizeof(int))
+        cdef int i
+
+        for i in range(self._n):
+            if seen[i]:
+                continue
+            l.append(i)
+            while not seen[i]:
+                seen[i] = 1
+                i = self._r[i]
+
+        free(seen)
+        return l
+
+    def vertical_cycle_representatives(self):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics import Origami
+            sage: Origami('(1,2)', '(1,3)').vertical_cycle_representatives()
+            [0, 1]
+        """
+        cdef list l = []
+        cdef int * seen = <int *> calloc(self._n, sizeof(int))
+        cdef int i
+
+        for i in range(self._n):
+            if seen[i]:
+                continue
+            l.append(i)
+            while not seen[i]:
+                seen[i] = 1
+                i = self._u[i]
+
+        free(seen)
+        return l
+
+    cpdef horizontal_twist(self, width=1, cylinder=None):
+        r"""
+        Return the origami ``(r, r^{-width}u)`` which is obtained by the action of an
+        horizontal twist of width ``k`` on this origami.
 
         INPUT:
 
         - ``width`` - integer (default: 1) - the width of the twist
+
+        - ``cylinder`` - integer or ``None`` (default ``None``) - if not ``None`` performs
+          a twist only in the band of squares that contain ``i``. In that case, it is
+          not a SL(2,R)-deformation.
 
         EXAMPLES::
 
@@ -1262,27 +1312,64 @@ cdef class Origami_dense_pyx(object):
             (1,2,3,4,5,6,7)
             sage: o.horizontal_twist(6) == o
             True
+
+            sage: S = SymmetricGroup(5)
+            sage: r = S('(1,2,3)(4,5)')
+            sage: u = S('(1,4)(2,5)')
+            sage: o = Origami(r, u)
+            sage: o.horizontal_twist(-1, 1) == o.horizontal_twist(2, 1) == Origami(r, S('(1,2,3)') * u)
+            True
+            sage: o.horizontal_twist(-2, 1) == o.horizontal_twist(1, 1) == Origami(r, S('(1,2,3)')^2 * u)
+            True
+            sage: o.horizontal_twist(-3, 1) == o.horizontal_twist(-3, 1) == o
+            True
         """
-        cdef int i, ii
+        cdef int i0, i, ii
         cdef int *rr = <int *>malloc(2*self._n*sizeof(int))
         cdef int *uu = rr + self._n
 
-        for i from 0 <= i < self._n:
-            rr[i] = self._r[i]
+        if cylinder is not None:
+            i0 = int(cylinder)
+            if i0 < 0 or i0 >= self._n:
+                raise ValueError("square number out of range")
+            for i from 0 <= i < self._n:
+                rr[i] = self._r[i]
+                uu[i] = self._u[i]
+            i = i0
             if width <= 0:
                 ii = i
                 for j from 0 <= j < -width:
                     ii = self._r[ii]
-                uu[i] = self._u[ii]
             else:
                 ii = self._r[i]
                 for j from 1 <= j < width:
                     ii = self._r[ii]
-                uu[ii] = self._u[i]
+            while True:
+                if width <= 0:
+                    uu[i] = self._u[ii]
+                else:
+                    uu[ii] = self._u[i]
+                i = self._r[i]
+                ii = self._r[ii]
+                if i == i0:
+                    break
+        else:
+            for i from 0 <= i < self._n:
+                rr[i] = self._r[i]
+                if width <= 0:
+                    ii = i
+                    for j from 0 <= j < -width:
+                        ii = self._r[ii]
+                    uu[i] = self._u[ii]
+                else:
+                    ii = self._r[i]
+                    for j from 1 <= j < width:
+                        ii = self._r[ii]
+                    uu[ii] = self._u[i]
 
         return self._new_c(rr)
 
-    cpdef vertical_twist(self, width=1):
+    cpdef vertical_twist(self, width=1, cylinder=None):
         r"""
         Return the origami `(ru^{-k}, u)` obtained by the action of a
         vertical twist of width `k` on this origami.
@@ -1303,23 +1390,61 @@ cdef class Origami_dense_pyx(object):
             (1)(2)(3)(4,5,6,7)
             sage: o.vertical_twist(4) == o
             True
+
+            sage: S = SymmetricGroup(5)
+            sage: r = S('(1,4)(2,5)')
+            sage: u = S('(1,2,3)(4,5)')
+            sage: o = Origami(r, u)
+            sage: o.vertical_twist(-1, 1) == o.vertical_twist(2, 1) == Origami(S('(1,2,3)') * r, u)
+            True
+            sage: o.vertical_twist(-2, 1) == o.vertical_twist(1, 1) == Origami(S('(1,2,3)')^2 * r, u)
+            True
+            sage: o.vertical_twist(-3, 1) == o.vertical_twist(-3, 1) == o
+            True
         """
         cdef int i
         cdef int *rr = <int *>malloc(2*self._n*sizeof(int))
         cdef int *uu = rr + self._n
 
-        for i from 0 <= i < self._n:
-            uu[i] = self._u[i]
+
+        if cylinder is not None:
+            i0 = int(cylinder)
+            if i0 < 0 or i0 >= self._n:
+                raise ValueError("square number out of range")
+            for i from 0 <= i < self._n:
+                rr[i] = self._r[i]
+                uu[i] = self._u[i]
+            i = i0
             if width <= 0:
                 ii = i
                 for j from 0 <= j < -width:
                     ii = self._u[ii]
-                rr[i] = self._r[ii]
             else:
                 ii = self._u[i]
                 for j from 1 <= j < width:
                     ii = self._u[ii]
-                rr[ii] = self._r[i]
+            while True:
+                if width <= 0:
+                    rr[i] = self._r[ii]
+                else:
+                    rr[ii] = self._r[i]
+                i = self._u[i]
+                ii = self._u[ii]
+                if i == i0:
+                    break
+        else:
+            for i from 0 <= i < self._n:
+                uu[i] = self._u[i]
+                if width <= 0:
+                    ii = i
+                    for j from 0 <= j < -width:
+                        ii = self._u[ii]
+                    rr[i] = self._r[ii]
+                else:
+                    ii = self._u[i]
+                    for j from 1 <= j < width:
+                        ii = self._u[ii]
+                    rr[ii] = self._r[i]
 
         return self._new_c(rr)
 
@@ -2512,7 +2637,7 @@ cdef class Origami_dense_pyx(object):
             sr = [[i-1 for i in x.domain()] for x in sr]
             su = [[i-1 for i in x.domain()] for x in su]
 
-            #the more direct        
+            #the more direct
             #    sr = [[i-1 for i in PermutationConstructor(x, check=check).domain()] for x in sr]
             #    su = [[i-1 for i in PermutationConstructor(x, check=check).domain()] for x in su]
             #does not work

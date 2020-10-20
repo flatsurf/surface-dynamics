@@ -28,8 +28,8 @@ cdef class Origami_dense_pyx:
 
     cpdef inverse(self)
     cpdef mirror(self)
-    cpdef horizontal_twist(self,width=*)
-    cpdef vertical_twist(self,width=*)
+    cpdef horizontal_twist(self, width=*, cylinder=*)
+    cpdef vertical_twist(self, width=*, cylinder=*)
 
     cdef _compute_gl2z_edges(self)
 

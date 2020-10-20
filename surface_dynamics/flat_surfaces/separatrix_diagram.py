@@ -3515,14 +3515,19 @@ class CylinderDiagram(SeparatrixDiagram):
 
         return list(self.origami_iterator(n))
 
-    def widths_and_heights_iterator(self, n):
+    def widths_and_heights_iterator(self, n, height_one=False):
         """
         Iterate over the possible integer widths and heights of the cylinders
         for which the corresponding translation surface has area ``n``.
 
-        At each iteration, the output is a pair of ``(lengths,heights)``. You
+        At each iteration, the output is a pair of ``(lengths, heights)``. You
         can then use :meth:`cylcoord_to_origami` to build the corresponding
         origami.
+
+        INPUT:
+
+        - ``height_one`` -- (boolean default ``False``) whether to return only
+          coordinates with cylinder height one.
 
         EXAMPLES::
 
@@ -3542,6 +3547,16 @@ class CylinderDiagram(SeparatrixDiagram):
             (1,2,3)(4,5,6)(7,8,9)(10)
             (1,4,7)(2,5,8)(3,6,9,10)
 
+            sage: it = cyl.widths_and_heights_iterator(10, height_one=True)
+            sage: l,h = next(it)
+            sage: print(l)
+            (8, 1, 1)
+            sage: print(h)
+            [1, 1]
+            sage: cyl.cylcoord_to_origami(l,h)
+            (1,2,3,4,5,6,7,8,9)(10)
+            (1)(2)(3)(4)(5)(6)(7)(8)(9,10)
+
         TESTS::
 
             sage: c1 = CylinderDiagram("(0,1)-(0,3,4,5) (2,3,5)-(1) (4)-(2)")
@@ -3553,6 +3568,12 @@ class CylinderDiagram(SeparatrixDiagram):
             [((1, 2, 1, 1, 1, 2), [1, 1, 1, 1])]
             sage: list(c3.widths_and_heights_iterator(8))
             [((1, 1, 1, 1, 2, 2), [1, 1, 1, 1])]
+
+            sage: for n in range(8, 12):
+            ....:     for c in c1,c2,c3:
+            ....:         L1 = [wh for wh in c.widths_and_heights_iterator(n) if all(h == 1 for h in wh[1])]
+            ....:         L2 = list(c.widths_and_heights_iterator(n, height_one=True))
+            ....:         assert L1 == L2, (L1, L2)
         """
         from sage.combinat.integer_lists import IntegerListsLex
         from sage.rings.integer_ring import ZZ
@@ -3582,7 +3603,10 @@ class CylinderDiagram(SeparatrixDiagram):
         for a in filter(
               lambda x: all(x[i] >= min_widths[i] for i in range(self.ncyls())),
               IntegerListsLex(n=n, length=self.ncyls(), min_part=1)):
-            area_div = tuple(list(filter(lambda d: d >= min_widths[i],arith.divisors(a[i]))) for i in range(self.ncyls()))
+            if height_one:
+                area_div = [[x] for x in a]
+            else:
+                area_div = tuple(list(filter(lambda d: d >= min_widths[i],arith.divisors(a[i]))) for i in range(self.ncyls()))
             for w in itertools.product(*area_div):
                 h = [Integer(a[i]/w[i]) for i in range(self.ncyls())]
 
