@@ -77,12 +77,7 @@ for name, data in extensions_data.items():
         full_dir = os.path.join('surface_dynamics', data['dir'])
         sources = [os.path.join(full_dir, src) for src in data['sources']]
         headers = [os.path.join(full_dir, data['dir'], head) for head in data['headers']]
-        ext = Extension(data['name'],
-            sources = sources,
-            include_dirs = [full_dir],
-            depends = headers,
-        )
-        extensions.append(ext)
+        extensions.append(Extension(data['name'], sources = sources))
 
         sources = [os.path.join(data['dir'], src) for src in data['sources']]
         headers = [os.path.join(data['dir'], head) for head in data['headers']]
@@ -109,9 +104,7 @@ setup(name='surface_dynamics',
           'surface_dynamics/databases': ['cylinder_diagrams/cyl_diags*', 'generalized_permutation_twins/twins*'],
           'surface_dynamics/flat_surfaces/origamis': ['origamis.db'],
           },
-      ext_modules=cythonize(extensions,
-          compiler_directives={'embedsignature': True}
-          ),
+      ext_modules=cythonize(extensions),
     classifiers=[
       'Development Status :: 4 - Beta',
       'Intended Audience :: Science/Research',

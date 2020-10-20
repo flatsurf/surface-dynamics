@@ -1,5 +1,3 @@
-# distutils: sources = surface_dynamics/flat_surfaces/origamis/normal_form.c surface_dynamics/flat_surfaces/origamis/lyapunov_exponents.c
-# distutils: include_dirs = surface_dynamics/flat_surfaces/origamis
 """
 Dense origamis
 
