@@ -113,6 +113,7 @@ from surface_dynamics.misc.permutation import (perm_check, equalize_perms, perm_
         perms_transitive_components, canonical_perm, canonical_perm_i,
         argmin)
 
+from sage.misc.decorators import rename_keyword
 from sage.misc.package import is_package_installed
 
 #
@@ -654,8 +655,8 @@ class SeparatrixDiagram(SageObject):
             sage: print(sh)
             (0,5,4)(1,3,2)-(0,3,2,1)(4,5)
 
-            sage: c = s.cylinder_diagrams(up_to_isomorphism=False)[0].horizontal_symmetry()
-            sage: ch = sh.cylinder_diagrams(up_to_isomorphism=False)[0]
+            sage: c = s.cylinder_diagrams(up_to_symmetry=False)[0].horizontal_symmetry()
+            sage: ch = sh.cylinder_diagrams(up_to_symmetry=False)[0]
             sage: c.is_isomorphic(ch)
             True
         """
@@ -675,8 +676,8 @@ class SeparatrixDiagram(SageObject):
             sage: print(sv)
             (0,3,2,1)(4,5)-(0,5,4)(1,3,2)
 
-            sage: c = sv.cylinder_diagrams(up_to_isomorphism=False)[0].vertical_symmetry()
-            sage: cv = sv.cylinder_diagrams(up_to_isomorphism=False)[0]
+            sage: c = sv.cylinder_diagrams(up_to_symmetry=False)[0].vertical_symmetry()
+            sage: cv = sv.cylinder_diagrams(up_to_symmetry=False)[0]
             sage: c.is_isomorphic(cv)
             True
         """
@@ -1363,7 +1364,8 @@ class SeparatrixDiagram(SageObject):
 
         return other
 
-    def cylinder_diagram_iterator(self, connected=True, up_to_isomorphism=True):
+    @rename_keyword(deprecation=666, up_to_isomorphism='up_to_symmetry')
+    def cylinder_diagram_iterator(self, connected=True, up_to_symmetry=True):
         r"""
         Construct all cylinder diagrams from given separatrix diagram (i.e. a pair
         of permutations).
@@ -1373,9 +1375,8 @@ class SeparatrixDiagram(SageObject):
         - ``connected`` - boolean (default: True) - if true, returns only
           connected cylinder diagrams.
 
-        - ``up_to_isomorphism`` - boolean (default: True) - take care of
-          isomorphism problem. It is memory efficient and probably faster to set
-          this option to ``False``.
+        - ``up_to_symmetry`` - boolean (default: True) take care of the horizontal
+          and vertical symmetries.
 
         EXAMPLES::
 
@@ -1386,9 +1387,9 @@ class SeparatrixDiagram(SageObject):
             (0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)
             (0,3)-(0,5) (1,2)-(1,4) (4,5)-(2,3)
             (0,5)-(3,4) (1,4)-(0,2) (2,3)-(1,5)
-            sage: sum(1 for _ in s.cylinder_diagram_iterator(up_to_isomorphism=False))
+            sage: sum(1 for _ in s.cylinder_diagram_iterator(up_to_symmetry=False))
             6
-            sage: sum(1 for _ in s.cylinder_diagram_iterator(up_to_isomorphism=True))
+            sage: sum(1 for _ in s.cylinder_diagram_iterator(up_to_symmetry=True))
             3
 
         Here is an example with some symmetry::
@@ -1402,6 +1403,16 @@ class SeparatrixDiagram(SageObject):
             sage: C2 = s.cylinder_diagrams()
             sage: assert len(C1) == len(C2)
             sage: for (c1, c2) in zip(C1, C2): assert c1.is_isomorphic(c2)
+
+        TESTS::
+
+            sage: from surface_dynamics import SeparatrixDiagram
+            sage: s = SeparatrixDiagram('(0,3)(1,4,5)(2)','(0)(1,2)(3,4,5)')
+            sage: C2 = s.cylinder_diagram_iterator(up_to_isomorphism=True)
+            doctest:warning
+            ...
+            DeprecationWarning: use the option 'up_to_symmetry' instead of 'up_to_isomorphism'
+            See http://trac.sagemath.org/666 for details.
         """
         cbot = self.bot_cycle_tuples()
         ctop0 = self.top_cycle_tuples()
@@ -1409,8 +1420,8 @@ class SeparatrixDiagram(SageObject):
 
         connected = not connected
 
-        if up_to_isomorphism:
-            # note: here we should only consider symmetries of the cylinder diagrams
+        if up_to_symmetry:
+            # NOTE: here we should only consider symmetries of the cylinder diagrams
             # only when this underlying separatrix diagrams has some. But the
             # canonical labels of cylinder diagrams and separatrix diagrams are
             # not compatible!!
@@ -1447,20 +1458,21 @@ class SeparatrixDiagram(SageObject):
                 if (connected or c.is_connected()) and c.smallest_integer_lengths():
                     yield c
 
-    def cylinder_diagrams(self, connected=True, up_to_isomorphism=True):
+    @rename_keyword(deprecation=666, up_to_isomorphism='up_to_symmetry')
+    def cylinder_diagrams(self, connected=True, up_to_symmetry=True):
         r"""
         Return the list of cylinder diagrams associated to this separatrix
         diagram.
 
         We warn that the cylinder diagram may be renumeroted in the output list
         (in order to prevent repetitions). If you care about numerotation the
-        option ``up_to_isomorphism`` should be set to False.
+        option ``up_to_symmetry`` should be set to False.
 
         INPUT:
 
         - ``connected`` - boolean (default: True)
 
-        - ``up_to_isomorphism`` - boolean (default: True)
+        - ``up_to_symmetry`` - boolean (default: True)
 
         EXAMPLES::
 
@@ -1490,13 +1502,23 @@ class SeparatrixDiagram(SageObject):
             ....:       CylinderDiagram('(0,1,2)-(0,1,5) (3,5)-(2,4) (4)-(3)'),
             ....:       CylinderDiagram('(0,2,3)-(2,5) (1,4)-(0,1,3) (5)-(4)')]
             sage: C2 = s.cylinder_diagrams()
-            sage: C3 = s.cylinder_diagrams(up_to_isomorphism=False)
+            sage: C3 = s.cylinder_diagrams(up_to_symmetry=False)
             sage: assert len(C1) == len(C2) == len(C3)
             sage: for (c1, c2, c3) in zip(C1, C2, C3): assert c1.is_isomorphic(c2) and c1.is_isomorphic(c3)
+
+        TESTS::
+
+            sage: from surface_dynamics import SeparatrixDiagram
+            sage: s = SeparatrixDiagram('(0,3)(1,4,5)(2)','(0)(1,2)(3,4,5)')
+            sage: C2 = s.cylinder_diagrams(up_to_isomorphism=True)
+            doctest:warning
+            ...
+            DeprecationWarning: use the option 'up_to_symmetry' instead of 'up_to_isomorphism'
+            See http://trac.sagemath.org/666 for details.
         """
         return list(self.cylinder_diagram_iterator(
             connected=connected,
-            up_to_isomorphism=up_to_isomorphism))
+            up_to_symmetry=up_to_symmetry))
 
 
 def cyclic_direction(x,y,z):
