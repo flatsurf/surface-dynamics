@@ -7,3 +7,4 @@ exclude surface_dynamics/interval_exchanges/integer_iet.c
 exclude surface_dynamics/interval_exchanges/lyapunov_exponents.c
 exclude surface_dynamics/interval_exchanges/iet_family.c
 include COPYING
+include NEWS
