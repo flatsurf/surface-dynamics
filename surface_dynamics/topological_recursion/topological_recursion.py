@@ -38,13 +38,15 @@ TODO:
 from __future__ import print_function
 from six.moves import range
 
+from collections import defaultdict
 from itertools import combinations
 
 from sage.misc.misc_c import prod
 from sage.misc.cachefunc import cached_method
 
 from sage.rings.all import ZZ, QQ
-from sage.arith.misc import factorial
+from sage.arith.misc import factorial, binomial
+from sage.combinat.integer_lists.invlex import IntegerListsLex
 from sage.combinat.composition import Compositions
 from sage.combinat.partition import Partitions
 
@@ -114,11 +116,14 @@ class TopologicalRecursion:
         return self._virasoro(g, n, I)
 
     def _virasoro(self, g, n, I):
-        # TODO: we should use exponential notations for I and do not
-        # make several calls to the same.
-
+        # TODO: we should use exponential notations for I
         if (g, n, I) in self._cache:
             return self._cache[(g, n, I)]
+
+        Idict = defaultdict(int)
+        for i in I[1:]:
+            Idict[i] += 1
+        Ituple = sorted(Idict.items())
 
         # set to True for debugging information
         verbose = False
@@ -134,13 +139,21 @@ class TopologicalRecursion:
             print("compute S1")
         J = I[1:]
         S1 = ZZ_0
-        for m in range(1,n):
-            J = I[1:m] + I[m+1:]
+        for im,_ in Ituple:
+            fac = Idict[im]
+            J = []
+            for j,mult in Ituple:
+                if j == im:
+                    J.extend([j] * (mult - 1))
+                else:
+                    J.extend([j] * mult)
+            J = tuple(J)
+
             s = sum(J) # = i + j
-            for (a, value) in B(g, n-s-1, I[0], I[m]):
+            for (a, value) in B(g, n-s-1, I[0], im):
                 if verbose:
-                    print("[S1] B({}, {}, {}) F({}, {}, {})".format(I[0], I[m], a, g, n-1, (a,) + J))
-                S1 += value * F(g, n-1, (a,) + J)
+                    print("[S1] B({}, {}, {}) F({}, {}, {})".format(I[0], im, a, g, n-1, (a,) + J))
+                S1 += fac * value * F(g, n-1, (a,) + J)
         if verbose:
             print("S1 = {}".format(S1))
 
@@ -168,10 +181,16 @@ class TopologicalRecursion:
             g1min = int(n1 < 2)
             g2min = int(n2 < 2)
 
-            for J1 in combinations(range(1, n), n1):
-                I1 = tuple([I[j] for j in J1])
-                J2 = set(range(1,n)).difference(J1)
-                I2 = tuple([I[j] for j in J2])
+            for M1 in IntegerListsLex(min_sum=n1, max_sum=n1, length=len(Ituple), ceiling=[v for k,v in Ituple]):
+                I1 = []
+                I2 = []
+                fac = 1
+                for m,(k,v) in zip(M1, Ituple):
+                    I1.extend([k]*m)
+                    I2.extend([k]*(v-m))
+                    fac *= binomial(v, m)
+                I1 = tuple(I1)
+                I2 = tuple(I2)
 
                 s1 = sum(I1)
                 s2 = sum(I2)
@@ -192,7 +211,7 @@ class TopologicalRecursion:
                         if verbose:
                             print("[S3] C({}, {}, {}) F({}, {}, {}) F({}, {}, {})".format(
                             I[0], a1, a2, g1, n1+1, (a1,) + I1, g2, n2+1, (a2,) + I2))
-                        S3 += value * f1 * f2
+                        S3 += fac * value * f1 * f2
 
         if verbose:
             print("S3 = {}".format(S3))
