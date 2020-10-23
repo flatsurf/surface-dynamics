@@ -1,17 +1,18 @@
-#*****************************************************************************
+# ****************************************************************************
 #       Copyright (C) 2020 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
+# ****************************************************************************
 from sage.misc.cachefunc import cached_function
-from sage.rings.all import ZZ, QQ
-from sage.arith.misc import bernoulli, factorial
+from sage.rings.all import ZZ
+from sage.arith.misc import bernoulli
 ZZ_0 = ZZ.zero()
 ZZ_1 = ZZ.one()
 ZZ_2 = ZZ(2)
+
 
 @cached_function
 def zeta_no_pi(k):
@@ -36,8 +37,7 @@ def zeta_no_pi(k):
         1/945*pi^6
     """
     k = ZZ(k)
-    if k % 2 == 1:
+    if k % 2:
         raise ValueError
     m = (k - 2) // 2
-    return ZZ(-1)**m * bernoulli(k) * ZZ_2**(k-1) / k.factorial()
-
+    return ZZ(-1)**m * bernoulli(k) * ZZ_2**(k - 1) / k.factorial()
