@@ -16,20 +16,21 @@ EXAMPLES::
     (4, 1) 1/384
     (3, 2) 29/5760
 """
-#*****************************************************************************
+# ****************************************************************************
 #       Copyright (C) 2020 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
+# ****************************************************************************
 from sage.misc.misc_c import prod
 from sage.structure.unique_representation import UniqueRepresentation
 from sage.rings.all import ZZ, QQ
 from .topological_recursion import TopologicalRecursion
 
 ZZ_1 = ZZ.one()
+
 
 def psi_correlator(*args):
     r"""
@@ -82,8 +83,9 @@ def psi_correlator(*args):
     s = sum(args)
     if (s - n) % 3:
         raise ValueError("the composition should sum up to 3*g - 3 + n")
-    g = (s -n)//3 + 1
-    return KontsevichTR().F(g, n, args) / prod((2*i + 1).multifactorial(2) for i in args)
+    g = (s - n) // 3 + 1
+    return KontsevichTR().F(g, n, args) / prod((2 * i + 1).multifactorial(2) for i in args)
+
 
 class KontsevichTR(UniqueRepresentation, TopologicalRecursion):
     r"""
@@ -142,25 +144,24 @@ class KontsevichTR(UniqueRepresentation, TopologicalRecursion):
         # i + j = k + 1
         k = i + j - 1
         if k >= 0:
-            yield (k, ZZ(2*j + 1))
+            yield (k, ZZ(2 * j + 1))
 
     def C(self, i, jmax, kmax, smax):
         r"""
-        C-data for Konstevich topological recursion
+        C-data for Kontsevich topological recursion
         """
-        if i < 2 or jmax > i-2 or kmax > i-2:
+        if i < 2 or jmax > i - 2 or kmax > i - 2:
             # this is a waste of time...
             return
 
         # iterate through indices (j,k) with j + k = i-2
         jmin = max(0, i - 2 - kmax)
         jmax = min(i - 2, jmax)
-        for j in range(jmin, jmax+1):
-            yield (j, i-j-2, ZZ_1)
+        for j in range(jmin, jmax + 1):
+            yield (j, i - j - 2, ZZ_1)
 
     def D(self, i):
         r"""
         D-data for Kontsevich topological recursion
         """
         return QQ(((i == 1), 8))
-
