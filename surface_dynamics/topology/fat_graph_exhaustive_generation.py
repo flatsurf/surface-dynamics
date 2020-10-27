@@ -4,24 +4,23 @@ Exhaustive generation of fat graphs.
 This is done following the McKay canonical augmentation. This module
 is experimental.
 """
-#*****************************************************************************
+# ****************************************************************************
 #       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
+# ****************************************************************************
 
 from __future__ import absolute_import, print_function
-from six.moves import range, map, zip
+from six.moves import range
 
 import numbers
+from collections import defaultdict
 
 from sage.rings.integer_ring import ZZ
 from sage.rings.rational_field import QQ
-
-from sage.stats.basic_stats import mean
 
 from .fat_graph import FatGraph
 
@@ -29,27 +28,35 @@ from .fat_graph import FatGraph
 # Miscellaneous functions #
 ###########################
 
+
 def num_and_weighted_num(it):
     from sage.rings.integer_ring import ZZ
     from sage.rings.rational_field import QQ
     s = QQ.zero()
     n = ZZ.zero()
-    for _,aut in it:
+    for _, aut in it:
         n += ZZ.one()
         if aut is None:
             s += QQ.one()
         else:
-            s += QQ((1,aut.group_cardinality()))
-    return n,s
+            s += QQ((1, aut.group_cardinality()))
+    return n, s
+
 
 def list_extrems(l, n):
+    """
+    EXAMPLES::
+
+        sage: list_extrems([3,5,3,17,7,2,1,19],4)
+        (3, 17)
+    """
     if not n:
         raise ValueError
     vdmin = vdmax = l[0]
     for i in range(1, n):
         if l[i] > vdmax:
             vdmax = l[i]
-        if l[i] < vdmin:
+        elif l[i] < vdmin:
             vdmin = l[i]
     return (vdmin, vdmax)
 
@@ -65,7 +72,7 @@ def augment1(cm, aut_grp, g, callback):
     ``aut_grp``, iterate through all its canonical extensions that are
     uniface-univertex maps of greater genus.
 
-    This operation inserts two edes.
+    This operation inserts two edges.
 
     This augmentation function is sufficient to iterate through unicellular map.
     """
@@ -87,14 +94,15 @@ def augment1(cm, aut_grp, g, callback):
             for sk in range(fd[fl[i]] - sj + (i != j)):
                 cm.trisect_face(i, j, k)
                 test, aaut_grp = cm._is_canonical(n)
-                callback('augment1', test, cm, aaut_grp, g-1)
-                if test and g>1:
+                callback('augment1', test, cm, aaut_grp, g - 1)
+                if test and g > 1:
                     augment1(cm, aaut_grp, g - 1, callback)
 
                 cm.remove_face_trisection(n)
                 k = fp[k]
             j = fp[j]
         i = fp[i]
+
 
 # augment2: face split
 # (essentially the same as augment3)
@@ -129,8 +137,8 @@ def augment2(cm, aut_grp, depth, callback):
             fdmax1 = fdmax0
             fdmax0 = fd[i]
 
-    if callback is not None:
-        parent = cm.to_string()
+    # if callback is not None:
+    #     parent = cm.to_string()
 
     for i in R:
         j = i
@@ -138,21 +146,22 @@ def augment2(cm, aut_grp, depth, callback):
             if fd[fl[i]] < fdmax0 - 1:
                 continue
             niter = fd[fl[i]]
-        elif fd[fl[i]] != fdmax0 or vd[fl[i]] < 2 * fdmax1 - 2:
+        elif fd[fl[i]] != fdmax0 or fd[fl[i]] < 2 * fdmax1 - 2:
             continue
         else:
             for _ in range(fdmax1 - 1):
                 j = fp[j]
-            niter = fd[fl[i]] - 2*fdmax1 + 3
+            niter = fd[fl[i]] - 2 * fdmax1 + 3
 
         for _ in range(niter):
             cm.split_face(i, j)
             test, aaut_grp = cm._is_canonical(n)
-            callback('augment2', test, cm, aaut_grp, depth-1)
+            callback('augment2', test, cm, aaut_grp, depth - 1)
             if test and depth > 1:
-                augment2(cm, aaut_grp, depth-1, callback)
+                augment2(cm, aaut_grp, depth - 1, callback)
             cm.remove_edge(n)
             j = fp[j]
+
 
 # augment3: vertex split
 def augment3(cm, aut_grp, depth, min_degree, callback):
@@ -205,16 +214,16 @@ def augment3(cm, aut_grp, depth, min_degree, callback):
         else:
             for _ in range(min_degree_loc - 1):
                 j = vp[j]
-            niter = vd[vl[i]] - 2*min_degree_loc + 3
+            niter = vd[vl[i]] - 2 * min_degree_loc + 3
 
         for _ in range(niter):
             cm.split_vertex(i, j)
             assert vd[vl[i]] >= min_degree_loc
             assert vd[vl[j]] >= min_degree_loc
             test, aaut_grp = cm._is_canonical(n)
-            callback('augment3', test, cm, aaut_grp, depth-1)
+            callback('augment3', test, cm, aaut_grp, depth - 1)
             if test and depth > 1:
-                augment3(cm, aaut_grp, depth-1, min_degree, callback)
+                augment3(cm, aaut_grp, depth - 1, min_degree, callback)
             cm.contract_edge(n)
             j = vp[j]
 
@@ -228,15 +237,19 @@ def augment3(cm, aut_grp, depth, min_degree, callback):
 # Callbacks for the various map reduce #
 ########################################
 
+
 # callback to count elements (behaves somehow as a 2-tuple)
 class CountAndWeightedCount(object):
     def __init__(self):
         self.count = ZZ(0)
         self.weighted_count = QQ(0)
+
     def __repr__(self):
         return "(%s, %s)" % (self.count, self.weighted_count)
+
     def __len__(self):
         return 2
+
     def __getitem__(self, i):
         if not isinstance(i, numbers.Integral):
             raise TypeError
@@ -247,17 +260,21 @@ class CountAndWeightedCount(object):
             return self.count
         else:
             raise IndexError("index out of range")
+
     def __eq__(self, other):
         if type(self) is not type(other):
             raise TypeError
         return self.count == other.count and self.weighted_count == other.weighted_count
+
     def __ne__(self, other):
         if type(self) is not type(other):
             raise TypeError
         return self.count != other.count or self.weighted_count != other.weighted_count
+
     def __call__(self, cm, aut):
         self.count += ZZ(1)
         self.weighted_count += QQ((1, (1 if aut is None else aut.group_cardinality())))
+
 
 # callback to list elements
 class ListCallback(object):
@@ -270,10 +287,11 @@ class ListCallback(object):
     def list(self):
         return self._list
 
+
 # TODO: make it work again! This is the most precious piece of information
 # to enhance the exhaustive generation...
 # Callback for getting a full trace of the execution
-grapvhiz_header="""/****************************************************************/
+graphviz_header = """/****************************************************************/
 /* Trace execution of fat graphs generation                     */
 /*                                                              */
 /* root: vp={vp:6} ep={ep:6} fp={fp:6}                          */
@@ -288,6 +306,7 @@ grapvhiz_header="""/************************************************************
 /****************************************************************/
 """
 
+
 class FatGraphsTrace(object):
     """
     A class to trace the execution of the fat graphs generation.
@@ -297,22 +316,23 @@ class FatGraphsTrace(object):
     def __init__(self, filename=None, verbosity=0):
         self._verbosity = int(verbosity)
         self._properties = {}
-        self._k = 0            # current number of vertices
-        self._vdepth = {}      # vertex -> depth
-        self._vnum   = {}      # vertex -> apparition in the iteration
-        self._edges = {}       # parent -> child
-        self._bad_explore = {} # vertex -> number of dead end
-        self._vaut = {}        # number of automorphisms
+        self._k = 0             # current number of vertices
+        self._vdepth = {}       # vertex -> depth
+        self._vnum = {}         # vertex -> apparition in the iteration
+        self._edges = {}        # parent -> child
+        self._bad_explore = {}  # vertex -> number of dead end
+        self._vaut = {}         # number of automorphisms
 
     def __repr__(self):
-        return 'FatGraphs trace for {%s}' % (', '.join('%s=%s' % (k,v) for k,v in sorted(self._properties.items())))
+        return 'FatGraphs trace for {%s}' % (', '.join('%s=%s' % (k, v)
+                                                       for k, v in sorted(self._properties.items())))
 
     def summary(self, filename=None):
         if filename is None:
             from sys import stdout
             f = stdout
         else:
-            f = open(fiename, 'w')
+            f = open(filename, 'w')
 
         f.write(repr(self))
         f.write('\n')
@@ -326,15 +346,15 @@ class FatGraphsTrace(object):
         for v in self._vdepth.values():
             count_by_depth[v] += 1
         max_depth = max(count_by_depth)
-        mean_depth = float(sum(k*v for k,v in count_by_depth.items())) / sum(v for v in count_by_depth.values())
+        mean_depth = float(sum(k * v for k, v in count_by_depth.items())) / sum(v for v in count_by_depth.values())
 
         childless_by_depth = defaultdict(int)
-        for v,child in self._edges.items():
+        for v, child in self._edges.items():
             if self._vdepth[v] != max_depth and not child:
                 childless_by_depth[self._vdepth[v]] += 1
 
         bad_explore_by_depth = defaultdict(int)
-        for v,num in self._bad_explore.items():
+        for v, num in self._bad_explore.items():
             bad_explore_by_depth[self._vdepth[v]] += num
 
         f.write('depth                   : %d\n' % max_depth)
@@ -351,6 +371,7 @@ class FatGraphsTrace(object):
 
     def __call__(self, cm, aut):
         pass
+
     def add_vertex(self, s, aut_grp, depth):
         if self._verbosity >= 1:
             print('add_vertex(s={}, depth={})'.format(s, depth))
@@ -403,7 +424,7 @@ class FatGraphsTrace(object):
             raise RuntimeError("_edges not properly initialized at %s" % parent)
         self._bad_explore[parent] += 1
 
-    def grapvhiz_tree(self, filename=None):
+    def graphviz_tree(self, filename=None):
         if filename is None:
             from sys import stdout
             output = stdout
@@ -414,7 +435,7 @@ class FatGraphsTrace(object):
             output.close()
 
         f = open(filename, 'w')
-        f.write(header.format(vp=vp, ep=ep, fp=fp, g=g, nf=nf, nv=nv))
+        f.write(graphviz_header.format(vp=vp, ep=ep, fp=fp, g=g, nf=nf, nv=nv))
 
         f.write('digraph Tree {\n')
         f.write('   rankdir = TB;\n')
@@ -430,28 +451,29 @@ class FatGraphsTrace(object):
             s1 = cm1.to_string()
             if s0 != s1:
                 f.write("""   %s [label="%s"];\n""" % (s1, 0))
-                f.write("""   %s -> %s [color="%s"];\n""" %(s0, s1, col1))
+                f.write("""   %s -> %s [color="%s"];\n""" % (s0, s1, col1))
             for cm2, a2 in augment2(cm1, a1, nnf, intermediate):
                 s2 = cm2.to_string()
                 if s2 != s1:
                     f.write("""   %s [label="%s"];\n""" % (s2, 0))
-                    f.write("""   %s -> %s [color="%s"];\n""" %(s1, s2, col2))
+                    f.write("""   %s -> %s [color="%s"];\n""" % (s1, s2, col2))
                 for cm3, a3 in augment3(cm2, a2, nnv, vertex_min_degree, intermediate):
                     s3 = cm3.to_string()
                     if s3 != s2:
                         f.write("""   %s [label="%s"];\n""" % (s3, 0))
-                        f.write("""   %s -> %s [color="%s"];\n""" %(s2, s3, col3))
+                        f.write("""   %s -> %s [color="%s"];\n""" % (s2, s3, col3))
                     yield cm3, a3
 
 #################
 # Main iterator #
 #################
 
+
 class StackCallback(object):
     def __init__(self, cm, aut, gmin, gdepth, nfmin, nfdepth, nvmin, nvdepth, min_degree, callback, filter):
         self._gmin = gmin
         self._gdepth = gdepth
-        self._nfmin = nfmin 
+        self._nfmin = nfmin
         self._nfdepth = nfdepth
         self._nvmin = nvmin
         self._nvdepth = nvdepth
@@ -469,7 +491,7 @@ class StackCallback(object):
                 # we know the map has one vertex and one edge and hence 4g = n
                 if cm._n >= 4 * self._gmin:
                     if cm._nv >= self._nvmin and cm._nf >= self._nfmin and \
-                       (self._filter is None or self._filter(cm,aut)):
+                       (self._filter is None or self._filter(cm, aut)):
                         self._callback(cm, aut)
 
                     # more faces?
@@ -501,12 +523,13 @@ class StackCallback(object):
             augment2(self._cm, self._aut, self._nfdepth, self)
         elif self._nvdepth:
             augment3(self._cm, self._aut, self._nvdepth, self._min_degree, self)
-        elif self._filter is None or self._filter(cm, aut):
+        elif self._filter is None or self._filter(self._cm, self._aut):
             self._callback(self._cm, self._aut)
 
 ##############
 # Main class #
 ##############
+
 
 class FatGraphs_g_nf_nv(object):
     r"""
@@ -526,7 +549,7 @@ class FatGraphs_g_nf_nv(object):
         ....:     assert catalan_number(n-1) == ntrees1 == ntrees2, n
 
     Genus zero with same number of vertices and faces::
-        
+
         sage: FatGraphs_g_nf_nv(0, 2, 2).cardinality_and_weighted_cardinality()
         (2, 5/4)
         sage: FatGraphs_g_nf_nv(0, 3, 3).cardinality_and_weighted_cardinality()
@@ -637,7 +660,7 @@ class FatGraphs_g_nf_nv(object):
             v = ZZ(v)
             if v < low_bnd:
                 raise ValueError("%s must be >= %d" % (name, low_bnd))
-            return (v, v+1)
+            return (v, v + 1)
         if vmax is None:
             raise ValueError("at least %s or %s_max must be set" % (name, name))
         if not isinstance(vmax, numbers.Integral):
@@ -735,7 +758,7 @@ class FatGraphs_g_nf_nv(object):
                 raise RuntimeError("this should not happen")
         else:
             # start with trisection of the trivial map (g = 1, nv = 1, nf = 1)
-            cm0 = FatGraph.from_unicellular_word([0,1,0,1])
+            cm0 = FatGraph.from_unicellular_word([0, 1, 0, 1])
             gshift = - 1
             vshift = - 1
             fshift = - 1
@@ -784,4 +807,3 @@ class FatGraphs_g_nf_nv(object):
         L = ListCallback()
         self.map_reduce(L)
         return L.list()
-
