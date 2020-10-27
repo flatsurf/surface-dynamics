@@ -45,6 +45,13 @@ def num_and_weighted_num(it):
 
 
 def list_extrems(l, n):
+    """
+    EXAMPLES::
+
+        sage: from surface_dynamics.topology.fat_graph import list_extrems
+        sage: list_extrems([3,5,3,17,7,2,1,19],4)
+        (3, 17)
+    """
     if not n:
         raise ValueError
     vdmin = vdmax = l[0]

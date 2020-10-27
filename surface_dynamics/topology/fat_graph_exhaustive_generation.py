@@ -22,7 +22,7 @@ from collections import defaultdict
 from sage.rings.integer_ring import ZZ
 from sage.rings.rational_field import QQ
 
-from .fat_graph import FatGraph
+from .fat_graph import FatGraph, list_extrems
 
 ###########################
 # Miscellaneous functions #
@@ -41,24 +41,6 @@ def num_and_weighted_num(it):
         else:
             s += QQ((1, aut.group_cardinality()))
     return n, s
-
-
-def list_extrems(l, n):
-    """
-    EXAMPLES::
-
-        sage: list_extrems([3,5,3,17,7,2,1,19],4)
-        (3, 17)
-    """
-    if not n:
-        raise ValueError
-    vdmin = vdmax = l[0]
-    for i in range(1, n):
-        if l[i] > vdmax:
-            vdmax = l[i]
-        elif l[i] < vdmin:
-            vdmin = l[i]
-    return (vdmin, vdmax)
 
 
 ##########################
