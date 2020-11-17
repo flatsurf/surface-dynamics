@@ -3,51 +3,62 @@ Fat graph.
 
 This module is experimental.
 """
-#*****************************************************************************
+# ****************************************************************************
 #       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
+# ****************************************************************************
 
 from __future__ import absolute_import, print_function
-from six.moves import range, map, zip
+from six.moves import range, zip
 
-from sage.misc.cachefunc import cached_function
 from sage.rings.integer_ring import ZZ
 from sage.rings.rational_field import QQ
 
-from array import array
 from collections import deque
-from surface_dynamics.misc.permutation import *
+from surface_dynamics.misc.permutation import (perm_compose, perm_conjugate,
+                                               perm_dense_cycles, constellation_init,
+                                               perm_num_cycles, perm_orbit,
+                                               perm_from_base64_str, perm_base64_str,
+                                               perm_check, perm_cycle_string,
+                                               perm_cycles, perm_cycle_type, perm_invert,
+                                               PermutationGroupOrbit)
 
 ###########################
 # Miscellaneous functions #
 ###########################
 
+
 def num_and_weighted_num(it):
-    from sage.rings.integer_ring import ZZ
-    from sage.rings.rational_field import QQ
     s = QQ.zero()
     n = ZZ.zero()
-    for _,aut in it:
+    for _, aut in it:
         n += ZZ.one()
         if aut is None:
             s += QQ.one()
         else:
-            s += QQ((1,aut.group_cardinality()))
-    return n,s
+            s += QQ((1, aut.group_cardinality()))
+    return n, s
+
 
 def list_extrems(l, n):
+    """
+    EXAMPLES::
+
+        sage: from surface_dynamics.topology.fat_graph import list_extrems
+        sage: list_extrems([3,5,3,17,7,2,1,19],4)
+        (3, 17)
+    """
     if not n:
         raise ValueError
     vdmin = vdmax = l[0]
     for i in range(1, n):
         if l[i] > vdmax:
             vdmax = l[i]
-        if l[i] < vdmin:
+        elif l[i] < vdmin:
             vdmin = l[i]
     return (vdmin, vdmax)
 
@@ -56,6 +67,7 @@ def list_extrems(l, n):
 #####################
 #
 # For Abelian strata we should use constellations (= bipartite stuff)
+
 
 class FatGraph(object):
     r"""
@@ -83,22 +95,22 @@ class FatGraph(object):
         sage: F0 == F1 and F0 == F2 and F0 == F3
         True
     """
-    __slots__ = ['_n',  # number of darts (non-negative integer)
-                 '_vp', # vertex permutation (array of length _n)
-                 '_ep', # edge permutation (array of length _n)
-                 '_fp', # face permutation (array of length _n)
+    __slots__ = ['_n',   # number of darts (non-negative integer)
+                 '_vp',  # vertex permutation (array of length _n)
+                 '_ep',  # edge permutation (array of length _n)
+                 '_fp',  # face permutation (array of length _n)
                  # labels
                  # TODO: add _el and care about folded edges!!
-                 '_vl', # vertex labels (array of length _n)
-                 '_fl', # face labels (array of length _n)
+                 '_vl',  # vertex labels (array of length _n)
+                 '_fl',  # face labels (array of length _n)
                  # numbers
                  # TODO: add _ne
-                 '_nv', # number of vertices (non-negative integer)
-                 '_nf', # number of faces (non-negative integer)
+                 '_nv',  # number of vertices (non-negative integer)
+                 '_nf',  # number of faces (non-negative integer)
                  # degrees
                  # TODO: add _ed
-                 '_vd', # vertex degrees (array of length _nv)
-                 '_fd'] # face degrees (array of length _nf)
+                 '_vd',  # vertex degrees (array of length _nv)
+                 '_fd']  # face degrees (array of length _nf)
 
     def __init__(self, vp=None, ep=None, fp=None, max_num_dart=None, check=True):
         vp, ep, fp = constellation_init(vp, ep, fp)
@@ -111,9 +123,9 @@ class FatGraph(object):
         self._nf = 0        # number of faces
 
         self._vl, self._vd = perm_dense_cycles(vp, self._n)
-        self._nv = len(self._vd) # number of vertices
+        self._nv = len(self._vd)  # number of vertices
         self._fl, self._fd = perm_dense_cycles(fp, self._n)
-        self._nf = len(self._fd) # number of faces
+        self._nf = len(self._fd)  # number of faces
 
         if max_num_dart is not None:
             if max_num_dart < self._n:
@@ -127,15 +139,15 @@ class FatGraph(object):
         raise TypeError("FatGraph not hashable")
 
     def _realloc(self, max_num_dart):
-            if max_num_dart < self._n:
-                return
-            self._vp.extend([-1] * (max_num_dart - self._n))
-            self._ep.extend([-1] * (max_num_dart - self._n))
-            self._fp.extend([-1] * (max_num_dart - self._n))
-            self._vl.extend([-1] * (max_num_dart - self._n))
-            self._fl.extend([-1] * (max_num_dart - self._n))
-            self._vd.extend([-1] * (max_num_dart - self._nv))
-            self._fd.extend([-1] * (max_num_dart - self._nf))
+        if max_num_dart < self._n:
+            return
+        self._vp.extend([-1] * (max_num_dart - self._n))
+        self._ep.extend([-1] * (max_num_dart - self._n))
+        self._fp.extend([-1] * (max_num_dart - self._n))
+        self._vl.extend([-1] * (max_num_dart - self._n))
+        self._fl.extend([-1] * (max_num_dart - self._n))
+        self._vd.extend([-1] * (max_num_dart - self._nv))
+        self._fd.extend([-1] * (max_num_dart - self._nf))
 
     def copy(self):
         """
@@ -177,9 +189,9 @@ class FatGraph(object):
         m = n // 2
         ep = [None] * n
         vp = [None] * n
-        fp = list(range(1,n)) + [0]
+        fp = list(range(1, n)) + [0]
         symb_to_pos = [None] * m
-        for i,k in enumerate(X):
+        for i, k in enumerate(X):
             j = symb_to_pos[k]
             if j is not None:
                 ep[i] = j
@@ -230,9 +242,9 @@ class FatGraph(object):
         """
         n = self._n
         return str(n) + "_" + \
-               perm_base64_str(self._vp, n) + "_" + \
-               perm_base64_str(self._ep, n) + "_" + \
-               perm_base64_str(self._fp, n)
+            perm_base64_str(self._vp, n) + "_" + \
+            perm_base64_str(self._ep, n) + "_" + \
+            perm_base64_str(self._fp, n)
 
     def _check(self, error=RuntimeError):
         vp = self._vp
@@ -264,7 +276,7 @@ class FatGraph(object):
             raise error("wrong number of faces")
 
         if len(vl) < n or len(fl) < n or len(vd) < nv or len(fd) < nf:
-               raise error("inconsistent lengths")
+            raise error("inconsistent lengths")
 
         if any(x < 0 or x > n for x in vd[:nv]) or sum(vd[:nv]) != m:
             raise error("invalid vertex degrees")
@@ -290,10 +302,10 @@ class FatGraph(object):
                 raise error("vertex label out of range: vl[%d] = %d" % (i, vl[i]))
 
             if fl[fp[i]] != fl[i]:
-                raise error("fl[fp[%d]] = %d while fl[%d] = %d" %(i, fl[fp[i]], i, fl[i]))
-            
+                raise error("fl[fp[%d]] = %d while fl[%d] = %d" % (i, fl[fp[i]], i, fl[i]))
+
             if vl[vp[i]] != vl[i]:
-                raise error("vl[vp[%d]] = vl[%d] = %d while vl[%d] = %d" %(i, vp[i], vl[vp[i]], i, vl[i]))
+                raise error("vl[vp[%d]] = vl[%d] = %d while vl[%d] = %d" % (i, vp[i], vl[vp[i]], i, vl[i]))
 
             ffd[fl[i]] += 1
             vvd[vl[i]] += 1
@@ -301,7 +313,7 @@ class FatGraph(object):
         if vvd != vd[:nv]:
             raise error("inconsistent face labels/degrees, got %s instead of vd = %s" % (vvd, vd[:nv]))
         if ffd != fd[:nf]:
-            raise error("inconsistent vertex labels/degrees, got %s instead of fd = %s" %(ffd, fd[:nf]))
+            raise error("inconsistent vertex labels/degrees, got %s instead of fd = %s" % (ffd, fd[:nf]))
 
     def is_face_bipartite(self):
         r"""
@@ -423,14 +435,11 @@ class FatGraph(object):
         if self._n != other._n or self._nf != other._nf or self._nv != other._nv:
             return False
 
-        for i in range(self._n):
-            if self._vp[i] != other._vp[i] or \
-               self._ep[i] != other._ep[i] or \
-               self._fp[i] != other._fp[i]:
-                   return False
-
         # here we ignore the vertex and face labels...
-        return True
+        return all(self._vp[i] == other._vp[i] and
+                   self._ep[i] == other._ep[i] and
+                   self._fp[i] == other._fp[i]
+                   for i in range(self._n))
 
     def __ne__(self, other):
         return not self == other
@@ -506,7 +515,7 @@ class FatGraph(object):
 
     def vertex_degree_min(self):
         return list_extrems(self._vd, self._nv)[0]
-    
+
     def vertex_degree_max(self):
         return list_extrems(self._vd, self._nv)[1]
 
@@ -517,10 +526,7 @@ class FatGraph(object):
         return list_extrems(self._fd, self._nf)[0]
 
     def face_degree_max(self):
-        return list_extrems(Self._fd, self._nf)[1]
-
-    def face_degree_min(self):
-        return s
+        return list_extrems(self._fd, self._nf)[1]
 
     def edges(self):
         r"""
@@ -568,7 +574,7 @@ class FatGraph(object):
             sage: cm.genus()
             1
         """
-        return (2 - self._nf + self._n//2 - self._nv) // 2
+        return (2 - self._nf + self._n // 2 - self._nv) // 2
 
     def euler_characteristic(self):
         r"""
@@ -582,7 +588,7 @@ class FatGraph(object):
             sage: cm.euler_characteristic()
             0
         """
-        return self._nf - self._n//2 + self._nv
+        return self._nf - self._n // 2 + self._nv
 
     def dual(self):
         r"""
@@ -652,9 +658,6 @@ class FatGraph(object):
         if self.num_faces() != len(b):
             raise ValueError("the length of b must be the number of faces")
 
-        ep = self._ep
-        fp = self._fp
-
         ieqs = []
         # positivity
         for i in range(self._n):
@@ -664,14 +667,14 @@ class FatGraph(object):
 
         eqns = []
         # half edge equations
-        for i,j in self.edges():
+        for i, j in self.edges():
             l = [0] * self._n
             l[i] = 1
             l[j] = -1
             eqns.append([0] + l)
 
         # face equations
-        for bb,f in zip(b,self.faces()):
+        for bb, f in zip(b, self.faces()):
             l = [0] * self._n
             for i in f:
                 l[i] = 1
@@ -737,13 +740,13 @@ class FatGraph(object):
            len(self._fl) < n or \
            len(self._fd) < nf or \
            len(self._vd) < nv:
-               raise TypeError("reallocation needed")
+            raise TypeError("reallocation needed")
 
     def split_face(self, i, j):
         r"""
         Insert an edge between the darts ``i`` and ``j`` to split the face.
 
-        One of the face will contains i, fp[i], ...,  (the x-face) and the 
+        One of the face will contains i, fp[i], ...,  (the x-face) and the
         other one will contain j, fp[j], ... In the special case i=j, a
         monogon (= face with only one edge) is created.
 
@@ -827,14 +830,14 @@ class FatGraph(object):
         i = int(i)
         j = int(j)
         if i < 0 or i >= self._n or j < 0 or j >= n or fl[i] != fl[j]:
-            raise ValueError("invalid darts i=%d and j=%d for face splitting" %(i, j))
+            raise ValueError("invalid darts i=%d and j=%d for face splitting" % (i, j))
 
         self._check_alloc(n + 2, nv, nf + 1)
 
         x = self._n
         y = self._n + 1
-        ii = ep[vp[i]] # = fp^-1(i)
-        jj = ep[vp[j]] # = fp^-1(j)
+        ii = ep[vp[i]]  # = fp^-1(i)
+        jj = ep[vp[j]]  # = fp^-1(j)
 
         ep[x] = y
         ep[y] = x
@@ -852,7 +855,6 @@ class FatGraph(object):
             vp[x] = vp[i]
             vp[y] = x
             vp[i] = y
-
 
             vl[x] = vl[y] = vl[i]
             fl[x] = fl[i]
@@ -974,7 +976,6 @@ class FatGraph(object):
 
         n = self._n
         nf = self._nf
-        nv = self._nv
 
         i = int(i)
         if i < 0 or i >= self._n:
@@ -984,9 +985,9 @@ class FatGraph(object):
         fi = fl[i]
         fj = fl[j]
         if fi == fj:
-            raise ValueError("i=%d and j=%d on the same face" %(i,j))
+            raise ValueError("i=%d and j=%d on the same face" % (i, j))
         fmin = min(fi, fj)
-        if i < n - 2 or j < n - 2 or max(fi, fj) != nf-1:
+        if i < n - 2 or j < n - 2 or max(fi, fj) != nf - 1:
             raise NotImplementedError
 
         ii = ep[vp[i]]
@@ -1032,7 +1033,7 @@ class FatGraph(object):
     def split_vertex(self, i, j):
         r"""
         Insert a new edge to split the vertex located at the darts i and j.
-        
+
         This operation keeps the genus constant. The inverse operation is implemented
         in :meth:`contract_edge`.
 
@@ -1080,7 +1081,7 @@ class FatGraph(object):
         i = int(i)
         j = int(j)
         if i < 0 or i >= self._n or j < 0 or j >= self._n or vl[i] != vl[j]:
-            raise ValueError("invalid darts i=%d and j=%d for vertex splitting" %(i, j))
+            raise ValueError("invalid darts i=%d and j=%d for vertex splitting" % (i, j))
 
         self._check_alloc(n + 2, nv + 1, nf)
 
@@ -1126,7 +1127,7 @@ class FatGraph(object):
             fp[ep[jj]] = x
             fp[x] = j
             fp[ep[ii]] = y
-            fp[y] = i 
+            fp[y] = i
 
             # update labels and degrees
 
@@ -1219,7 +1220,6 @@ class FatGraph(object):
         fd = self._fd
 
         n = self._n
-        nf = self._nf
         nv = self._nv
 
         i = int(i)
@@ -1227,12 +1227,12 @@ class FatGraph(object):
             raise ValueError("dart index out of range")
         j = ep[i]
         if vl[i] == vl[j]:
-            raise ValueError("i=%d and j=%d on the same vertex" %(i,j))
+            raise ValueError("i=%d and j=%d on the same vertex" % (i, j))
 
         vi = vl[i]
         vj = vl[j]
         vmin = min(vi, vj)
-        if i < n - 2 or j < n - 2 or max(vi, vj) != nv-1:
+        if i < n - 2 or j < n - 2 or max(vi, vj) != nv - 1:
             raise NotImplementedError
 
         ii = ep[vp[i]]
@@ -1340,9 +1340,9 @@ class FatGraph(object):
         self._check_alloc(n + 4, nv, nf)
         self._n += 4
 
-        ii = ep[vp[i]] # = fp^-1(i) at the end of B
-        jj = ep[vp[j]] # = fp^-1(j) at the end of A
-        kk = ep[vp[k]] # = fp^-1(k) at the end of C
+        ii = ep[vp[i]]  # = fp^-1(i) at the end of B
+        jj = ep[vp[j]]  # = fp^-1(j) at the end of A
+        kk = ep[vp[k]]  # = fp^-1(k) at the end of C
 
         x = n
         y = n + 1
@@ -1365,7 +1365,7 @@ class FatGraph(object):
         vd[vl[k]] += 1
 
         if i == j == k:
-            # face: -> (x xx y yy j C) 
+            # face: -> (x xx y yy j C)
             # (j C kk)
             vp[x] = vp[j]
             vp[yy] = x
@@ -1471,9 +1471,9 @@ class FatGraph(object):
         i = fp[xx]
         k = fp[y]
         j = fp[yy]
-        ii = ep[vp[yy]] # = fp^-1(yy)
-        jj = ep[vp[y]]  # = fp^-1(y)
-        kk = ep[vp[x]]  # = fp^-1(x)
+        ii = ep[vp[yy]]  # = fp^-1(yy)
+        jj = ep[vp[y]]   # = fp^-1(y)
+        kk = ep[vp[x]]   # = fp^-1(x)
 
         if fp[xx] == y and fp[y] == yy:
             # vertex (... j xx y yy x ...) -> (... j ...)
@@ -1649,7 +1649,7 @@ class FatGraph(object):
         else:
             # (we have a single face and a single vertex)
             # Minimize the face angle between i and ep[i]
-            
+
             # 1. compute the "face angle" between the half edges
             fa = [None] * n
             fa[0] = 0
@@ -1664,7 +1664,8 @@ class FatGraph(object):
             if i0 != -1:
                 j0 = ep[i0]
                 best = fa[j0] - fa[i0]
-                if best < 0: best += n
+                if best < 0:
+                    best += n
             else:
                 best = None
 
@@ -1674,7 +1675,8 @@ class FatGraph(object):
                     continue
                 j = ep[i]
                 cur = fa[j] - fa[i]
-                if cur < 0: cur += n
+                if cur < 0:
+                    cur += n
                 if best is None:
                     best = cur
                 if cur < best:
@@ -1693,16 +1695,16 @@ class FatGraph(object):
         Edges gets relabelled (2i, 2i+1).
 
         OUTPUT: a triple ``(fc, fd, rel)`` where
-        
+
         - ``fc`` is the list of edges seen along the walk (with respect to the new
           numbering)
-        
+
         - ``fd``: face degrees seen along the walk
 
         - ``rel``: relabelling map {current labels} -> {canonical labels}
 
         EXAMPLES::
-   
+
             sage: from surface_dynamics.topology.fat_graph import FatGraph
 
             sage: vp = '(0,15,3,6,8)(1,14,18,10,9,12,5,19)(2,7,4,17,11)(13,16)'
@@ -1719,9 +1721,9 @@ class FatGraph(object):
         ep = self._ep
         fp = self._fp
 
-        fc = []        # faces seen along the walk
-        fd = []        # face degrees seen along the walk
-        rel = [-1] * n # dart relabeling
+        fc = []         # faces seen along the walk
+        fd = []         # face degrees seen along the walk
+        rel = [-1] * n  # dart relabeling
 
         rel[i0] = 0   # first edge is relabelled (0,1)
         fc.append(0)
@@ -1731,7 +1733,6 @@ class FatGraph(object):
         # along the way, we collect unseen edges
         i = fp[i0]
         wait = deque([ep[i0]])
-        cyc = [0]
         d = 1
         while i != i0:
             if rel[i] == -1:
@@ -1794,15 +1795,15 @@ class FatGraph(object):
         fl = self._fl
         sfd = self._fd
 
-        is_fd_better = 0  # whether the current face degree works better
-        is_fc_better = 0  # whether the current relabelling works better
-                          #  0 = equal
-                          #  1 = better
-                          # -1 = worse
+        is_fd_better = 0   # whether the current face degree works better
+        is_fc_better = 0   # whether the current relabelling works better
+        #  0 = equal
+        #  1 = better
+        # -1 = worse
 
-        fd = []        # face degrees seen along the walk (want to maximize)
-        fc = []        # edges seen along the walk (want to minimize)
-        rel = [-1] * n # dart relabeling
+        fd = []         # face degrees seen along the walk (want to maximize)
+        fc = []         # edges seen along the walk (want to minimize)
+        rel = [-1] * n  # dart relabeling
 
         # walk along faces first, starting from i0
         # along the way, we collect unseen edges
@@ -1820,7 +1821,6 @@ class FatGraph(object):
         fc.append(0)
         i = fp[i0]
         wait = deque([ep[i0]])
-        cyc = [0]
         while i != i0:
             if rel[i] == -1:
                 j = ep[i]
@@ -2039,10 +2039,9 @@ class FatGraph(object):
         self._vp = perm_conjugate(self._vp, r, n)
         self._ep = perm_conjugate(self._ep, r, n)
         self._fp = perm_conjugate(self._fp, r, n)
-        
+
         vl = [None] * n
         fl = [None] * n
-        fa = [None] * n
 
         for i in range(n):
             j = r[i]
