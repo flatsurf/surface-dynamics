@@ -219,26 +219,27 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
         """
         return os.path.isfile(os.path.join(self.path,self.filename(stratum)))
 
-    def update(self, stratum=None):
+    def update(self, stratum):
         r"""
-        Update the database with the component comp.
-        If comp is None update the whole database.
+        Update the database with the irregular component of the given stratum.
 
-        The database should be not in read only mode.
+        The database should not be in read only mode.
         """
         assert not self.read_only
 
-        f = open(os.path.join(selfr.path, self.filename(stratum)))
-
+        from surface_dynamics.interval_exchanges.template import cylindric_canonical
         p = stratum.irregular_component().permutation_representative()
-        res = []
+        res = set()
         for q in p.rauzy_diagram(symmetric=True):
             if q.is_cylindric():
-                res.append(q._twin)
-        res.sort()
+                res.add(cylindric_canonical(q))
+        res = sorted(res)
 
-        for twin in res:
-            f.write(str(twin) + '\n')
+        filename = os.path.join(self.path, self.filename(stratum))
+        with open(filename, 'w') as output:
+            for can in res:
+                output.write(str(can))
+                output.write("\n")
 
     def list_strata(self):
         r"""
@@ -274,12 +275,10 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
             sage: from surface_dynamics.databases.flat_surfaces import IrregularComponentTwins
             sage: D = IrregularComponentTwins()
             sage: l = D.get(QuadraticStratum(6,3,-1))
-            sage: l[0][0]
-            [(1, 8), (1, 5), (1, 4), (0, 4), (0, 3), (1, 7), (1, 6)]
-            sage: l[0][1]
-            [(1, 2), (1, 3), (1, 0), (1, 1), (0, 2), (0, 1), (0, 6), (0, 5), (0, 0)]
+            sage: l[0]
+            ((1, 2, 0, 4, 6, 7, 8, 9, 10, 11, 12, 13, 5, 3),)
             sage: len(l)
-            1634
+            32
         """
         assert self.has_stratum(stratum)
         f = open(os.path.join(self.path, self.filename(stratum)))
@@ -303,9 +302,9 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
             sage: D = IrregularComponentTwins()
             sage: Q = QuadraticStratum(12)
             sage: len(D.get(Q))
-            6993
+            82
             sage: D.count(Q)
-            6993
+            82
         """
         return line_count(os.path.join(self.path, self.filename(stratum)))
 

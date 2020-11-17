@@ -43,6 +43,113 @@ from sage.rings.integer import Integer
 from sage.matrix.constructor import identity_matrix, matrix
 from sage.misc.nested_class import NestedClassMetaclass
 
+from surface_dynamics.misc.permutation import perms_canonical_labels
+
+def to_fat_graphs(twin):
+    lt = len(twin[0])
+    lb = len(twin[1])
+    assert twin[1][-1] == (0,0)
+
+    if any(i == 1 for i,j in twin[0][1:]):
+        # non-separating
+        n = lt + lb - 2
+
+        labels = [[None]*lt, [None]*lb]
+        labels[0][0] = labels[1][-1] = -1
+        k = 0
+        ep = [None] * n
+        for i in range(2):
+            for j in range(len(labels[i])):
+                if labels[i][j] is None:
+                    ii,jj = twin[i][j]
+                    labels[i][j] = k
+                    labels[ii][jj] = k+1
+                    ep[k] = k+1
+                    ep[k+1] = k
+                    k += 2
+        assert k == n
+        labels[0].pop(0)
+        labels[1].pop(-1)
+
+        fp = [None] * n
+        for i in range(lt-1):
+            j = (i-1) % (lt-1)
+            fp[labels[0][i]] = labels[0][j]
+        for i in range(lb-1):
+            j = (i+1) % (lb-1)
+            fp[labels[1][i]] = labels[1][j]
+
+        return [(ep, fp)]
+    else:
+        # separating
+        labelstop = [None] * lt
+        labelstop[0] = -1
+        eptop = [None] * (lt-1)
+        k = 0
+        for j in range(len(labelstop)):
+            if labelstop[j] is None:
+                jj = twin[0][j][1]
+                labelstop[j] = k
+                labelstop[jj] = k+1
+                eptop[k] = k+1
+                eptop[k+1] = k
+                k += 2
+        labelstop.pop(0)
+        fptop = [None] * (lt-1)
+        for i in range(lt-1):
+            j = (i-1) % (lt-1)
+            fptop[labelstop[i]] = labelstop[j]
+
+        labelsbot = [None] * lb
+        labelsbot[-1] = -1
+        epbot = [None] * (lb-1)
+        k = 0
+        for j in range(len(labelsbot)):
+            if labelsbot[j] is None:
+                jj = twin[1][j][1]
+                labelsbot[j] = k
+                labelsbot[jj] = k+1
+                epbot[k] = k+1
+                epbot[k+1] = k
+                k += 2
+        labelsbot.pop(-1)
+        fpbot = [None] * (lb-1)
+        for i in range(lb-1):
+            j = (i+1) % (lb-1)
+            fpbot[labelsbot[i]] = labelsbot[j]
+
+        return [(eptop, fptop), (epbot, fpbot)]
+
+def cylindric_canonical(p):
+    r"""
+    TESTS::
+
+        sage: from surface_dynamics import QuadraticStratum
+        sage: from surface_dynamics.interval_exchanges.template import cylindric_canonical
+
+        sage: C = QuadraticStratum(1,genus=0).unique_component()
+        sage: R = C.permutation_representative().rauzy_diagram()
+        sage: K = [p for p in R if p.is_cylindric()]
+        sage: Kcan = set(cylindric_canonical(p) for p in K)
+        sage: Kcan
+        {((1, 0), (1, 2, 3, 4, 5, 0))}
+        sage: C = QuadraticStratum(1,1,genus=0).unique_component()
+        sage: R = C.permutation_representative().rauzy_diagram()
+        sage: K = [p for p in R if p.is_cylindric()]
+        sage: Kcan = set(cylindric_canonical(p) for p in K)
+        sage: Kcan
+        {((1, 0), (1, 2, 3, 4, 6, 0, 7, 8, 9, 5)),
+         ((1, 2, 3, 4, 5, 0), (1, 2, 3, 4, 5, 0))}
+    """
+    twin = p._twin
+    if twin[1][-1] != (0,0):
+        lt = len(twin[0])
+        lb = len(twin[1])
+        p._move(0, lt-1, 0, 0)
+        p._move(1, 0, 1, lb)
+    fg = [perms_canonical_labels([ep,fp])[0][1] for ep,fp in to_fat_graphs(twin)]
+    fg.sort()
+    return tuple(map(tuple, fg))
 
 def interval_conversion(interval=None):
     r"""
@@ -2761,7 +2868,9 @@ class PermutationLI(Permutation):
         Return a cylindric permutation in the same extended Rauzy class
 
         A generalized permutation is *cylindric* if the first letter in the top
-        interval is the same as the last letter in the bottom interval.
+        interval is the same as the last letter in the bottom interval or if the
+        laster letter of the top interval is the same as the fist letter of the
+        bottom interval.
 
         EXAMPLES::
 
@@ -2772,6 +2881,11 @@ class PermutationLI(Permutation):
             True
             sage: p.to_cylindric().is_cylindric()
             True
+
+            sage: p = iet.GeneralizedPermutation([0,1,2,1,2,3,4,5,6], [6,0,5,4,7,3,7], reduced=True)
+            sage: p.to_cylindric()
+            0 1 2 1 2 3 4 5 6
+            6 0 5 4 7 3 7
 
         TESTS::
 
@@ -2797,20 +2911,20 @@ class PermutationLI(Permutation):
             if q.has_rauzy_move('t'): # top rauzy move
                 qq = q.rauzy_move('t')
                 if qq not in rauzy_class:
-                    if qq._twin[1][-1] == (0,0):
+                    if qq._twin[1][-1] == (0,0) or qq._twin[0][-1] == (1,0):
                         return qq
                     wait.append(qq)
                     rauzy_class.add(qq)
             if q.has_rauzy_move('b'): # bot rauzy move
                 qq = q.rauzy_move('b')
                 if qq not in rauzy_class:
-                    if qq._twin[1][-1] == (0,0):
+                    if qq._twin[1][-1] == (0,0) or qq._twin[0][-1] == (1,0):
                         return qq
                     wait.append(qq)
                     rauzy_class.add(qq)
             qq = q.symmetric() # symmetric
             if qq not in rauzy_class:
-                if qq._twin[1][-1] == (0,0):
+                if qq._twin[1][-1] == (0,0) or qq._twin[0][-1] == (1,0):
                     return qq
                 wait.append(qq)
                 rauzy_class.add(qq)
@@ -3251,10 +3365,10 @@ class PermutationLI(Permutation):
 
             sage: Q = QuadraticStratum(9,3)
             sage: p = Q.regular_component().permutation_representative()
-            sage: p.stratum_component()  # long time - 1.5sec
+            sage: p.stratum_component()
             Q_4(9, 3)^reg
             sage: p = Q.irregular_component().permutation_representative()
-            sage: p.stratum_component()  # long time - 2sec
+            sage: p.stratum_component()
             Q_4(9, 3)^irr
 
             sage: Q = QuadraticStratum(6,6)
@@ -3262,18 +3376,18 @@ class PermutationLI(Permutation):
             sage: p.stratum_component()
             Q_4(6^2)^hyp
             sage: p = Q.regular_component().permutation_representative()
-            sage: p.stratum_component()  # long time - 1sec
+            sage: p.stratum_component()
             Q_4(6^2)^reg
             sage: p = Q.irregular_component().permutation_representative()
-            sage: p.stratum_component()  # long time - 1sec
+            sage: p.stratum_component()
             Q_4(6^2)^irr
 
             sage: Q = QuadraticStratum(6,3,3)
             sage: p = Q.regular_component().permutation_representative()
-            sage: p.stratum_component()  # long time - 3sec
+            sage: p.stratum_component()
             Q_4(6, 3^2)^reg
             sage: p = Q.irregular_component().permutation_representative()
-            sage: p.stratum_component()  # long time - 3sec
+            sage: p.stratum_component()
             Q_4(6, 3^2)^irr
 
             sage: Q = QuadraticStratum(3,3,3,3)
@@ -3281,10 +3395,10 @@ class PermutationLI(Permutation):
             sage: p.stratum_component()
             Q_4(3^4)^hyp
             sage: p = Q.regular_component().permutation_representative()
-            sage: p.stratum_component()  # long time - 5sec
+            sage: p.stratum_component()
             Q_4(3^4)^reg
             sage: p = Q.irregular_component().permutation_representative()
-            sage: p.stratum_component()  # long time - 5sec
+            sage: p.stratum_component()
             Q_4(3^4)^irr
         """
         stratum = self.stratum()
@@ -3304,10 +3418,10 @@ class PermutationLI(Permutation):
         D = IrregularComponentTwins()
         if len(D.list_strata()) != 8:
             raise NotImplementedError("database of irregular twins not available")
-        p = self.erase_marked_points().to_cylindric()
 
-        if p._twin in D.get(stratum):
-            return stratum.irregular_component()
+        p = self.erase_marked_points().to_cylindric()
+        if cylindric_canonical(p) in D.get(stratum):
+           return stratum.irregular_component()
         return stratum.regular_component()
 
     def has_rauzy_move(self, winner, side='right'):
