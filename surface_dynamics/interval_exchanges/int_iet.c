@@ -4,7 +4,8 @@
 #include <string.h>
 
 /* set the thing below to disable safety checks */
-#define INT_IET_CHECK(t) if(int_iet_check(t)) {fprintf(stderr, "check failed\n"); exit(EXIT_FAILURE);}
+/* #define INT_IET_CHECK(t) if(int_iet_check(t)) {fprintf(stderr, "check failed\n"); exit(EXIT_FAILURE);} */
+#define INT_IET_CHECK(t)
 
 uint64_t uint64_rand()
 {
@@ -138,7 +139,7 @@ void int_iet_set_random_lengths(int_iet_t t, uint64_t L)
     }
 }
 
-int int_iet_check(int_iet_t t)
+int int_iet_check(const int_iet_t t)
 {
     interval * i;
     unsigned int j;
@@ -209,6 +210,12 @@ int int_iet_check(int_iet_t t)
             break;
 
             case 2:
+            if((t->labels)[j].length == 0)
+            {
+                fprintf(stderr, "check problem: interval %d does appear but has zero length\n", j);
+                free(seen);
+                return 1;
+            }
             break;
 
             default:
@@ -280,44 +287,55 @@ int int_iet_check(int_iet_t t)
 }
 
 
-void int_iet_print(int_iet_t t)
+void iet_print(int_iet_t t)
+{
+    int_iet_fprint(stdout, t);
+}
+
+void int_iet_fprint(FILE * stream, int_iet_t t)
 {
     interval * i;
     unsigned int j;
 
     // intervals
     for(i=t->top; i!=NULL; i=i->next)
-        printf("%lu ", i->lab - t->labels);
-    printf("\n");
+        fprintf(stream, "%lu ", i->lab - t->labels);
+    fprintf(stream, "\n");
     for(i=t->bot; i!=NULL; i=i->next)
-        printf("%lu ", i->lab - t->labels);
-    printf("\n");
+        fprintf(stream, "%lu ", i->lab - t->labels);
+    fprintf(stream, "\n");
     // lengths
-    printf("lengths: ");
+    fprintf(stream, "lengths: ");
     for (j = 0; j < t->nb_labels; j++)
-        printf("%lu ", (t->labels[j]).length);
-    printf("\n");
+        fprintf(stream, "%lu ", (t->labels[j]).length);
+    fprintf(stream, "\n");
     // heights
-    printf("heights: ");
+    fprintf(stream, "heights: ");
     for (j = 0; j < t->nb_labels; j++)
-        printf("%lu ", (t->labels[j]).height);
-    printf("\n");
+        fprintf(stream, "%lu ", (t->labels[j]).height);
+    fprintf(stream, "\n");
 }
 
 
 
 int int_iet_num_cylinders(uint64_t * widths, uint64_t * heights, int_iet_t t)
-/* t: an interval exchange with integer lengths                         */
-/* s: another (empty) interval exchange on the same number of intervals */
-/*    it will be allocated to the last valid intervals t is             */
-/* Warning: t is modified (but not the allocation of its memory)        */
+/* widths: NULL or write only vector of cylinder widths                 */
+/* heights: NULL or write only vector of cylinder heights               */
+/* t: integral interval exchange                                        */
+/* Warning: t is modified (but not the allocated memory)                */
 {
-    uint64_t ltop = t->top->lab->length;
-    uint64_t lbot = t->bot->lab->length;
+    int nb_cyl = 0;
+    uint64_t ltop;
+    uint64_t lbot;
     uint64_t m,l;
     interval *i1, *i2, *itmp;
     int nonzero_labels = t->nb_labels;
-    int nb_cyl = 0;
+
+    if (nonzero_labels == 0)
+        return 0;
+
+    ltop = t->top->lab->length;
+    lbot = t->bot->lab->length;
 
     if(ltop < lbot)
     {
@@ -335,9 +353,14 @@ int int_iet_num_cylinders(uint64_t * widths, uint64_t * heights, int_iet_t t)
 
         INT_IET_CHECK(t)
 
-        if(t->top->lab->length < t->bot->lab->length)
+        if((ltop != t->top->lab->length) ||
+           (lbot != t->bot->lab->length) ||
+           (ltop == 0) ||
+           (lbot == 0) ||
+           (ltop < lbot))
         {
-            fprintf(stderr,"ERROR (num_cylinders): ltop < lbot\n");
+            fprintf(stderr, "ERROR (num_cylinders): invalid state at beginning of loop\n");
+            int_iet_fprint(stderr, t);
             return -1;
         }
 #ifdef VERBOSE
@@ -528,19 +551,21 @@ int int_iet_num_cylinders(uint64_t * widths, uint64_t * heights, int_iet_t t)
                 t->top->lab->length = ltop;
                 t->bot->lab->height += t->top->lab->height;
 
-                i1 = t->bot; // the guy which moves
+                i1 = t->bot; // the interval which moves
+                i2 = t->top->twin; // the interval to which i1 moves to the left
+                if (i1 != i2->prev)
+                {
+                    // remove i1 from the bottom
+                    t->bot = i1->next;
+                    t->bot->prev = NULL;
 
-                // remove it from the bottom
-                t->bot = i1->next;
-                t->bot->prev = NULL;
-
-                // place it before the twin
-                i2 = t->top->twin;
-                i1->prev = i2->prev;
-                i1->next = i2;
-                i2->prev->next = i1;
-                i2->prev = i1;
-                lbot = t->bot->lab->length;
+                    // place i1 before i2
+                    i1->prev = i2->prev;
+                    i1->next = i2;
+                    i2->prev->next = i1;
+                    i2->prev = i1;
+                    lbot = t->bot->lab->length;
+                }
 #ifdef VERBOSE
                 printf(" additive step done\n");
                 int_iet_check(t);

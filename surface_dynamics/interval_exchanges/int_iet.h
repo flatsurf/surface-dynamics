@@ -13,22 +13,23 @@
 /*****************************************************************************/
 
 #include <stdint.h>
+#include <stdio.h>
  
 typedef struct {
     uint64_t length;
-    uint64_t height;  // not very useful!
+    uint64_t height;
     int      same_interval;  // whether or not the two belong to the same interval
 } label;
 
 typedef struct Xinterval {
-    struct Xinterval *prev;    // guy on the left
-    struct Xinterval *next;    // guy on the right
+    struct Xinterval *prev;    // interval on the left
+    struct Xinterval *next;    // interval on the right
     struct Xinterval *twin;    // the twin interval
-    label * lab;               // the label
+    label * lab;               // associated label
 } interval;
 
 typedef struct {
-    unsigned int nb_labels;  // number of intervals (actually pair of intervals)
+    unsigned int nb_labels;  // number of labels (= pairs of intervals)
     interval * top;          // first interval on top
     interval * bot;          // first interval on bot
 
@@ -45,7 +46,7 @@ typedef struct{
     int n;
     int kfree;
     int ktop;
-    int  kbot;
+    int kbot;
 
     /* internal */
     uint64_t nfree;
@@ -64,7 +65,8 @@ void int_iet_init(int_iet_t t, unsigned int n);
 void int_iet_clear(int_iet_t t);
 
 /* safety check */
-int  int_iet_check(int_iet_t t);
+/* Return 0 if t is valid and 1 otherwise */
+int  int_iet_check(const int_iet_t t);
 
 /* set data */
 void int_iet_set_labels_and_twin(int_iet_t t, int * labels, int * twin, int k);
@@ -72,11 +74,11 @@ void int_iet_set_lengths(int_iet_t t, uint64_t * lengths);
 void int_iet_set_random_lengths(int_iet_t t, uint64_t L);
 
 /* output */
+void int_iet_fprint(FILE * stream, int_iet_t t);
 void int_iet_print(int_iet_t t);
 
 /* number of cylinders */
 int int_iet_num_cylinders(uint64_t * widths, uint64_t * heights, int_iet_t t);
-
 
 /* iteration through integer vectors of given sum and length */
 int int_vector_first(uint64_t * x, int n, int k);

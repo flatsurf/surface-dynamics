@@ -293,30 +293,36 @@ cdef void get_stat(statistics, bint flat, int_iet_t t, uint64_t * widths, uint64
 
 def interval_exchange_statistics(top, bot, uint64_t L, int kind=0, bint flat=False):
     r"""
-    Return the statistics about cylinder decomposition of all the integral iet
-    with given permutation ``top`` and ``bot`` and total length ``L``.
+    Return the statistics about cylinder decompositions of the integral interval
+    exchanges with given permutation ``(top, bot)`` and total length ``L``.
 
     An integral interval exchange transformation (or iet for short)
-    decomposes into periodic components. We want to study these
-    components. Equivalently, such iet corresponds to a permutation
-    and we want to study its cycle decomposition.
+    decomposes into periodic components. This function allows to study
+    these components (ie number and geometry).
 
     INPUT:
 
-    - ``top``, ``bot`` -- top and bottom permutation (as list of
-      numbers starting from ``0``)
+    - ``top``, ``bot`` (lists) -- top and bottom labels (as list of
+      numbers from ``0`` to ``n-1`` where ``n`` is the number of intervals)
 
-    - ``L`` (integer) -- the total length of the integral iet to be
+    - ``L`` (integer) -- the total length of the integral iets to be
       tested
 
-    - ``kind`` -- if ``0`` (default) return statistics about the number of
-      cylinders, if ``1`` return statistics about the number of components, if
-      ``2`` the keys are tuples of cylinder heights
+    - ``kind`` (integer) -- choose the statistics to gather
+      - ``kind=0``: number of cylinders
+      - ``kind=1``: number of components
+      - ``kind=2``: tuple of cylinder widths
+      - ``kind=3``: tuple of cylinder heights
+      - ``kind=4``: tuple of pairs (cylinder width, cylinder height)
 
-    OUTPUT: a dictionary whose keys are integers and the value associated to a
-    key ``k`` is the number of length data with sum ``L`` which corresponds to
-    an iet with data ``top`` and ``bot`` and whose cylinder decomposition has
-    ``k`` cylinders.
+    - ``flat`` (boolean, default ``False``) - whether to return the result
+      as a dictionary or as a list.
+
+    OUTPUT: if ``flat=False`` a dictionary whose keys are integers or tuples
+    and the value associated to a key ``k`` is the number of length data with
+    sum ``L`` which corresponds to an iet with data ``top`` and ``bot`` and
+    whose cylinder decomposition has statistics ``k``. If ``flat=True`` a list
+    for each each term is a statistics.
 
     EXAMPLES:
 
@@ -444,14 +450,23 @@ def interval_exchange_statistics_sample(top, bot, uint64_t L, uint64_t sample_si
     - ``L`` (integer) -- a magnitude order for the total length of the integral
       iet to be generated
 
-    - ``kind`` -- if ``0`` (default) return statistics about the number of
-      cylinders, if ``1`` return statistics about the number of components, if
-      ``2`` the keys are tuples of cylinder heights
+    - ``sample_size`` -- size of the sample
 
-    OUTPUT: a dictionary whose keys are integers and the value associated to a
-    key ``k`` is the number of length data with sum ``L`` which corresponds to
-    an iet with data ``top`` and ``bot`` and whose cylinder decomposition has
-    ``k`` cylinders.
+    - ``kind`` (integer) -- choose the statistics to gather
+      - ``kind=0``: number of cylinders
+      - ``kind=1``: number of components
+      - ``kind=2``: tuple of cylinder widths
+      - ``kind=3``: tuple of cylinder heights
+      - ``kind=4``: tuple of pairs (cylinder width, cylinder height)
+
+    - ``flat`` (boolean, default ``False``) - whether to return the result
+      as a dictionary or as a list.
+
+    OUTPUT: if ``flat=False`` a dictionary whose keys are integers or tuples
+    and the value associated to a key ``k`` is the number of length data with
+    sum ``L`` which corresponds to an iet with data ``top`` and ``bot`` and
+    whose cylinder decomposition has statistics ``k``. If ``flat=True`` a list
+    for each each term is a statistics.
 
     EXAMPLES:
 
@@ -495,6 +510,13 @@ def interval_exchange_statistics_sample(top, bot, uint64_t L, uint64_t sample_si
         True
         sage: dict(s1) == interval_exchange_statistics([0,1,2,3], [3,2,1,0], 10, 1)
         True
+
+    An example of flat statistics in `Q(1,1,1,1)`::
+
+        sage: interval_exchange_statistics([0,1,2,3,1,4,5], [2,6,5,4,6,3,0], 10, kind=4, flat=True)
+        [((1, 3), (1, 3), (1, 4)), ((1, 1), (1, 9)), ((1, 3), (1, 7)), ((1, 2), (1, 8)),
+         ...
+        ((1, 3), (1, 3), (1, 4)), ((1, 2), (1, 8)), ((1, 3), (1, 7)), ((1, 3), (1, 7)), ((1, 5), (1, 5))]
     """
     cdef int * labels
     cdef int * twin
@@ -541,12 +563,6 @@ def interval_exchange_statistics_sample(top, bot, uint64_t L, uint64_t sample_si
     return statistics
 
 
-# there are several interesting statistics one might want to compute
-# such as
-#  - number of cylinders
-#  - sum of heights of cylinders
-#  - mean ratio in view of Siegel Veech constants (not available for now) as
-#    we would need the circumferences of cylinders as well
 def cylinder_statistics(top, bot, uint64_t L, int kind=0, bint flat=False):
     r"""
     Return the statistics of the number of cylinders for a given total length
@@ -559,12 +575,21 @@ def cylinder_statistics(top, bot, uint64_t L, int kind=0, bint flat=False):
     
     - ``L`` -- (positive integer) the length we are considering
 
-    - ``kind`` -- kind of statistics to gather
-      - ``0`` number of cylinders
-      - ``1`` number of components
-      - ``2`` tuple of widths
-      - ``3`` tuple of heights
-      - ``4`` tuple of pairs (width, height)
+    - ``kind`` (integer) -- choose the statistics to gather
+      - ``kind=0``: number of cylinders
+      - ``kind=1``: number of components
+      - ``kind=2``: tuple of cylinder widths
+      - ``kind=3``: tuple of cylinder heights
+      - ``kind=4``: tuple of pairs (cylinder width, cylinder height)
+
+    - ``flat`` (boolean, default ``False``) - whether to return the result
+      as a dictionary or as a list.
+
+    OUTPUT: if ``flat=False`` a dictionary whose keys are integers or tuples
+    and the value associated to a key ``k`` is the number of length data with
+    sum ``L`` which corresponds to an iet with data ``top`` and ``bot`` and
+    whose cylinder decomposition has statistics ``k``. If ``flat=True`` a list
+    for each each term is a statistics.
 
     EXAMPLES::
 
