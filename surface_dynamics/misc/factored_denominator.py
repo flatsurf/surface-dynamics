@@ -79,7 +79,7 @@ def vector_to_linear_form_string(u, var_names):
 
 
 # NOTE: should this be an instance of Factorization?
-class FactoredDenominator:
+class FactoredDenominator(object):
     r"""
     Factored denominator
 

@@ -513,10 +513,11 @@ def interval_exchange_statistics_sample(top, bot, uint64_t L, uint64_t sample_si
 
     An example of flat statistics in `Q(1,1,1,1)`::
 
-        sage: interval_exchange_statistics([0,1,2,3,1,4,5], [2,6,5,4,6,3,0], 10, kind=4, flat=True)
-        [((1, 3), (1, 3), (1, 4)), ((1, 1), (1, 9)), ((1, 3), (1, 7)), ((1, 2), (1, 8)),
-         ...
-        ((1, 3), (1, 3), (1, 4)), ((1, 2), (1, 8)), ((1, 3), (1, 7)), ((1, 3), (1, 7)), ((1, 5), (1, 5))]
+        sage: stats = interval_exchange_statistics([0,1,2,3,1,4,5], [2,6,5,4,6,3,0], 10, kind=4, flat=True)
+        sage: len(stats)
+        40
+        sage: assert stats[:4] == [((1, 3), (1, 3), (1, 4)), ((1, 1), (1, 9)), ((1, 3), (1, 7)), ((1, 2), (1, 8))]
+        sage: assert stats[-4:] == [((1, 2), (1, 8)), ((1, 3), (1, 7)), ((1, 3), (1, 7)), ((1, 5), (1, 5))]
     """
     cdef int * labels
     cdef int * twin
