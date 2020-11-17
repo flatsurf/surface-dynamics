@@ -221,7 +221,7 @@ def augment3(cm, aut_grp, depth, min_degree, callback):
 
 
 # callback to count elements (behaves somehow as a 2-tuple)
-class CountAndWeightedCount(object):
+class CountAndWeightedCount:
     def __init__(self):
         self.count = ZZ(0)
         self.weighted_count = QQ(0)
@@ -259,7 +259,7 @@ class CountAndWeightedCount(object):
 
 
 # callback to list elements
-class ListCallback(object):
+class ListCallback:
     def __init__(self):
         self._list = []
 
@@ -288,8 +288,7 @@ graphviz_header = """/**********************************************************
 /****************************************************************/
 """
 
-
-class FatGraphsTrace(object):
+class FatGraphsTrace:
     """
     A class to trace the execution of the fat graphs generation.
 
@@ -450,8 +449,7 @@ class FatGraphsTrace(object):
 # Main iterator #
 #################
 
-
-class StackCallback(object):
+class StackCallback:
     def __init__(self, cm, aut, gmin, gdepth, nfmin, nfdepth, nvmin, nvdepth, min_degree, callback, filter):
         self._gmin = gmin
         self._gdepth = gdepth
@@ -512,8 +510,7 @@ class StackCallback(object):
 # Main class #
 ##############
 
-
-class FatGraphs_g_nf_nv(object):
+class FatGraphs_g_nf_nv:
     r"""
     Isomorphism classes of fat graphs with given genus, number of faces and
     number of vertices.

@@ -393,7 +393,7 @@ def origami_unpickle(r, u, pos, name):
     if name is not None: o.rename(name)
     return o
 
-cdef class Origami_dense_pyx(object):
+cdef class Origami_dense_pyx:
     r"""
     Origami or square-tiled surface.
 

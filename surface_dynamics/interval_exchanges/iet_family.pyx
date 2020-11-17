@@ -137,7 +137,7 @@ cdef inline void rauzy_bot(int * perm, size_t dim):
         perm[j] = perm[j - 1]
     perm[i + 1] = a
 
-cdef class IETFamily(object):
+cdef class IETFamily:
     r"""
     A linear family of interval exchange transformations
 

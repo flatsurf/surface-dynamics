@@ -68,8 +68,7 @@ def list_extrems(l, n):
 #
 # For Abelian strata we should use constellations (= bipartite stuff)
 
-
-class FatGraph(object):
+class FatGraph:
     r"""
     EXAMPLES:
 

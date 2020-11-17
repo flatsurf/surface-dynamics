@@ -1420,7 +1420,7 @@ def perm_order(p, n=None):
 
 # TODO: redesign
 # when adding a generator we need to check the orbit under what was already computed
-class PermutationGroupOrbit(object):
+class PermutationGroupOrbit:
     r"""
     Dynamical orbit generation.
 

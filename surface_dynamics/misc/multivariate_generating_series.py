@@ -308,7 +308,7 @@ def monomial_projection(num, den, i, M):
 
 # This should be a real number!
 # ... and we need an algebra to handle all these values properly
-class _OLD_TOTO_(object):
+class _OLD_TOTO_:
     r"""
     A generalized multiple zeta value.
 

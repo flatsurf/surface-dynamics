@@ -72,7 +72,7 @@ def wedge(u, v):
     assert len(u) == len(v) and v.base_ring() == R
     return free_module_element(R, d*(d-1)//2, [(u[i]*v[j] - u[j]*v[i]) for i in range(d-1) for j in range(i+1,d)])
 
-class IntervalExchangeTransformation(object):
+class IntervalExchangeTransformation:
     r"""
     Interval exchange transformation
 
