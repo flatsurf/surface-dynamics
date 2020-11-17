@@ -34,6 +34,8 @@ REFERENCES:
     - double check: write the formula that gives MasurVeech TR as a sum over stable
       graphs of the product of weighted Kontsevich
       (needs the list of stable graphs)
+
+    - To get the (0,0,...,0) coefficient in genus 0 there should be a smarter way :)
 """
 # ****************************************************************************
 #       Copyright (C) 2020 Vincent Delecroix <20100.delecroix@gmail.com>

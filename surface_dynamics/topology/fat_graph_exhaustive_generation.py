@@ -628,6 +628,9 @@ class FatGraphs_g_nf_nv:
         self._gmin, self._gmax = self._get_interval(g, g_min, g_max, 0, 'g')
         if self._gmax != self._gmin + 1:
             raise ValueError("not implemented for genus in an interval")
+        # 2 - 2g = (num vertices) - (num edges) + (num faces)
+        # if we specify the number of edges, it provides upper bound for both
+        # faces and vertices
         self._fmin, self._fmax = self._get_interval(nf, nf_min, nf_max, 1, 'nf')
         self._vmin, self._vmax = self._get_interval(nv, nv_min, nv_max, 1, 'nv')
         self._vertex_min_degree = ZZ(vertex_min_degree)

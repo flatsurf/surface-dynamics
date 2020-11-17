@@ -314,7 +314,7 @@ class FatGraph(object):
         if ffd != fd[:nf]:
             raise error("inconsistent vertex labels/degrees, got %s instead of fd = %s" % (ffd, fd[:nf]))
 
-    def is_face_bipartite(self):
+    def is_face_bipartite(self, certificate=False):
         r"""
         Test whether the faces admit a bi-coloring.
 
@@ -344,9 +344,9 @@ class FatGraph(object):
         """
         # trivial cases
         if self._nf == 0:
-            return True
+            return (True, []) if certificate else True
         elif self._nf == 1:
-            return False
+            return (False, None) if certificate else False
 
         n = self._n
         ep = self._ep
@@ -372,11 +372,11 @@ class FatGraph(object):
                 to_test.extend(perm_orbit(fp, e2))
             elif colors[f1] == colors[f2]:
                 # contradiction in colors
-                return False
+                return (False, None) if certificate else False
 
             edge_seen[e1] = edge_seen[e2] = True
 
-        return True
+        return (True, colors) if certificate else True
 
     def __copy__(self):
         r"""
