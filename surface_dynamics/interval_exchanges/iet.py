@@ -1110,7 +1110,9 @@ class IntervalExchangeTransformation(object):
         itop = [None]*(max(top)+1)
         for i,j in enumerate(top):
             itop[j] = i
-        key = lambda x: [itop[i] for i in x[0]]
+
+        def key(x):
+            return [itop[i] for i in x[0]]
         top = sorted(cuts, key=key)
         lengths = [y for x,y in top]
         top = [''.join(str(unrank(i)) for i in x) for x,y in top]
@@ -1904,7 +1906,7 @@ class IntervalExchangeTransformation(object):
         for i in self._permutation._labels[0]:
             G += line2d([(s,top_height),(s+lengths[i],top_height)],
                 rgbcolor=colors[i])
-            if labels == True:
+            if labels is True:
                 G += text(str(self._permutation._alphabet.unrank(i)),
                     (s+float(lengths[i])/2,top_height+labels_height),
                     horizontal_alignment='center',
@@ -1926,7 +1928,7 @@ class IntervalExchangeTransformation(object):
         for i in self._permutation._labels[1]:
             G += line2d([(s,bottom_height), (s+lengths[i],bottom_height)],
                 rgbcolor=colors[i])
-            if labels == True:
+            if labels is True:
                 G += text(str(self._permutation._alphabet.unrank(i)),
                     (s+float(lengths[i])/2,bottom_height-labels_height),
                     horizontal_alignment='center',

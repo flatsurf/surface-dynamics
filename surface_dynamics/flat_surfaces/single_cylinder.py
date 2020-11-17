@@ -1753,6 +1753,6 @@ def cylinder_concatenation(perm_1, perm_2, alphabet=None):
             bot_row2[j] += length_1
     bot_row = bot_row1 + bot_row2 + [0]
     perm = GeneralizedPermutation(top_row,bot_row)
-    if not alphabet == None:
+    if alphabet is not None:
         perm.alphabet(alphabet)
     return perm
