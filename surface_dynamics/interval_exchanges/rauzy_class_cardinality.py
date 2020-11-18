@@ -430,11 +430,11 @@ def gamma_std(profile, marking=None):
         sage: n_odd + n_hyp == rcc.gamma_std([5])
         True
     """
-    p = Partition(sorted(profile,reverse=True))
+    p = Partition(sorted(profile, reverse=True))
     if (sum(p) + len(p)) % 2 != 0:
         raise ValueError("the sum of the profile (=%s) plus its length must be congruent to 0 modulo 2" % p)
 
-    if len(p) == 0 and marking==(1,0,0):
+    if not p and marking == (1, 0, 0):
         return 1
 
     if marking is None:
