@@ -43,14 +43,14 @@ EXAMPLES::
 # ****************************************************************************
 
 from __future__ import print_function, absolute_import
-from six.moves import range, map, filter, zip
+from six.moves import range, map
 from six import iteritems
 
 from surface_dynamics.flat_surfaces.origamis.origami_dense import Origami_dense_pyx
 from surface_dynamics.misc.permutation import perm_init, perm_check
 
 from sage.structure.sage_object import SageObject
-from sage.groups.perm_gps.permgroup import PermutationGroup
+from sage.categories.action import Action
 
 try:
     # Trac #28652: Rework the constructor of PermutationGroupElement
@@ -58,7 +58,6 @@ try:
 except ImportError:
     from sage.groups.perm_gps.permgroup import PermutationGroupElement
 from sage.misc.cachefunc import cached_method
-from copy import copy
 from sage.matrix.constructor import matrix, identity_matrix
 
 from sage.categories.finite_enumerated_sets import FiniteEnumeratedSets
@@ -70,17 +69,22 @@ from sage.structure.parent import Parent
 from sage.structure.element import Element
 from sage.structure.unique_representation import UniqueRepresentation
 
-from sage.interfaces.gap import gap
-
-from sage.plot.plot import options
 
 def flatten_word(w):
+    """
+    EXAMPLES::
+
+        sage: from surface_dynamics.flat_surfaces.origamis.origami import flatten_word
+        sage: flatten_word([('l', 4), ('r', 6)])
+        'llllrrrrrr'
+    """
     l = []
-    for i,j in w:
-        l.append(i*j)
+    for i, j in w:
+        l.append(i * j)
     return ''.join(l)
 
-def permutation_simplicial_action(r,u,n,w):
+
+def permutation_simplicial_action(r, u, n, w):
     r"""
     From a word in 'l','r' return the simplicial action on homology as
     well as the obtained origami.
@@ -114,13 +118,14 @@ def permutation_simplicial_action(r,u,n,w):
             m[n:,:n] = r.matrix()
             res = m * res
         else:
-            raise ValueError("does not understand the letter %s" %str(letter))
+            raise ValueError("does not understand the letter %s" % str(letter))
 
-    return r,u,res
+    return r, u, res
 
 #
 # Origami and pillow case cover constructors
 #
+
 
 def Origami(r, u,
         sparse=False,
@@ -202,7 +207,6 @@ def Origami(r, u,
 # complex or embeeded graph or whatever).
 #
 
-from sage.categories.action import Action
 
 class ActionOnOrigamiObjects(Action):
     r"""
@@ -212,18 +216,18 @@ class ActionOnOrigamiObjects(Action):
         import operator
         o = objects.origami()
         # Action.__init__(G,S,is_left,op)
-        Action.__init__(
-                self,
-                o.automorphism_group(),
-                objects,
-                True,
-                operator.mul)
+        Action.__init__(self,
+                        o.automorphism_group(),
+                        objects,
+                        True,
+                        operator.mul)
 
     def _call_(self, g, x):
         r"""
         Action of g on x.
         """
         return x._acted_upon_(g, True)
+
 
 class OrigamiObjects(Parent):
     def chain_space(self):
@@ -243,6 +247,7 @@ class OrigamiObjects(Parent):
         """
         return self.derivative().column_space()
 
+
 class OrigamiFaces(OrigamiObjects):
     def __init__(self, origami):
         Parent.__init__(self, category=FiniteEnumeratedSets())
@@ -257,13 +262,14 @@ class OrigamiFaces(OrigamiObjects):
         ui = self._origami.u_inv_tuple()
         der = matrix(2*n,n,ring=QQ)
         for i in range(n):
-            if ui[i] != i: # horiz sides
+            if ui[i] != i:  # horiz sides
                 der[i,i] = -1
                 der[ui[i],i] = 1
-            if ri[i] != i: # vert sides
+            if ri[i] != i:  # vert sides
                 der[n+i,i] = 1
                 der[n+ri[i],i] = -1
         return der
+
 
 class OrigamiEdges(OrigamiObjects):
     r"""
@@ -290,24 +296,24 @@ class OrigamiEdges(OrigamiObjects):
     # about elements
 
     def _element_constructor(self, i):
-        if i >= 0 and i < 2*o.nb_squares():
-            return o.chain_complex().chain_space(1).gen(i)
+        if i >= 0 and i < 2 * self.nb_squares():
+            return self.chain_complex().chain_space(1).gen(i)
 
-    def start(self,i):
+    def start(self, i):
         return self._starts[i]
 
-    def end(self,i):
+    def end(self, i):
         return self._ends[i]
 
     # about global derivation
 
     def cardinality(self):
-        return 2*self._origami.nb_squares()
+        return 2 * self._origami.nb_squares()
 
     def derivative(self):
         m = self._origami.nb_vertices(True)
-        n = 2*self._origami.nb_squares()
-        der = matrix(m,n,ring=QQ)
+        n = 2 * self._origami.nb_squares()
+        der = matrix(QQ, m, n)
         for i in range(n):
             if self._starts[i] != self._ends[i]:
                 der[self._ends[i], i] = 1
@@ -413,7 +419,7 @@ class OrigamiEdges(OrigamiObjects):
                         c1_in[vert],c2_in[vert],c1_out[vert]):
                     if are_cyclically_ordered(
                             c1_out[vert],c2_out[vert],c1_in[vert]):
-                            intersection += 1
+                        intersection += 1
 
                 elif are_cyclically_ordered(
                         c1_in[vert],c2_out[vert],c1_out[vert]):
@@ -427,6 +433,7 @@ class OrigamiEdges(OrigamiObjects):
         """
         assert(self.is_simple_closed_curve(c))
         pass
+
 
 class OrigamiVertices(OrigamiObjects):
     r"""
@@ -528,7 +535,7 @@ class OrigamiVertices(OrigamiObjects):
         return matrix([1]*len(self._vertices), ring=QQ)
 
     def _repr_(self):
-        return "Vertices of origami\n%s" %self.origami()
+        return "Vertices of origami\n%s" % self.origami()
 
     def __contains__(self, v):
         return v in self._vertices
@@ -606,6 +613,7 @@ class OrigamiVertices(OrigamiObjects):
         """
         return iter(self._vertices)
 
+
 class OrigamiVertex(Element):
     def __init__(self, parent, ur, dl):
         Element.__init__(self, parent)
@@ -613,7 +621,7 @@ class OrigamiVertex(Element):
         self._dl = dl
 
     def _repr_(self):
-        return "vertex %s" %(str(self._ur))
+        return "vertex %s" % (str(self._ur))
 
     def __str__(self):
         return str(self._ur)
@@ -703,6 +711,7 @@ class OrigamiVertex(Element):
     def outgoing_edge_positions(self, i):
         return self.edge_positions()[1][i]
 
+
 class OrigamiChainComplex(SageObject, UniqueRepresentation):
     r"""
     Chain complex for reduced homology of the origami
@@ -754,4 +763,4 @@ class OrigamiChainComplex(SageObject, UniqueRepresentation):
         return self._objects[degree+1].border_space()
 
     def _repr_(self):
-        return "Chain complex of origami\n%s" %(self.origami())
+        return "Chain complex of origami\n%s" % (self.origami())

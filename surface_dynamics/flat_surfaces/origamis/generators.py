@@ -1,4 +1,4 @@
-#encoding=utf8
+# encoding=utf8
 r"""
 List of common origamis
 
@@ -30,11 +30,12 @@ The constructors available in this database are organized as follows
 # ****************************************************************************
 
 from __future__ import print_function, absolute_import
-from six.moves import range, map, filter, zip
+from six.moves import range, map
 
 from .origami import Origami
 from sage.rings.integer import Integer
 from sage.rings.integer_ring import ZZ
+
 
 class OrigamiGenerators():
     r"""
@@ -71,8 +72,8 @@ class OrigamiGenerators():
         lr = [(i,i+1) for i in range(1,2*n+1,2)]
         lu = [(1,2*n)] + [(i,i+1) for i in range(2,2*n,2)]
         positions = [((i+1)//2,i//2) for i in range(2*n)]
-        name = "Escalator with %d steps" %n
-        o = Origami(lr,lu,positions=positions,name=name)
+        name = "Escalator with %d steps" % n
+        o = Origami(lr, lu, positions=positions, name=name)
         return o
 
     @staticmethod
@@ -106,18 +107,19 @@ class OrigamiGenerators():
         u = [4,7,6,5,2,1,0,3]
         positions = [(0,0),(1,0),(2,0),(3,0),(0,1),(1,1),(2,1),(3,1)]
         name = "Eierlegende Wollmilchsau"
-        o = Origami(r,u,check=False,as_tuple=True,positions=positions,name=name)
+        o = Origami(r, u, check=False, as_tuple=True, positions=positions,
+                    name=name)
         return o
 
     @staticmethod
     def CyclicCover(a, M=None):
         r"""
         Return the Abelian differential associated to the quadruple ``a``
-        
+
         INPUT:
-            
+
             - ``a`` - quadruple of integers
-            
+
             - ``M`` - positive integer (default: None)
 
         EXAMPLES:
@@ -157,22 +159,22 @@ class OrigamiGenerators():
         a = list(map(Integer,a))
         if len(a) != 4:
             raise ValueError("a should be of length 4")
-            
-        if any(ai%2==0 for ai in a):
+
+        if any(ai % 2 == 0 for ai in a):
             raise ValueError("ai should be odd")
-            
+
         if gcd([M]+a) != 1:
             raise ValueError("gcd(M,a) should be 1")
-            
-        if M%2:
+
+        if M % 2:
             raise ValueError("M should be even")
 
         if sum(a) % M:
             raise ValueError("the sum of ai should be 0 mod M")
-            
+
         r = [None] * (2*M)
         u = [None] * (2*M)
-        
+
         # initialize horizontal cylinders
         i = 0
         seen = set([])
@@ -189,42 +191,42 @@ class OrigamiGenerators():
                 j = (i + a[0] + a[3]) % M
                 if j not in seen and j not in pos:
                     pos.add(j)
-        
-                u[2*i] = (2*(i-a[3])+1) % (2*M) # sigma_D^-1
+
+                u[2*i] = (2*(i-a[3])+1) % (2*M)  # sigma_D^-1
                 j = (i-a[3]) % M
                 if j not in seen and j not in neg:
                     neg.add(j)
-                u[2*i+1] = (2*(i+a[3])) % (2*M) # sigma_D
+                u[2*i+1] = (2*(i+a[3])) % (2*M)  # sigma_D
                 j = (i+a[3]) % M
                 if j not in seen and j not in neg:
                     neg.add(j)
-            
+
             if neg:
                 i = neg.pop()
                 seen.add(i)
                 r[2*i+1] = 2*i
-                r[2*i] = (2*(i+a[1]+a[2]) + 1) % (2*M) # sigma_B + sigma_C
+                r[2*i] = (2*(i+a[1]+a[2]) + 1) % (2*M)  # sigma_B + sigma_C
                 j = (i+a[1]+a[2]) % M
                 if j not in seen and j not in neg:
                     neg.add(j)
-                    
-                u[2*i] = (2*(i+a[2]) + 1) % (2*M) # sigma_C
+
+                u[2*i] = (2*(i+a[2]) + 1) % (2*M)  # sigma_C
                 j = (i+a[2]) % M
                 if j not in seen and j not in neg:
                     pos.add(j)
-                u[2*i+1] = (2*(i-a[2])) % (2*M) # sigma_C^-1
-                j = (i-a[2]) %M
+                u[2*i+1] = (2*(i-a[2])) % (2*M)  # sigma_C^-1
+                j = (i-a[2]) % M
                 if j not in seen and j not in neg:
                     pos.add(j)
-        
-        return Origami(r,u,as_tuple=True,name="M_%d(%d,%d,%d,%d)" %(M,a[0],a[1],a[2],a[3]))
+
+        return Origami(r,u,as_tuple=True,name="M_%d(%d,%d,%d,%d)" % (M,a[0],a[1],a[2],a[3]))
 
     @staticmethod
     def Stair(n):
         r"""
         Stair origamis
 
-        The stair origami with n=2k squares is defined by the permutations 
+        The stair origami with n=2k squares is defined by the permutations
 
         r = (1 2)(3 4) ... (n-1 n)
         u = (1)(2 3) ... (n-2 n-1)(n)
@@ -260,7 +262,7 @@ class OrigamiGenerators():
             u.append(i+1)
             u.append(i)
 
-        if n%2:
+        if n % 2:
             r.append(n-1)
         else:
             r.append(n-1)
@@ -268,7 +270,8 @@ class OrigamiGenerators():
             u.append(n-1)
 
         positions = [((i+1)//2,i//2) for i in range(n)]
-        o = Origami(r,u,as_tuple=True,positions=positions,name="Stair origami with %d squares" %n)
+        o = Origami(r, u, as_tuple=True, positions=positions,
+                    name="Stair origami with %d squares" % n)
         return o
 
     @staticmethod
@@ -291,15 +294,15 @@ class OrigamiGenerators():
         """
         from sage.combinat.partition import Partition
 
-        if isinstance(data, (int,Integer)):
-            p = Partition([i for i in range(data,0,-1)])
+        if isinstance(data, (int, Integer)):
+            p = Partition([i for i in range(data, 0, -1)])
         else:
             p = Partition(data)
 
         p = Partition(data)
         q = p.conjugate()
 
-        r=[]
+        r = []
         positions = []
         i = 0
         for j,jj in enumerate(p):
@@ -316,7 +319,9 @@ class OrigamiGenerators():
                 k += p[jj]
             u[k] = j
 
-        return Origami(r,u,positions=positions,name="Podium origami with partition %s" %str(p),as_tuple=True)
+        return Origami(r, u, positions=positions,
+                       name="Podium origami with partition %s" % str(p),
+                       as_tuple=True)
 
     @staticmethod
     def ProjectiveLine(p, r=None, u=None):
@@ -388,7 +393,6 @@ class OrigamiGenerators():
             sage: o.stratum_component()
             H_3(4)^hyp
         """
-        from sage.arith.all import is_prime
         from sage.rings.finite_rings.finite_field_constructor import GF
         from sage.groups.matrix_gps.linear import GL
         from sage.modules.free_module import VectorSpace
@@ -447,10 +451,10 @@ class OrigamiGenerators():
         else:
             u.append(p)
 
-        o = Origami(r,u,
+        o = Origami(r, u,
             as_tuple=True,
             positions=positions,
-            name="Projective line origami on GF(%d)\n r = %s    u = %s\n     %s        %s"%(p,sr[0],su[0],sr[1],su[1]))
+            name="Projective line origami on GF(%d)\n r = %s    u = %s\n     %s        %s" % (p, sr[0], su[0], sr[1], su[1]))
         return o
 
     @staticmethod
@@ -497,11 +501,10 @@ class OrigamiGenerators():
             for b in range(p):
                 for d in range(p):
                     n = a*pp + b*p + d
-                    r[n] = ((a+1)%p)*pp + b*p + d
-                    u[n] = a*pp + ((b+1)%p)*p + ((a+d)%p)
-        return Origami(r,u,
-                as_tuple=True,
-                name="Heisenberg origami on GF(%d)"%p)
+                    r[n] = ((a+1) % p)*pp + b*p + d
+                    u[n] = a*pp + ((b+1) % p)*p + ((a+d) % p)
+        return Origami(r, u, as_tuple=True,
+                       name="Heisenberg origami on GF(%d)" % p)
 
     def ShresthaWang(self):
         r"""
@@ -532,5 +535,6 @@ class OrigamiGenerators():
         """
         return Origami("(1,2,3,4,5,6)(7,8,9,10,11,12)(13,14)(15,16)",
                        "(1,8,5,15,13,12)(2,16,14,9,6,7)(3,10)(4,11)")
+
 
 origamis = OrigamiGenerators()

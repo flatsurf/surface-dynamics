@@ -44,7 +44,7 @@ display the result on the screen in a table, one can use
 :meth:`~OrigamiQuery.show` of :class:`OrigamiQuery`::
 
     sage: q.show()
-    Origami             
+    Origami
     --------------------
     r=1234 5678  u=1537 2846
     r=123456 789abc  u=17593b 284c6a
@@ -53,10 +53,10 @@ We can display much more informations by modifying the displayed columns::
 
     sage: q.cols('nb_squares', 'stratum', 'component', 'regular', 'quasi_regular')
     sage: q.show()
-    Nb squares           Stratum              Comp.                Regular              Quasi regular       
+    Nb squares           Stratum              Comp.                Regular              Quasi regular
     ----------------------------------------------------------------------------------------------------
-    8                    H_3(1^4)             c                    True                 True                
-    12                   H_4(2^3)             even                 False                True             
+    8                    H_3(1^4)             c                    True                 True
+    12                   H_4(2^3)             even                 False                True
 
 And the complete list of columns in the database is obtained through::
 
@@ -153,13 +153,13 @@ group of translation acts transitively on the set of squares)::
     sage: q = D.query(regular=True)
     sage: q.cols('nb_squares', 'stratum', 'automorphism_group_name')
     sage: q.show()
-    Nb squares           Stratum              Automorphism        
+    Nb squares           Stratum              Automorphism
     ------------------------------------------------------------
-    6                    H_3(2^2)             S3                  
-    8                    H_3(1^4)             D8                  
-    8                    H_3(1^4)             Q8                  
-    10                   H_5(4^2)             D10                 
-    12                   H_4(1^6)             A4                  
+    6                    H_3(2^2)             S3
+    8                    H_3(1^4)             D8
+    8                    H_3(1^4)             Q8
+    10                   H_5(4^2)             D10
+    12                   H_4(1^6)             A4
 
 .. TODO::
 
@@ -183,19 +183,18 @@ AUTHOR:
 # ****************************************************************************
 
 from __future__ import print_function, absolute_import
+import os
 from six.moves import range, map, filter, zip
 from six import iteritems, string_types
 
-from sage.rings.integer import Integer
 from sage.rings.real_mpfr import RealField
-from sage.rings.all import ZZ,QQ,Integer
-from surface_dynamics.flat_surfaces.origamis.origami import Origami, Origami_dense_pyx
+from sage.rings.all import QQ, Integer
+from surface_dynamics.flat_surfaces.origamis.origami import Origami_dense_pyx
 from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum
 from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
-
+from surface_dynamics.flat_surfaces.abelian_strata import ASC, HypASC, NonHypASC, EvenASC, OddASC
 from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
-from sage.env import SAGE_SHARE
-import os
+
 
 from . import __path__ as db_path
 if len(db_path) != 1:
@@ -210,6 +209,7 @@ ORIGAMI_DB_LOCATION = os.path.join(db_path, 'origamis.db')
 #  gap.PrimitiveIdentification(G) : the index in the primitive group database
 #  to get back the group:
 #  gap.PrimitiveGroup(gap.NrMovedPoints(G),gap.PrimitiveIdentification(G))
+
 
 def are_skeleton_equal(sk1, sk2):
     r"""
@@ -238,18 +238,19 @@ def are_skeleton_equal(sk1, sk2):
 
             if w1['sql'] != w2['sql']:
                 return False
-            if w1.get('index',False) != w2.get('index',False):
+            if w1.get('index', False) != w2.get('index', False):
                 return False
-            if w1.get('unique',False) != w2.get('unique',False):
+            if w1.get('unique', False) != w2.get('unique', False):
                 return False
-            if w1.get('primary_key',False) != w2.get('primary_key',False):
+            if w1.get('primary_key', False) != w2.get('primary_key', False):
                 return False
 
     return True
 
+
 ORIGAMI_DB_skeleton = {'origamis': {
     # Origami representative
-    'representative'                      : {'sql': 'TEXT',    'unique': True},
+    'representative'                      : {'sql': 'TEXT', 'unique': True},
 
     # Origami family
     'primitive'                           : {'sql': 'BOOLEAN'},
@@ -284,7 +285,7 @@ ORIGAMI_DB_skeleton = {'origamis': {
     'max_hom_dim'                         : {'sql': 'INTEGER'},
     'minus_identity_invariant'            : {'sql': 'BOOLEAN'},
 
-    #monodromy data
+    # monodromy data
     'monodromy_name'                      : {'sql': 'TEXT',    'index': True},
     'monodromy_signature'                 : {'sql': 'BOOLEAN', 'index': True},
     'monodromy_index'                     : {'sql': 'INTEGER', 'index': True},
@@ -347,7 +348,7 @@ for cols in added_cols:
     for col in cols:
         del OLD_ORIGAMI_DB_skeleton[col]
         OLD_ORIGAMI_DB_cols.remove(col)
-    OLDS.append(({'origamis':OLD_ORIGAMI_DB_skeleton.copy()}, OLD_ORIGAMI_DB_cols[:]))
+    OLDS.append(({'origamis': OLD_ORIGAMI_DB_skeleton.copy()}, OLD_ORIGAMI_DB_cols[:]))
 
 #
 # relabelization of columns
@@ -433,6 +434,7 @@ def real_tuple_to_data(t):
         s += ' ' + integer_tuple_to_data(x.sign_mantissa_exponent())
     return s
 
+
 def data_to_real_tuple(s):
     r"""
     Convert a string into a tuple of real numbers.
@@ -458,14 +460,15 @@ def data_to_real_tuple(s):
     if not s:
         return ()
     s = s.split(' ')
-    prec = Integer(s[0],36)
+    prec = Integer(s[0], 36)
     s = s[1:]
     R = RealField(prec)
     res = []
-    for i in range(0,len(s),3):
-        sign,mantissa,exponent = data_to_integer_tuple(s[i] + ' ' + s[i+1] + ' ' + s[i+2])
+    for i in range(0, len(s), 3):
+        sign, mantissa, exponent = data_to_integer_tuple(s[i] + ' ' + s[i+1] + ' ' + s[i+2])
         res.append(R(sign * mantissa * 2**exponent))
     return tuple(res)
+
 
 def small_positive_integer_tuple_to_data(t):
     r"""
@@ -489,8 +492,9 @@ def small_positive_integer_tuple_to_data(t):
     """
     if not t:
         return ''
-    assert(all(0 <= i and i < 36 for i in t))
+    assert all(0 <= i < 36 for i in t)
     return ''.join(Integer(x).str(36) for x in t)
+
 
 def data_to_small_positive_integer_tuple(s):
     r"""
@@ -551,30 +555,19 @@ def data_to_integer_tuple(s):
     """
     if not s:
         return ()
-    return tuple(Integer(i,36) for i in s.split(' '))
+    return tuple(Integer(i, 36) for i in s.split(' '))
+
 
 rational_to_data = str
-def data_to_rational(s):
-    r"""
-    Convert a string into a rational.
+data_to_rational = QQ
 
-    EXAMPLES::
-
-        sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
-        sage: odb.data_to_rational('41/1806')
-        41/1806
-
-    .. TODO::
-
-        allow unicode input to QQ and remove this function.
-    """
-    return QQ(str(s))
 
 def square_num_to_str(i):
     if i < 80:
-        return chr(c+48)
+        return chr(i + 48)
     else:
         return ' ' + Integer(i).str(16) + ' '
+
 
 def representative_to_data(o):
     r"""
@@ -656,9 +649,12 @@ def format_representative(s):
     r = o.r().cycle_tuples()
     u = o.u().cycle_tuples()
 
-    format_cycles = lambda cycles: ' '.join(map(lambda c: ''.join(map(lambda x: Integer(x).str(36),c)),cycles))
+    def format_cycles(cycles):
+        return ' '.join(''.join(map(lambda x: Integer(x).str(36), c))
+                        for c in cycles)
 
     return 'r=' + format_cycles(r) + '  u=' + format_cycles(u)
+
 
 # stratum and component
 def stratum_to_data(h):
@@ -693,10 +689,12 @@ def data_to_stratum(s):
     """
     return AbelianStratum(data_to_integer_tuple(s))
 
+
 L_exp_approx_to_data = real_tuple_to_data
 data_to_L_exp_approx = data_to_real_tuple
 
 pole_partition_to_data = small_positive_integer_tuple_to_data
+
 
 def data_to_pole_partition(s):
     r"""
@@ -727,13 +725,15 @@ def format_pole_partition(p):
     if p is None:
         return ""
     assert len(p) == 4
-    return "%d (%d,%d,%d)"%p
+    return "%d (%d,%d,%d)" % p
+
 
 nb_cyls_spectrum_to_data = integer_tuple_to_data
 data_to_nb_cyls_spectrum = data_to_integer_tuple
 
 sum_of_L_exp_to_data = rational_to_data
 data_to_sum_of_L_exp = data_to_rational
+
 
 def orientation_stratum_to_data(q):
     r"""
@@ -757,8 +757,6 @@ def data_to_orientation_stratum(s):
         return QuadraticStratum(data_to_integer_tuple(s))
     return None
 
-
-from surface_dynamics.flat_surfaces.abelian_strata import ASC, HypASC, NonHypASC, EvenASC, OddASC
 
 cc_from_name = dict((cc._name, cc) for cc in [ASC,HypASC,NonHypASC,EvenASC, OddASC])
 
@@ -814,12 +812,12 @@ class OrigamiQuery:
         self._cols = cols
         self._query_string = query_string
         self._display_options = kwds
-        self._order = [("nb_squares",1)]
+        self._order = [("nb_squares", 1)]
 
         if db is None:
             self._db = OrigamiDatabase()
         elif not isinstance(db, OrigamiDatabase):
-            raise TypeError("%s is not a valid origami database"%database)
+            raise TypeError("%s is not a valid origami database" % db)
         else:
             self._db = db
 
@@ -1032,9 +1030,9 @@ class OrigamiQuery:
              {'pole_partition': (0, 0, 2, 4), 'primitive': False}]
         """
         if len(self._cols) == 1:
-            return [{self._cols[0]:x} for x in self]
+            return [{self._cols[0]: x} for x in self]
         else:
-            return [dict(zip(self._cols,x)) for x in self]
+            return [dict(zip(self._cols, x)) for x in self]
 
     def number_of(self):
         """
@@ -1151,9 +1149,7 @@ def build_local_data(o):
         data['relative_monodromy_name'] = data['monodromy_name']
         data['relative_monodromy_gap_primitive_id'] = data['monodromy_gap_primitive_id']
 
-    else: # not primitive
-        from sage.functions.other import factorial
-
+    else:  # not primitive
         data['monodromy_name'] = data['monodromy_gap_primitive_id'] = None
 
         H = o.monodromy(relative=True)
@@ -1165,8 +1161,8 @@ def build_local_data(o):
         data['relative_monodromy_gap_primitive_id'] = libgap.PrimitiveIdentification(H) if H.order() < 2500 else None
         data['relative_monodromy_name'] = libgap.StructureDescription(H) if quasi_primitive else None
 
-        a,t,u = o.lattice_of_absolute_periods()
-        data['optimal_degree'] = a*u
+        a, _, u = o.lattice_of_absolute_periods()
+        data['optimal_degree'] = a * u
 
         A = o.automorphism_group()
         d = o.orientation_data()
@@ -1230,10 +1226,11 @@ def build_lyapunov_exponents(o, nb_iterations=0X10000, nb_experiments=10):
     data = {}
 
     data['L_exp_approx'] = o.lyapunov_exponents_approx(
-            nb_iterations=nb_iterations,
-            nb_experiments=nb_experiments)
+        nb_iterations=nb_iterations,
+        nb_experiments=nb_experiments)
 
     return data
+
 
 def build_global_data(o, c=None):
     r"""
@@ -1279,12 +1276,12 @@ def build_global_data(o, c=None):
     data['teich_curve_nu3'] = V.nu3()
     data['teich_curve_genus'] = V.genus()
 
-    s = 0                   # sum of L. exp (Kontsevich formula)
-    m_ncyls = 4*o.genus()+4 # min. nb cyls
-    M_ncyls = 0             # max. nb cyls
-    m_hd = 4*o.genus()+4    # min. Hom. dim
-    M_hd = 0                # max. Hom. dim
-    for (oo,l) in c.cusp_representative_iterator():
+    s = 0                    # sum of L. exp (Kontsevich formula)
+    m_ncyls = 4*o.genus()+4  # min. nb cyls
+    M_ncyls = 0              # max. nb cyls
+    m_hd = 4*o.genus()+4     # min. Hom. dim
+    M_hd = 0                 # max. Hom. dim
+    for (oo, l) in c.cusp_representative_iterator():
         cc,w,h,_ = oo.cylinder_diagram(data=True)
         nc = cc.ncyls()
         if nc < m_ncyls:
@@ -1402,7 +1399,7 @@ class OrigamiDatabase(SQLDatabase):
             SQLDatabase.__init__(self,
                     dblocation,
                     read_only=read_only,
-                    skeleton = skeleton)
+                    skeleton=skeleton)
 
         else:
             SQLDatabase.__init__(self, dblocation, read_only=read_only)
@@ -1526,7 +1523,7 @@ class OrigamiDatabase(SQLDatabase):
         else:
             columns = ORIGAMI_DB_cols
 
-        k = 0 # counter for the number of modifications
+        k = 0  # counter for the number of modifications
         m = comp.stratum().dimension()-1
         if not force_computation:
             m = max(m,self.max_nb_squares(comp)+1)
@@ -1676,7 +1673,6 @@ class OrigamiDatabase(SQLDatabase):
             self.add_row('origamis', value, entry_order)
 
         self.commit()
-
 
     def update(self, other, replace=False, verbose=False):
         r"""
@@ -1935,10 +1931,10 @@ class OrigamiDatabase(SQLDatabase):
                 # further
                 for a in AbelianStrata(dimension=d):
                     k = self.max_nb_squares(a)
-                    if k == 0: # we miss an origami with d-1 squares
+                    if k == 0:  # we miss an origami with d-1 squares
                         return d-2
                     else:      # we can update m
-                        m = min(k,m)
+                        m = min(k, m)
                 if m == d-1:
                     return m
                 d += 1
@@ -2034,7 +2030,7 @@ class OrigamiDatabase(SQLDatabase):
                 value = self._entry_to_data[entry](value)
             typ = skeleton['origamis'][entry]['sql']
             if typ == 'TEXT':
-                qq.append("%s%s'%s'" %(entry,sign,str(value)))
+                qq.append("%s%s'%s'" % (entry, sign, str(value)))
             elif typ == 'BOOLEAN':
                 if value:
                     qq.append("%s%s'True'"%(entry,sign))
@@ -2049,8 +2045,7 @@ class OrigamiDatabase(SQLDatabase):
             query_string = ''
 
         return OrigamiQuery(
-                self,
-                query_string = query_string,
-                cols = cols,
-                format_cols = self._get_format(cols))
-
+            self,
+            query_string=query_string,
+            cols=cols,
+            format_cols=self._get_format(cols))
