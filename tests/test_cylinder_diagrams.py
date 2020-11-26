@@ -89,6 +89,7 @@ def test_H4():
     origami_check(A.hyperelliptic_component(), 10, 10)
     origami_check(A.odd_component(), 10, 10)
 
+@pytest.mark.slow
 def test_H22():
     A = AbelianStratum(2,2)
     cylinder_diagrams_testing(A)
@@ -100,6 +101,7 @@ def test_H31():
     cylinder_diagrams_testing(A)
     origami_check(A.unique_component(), 10, 10)
 
+@pytest.mark.slow
 def test_H6():
     A = AbelianStratum(6)
     cylinder_diagrams_testing(A)
@@ -107,7 +109,8 @@ def test_H6():
     origami_check(A.odd_component(), 10, 10)
     origami_check(A.even_component(), 10, 10)
 
+@pytest.mark.slow
 def test_H211():
     A = AbelianStratum(2,1,1)
     cylinder_diagrams_testing(A)
-    origami_check(A.unique_component(), 10, 10)
+    origami_check(A.unique_component(), 5, 10)
