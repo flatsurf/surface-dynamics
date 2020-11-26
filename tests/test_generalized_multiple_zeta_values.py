@@ -1,7 +1,8 @@
 import itertools
 import random
 
-from sage.all import FreeModule, ZZ, QQ, matrix, Multizetas
+from sage.all import FreeModule, ZZ, QQ, matrix
+from surface_dynamics import Multizetas
 from surface_dynamics.misc.generalized_multiple_zeta_values import linear_forms, handle_term, is_convergent, Z2, to_Z2, Z3, to_Z3, is_Z3_convergent, clean_term, convergent_multizeta
 
 # put more multiple zeta values in the cache

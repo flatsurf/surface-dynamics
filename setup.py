@@ -11,11 +11,14 @@ except ImportError:
                      "If you are using Ubuntu with Sage installed from the official apt repository, run\n"
                      "first in a console \"$ source /usr/share/sagemath/bin/sage-env\"\n")
 
+import sys, os
+
 from distutils.core import setup
 from distutils.extension import Extension
-from Cython.Build import cythonize
-import sys, os
 from distutils.version import LooseVersion
+from distutils.command.build_py import build_py as _build_py
+
+from Cython.Build import cythonize
 
 with open("surface_dynamics/version.py") as f:
     version = f.read().strip()
@@ -33,6 +36,14 @@ except ImportError:
     WITH_PPL = False
 else:
     WITH_PPL = True
+
+try:
+    import sage.modular.multiple_zeta
+except ImportError:
+    sys.stderr.write('Warning: multiple_zeta not available in Sage\n')
+    WITH_MZV = False
+else:
+    WITH_MZV = True
 
 extensions_data = {
     'origamis': {
@@ -84,6 +95,20 @@ for name, data in extensions_data.items():
         source_files.extend(sources)
         source_files.extend(headers)
 
+class build_py(_build_py):
+    r"""
+    Custom build_py command to not install generalized_multiple_zeta_values when
+    corresponding sage module not present.
+    """
+    def find_package_modules(self, package, package_dir):
+        modules = _build_py.find_package_modules(self, package, package_dir)
+        if not WITH_MZV and package == 'surface_dynamics/misc':
+            modules = [
+                (pkg, mod, file)
+                for (pkg, mod, file) in modules
+                if mod != 'generalized_multiple_zeta_values']
+        return modules
+
 setup(name='surface_dynamics',
       version=version,
       description="Dynamics on surfaces",
@@ -105,7 +130,7 @@ setup(name='surface_dynamics',
           'surface_dynamics/databases': ['cylinder_diagrams/cyl_diags*', 'generalized_permutation_twins/twins*'],
           'surface_dynamics/flat_surfaces/origamis': ['origamis.db'],
           },
-      ext_modules=cythonize(extensions),
+    ext_modules=cythonize(extensions),
     classifiers=[
       'Development Status :: 4 - Beta',
       'Intended Audience :: Science/Research',
@@ -118,4 +143,5 @@ setup(name='surface_dynamics',
       'Topic :: Scientific/Engineering :: Mathematics',
     ],
     keywords='surfaces, dynamics, geometry, flat surfaces, Abelian differentials, quadratic differentials, Riemann surfaces',
+    cmdclass={'build_py':build_py}
 )

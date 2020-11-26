@@ -8,14 +8,21 @@ TODO:
 - introduce linear combinations of *divergent* multiple zeta values
   that we possibly simplify at the end.
 """
+from __future__ import absolute_import
+
 import itertools
 from collections import defaultdict
 
-from sage.all import ZZ, QQ, matrix, bernoulli_polynomial, prod, cached_function, Multizetas, FreeModule
+from sage.all import ZZ, QQ, matrix, bernoulli_polynomial, prod, cached_function, FreeModule
 # Do not use binomial and factorial from sage.all that are slow and broken
 from sage.arith.all import binomial, factorial
 from sage.sets.disjoint_set import DisjointSet
 from sage.misc.cachefunc import cached_method, cached_function
+
+try:
+    from sage.modular.multiple_zeta import Multizetas
+except ImportError:
+    raise ValueError('Your sage version is not recent enough as this module needs sage.modular.multiple_zeta')
 
 VERBOSE = False
 

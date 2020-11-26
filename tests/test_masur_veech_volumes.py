@@ -11,8 +11,8 @@
 import sys
 import pytest
 
-from sage.all import QQ, Multizeta as M
-from surface_dynamics import AbelianStratum
+from sage.all import QQ
+from surface_dynamics import AbelianStratum, Multizeta as M
 from surface_dynamics.flat_surfaces.masur_veech_volumes import masur_veech_volume
 
 def as_pure_zeta(vol):
