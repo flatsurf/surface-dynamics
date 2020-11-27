@@ -640,6 +640,31 @@ cdef class Origami_dense_pyx:
         cdef int i
         return tuple(self._r[i] for i in range(self._n))
 
+    def r_orbit(self, int i):
+        r"""
+        Return the orbit of ``i`` under the `r` permutation as a list.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import Origami
+
+            sage: o = Origami('(1,2)', '(1,3)')
+            sage: o.r_orbit(0)
+            [0, 1]
+            sage: o.r_orbit(1)
+            [1, 0]
+            sage: o.r_orbit(2)
+            [2]
+        """
+        if i < 0 or i >= self._n:
+            raise ValueError('out of range')
+        cdef list l = [i]
+        cdef int j = self._r[i]
+        while i != j:
+            l.append(j)
+            j = self._r[j]
+        return l
+
     def r_inv_tuple(self):
         r"""
         Return the inverse of the right permutation as a tuple on {0, ..., n-1}
@@ -666,6 +691,31 @@ cdef class Origami_dense_pyx:
         """
         cdef int i
         return tuple(self._u[i] for i in range(self._n))
+
+    def u_orbit(self, int i):
+        r"""
+        Return the orbit of ``i`` under the `u` permutation as a list.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import Origami
+
+            sage: o = Origami('(1,2)', '(1,3)')
+            sage: o.u_orbit(0)
+            [0, 2]
+            sage: o.u_orbit(1)
+            [1]
+            sage: o.u_orbit(2)
+            [2, 0]
+        """
+        if i < 0 or i >= self._n:
+            raise ValueError('out of range')
+        cdef list l = [i]
+        cdef int j = self._u[i]
+        while i != j:
+            l.append(j)
+            j = self._u[j]
+        return l
 
     def u_inv_tuple(self):
         r"""
@@ -1967,13 +2017,13 @@ cdef class Origami_dense_pyx:
             l.append(Origami_dense_pyx(rr, uu))
         return l
 
-    def is_isomorphic(self, Origami_dense_pyx other):
+    def is_isomorphic(self, Origami_dense_pyx other, bint certificate=False):
         r"""
         Isomorphism test
 
         EXAMPLES::
 
-            sage: from surface_dynamics.all import Origami
+            sage: from surface_dynamics import Origami
 
             sage: o1 = Origami('(1,2)', '(1,3)')
             sage: o2 = Origami('(1,2)', '(2,3)')
@@ -1984,18 +2034,31 @@ cdef class Origami_dense_pyx:
             True
             sage: o2.is_isomorphic(o3) and o3.is_isomorphic(o2)
             True
+
+
+            sage: from surface_dynamics.misc.permutation import perm_conjugate
+            sage: for a,b in [(o1,o2),(o2,o1),(o1,o3),(o3,o1),(o2,o3)]:
+            ....:     m = a.is_isomorphic(b, certificate=True)[1]
+            ....:     assert perm_conjugate(a.r_tuple(), m) == list(b.r_tuple())
+            ....:     assert perm_conjugate(a.u_tuple(), m) == list(b.u_tuple())
         """
         if self._n != other._n:
             return False
-        cdef Origami_dense_pyx ss = self.relabel()
-        cdef Origami_dense_pyx oo = other.relabel()
+        cdef Origami_dense_pyx ss, oo
+        cdef ms, mo
+        ss, ms = self.relabel(inplace=False, return_map=True)
+        oo, mo = other.relabel(inplace=False, return_map=True)
         cdef size_t i
         for i in range(self._n):
             if ss._r[i] != oo._r[i]:
-                return False
+                return (False, None) if certificate else False
             if ss._u[i] != oo._u[i]:
-                return False
-        return True
+                return (False, None) if certificate else False
+        if certificate:
+            from surface_dynamics.misc.permutation import perm_invert, perm_compose
+            return (True, perm_compose(ms, perm_invert(mo)))
+        else:
+            return True
     #
     # Component of stratum
     #
