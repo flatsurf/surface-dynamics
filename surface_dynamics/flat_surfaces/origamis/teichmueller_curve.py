@@ -11,22 +11,19 @@ Teichmueller curves of Origamis.
 # ****************************************************************************
 
 from __future__ import print_function, absolute_import
-from six.moves import range, map, filter, zip
+from six.moves import range
 
 from sage.structure.sage_object import SageObject
-from sage.structure.element import Element
-from sage.structure.parent import Parent
 
-from sage.rings.infinity import Infinity
 from sage.rings.integer import Integer
-from .origami import Origami
 
-from sage.modular.arithgroup.congroup_sl2z import SL2Z
-from sage.modular.arithgroup.arithgroup_perm import Lm,Rm,S2m,S3m,EvenArithmeticSubgroup_Permutation, OddArithmeticSubgroup_Permutation
+from sage.modular.arithgroup.arithgroup_perm import (EvenArithmeticSubgroup_Permutation, OddArithmeticSubgroup_Permutation)
 from copy import copy
+
 
 class TeichmuellerCurve(SageObject):
     pass
+
 
 class Cusp(SageObject):
     r"""
@@ -48,13 +45,13 @@ class Cusp(SageObject):
         self._slope = slope
 
         self._width = 1
-        L,_ = origami.gl2z_edges()
+        L, _ = origami.gl2z_edges()
         oo = L[origami]
         while oo != origami:
             oo = L[oo]
             self._width += 1
 
-        c,l,h = origami.cylinder_diagram(data=True)
+        c, l, h = origami.cylinder_diagram(data=True)
         self._cyl_diag = c
         self._lengths = l
         self._heights = h
@@ -63,7 +60,7 @@ class Cusp(SageObject):
         r"""
         String representation
         """
-        return "Cusp of %s" %str(parent)
+        return "Cusp of %s" % str(self._parent)
 
     def width(self):
         r"""
@@ -84,6 +81,7 @@ class Cusp(SageObject):
         Return one slope
         """
         return self._slope
+
 
 def TeichmuellerCurveOfOrigami(origami):
     r"""
@@ -126,7 +124,8 @@ def TeichmuellerCurveOfOrigami(origami):
         s3_edges[r_edges[i]] = l_edges[i]
 
     return TeichmuellerCurveOfOrigami_class(
-                mapping, inv_mapping, l_edges, r_edges, s2_edges, s3_edges)
+        mapping, inv_mapping, l_edges, r_edges, s2_edges, s3_edges)
+
 
 def TeichmuellerCurvesOfOrigamis(origamis, assume_normal_form=False, limit=0, verbose_level=0):
     r"""
@@ -176,9 +175,10 @@ def TeichmuellerCurvesOfOrigamis(origamis, assume_normal_form=False, limit=0, ve
             s3_edges[r_edges[i]] = l_edges[i]
 
         tcurves.append(TeichmuellerCurveOfOrigami_class(
-                    mapping, inv_mapping, l_edges, r_edges, s2_edges, s3_edges))
+            mapping, inv_mapping, l_edges, r_edges, s2_edges, s3_edges))
 
     return tcurves
+
 
 class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
     def __init__(self, mapping, inv_mapping, l_edges, r_edges, s2_edges, s3_edges):
@@ -219,7 +219,7 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
         r"""
         string representation of self
         """
-        return "Teichmueller curve of the origami\n%s" %self.origami()
+        return "Teichmueller curve of the origami\n%s" % self.origami()
 
     def stratum(self):
         r"""
@@ -266,17 +266,16 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
 
         - ``return_map`` - return the list of origamis in the orbit
         """
-        G = self._veech_group.coset_graph(
-                    s2_edges=s2_edges,
-                    s3_edges=s3_edges,
-                    l_edges=l_edges,
-                    r_edges=r_edges)
+        G = self._veech_group.coset_graph(s2_edges=s2_edges,
+                                          s3_edges=s3_edges,
+                                          l_edges=l_edges,
+                                          r_edges=r_edges)
         if vertex_labels:
             G.relabel(dict(enumerate(self._mapping)))
         return G
 
-    def __getitem__(self,i):
-        assert(isinstance(i,(int,Integer)))
+    def __getitem__(self, i):
+        assert(isinstance(i, (int, Integer)))
         if i < 0 or i >= len(self._mapping):
             raise IndexError
         return self._mapping[i]
@@ -318,13 +317,12 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
         Each term is a couple ``(o,w)`` where ``o`` is a representative of the
         cusp (an origami) and ``w`` is the width of the cusp (an integer).
         """
-        cusps = []
         n = len(self._mapping)
-        seen = [True]*n
+        seen = [True] * n
         l = self._l_edges
         for i in range(n):
             if seen[i]:
-                k=1
+                k = 1
                 seen[i] = False
                 j = l[i]
                 while j != i:
@@ -381,15 +379,14 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
             KK += sum(w/h for (h,w) in o.widths_and_heights())
         return K + Integer(1)/Integer(len(self._mapping)) * KK
 
-
-    #TODO: mysterious signs and interversion problems...
+    # TODO: mysterious signs and interversion problems...
     def simplicial_action_generators(self):
         r"""
-        Return action of generators of the Veech group on homolgy
+        Return action of generators of the Veech group on homology
         """
         from sage.matrix.constructor import matrix, identity_matrix
 
-        tree,reps,word_reps,gens = self._veech_group._spanning_tree_verrill(on_right=False)
+        tree, reps, word_reps, gens = self._veech_group._spanning_tree_verrill(on_right=False)
         n = self[0].nb_squares()
 
         l_mat = identity_matrix(2*n)
@@ -456,10 +453,9 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
 
             m_ren = (oo_renum * ~ooo_renum).matrix().transpose()
             m_s = matrix(2*n)
-            m_s[:n,:n] = m_ren;
+            m_s[:n,:n] = m_ren
             m_s[n:,n:] = m_ren
 
             m_gens.append(~reps[e1] * m_s * m * reps[e0])
 
-        return tree,reps,reps_o,gens,m_gens,word_reps
-
+        return tree, reps, reps_o, gens, m_gens, word_reps
