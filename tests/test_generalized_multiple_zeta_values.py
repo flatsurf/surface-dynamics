@@ -1,8 +1,21 @@
+#!/usr/bin/env python
+#*****************************************************************************
+#       Copyright (C) 2020 Vincent Delecroix <20100.delecroix@gmail.com>
+#
+#  Distributed under the terms of the GNU General Public License (GPL)
+#  as published by the Free Software Foundation; either version 2 of
+#  the License, or (at your option) any later version.
+#                  https://www.gnu.org/licenses/
+#*****************************************************************************
+import pytest
+import sage.all
+
+pytest.importorskip('sage.modular.multiple_zeta')
+
 import itertools
 import random
 
-from sage.all import FreeModule, ZZ, QQ, matrix
-from surface_dynamics import Multizetas
+from sage.all import FreeModule, ZZ, QQ, matrix, Multizetas
 from surface_dynamics.misc.generalized_multiple_zeta_values import linear_forms, handle_term, is_convergent, Z2, to_Z2, Z3, to_Z3, is_Z3_convergent, clean_term, convergent_multizeta
 
 # put more multiple zeta values in the cache

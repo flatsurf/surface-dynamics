@@ -8,7 +8,6 @@
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
-import sys
 import pytest
 import itertools
 import random

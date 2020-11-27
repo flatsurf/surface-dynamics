@@ -8,7 +8,6 @@
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
-import sys
 import pytest
 
 from sage.all import ZZ, QQ, factorial, parent
@@ -148,6 +147,3 @@ def test_masur_veech_edge_weight():
         assert parent(p) is R
         p /= p(1)
         assert p == value, (g, n, p, value)
-
-
-if __name__ == '__main__': sys.exit(pytest.main(sys.argv))
