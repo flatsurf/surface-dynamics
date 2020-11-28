@@ -9,23 +9,24 @@ marking. Either the points at the left and the right of the interval coincide in
 which case the marking is of type one, otherwise they are two different parts
 and the marking is of type two.
 """
-#*****************************************************************************
+# ****************************************************************************
 #       Copyright (C) 2012 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
+# ****************************************************************************
 
 from __future__ import print_function, absolute_import
-from six.moves import range, map, filter, zip
+from six.moves import range, map
 
 from sage.structure.sage_object import SageObject
 from sage.combinat.partition import Partition
 from sage.rings.integer import Integer
 
 from surface_dynamics.flat_surfaces.strata import list_to_exp_list
+
 
 class Marking(SageObject):
     r"""
@@ -57,16 +58,16 @@ class Marking(SageObject):
             tt = args[0]
             if "|" in tt:
                 self.t = 1
-                self.data = tuple(map(Integer,tt.split('|')))
+                self.data = tuple(map(Integer, tt.split('|')))
             elif "o" in tt:
                 self.t = 2
-                self.data = tuple(map(Integer,tt.split('o')))
-        elif len(args) == 1 and isinstance(args[0], (list,tuple)) and len(args[0]) == 2:
+                self.data = tuple(map(Integer, tt.split('o')))
+        elif len(args) == 1 and isinstance(args[0], (list, tuple)) and len(args[0]) == 2:
             self.t = Integer(args[0][0])
-            self.data = tuple(map(Integer,args[0][1]))
+            self.data = tuple(map(Integer, args[0][1]))
         elif len(args) == 2:
             self.t = Integer(args[0])
-            self.data = tuple(map(Integer,args[1]))
+            self.data = tuple(map(Integer, args[1]))
         else:
             raise ValueError("can not build marking from given data")
 
@@ -90,23 +91,23 @@ class Marking(SageObject):
         return hash(self.t) + hash(self.data)
 
     def _repr_(self):
-       r"""
-       String representation.
+        r"""
+        String representation.
 
-       TESTS::
+        TESTS::
 
-        sage: from surface_dynamics.interval_exchanges.marked_partition import Marking
-        sage: Marking(1, (2,0))._repr_()
-        '2|0'
-        sage: Marking(2, (3,2))._repr_()
-        '3o2'
-       """
-       if self.t == 1:
-           return "%d|%d"%self.data
-       else:
-           return "%do%d"%self.data
+            sage: from surface_dynamics.interval_exchanges.marked_partition import Marking
+            sage: Marking(1, (2,0))._repr_()
+            '2|0'
+            sage: Marking(2, (3,2))._repr_()
+            '3o2'
+        """
+        if self.t == 1:
+            return "%d|%d" % self.data
+        else:
+            return "%do%d" % self.data
 
-    def __eq__(self,other):
+    def __eq__(self, other):
         r"""
         TESTS::
 
@@ -116,11 +117,11 @@ class Marking(SageObject):
             sage: Marking('1o2') == Marking('2o1')
             False
         """
-        if not isinstance(other,Marking):
+        if not isinstance(other, Marking):
             return False
         return self.t == other.t and self.data == other.data
 
-    def __ne__(self,other):
+    def __ne__(self, other):
         r"""
         TESTS::
 
@@ -132,10 +133,13 @@ class Marking(SageObject):
 
     def __lt__(self, other):
         return self.t < other.t or (self.t == other.t and self.data < other.data)
-    def __le__(self,other):
+
+    def __le__(self, other):
         return self.t <= other.t or (self.t == other.t and self.data <= other.data)
+
     def __gt__(self, other):
         return self.t > other.t or (self.t == other.t and self.data > other.data)
+
     def __ge__(self, other):
         return self.t >= other.t or (self.t == other.t and self.data >= other.data)
 
@@ -165,8 +169,11 @@ class Marking(SageObject):
             sage: Marking(2,(1,3)).right()
             3
         """
-        if self.t == 1: return self.data[0]
-        else: return self.data[1]
+        if self.t == 1:
+            return self.data[0]
+        else:
+            return self.data[1]
+
 
 def markings(p):
     r"""
@@ -187,13 +194,14 @@ def markings(p):
         [2|0, 2|1, 2|2, 1|0, 1|1, 2o2, 2o1, 1o2, 1o1]
     """
     q = list_to_exp_list(p)
-    for i,_ in q:
-        for j in range(i+1):
-            yield Marking(1, (i,j))
-    for i,m in q:
-        for j,n in q:
+    for i, _ in q:
+        for j in range(i + 1):
+            yield Marking(1, (i, j))
+    for i, m in q:
+        for j, n in q:
             if m > 1 or i != j:
-                yield Marking(2, (i,j))
+                yield Marking(2, (i, j))
+
 
 class MarkedPartition(SageObject):
     r"""
@@ -238,8 +246,6 @@ class MarkedPartition(SageObject):
             sage: loads(dumps(p)) == p
             True
         """
-        from sage.combinat.partition import Partition
-
         if len(args) == 1 and isinstance(args[0], MarkedPartition):
             from copy import copy
             self.p = copy(args[0].p)
@@ -249,28 +255,26 @@ class MarkedPartition(SageObject):
             x = re.compile("(?P<mark>[^[]*)[^[]*\\[(?P<parts>[^]]*)]")
             m = x.match(args[0])
             self.m = Marking(m.groupdict()["mark"])
-            self.p = Partition(sorted(map(Integer,m.groupdict()["parts"].split(',')),reverse=True))
-        elif len(args) == 1 and isinstance(args[0], (list,tuple)) and len(args[0]) == 3:
-            self.p = Partition(sorted(args[0][0],reverse=True))
-            self.m = Marking(args[0][1],args[0][2])
+            self.p = Partition(sorted(map(Integer, m.groupdict()["parts"].split(',')), reverse=True))
+        elif len(args) == 1 and isinstance(args[0], (list, tuple)) and len(args[0]) == 3:
+            self.p = Partition(sorted(args[0][0], reverse=True))
+            self.m = Marking(args[0][1], args[0][2])
         elif len(args) == 3:
-            self.p = Partition(sorted(args[0],reverse=True))
-            self.m = Marking(args[1],args[2])
+            self.p = Partition(sorted(args[0], reverse=True))
+            self.m = Marking(args[1], args[2])
         else:
             raise ValueError("can not build marked partition from given data")
 
-        if kwds.get("check",True):
+        if kwds.get("check", True):
             if self.p == Partition([]):
                 if self.m.t != 2 or self.m.data[0] != 0 or self.m.data[1] != 0:
                     raise ValueError("empty partition has only type 2 with data (0,0)")
-
             elif self.m.t == 1:
                 if self.m.data[0] not in self.p:
-                    raise ValueError("%d is not an element of parts"%data[0])
-            else:
-                if ((self.m.data[0] not in self.p or self.m.data[1] not in self.p) or
-                    (self.m.data[0] == self.m.data[1] and list(self.p).count(self.m.data[0]) < 2)):
-                    raise ValueError("parts do not contains (m_l,m_r) = (%d,%d)"%(self.m.data[0],self.m.data[1]))
+                    raise ValueError("%d is not an element of parts" % self.m.data[0])
+            elif ((self.m.data[0] not in self.p or self.m.data[1] not in self.p) or
+                  (self.m.data[0] == self.m.data[1] and list(self.p).count(self.m.data[0]) < 2)):
+                raise ValueError("parts do not contains (m_l,m_r) = (%d,%d)" % (self.m.data[0], self.m.data[1]))
 
     def _repr_(self):
         r"""
@@ -284,7 +288,7 @@ class MarkedPartition(SageObject):
             sage: MarkedPartition([3,1],2,(3,1))._repr_()
             '3o1 [3, 1]'
         """
-        return "%s %s" %(self.m,self.p)
+        return "%s %s" % (self.m, self.p)
 
     def __eq__(self, other):
         r"""
@@ -298,12 +302,12 @@ class MarkedPartition(SageObject):
             sage: MarkedPartition([3,2,1],1,(2,0)) == MarkedPartition([3,2,1],1,(2,1))
             False
         """
-        if not isinstance(other,MarkedPartition):
+        if not isinstance(other, MarkedPartition):
             return False
 
         return self.m == other.m and self.p == other.p
 
-    def __ne__(self,other):
+    def __ne__(self, other):
         r"""
         Difference test.
 
@@ -358,7 +362,7 @@ class MarkedPartition(SageObject):
 
     def partition(self):
         r"""
-        Returns the underlying partition.
+        Return the underlying partition.
 
         EXAMPLES::
 
@@ -386,7 +390,7 @@ class MarkedPartition(SageObject):
 
     def is_odd(self):
         r"""
-        Returns True if all terms of p are odd
+        Return ``True`` if all terms of p are odd.
 
         EXAMPLES::
 
@@ -396,4 +400,4 @@ class MarkedPartition(SageObject):
             sage: MarkedPartition([3,2,2],1,(3,1)).is_odd()
             False
         """
-        return all(k%2 for k in self.p)
+        return all(k % 2 for k in self.p)
