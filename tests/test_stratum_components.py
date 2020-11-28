@@ -79,12 +79,14 @@ def testQ_6_6():
     check_quadratic_component(Q.regular_component(), 100)
     check_quadratic_component(Q.irregular_component(), 100)
 
+@pytest.mark.slow
 def test_Q_6_3_3():
     Q = QuadraticStratum(6,3,3)
     check_quadratic_component(Q.hyperelliptic_component(), 100)
     check_quadratic_component(Q.regular_component(), 100)
     check_quadratic_component(Q.irregular_component(), 100)
 
+@pytest.mark.slow
 def test_Q_3_3_3_3():
     Q = QuadraticStratum(3,3,3,3)
     check_quadratic_component(Q.hyperelliptic_component(), 100)

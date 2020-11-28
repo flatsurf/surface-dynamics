@@ -52,6 +52,7 @@ import numbers
 
 from sage.misc.cachefunc import cached_method
 
+from sage.structure.unique_representation import UniqueRepresentation
 from sage.structure.sage_object import SageObject
 from sage.structure.parent import Parent
 from sage.structure.element import Element, parent
@@ -589,6 +590,14 @@ class GeneralizedMultiZetaElement(AbstractMSum):
             new_data.append((new_den, num))
         return P.element_class(P, new_data, allow_multiple=True)
 
+    def to_mzv(self):
+        r"""
+        Try to convert this element to a multiple zeta value
+        """
+        from .generalized_multiple_zeta_values import handle_term
+        n = self.parent().free_module().rank()
+        return sum(QQ(num) * handle_term(n, den._tuple) for den, num in self._data.items())
+
     def expand(self):
         r"""
         Apply 1 / (L1 L2) = 1/(L1+L2) * (1/L1 + 1/L2) to try getting
@@ -614,8 +623,7 @@ class GeneralizedMultiZetaElement(AbstractMSum):
             if not den.is_one():
                 fraction += ' * Sum(1/'
                 linterm = den.str_linear(var_names)
-                fraction += '(' + den.str_linear(var_names) + '), '
-                fraction += ', '.join("%s=1..+oo"%v for v in var_names) + ')'
+                fraction += '(' + den.str_linear(var_names) + '))'
             terms.append(fraction)
 
         return ' + '.join(terms)
@@ -651,6 +659,15 @@ class MultivariateGeneratingSeries(AbstractMSum):
             return self.parent().laurent_polynomial_ring().zero()
         else:
             return list(self._data.values())[0]
+
+    def numerator_subs(self, *args, **kwds):
+        M = self.parent()
+        R = M.laurent_polynomial_ring()
+
+        ans = M.zero()
+        for den, num in self._data.items():
+            ans += M.term(num.subs(*args, **kwds), den)
+        return ans
 
     def summands(self):
         r"""
@@ -1093,22 +1110,36 @@ class MultivariateGeneratingSeries(AbstractMSum):
         return SR(str(self))
 
 
-class AbstractMSumRing(Parent):
-    def __init__(self, *args):
-        if len(args) == 1 and isinstance(args[0], AbstractMSumRing):
-            self._laurent_polynomial_ring = args[0]._laurent_polynomial_ring
-            self._free_module = args[0]._free_module
-            self._laurent_polynomial_ring_extra_var = args[0]._laurent_polynomial_ring_extra_var
-        else:
-            from sage.rings.polynomial.laurent_polynomial_ring import LaurentPolynomialRing
-            from sage.modules.free_module import FreeModule
-            self._laurent_polynomial_ring = LaurentPolynomialRing(QQ, *args)
-            dim = ZZ(self._laurent_polynomial_ring.ngens())
-            self._free_module = FreeModule(ZZ, dim)
+# TODO: the UniqueRepresentation should normalize the laurent polynomial
+class AbstractMSumRing(UniqueRepresentation, Parent):
+    r"""
+    TESTS::
 
-            # univariate extension of the polynomial ring
-            # (needed in several algorithms)
-            self._laurent_polynomial_ring_extra_var = self._laurent_polynomial_ring['EXTRA_VAR']
+        sage: from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
+        sage: MultivariateGeneratingSeriesRing(5, 'x') is MultivariateGeneratingSeriesRing(['x0','x1','x2','x3','x4'])
+        True
+    """
+    @staticmethod
+    def __classcall__(cls, *args):
+        if len(args) == 1 and isinstance(args[0], AbstractMSumRing):
+            poly_ring = args[0]._laurent_polynomial_ring
+        else:
+            if len(args) == 1 and not isinstance(args[0], (tuple, str)):
+                args = (tuple(args[0]),)
+            from sage.rings.polynomial.laurent_polynomial_ring import LaurentPolynomialRing
+            poly_ring = LaurentPolynomialRing(QQ, *args)
+
+        return super(AbstractMSumRing, cls).__classcall__(cls, poly_ring)
+
+    def __init__(self, poly_ring):
+        from sage.modules.free_module import FreeModule
+        self._laurent_polynomial_ring = poly_ring
+        dim = ZZ(poly_ring.ngens())
+        self._free_module = FreeModule(ZZ, dim)
+
+        # univariate extension of the polynomial ring
+        # (needed in several algorithms)
+        self._laurent_polynomial_ring_extra_var = self._laurent_polynomial_ring['EXTRA_VAR']
 
         Parent.__init__(self, category=Rings())
 
@@ -1234,6 +1265,9 @@ class AbstractMSumRing(Parent):
 
 class GeneralizedMultiZetaRing(AbstractMSumRing):
     Element = GeneralizedMultiZetaElement
+
+    def __repr__(self):
+        return "Generalized multiple zeta values ring on {}".format(self.laurent_polynomial_ring())
 
     def _coerce_map_from_(self, other):
         if self.laurent_polynomial_ring().base_ring().has_coerce_map_from(other):

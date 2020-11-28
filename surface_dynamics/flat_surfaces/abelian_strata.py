@@ -3990,8 +3990,16 @@ class AbelianStrata_gd(AbelianStrata):
 
             sage: from surface_dynamics import *
 
-            sage: list(AbelianStrata(genus=2, dimension=4))
+            sage: AbelianStrata(genus=2, dimension=4).list()
             [H_2(2)]
+
+            sage: AbelianStrata(genus=4, dimension=10, fake_zeros=True).list()
+            [H_4(6, 0^2), H_4(5, 1, 0), H_4(4, 2, 0), H_4(4, 1^2), H_4(3^2, 0), H_4(3, 2, 1), H_4(2^3)]
+            sage: AbelianStrata(genus=4, dimension=10, fake_zeros=False).list()
+            [H_4(4, 1^2), H_4(3, 2, 1), H_4(2^3)]
+
+            sage: AbelianStrata(genus=3, dimension=10, fake_zeros=True).list()
+            [H_3(4, 0^4), H_3(3, 1, 0^3), H_3(2^2, 0^3), H_3(2, 1^2, 0^2), H_3(1^4, 0)]
         """
         if self._genus == 0:
             pass
@@ -4000,11 +4008,12 @@ class AbelianStrata_gd(AbelianStrata):
                 yield AbelianStratum([0]*(self._dimension-1))
         else:
             s = self._dimension - 2*self._genus + 1
-            for p in Partitions(2*self._genus - 2 + s, length=s):
-                l = [k-1 for k in p]
-                for t in set(l):
-                    i = l.index(t)
-                    yield AbelianStratum([t] + l[:i] + l[i+1:])
+            if self._fake_zeros:
+                for p in Partitions(2*self._genus - 2 + s, length=s):
+                    yield AbelianStratum([k-1 for k in p])
+            else:
+                for p in Partitions(2*self._genus - 2, length=s):
+                    yield AbelianStratum(p)
 
 class AbelianStrata_all(AbelianStrata):
     r"""

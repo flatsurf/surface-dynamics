@@ -8,10 +8,11 @@
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
-import sys
 import pytest
+import itertools
+import random
 
-from surface_dynamics import AbelianStratum
+from surface_dynamics import AbelianStratum, OrigamiDatabase
 
 def representative(cd):
     return min([cd.canonical_label(), cd.horizontal_symmetry().canonical_label(), cd.vertical_symmetry().canonical_label(), cd.inverse().canonical_label()])
@@ -62,25 +63,53 @@ def cylinder_diagrams_testing(A):
             match_list_up_to_symmetry(cc, k)
             match_list_no_symmetry(cc, k)
 
+def origami_check(C, sample_size, repeat):
+    D = OrigamiDatabase()
+    q = D.query(stratum=C.stratum(), component=C._name)
+    cyl_diags = set(representative(c) for c in C.cylinder_diagrams())
+    for o in itertools.islice(q, sample_size):
+        for _ in range(repeat):
+            o = o.horizontal_twist(random.randint(1,30)).mirror()
+            assert representative(o.cylinder_diagram()) in cyl_diags, o
+
 def test_H2():
-    cylinder_diagrams_testing(AbelianStratum(2))
+    A = AbelianStratum(2)
+    cylinder_diagrams_testing(A)
+    origami_check(A.unique_component(), 10, 10)
 
 def test_H11():
-    cylinder_diagrams_testing(AbelianStratum(1,1))
+    A = AbelianStratum(1,1)
+    cylinder_diagrams_testing(A)
+    origami_check(A.unique_component(), 10, 10)
 
 def test_H4():
-    cylinder_diagrams_testing(AbelianStratum(4))
+    A = AbelianStratum(4)
+    cylinder_diagrams_testing(A)
+    origami_check(A.hyperelliptic_component(), 10, 10)
+    origami_check(A.odd_component(), 10, 10)
 
+@pytest.mark.slow
 def test_H22():
-    cylinder_diagrams_testing(AbelianStratum(2,2))
+    A = AbelianStratum(2,2)
+    cylinder_diagrams_testing(A)
+    origami_check(A.hyperelliptic_component(), 10, 10)
+    origami_check(A.odd_component(), 10, 10)
 
 def test_H31():
-    cylinder_diagrams_testing(AbelianStratum(3,1))
+    A = AbelianStratum(3,1)
+    cylinder_diagrams_testing(A)
+    origami_check(A.unique_component(), 10, 10)
 
+@pytest.mark.slow
 def test_H6():
-    cylinder_diagrams_testing(AbelianStratum(6))
+    A = AbelianStratum(6)
+    cylinder_diagrams_testing(A)
+    origami_check(A.hyperelliptic_component(), 10, 10)
+    origami_check(A.odd_component(), 10, 10)
+    origami_check(A.even_component(), 10, 10)
 
+@pytest.mark.slow
 def test_H211():
-    cylinder_diagrams_testing(AbelianStratum(2,1,1))
-
-if __name__ == '__main__': sys.exit(pytest.main(sys.argv))
+    A = AbelianStratum(2,1,1)
+    cylinder_diagrams_testing(A)
+    origami_check(A.unique_component(), 5, 10)
