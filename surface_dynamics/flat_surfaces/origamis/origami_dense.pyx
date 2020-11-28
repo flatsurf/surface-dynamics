@@ -909,7 +909,7 @@ cdef class Origami_dense_pyx:
                     k += 1
                 periods.append((smallInteger(-i_to_tr[j]), k))
 
-        if len(periods) == 0:
+        if not periods:
             raise RuntimeError("this should not happen!")
 
         free(memory)

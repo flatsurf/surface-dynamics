@@ -2149,7 +2149,7 @@ class HypAbelianStratumComponent(ASC):
             1
         """
         z = self.stratum().zeros(fake_zeros=False)
-        if len(z) == 0:
+        if not z:
             return Integer(1)
         elif len(z) == 1:
             return Integer(((self.stratum().genus()+1)//2) % 2)

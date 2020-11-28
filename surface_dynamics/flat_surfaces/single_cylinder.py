@@ -281,10 +281,11 @@ def even_twos_odd(real_zeros,two_count):
     for i in range((two_count-2)//2):
         twos_perm = cylinder_concatenation(twos_perm,odd_2_2)
 
-    if len(real_zeros) == 0:
+    if not real_zeros:
         return twos_perm
     else:
         return cylinder_concatenation(twos_perm,no_two_odd(real_zeros))
+
 
 def odd_twos_odd(real_zeros,two_count):
     r"""
@@ -340,10 +341,11 @@ def odd_twos_odd(real_zeros,two_count):
     for i in range((two_count-3)//2):
         twos_perm = cylinder_concatenation(twos_perm,odd_2_2)
 
-    if len(real_zeros) == 0:
+    if not real_zeros:
         return twos_perm
     else:
         return cylinder_concatenation(twos_perm,no_two_odd(real_zeros))
+
 
 def even_zero_even(num):
     r"""
@@ -644,11 +646,12 @@ def even_twos_even(real_zeros,two_count):
     twos_perm = even_2_2_2_2
     for i in range((two_count-4)//2):
         twos_perm = cylinder_concatenation(twos_perm,odd_2_2)
-    if len(real_zeros) == 0:
+    if not real_zeros:
         return twos_perm
     else:
         odd_perm = AbelianStratum(real_zeros).odd_component().single_cylinder_representative()
         return cylinder_concatenation(twos_perm,odd_perm)
+
 
 def odd_twos_even(real_zeros,two_count):
     r"""
@@ -699,11 +702,12 @@ def odd_twos_even(real_zeros,two_count):
     twos_perm = even_2_2_2
     for i in range((two_count-3)//2):
         twos_perm = cylinder_concatenation(twos_perm,odd_2_2)
-    if len(real_zeros) == 0:
+    if not real_zeros:
         return twos_perm
     else:
         odd_perm = AbelianStratum(real_zeros).odd_component().single_cylinder_representative()
         return cylinder_concatenation(twos_perm,odd_perm)
+
 
 def odds_right_swap(zero_pair):
     r"""
@@ -1163,10 +1167,11 @@ def even_ones_odds(odd_zeros,one_count):
         perm = six_ones
         for i in range((one_count-6)//4):
             perm = cylinder_concatenation(perm,four_ones)
-    if len(odd_zeros) == 0:
+    if not odd_zeros:
         return perm
     else:
         return cylinder_concatenation(perm,no_ones_odds(odd_zeros))
+
 
 def odd_ones_odds(odd_zeros,one_count):
     r"""
@@ -1472,7 +1477,7 @@ def only_even_2(odd_zeros):
             if 1 in pair_zeros:
                 if pair_zeros == [3,1]:
                     perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9],[2,6,8,3,7,4,1,9,5,0])
-                    if len(odd_zeros) == 0:
+                    if not odd_zeros:
                         return perm
                     else:
                         one_count = odd_zeros.count(1)
@@ -1490,7 +1495,7 @@ def only_even_2(odd_zeros):
                     top_row = top_row_1 + top_row_2
                     bot_row = bot_row_1 + bot_row_2
                     perm = GeneralizedPermutation(top_row,bot_row)
-                    if len(odd_zeros) == 0:
+                    if not odd_zeros:
                         return perm
                     else:
                         one_count = odd_zeros.count(1)
@@ -1509,7 +1514,7 @@ def only_even_2(odd_zeros):
                 top_row = top_row_1 + top_row_2
                 bot_row = bot_row_1 + bot_row_2
                 perm = GeneralizedPermutation(top_row,bot_row)
-                if len(odd_zeros) == 0:
+                if not odd_zeros:
                     return perm
                 else:
                     perm_odd = odd_zeros_one_one(odd_zeros)
@@ -1528,7 +1533,7 @@ def only_even_2(odd_zeros):
                 top_row = top_row_1 + top_row_2
                 bot_row = bot_row_1 + bot_row_2
                 perm = GeneralizedPermutation(top_row,bot_row)
-                if len(odd_zeros) == 0:
+                if not odd_zeros:
                     return perm
                 else:
                     odd_perm = odd_zeros_one_one(odd_zeros)
@@ -1655,6 +1660,7 @@ def only_odds_11(even_zeros):
             else:
                 even_perm = AbelianStratum(even_zeros[1:]).odd_component().single_cylinder_representative()
                 return cylinder_concatenation(perm,even_perm)
+
 
 def cylinder_concatenation(perm_1, perm_2, alphabet=None):
     r"""
