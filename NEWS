@@ -1,0 +1,26 @@
+===========================
+surface_dynamics Change Log
+===========================
+
+.. current developments
+
+v0.4.6
+====================
+
+**Fixed:**
+
+* Wrong computation of the stratum component for generalized permutation associated
+  to quadratic differentials
+
+* Fixed SEGFAULT in integral iet statistics
+
+**Changed:**
+
+* Masur-Veech volume contribution of individual cylinder diagrams
+
+v0.4.5
+======
+
+**Changed:**
+
+* Topological recursion (Kontsevich and Masur-Veech volumes)
