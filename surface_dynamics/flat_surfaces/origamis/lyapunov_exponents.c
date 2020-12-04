@@ -13,8 +13,8 @@
 
 /* the length of the interval under which we perform the  */
 /* the renormalization step                               */
-#define MIN_LENGTH    .000008L  /* roughly between 4 and 20 iterations of Gauss map */
-#define CRITIC_LENGTH .0000000000000000000001L
+#define MIN_LENGTH    8e-6   /* roughly between 4 and 20 iterations of Gauss map */
+#define CRITIC_LENGTH 1e-50
 /**********************************************************/
 
 /* verbosity level */
