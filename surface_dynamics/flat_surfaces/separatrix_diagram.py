@@ -109,13 +109,13 @@ from sage.rings.integer import Integer
 from sage.graphs.digraph import DiGraph
 
 from surface_dynamics.misc.permutation import (perm_check, equalize_perms, perm_init,
-        perm_cycles, perm_cycle_string, perm_cycle_type, perm_compose, perm_compose_i,
-        perm_orbit, perm_invert, perms_canonical_labels,
+        perm_cycles, perm_cycle_type, perm_compose_i,
+        perm_invert, perms_canonical_labels,
         perms_transitive_components, canonical_perm, canonical_perm_i,
         argmin)
 
 from sage.misc.decorators import rename_keyword
-from sage.misc.package import is_package_installed
+
 
 #
 # Abelian and quadratic Separatrix Diagram
@@ -641,7 +641,7 @@ class SeparatrixDiagram(SageObject):
             self._top_to_cycle = other._top_to_cycle
             return
 
-        return self._normal_form
+        return sep
 
     def horizontal_symmetry(self):
         r"""
@@ -1417,7 +1417,6 @@ class SeparatrixDiagram(SageObject):
         """
         cbot = self.bot_cycle_tuples()
         ctop0 = self.top_cycle_tuples()
-        n = self.nseps()
 
         connected = not connected
 
@@ -1589,7 +1588,6 @@ def separatrix_diagram_fast_iterator(profile,ncyls=None):
     n = sum(part)
     d = (n+len(part))//2  # the maximum number of cylinders is known
                           # to be g+s-1 from a theorem of Y. Naveh
-    res = set([])
 
     tops = [[]]
     if ncyls is None:
@@ -1804,7 +1802,7 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
 
     cyl_diags = set([])
     if verbose is True: verbose=1
-    aa = a//2
+
     B = [False]*(2*a+2)  # open loops indicator
                          # if B[k] is not False, it is where loop k starts
     sigma = list(range(1,a)) + [0] + list(range(a,2*a+2))
@@ -1918,7 +1916,7 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
                 a_s_a_j = alpha[s_a_j]
 
                 assert sigma[j] == a_j, "sigma[%d] = %d != alpha[%d]"%(j,sigma[j],a_j)
-                assert phi[i] == a_i, "phi[%d] != alpha[i]"%(i,i)
+                assert phi[i] == a_i, "phi[%d] != alpha[i]"%(i,)
                 assert phi[a_s_i] == i, "phi[%d] != %d"%(a_s_i,i)
                 assert phi[j] == j, "phi[%d] + %d"%(j,j)
                 assert phi[a_s_a_j] == a_j, "phi[%d] != alpha[%d]"%(a_s_a_j,j)
@@ -2582,14 +2580,7 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: c.widths_generating_series()  # optional -- latte_int
             (1)/((1 - w0)*(1 - w0*w1)*(1 - w0*w1*w2)^2) + (1)/((1 - w0)*(1 - w0*w1)^2*(1 - w0*w1*w2))
         """
-        from sage.matrix.constructor import matrix
         from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
-        from sage.geometry.polyhedron.constructor import Polyhedron
-
-        from sage.misc.misc_c import prod
-
-        import re
-        re_var = re.compile('w(\\d+)')
 
         sub1 = [None] * self.nseps()
         sub2 = [None] * self.nseps()
@@ -2604,7 +2595,7 @@ class CylinderDiagram(SeparatrixDiagram):
         ans = M.zero()
         dim = self.nseps() - self.ncyls() + 1
         for rays in cone_triangulate(self.lengths_cone()):
-            assert len(rays) == dim, (self, dim, t, C)
+            assert len(rays) == dim, (self, dim)
             num = simplex_count(rays)
 
             den1 = {}
@@ -2629,7 +2620,7 @@ class CylinderDiagram(SeparatrixDiagram):
             f1 = M.term(num, list(den1.items()))
             f2 = M.term(num, list(den2.items()))
 
-            assert f1 == f2, (t, f1, f2)
+            assert f1 == f2, (f1, f2)
             degrees = set(f1.degrees())
             assert degrees == set([dim]), (self, degrees, dim)
 
@@ -3425,7 +3416,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         edges = [(i,n+i) for i in range(n)] + [(2*(n+i),2*(n+i)+1) for i in range(m)]
         faces = []
-        half = Integer(1)/Integer(2)
+
         for j,(b,t) in enumerate(self.cylinders()):
             face = [i for i in b] + [2*(n+j)] + [n+i for i in t[1:]+t[:1]] + [2*(n+j)+1]
             faces.append(tuple(face))
@@ -4111,11 +4102,10 @@ def simplex_count(rays):
         sage: simplex_count(rays)
         1
     """
-    from sage.rings.all import ZZ
-    from sage.matrix.constructor import matrix
     from sage.geometry.polyhedron.constructor import Polyhedron
     d = len(rays[0])
     return Polyhedron([[0]*d] + list(rays)).integral_points_count() - len(rays)
+
 
 def cone_triangulate(C):
     from sage.rings.all import ZZ
@@ -4392,7 +4382,7 @@ class QuadraticCylinderDiagram(SageObject):
         from sage.rings.integer_ring import ZZ
 
         n = self.num_edges()
-        g = self._g
+
         ieqs = []
         eqns = []
 
@@ -4446,9 +4436,7 @@ class QuadraticCylinderDiagram(SageObject):
             sage: q = QuadraticCylinderDiagram('(0,0,1,2,3)-(1,4,4,5,6) (2,5,7,8,8)-(3,6,7,9,9)')
             sage: F = q.widths_generating_series()  # optional -- latte_int
         """
-        from sage.matrix.constructor import matrix
         from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
-        from sage.geometry.polyhedron.constructor import Polyhedron
 
         sub1 = [[] for i in range(self.nseps())]
         sub2 = [[] for i in range(self.nseps())]
@@ -4492,7 +4480,7 @@ class QuadraticCylinderDiagram(SageObject):
             f1 = M.term(num, list(den1.items()))
             f2 = M.term(num, list(den2.items()))
 
-            assert f1 == f2, (t, f1, f2)
+            assert f1 == f2, (f1, f2)
 
             ans += f1
 
@@ -4644,7 +4632,7 @@ class QuadraticCylinderDiagram(SageObject):
                             todo.add(j)
                         elif dart_to_corner[j] != vv:
                             if verbose:
-                                print('j = {} dart_to_corner[{}] = {}'.format(j, dart_to_corner[j]))
+                                print('j = {} dart_to_corner[{}] = {}'.format(j,j,dart_to_corner[j]))
                             raise ValueError('invalid lengths/heights/twists')
 
                 cross.add(min(f))
