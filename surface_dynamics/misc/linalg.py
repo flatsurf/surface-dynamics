@@ -10,6 +10,10 @@ Some linear algebra routines
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
+from sage.arith.all import gcd, lcm
+from sage.rings.all import ZZ, QQ
+from sage.geometry.polyhedron.constructor import Polyhedron
+
 def relation_space(v):
     r"""
     Relation space of the given vector ``v``
@@ -60,7 +64,6 @@ def relation_space(v):
     try:
         m_lengths = matrix([u.vector() for u in v])
     except AttributeError:
-        from sage.rings.rational_field import QQ
         v = [QQ.coerce(i) for i in v]
         m_lengths = matrix([[i] for i in v])
     return m_lengths.left_kernel()
@@ -114,7 +117,6 @@ def deformation_space(lengths):
     try:
         m_lengths = matrix([u.vector() for u in lengths])
     except AttributeError:
-        from sage.rings.rational_field import QQ
         lengths = [QQ.coerce(i) for i in lengths]
         m_lengths = matrix([[i] for i in lengths])
 
@@ -135,10 +137,46 @@ def deformation_cone(v):
         sage: P.rays_list()
         [[1, 0, 1], [0, 1, 1]]
     """
-    from sage.rings.all import QQ
-    from sage.geometry.polyhedron.constructor import Polyhedron
     V = deformation_space(v)
     P = Polyhedron(lines=deformation_space(v).basis())
     B = Polyhedron(rays=(QQ**V.degree()).basis())
     return P.intersection(B)
 
+def cone_triangulate(C, hyperplane=None):
+    r"""
+    Triangulation of rational cone contained in the positive quadrant.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.linalg import cone_triangulate
+        sage: P = Polyhedron(rays=[(1,0,0),(0,1,0),(1,0,1),(0,1,1)])
+        sage: list(cone_triangulate(P))
+        [[(0, 1, 1), (0, 1, 0), (1, 0, 0)], [(0, 1, 1), (1, 0, 1), (1, 0, 0)]]
+
+        sage: rays = [(0, 1, 0, -1, 0, 0),
+        ....: (1, 0, -1, 0, 0, -1),
+        ....: (0, 1, -1, 0, 0, -1),
+        ....: (0, 0, 1, 0, 0, 0),
+        ....: (0, 0, 0, 1, 0, -1),
+        ....: (1, -1, 0, 0, 1, -1),
+        ....: (0, 0, 0, 0, 1, -1),
+        ....: (0, 0, 1, -1, 1, 0),
+        ....: (0, 0, 1, -1, 0, 0),
+        ....: (0, 0, 1, 0, -1, 0),
+        ....: (0, 0, 0, 1, -1, -1),
+        ....: (1, -1, 0, 0, 0, -1),
+        ....: (0, 0, 0, 0, 0, -1)]
+        sage: P = Polyhedron(rays=rays)
+        sage: list(cone_triangulate(P, hyperplane=(1, 2, 3, -1, 0, -5)))
+    """
+    rays = [r.vector() for r in C.rays()]
+    dim = len(rays[0])
+    if hyperplane is None:
+        hyperplane = [1] * dim
+    scalings = [sum(x*h for x,h in zip(r, hyperplane)) for r in rays]
+    assert all(s > 0 for s in scalings)
+    normalized_rays = [r / s for r,s in zip(rays, scalings)]
+    P = Polyhedron(vertices=normalized_rays)
+    for t in P.triangulate():
+        simplex = [P.Vrepresentation(i).vector() for i in t]
+        yield [(r / gcd(r)).change_ring(ZZ) for r in simplex]
