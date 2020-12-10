@@ -111,9 +111,11 @@ from copy import copy
 
 import time
 import surface_dynamics.interval_exchanges.lyapunov_exponents as lyapunov_exponents  # the cython bindings
+from surface_dynamics.misc.linalg import cone_triangulate
 
 from sage.combinat.words.alphabet import Alphabet, OrderedAlphabet
 from sage.combinat.words.morphism import WordMorphism
+from sage.rings.all import ZZ
 
 from sage.matrix.constructor import Matrix, identity_matrix
 from sage.rings.integer import Integer
@@ -738,6 +740,37 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
 
         from sage.geometry.polyhedron.constructor import Polyhedron
         return Polyhedron(ieqs=ieqs)
+
+    def invariant_density_rauzy(self, var='x'):
+        r"""
+        Return the invariant density for the Rauzy induction.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import iet
+            sage: iet.Permutation('a b c d', 'd c b a').invariant_density_rauzy()
+            (1)/((x2 + x3)*(x1 + x2)*(x1 + x2 + x3)*(x0 + x1)) + (1)/((x2 + x3)*(x1 + x2)*(x0 + x1)*(x0 + x1 + x2))
+        """
+        from surface_dynamics.misc.additive_multivariate_generating_series import AdditiveMultivariateGeneratingSeriesRing
+
+        d = len(self)
+        S = self.suspension_cone()
+        Omega = self.intersection_matrix()
+        M = AdditiveMultivariateGeneratingSeriesRing(var, d)
+
+        ans = M.zero()
+        hyperplane = sum(Omega.columns())
+        fac = 1 / ZZ(d).factorial()
+        for t in cone_triangulate(S, hyperplane):
+            heights = [r * Omega for r in t]
+            for h in heights: h.set_immutable()
+            d = {}
+            for h in heights:
+                if h not in d: d[h] = ZZ.one()
+                else: d[h] += ZZ.one()
+            ans += M.term(ZZ.one(), d)
+
+        return ans
 
     def heights_cone(self, side=None):
         r"""
