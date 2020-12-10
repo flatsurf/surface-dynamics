@@ -150,8 +150,10 @@ def cone_triangulate(C, hyperplane=None):
 
         sage: from surface_dynamics.misc.linalg import cone_triangulate
         sage: P = Polyhedron(rays=[(1,0,0),(0,1,0),(1,0,1),(0,1,1)])
-        sage: list(cone_triangulate(P))
+        sage: list(cone_triangulate(P)) # random
         [[(0, 1, 1), (0, 1, 0), (1, 0, 0)], [(0, 1, 1), (1, 0, 1), (1, 0, 0)]]
+        sage: len(_)
+        2
 
         sage: rays = [(0, 1, 0, -1, 0, 0),
         ....: (1, 0, -1, 0, 0, -1),
@@ -167,7 +169,21 @@ def cone_triangulate(C, hyperplane=None):
         ....: (1, -1, 0, 0, 0, -1),
         ....: (0, 0, 0, 0, 0, -1)]
         sage: P = Polyhedron(rays=rays)
-        sage: list(cone_triangulate(P, hyperplane=(1, 2, 3, -1, 0, -5)))
+        sage: list(cone_triangulate(P, hyperplane=(1, 2, 3, -1, 0, -5))) # random
+        [[(0, 0, 0, 0, 0, -1),
+          (0, 0, 0, 0, 1, -1),
+          (0, 0, 0, 1, -1, -1),
+          (0, 0, 1, 0, 0, 0),
+          (0, 1, -1, 0, 0, -1),
+          (1, -1, 0, 0, 1, -1)],
+          ...
+          (0, 0, 1, 0, 0, 0),
+          (0, 1, -1, 0, 0, -1),
+          (0, 1, 0, -1, 0, 0),
+          (1, -1, 0, 0, 1, -1),
+          (1, 0, -1, 0, 0, -1)]]
+        sage: len(_)
+        16
     """
     rays = [r.vector() for r in C.rays()]
     dim = len(rays[0])
