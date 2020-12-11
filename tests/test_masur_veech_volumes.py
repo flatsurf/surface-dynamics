@@ -37,8 +37,8 @@ def as_pure_zeta(vol):
 
 def test_H2_cylinder_diagram_contributions():
     A = AbelianStratum(2).unique_component()
-    c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).to_mzv()
-    c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).to_mzv()
+    c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).integral_sum_as_mzv()
+    c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).integral_sum_as_mzv()
     assert c1 == M(4)/3
     assert c2 == (2*M(1,3) + M(2,2)) / 3
 
@@ -47,9 +47,9 @@ def test_H2_cylinder_diagram_contributions():
 
 def test_H11_cylinder_diagram_contributions():
     A = AbelianStratum(1,1).hyperelliptic_component()
-    c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).to_mzv()
-    c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).to_mzv()
-    c3 = sum(c.volume_contribution() for c in A.cylinder_diagrams(3)).to_mzv()
+    c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).integral_sum_as_mzv()
+    c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).integral_sum_as_mzv()
+    c3 = sum(c.volume_contribution() for c in A.cylinder_diagrams(3)).integral_sum_as_mzv()
 
     assert c1 == M(5)/6
     assert c2 == M(2)*M(3)/3 - M(5)/6
@@ -60,18 +60,18 @@ def test_H11_cylinder_diagram_contributions():
 
 def test_H4hyp_cylinder_diagram_contributions():
     A = AbelianStratum(4).hyperelliptic_component()
-    c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).to_mzv()
-    c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).to_mzv()
-    c3 = sum(c.volume_contribution() for c in A.cylinder_diagrams(3)).to_mzv()
+    c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).integral_sum_as_mzv()
+    c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).integral_sum_as_mzv()
+    c3 = sum(c.volume_contribution() for c in A.cylinder_diagrams(3)).integral_sum_as_mzv()
 
     vol = c1 + c2 + c3
     assert vol == masur_veech_volume(A, rational=True) * M(2*A.stratum().genus())
 
 def test_H4odd_cylinder_diagram_contributions():
     A = AbelianStratum(4).odd_component()
-    c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).to_mzv()
-    c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).to_mzv()
-    c3 = sum(c.volume_contribution() for c in A.cylinder_diagrams(3)).to_mzv()
+    c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).integral_sum_as_mzv()
+    c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).integral_sum_as_mzv()
+    c3 = sum(c.volume_contribution() for c in A.cylinder_diagrams(3)).integral_sum_as_mzv()
 
     vol = c1 + c2 + c3
     assert vol == masur_veech_volume(A, rational=True) * M(2*A.stratum().genus())
@@ -81,9 +81,9 @@ def test_H31_cylinder_diagram_contributions():
     # and Teichmueller volumes of the moduli spaces of Abelian
     # differentials" (2002)
     A = AbelianStratum(3,1).unique_component()
-    c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).to_mzv()
-    c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).to_mzv()
-    c3 = sum(c.volume_contribution() for c in A.cylinder_diagrams(3)).to_mzv()
+    c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).integral_sum_as_mzv()
+    c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).integral_sum_as_mzv()
+    c3 = sum(c.volume_contribution() for c in A.cylinder_diagrams(3)).integral_sum_as_mzv()
 
     assert c1 == M(7)/15
     assert c2 == (55*M(1,6) + 29*M(2,5) + 15*M(3,4) + 8*M(4,3) + 4*M(5,2)) / 45
@@ -95,9 +95,9 @@ def test_H31_cylinder_diagram_contributions():
 
 def test_H211_cylinder_diagram_contributions():
     A = AbelianStratum(2,1,1).unique_component()
-    c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).to_mzv()
-    c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).to_mzv()
-    c3 = sum(c.volume_contribution() for c in A.cylinder_diagrams(3)).to_mzv()
+    c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).integral_sum_as_mzv()
+    c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).integral_sum_as_mzv()
+    c3 = sum(c.volume_contribution() for c in A.cylinder_diagrams(3)).integral_sum_as_mzv()
 
     assert c1 == 7* M(8)/180
     assert c2 == (1620*M(1,7) + 850*M(2,6) + 436*M(3,5) + 231*M(4,4) + 130*M(5,3) +

@@ -103,7 +103,6 @@ from sage.structure.sage_object import SageObject
 
 import itertools
 import sage.arith.misc as arith
-from sage.arith.all import gcd, lcm
 from sage.rings.integer import Integer
 
 from sage.graphs.digraph import DiGraph
@@ -113,6 +112,7 @@ from surface_dynamics.misc.permutation import (perm_check, equalize_perms, perm_
         perm_invert, perms_canonical_labels,
         perms_transitive_components, canonical_perm, canonical_perm_i,
         argmin)
+from surface_dynamics.misc.linalg import cone_triangulate
 
 from sage.misc.decorators import rename_keyword
 
@@ -2580,7 +2580,14 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: c.widths_generating_series()  # optional -- latte_int
             (1)/((1 - w0)*(1 - w0*w1)*(1 - w0*w1*w2)^2) + (1)/((1 - w0)*(1 - w0*w1)^2*(1 - w0*w1*w2))
         """
-        from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
+        from sage.matrix.constructor import matrix
+        from surface_dynamics.misc.multiplicative_multivariate_generating_series import MultiplicativeMultivariateGeneratingSeriesRing
+        from sage.geometry.polyhedron.constructor import Polyhedron
+
+        from sage.misc.misc_c import prod
+
+        import re
+        re_var = re.compile('w(\\d+)')
 
         sub1 = [None] * self.nseps()
         sub2 = [None] * self.nseps()
@@ -2590,7 +2597,7 @@ class CylinderDiagram(SeparatrixDiagram):
             for j in bot:
                 sub2[j] = i
 
-        M = MultivariateGeneratingSeriesRing(self.ncyls(), 'w')
+        M = MultiplicativeMultivariateGeneratingSeriesRing(self.ncyls(), 'w')
         V = M.free_module()
         ans = M.zero()
         dim = self.nseps() - self.ncyls() + 1
@@ -2641,59 +2648,60 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: c0, c1 = AbelianStratum(2).cylinder_diagrams()
             sage: v0 = c0.volume_contribution()   # optional - latte_int, mzv
             sage: v0                              # optional - latte_int, mzv
-            1/3 * Sum...
-            sage: v0.to_mzv()                     # optional - latte_int, mzv
+            (1/3)/((w)^4)
+            sage: v0.integral_sum_as_mzv()                     # optional - latte_int, mzv
             1/3*ζ(4)
             sage: v1 = c1.volume_contribution()   # optional - latte_int, mzv
             sage: v1                              # optional - latte_int, mzv
-            2/3 * Sum...
-            sage: v1.to_mzv()                     # optional - latte_int, mzv
+            (2/3)/((w1)*(w0 + w1)^3) + (1/3)/((w1)^2*(w0 + w1)^2)
+            sage: v1.integral_sum_as_mzv()                     # optional - latte_int, mzv
             2/3*ζ(1,3) + 1/3*ζ(2,2)
 
             sage: for c in AbelianStratum(1,1).cylinder_diagrams():  # optional - latte_int, mzv
-            ....:     print(c, c.volume_contribution().to_mzv())
+            ....:     print(c, c.volume_contribution().integral_sum_as_mzv())
             (0,3,1,2)-(0,3,1,2) 1/6*ζ(5)
             (0)-(1) (1,2,3)-(0,2,3) 1/3*ζ(2,3) + 1/3*ζ(3,2)
             (0,3)-(1,3) (1,2)-(0,2) ζ(1,4) + 1/3*ζ(2,3)
             (0,1)-(2,3) (2)-(1) (3)-(0) 1/3*ζ(1,3) + 1/3*ζ(2,2) - 1/3*ζ(2,3) - 1/3*ζ(3,2) + 1/3*ζ(4) - 1/3*ζ(5)
 
-            sage: sum(c.volume_contribution() for c in AbelianStratum(2,1,1).cylinder_diagrams(1)).to_mzv()  # optional - latte_int, mzv
+            sage: sum(c.volume_contribution() for c in AbelianStratum(2,1,1).cylinder_diagrams(1)).integral_sum_as_mzv()  # optional - latte_int, mzv
             7/180*ζ(8)
 
         Detailed contribution of 2 cylinder diagrams::
 
             sage: cyls = AbelianStratum(2,1,1).cylinder_diagrams(2)
-            sage: sum(cyls[k].volume_contribution() for k in [2,7,8,21,22]).to_mzv()  # optional - latte_int, mzv
+            sage: sum(cyls[k].volume_contribution() for k in [2,7,8,21,22]).integral_sum_as_mzv()  # optional - latte_int, mzv
             13/630*ζ(5,3) + 13/252*ζ(6,2)
-            sage: sum(cyls[k].volume_contribution() for k in [0,11,19,20]).to_mzv()  # optional - latte_int, mzv
+            sage: sum(cyls[k].volume_contribution() for k in [0,11,19,20]).integral_sum_as_mzv()  # optional - latte_int, mzv
             1/21*ζ(4,4) + 4/63*ζ(5,3)
-            sage: sum(cyls[k].volume_contribution() for k in [3,10]).to_mzv()  # optional - latte_int, mzv
+            sage: sum(cyls[k].volume_contribution() for k in [3,10]).integral_sum_as_mzv()  # optional - latte_int, mzv
             2/35*ζ(3,5) + 3/70*ζ(4,4)
-            sage: sum(cyls[k].volume_contribution() for k in [13,23,24]).to_mzv()  # optional - latte_int, mzv
+            sage: sum(cyls[k].volume_contribution() for k in [13,23,24]).integral_sum_as_mzv()  # optional - latte_int, mzv
             2/21*ζ(2,6) + 4/105*ζ(3,5)
-            sage: sum(cyls[k].volume_contribution() for k in [9]).to_mzv()  # optional - latte_int, mzv
+            sage: sum(cyls[k].volume_contribution() for k in [9]).integral_sum_as_mzv()  # optional - latte_int, mzv
             1/21*ζ(1,7) + 1/126*ζ(2,6)
-            sage: sum(cyls[k].volume_contribution() for k in [5]).to_mzv()  # optional - latte_int, mzv
+            sage: sum(cyls[k].volume_contribution() for k in [5]).integral_sum_as_mzv()  # optional - latte_int, mzv
             2/105*ζ(3,5) + 1/70*ζ(4,4)
-            sage: sum(cyls[k].volume_contribution() for k in [6,26]).to_mzv()  # optional - latte_int, mzv
+            sage: sum(cyls[k].volume_contribution() for k in [6,26]).integral_sum_as_mzv()  # optional - latte_int, mzv
             1/7*ζ(1,7) + 1/14*ζ(2,6) + 1/21*ζ(3,5) + 1/28*ζ(4,4) + 2/105*ζ(5,3)
-            sage: sum(cyls[k].volume_contribution() for k in [1,14]).to_mzv()  # optional - latte_int, mzv
+            sage: sum(cyls[k].volume_contribution() for k in [1,14]).integral_sum_as_mzv()  # optional - latte_int, mzv
             2/7*ζ(1,7) + 1/7*ζ(2,6) + 2/21*ζ(3,5) + 3/70*ζ(4,4)
-            sage: sum(cyls[k].volume_contribution() for k in [17,27]).to_mzv()  # optional - latte_int, mzv
+            sage: sum(cyls[k].volume_contribution() for k in [17,27]).integral_sum_as_mzv()  # optional - latte_int, mzv
             2/7*ζ(1,7) + 1/7*ζ(2,6) + 4/105*ζ(3,5)
-            sage: sum(cyls[k].volume_contribution() for k in [4,25]).to_mzv()  # optional - latte_int, mzv
+            sage: sum(cyls[k].volume_contribution() for k in [4,25]).integral_sum_as_mzv()  # optional - latte_int, mzv
             1/7*ζ(1,7) + 1/42*ζ(2,6)
-            sage: sum(cyls[k].volume_contribution() for k in [12,28]).to_mzv()  # optional - latte_int, mzv
+            sage: sum(cyls[k].volume_contribution() for k in [12,28]).integral_sum_as_mzv()  # optional - latte_int, mzv
             4/21*ζ(1,7) + 2/21*ζ(2,6) + 8/315*ζ(3,5)
-            sage: sum(cyls[k].volume_contribution() for k in [15,16]).to_mzv()  # optional - latte_int, mzv
+            sage: sum(cyls[k].volume_contribution() for k in [15,16]).integral_sum_as_mzv()  # optional - latte_int, mzv
             4/21*ζ(1,7) + 2/21*ζ(2,6) + 8/315*ζ(3,5)
-            sage: sum(cyls[k].volume_contribution() for k in [18]).to_mzv()  # optional - latte_int, mzv
+            sage: sum(cyls[k].volume_contribution() for k in [18]).integral_sum_as_mzv()  # optional - latte_int, mzv
             1/36*ζ(7) - 1/36*ζ(8)
         """
-        from surface_dynamics.misc.multivariate_generating_series import GeneralizedMultiZetaElement
+        from surface_dynamics.misc.additive_multivariate_generating_series import AdditiveMultivariateGeneratingSeriesRing
 
         from sage.misc.misc_c import prod
         from sage.rings.integer_ring import ZZ
+
 
         # automorphism group
         aut_size = self.automorphism_group().cardinality()
@@ -2711,11 +2719,12 @@ class CylinderDiagram(SeparatrixDiagram):
                 mult[i] = 1
         numbering = prod(ZZ(m).factorial() for m in mult.values())
 
-
         F = self.widths_generating_series()
         deg, res = F.delta().residue()
         assert deg == self.nseps() + 1, (deg, self.nseps(), F, res)
-        res = GeneralizedMultiZetaElement(F.parent().residue_ring(), [(den,num) for num,den in res])
+
+        A = F.parent().residue_ring()
+        res = sum(A.term(num, den) for num,den in res)
 
         m = ZZ(2) * numbering * sym / ZZ(self.nseps()).factorial() / aut_size
         return m * res
@@ -4106,20 +4115,6 @@ def simplex_count(rays):
     d = len(rays[0])
     return Polyhedron([[0]*d] + list(rays)).integral_points_count() - len(rays)
 
-
-def cone_triangulate(C):
-    from sage.rings.all import ZZ
-    from sage.geometry.polyhedron.constructor import Polyhedron
-    rays = [r.vector() for r in C.rays()]
-    assert all(gcd(r) == 1 for r in rays)
-    assert all(x >= 0 for r in rays for x in r)
-    l = lcm([sum(r) for r in rays])
-    normalized_rays = [l // sum(r) * r for r in rays]
-    P = Polyhedron(vertices=normalized_rays)
-    for t in P.triangulate():
-        simplex = [P.Vrepresentation(i).vector() for i in t]
-        yield [(r / gcd(r)).change_ring(ZZ) for r in simplex]
-
 class QuadraticCylinderDiagram(SageObject):
     r"""
     Cylinder diagram for quadratic differentials
@@ -4436,7 +4431,9 @@ class QuadraticCylinderDiagram(SageObject):
             sage: q = QuadraticCylinderDiagram('(0,0,1,2,3)-(1,4,4,5,6) (2,5,7,8,8)-(3,6,7,9,9)')
             sage: F = q.widths_generating_series()  # optional -- latte_int
         """
-        from surface_dynamics.misc.multivariate_generating_series import MultivariateGeneratingSeriesRing
+        from sage.matrix.constructor import matrix
+        from surface_dynamics.misc.multiplicative_multivariate_generating_series import MultiplicativeMultivariateGeneratingSeriesRing
+        from sage.geometry.polyhedron.constructor import Polyhedron
 
         sub1 = [[] for i in range(self.nseps())]
         sub2 = [[] for i in range(self.nseps())]
@@ -4447,7 +4444,7 @@ class QuadraticCylinderDiagram(SageObject):
                 sub2[j].append(i)
 
         dim = self.nseps() - self.ncyls()
-        M = MultivariateGeneratingSeriesRing(self.ncyls(), 'w')
+        M = MultiplicativeMultivariateGeneratingSeriesRing(self.ncyls(), 'w')
         V = M.free_module()
         ans = M.zero()
         for rays in cone_triangulate(self.lengths_cone()):
