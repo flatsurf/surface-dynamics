@@ -246,7 +246,7 @@ class Constellation_class(Element):
 
     def switch(self, i, j0, j1):
         r"""
-        Swith the vertices and edges at `i` and `i+1`
+        Switch the vertices and edges at `i` and `i+1`
 
         The modification is local in the sense that it modifies `g_i`
         and `g_{i+1}` but does not modify the product `g_i g_{i+1}`.

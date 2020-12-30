@@ -1,7 +1,7 @@
 r"""
 Topological recursion for Masur-Veech volumes.
 
-This is the topological recursion as developped in Andersen et al.
+This is the topological recursion as developed in Andersen et al.
 
 EXAMPLES:
 

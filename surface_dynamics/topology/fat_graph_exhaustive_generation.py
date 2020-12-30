@@ -183,7 +183,7 @@ def augment3(cm, aut_grp, depth, min_degree, callback):
     for i in R:
         # vertex degrees are split as d -> (d1 + 1, d2 + 1)
         # so, if min_degree > 1 we can ignore the first/last half edges
-        # moreover, by the choosen canonical labelling, the degrees of
+        # moreover, by the chosen canonical labelling, the degrees of
         # the split vertices must remain larger than any other
 
         j = i
