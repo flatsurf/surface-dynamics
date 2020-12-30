@@ -204,7 +204,7 @@ ORIGAMI_DB_LOCATION = os.path.join(db_path, 'origamis.db')
 
 # for primitive and primitive orientation cover
 # classification of primitive group action in GAP (order < )
-# (anounced to be up 4096)
+# (announced to be up 4096)
 #  gap.NrMovedPoints(G) : number of points on which the group act
 #  gap.PrimitiveIdentification(G) : the index in the primitive group database
 #  to get back the group:
@@ -627,12 +627,13 @@ def data_to_representative(s):
         u = data_to_integer_tuple(us)
     return Origami_dense_pyx(r,u)
 
+
 def format_representative(s):
     r"""
     Convert a string that encodes an origami into a human readable string.
 
     The output form consists of the concatenation of the cycles without the
-    paranthesis. In other words the permutation `(1,5)(2)(3,7,4)` will be
+    parenthesis. In other words the permutation `(1,5)(2)(3,7,4)` will be
     convert into '15 374'.
 
     EXAMPLES::
@@ -710,9 +711,10 @@ def data_to_pole_partition(s):
         return data_to_small_positive_integer_tuple(s)
     return None
 
+
 def format_pole_partition(p):
     r"""
-    Format into a nice readble string the pole partition.
+    Format into a nice readable string the pole partition.
 
     EXAMPLES::
 
@@ -891,7 +893,7 @@ class OrigamiQuery:
         Get or modify order.
 
         Order should be a list (col_name, +1) or (col_name, -1). First one means
-        ascending and the second one decending. In a sql query, it corresponds
+        ascending and the second one descending. In a sql query, it corresponds
         to the clause 'ORDER BY'.
 
         EXAMPLES::
@@ -987,7 +989,7 @@ class OrigamiQuery:
         that query. Otherwise, it is a list of lists where each item is the
         entries of columns.
 
-        See also `meth:dict` to get a dictionnary output.
+        See also `meth:dict` to get a dictionary output.
 
         EXAMPLES::
 
@@ -1007,7 +1009,7 @@ class OrigamiQuery:
 
     def dict(self):
         r"""
-        Returns a list of dictionnaries: col -> value.
+        Returns a list of dictionaries: col -> value.
 
         EXAMPLES::
 
@@ -1070,7 +1072,7 @@ def build_local_data(o):
     r"""
     Build local data for the origami ``o``.
 
-    The ouptut is a dictionnary that is intended to be used to feed the database
+    The output is a dictionary that is intended to be used to feed the database
     of origamis. The local data are geometrical aspects (stratum, genus, ...) the
     monodromy group (primitivity, orientation cover, ...) and the automorphisms
     of ``o``.
@@ -1080,7 +1082,7 @@ def build_local_data(o):
 
     EXAMPLES::
 
-            sage: from surface_dynamics import *
+        sage: from surface_dynamics import *
 
         sage: o = Origami('(1,2)','(1,3)')
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
@@ -1373,7 +1375,7 @@ class OrigamiDatabase(SQLDatabase):
         - ``dblocation`` - string - name of the database to use (optional).
 
         - ``read_only`` - bool (default: True) - if True, then the database is
-          read_only and changes cannot be commited to disk.
+          read_only and changes cannot be committed to disk.
 
         - ``force_creation`` - bool (default: False) - whether or not create the database.
 
@@ -1775,7 +1777,7 @@ class OrigamiDatabase(SQLDatabase):
             self.delete_rows(qq.sql_query())
 
             if verbose:
-                print("modifiy r=%s u=%s"%(o.r(),o.u()))
+                print("modify r=%s u=%s" % (o.r(), o.u()))
 
             if local_data:
                 x.update(build_local_data(o))
@@ -1952,11 +1954,11 @@ class OrigamiDatabase(SQLDatabase):
             return max(query.list())
 
         else:
-            raise ValueError("\"comp\" shoud be None, a stratum of Abelian differential or a component of stratum")
+            raise ValueError("\"comp\" should be None, a stratum of Abelian differential or a component of stratum")
 
     def _get_format(self, cols):
         r"""
-        Returns the dictionnary of functions for formatting the given the list
+        Returns the dictionary of functions for formatting the given the list
         ``cols`` of columns to display.
 
         EXAMPLES::

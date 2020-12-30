@@ -329,7 +329,7 @@ class OrigamiGenerators():
         Return the projective line with action given by the matrices ``r``
         and ``u`` on the projective line over the field with ``p`` elements.
 
-        If ``r`` and ``u`` are None, then r and u are choosen to be
+        If ``r`` and ``u`` are None, then r and u are chosen to be
 
         .. MATH::
 
@@ -378,7 +378,7 @@ class OrigamiGenerators():
             sage: o.sum_of_lyapunov_exponents()
             5/3
 
-        Any invertible matrix mod p can be choosed to generate the origami::
+        Any invertible matrix mod p can be chosen to generate the origami::
 
             sage: r = matrix([[1,3],[0,1]])
             sage: u = matrix([[1,0],[3,1]])

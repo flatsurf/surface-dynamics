@@ -1676,7 +1676,7 @@ def cylinder_concatenation(perm_1, perm_2, alphabet=None):
 
     - ``perm_1``, ``perm_2`` - two single cylinder permutation representatives.
 
-    - ``alphabet`` - alphabet or ``None`` (defaut: ``None``):
+    - ``alphabet`` - alphabet or ``None`` (default: ``None``):
       whether you want to specify an alphabet for your representative.
 
     EXAMPLES::
@@ -1743,9 +1743,9 @@ def cylinder_concatenation(perm_1, perm_2, alphabet=None):
     from sage.combinat.words.alphabet import Alphabet
     from sage.rings.semirings.non_negative_integer_semiring import NN
 
-    alph = Alphabet(NN)
-    perm_1.alphabet(alph)
-    perm_2.alphabet(alph)
+    alpha = Alphabet(NN)
+    perm_1.alphabet(alpha)
+    perm_2.alphabet(alpha)
     length_1 = len(perm_1[0])-1
     length_2 = len(perm_2[0])-1
     top_row = [i for i in range(length_1+length_2+1)]

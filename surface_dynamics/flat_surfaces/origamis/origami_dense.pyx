@@ -411,7 +411,7 @@ cdef class Origami_dense_pyx:
         (1,3)(2)
     """
     #
-    # Intialize and copy
+    # Initialize and copy
     #
 
     def __cinit__(self):
@@ -2977,7 +2977,7 @@ cdef class Origami_dense_pyx:
         r"""
         Plot self.
 
-        The positions of each square follow a naive algorithm. If you belive
+        The positions of each square follow a naive algorithm. If you believe
         that a better picture exists look at the method .set_positions()
 
         EXAMPLES::
