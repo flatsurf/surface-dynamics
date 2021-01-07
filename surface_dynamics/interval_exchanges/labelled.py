@@ -741,7 +741,7 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
         from sage.geometry.polyhedron.constructor import Polyhedron
         return Polyhedron(ieqs=ieqs)
 
-    def invariant_density_rauzy(self, var='x'):
+    def invariant_density_rauzy(self, var='x', winner=None):
         r"""
         Return the invariant density for the Rauzy induction.
 
@@ -754,7 +754,7 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
         from surface_dynamics.misc.additive_multivariate_generating_series import AdditiveMultivariateGeneratingSeriesRing
 
         d = len(self)
-        S = self.suspension_cone()
+        S = self.suspension_cone(winner=winner)
         Omega = self.intersection_matrix()
         M = AdditiveMultivariateGeneratingSeriesRing(var, d)
 
