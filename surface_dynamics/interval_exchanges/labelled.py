@@ -734,9 +734,11 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
         if winner is not None:
             winner = interval_conversion(winner)
             if winner == 0:
-                ieqs.append([0] + [1] * len(self))
-            elif winner == 1:
+                # sum of heights is <= 0
                 ieqs.append([0] + [-1] * len(self))
+            elif winner == 1:
+                # sum of heights is >= 0
+                ieqs.append([0] + [1] * len(self))
 
         from sage.geometry.polyhedron.constructor import Polyhedron
         return Polyhedron(ieqs=ieqs)
@@ -791,9 +793,9 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
             [[0, 0, 1, 1], [0, 1, 1, 0], [0, 1, 1, 1], [1, 1, 0, 0], [1, 1, 1, 0]]
 
             sage: p.heights_cone('top').rays_list()
-            [[0, 0, 1, 1], [0, 1, 1, 0], [0, 1, 1, 1], [1, 1, 0, 0]]
-            sage: p.heights_cone('bot').rays_list()
             [[0, 0, 1, 1], [0, 1, 1, 0], [1, 1, 0, 0], [1, 1, 1, 0]]
+            sage: p.heights_cone('bot').rays_list()
+            [[0, 0, 1, 1], [0, 1, 1, 0], [0, 1, 1, 1], [1, 1, 0, 0]]
         """
         I = self.intersection_matrix()
         C = self.suspension_cone(side)
