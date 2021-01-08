@@ -743,15 +743,26 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
         from sage.geometry.polyhedron.constructor import Polyhedron
         return Polyhedron(ieqs=ieqs)
 
-    def invariant_density_rauzy(self, var='x', winner=None):
+    def invariant_density_rauzy(self, winner=None, var='x'):
         r"""
         Return the invariant density for the Rauzy induction.
 
         EXAMPLES::
 
             sage: from surface_dynamics import iet
-            sage: iet.Permutation('a b c d', 'd c b a').invariant_density_rauzy()
+            sage: f = iet.Permutation('a b c d', 'd c b a').invariant_density_rauzy()
+            sage: f
             (1)/((x2 + x3)*(x1 + x2)*(x1 + x2 + x3)*(x0 + x1)) + (1)/((x2 + x3)*(x1 + x2)*(x0 + x1)*(x0 + x1 + x2))
+
+            sage: f_top = iet.Permutation('a b c d', 'd c b a').invariant_density_rauzy('top')
+            sage: f_top
+            (1)/((x2 + x3)*(x1 + x2)*(x0 + x1)*(x0 + x1 + x2))
+            sage: f_bot = iet.Permutation('a b c d', 'd c b a').invariant_density_rauzy('bot')
+            sage: f_bot
+            (1)/((x2 + x3)*(x1 + x2)*(x1 + x2 + x3)*(x0 + x1))
+
+            sage: f == f_bot + f_top
+            True
         """
         from surface_dynamics.misc.additive_multivariate_generating_series import AdditiveMultivariateGeneratingSeriesRing
 
