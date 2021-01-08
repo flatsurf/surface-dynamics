@@ -126,6 +126,14 @@ def vector_to_linear_form_string(u, var_names):
 
     return '0' if not s else s
 
+def vector_to_linear_form(u, var):
+    r"""
+    """
+    P = 0
+    for i,j in enumerate(u):
+        P += j*var[i]
+
+    return P
 
 
 # NOTE: should this be an instance of Factorization?
@@ -138,7 +146,7 @@ class FactoredDenominator(object):
     dimension) and ``m`` are multiplicities (i.e. positive integers).
 
     It is used for at least two purposes:
-    
+
     - (Factored) product of polynomials of the form `(1 - m)^d` where `m` is a
       monomial
 
@@ -616,6 +624,16 @@ class FactoredDenominator(object):
             terms.append(term)
 
         return '*'.join(terms)
+
+    def linear_form(self, var):
+        terms = 1
+        for mon, mul in self._tuple:
+            term = vector_to_linear_form(mon, var)
+            if not mul.is_one():
+                term ^= mul
+            terms *= term
+
+        return terms
 
 # TODO: make it possible to use Laurent polynomials in denominator
 # TODO: monomial substitution

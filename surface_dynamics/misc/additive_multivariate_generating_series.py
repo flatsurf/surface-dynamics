@@ -58,6 +58,10 @@ class AdditiveMultivariateGeneratingSeries(AbstractMSum):
         var_names = self.parent().polynomial_ring().variable_names()
         return den.str_linear(var_names)
 
+    def _den_rational_frac(self, den):
+        var = self.parent().polynomial_ring().gens()
+        return den.linear_form(var)
+
     def factor(self):
         """
         Group all the partial fractions into a unique fraction.
