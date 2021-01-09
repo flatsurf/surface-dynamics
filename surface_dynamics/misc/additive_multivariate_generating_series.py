@@ -58,6 +58,52 @@ class AdditiveMultivariateGeneratingSeries(AbstractMSum):
         var_names = self.parent().polynomial_ring().variable_names()
         return den.str_linear(var_names)
 
+    def _symbolic_(self, SR):
+        r"""
+        Return a symbolic version of this fraction.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.additive_multivariate_generating_series import AdditiveMultivariateGeneratingSeriesRing
+            sage: A = AdditiveMultivariateGeneratingSeriesRing('x', 3)
+            sage: x0, x1, x2 = A.polynomial_ring().gens()
+            sage: f1 = A.term(1, [((1,0,0),2), ((0,1,0),2), ((0,0,1),2)])
+            sage: f2 = A.term(x0*x1 - 1, [((1,1,1),3)])
+            sage: SR(f1 + f2) # indirect doctest
+            (x0*x1 - 1)/(x0 + x1 + x2) + 1/(x0*x1*x2)
+            sage: bool(SR(f1) + SR(f2) == SR(f1 + f2))
+            True
+        """
+        P = self.parent().polynomial_ring()
+        res = SR.zero()
+        for den, num in self._data.items():
+            res += SR(num) / SR(den.to_additive_polynomial(P))
+        return res
+
+    def to_rational_function(self, R=None):
+        r"""
+        Return the multivariate rational function corresponding to this element.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.additive_multivariate_generating_series import AdditiveMultivariateGeneratingSeriesRing
+            sage: A = AdditiveMultivariateGeneratingSeriesRing('x', 3)
+            sage: x0, x1, x2 = A.polynomial_ring().gens()
+            sage: f1 = A.term(1, [((1,0,0),2), ((0,1,0),2), ((0,0,1),2)])
+            sage: f2 = A.term(x0*x1 - 1, [((1,1,1),3)])
+            sage: g = (f1 + f2).to_rational_function()
+            sage: g
+            (x0^2*x1^2*x2 - x0*x1*x2 + x0 + x1 + x2)/(x0^2*x1*x2 + x0*x1^2*x2 + x0*x1*x2^2)
+            sage: f1.to_rational_function() + f2.to_rational_function() == g
+            True
+        """
+        if R is None:
+            R = self.parent().polynomial_ring().fraction_field()
+        res = R.zero()
+        for den,num in self._data.items():
+            res += R(num) / den.to_additive_polynomial(R)
+        return res
+
     def factor(self):
         """
         Group all the partial fractions into a unique fraction.

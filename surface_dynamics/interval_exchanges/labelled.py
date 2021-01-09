@@ -734,27 +734,40 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
         if winner is not None:
             winner = interval_conversion(winner)
             if winner == 0:
-                ieqs.append([0] + [1] * len(self))
-            elif winner == 1:
+                # sum of heights is <= 0
                 ieqs.append([0] + [-1] * len(self))
+            elif winner == 1:
+                # sum of heights is >= 0
+                ieqs.append([0] + [1] * len(self))
 
         from sage.geometry.polyhedron.constructor import Polyhedron
         return Polyhedron(ieqs=ieqs)
 
-    def invariant_density_rauzy(self, var='x'):
+    def invariant_density_rauzy(self, winner=None, var='x'):
         r"""
         Return the invariant density for the Rauzy induction.
 
         EXAMPLES::
 
             sage: from surface_dynamics import iet
-            sage: iet.Permutation('a b c d', 'd c b a').invariant_density_rauzy()
+            sage: f = iet.Permutation('a b c d', 'd c b a').invariant_density_rauzy()
+            sage: f
             (1)/((x2 + x3)*(x1 + x2)*(x1 + x2 + x3)*(x0 + x1)) + (1)/((x2 + x3)*(x1 + x2)*(x0 + x1)*(x0 + x1 + x2))
+
+            sage: f_top = iet.Permutation('a b c d', 'd c b a').invariant_density_rauzy('top')
+            sage: f_top
+            (1)/((x2 + x3)*(x1 + x2)*(x0 + x1)*(x0 + x1 + x2))
+            sage: f_bot = iet.Permutation('a b c d', 'd c b a').invariant_density_rauzy('bot')
+            sage: f_bot
+            (1)/((x2 + x3)*(x1 + x2)*(x1 + x2 + x3)*(x0 + x1))
+
+            sage: f == f_bot + f_top
+            True
         """
         from surface_dynamics.misc.additive_multivariate_generating_series import AdditiveMultivariateGeneratingSeriesRing
 
         d = len(self)
-        S = self.suspension_cone()
+        S = self.suspension_cone(winner=winner)
         Omega = self.intersection_matrix()
         M = AdditiveMultivariateGeneratingSeriesRing(var, d)
 
@@ -791,9 +804,9 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
             [[0, 0, 1, 1], [0, 1, 1, 0], [0, 1, 1, 1], [1, 1, 0, 0], [1, 1, 1, 0]]
 
             sage: p.heights_cone('top').rays_list()
-            [[0, 0, 1, 1], [0, 1, 1, 0], [0, 1, 1, 1], [1, 1, 0, 0]]
-            sage: p.heights_cone('bot').rays_list()
             [[0, 0, 1, 1], [0, 1, 1, 0], [1, 1, 0, 0], [1, 1, 1, 0]]
+            sage: p.heights_cone('bot').rays_list()
+            [[0, 0, 1, 1], [0, 1, 1, 0], [0, 1, 1, 1], [1, 1, 0, 0]]
         """
         I = self.intersection_matrix()
         C = self.suspension_cone(side)

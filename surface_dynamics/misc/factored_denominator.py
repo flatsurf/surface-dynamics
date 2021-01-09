@@ -138,7 +138,7 @@ class FactoredDenominator(object):
     dimension) and ``m`` are multiplicities (i.e. positive integers).
 
     It is used for at least two purposes:
-    
+
     - (Factored) product of polynomials of the form `(1 - m)^d` where `m` is a
       monomial
 
