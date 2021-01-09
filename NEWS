@@ -16,7 +16,10 @@ v0.4.6
 
 **Changed:**
 
-* Masur-Veech volume contribution of individual cylinder diagrams
+* Masur-Veech volume contribution of individual cylinder diagrams as multiple
+  zeta values
+
+* Density function for Rauzy induction
 
 v0.4.5
 ======
