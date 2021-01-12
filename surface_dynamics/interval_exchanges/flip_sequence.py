@@ -554,7 +554,16 @@ class IETFlipSequence(SageObject):
         from sage.rings.qqbar import AA
         m = self.matrix()
         poly = m.charpoly()
-        K, a, _ = max(poly.roots(AA, False)).as_number_field_element(minimal=True, embedded=True)
+        rho = max(poly.roots(AA, False))
+        try:
+            K, a, _ = rho.as_number_field_element(minimal=True, embedded=True)
+        except TypeError:
+            # NOTE: the embedded option appeared in sage 8.8
+            from sage.rings.number_field.number_field import NumberField
+            L, b, _ = rho.as_number_field_element(minimal=True)
+            K = NumberField(L.polynomial(), str(L.gen()), embedding=rho)
+            a = K(b.polynomial())
+
         lengths = (m - a).right_kernel().basis()[0]
         if lengths[0] < 0:
             lengths = -lengths
