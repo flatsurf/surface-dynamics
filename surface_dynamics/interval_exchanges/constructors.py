@@ -166,7 +166,7 @@ AUTHORS:
 
 """
 #*****************************************************************************
-#       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
+#       Copyright (C) 2019-2021 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
@@ -903,3 +903,7 @@ def IntervalExchangeTransformationFamily(*args):
         return IETFamily(args[0], C)
 
 IETFamily = IntervalExchangeTransformationFamily
+
+def FlipSequence(*args, **kwds):
+    from .flip_sequence import IETFlipSequence
+    return IETFlipSequence(*args, **kwds)
