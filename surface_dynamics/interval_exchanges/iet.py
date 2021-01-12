@@ -1,7 +1,7 @@
 r"""
 Interval Exchange Transformations and Linear Involution
 
-An interval exchage transformation is a map defined on an interval (see
+An interval exchange transformation is a map defined on an interval (see
 help(iet.IntervalExchangeTransformation) for a more complete help.
 
 EXAMPLES::
@@ -830,7 +830,7 @@ class IntervalExchangeTransformation:
                 # B ... A ... D
                 newlengths[A] += newlengths[C]  # backward rauzy
                 newlengths[D] += newlengths[B]  # backward rauzy
-                newlengths[B] += newlengths[C]  # absorbtion
+                newlengths[B] += newlengths[C]  # absorption
                 newlengths[C] = 0
                 newtop.pop(newtop.index(C))
                 newtop.pop(newtop.index(B))
@@ -855,7 +855,7 @@ class IntervalExchangeTransformation:
         Composition of iet.
 
         The domain (i.e. the length) of the two iets must be the same). The
-        alphabet choosen depends on the permutation.
+        alphabet chosen depends on the permutation.
 
         TESTS:
 
@@ -1858,9 +1858,9 @@ class IntervalExchangeTransformation:
 
         - ``position`` - a 2-uple of the position
 
-        - ``horizontal_alignment`` - left (defaut), center or right
+        - ``horizontal_alignment`` - left (default), center or right
 
-        - ``labels`` - boolean (defaut: True)
+        - ``labels`` - boolean (default: True)
 
         - ``fontsize`` - the size of the label
 

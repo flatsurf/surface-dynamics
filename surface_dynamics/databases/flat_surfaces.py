@@ -373,7 +373,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
     def has_component(self, comp):
         r"""
-        Test wheter the database has the component ``comp``.
+        Test whether the database has the component ``comp``.
 
         EXAMPLES::
 

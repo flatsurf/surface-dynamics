@@ -36,10 +36,10 @@ class PermutationCover(SageObject):
     \in \{1, 2, \ldots, m\}`.
 
     In order to do so, each interval on the base surface should come with an
-    orientation. This orientation is automaticaly choosen by convention
+    orientation. This orientation is automatically chosen by convention
     according to a clockwise orientation of the surface. The two copies of any
-    interval have to be oriented alternatively in this choosen orientation and
-    in the oposite to it.
+    interval have to be oriented alternatively in this chosen orientation and
+    in the opposite to it.
 
     This convention is made such that the permutation associated to each interval
     is the action of the path going into the interval oriented according to
@@ -628,7 +628,7 @@ class PermutationCover(SageObject):
 
         This is cached to speed up the computation of the projection matrices.
         See :meth:`~flatsurf.misc.group_representation.conjugacy_class_matrix`
-        for more informations.
+        for more information.
 
         TESTS::
 
@@ -710,17 +710,17 @@ class PermutationCover(SageObject):
          the additional information in the given file rather than on the
          standard output.
 
-         - ``return_speed`` -- wether or not return the lyapunov exponents list
+         - ``return_speed`` -- whether or not return the lyapunov exponents list
          in a pair with the speed of the geodesic.
 
          - ``isotypic_decomposition`` -- either a boolean or a character or a list of characters.
 
          - ``return_char`` -- whether or not return the character corresponding to
-         the isotypic component.
+           the isotypic component.
 
-         - ``verbose`` -- if ``True`` provide additional informations rather than
-         returning only the Lyapunov exponents (i.e. ellapsed time, confidence
-         intervals, ...)
+         - ``verbose`` -- if ``True`` provide additional information rather than
+           returning only the Lyapunov exponents (i.e. elapsed time, confidence
+           intervals, ...)
 
 
         EXAMPLES::
@@ -895,7 +895,7 @@ class PermutationCover(SageObject):
             output_file.write("%d iterations (~2^%d)\n"%(
                     nb_iterations,
                     floor(log(nb_iterations) / log(2))))
-            output_file.write("ellapsed time %s\n"%time.strftime("%H:%M:%S",time.gmtime(t1-t0)))
+            output_file.write("elapsed time %s\n"%time.strftime("%H:%M:%S",time.gmtime(t1-t0)))
             output_file.write("Lexp Rauzy-Zorich: %f (std. dev. = %f, conf. rad. 0.01 = %f)\n"%(
                     m,d, 2.576*d/sqrt(nb_experiments)))
 

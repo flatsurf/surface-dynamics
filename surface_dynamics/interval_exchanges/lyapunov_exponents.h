@@ -81,7 +81,7 @@ typedef struct{
 of the suspension surface is always pointing in the clockwise direction.
 We fix the orientation of the top intervals to be 1 for the first we meet
 and then -1.
-For the bottom interals, if their twin is on top they necessarily have orientation
+For the bottom intervals, if their twin is on top they necessarily have orientation
 -1.  for two intervals in the bottom part, we will choose the second one to have
 orientation -1. 
 The permutations will be given by generator of the fundamental group

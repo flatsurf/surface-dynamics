@@ -516,7 +516,7 @@ def delta_std(profile, marking=None):
         sage: import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rcc
 
 
-    A ValueError is raised if the partition does not fullfill the requirement::
+    A ValueError is raised if the partition does not fulfill the requirement::
 
         sage: rcc.delta_std([5,2])
         Traceback (most recent call last):
@@ -703,7 +703,7 @@ def gamma_irr(profile=None, marking=None):
         sage: rcc.gamma_irr([4,2])
         770
 
-    The non connecte strata in genus 3::
+    The non connected strata in genus 3::
 
         sage: c_odd = AbelianStratum(2,2).odd_component()
         sage: c_hyp = AbelianStratum(2,2).hyperelliptic_component()
@@ -775,7 +775,7 @@ def _delta_irr_rec(p, marking):
         pp = Partition(p._list[:i1] + p._list[i1+1:i2] + p._list[i2+1:])
 
         N = d(Partition(sorted(pp._list+[m1+m2+1],reverse=True))) /  pp.centralizer_size()
-        # nb of standard permutations that corrresponds to extension of good
+        # nb of standard permutations that corresponds to extension of good
         # guys
 
         for p1,p2 in bidecompositions(Partition(pp)):
@@ -814,7 +814,7 @@ def delta_irr(profile, marking=None):
 
         sage: import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rcc
 
-    The non connecte strata in genus 3::
+    The non connected strata in genus 3::
 
         sage: from surface_dynamics import AbelianStratum
 
