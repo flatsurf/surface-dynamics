@@ -905,5 +905,32 @@ def IntervalExchangeTransformationFamily(*args):
 IETFamily = IntervalExchangeTransformationFamily
 
 def FlipSequence(*args, **kwds):
+    r"""
+    Build a flip sequence corresponding to a path in a Rauzy diagram.
+
+    A flip sequence is built from an initial permutation (built from :func:`Permutation` or
+    :func:`GeneralizedPermutation`) and a sequence of Rauzy inductions that could be of the
+    following form:
+
+    - a letter ``'t'`` or ``'b'`` for top right and bottom right induction
+      respectively
+
+    - a pair of letters ``'tr'``, ``'br'``, ``'tl'`` or ``'bl'`` for top right,
+      bottom right, top left and bottom left induction respectively
+
+    For all available options, see :class:`~surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence`.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics import iet
+        sage: p = iet.Permutation('a b', 'b a')
+        sage: f = iet.FlipSequence(p, ['t', 'b'])
+        sage: f.substitution()
+        WordMorphism: a->ab, b->abb
+
+        sage: f = iet.FlipSequence(p, ['tr', 'bl'])
+        sage: f.substitution()
+        WordMorphism: a->bab, b->b
+    """
     from .flip_sequence import IETFlipSequence
     return IETFlipSequence(*args, **kwds)

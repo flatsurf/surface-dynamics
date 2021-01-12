@@ -45,7 +45,6 @@ class IETFlipSequence(SageObject):
 
         sage: from surface_dynamics import iet
 
-
     Making substitutions from a flip sequence::
 
         sage: p = iet.Permutation([['a','b','c','d'],['d','c','b','a']])
@@ -85,6 +84,22 @@ class IETFlipSequence(SageObject):
         x^8 - x^7 - x^6 + x^5 - x^4 + x^3 - x^2 - x + 1
     """
     def __init__(self, p, rauzy_moves=None, top_bottom_inverse=False, left_right_inverse=False, relabelling=None):
+        r"""
+        INPUT:
+
+        - ``p`` - permutation or generalized permutation
+
+        - ``rauzy_moves`` - (optional; default empty) a sequence of Rauzy moves
+
+        - ``top_bottom_inverse`` - (optional; default ``False``) whether a
+          top-bottom inverse is performed at the end of the flip sequence
+
+        - ``left_right_inverse`` - (optional; default ``False``) whether a
+          left-right inverse is performed at the end of the flip sequence
+
+        - ``relabelling`` - (optional; default identity permutation) the
+          relabelling to be performed at the end of the flip sequence
+        """
         if not isinstance(p, LabelledPermutation):
             p = GeneralizedPermutation(p)
         self._start = p.__copy__()
