@@ -1352,9 +1352,9 @@ class Permutation(SageObject):
         else:
             self._set_alphabet(data)
 
-    def left_right_inverse(self):
+    def left_right_inverse(self, inplace=False):
         r"""
-        Returns the left-right inverse.
+        Return the left-right inverse.
 
         The left-right inverse of a permutation, is the permutation obtained by
         reversing the order of the underlying ordering.
@@ -1407,7 +1407,7 @@ class Permutation(SageObject):
              sage: p.left_right_inverse() == p
              True
         """
-        res = copy(self)
+        res = self if inplace else copy(self)
         res._reversed_twin()
 
         if res._flips is not None:
@@ -1423,9 +1423,9 @@ class Permutation(SageObject):
     lr_inverse = left_right_inverse
     vertical_inverse = left_right_inverse
 
-    def top_bottom_inverse(self):
+    def top_bottom_inverse(self, inplace=False):
         r"""
-        Returns the top-bottom inverse.
+        Return the top-bottom inverse.
 
         You can use also use the shorter .tb_inverse().
 
@@ -1470,7 +1470,7 @@ class Permutation(SageObject):
             sage: p is p.top_bottom_inverse()
             False
         """
-        res = copy(self)
+        res = self if inplace else copy(self)
         res._inversed_twin()
 
         if res._flips is not None:
