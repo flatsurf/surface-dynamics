@@ -347,7 +347,7 @@ class OrigamiEdges(OrigamiObjects):
 
     def simple_closed_curve_to_vertex_in_out(self, c):
         r"""
-        From a curve c (as a vector) returns two dictionnaries associated to
+        From a curve c (as a vector) returns two dictionaries associated to
         input/output view from each visited vertices
         """
         c_in = {}

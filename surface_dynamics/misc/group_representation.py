@@ -21,7 +21,7 @@ def real_characters(G):
     Return a pair ``(table of characters, character degrees)`` for the
     group ``G``.
 
-    OUPUT:
+    OUTPUT:
 
     - table of characters - a list of characters. Each character is represented
       as the list of its values on conjugacy classes. The order of conjugacy

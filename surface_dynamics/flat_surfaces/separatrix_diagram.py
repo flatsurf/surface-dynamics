@@ -180,7 +180,7 @@ class SeparatrixDiagram(SageObject):
         -------------------
            <-- top --
 
-    The order for bot and top is choosen in such a way that it cooresponds to
+    The order for bot and top is chosen in such a way that it corresponds to
     the orientation of a face.
 
     EXAMPLES::
@@ -322,7 +322,7 @@ class SeparatrixDiagram(SageObject):
 
         The vertices correspond to separatrix and the edges are of two types
 
-        - 'b' neighboor corresponds to the right neighbors on the bottom
+        - 'b' neighbor corresponds to the right neighbors on the bottom
           permutation
 
         - 't' edges correspond to the neighbor of the top permutation
@@ -1695,10 +1695,11 @@ def string_to_cycle(s):
     if len(s) < 2:
         raise ValueError("Wrong syntax")
     if s[0] != '(':
-        raise ValueError("A cycle string should start with an opening paranthesis")
+        raise ValueError("A cycle string should start with an opening parenthesis")
     if s[-1] != ')':
-        raise ValueError("A cycle string should end with a closing paranthesis")
+        raise ValueError("A cycle string should end with a closing parenthesis")
     return tuple(int(i) for i in s[1:-1].split(','))
+
 
 def orientation_cover(alpha,phi,a,verbose=0):
     r"""
@@ -3779,7 +3780,7 @@ class CylinderDiagram(SeparatrixDiagram):
         widths = [sum(lengths[i] for i in bot) for bot in self.bot_cycle_tuples()]
         areas = [heights[i]*widths[i] for i in range(self.ncyls())]
 
-        # intialization of partial volumes: the set of squares in cylinder i is range(v[i],v[i+1])
+        # initialization of partial volumes: the set of squares in cylinder i is range(v[i],v[i+1])
         v = [0]
         for a in areas:
             v.append(v[-1] + a)
@@ -3906,7 +3907,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         areas = [heights[i]*widths[i] for i in range(self.ncyls())]
 
-        # intialization of partial volumes: the set of squares in cylinder i is range(v[i],v[i+1])
+        # initialization of partial volumes: the set of squares in cylinder i is range(v[i],v[i+1])
         v = [0]
         for a in areas:
             v.append(v[-1] + a)

@@ -342,7 +342,7 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
 
             sage: from surface_dynamics import *
 
-        Let us consider few examples in H(2) for which the sum is independant of
+        Let us consider few examples in H(2) for which the sum is independent of
         the origami::
 
             sage: o = Origami('(1,2)','(1,3)')

@@ -109,7 +109,7 @@ Old code that might moved or be removed.
 #        # the other occurrence of ktop needs to be replaced
 #        # - by [lbot[-1],ltop[-1]] if it is ltop[j]
 #        # - by [ltop[-1],lbot[-1]] if it is lbot[j]
-#        # the dictionary of lenghts needs one update: ll[kbot] = l[kbot] - l[ktop]
+#        # the dictionary of lengths needs one update: ll[kbot] = l[kbot] - l[ktop]
 #
 #        if kbot in llbot: llbot.insert(llbot.index(kbot),ktop)
 #        else: lltop.insert(lltop.index(kbot)+1,ktop)

@@ -380,7 +380,7 @@ void lyapunov_exponents(origami_data *o, size_t NB_ITERATIONS, double * ttheta)
 	while(iteration < NB_ITERATIONS)
 	{
 	    /* Rauzy induction while the length is not too small   */
-		/* we assume lb > la at the begining of the loop       */
+		/* we assume lb > la at the beginning of the loop       */
 		/* one step of iteration corresponds to go from lb and */
 		/* get smaller than MIN_LENGTH */
 		while(lb > MIN_LENGTH)
@@ -735,7 +735,7 @@ void lyapunov_exponents_with_involution(origami_with_involution_data *o, size_t 
 	while(iteration < NB_ITERATIONS)
 	{
 	    /* Rauzy induction while the length is not too small   */
-		/* we assume lb > la at the begining of the loop       */
+		/* we assume lb > la at the beginning of the loop       */
 		/* one step of iteration corresponds to go from lb and */
 		/* get smaller than MIN_LENGTH */
 #if _VERBOSE_ > 1

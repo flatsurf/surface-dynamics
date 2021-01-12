@@ -888,7 +888,7 @@ class AbelianStratum(Stratum):
 
     def cylinder_diagrams_by_component(self, ncyls=None, up_to_symmetry=True, force_computation=False):
         r"""
-        Return a dictionnary component -> list of cylinder diagrams.
+        Return a dictionary component -> list of cylinder diagrams.
 
         INPUT:
 
@@ -1160,7 +1160,7 @@ class AbelianStratumComponent(StratumComponent):
         r"""
         Returns the Zorich representative of this connected component.
 
-        Zorich constructs explicitely interval exchange
+        Zorich constructs explicitly interval exchange
         transformations for each stratum in [Zor08]_.
 
         INPUT:
@@ -1731,7 +1731,7 @@ class AbelianStratumComponent(StratumComponent):
           cylinder diagrams up to horizontal and vertical symmetry.
 
         - ``force_computation`` - (default: ``False``) whether we use the
-          database or compute explicitely using the the generation algorithm.
+          database or compute explicitly using the the generation algorithm.
 
         EXAMPLES::
 
@@ -2162,15 +2162,15 @@ class HypAbelianStratumComponent(ASC):
         r"""
         Returns the Zorich representative of this connected component.
 
-        Zorich constructs explicitely interval exchange
+        Zorich constructs explicitly interval exchange
         transformations for each stratum in [Zor08]_.
 
         INPUT:
 
-        - ``reduced`` - boolean (defaut: ``True``): whether you obtain
+        - ``reduced`` - boolean (default: ``True``): whether you obtain
           a reduced or labelled permutation
 
-        - ``alphabet`` - alphabet or ``None`` (defaut: ``None``):
+        - ``alphabet`` - alphabet or ``None`` (default: ``None``):
           whether you want to specify an alphabet for your
           representative
 
@@ -2277,11 +2277,11 @@ class HypAbelianStratumComponent(ASC):
         Return the cardinality of the extended Rauzy diagram associated to the
         hyperelliptic component
 
-        The cardinality of the rauzy diagram or extended Rauzy diagram
+        The cardinality of the Rauzy diagram or extended Rauzy diagram
         associated to `H_{hyp}(2g-2,0^k)` or `H_{hyp}(g-1,g-1,0^k)` depends only
-        on the dimension `d` of the inital stratum `\mathcal{H}_{hyp}(2g-2)` for
-        which `d=2g` or `\mathcal{H}_{hyp}(g-1,g-1)` for which `d=2g+1` and the
-        number of fake zeros `k`. The formula is
+        on the dimension `d` of the initial stratum `\mathcal{H}_{hyp}(2g-2)`
+        for which `d=2g` or `\mathcal{H}_{hyp}(g-1,g-1)` for which
+        `d=2g+1` and the number of fake zeros `k`. The formula is
 
         .. MATH::
 
@@ -2766,18 +2766,18 @@ class EvenAbelianStratumComponent(ASC):
         r"""
         Returns the Zorich representative of this connected component.
 
-        Zorich constructs explicitely interval exchange
+        Zorich constructs explicitly interval exchange
         transformations for each stratum in [Zor08]_.
 
         INPUT:
 
-        - ``reduced`` - boolean (defaut: True): whether you obtain a reduced or
+        - ``reduced`` - boolean (default: True): whether you obtain a reduced or
           labelled permutation
 
         - ``left_degree`` - integer (optional) - a specified degree of zero at
           the left of the interval.
 
-        - ``alphabet`` - alphabet or None (defaut: None): whether you want to
+        - ``alphabet`` - alphabet or None (default: None): whether you want to
           specify an alphabet for your representative
 
         - ``relabel`` - boolean (default: True) - if False uses Zorich's natural
@@ -3142,7 +3142,7 @@ class OddAbelianStratumComponent(ASC):
         """
         Returns the Zorich representative of this connected component.
 
-        A. Zorich constructs explicitely interval exchange
+        A. Zorich constructs explicitly interval exchange
         transformations for each stratum in [Zor08]_.
 
         EXAMPLES::
@@ -3577,7 +3577,7 @@ class AbelianStrata(Strata):
     H^out([2])
     H^out([0], 0, 0)
 
-    Get outisde of tests
+    Get outside of tests
     sage  for s in AbelianStrata(dimension=5): print(s)
     H^out(2, [0])
     H^out([2], 0)
@@ -3717,6 +3717,7 @@ class AbelianStrata(Strata):
                 (self._dimension is None or c.dimension() == self._dimension) and
                 (self._fake_zeros is None or self._fake_zeros or not c.nb_fake_zeros()))
 
+
 class AbelianStrata_g(AbelianStrata):
     r"""
     Stratas of genus g surfaces without fake zeros.
@@ -3818,6 +3819,7 @@ class AbelianStrata_g(AbelianStrata):
         """
         return AbelianStratum({1:2*self._genus-2})
 
+
 class AbelianStrata_d(AbelianStrata):
     r"""
     Strata with prescribed dimension.
@@ -3826,7 +3828,7 @@ class AbelianStrata_d(AbelianStrata):
 
     - ``dimension`` - an integer greater than 1
 
-    - ``fake_zeros`` - boolean (dafault: False) - allows or not fake zeros
+    - ``fake_zeros`` - boolean (default: False) - allows or not fake zeros
 
     EXAMPLES::
 

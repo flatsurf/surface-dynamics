@@ -71,10 +71,10 @@ class Stratum(UniqueRepresentation, SageObject):
 
     There may be
 
-    - an attribute ``._name`` which corresponds to the begining of the string
+    - an attribute ``._name`` which corresponds to the beginning of the string
       representation (default is the empty string)
 
-    - an attribute ``._latex_name`` which corresponds to the begining of the latex
+    - an attribute ``._latex_name`` which corresponds to the beginning of the latex
       string representation (uses ``_name`` by default)
 
     TESTS::
