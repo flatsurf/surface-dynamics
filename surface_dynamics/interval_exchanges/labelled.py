@@ -110,8 +110,11 @@ from sage.misc.lazy_attribute import lazy_attribute
 from copy import copy
 
 import time
+
+from surface_dynamics.misc.permutation import perm_check, perm_init
 import surface_dynamics.interval_exchanges.lyapunov_exponents as lyapunov_exponents  # the cython bindings
 from surface_dynamics.misc.linalg import cone_triangulate
+
 
 from sage.combinat.words.alphabet import Alphabet, OrderedAlphabet
 from sage.combinat.words.morphism import WordMorphism
@@ -238,6 +241,25 @@ class LabelledPermutation(SageObject):
             a1 = list(map(self._alphabet.unrank, self._labels[1]))
 
         return [a0,a1]
+
+    def relabel(self, p):
+        r"""
+        Relabel this permutation according to ``p``.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import iet
+            sage: p = iet.Permutation('a b c \n c b a')
+            sage: p.relabel([2, 1, 0])
+            sage: p
+            c b a
+            a b c
+        """
+        if not perm_check(p):
+            p = perm_init(p, n=self._alphabet.cardinality())
+        for i in range(2):
+            for j in range(len(self._labels[i])):
+                self._labels[i][j] = p[self._labels[i][j]]
 
     def rauzy_move_matrix(self, winner=None, side='right'):
         r"""
@@ -1635,7 +1657,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
             OUTPUT:
 
-            WordMorhpism -- the word morphism corresponding to the orbit
+            WordMorphism -- the word morphism corresponding to the orbit
 
             EXAMPLES::
 
