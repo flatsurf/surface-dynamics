@@ -232,8 +232,8 @@ class FactoredDenominator(object):
             sage: f = FactoredDenominator([((0,1,2), 3), ((1,1,1), 1)], V)
 
             sage: m = matrix(3, [1,1,0,0,1,1,1,0,1])
-            sage: f.subs(m)
-            {(1, 3, 2): 3, (2, 2, 2): 1}
+            sage: f.subs(m) == FactoredDenominator([((1,3,2), 3), ((2,2,2), 1)], V)
+            True
 
             sage: m = matrix(3, [1,1,1,1,1,1,1,1,1])
             sage: f.subs(m)
