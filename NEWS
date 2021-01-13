@@ -21,9 +21,26 @@ v0.4.6
 
 * Density function for Rauzy induction
 
+* Flip sequence for Rauzy induction. It is now possible to construct
+  pseudo-Anosov homeomorphism without generating the Rauzy diagrams.
+
 v0.4.5
 ======
+
+**Fixed:**
+
+* fix .factor() for multivariate generating series
 
 **Changed:**
 
 * Topological recursion (Kontsevich and Masur-Veech volumes)
+
+* up_to_symmetry option for cylinder diagrams
+
+* more flexible statistics for interval exchange transformations
+
+* fix orientation cover for Q(-1^4)
+
+* erase_marked_points for interval exchange transformations
+
+* generators for square tiled surfaces with cylinders of height one

@@ -221,6 +221,45 @@ class FactoredDenominator(object):
         """
         return iter(self._tuple)
 
+    def subs(self, m):
+        r"""
+        Matrix substitution.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.factored_denominator import FactoredDenominator
+            sage: V = ZZ**3
+            sage: f = FactoredDenominator([((0,1,2), 3), ((1,1,1), 1)], V)
+
+            sage: m = matrix(3, [1,1,0,0,1,1,1,0,1])
+            sage: f.subs(m) == FactoredDenominator([((1,3,2), 3), ((2,2,2), 1)], V)
+            True
+
+            sage: m = matrix(3, [1,1,1,1,1,1,1,1,1])
+            sage: f.subs(m)
+            {(3, 3, 3): 4}
+
+            sage: m = matrix(3, [1,0,0,1,0,0,1,0,0])
+            sage: f.subs(m)
+            Traceback (most recent call last):
+            ...
+            ValueError: zero denominator
+        """
+        if not self._tuple:
+            return self
+        new_dict = {}
+        for mon, mult in self._dict.items():
+            new_mon = m * mon
+            new_mon.set_immutable()
+            if not new_mon:
+                raise ValueError('zero denominator')
+            if new_mon in new_dict:
+                new_dict[new_mon] += mult
+            else:
+                new_dict[new_mon] = mult
+
+        return FactoredDenominator(new_dict)
+
     def to_multiplicative_polynomial(self, S, extra_var=False):
         r"""
         Return the product of the term in a given polynomial ring ``S``.
