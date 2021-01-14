@@ -312,17 +312,17 @@ class FactoredDenominator(object):
 
             sage: R1 = QQ['x,y,z']
             sage: f.to_additive_polynomial(R1)
-            x
+            x^2
             sage: g.to_additive_polynomial(R1)
-            x^2 + x*y + x*z
+            x^3 + x^2*y + x^2*z
 
             sage: f.to_additive_polynomial(R1['E'], extra_var=True)
-            x*E
+            x^2*E
             sage: g.to_additive_polynomial(R1['E'], extra_var=True)
-            (x^2 + x*y + x*z)*E^2
+            (x^3 + x^2*y + x^2*z)*E^2
 
             sage: g.to_additive_polynomial(QQ['t1,t2,t3'])
-            t1^2 + t1*t2 + t1*t3
+            t1^3 + t1^2*t2 + t1^2*t3
         """
         if extra_var:
             R = S.base_ring()
