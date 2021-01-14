@@ -317,9 +317,9 @@ class FactoredDenominator(object):
             x^3 + x^2*y + x^2*z
 
             sage: f.to_additive_polynomial(R1['E'], extra_var=True)
-            x^2*E
+            x^2*E^2
             sage: g.to_additive_polynomial(R1['E'], extra_var=True)
-            (x^3 + x^2*y + x^2*z)*E^2
+            (x^3 + x^2*y + x^2*z)*E^3
 
             sage: g.to_additive_polynomial(QQ['t1,t2,t3'])
             t1^3 + t1^2*t2 + t1^2*t3
@@ -332,9 +332,9 @@ class FactoredDenominator(object):
             T = S.one()
 
         ans = S.one()
-        for a,i in self._tuple:
-            monomial = sum(coeff * R.gen(i) for i,coeff in enumerate(a))
-            ans *= monomial ** i * T
+        for a, mult in self._tuple:
+            monomial = sum(coeff * R.gen(i) for i, coeff in enumerate(a))
+            ans *= (monomial * T) ** mult
         return ans
 
     def degree(self):
