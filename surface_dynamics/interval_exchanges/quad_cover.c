@@ -30,7 +30,7 @@ check_quad_cover(quad_cover * qcc)
         }
         if ((i->twin == i) || (i->lab != i->twin->lab))
         {
-            fprintf(stderr, "the twin is broken somwhere on the top line\n");
+            fprintf(stderr, "the twin is broken somewhere on the top line\n");
             return 1;
         }
         j = i->twin;
@@ -72,7 +72,7 @@ check_quad_cover(quad_cover * qcc)
         }
         if ((i->twin == i) || (i->lab != i->twin->lab))
         {
-            fprintf(stderr, "the twin is borken on the bottom line\n");
+            fprintf(stderr, "the twin is broken on the bottom line\n");
             return 1;
         }
         j = i->twin;
@@ -134,7 +134,7 @@ new_quad_cover(generalized_permutation * gp, size_t ** sigma, size_t degree,
                size_t nb_vectors)
 /*   Create a quad_cover of given degree over a translation surface, with the given generalized_permutation for the interval exchange, */
 /*   moreover sigma is an array of permutations that gives the action of the fondamental group of the surface on the cover (we give the action */
-/*   for the canonical generating familly of the group on the translation surface. */
+/*   for the canonical generating family of the group on the translation surface. */
 /*   Finally, we set nb_vectors vectors, with degree*nb_intervals coordinates, to follow the monodromy afterward. */
 {
 
@@ -276,7 +276,7 @@ renormalize_length_quad_cover(quad_cover * qcc)
         (qcc->labels)[j].length /= length;
     qcc->length = 1;
 
-    /* now if ltop and lbot are two far appart we project */
+    /* now if ltop and lbot are two far apart we project */
     if (((lbot - ltop) / (lbot + ltop) > EPSILON_LENGTH_PROJECTION)
         || ((ltop - lbot) / (ltop + lbot) > EPSILON_LENGTH_PROJECTION))
     {
@@ -506,7 +506,7 @@ print_quad_cover(quad_cover * qcc)
 void
 rauzy_induction_H_plus_quad_cover(quad_cover * qcc)
 /* perform one step of rauzy-zorich induction                           */
-/* v shoud have dimension (nb_vectors) x (qcc->degree * qcc->nb_labels) */
+/* v should have dimension (nb_vectors) x (qcc->degree * qcc->nb_labels) */
 {
     interval *win, *los, *win_twin;
     interval **los_ptr;
@@ -673,7 +673,7 @@ rauzy_induction_H_plus_quad_cover(quad_cover * qcc)
                      qcc->degree);
     }
 
-    /*change begining of loser interval */
+    /*change beginning of loser interval */
     los = *los_ptr;
 }
 

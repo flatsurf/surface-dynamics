@@ -345,7 +345,7 @@ int int_iet_num_cylinders(uint64_t * widths, uint64_t * heights, int_iet_t t)
     }
 
     while(nonzero_labels)
-    // at the begining of each loop ltop >= lbot
+    // at the beginning of each loop ltop >= lbot
     {
 #ifdef VERBOSE
         printf("start new loop...\n");
@@ -525,7 +525,7 @@ int int_iet_num_cylinders(uint64_t * widths, uint64_t * heights, int_iet_t t)
             if(ltop == 0)
             {
                 // this is similar to the case where we remove an interval. We
-                // need to translate a whole chunck of subintervals on the bottom
+                // need to translate a whole chunk of subintervals on the bottom
                 // instead, we set the big length to the sum of the small lengths
                 ltop = l;
                 m -= 1;

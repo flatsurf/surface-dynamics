@@ -618,7 +618,7 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
 
     def rauzy_move_orbit_substitution(self,winner=None,side=None):
         r"""
-        Return the action fo the rauzy_move on the orbit.
+        Return the action of the rauzy_move on the orbit.
 
         INPUT:
 
@@ -1190,8 +1190,8 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
            which is rather small but provide a good compromise between speed and
            quality of approximation.
 
-        - ``verbose`` -- if ``True`` provide additional informations rather than
-          returning only the Lyapunov exponents (i.e. ellapsed time, confidence
+        - ``verbose`` -- if ``True`` provide additional information rather than
+          returning only the Lyapunov exponents (i.e. elapsed time, confidence
           intervals, ...)
 
         - ``output_file`` -- if provided (as a file object or a string) output
@@ -1252,8 +1252,8 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
            which is rather small but provide a good compromise between speed and
            quality of approximation.
 
-        - ``verbose`` -- if ``True`` provide additional informations rather than
-          returning only the Lyapunov exponents (i.e. ellapsed time, confidence
+        - ``verbose`` -- if ``True`` provide additional information rather than
+          returning only the Lyapunov exponents (i.e. elapsed time, confidence
           intervals, ...)
 
         - ``output_file`` -- if provided (as a file object or a string) output

@@ -2438,7 +2438,7 @@ class PermutationLI(Permutation):
 
     def _init_alphabet(self, intervals) :
         r"""
-        Intialization procedure of the alphabet of self from intervals list
+        Initialization procedure of the alphabet of self from intervals list
 
         TESTS::
 
@@ -2730,7 +2730,7 @@ class PermutationLI(Permutation):
         INPUT:
 
         -  ``return_decomposition`` - boolean (default: False) - if True, and
-           the permutation is reducible, returns also the blocs A1 u B1, B1 u
+           the permutation is reducible, returns also the blocks A1 u B1, B1 u
            A2, A1 u B2 and B2 u A2 of a decomposition as above.
 
         OUTPUT:
@@ -3327,7 +3327,7 @@ class PermutationLI(Permutation):
             sage: p.stratum_component()
             Q_0(-1^4)^c
 
-        Test the exceptionnal strata in genus 3::
+        Test the exceptional strata in genus 3::
 
             sage: Q = QuadraticStratum(9,-1)
             sage: p = Q.regular_component().permutation_representative()
@@ -3353,7 +3353,7 @@ class PermutationLI(Permutation):
             sage: p.stratum_component()
             Q_3(3^3, -1)^irr
 
-        Test the exceptionnal strata in genus 4::
+        Test the exceptional strata in genus 4::
 
             sage: Q = QuadraticStratum(12)
             sage: p = Q.regular_component().permutation_representative()
@@ -4174,7 +4174,7 @@ class OrientablePermutationIET(PermutationIET):
 
         - ``winner`` - 'top' or 'bottom' interval
 
-        - ``side`` - 'right' or 'left' (defaut: 'right') corresponding
+        - ``side`` - 'right' or 'left' (default: 'right') corresponding
           to the side on which the Rauzy move must be performed.
 
         - ``inplace`` - (default ``False``) whether the Rauzy move is
@@ -4274,7 +4274,7 @@ class OrientablePermutationIET(PermutationIET):
 
         - ``winner`` - 'top' or 'bottom' interval
 
-        - ``side`` - 'right' or 'left' (defaut: 'right') corresponding
+        - ``side`` - 'right' or 'left' (default: 'right') corresponding
           to the side on which the Rauzy move must be performed.
 
         - ``inplace`` - (default ``False``) whether the Rauzy move is
@@ -4657,7 +4657,7 @@ class OrientablePermutationIET(PermutationIET):
 
     def to_permutation(self):
         r"""
-        Returns the permutation as an element of the symetric group.
+        Returns the permutation as an element of the symmetric group.
 
         EXAMPLES::
 
@@ -5174,9 +5174,9 @@ class RauzyDiagram(SageObject):
         Path in Rauzy diagram.
 
             A path in a Rauzy diagram corresponds to a subsimplex of the simplex of
-            lengths. This correspondance is obtained via the Rauzy induction. To a
+            lengths. This correspondence is obtained via the Rauzy induction. To a
             idoc IET we can associate a unique path in a Rauzy diagram. This
-            establishes a correspondance between infinite full path in Rauzy diagram
+            establishes a correspondence between infinite full path in Rauzy diagram
             and equivalence topologic class of IET.
         """
         def __init__(self, parent, *data):
@@ -5782,7 +5782,7 @@ class RauzyDiagram(SageObject):
               element. Moreover function(None,None) must be an identity element
               for initialization.
 
-            - ``composition`` - the composition function for the function. * if None (defaut None)
+            - ``composition`` - the composition function for the function. * if None (default: None)
 
             TEST::
 

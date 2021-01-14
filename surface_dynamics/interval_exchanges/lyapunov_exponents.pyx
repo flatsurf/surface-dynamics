@@ -72,7 +72,7 @@ def lyapunov_exponents_H_plus_cover(
 
     - ``sigma`` -- covering data
 
-    - ``nb_experiments`` -- number of experimets
+    - ``nb_experiments`` -- number of experiments
 
     - ``nb_iterations`` -- the number of iterations of the Rauzy-Zorich
       induction to perform

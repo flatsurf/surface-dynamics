@@ -64,7 +64,7 @@ from sage.rings.integer cimport Integer
 
 
 ########################
-# Begining of the code
+# Beginning of the code
 ########################
 
 cdef int compare(const void * _left, const void * _right) nogil:
@@ -179,7 +179,7 @@ cdef class IETFamily:
     cdef int * perm         # top perm
     cdef size_t dim         # dimension (= number of letters)
     cdef mpz_t * entries    # ray coefficients
-    cdef mpz_t ** rows      # ray pointers to entries (begining of vectors)
+    cdef mpz_t ** rows      # ray pointers to entries (beginning of vectors)
     cdef size_t alloc       # ray allocation size
     cdef size_t length      # number of rays
     cdef C_Polyhedron poly  # the polyhedron (that we should get rid of)
