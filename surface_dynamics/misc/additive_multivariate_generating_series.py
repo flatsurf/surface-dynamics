@@ -77,7 +77,7 @@ class AdditiveMultivariateGeneratingSeries(AbstractMSum):
             sage: f1 = A.term(1, [((1,0,0),2), ((0,1,0),2), ((0,0,1),2)])
             sage: f2 = A.term(x0*x1 - 1, [((1,1,1),3)])
             sage: SR(f1 + f2) # indirect doctest
-            (x0*x1 - 1)/(x0 + x1 + x2) + 1/(x0*x1*x2)
+            (x0*x1 - 1)/(x0^3 + 3*x0^2*x1 + 3*x0*x1^2 + x1^3 + 3*x0^2*x2 + 6*x0*x1*x2 + 3*x1^2*x2 + 3*x0*x2^2 + 3*x1*x2^2 + x2^3) + 1/(x0^2*x1^2*x2^2)
             sage: bool(SR(f1) + SR(f2) == SR(f1 + f2))
             True
         """
@@ -100,7 +100,7 @@ class AdditiveMultivariateGeneratingSeries(AbstractMSum):
             sage: f2 = A.term(x0*x1 - 1, [((1,1,1),3)])
             sage: g = (f1 + f2).to_rational_function()
             sage: g
-            (x0^2*x1^2*x2 - x0*x1*x2 + x0 + x1 + x2)/(x0^2*x1*x2 + x0*x1^2*x2 + x0*x1*x2^2)
+            (x0^3*x1^3*x2^2 - x0^2*x1^2*x2^2 + x0^3 + 3*x0^2*x1 + 3*x0*x1^2 + x1^3 + 3*x0^2*x2 + 6*x0*x1*x2 + 3*x1^2*x2 + 3*x0*x2^2 + 3*x1*x2^2 + x2^3)/(x0^5*x1^2*x2^2 + 3*x0^4*x1^3*x2^2 + 3*x0^3*x1^4*x2^2 + x0^2*x1^5*x2^2 + 3*x0^4*x1^2*x2^3 + 6*x0^3*x1^3*x2^3 + 3*x0^2*x1^4*x2^3 + 3*x0^3*x1^2*x2^4 + 3*x0^2*x1^3*x2^4 + x0^2*x1^2*x2^5)
             sage: f1.to_rational_function() + f2.to_rational_function() == g
             True
         """
