@@ -334,7 +334,7 @@ class FactoredDenominator(object):
         ans = S.one()
         for a,i in self._tuple:
             monomial = sum(coeff * R.gen(i) for i,coeff in enumerate(a))
-            ans *= monomial * T
+            ans *= monomial ** i * T
         return ans
 
     def degree(self):
