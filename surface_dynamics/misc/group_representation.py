@@ -1,4 +1,4 @@
-#coding: utf-8
+# coding: utf-8
 r"""
 Some utility function for representations of finite groups
 
@@ -15,6 +15,7 @@ Most of the functions are just GAP wrappers.
 # *************************************************************************
 
 from sage.libs.gap.libgap import libgap
+
 
 def real_characters(G):
     r"""
@@ -65,7 +66,7 @@ def real_characters(G):
     real_T = []
     real_degrees = []
     seen = set()
-    for i,chi in enumerate(Tgap):
+    for i, chi in enumerate(Tgap):
         if chi in seen:
             continue
 
@@ -81,6 +82,7 @@ def real_characters(G):
 
     return (real_T, real_degrees)
 
+
 def conjugacy_class_matrix(cl, d):
     r"""
     Return the matrix associated to a given conjugacy class of a permutation
@@ -91,7 +93,7 @@ def conjugacy_class_matrix(cl, d):
     on the isotypic subspaces.
 
     EXAMPLES::
-        
+
         sage: from surface_dynamics.misc.group_representation import conjugacy_class_matrix
 
         sage: G = QuaternionGroup()
@@ -126,15 +128,16 @@ def conjugacy_class_matrix(cl, d):
         ....:           g = G.random_element().matrix()
         ....:           assert g*m*~g == m
     """
-    res = [[0]*d for _ in range(d)]
+    res = [[0] * d for _ in range(d)]
 
     for p in cl.AsList():
-        p = [i-1 for i in libgap.ListPerm(p, d).sage()]
+        p = [i - 1 for i in libgap.ListPerm(p, d).sage()]
         for k in range(d):
             res[k][p[k]] += 1
 
     from sage.matrix.constructor import matrix
     return matrix(res)
+
 
 def isotypic_projection_matrix(G, d, chi, deg, conj_mats=None):
     r"""
@@ -150,16 +153,16 @@ def isotypic_projection_matrix(G, d, chi, deg, conj_mats=None):
 
     - ``deg`` -- (integer) degree of the character
 
-    Recall the formula for the projection as given in Theorem 8 in [Ser]_. If
+    Recall the formula for the projection as given in Theorem 8 in [Serre]_. If
     `G` is a permutation group, then
-    
+
     .. MATH::
-    
+
         \pi_\chi = \sum_{g \in G} \overline_{\chi(g)} g
 
     REFERENCES::
 
-    .. [Ser] J.-P. Serre, "Représentation des groupes finis."
+    .. [Serre] J.-P. Serre, "Représentation des groupes finis."
 
     EXAMPLES::
 
@@ -205,14 +208,15 @@ def isotypic_projection_matrix(G, d, chi, deg, conj_mats=None):
 
     Ggap = libgap(G)
 
-    for t,cl in enumerate(Ggap.ConjugacyClasses()):
+    for t, cl in enumerate(Ggap.ConjugacyClasses()):
         if conj_mats is None:
             m = conjugacy_class_matrix(cl, d)
         else:
             m = conj_mats[t]
-        res += chi[t] * conjugacy_class_matrix(cl,d)
+        res += chi[t] * m
 
     return deg / G.cardinality() * res
+
 
 def real_isotypic_projection_matrices(G, d):
     r"""
@@ -237,5 +241,5 @@ def real_isotypic_projection_matrices(G, d):
         sage: sum(mats).is_one()
         True
     """
-    return [isotypic_projection_matrix(G, d, chi, deg) for chi,deg in zip(*real_characters(G))]
-
+    return [isotypic_projection_matrix(G, d, chi, deg)
+            for chi, deg in zip(*real_characters(G))]
