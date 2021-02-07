@@ -688,7 +688,7 @@ cdef class IETFamily:
             sage: (QQ**6).subspace(F.rays()) == V # optional - pplpy
             True
         """
-        from constructors import Permutation, IET
+        from .constructors import Permutation, IET
 
         top = [self.perm[i] for i in range(self.dim)]
         bot = [self.perm[i] for i in range(self.dim,2*self.dim)]
@@ -705,8 +705,14 @@ cdef class IETFamily:
         return IET(p, lengths)
 
     # TODO: find a better name and output!!!
-    def random_element_statistics(self, ring, num_exp=100, num_iterations=200, *args, **kwds):
+    def random_element_statistics(self, ring, num_exp=100, num_iterations=200, intervalxt=None, *args, **kwds):
         r"""
+        Return a triple ``(num_minimals, num_saddles, num_unknowns)`` of number
+        of interval exchange transformations found to be respectively minimal, with
+        a saddle connection or "unknown" by mean of at most ``num_iterations`` steps
+        of Zorich induction over a sample of ``num_exp`` random interval exchange
+        transformations in this family.
+
         INPUT:
 
         - ``ring`` -- the ring in which is taken the lengths (usually a number field)
@@ -716,12 +722,17 @@ cdef class IETFamily:
         - ``num_iterations`` -- the number of Zorich move to be performed on the
           interval exchange transformations to find a saddle connection
 
+        - ``intervalxt`` -- whether to use pyintervalxt for iteration (much faster for
+          large number of induction steps)
+
         EXAMPLES::
 
             sage: from surface_dynamics import *
             sage: q = iet.Permutation([0,1,2,3,4,5],[5,3,2,1,0,4])
             sage: rays = [[0, 0, 0, 1, 1, 0], [3, 1, 0, 1, 0, 2], [5, 0, 1, 2, 0, 3]]
             sage: F = iet.IETFamily(q, rays)  # optional - pplpy
+            sage: x = polygen(QQ)
+            sage: K.<cbrt3> = NumberField(x^3 - 3, embedding=AA(3)**(1/3))
             sage: F.random_element_statistics(K)  # optional - pplpy
             100 saddles found on 100 random point
 
@@ -745,21 +756,58 @@ cdef class IETFamily:
             524 703 0 628 0 245 51 68 0
             619 462 0 229 238 63 0 0 272
             701 910 0 823 0 308 0 119 51
-            sage: K.<cbrt3> = NumberField(x^3 - 3, embedding=AA(3)**(1/3))
-            sage: F.random_element_statistics(K, num_exp=20, num_iterations=200)  # optional - pplpy # random
-            ... saddles found on 20 random points
+            sage: minimals, saddles, unknowns = F.random_element_statistics(K, num_exp=20, num_iterations=200, intervalxt=False)  # optional - pplpy
+            sage: assert minimals == 0 and saddles < 5 and unknowns > 15, (minimals, saddles, unknowns)
+            sage: minimals, saddles, unknowns = F.random_element_statistics(K, num_exp=20, num_iterations=200, intervalxt=True) # optional - pplpy, gmpxxyy, pyeantic, pyintervalxt
+            sage: assert minimals == 0 and saddles < 5 and unknowns > 15, (minimals, saddles, unknowns)
+
         """
-        num_saddles = 0
-        bads = []
-        for i in range(num_exp):
-            T = self.random_element(ring, *args, **kwds)
+        if intervalxt is None:
             try:
-                T.zorich_move(iterations=num_iterations)
-            except ValueError:
-                num_saddles += 1
+                import gmpxxyy
+                import pyintervalxt
+                import pyeantic
+            except ImportError:
+                intervalxt = False
             else:
-                bads.append(T)
-        print('%d saddles found on %d random points' % (num_saddles, num_exp))
+                intervalxt = True
+
+        num_minimals = 0
+        num_saddles = 0
+        num_unknowns = 0
+        bads = []
+
+        if intervalxt:
+            from pyintervalxt import intervalxt
+            Result = intervalxt.InductionStep.Result
+            LIMIT_REACHED = [Result.LIMIT_REACHED]
+            SADDLE = [Result.CYLINDER, Result.SEPARATING_CONNECTION, Result.NON_SEPARATING_CONNECTION]
+            MINIMAL = [Result.WITHOUT_PERIODIC_TRAJECTORY_BOSHERNITZAN, Result.WITHOUT_PERIODIC_TRAJECTORY_AUTO_SIMILAR]
+
+            from .conversion import iet_to_pyintervalxt
+            for i in range(num_exp):
+                T = self.random_element(ring, *args, **kwds)
+                U = iet_to_pyintervalxt(T)
+                res = U.induce(int(num_iterations))
+                if res.result in LIMIT_REACHED:
+                    num_unknowns += 1
+                elif res.result in SADDLE:
+                    num_saddles += 1
+                elif res.result in MINIMAL:
+                    num_minimal += 1
+                else:
+                    raise RuntimeError("unknown return code from pyintervalxt {}".format(res.result))
+        else:
+            for i in range(num_exp):
+                T = self.random_element(ring, *args, **kwds)
+                try:
+                    T.zorich_move(iterations=num_iterations)
+                except ValueError:
+                    num_saddles += 1
+                else:
+                    num_unknowns += 1
+
+        return (num_minimals, num_saddles, num_unknowns)
 
     def random_integer_point_statistics(self, num_exp=100):
         r"""
@@ -767,17 +815,4 @@ cdef class IETFamily:
         number of integer points found so that the number of cylinders is
         ``i``.
         """
-        # TODO: make iet_interface part of flatsurf
-        import iet_interface
-        from sage.rings.integer_ring import ZZ
-        top, bot = self.permutation()
-        dim = len(top)
-        cdef dict cyls = {}
-        for _ in range(num_exp):
-            lengths = sum(ZZ.random_element(0,100000000) * r for r in self.rays())
-            ncyls = iet_interface.number_of_cylinders(top, bot, lengths)
-            if ncyls not in cyls:
-                cyls[ncyls] = 0
-            cyls[ncyls] += 1
-        return cyls
-
+        raise NotImplementedError
