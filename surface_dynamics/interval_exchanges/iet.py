@@ -125,7 +125,7 @@ class IntervalExchangeTransformation:
         sage: iet.IET(('a b','b a'),[-1,-1])
         Traceback (most recent call last):
         ...
-        ValueError: lengths must be non-negative
+        ValueError: lengths must be non-negative, got -1.0
     """
     def __init__(self, permutation=None, lengths=None, base_ring=None):
         r"""
@@ -454,7 +454,7 @@ class IntervalExchangeTransformation:
             raise TypeError("unable to convert x (='%s') into a real number"  %(str(x)))
 
         if total <= 0:
-           raise ValueError("the total length must be positive")
+           raise ValueError("the total length must be positive, got {}".format(total))
 
         if inplace:
             res = self

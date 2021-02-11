@@ -64,7 +64,7 @@ def iet_to_pyintervalxt(T):
     else:
         raise NotImplementedError("unknown base ring K={}".format(K))
 
-    perm = tuple(T._permutation._twin[0])
+    perm = tuple(T._permutation._twin[1])
 
     import pyintervalxt
     return pyintervalxt.IntervalExchangeTransformation(lengths, perm)
@@ -165,6 +165,6 @@ def iet_from_pyintervalxt(T, alphabet=None):
     p = iet.Permutation(top, bottom)
     if alphabet is not None:
         p.alphabet(alphabet)
-    lengths = lengths_to_sage([T.lengths.get(x) for x in T.top()])
+    lengths = lengths_to_sage([T.lengths().get(x) for x in T.top()])
 
     return iet.IntervalExchangeTransformation(p, lengths)

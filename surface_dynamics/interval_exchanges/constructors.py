@@ -852,8 +852,8 @@ def IntervalExchangeTransformation(permutation=None,lengths=None):
         except ValueError:
             raise TypeError("unable to convert x (='%s') into a real number" %(str(x)))
 
-        if y < 0:
-           raise ValueError("lengths must be non-negative")
+        if x < 0:
+           raise ValueError("lengths must be non-negative, got {}".format(y))
 
     return _IET(p,lengths)
 
