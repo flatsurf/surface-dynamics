@@ -697,7 +697,7 @@ def perm_invert_inplace(p, n=None):
     Inverse in place the permutation p
     """
     if n is None:
-        n = len(l)
+        n = len(p)
     seen = [0] * n
     for i in range(n):
         if seen[i]:

@@ -4,16 +4,17 @@ Some extra ppl utilities
 ppl is a library to deal with rational polytopes. pplpy is a thin
 Python wrapper. This file provides some helper functions to use it.
 """
-#*****************************************************************************
+# ****************************************************************************
 #       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
+# ****************************************************************************
 
 import ppl
+
 
 def ppl_check_non_negative_cone(C):
     r"""
@@ -57,9 +58,10 @@ def ppl_check_non_negative_cone(C):
         raise ValueError('C must be a subcone of the non-negative cone')
     for g in C.generators():
         if g.is_point() and not g.is_equivalent_to(ppl_zero_point(n)):
-            raise ValueError('should have only zero as vertices'.format(g))
+            raise ValueError('should have only zero as vertices')
         if g.is_line():
             raise ValueError('the cone contains a line')
+
 
 def ppl_zero_point(n):
     r"""
@@ -77,6 +79,7 @@ def ppl_zero_point(n):
     z.set_space_dimension(n)
     return z
 
+
 def ppl_positive_cone(n):
     r"""
     Return the positive cone in R^n
@@ -89,10 +92,10 @@ def ppl_positive_cone(n):
         Generator_System {point(0/1, 0/1, 0/1), ray(0, 0, 1), ray(0, 1, 0), ray(1, 0, 0)}
     """
     gs = ppl.Generator_System(ppl_zero_point(n))
-    l = [0]*n
     for i in range(n):
         gs.insert(ppl.ray(ppl.Variable(i)))
     return ppl.C_Polyhedron(gs)
+
 
 def ppl_cone(rays):
     r"""
@@ -108,7 +111,8 @@ def ppl_cone(rays):
     n = len(rays[0])
     gs = ppl.Generator_System(ppl_zero_point(n))
     for r in rays:
-        gs.insert(ppl.ray(sum(int(j) * ppl.Variable(i) for i,j in enumerate(r))))
+        gs.insert(ppl.ray(sum(int(j) * ppl.Variable(i)
+                              for i, j in enumerate(r))))
     return ppl.C_Polyhedron(gs)
 
 
@@ -127,10 +131,12 @@ def ppl_convert(P):
         return P
     gs = ppl.Generator_System()
     for v in P.vertices_list():
-        gs.insert(ppl.point(sum(int(j) * ppl.Variable(i) for i,j in enumerate(v))))
+        gs.insert(ppl.point(sum(int(j) * ppl.Variable(i)
+                                for i, j in enumerate(v))))
     for r in P.rays_list():
-        gs.insert(ppl.ray(sum(int(j) * ppl.Variable(i) for i,j in enumerate(r))))
+        gs.insert(ppl.ray(sum(int(j) * ppl.Variable(i)
+                              for i, j in enumerate(r))))
     for l in P.lines_list():
-        gs.insert(ppl.line(sum(int(j) * ppl.Variable(i) for i,j in enumerate(l))))
+        gs.insert(ppl.line(sum(int(j) * ppl.Variable(i)
+                               for i, j in enumerate(l))))
     return ppl.C_Polyhedron(gs)
-
