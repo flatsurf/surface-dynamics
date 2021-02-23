@@ -384,7 +384,7 @@ class FactoredDenominator(object):
 
         - ``j`` -- index of a variable
 
-        OUTPUT: itertor of triples ``(mult, v, monomial)``
+        OUTPUT: iterator of triples ``(mult, v, monomial)``
 
         EXAMPLES::
 
@@ -567,7 +567,7 @@ class FactoredDenominator(object):
 
     def lcm(self, other):
         r"""
-        Return the lcm of two factored denomiator.
+        Return the lcm of two factored denominators.
 
         EXAMPLES::
 
@@ -920,7 +920,7 @@ class AbstractMSum(Element):
             res.add(den.degree())
         return res
 
-# TODO: the UniqueRepresentation should normalize the laurent polynomial
+# TODO: the UniqueRepresentation should normalize the Laurent polynomial
 class AbstractMSumRing(UniqueRepresentation, Parent):
     r"""
     TESTS::

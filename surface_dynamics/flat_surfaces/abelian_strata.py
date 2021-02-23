@@ -1731,7 +1731,7 @@ class AbelianStratumComponent(StratumComponent):
           cylinder diagrams up to horizontal and vertical symmetry.
 
         - ``force_computation`` - (default: ``False``) whether we use the
-          database or compute explicitly using the the generation algorithm.
+          database or compute explicitly using the generation algorithm.
 
         EXAMPLES::
 

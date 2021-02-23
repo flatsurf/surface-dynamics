@@ -476,7 +476,7 @@ void lyapunov_exponents(origami_data *o, size_t NB_ITERATIONS, double * ttheta)
 			}
 		}
 
-		/* orthonrmalization */
+		/* orthonormalization */
 		QR(va, vb, DEGREE, NB_VECTORS, theta);
 
 	} /* end of the iteration */

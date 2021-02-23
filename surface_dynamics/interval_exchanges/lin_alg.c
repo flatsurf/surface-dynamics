@@ -532,7 +532,7 @@ project_isotypic(quad_cover * qcc, size_t nb_char, size_t * dimensions,
                  double *projections)
 {
     /*
-       We compute the product of the the nb_char matrices of projection, of size : size_of_matrix = nb_labels*degree
+       We compute the product of the nb_char matrices of projection, of size : size_of_matrix = nb_labels*degree
        M_(i_char)[(lab_i, deg_i), (lab_j, deg_j)] = projections [i_char*(size_of_matrix**2) + (deg_i*nb_labels + lab_i)*size_of_matrix + (deg_j*nb_labels + lab_j)]
 
        So the product is
