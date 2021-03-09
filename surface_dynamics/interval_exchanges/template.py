@@ -4870,6 +4870,148 @@ class OrientablePermutationIET(PermutationIET):
         u = perm_invert([self._twin[1][i]-1 for i in range(n-1)])
         return Origami(r, u, as_tuple=True)
 
+    def _masur_polygon_helper(self, lengths, heights):
+        n = len(self)
+
+        from sage.structure.sequence import Sequence
+
+        s = Sequence(list(lengths) + list(heights))
+        lengths = s[:len(lengths)]
+        heights = s[len(lengths):]
+        base_ring = s.universe()
+
+        if self._labels is None:
+            lengths = [lengths[:n]] + [lengths[j] for j in self._twins[1]]
+            heights = [heights[:n]] + [heights[j] for j in self._twins[1]]
+        else:
+            lengths = [[lengths[j] for j in self._labels[i]] for i in [0, 1]]
+            heights = [[heights[j] for j in self._labels[i]] for i in [0, 1]]
+
+        try:
+            zero = base_ring.zero()
+        except AttributeError:
+            zero = base_ring(0)
+
+        # build the polygon in counter-clockwise order
+        Ltop = [(zero,zero)]
+        for i,dx,dy in zip(range(n), lengths[0], heights[0]):
+            x, y = Ltop[-1]
+            if dx <= 0 or (y <= 0 and i != 0):
+                raise ValueError('invalid suspension data dx={} y={} at i={} on top'.format(dx, y, i))
+            Ltop.append((x+dx, y+dy))
+        Lbot = [(zero,zero)]
+        for i,dx,dy in zip(range(n), lengths[1], heights[1]):
+            x, y = Lbot[-1]
+            if dx <= 0 or (y >= 0 and i != 0):
+                raise ValueError('invalid suspension data dx={} y={} at i={} on bot'.format(dx, y, i))
+            Lbot.append((x+dx, y+dy))
+
+        assert Ltop[0] == Lbot[0] and Ltop[-1] == Lbot[-1], (Ltop, Lbot)
+        Ltop.pop(0)
+        Lbot.pop(0)
+        endpoint = Ltop.pop(-1)
+        Lbot.pop(-1)
+
+        from flatsurf.geometry.polygon import ConvexPolygons
+
+        C = ConvexPolygons(base_ring)
+        ptop = Ltop[0]
+        pbot = Lbot[0]
+        triangles = [C(vertices=[(zero,zero), pbot, ptop])]
+        tops = [(0,2)]
+        bots = [(0,0)]
+        mids = [(0,1)]
+        itop = 1
+        ibot = 1
+        k = 1
+        while itop < len(Ltop) or ibot < len(Lbot):
+            xtop = Ltop[itop][0] if itop < len(Ltop) else None
+            xbot = Lbot[ibot][0] if ibot < len(Lbot) else None
+            if xbot is None or (xtop is not None and xtop <= xbot):
+                # add a triangle with a new vertex on top
+                pptop = Ltop[itop]
+                itop += 1
+                triangles.append(C(vertices=[ptop,pbot,pptop]))
+                tops.append((k,2))
+                mids.append((k,0))
+                mids.append((k,1))
+                ptop = pptop
+            else:
+                ppbot = Lbot[ibot]
+                ibot += 1
+                triangles.append(C(vertices=[ptop,pbot,ppbot]))
+                bots.append((k,1))
+                mids.append((k,0))
+                mids.append((k,2))
+                pbot = ppbot
+            k += 1
+
+        triangles.append(C(vertices=[ptop, pbot, endpoint]))
+        tops.append((k, 2))
+        bots.append((k, 1))
+        mids.append((k, 0))
+
+        assert len(tops) == len(bots) == n, (n, tops, bots)
+        assert len(triangles) == 2*n-2, (n, len(triangles))
+
+        return base_ring, triangles, tops, bots, mids
+
+    def masur_polygon(self, lengths, heights):
+        r"""
+        Return the Masur polygon for the given ``lengths`` and ``heights``
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import iet
+
+            sage: p = iet.Permutation('a b c', 'c b a')
+            sage: S = p.masur_polygon([1,4,2], [2,0,-1])  # optional - sage_flatsurf
+            sage: S                                       # optional - sage_flatsurf
+            sage: S.stratum()                             # optional - sage_flatsurf
+            H(0^2)
+
+        Generic construction using suspension cone::
+
+            sage: p = iet.Permutation('a b c d e f g h i', 'b g f c a d i e h')
+            sage: x = polygen(QQ)
+            sage: poly = x^3 - x - 1
+            sage: emb = AA.polynomial_root(poly, RIF(1.3,1.4))
+            sage: K = NumberField(poly, 'a', embedding=emb)
+            sage: a = K.gen()
+            sage: R = [r.vector() for r in p.suspension_cone().rays()]
+            sage: C = [1, a, a+1, 2-a, 2, 1, a, a, 1, a-1, 1]
+            sage: H = sum(c*r for c,r in zip(C,R))
+            sage: H
+            (a + 2, -2, 2, -2*a + 2, 3*a, -a - 4, 0, -a + 1, -2*a - 1)
+            sage: L = [1+a**2, 2*a**2-1, 1, 1, 1+a, a**2, a-1, a-1, 2]
+            sage: S = p.masur_polygon(L, H)   # optional - sage_flatsurf
+            TranslationSurface built from 16 polygons
+            sage: TestSuite(S).run()          # optional - sage_flatsurf
+
+        TESTS::
+
+            sage: p = iet.Permutation('a b c', 'c b a')
+            sage: for L in [[1,4,2],[2,4,1],[5,1,1],[1,5,1],[1,1,5]]:  # optional - sage_flatsurf
+            ....:     S = p.masur_polygon(L, H)
+            ....:     TestSuite(S).run()
+            ....:     assert S.stratum() == p.stratum()
+        """
+        base_ring, triangles, tops, bots, mids = self._masur_polygon_helper(lengths, heights)
+
+        from flatsurf import Surface_list, TranslationSurface
+        S = Surface_list(base_ring)
+        S.add_polygons(triangles)
+        for i in range(len(self)):
+            p1, e1 = tops[i]
+            p2, e2 = bots[self._twin[0][i]]
+            S.set_edge_pairing(p1, e1, p2, e2)
+        for i in range(0,len(mids),2):
+            p1, e1 = mids[i]
+            p2, e2 = mids[i+1]
+            S.set_edge_pairing(p1, e1, p2, e2)
+        S.set_immutable()
+        return TranslationSurface(S)
+
 class OrientablePermutationLI(PermutationLI):
     r"""
     Template for quadratic permutation.

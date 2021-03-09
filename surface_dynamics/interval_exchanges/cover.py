@@ -972,3 +972,42 @@ class PermutationCover(SageObject):
 
         return PermutationGroup(libgap.GeneratorsOfGroup(C).sage())
 
+    def masur_polygon(self, lengths, heights):
+        r"""
+        Return the Masur polygon for the given ``lengths`` and ``heights``.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import iet
+
+            sage: p = iet.Permutation('a b c', 'c b a').cover(['(1,2)','(1,3)','(1,4)'])
+            sage: S = p.masur_polygon([1,4,2], [2,0,-1]) # optional - sage_flatsurf
+            sage: TestSuite(S).run()                     # optional - sage_flatsurf
+            sage: S.stratum()                            # optional - sage_flatsurf
+            H_4(3^2)
+            sage: p.stratum()                            # optional - sage_flatsurf
+            H_4(3^2)
+        """
+        base_ring, triangles, tops, bots, mids = self._base._masur_polygon_helper(lengths, heights)
+
+        from flatsurf import Surface_list, TranslationSurface
+        S = Surface_list(base_ring)
+        n = len(self._base)
+        nt = len(triangles)
+        d = self._degree_cover
+        S.add_polygons(triangles * d)
+        for i in range(n):
+            p1, e1 = tops[i]
+            p2, e2 = bots[self._base._twin[0][i]]
+            perm = self._permut_cover[self._base._labels[0][i]]
+            for j in range(d):
+                jj = perm[j]
+                S.set_edge_pairing(p1 + nt*j, e1, p2 + nt*jj, e2)
+        for i in range(0,len(mids),2):
+            p1, e1 = mids[i]
+            p2, e2 = mids[i+1]
+            for j in range(d):
+                S.set_edge_pairing(p1 + nt*j, e1, p2 + nt*j, e2)
+        S.set_immutable()
+        return TranslationSurface(S)
+
