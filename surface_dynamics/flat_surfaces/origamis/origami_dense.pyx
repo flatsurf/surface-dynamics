@@ -1664,7 +1664,7 @@ cdef class Origami_dense_pyx:
 
     def sl2z_edges(self):
         r"""
-        Return the ction of SL(2, Z) on the SL(2, Z)-orbit of this origami.
+        Return the action of SL(2, Z) on the SL(2, Z)-orbit of this origami.
 
         The action is returned as a triple of dictionaries ``(l, r, s)``
         representing the action of the matrices L, R, S, where:

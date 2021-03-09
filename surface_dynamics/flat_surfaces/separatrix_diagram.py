@@ -276,7 +276,7 @@ class SeparatrixDiagram(SageObject):
         Check that the data of self is valid, i.e.
 
           * self._bot, self._top are valid permutations
-          * the number of cylces of bot and top are the same
+          * the number of cycles of bot and top are the same
 
         EXAMPLES::
 

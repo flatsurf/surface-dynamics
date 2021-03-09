@@ -238,7 +238,7 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
 
     def origami(self):
         r"""
-        Returns an origmami in this teichmueller curve.
+        Returns an origami in this Teichmueller curve.
 
         Beware that the labels of the initial origami may have changed.
 

@@ -221,7 +221,7 @@ class MarkedPartition(SageObject):
         sage: m2 = MarkedPartition([3,2,1],2,(2,3)); m2
         2o3 [3, 2, 1]
 
-    It also posisble to initialize it from a string::
+    It also possible to initialize it from a string::
 
         sage: MarkedPartition('2|1 [3,2,2]')
         2|1 [3, 2, 2]

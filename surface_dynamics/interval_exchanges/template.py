@@ -331,7 +331,7 @@ class Permutation(SageObject):
 
         - ``intervals`` - the intervals as a list of two lists
 
-        - ``alphabet`` - something that should be converted to an alphabe
+        - ``alphabet`` - something that should be converted to an alphabet
 
         - ``reduced`` - (boolean) whether the permutation is reduced or labeled
 
@@ -3029,7 +3029,7 @@ class PermutationLI(Permutation):
 
         The *marked profile* of a generalized permutation is an integer
         partition and some additional data associated to the angles of conical
-        singularities in the the suspension. The partition, called the
+        singularities in the suspension. The partition, called the
         *profile*, is the list of angles divided by `2\pi` (see
         :meth:`profile`). The additional is called the *marking* and may be of
         two different types.
@@ -3183,7 +3183,7 @@ class PermutationLI(Permutation):
             sage: p.is_hyperelliptic()
             True
 
-        Check for the corresondance::
+        Check for the correspondance::
 
             sage: q = QuadraticStratum(6,6)
             sage: c_hyp, c_reg, c_irr = q.components()
@@ -3784,7 +3784,7 @@ class OrientablePermutationIET(PermutationIET):
         Returns the marked profile of the permutation
 
         The marked profile of a permutation corresponds to the integer partition
-        associated to the angles of conical singularities in the the suspension
+        associated to the angles of conical singularities in the suspension
         together with a data associated to the endpoint called marking.
 
         If the left endpoint and the right endpoint of the interval associated
@@ -3795,7 +3795,7 @@ class OrientablePermutationIET(PermutationIET):
         endpoint. A marking of type one is denoted ``(m|a)``.
 
         If the left endpoint and the right endpoint are two different conical
-        singularities in the suspension the the marking is of type two and
+        singularities in the suspension the marking is of type two and
         consists in a couple ``(m_l,m_r)`` where ``m_l`` (resp. ``m_r``) is the
         conical angle of the singularity at the left endpoint (resp. right
         endpoint). A marking of type two is denoted ``m_l o m_r``

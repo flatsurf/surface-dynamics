@@ -1419,7 +1419,7 @@ class OrigamiDatabase(SQLDatabase):
                 if k01:
                     msg += "\ncolumn(s) {} appear(s) in the database but not in the skeleton".format(sorted(k01))
 
-                raise RuntimeError('Database at %s does not appear to be a valid origami databse'%dblocation + msg)
+                raise RuntimeError('Database at %s does not appear to be a valid origami database' % dblocation + msg)
 
         self._data_to_entry = {}
         self._entry_to_data = {}
