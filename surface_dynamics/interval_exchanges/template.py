@@ -4821,6 +4821,7 @@ class OrientablePermutationIET(PermutationIET):
             True
         """
         from surface_dynamics.misc.additive_multivariate_generating_series import AdditiveMultivariateGeneratingSeriesRing
+        from surface_dynamics.misc.linalg import cone_triangulate
 
         d = len(self)
         S = self.suspension_cone(winner=winner)

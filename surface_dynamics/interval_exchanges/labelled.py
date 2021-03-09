@@ -113,8 +113,6 @@ import time
 
 from surface_dynamics.misc.permutation import perm_check, perm_init
 import surface_dynamics.interval_exchanges.lyapunov_exponents as lyapunov_exponents  # the cython bindings
-from surface_dynamics.misc.linalg import cone_triangulate
-
 
 from sage.combinat.words.alphabet import Alphabet, OrderedAlphabet
 from sage.combinat.words.morphism import WordMorphism
