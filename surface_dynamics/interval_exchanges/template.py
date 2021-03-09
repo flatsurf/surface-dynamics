@@ -4677,6 +4677,170 @@ class OrientablePermutationIET(PermutationIET):
         from sage.combinat.permutation import Permutation
         return Permutation(list(map(lambda x: x+1,self._twin[1])))
 
+    def suspension_cone(self, winner=None):
+        r"""
+        Return the cone of suspension data.
+
+        A suspension data `\tau` for a permutation `(\pi_{top}, \pi_{bot})`
+        on the alphabet `\mathcal{A}` is a real vector in `RR^\mathcal{A}`
+        so that
+
+        .. MATH::
+
+            \forall 1 \leq k < d,\,
+            \sum_{\beta: \pi_{top}(\beta) \leq k} \tau_\beta > 0
+            \quad \text{and} \quad
+            \sum_{\beta: \pi_{bot}(\beta) \leq k} \tau_\beta < 0.
+
+        A suspension data determines half of a zippered rectangle construction.
+        The other half is the length data that is a positive vector in
+        `\RR^\mathcal{A}`.
+
+        INPUT:
+
+        - ``winner`` - (optional) either ``None``, ``"top"`` or ``"bottom"``. If
+          not ``None`` , then return only half of the suspension cone corresponding
+          to data that either comes from a top or bottom Rauzy induction.
+
+        .. SEEALSO::
+
+            :meth:`heights_cone`
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import *
+            sage: p = iet.Permutation('a b c d e f', 'e c b f d a')
+            sage: H = p.suspension_cone()
+            sage: H.dimension()
+            6
+            sage: rays = [r.vector() for r in H.rays()]
+            sage: r = sum(randint(1,5)*ray for ray in rays)
+            sage: r[0]>0 and r[0]+r[1] > 0 and r[0]+r[1]+r[2] > 0
+            True
+            sage: r[0]+r[1]+r[2]+r[3]>0
+            True
+            sage: r[0]+r[1]+r[2]+r[3]+r[4]>0
+            True
+            sage: r[4]<0 and r[4]+r[2]<0 and r[4]+r[2]+r[1] < 0
+            True
+            sage: r[4]+r[2]+r[1]+r[5]<0
+            True
+            sage: r[4]+r[2]+r[1]+r[5]+r[3]<0
+            True
+
+        The construction also works with reduced permutations (ie not carrying
+        labels)::
+
+            sage: p = iet.Permutation('a b c d', 'd c b a', reduced=True)
+            sage: H = p.suspension_cone()
+            sage: r = sum(r.vector() for r in H.rays())
+            sage: r[0] > 0 and r[0]+r[1] > 0 and r[0]+r[1]+r[2] > 0
+            True
+            sage: r[3] < 0 and r[3]+r[2] < 0 and r[3]+r[2]+r[1] < 0
+            True
+        """
+        n = len(self)
+        ieqs = []
+
+        if self._labels is not None:
+            labels = self._labels
+        else:
+            labels = [list(range(n)), self._twin[1]]
+
+        for i in range(1,len(self)):
+            ieq = [0]*(n+1)
+            for j in range(i):
+                ieq[labels[0][j]+1] = 1
+            ieqs.append(ieq)
+
+            ieq = [0]*(n+1)
+            for j in range(i):
+                ieq[labels[1][j]+1] = -1
+            ieqs.append(ieq)
+
+        if winner is not None:
+            winner = interval_conversion(winner)
+            if winner == 0:
+                # sum of heights is <= 0
+                ieqs.append([0] + [-1] * len(self))
+            elif winner == 1:
+                # sum of heights is >= 0
+                ieqs.append([0] + [1] * len(self))
+
+        from sage.geometry.polyhedron.constructor import Polyhedron
+        return Polyhedron(ieqs=ieqs)
+
+    def heights_cone(self, side=None):
+        r"""
+        Return the cone of heights data.
+
+        .. SEEALSO::
+
+            :meth:`suspension_cone`
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import *
+            sage: p = iet.Permutation('a b c d', 'd c b a')
+            sage: C = p.heights_cone()
+            sage: C
+            A 4-dimensional polyhedron in QQ^4 defined as the convex hull of 1 vertex and 5 rays
+            sage: C.rays_list()
+            [[0, 0, 1, 1], [0, 1, 1, 0], [0, 1, 1, 1], [1, 1, 0, 0], [1, 1, 1, 0]]
+
+            sage: p.heights_cone('top').rays_list()
+            [[0, 0, 1, 1], [0, 1, 1, 0], [1, 1, 0, 0], [1, 1, 1, 0]]
+            sage: p.heights_cone('bot').rays_list()
+            [[0, 0, 1, 1], [0, 1, 1, 0], [0, 1, 1, 1], [1, 1, 0, 0]]
+        """
+        I = self.intersection_matrix()
+        C = self.suspension_cone(side)
+
+        from sage.geometry.polyhedron.constructor import Polyhedron
+        return Polyhedron(rays=[-I*c.vector() for c in C.rays()])
+
+    def invariant_density_rauzy(self, winner=None, var='x'):
+        r"""
+        Return the invariant density for the Rauzy induction.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import iet
+            sage: f = iet.Permutation('a b c d', 'd c b a').invariant_density_rauzy()
+            sage: f
+            (1)/((x2 + x3)*(x1 + x2)*(x1 + x2 + x3)*(x0 + x1)) + (1)/((x2 + x3)*(x1 + x2)*(x0 + x1)*(x0 + x1 + x2))
+
+            sage: f_top = iet.Permutation('a b c d', 'd c b a').invariant_density_rauzy('top')
+            sage: f_top
+            (1)/((x2 + x3)*(x1 + x2)*(x0 + x1)*(x0 + x1 + x2))
+            sage: f_bot = iet.Permutation('a b c d', 'd c b a').invariant_density_rauzy('bot')
+            sage: f_bot
+            (1)/((x2 + x3)*(x1 + x2)*(x1 + x2 + x3)*(x0 + x1))
+
+            sage: f == f_bot + f_top
+            True
+        """
+        from surface_dynamics.misc.additive_multivariate_generating_series import AdditiveMultivariateGeneratingSeriesRing
+
+        d = len(self)
+        S = self.suspension_cone(winner=winner)
+        Omega = self.intersection_matrix()
+        M = AdditiveMultivariateGeneratingSeriesRing(var, d)
+
+        ans = M.zero()
+        hyperplane = sum(Omega.columns())
+        fac = 1 / ZZ(d).factorial()
+        for t in cone_triangulate(S, hyperplane):
+            heights = [r * Omega for r in t]
+            for h in heights: h.set_immutable()
+            d = {}
+            for h in heights:
+                if h not in d: d[h] = ZZ.one()
+                else: d[h] += ZZ.one()
+            ans += M.term(ZZ.one(), d)
+
+        return ans
+
     def to_origami(self):
         r"""
         Return the origami associated to a cylindric permutation.
