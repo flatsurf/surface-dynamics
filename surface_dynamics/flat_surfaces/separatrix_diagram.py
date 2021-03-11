@@ -1,3 +1,4 @@
+# encoding=utf-8
 r"""
 Separatrix diagrams and cylinder diagrams
 
