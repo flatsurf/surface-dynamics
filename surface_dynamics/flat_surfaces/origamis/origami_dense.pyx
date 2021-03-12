@@ -30,6 +30,14 @@ from cpython.tuple cimport *
 
 from cpython cimport bool
 
+# NOTE: This one line seems need to not get Cython confused on compilation...
+# Otherwise we end up with the strange error
+#     sage: from .origami import Origami
+#     Traceback (most recent call last):
+#     ...
+#     AttributeError: 'module' object has no attribute 'ModuleElementWithMutability'
+cimport sage.structure.element
+
 try:
     from sage.structure.coerce import CoercionModel
 except ImportError:

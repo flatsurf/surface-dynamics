@@ -1017,7 +1017,7 @@ class QuadraticStratumComponent(StratumComponent):
         perm = self.permutation_representative(reduced=False).orientation_cover()
         if 'isotypic_decomposition' not in kargs:
             kargs['isotypic_decomposition'] = (1,-1)
-        return perm.lyapunov_exponents_H_plus(**kargs)
+        return perm.lyapunov_exponents_H_plus(**kargs)[0]
 
 QSC = QuadraticStratumComponent
 

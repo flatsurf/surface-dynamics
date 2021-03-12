@@ -14,7 +14,9 @@ Most of the functions are just GAP wrappers.
 #                  https://www.gnu.org/licenses/
 # *************************************************************************
 
+from sage.rings.all import ZZ
 from sage.libs.gap.libgap import libgap
+import numpy as np
 
 
 def real_characters(G):
@@ -136,10 +138,28 @@ def conjugacy_class_matrix(cl, d):
             res[k][p[k]] += 1
 
     from sage.matrix.constructor import matrix
-    return matrix(res)
+    return matrix(ZZ, res)
 
+def regular_conjugacy_class_matrix(cl, G):
+    r"""
+    Return the matrix of the conjugacy class ``cl`` associated to the regular
+    representation of ``G``.
+    """
+    Glist = G.AsList()
 
-def isotypic_projection_matrix(G, d, chi, deg, conj_mats=None):
+    d = G.Size().sage()
+
+    res = [[0]*d for _ in range(d)]
+    for p in cl.AsList():
+        p = libgap.Permutation(p, Glist, libgap.OnRight)
+        p = libgap.ListPerm(p, d)
+        for k in range(d):
+            res[k][p[k] - 1] += 1
+
+    from sage.matrix.constructor import matrix
+    return matrix(ZZ, res)
+
+def isotypic_projection_matrix(G, d, chi, deg, conj_mats=None, floating_point=False):
     r"""
     Return an isotypic projection matrix
 
@@ -153,7 +173,12 @@ def isotypic_projection_matrix(G, d, chi, deg, conj_mats=None):
 
     - ``deg`` -- (integer) degree of the character
 
-    Recall the formula for the projection as given in Theorem 8 in [Serre]_. If
+    - ``conj_mats`` -- (optional list) matrices of the conjugacy classes
+
+    - ``floating_point`` -- whether to return matrices with floating point entries instead
+                   of elements in the cyclotomic field
+
+    Recall the formula for the projection as given in Theorem 8 in [Ser]_. If
     `G` is a permutation group, then
 
     .. MATH::
@@ -193,6 +218,12 @@ def isotypic_projection_matrix(G, d, chi, deg, conj_mats=None):
         [-1/5 -1/5  4/5 -1/5 -1/5]
         [-1/5 -1/5 -1/5  4/5 -1/5]
         [-1/5 -1/5 -1/5 -1/5  4/5]
+        sage: isotypic_projection_matrix(G, 5, T[3], deg[3], floating_point=True)
+        array([[ 0.8, -0.2, -0.2, -0.2, -0.2],
+               [-0.2,  0.8, -0.2, -0.2, -0.2],
+               [-0.2, -0.2,  0.8, -0.2, -0.2],
+               [-0.2, -0.2, -0.2,  0.8, -0.2],
+               [-0.2, -0.2, -0.2, -0.2,  0.8]])
         sage: isotypic_projection_matrix(G, 5, T[4], deg[4])
         [0 0 0 0 0]
         [0 0 0 0 0]
@@ -213,9 +244,15 @@ def isotypic_projection_matrix(G, d, chi, deg, conj_mats=None):
             m = conjugacy_class_matrix(cl, d)
         else:
             m = conj_mats[t]
-        res += chi[t] * m
+        if floating_point:
+            res += np.float64(chi[t]) * m.numpy()
+        else:
+            res += chi[t] * m
 
-    return deg / G.cardinality() * res
+    if floating_point:
+            return int(deg) * res / int(G.cardinality())
+    else:
+            return deg * res / G.cardinality()
 
 
 def real_isotypic_projection_matrices(G, d):

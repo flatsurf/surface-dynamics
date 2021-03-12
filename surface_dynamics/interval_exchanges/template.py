@@ -2071,6 +2071,39 @@ class Permutation(SageObject):
         from .cover import PermutationCover
         return PermutationCover(self, d, perms)
 
+    def regular_cover(self, G, elts):
+        r"""
+        Return a regular (or normal) cover of this permutation.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import iet
+
+            sage: p = iet.Permutation('a b c d', 'd c b a')
+            sage: G = SymmetricGroup(4)
+            sage: ga = G('(1,2)')
+            sage: gb = G('(1,3,4)')
+            sage: gc = G('(1,3)')
+            sage: gd = G('()')
+            sage: pp = p.regular_cover(G, [ga, gb, gc, gd])
+            sage: pp
+            Regular cover of degree 24 with group Symmetric group of order 4! as a permutation group of the permutation:
+            a b c d
+            d c b a
+            sage: pp.genus()
+            33
+
+        Additive groups are converted to multiplicative groups::
+
+            sage: p = iet.GeneralizedPermutation('a a b', 'b c c')
+            sage: G = Zmod(5)
+            sage: p.regular_cover(G, [0, 1, 2])
+            Regular cover of degree 5 with group Multiplicative Abelian group isomorphic to C5 of the permutation:
+            a a b
+            b c c
+        """
+        from .cover import RegularCover
+        return RegularCover(self, G, elts)
 
 class PermutationIET(Permutation):
     def _init_twin(self, a):

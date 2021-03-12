@@ -13,6 +13,7 @@ except ImportError:
                      "first in a console \"$ source /usr/share/sagemath/bin/sage-env\"\n")
 
 import sys, os
+import numpy as np
 
 from distutils.core import setup
 from distutils.extension import Extension
@@ -95,7 +96,7 @@ for name, data in extensions_data.items():
         full_dir = os.path.join('surface_dynamics', data['dir'])
         sources = [os.path.join(full_dir, src) for src in data['sources']]
         headers = [os.path.join(full_dir, data['dir'], head) for head in data['headers']]
-        extensions.append(Extension(data['name'], sources = sources))
+        extensions.append(Extension(data['name'], sources=sources, include_dirs=[full_dir, np.get_include()]))
 
         sources = [os.path.join(data['dir'], src) for src in data['sources']]
         headers = [os.path.join(data['dir'], head) for head in data['headers']]
