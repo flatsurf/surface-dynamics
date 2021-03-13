@@ -60,7 +60,7 @@ or installed it from source use ``PIP='sage -pip'`` and ``PYTHON='sage -python'`
 
 You can install the latest development version in one line with::
 
-    $ PIP install git+https://gitlab.com/videlec/surface_dynamics [--user]
+    $ PIP install git+https://github.com/flatsurf/surface_dynamics [--user]
 
 As before, the ``--user`` option is optional and when specified will
 install the module in your user space.
@@ -68,7 +68,7 @@ install the module in your user space.
 You can also perform a two stage installation that will allow you to
 modify the source code. The first step is to clone the repository::
 
-    $ git clone https://gitlab.com/videlec/surface_dynamics
+    $ git clone https://github.com/flatsurf/surface_dynamics
 
 The above command creates a repository ``surface_dynamics`` with the source code,
 documentation and miscellaneous files. You can then change to the directory
@@ -169,12 +169,12 @@ Installing development version - source code
 
 The development webpage is
 
-* https://gitlab.com/videlec/surface_dynamics
+* https://github.com/flatsurf/surface_dynamics
 
 Assuming you have the program ``git`` on your computer, you can install the
 development version with the command::
 
-    $ sage -pip install git+https://gitlab.com/videlec/surface_dynamics [--user]
+    $ sage -pip install git+https://github.com/flatsurf/surface_dynamics [--user]
 
 Contact
 -------
@@ -209,6 +209,7 @@ To cite the software, use the following Bibtex entry::
 Versions
 --------
 
+* 0.4.6 was released on 2021-03-13 (as a Python package on PyPI)
 * 0.4.5 was released on 2020-10-22 (as a Python package on PyPI)
 * 0.4.4 was released on 2020-01-31 (as a Python package on PyPI)
 * 0.4.3 was released on 2019-07-28 (as a Python package on PyPI)

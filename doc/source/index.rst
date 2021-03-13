@@ -25,14 +25,14 @@ a two step installation::
 
 If you use the sagemath package from Archlinux, run::
 
-    $ pip3 install git+https://gitlab.com/videlec/surface_dynamics --user
+    $ pip3 install git+https://github.com/flatsurf/surface_dynamics --user
 
 Other sources of information:
 
 - short tutorial: http://www.labri.fr/perso/vdelecro/flatsurf.html
 
 - development webpage (including source code):
-  https://gitlab.com/videlec/surface_dynamics
+  https://github.com/flatsurf/surface_dynamics
 
 Module documentation
 --------------------
