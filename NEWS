@@ -5,7 +5,7 @@ surface_dynamics Change Log
 .. current developments
 
 v0.4.6
-====================
+======
 
 **Fixed:**
 
@@ -16,6 +16,8 @@ v0.4.6
 
 * problematic utf-8 encoding in README.rst that used to break the setup.py script
 
+* undeclared utf-8 encoding in some Python files
+
 **Changed:**
 
 * Masur-Veech volume contribution of individual cylinder diagrams as multiple
@@ -25,6 +27,13 @@ v0.4.6
 
 * Flip sequence for Rauzy induction. It is now possible to construct
   pseudo-Anosov homeomorphism without generating the Rauzy diagrams.
+
+* Masur polygon (as a triangulated sage-flatsurf surface)
+
+* Implementation of regular covers for faster computation of isotypical
+  components
+
+* conversion to and from pyintervalxt
 
 v0.4.5
 ======

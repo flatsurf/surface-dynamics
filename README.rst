@@ -209,11 +209,12 @@ To cite the software, use the following Bibtex entry::
 Versions
 --------
 
-* flatsurf 0.4.4 was released on 2020-01-31 (as a Python package on PyPI)
-* flatsurf 0.4.3 was released on 2019-07-28 (as a Python package on PyPI)
-* flatsurf 0.4.2 was released on 2019-06-21 (as a Python package on PyPI)
-* flatsurf 0.4.1 was released on 2019-03-26 (as a Python package on PyPI)
-* flatsurf 0.4.0 was released on 2018-05-14 (as a Python package on PyPI)
-* flatsurf 0.3 was released on 2017-08-11 (as a Python package on PyPI)
-* flatsurf 0.2 was released on 2015-11-15 (as a Sage spkg)
-* flatsurf 0.1 was released on 2015-07-30 (as a Sage spkg)
+* 0.4.5 was released on 2020-10-22 (as a Python package on PyPI)
+* 0.4.4 was released on 2020-01-31 (as a Python package on PyPI)
+* 0.4.3 was released on 2019-07-28 (as a Python package on PyPI)
+* 0.4.2 was released on 2019-06-21 (as a Python package on PyPI)
+* 0.4.1 was released on 2019-03-26 (as a Python package on PyPI)
+* 0.4.0 was released on 2018-05-14 (as a Python package on PyPI)
+* 0.3 was released on 2017-08-11 (as a Python package on PyPI)
+* 0.2 was released on 2015-11-15 (as a Sage spkg)
+* 0.1 was released on 2015-07-30 (as a Sage spkg)
