@@ -28,6 +28,15 @@ from .fat_graph import FatGraph, list_extrems
 # Miscellaneous functions #
 ###########################
 
+def minmax(l):
+    m = M = l[0]
+    for i in range(1, len(l)):
+        if l[i] < m:
+            m = l[i]
+        elif l[i] > M:
+            M = l[i]
+    return m, M
+
 
 def num_and_weighted_num(it):
     from sage.rings.integer_ring import ZZ
@@ -69,6 +78,14 @@ def augment1(cm, aut_grp, g, callback):
         aut_grp.reset_iterator()
         R = aut_grp
 
+    if cm._n == 0:
+        cm._set_genus1_square()
+        aaut_grp = cm.automorphism_group()
+        callback('augment1', True, cm, aaut_grp, g - 1)
+        if g > 1:
+            augment1(cm, aaut_grp, g - 1, callback)
+        return
+
     for i in R:
         j = i
         for sj in range(fd[fl[i]]):
@@ -103,6 +120,16 @@ def augment2(cm, aut_grp, depth, callback):
     fp = cm._fp
     fd = cm._fd
     fl = cm._fl
+
+    if cm._n == 0:
+        # trivial map -> loop (1 vertex, 2 faces)
+        cm._set_genus0_loop()
+        aaut_grp = cm.automorphism_group()
+        callback('augment2', True, cm, aaut_grp, depth - 1)
+        if depth > 1:
+            augment2(cm, aaut_grp, depth - 1, callback)
+        cm.remove_edge(0)
+        return
 
     if aut_grp is None:
         R = range(n)
@@ -163,6 +190,16 @@ def augment3(cm, aut_grp, depth, min_degree, callback):
     vp = cm._vp
     vd = cm._vd
     vl = cm._vl
+
+    if cm._n == 0:
+        # trivial map -> edge (2 vertices, 1 face)
+        cm._set_genus0_edge()
+        aaut_grp = cm.automorphism_group()
+        callback('augment3', True, cm, aaut_grp, depth - 1)
+        if depth > 1:
+            augment3(cm, aaut_grp, depth - 1, min_degree, callback)
+        cm.contract_edge(0)
+        return
 
     if aut_grp is None:
         R = range(n)
@@ -256,7 +293,6 @@ class CountAndWeightedCount:
     def __call__(self, cm, aut):
         self.count += ZZ(1)
         self.weighted_count += QQ((1, (1 if aut is None else aut.group_cardinality())))
-
 
 # callback to list elements
 class ListCallback:
@@ -450,90 +486,128 @@ class FatGraphsTrace:
 #################
 
 class StackCallback:
-    def __init__(self, cm, aut, gmin, gdepth, nfmin, nfdepth, nvmin, nvdepth, min_degree, callback, filter):
+    def __init__(self, gmin, gmax, fmin, fmax, emin, emax, vmin, vmax, min_degree, callback, filter):
         self._gmin = gmin
-        self._gdepth = gdepth
-        self._nfmin = nfmin
-        self._nfdepth = nfdepth
-        self._nvmin = nvmin
-        self._nvdepth = nvdepth
-        self._cm = cm
-        self._aut = aut
+        self._gmax = gmax
+        self._fmin = fmin
+        self._fmax = fmax
+        self._emin = emin
+        self._emax = emax
+        self._vmin = vmin
+        self._vmax = vmax
         self._callback = callback
         self._min_degree = min_degree
         self._filter = filter
-        # print("StackCallback(gmin={}, gdepth={}, nfmin={}, nfdepth={}, nvmin={}, nvdepth={}".format(
-        #    self._gmin, self._gdepth, self._nfmin, self._nfdepth, self._nvmin, self._nvdepth))
 
     def __call__(self, caller, test, cm, aut, depth):
-        if test:
-            if caller == 'augment1':
-                # we know the map has one vertex and one edge and hence 4g = n
-                if cm._n >= 4 * self._gmin:
-                    if cm._nv >= self._nvmin and cm._nf >= self._nfmin and \
-                       (self._filter is None or self._filter(cm, aut)):
-                        self._callback(cm, aut)
+        # argument test: answers whether this is a canonical map
+        nv = cm._nv
+        ne = cm._n // 2
+        nf = cm._nf
+        assert nv < self._vmax and ne < self._emax and nf < self._fmax, (cm, depth)
 
+        if test:
+            if nv >= self._vmin and \
+               ne >= self._emin and \
+               nf >= self._fmin and \
+               (self._filter is None or self._filter(cm, aut)):
+                self._callback(cm, aut)
+
+            if caller == 'augment1':
+                # augment1 creates fat graphs with a single vertex and a single face.
+                # Here: nv=1, nf=1, 2g=e.
+                if ne >= 2 * self._gmin:
                     # more faces?
-                    if self._nfdepth:
-                        augment2(cm, aut, self._nfdepth, self)
+                    nfdepth = min(self._fmax - 2, self._emax - ne - 1)
+                    if nfdepth:
+                        augment2(cm, aut, nfdepth, self)
                     # more vertices?
-                    elif self._nvdepth:
-                        augment3(cm, aut, self._nvdepth, self._min_degree, self)
+                    else:
+                        nvdepth = min(self._vmax - 2, self._emax - ne - 1)
+                        if nvdepth:
+                            augment3(cm, aut, nvdepth, self._min_degree, self)
 
             elif caller == 'augment2':
-                if cm._nf >= self._nfmin:
-                    if cm._nv >= self._nvmin and \
-                       (self._filter is None or self._filter(cm, aut)):
-                        self._callback(cm, aut)
-
+                # augment2 performs face splitting
+                # Here: nv=1
+                if nf >= self._fmin:
                     # more vertices?
-                    if self._nvdepth:
-                        augment3(cm, aut, self._nvdepth, self._min_degree, self)
+                    nvdepth = min(self._vmax - 2, self._emax - ne - 1)
+                    if nvdepth:
+                        augment3(cm, aut, nvdepth, self._min_degree, self)
 
             elif caller == 'augment3':
-                if cm._nv >= self._nvmin and \
-                   (self._filter is None or self._filter(cm, aut)):
-                    self._callback(cm, aut)
+                pass
+
+            else:
+                raise RuntimeError('unknown caller')
 
     def run(self):
-        if self._gdepth:
-            augment1(self._cm, self._aut, self._gdepth, self)
-        elif self._nfdepth:
-            augment2(self._cm, self._aut, self._nfdepth, self)
-        elif self._nvdepth:
-            augment3(self._cm, self._aut, self._nvdepth, self._min_degree, self)
-        elif self._filter is None or self._filter(self._cm, self._aut):
-            self._callback(self._cm, self._aut)
+        # trivial map (g = 0, nv = 1, nf = 1)
+        cm = FatGraph('()', '()', '()')
+        nv = 1
+        ne = 0
+        nf = 1
+        g = 0
+
+        if self._vmin <= nv < self._vmax and \
+           self._emin <= ne < self._emax and \
+           self._fmin <= nf < self._fmax and \
+           self._gmin <= g < self._gmax and \
+           (self._filter is None or self._filter(cm, aut)):
+               self._callback(cm, None)
+
+        cm._realloc(2*self._emax - 2)
+        if self._gmax > 1:
+            augment1(cm, None, self._gmax - 1, self)
+        if self._gmin == 0 and self._fmax > 2:
+            augment2(cm, None, self._fmax - 2, self)
+        if self._gmin == 0 and self._fmin == 1 and self._vmax > 2:
+            augment3(cm, None, self._vmax - 2, self._min_degree, self)
 
 ##############
 # Main class #
 ##############
 
-class FatGraphs_g_nf_nv:
+class FatGraphs:
     r"""
-    Isomorphism classes of fat graphs with given genus, number of faces and
-    number of vertices.
+    Isomorphism classes of fat graphs with topological constraints.
 
     EXAMPLES::
 
-        sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs_g_nf_nv
+        sage: from surface_dynamics import FatGraphs
 
     Trees and their dual (maps with single vertex) in genus zero are counted by
     Catalan numbers::
 
         sage: for n in range(2, 10):
-        ....:     ntrees1 = 2 * (n-1) * FatGraphs_g_nf_nv(0, n, 1).weighted_cardinality()
-        ....:     ntrees2 = 2 * (n-1) * FatGraphs_g_nf_nv(0, 1, n).weighted_cardinality()
-        ....:     assert catalan_number(n-1) == ntrees1 == ntrees2, n
+        ....:     ntrees1 = 2 * (n-1) * FatGraphs(g=0, nf=n, nv=1).weighted_cardinality()
+        ....:     ntrees2 = 2 * (n-1) * FatGraphs(g=0, nf=1, nv=n).weighted_cardinality()
+        ....:     assert catalan_number(n-1) == ntrees1 == ntrees2, (n, ntrees1, ntrees2)
+
+    Tutte formulas in genus 0 (combinatorial maps counted by number of edges)::
+
+        sage: R.<t> = QQ[]
+        sage: F = FatGraphs(g=0, ne_max=8)
+        sage: poly = R.zero()
+        sage: def update(cm, aut):
+        ....:     global poly
+        ....:     p = [cm.face_profile()]
+        ....:     aut_card = 1 if aut is None else aut.group_cardinality()
+        ....:     poly += 2*cm.num_edges() // aut_card * t**cm.num_edges()
+        sage: F.map_reduce(update)
+        sage: poly
+        208494*t^7 + 24057*t^6 + 2916*t^5 + 378*t^4 + 54*t^3 + 9*t^2 + 2*t
+        sage: sum(2 * 3**n / (n+2) / (n+1) * binomial(2*n,n) *t**n for n in range(1,8))
+        208494*t^7 + 24057*t^6 + 2916*t^5 + 378*t^4 + 54*t^3 + 9*t^2 + 2*t
 
     Genus zero with same number of vertices and faces::
 
-        sage: FatGraphs_g_nf_nv(0, 2, 2).cardinality_and_weighted_cardinality()
+        sage: FatGraphs(g=0, nf=2, nv=2).cardinality_and_weighted_cardinality()
         (2, 5/4)
-        sage: FatGraphs_g_nf_nv(0, 3, 3).cardinality_and_weighted_cardinality()
+        sage: FatGraphs(g=0, nf=3, nv=3).cardinality_and_weighted_cardinality()
         (23, 41/2)
-        sage: FatGraphs_g_nf_nv(0, 4, 4).cardinality_and_weighted_cardinality()
+        sage: FatGraphs(g=0, nf=4, nv=4).cardinality_and_weighted_cardinality()
         (761, 8885/12)
 
     Duality checks
@@ -541,8 +615,8 @@ class FatGraphs_g_nf_nv:
         sage: for g,nf,nv in [(0,2,3), (0,2,4), (0,3,4),
         ....:                 (1,1,2), (1,1,3), (1,1,4), (1,1,5), (1,2,3), (1,2,4), (1,3,4),
         ....:                 (2,1,2), (2,1,3)]:
-        ....:     n1 = FatGraphs_g_nf_nv(g, nf, nv).cardinality_and_weighted_cardinality()
-        ....:     n2 = FatGraphs_g_nf_nv(g, nv, nf).cardinality_and_weighted_cardinality()
+        ....:     n1 = FatGraphs(g=g, nf=nf, nv=nv).cardinality_and_weighted_cardinality()
+        ....:     n2 = FatGraphs(g=g, nf=nv, nv=nf).cardinality_and_weighted_cardinality()
         ....:     assert n1 == n2
         ....:     print(g, nf, nv, n1)
         0 2 3 (5, 11/3)
@@ -560,15 +634,15 @@ class FatGraphs_g_nf_nv:
 
     Unicellular map with one vertex in genus 3::
 
-        sage: FatGraphs_g_nf_nv(3, 1, 1).cardinality_and_weighted_cardinality()
+        sage: FatGraphs(g=3, nf=1, nv=1).cardinality_and_weighted_cardinality()
         (131, 495/4)
 
     Minimum vertex degree bounds::
 
         sage: for k in range(2,5):
-        ....:    F = FatGraphs_g_nf_nv(1, 2, 2, vertex_min_degree=1)
+        ....:    F = FatGraphs(g=1, nf=2, nv=2, vertex_min_degree=1)
         ....:    c1 = F.cardinality_and_weighted_cardinality(lambda cm,_: cm.vertex_degree_min() >= k)
-        ....:    G = FatGraphs_g_nf_nv(1, 2, 2, vertex_min_degree=k)
+        ....:    G = FatGraphs(g=1, nf=2, nv=2, vertex_min_degree=k)
         ....:    c2 = G.cardinality_and_weighted_cardinality()
         ....:    assert c1 == c2
         ....:    print(c1)
@@ -577,9 +651,9 @@ class FatGraphs_g_nf_nv:
         (4, 15/8)
 
         sage: for k in range(2,6):
-        ....:    F = FatGraphs_g_nf_nv(0, 5, 2, vertex_min_degree=1)
+        ....:    F = FatGraphs(g=0, nf=5, nv=2, vertex_min_degree=1)
         ....:    c1 = F.cardinality_and_weighted_cardinality(lambda cm,_: cm.vertex_degree_min() >= k)
-        ....:    G = FatGraphs_g_nf_nv(0, 5, 2, vertex_min_degree=k)
+        ....:    G = FatGraphs(g=0, nf=5, nv=2, vertex_min_degree=k)
         ....:    c2 = G.cardinality_and_weighted_cardinality()
         ....:    assert c1 == c2
         ....:    print(c1)
@@ -590,7 +664,7 @@ class FatGraphs_g_nf_nv:
 
     Using ranges for vertex and face numbers::
 
-        sage: F = FatGraphs_g_nf_nv(1, nv_min=2, nv_max=4, nf_min=2, nf_max=4)
+        sage: F = FatGraphs(g=1, nv_min=2, nv_max=4, nf_min=2, nf_max=4)
         sage: def check(cm,aut):
         ....:    if cm.num_vertices() < 2 or \
         ....:       cm.num_vertices() >= 4 or \
@@ -601,15 +675,29 @@ class FatGraphs_g_nf_nv:
         sage: for nf in [2,3]:
         ....:     for nv in [2,3]:
         ....:         c1 = F.cardinality_and_weighted_cardinality(lambda cm,_: cm.num_vertices() == nv and cm.num_faces() == nf)
-        ....:         c2 = FatGraphs_g_nf_nv(1, nf, nv).cardinality_and_weighted_cardinality()
+        ....:         c2 = FatGraphs(g=1, nf=nf, nv=nv).cardinality_and_weighted_cardinality()
         ....:         assert c1 == c2
         ....:         print(nf, nv, c1)
         2 2 (24, 167/8)
         2 3 (180, 172)
         3 2 (180, 172)
         3 3 (2048, 6041/3)
+
+    TESTS::
+
+        sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs
+        sage: FatGraphs(g=0, nf=1, nv=1).list()
+        [FatGraph('()', '()', '()')]
+        sage: FatGraphs(g=1, nf=1, nv=1).list()
+        [FatGraph('(0,1,2,3)', '(0,2)(1,3)', '(0,1,2,3)')]
+        sage: FatGraphs(g=0, nf=2, nv=1).list()
+        [FatGraph('(0,1)', '(0,1)', '(0)(1)')]
+        sage: FatGraphs(g=0, nf=1, nv=2).list()
+        [FatGraph('(0)(1)', '(0,1)', '(0,1)')]
+        sage: FatGraphs(g=0, ne=1).list()
+        [FatGraph('(0,1)', '(0,1)', '(0)(1)'), FatGraph('(0)(1)', '(0,1)', '(0,1)')]
     """
-    def __init__(self, g=None, nf=None, nv=None, vertex_min_degree=1, g_min=None, g_max=None, nf_min=None, nf_max=None, nv_min=None, nv_max=None):
+    def __init__(self, g=None, nf=None, ne=None, nv=None, vertex_min_degree=1, g_min=None, g_max=None, nf_min=None, nf_max=None, ne_min=None, ne_max=None, nv_min=None, nv_max=None):
         r"""
        INPUT:
 
@@ -617,23 +705,21 @@ class FatGraphs_g_nf_nv:
 
         - ``nf``, ``nf_min``, ``nf_max`` - number of faces
 
+        - ``ne``, `ne_min``, ``ne_max`` - number of edges
+
         - ``nv``, ``nv_min``, ``nv_max`` - number of vertices
 
-        - ``vertex_min_degree`` - minimal number of vertices (default to ``1``)
-
-        - ``intermediate`` - if set to ``True`` then return all graphs with genus = g,
-          number of faces <= nf and number of vertices <= nv that satisfy the
-          ``vertex_min_degree`` constraint
+        - ``vertex_min_degree`` - minimal degree of vertices (default to ``1``)
         """
         self._gmin, self._gmax = self._get_interval(g, g_min, g_max, 0, 'g')
-        if self._gmax != self._gmin + 1:
-            raise ValueError("not implemented for genus in an interval")
-        # 2 - 2g = (num vertices) - (num edges) + (num faces)
-        # if we specify the number of edges, it provides upper bound for both
-        # faces and vertices
         self._fmin, self._fmax = self._get_interval(nf, nf_min, nf_max, 1, 'nf')
         self._vmin, self._vmax = self._get_interval(nv, nv_min, nv_max, 1, 'nv')
+        self._emin, self._emax = self._get_interval(ne, ne_min, ne_max, 0, 'ne')
+        self._adjust_bounds()
+
         self._vertex_min_degree = ZZ(vertex_min_degree)
+        if self._vertex_min_degree < 0:
+            raise ValueError('vertex_min_degree must be positive')
 
     def _get_interval(self, v, vmin, vmax, low_bnd, name):
         if v is not None:
@@ -644,53 +730,108 @@ class FatGraphs_g_nf_nv:
                 raise ValueError("%s must be >= %d" % (name, low_bnd))
             return (v, v + 1)
         if vmax is None:
-            raise ValueError("at least %s or %s_max must be set" % (name, name))
-        if not isinstance(vmax, numbers.Integral):
+            pass
+        elif not isinstance(vmax, numbers.Integral):
             raise ValueError("%s_max must be integral" % name)
-        vmax = ZZ(vmax)
+        else:
+            vmax = ZZ(vmax)
+
         if vmin is None:
             vmin = low_bnd
         elif not isinstance(vmin, numbers.Integral):
             raise TypeError("%s_min must be integral" % name)
-        vmin = ZZ(vmin)
+        else:
+            vmin = ZZ(vmin)
         if vmin < low_bnd:
             raise ValueError("%s_min must be >= %s" % (name, low_bnd))
         return vmin, vmax
+
+    def _adjust_bounds(self):
+        # TODO: take into account vertex_min_degree
+        if self._fmax is None:
+            if self._emax is None:
+                raise ValueError("'fmax' or 'emax' must be set")
+            self._fmax = 2*self._emax
+        if self._vmax is None:
+            if self._emax is None:
+                raise ValueError("'vmax' or 'emax' must be set")
+            self._vmax = 2*self._emax
+        if self._emax is None:
+            # e = 2g - 2 + v  + f
+            self._emax = 2*(self._gmax-1) - 2 + (self._vmax-1) + (self._fmax-1) + 1
+        # v, e, f, g
+        # -2 + v - e + f + 2g = 0
+        from sage.geometry.polyhedron.constructor import Polyhedron
+        P = Polyhedron(ieqs=[
+            (-self._vmin,   1, 0, 0, 0),
+            (self._vmax-1, -1, 0, 0, 0),
+            (-self._emin,  0,  1, 0, 0),
+            (self._emax-1, 0, -1, 0, 0),
+            (-self._fmin,  0, 0,  1, 0),
+            (self._fmax-1, 0, 0, -1, 0),
+            (-self._gmin,  0, 0, 0,  1),
+            (self._gmax-1, 0, 0, 0, -1)],
+            eqns = [(-2, 1, -1, 1, 2)])
+        if P.is_empty():
+            raise ValueError('conditions lead to an empty set')
+        half = QQ((1,2))
+        self._vmin, self._vmax = minmax([v[0] for v in P.vertices_list()])
+        self._vmin = self._vmin.floor()
+        self._vmax = (self._vmax + half).ceil()
+        self._emin, self._emax = minmax([v[1] for v in P.vertices_list()])
+        self._emin = self._emin.floor()
+        self._emax = (self._emax + half).ceil()
+        self._fmin, self._fmax = minmax([v[2] for v in P.vertices_list()])
+        self._fmin = self._fmin.floor()
+        self._fmax = (self._fmax + half).ceil()
+        self._gmin, self._gmax = minmax([v[3] for v in P.vertices_list()])
+        self._gmin = self._gmin.floor()
+        self._gmax = (self._gmax + half).ceil()
 
     def __repr__(self):
         r"""
         EXAMPLES::
 
-            sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs_g_nf_nv
-            sage: FatGraphs_g_nf_nv(0, 5, 1, vertex_min_degree=3)
-            Fat graphs of genus 0, with 5 faces and 1 vertices
-            sage: FatGraphs_g_nf_nv(0, nf_min=2, nf_max=5, nv_min=1, nv_max=5, vertex_min_degree=3)
-            Fat graphs of genus 0, with between 2 and 5 faces and between 1 and 5 vertices
+            sage: from surface_dynamics import FatGraphs
+            sage: FatGraphs(g=0, ne=1)
+            FatGraphs(g=0, nf_min=1, nf_max=3, ne=1, nv_min=1, nv_max=3)
+            sage: FatGraphs(g=0, nf=5, nv=1, vertex_min_degree=3)
+            FatGraphs(g=0, nf=5, ne=4, nv=1, vertex_min_degree=3)
+            sage: FatGraphs(g=0, nf_min=2, nf_max=5, nv_min=1, nv_max=5, vertex_min_degree=3)
+            FatGraphs(g=0, nf_min=2, nf_max=5, ne_min=1, ne_max=7, nv_min=1, nv_max=5, vertex_min_degree=3)
         """
         if self._gmax == self._gmin + 1:
-            genus = '%d' % self._gmin
+            genus = 'g=%d' % self._gmin
         else:
-            genus = 'between %d and %d' % (self._gmin, self._gmax)
+            genus = 'gmin=%d, gmax=%d' % (self._gmin, self._gmax)
 
         if self._fmax == self._fmin + 1:
-            faces = '%d' % self._fmin
+            faces = 'nf=%d' % self._fmin
         else:
-            faces = 'between %d and %d' % (self._fmin, self._fmax)
+            faces = 'nf_min=%d, nf_max=%d' % (self._fmin, self._fmax)
+
+        if self._emax == self._emin + 1:
+            edges = 'ne=%d' % self._emin
+        else:
+            edges = 'ne_min=%d, ne_max=%d' % (self._emin, self._emax)
 
         if self._vmax == self._vmin + 1:
-            vertices = '%d' % self._vmin
+            vertices = 'nv=%d' % self._vmin
         else:
-            vertices = 'between %d and %d' % (self._vmin, self._vmax)
+            vertices = 'nv_min=%d, nv_max=%d' % (self._vmin, self._vmax)
 
-        return "Fat graphs of genus %s, with %s faces and %s vertices" % (genus, faces, vertices)
+        constraints = []
+        if self._vertex_min_degree != 1:
+            constraints.append("vertex_min_degree=%d" % self._vertex_min_degree)
+
+        return "FatGraphs({})".format(", ".join([genus, faces, edges, vertices] + constraints))
 
     def map_reduce(self, callback, filter=None):
         r"""
         EXAMPLES::
 
-            sage: from __future__ import print_function
-            sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs_g_nf_nv
-            sage: FatGraphs_g_nf_nv(1, 2, 2).map_reduce(lambda x,y: print(x))
+            sage: from surface_dynamics import FatGraphs
+            sage: FatGraphs(g=1, nf=2, nv=2).map_reduce(lambda x,y: print(x))
             FatGraph('(0,6,5,4,1,2,3)(7)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,3,4,6,7)(5)')
             FatGraph('(0,6,1,2,3)(4,7,5)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,3,6,4,7)(5)')
             FatGraph('(0,5,4,1,6,2,3)(7)', '(0,2)(1,3)(4,5)(6,7)', '(0,6,7,1,2,3,4)(5)')
@@ -716,44 +857,11 @@ class FatGraphs_g_nf_nv:
             FatGraph('(0,7,4)(1,2,3,6,5)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,4,6)(3,5,7)')
             FatGraph('(0,5,7,4)(1,2,3,6)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,4)(3,6,5,7)')
         """
-        g = self._gmin
-        fmin = self._fmin
-        fmax = self._fmax
-        vmin = self._vmin
-        vmax = self._vmax
-        if g == 0:
-            if fmin == 1 and vmin == 1:
-                raise NotImplementedError
-            elif fmin > 1:
-                # start with face splitting of the bicellular map (g = 0, nv = 1, nf = 2)
-                cm0 = FatGraph('(0,1)', '(0,1)', '(0)(1)')
-                gshift = 0
-                vshift = - 1
-                fshift = - 2
-            elif vmin > 1:
-                # start with vertex splitting of the unicellular map (g = 0, nv = 2, nf = 1)
-                cm0 = FatGraph('(0)(1)', '(0,1)', '(0,1)')
-                gshift = 0
-                vshift = - 2
-                fshift = - 1
-            else:
-                raise RuntimeError("this should not happen")
-        else:
-            # start with trisection of the trivial map (g = 1, nv = 1, nf = 1)
-            cm0 = FatGraph.from_unicellular_word([0, 1, 0, 1])
-            gshift = - 1
-            vshift = - 1
-            fshift = - 1
-        cm0._realloc(4 * g + 2 * (fmax + vmax - 2))
-
-        a0 = cm0.automorphism_group()
-        StackCallback(cm0, a0,
-                g,                  # gmin
-                g + gshift,         # depth for trisections
-                fmin,               # nfmin
-                fmax + fshift - 1,  # depth for face splitting
-                vmin,               # nvmin
-                vmax + vshift - 1,  # depth for vertex splitting
+        StackCallback(
+                self._gmin, self._gmax,
+                self._fmin, self._fmax,
+                self._emin, self._emax,
+                self._vmin, self._vmax,
                 self._vertex_min_degree,
                 callback,
                 filter).run()
@@ -772,15 +880,14 @@ class FatGraphs_g_nf_nv:
         r"""
         EXAMPLES::
 
-            sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs_g_nf_nv
-            sage: L21 = FatGraphs_g_nf_nv(0, 2, 1).list()
+            sage: from surface_dynamics import FatGraphs
+            sage: L21 = FatGraphs(g=0, nf=2, nv=1).list()
             sage: L21[0].num_faces()
             2
             sage: L21[0].num_vertices()
             1
 
-
-            sage: L12 = FatGraphs_g_nf_nv(0, 1, 2).list()
+            sage: L12 = FatGraphs(g=0, nf=1, nv=2).list()
             sage: L12[0].num_faces()
             1
             sage: L12[0].num_vertices()
@@ -789,3 +896,23 @@ class FatGraphs_g_nf_nv:
         L = ListCallback()
         self.map_reduce(L)
         return L.list()
+
+###################
+# Deprecated code #
+###################
+
+def FatGraphs_g_nf_nv(g=None, nf=None, nv=None, vertex_min_degree=1, g_min=None, g_max=None, nf_min=None, nf_max=None, nv_min=None, nv_max=None):
+    r"""
+    TESTS::
+
+        sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs_g_nf_nv
+        sage: F = FatGraphs_g_nf_nv(g=1, nf=1, nv=1)
+        doctest:warning
+        ...
+        DeprecationWarning: FatGraphs_g_nf_nv is deprecated. Use FatGraphs
+        sage: F.list()
+        [FatGraph('(0,1,2,3)', '(0,2)(1,3)', '(0,1,2,3)')]
+    """
+    from warnings import warn
+    warn('FatGraphs_g_nf_nv is deprecated. Use FatGraphs', DeprecationWarning)
+    return FatGraphs(g=g, nf=nf, nv=nv, vertex_min_degree=vertex_min_degree, g_min=g_min, g_max=g_max, nf_min=nf_min, nf_max=nf_max, nv_min=nv_min, nv_max=nv_max)

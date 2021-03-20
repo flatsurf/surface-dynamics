@@ -310,9 +310,9 @@ class FatGraph(object):
             vvd[vl[i]] += 1
 
         if vvd != vd[:nv]:
-            raise error("inconsistent face labels/degrees, got %s instead of vd = %s" % (vvd, vd[:nv]))
+            raise error("inconsistent vertex labels/degrees, got %s instead of vd = %s" % (vvd, vd[:nv]))
         if ffd != fd[:nf]:
-            raise error("inconsistent vertex labels/degrees, got %s instead of fd = %s" % (ffd, fd[:nf]))
+            raise error("inconsistent face labels/degrees, got %s instead of fd = %s" % (ffd, fd[:nf]))
 
     def is_face_bipartite(self, certificate=False):
         r"""
@@ -337,8 +337,8 @@ class FatGraph(object):
             sage: FatGraph(vp, ep, fp).is_face_bipartite()
             False
 
-            sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs_g_nf_nv
-            sage: F = FatGraphs_g_nf_nv(1, 3, 3, vertex_min_degree=3)
+            sage: from surface_dynamics import FatGraphs
+            sage: F = FatGraphs(g=1, nf=3, nv=3, vertex_min_degree=3)
             sage: F.cardinality_and_weighted_cardinality(filter=lambda x,a: x.is_face_bipartite())
             (3, 5/3)
         """
@@ -740,6 +740,108 @@ class FatGraph(object):
            len(self._fd) < nf or \
            len(self._vd) < nv:
             raise TypeError("reallocation needed")
+
+    def _set_genus0_loop(self):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
+            sage: f = FatGraph('()', '()', '()')
+            sage: f._realloc(2)
+            sage: f._set_genus0_loop()
+            sage: f._check()
+            sage: f
+            FatGraph('(0,1)', '(0,1)', '(0)(1)')
+            sage: f.remove_edge(0)
+            sage: f
+            FatGraph('()', '()', '()')
+        """
+        self._check_alloc(2, 1, 2)
+        self._n = 2
+        self._nf = 2
+        self._nv = 1
+        # set face
+        self._fp[0] = 0
+        self._fp[1] = 1
+        self._fl[0] = 0
+        self._fl[1] = 1
+        self._fd[0] = self._fd[1] = 1
+        # set edge
+        self._ep[0] = 1
+        self._ep[1] = 0
+        # set vertex
+        self._vp[0] = 1
+        self._vp[1] = 0
+        self._vl[0] = self._vl[1] = 0
+        self._vd[0] = 2
+
+    def _set_genus0_edge(self):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
+            sage: f = FatGraph('()', '()', '()')
+            sage: f._realloc(2)
+            sage: f._set_genus0_edge()
+            sage: f._check()
+            sage: f
+            FatGraph('(0)(1)', '(0,1)', '(0,1)')
+            sage: f.contract_edge(0)
+            sage: f
+            FatGraph('()', '()', '()')
+        """
+        self._check_alloc(2, 2, 1)
+        self._n = 2
+        self._nf = 1
+        self._nv = 2
+        # set vertex
+        self._vp[0] = 0
+        self._vp[1] = 1
+        self._vl[0] = 0
+        self._vl[1] = 1
+        self._vd[0] = self._vd[1] = 1
+        # set edge
+        self._ep[0] = 1
+        self._ep[1] = 0
+        # set face
+        self._fp[0] = 1
+        self._fp[1] = 0
+        self._fl[0] = self._fl[1] = 0
+        self._fd[0] = 2
+
+    def _set_genus1_square(self):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
+            sage: f = FatGraph('()', '()', '()')
+            sage: f._realloc(4)
+            sage: f._set_genus1_square()
+            sage: f._check()
+            sage: f
+            FatGraph('(0,1,2,3)', '(0,2)(1,3)', '(0,1,2,3)')
+            sage: f.remove_face_trisection(0)
+            sage: f
+            FatGraph('()', '()', '()')
+        """
+        self._check_alloc(4, 1, 1)
+        self._n = 4
+        self._nv = self._nf = 1
+        vp = self._vp
+        ep = self._ep
+        fp = self._fp
+        vl = self._vl
+        fl = self._fl
+        vd = self._vd
+        fd = self._fd
+        fp[0] = 1; fp[1] = 2; fp[2] = 3; fp[3] = 0
+        vp[0] = 1; vp[1] = 2; vp[2] = 3; vp[3] = 0
+        ep[2] = 0; ep[0] = 2
+        ep[1] = 3; ep[3] = 1
+        fl[0] = fl[1] = fl[2] = fl[3] = 0
+        fd[0] = 4
+        vl[0] = vl[1] = vl[2] = vl[3] = 0
+        vd[0] = 4
 
     def split_face(self, i, j):
         r"""

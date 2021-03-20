@@ -8,3 +8,4 @@
 #*****************************************************************************
 
 from .fat_graph import FatGraph
+from .fat_graph_exhaustive_generation import FatGraphs
