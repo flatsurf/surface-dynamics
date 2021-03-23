@@ -1874,8 +1874,7 @@ class IntervalExchangeTransformation:
             sage: from surface_dynamics import *
 
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1,1])
-            sage: t.plot_two_intervals()
-            ...
+            sage: t.plot_two_intervals() # random output due to matplotlib deprecation warnings with SageMath <9.1
             Graphics object consisting of 8 graphics primitives
         """
         from sage.plot.plot import Graphics
