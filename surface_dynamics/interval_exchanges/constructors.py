@@ -165,19 +165,22 @@ AUTHORS:
 - Vincent Delecroix (2009-09-29): initial version
 
 """
-#*****************************************************************************
+# ****************************************************************************
 #       Copyright (C) 2019-2021 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
+# ****************************************************************************
 
 from __future__ import print_function, absolute_import
-from six.moves import range, map, filter, zip
+from six.moves import range
 
-from sage.rings.integer import Integer
+from sage.combinat.words.alphabet import Alphabet
+from sage.rings.infinity import Infinity
+from sage.misc.decorators import rename_keyword
+
 
 def _two_lists(arg1, arg2):
     r"""
@@ -235,13 +238,13 @@ def _two_lists(arg1, arg2):
             return [t[0].split(), t[1].split()]
 
         elif isinstance(arg1, CombinatPermutation):
-            return [list(range(1,len(arg1)+1)), list(arg1)]
+            return [list(range(1, len(arg1) + 1)), list(arg1)]
 
         elif isinstance(arg1, PermutationGroupElement):
             dom = list(arg1.parent().domain())
             return [dom, [arg1(i) for i in dom]]
 
-        elif isinstance(arg1, (tuple,list)):
+        elif isinstance(arg1, (tuple, list)):
             try:
                 t = CombinatPermutation(arg1)
             except Exception:
@@ -264,6 +267,7 @@ def _two_lists(arg1, arg2):
             raise TypeError('argument not accepted')
 
     return res
+
 
 def Permutation(arg1, arg2=None, reduced=None, flips=None, alphabet=None):
     r"""
@@ -394,9 +398,9 @@ def Permutation(arg1, arg2=None, reduced=None, flips=None, alphabet=None):
         if isinstance(arg1, Permutation_class):
             return Permutation(
                 arg1.list(),
-                reduced = (arg1._labels is None) if reduced is None else reduced,
-                flips = arg1.flips() if flips is None else flips,
-                alphabet = arg1.alphabet() if alphabet is None else alphabet)
+                reduced=(arg1._labels is None) if reduced is None else reduced,
+                flips=arg1.flips() if flips is None else flips,
+                alphabet=arg1.alphabet() if alphabet is None else alphabet)
 
     if reduced is None:
         reduced = False
@@ -422,15 +426,16 @@ def Permutation(arg1, arg2=None, reduced=None, flips=None, alphabet=None):
     if reduced:
         if flips is None:
             from .reduced import ReducedPermutationIET as cls
-        else :
+        else:
             from .reduced import FlippedReducedPermutationIET as cls
     else:
         if flips is None:
             from .labelled import LabelledPermutationIET as cls
-        else :
+        else:
             from .labelled import FlippedLabelledPermutationIET as cls
 
     return cls(a, alphabet=alphabet, reduced=reduced, flips=flips)
+
 
 def GeneralizedPermutation(arg1, arg2=None, reduced=None, flips=None, alphabet=None):
     r"""
@@ -502,9 +507,9 @@ def GeneralizedPermutation(arg1, arg2=None, reduced=None, flips=None, alphabet=N
         if isinstance(arg1, Permutation_class):
             return GeneralizedPermutation(
                 arg1.list(),
-                reduced = (arg1._labels is None) if reduced is None else reduced,
-                flips = arg1.flips() if flips is None else flips,
-                alphabet = arg1.alphabet() if alphabet is None else alphabet)
+                reduced=(arg1._labels is None) if reduced is None else reduced,
+                flips=arg1.flips() if flips is None else flips,
+                alphabet=arg1.alphabet() if alphabet is None else alphabet)
 
     if reduced is None:
         reduced = False
@@ -539,21 +544,21 @@ def GeneralizedPermutation(arg1, arg2=None, reduced=None, flips=None, alphabet=N
     if reduced:
         if flips is None:
             from .reduced import ReducedPermutationLI as cls
-        else :
+        else:
             from .reduced import FlippedReducedPermutationLI as cls
     else:
         if flips is None:
             from .labelled import LabelledPermutationLI as cls
-        else :
+        else:
             from .labelled import FlippedLabelledPermutationLI as cls
 
     return cls(a, alphabet=alphabet, reduced=reduced, flips=flips)
 
-def Permutations_iterator(
-    nintervals=None,
-    irreducible=True,
-    reduced=False,
-    alphabet=None):
+
+def Permutations_iterator(nintervals=None,
+                          irreducible=True,
+                          reduced=False,
+                          alphabet=None):
     r"""
     Returns an iterator over permutations.
 
@@ -612,7 +617,7 @@ def Permutations_iterator(
             nintervals = alphabet.cardinality()
 
     elif alphabet is None:
-            alphabet = range(1,nintervals+1)
+        alphabet = range(1, nintervals + 1)
 
     if reduced:
         return ReducedPermutationsIET_iterator(
@@ -625,10 +630,10 @@ def Permutations_iterator(
             irreducible=irreducible,
             alphabet=alphabet)
 
-from sage.misc.decorators import rename_keyword
+
 @rename_keyword(
-        lr_inversion='left_right_inversion',
-        tb_inversion='top_bottom_inversion')
+    lr_inversion='left_right_inversion',
+    tb_inversion='top_bottom_inversion')
 def RauzyDiagram(arg1, arg2=None, reduced=False, flips=None, alphabet=None,
         right_induction=True, left_induction=False,
         left_right_inversion=False,
@@ -749,22 +754,23 @@ def RauzyDiagram(arg1, arg2=None, reduced=False, flips=None, alphabet=None,
     """
     p = GeneralizedPermutation(
         arg1, arg2,
-        reduced = reduced,
-        flips = flips,
-        alphabet = alphabet)
+        reduced=reduced,
+        flips=flips,
+        alphabet=alphabet)
 
     return p.rauzy_diagram(
-        right_induction = right_induction,
-        left_induction = left_induction,
-        left_right_inversion = left_right_inversion,
-        top_bottom_inversion = top_bottom_inversion,
-        symmetric = symmetric)
+        right_induction=right_induction,
+        left_induction=left_induction,
+        left_right_inversion=left_right_inversion,
+        top_bottom_inversion=top_bottom_inversion,
+        symmetric=symmetric)
 
-#TODO
+# TODO
 # def GeneralizedPermutation_iterator():
-#     print "gpi"
+#     pass
 
-def IntervalExchangeTransformation(permutation=None,lengths=None):
+
+def IntervalExchangeTransformation(permutation=None, lengths=None):
     """
     Constructs an Interval exchange transformation.
 
@@ -850,14 +856,16 @@ def IntervalExchangeTransformation(permutation=None,lengths=None):
         try:
             y = float(x)
         except ValueError:
-            raise TypeError("unable to convert x (='%s') into a real number" %(str(x)))
+            raise TypeError("unable to convert x (='%s') into a real number" % (str(x)))
 
         if x < 0:
-           raise ValueError("lengths must be non-negative, got {}".format(y))
+            raise ValueError("lengths must be non-negative, got {}".format(y))
 
-    return _IET(p,lengths)
+    return _IET(p, lengths)
+
 
 IET = IntervalExchangeTransformation
+
 
 def IntervalExchangeTransformationFamily(*args):
     r"""
@@ -902,7 +910,9 @@ def IntervalExchangeTransformationFamily(*args):
 
         return IETFamily(args[0], C)
 
+
 IETFamily = IntervalExchangeTransformationFamily
+
 
 def FlipSequence(*args, **kwds):
     r"""
