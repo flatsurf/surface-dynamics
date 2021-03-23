@@ -5007,8 +5007,9 @@ class OrientablePermutationIET(PermutationIET):
             sage: p = iet.Permutation('a b c', 'c b a')
             sage: S = p.masur_polygon([1,4,2], [2,0,-1])  # optional - sage_flatsurf
             sage: S                                       # optional - sage_flatsurf
+            TranslationSurface built from 4 polygons
             sage: S.stratum()                             # optional - sage_flatsurf
-            H(0^2)
+            H_1(0^2)
 
         Generic construction using suspension cone::
 
@@ -5025,6 +5026,7 @@ class OrientablePermutationIET(PermutationIET):
             (a + 2, -2, 2, -2*a + 2, 3*a, -a - 4, 0, -a + 1, -2*a - 1)
             sage: L = [1+a**2, 2*a**2-1, 1, 1, 1+a, a**2, a-1, a-1, 2]
             sage: S = p.masur_polygon(L, H)   # optional - sage_flatsurf
+            sage: S                           # optional - sage_flatsurf
             TranslationSurface built from 16 polygons
             sage: TestSuite(S).run()          # optional - sage_flatsurf
 
@@ -5032,7 +5034,7 @@ class OrientablePermutationIET(PermutationIET):
 
             sage: p = iet.Permutation('a b c', 'c b a')
             sage: for L in [[1,4,2],[2,4,1],[5,1,1],[1,5,1],[1,1,5]]:  # optional - sage_flatsurf
-            ....:     S = p.masur_polygon(L, H)
+            ....:     S = p.masur_polygon(L, [2,0,-1])
             ....:     TestSuite(S).run()
             ....:     assert S.stratum() == p.stratum()
         """
