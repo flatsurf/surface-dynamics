@@ -47,6 +47,7 @@ jobs:
           sage -tp --force-lib --long --optional=${{ matrix.optionals }} ${SURFACE_DYNAMICS_INSTALL} doc
       - name: Run pytest
         shell: bash -l {0}
+        working-directory: tests
         run: pytest -n auto
       - name: Show logs
         run: grep "" /dev/null `find -name '*.log'` || true
