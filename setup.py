@@ -82,6 +82,8 @@ extensions_data = {
         'dir': 'interval_exchanges',
         'sources': ['iet_family.pyx'],
         'headers': [],
+        # distutils does not pick up CXXFLAGS when compiling C++, see https://bugs.python.org/issue1222585
+        'flags': os.environ.get('CXXFLAGS', '').split(),
         'condition': WITH_PPL
         }
 }
@@ -96,7 +98,11 @@ for name, data in extensions_data.items():
         full_dir = os.path.join('surface_dynamics', data['dir'])
         sources = [os.path.join(full_dir, src) for src in data['sources']]
         headers = [os.path.join(full_dir, data['dir'], head) for head in data['headers']]
-        extensions.append(Extension(data['name'], sources=sources, include_dirs=[full_dir, np.get_include()]))
+        extensions.append(Extension(
+            data['name'],
+            sources=sources,
+            include_dirs=[full_dir, np.get_include()],
+            extra_compile_args=data.get('flags', [])))
 
         sources = [os.path.join(data['dir'], src) for src in data['sources']]
         headers = [os.path.join(data['dir'], head) for head in data['headers']]
