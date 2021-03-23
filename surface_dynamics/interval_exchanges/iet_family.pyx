@@ -735,7 +735,7 @@ cdef class IETFamily:
             sage: K.<cbrt3> = NumberField(x^3 - 3, embedding=AA(3)**(1/3))
             sage: F.random_element_statistics(K, intervalxt=False) # optional - pplpy
             (0, 100, 0)
-            sage: F.random_element_statistics(K, intervalxt=True) # optional - pplpy, gmpxxyy, pyeantic, pyintervalxt
+            sage: F.random_element_statistics(K, intervalxt=True) # optional - pplpy gmpxxyy pyeantic pyintervalxt
             (0, 100, 0)
 
         A conjectural counterexample to Dynnikov-Skripshenko conjecture::
@@ -760,8 +760,8 @@ cdef class IETFamily:
             701 910 0 823 0 308 0 119 51
             sage: minimals, saddles, unknowns = F.random_element_statistics(K, num_exp=20, num_iterations=200, intervalxt=False) # optional - pplpy
             sage: assert minimals == 0 and saddles < 3 and unknowns > 17, (minimals, saddles, unknowns) # optional - pplpy
-            sage: minimals, saddles, unknowns = F.random_element_statistics(K, num_exp=20, num_iterations=200, intervalxt=True) # optional - pplpy, gmpxxyy, pyeantic, pyintervalxt
-            sage: assert minimals == 0 and saddles < 3 and unknowns > 17, (minimals, saddles, unknowns) # optional - pplpy, gmpxxyy, pyeantic, pyintervalxt
+            sage: minimals, saddles, unknowns = F.random_element_statistics(K, num_exp=20, num_iterations=200, intervalxt=True) # optional - pplpy gmpxxyy pyeantic pyintervalxt
+            sage: assert minimals == 0 and saddles < 3 and unknowns > 17, (minimals, saddles, unknowns) # optional - pplpy gmpxxyy pyeantic pyintervalxt
         """
         if intervalxt is None:
             try:
