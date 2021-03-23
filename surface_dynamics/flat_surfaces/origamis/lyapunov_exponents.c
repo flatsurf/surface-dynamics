@@ -452,7 +452,6 @@ void lyapunov_exponents(origami_data *o, size_t NB_ITERATIONS, double * ttheta)
 		/* TODO: stop the trajectory */
 		if(lb < CRITIC_LENGTH) /* restart with random data */
 		{
-			fprintf(stderr, "Warning: reinitialize length\n");
 			la = ldrandGauss();
 			while(la > 0.5) la = ldrandGauss();
 			lb = 1.-la;
@@ -817,7 +816,6 @@ void lyapunov_exponents_with_involution(origami_with_involution_data *o, size_t 
 		/* TODO: stop the trajectory */
 		if(lb < CRITIC_LENGTH) /* restart with random data */
 		{
-			fprintf(stderr, "Warning: reinitialize length\n");
 			la = ldrandGauss();
 			while(la > 0.5) la = ldrandGauss();
 			lb = 1.-la;
