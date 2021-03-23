@@ -13,10 +13,14 @@ jobs:
             packages: "sagelib=8.8"
           - optionals: "sage,pplpy"
             packages: "sagelib=8.9"
-          - optionals: "sage,pplpy,mzv"
+          - optionals: "sage,pplpy"
             packages: "sagelib=9.1"
-          - optionals: "sage,pplpy,mzv,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
             packages: "sagelib=9.1 sage-flatsurf pyflatsurf>=1.1.0 pyeantic>=1.1.1 pyintervalxt>=3.1.0"
+          - optionals: "sage,pplpy,mzv"
+            packages: "sagelib=9.2"
+          - optionals: "sage,pplpy,mzv,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+            packages: "sagelib=9.2 sage-flatsurf pyflatsurf>=1.1.0 pyeantic>=1.1.1 pyintervalxt>=3.1.0"
     steps:
       - uses: actions/checkout@v2
         with: { submodules: recursive }
