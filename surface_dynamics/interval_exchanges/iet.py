@@ -1875,6 +1875,7 @@ class IntervalExchangeTransformation:
 
             sage: t = iet.IntervalExchangeTransformation(('a b','b a'),[1,1])
             sage: t.plot_two_intervals()
+            ...
             Graphics object consisting of 8 graphics primitives
         """
         from sage.plot.plot import Graphics
