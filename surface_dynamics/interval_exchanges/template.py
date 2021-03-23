@@ -4948,7 +4948,13 @@ class OrientablePermutationIET(PermutationIET):
 
         from flatsurf.geometry.polygon import ConvexPolygons
 
-        C = ConvexPolygons(base_ring)
+        try:
+            C = ConvexPolygons(base_ring)
+        except ValueError:
+            # work around the fact that rings are not supported on old versions
+            # of sage-flatsurf
+            base_ring = base_ring.fraction_field()
+            C = ConvexPolygons(base_ring)
         ptop = Ltop[0]
         pbot = Lbot[0]
         triangles = [C(vertices=[(zero,zero), pbot, ptop])]
