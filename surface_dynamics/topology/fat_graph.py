@@ -469,13 +469,33 @@ class FatGraph(object):
             return self._fp
 
     def vertex_profile(self):
-        return perm_cycle_type(self._vp, self._n)
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics import FatGraph
+            sage: FatGraph('()', '()', '()').vertex_profile()
+            [0]
+        """
+        if self._n == 0:
+            return [0]
+        else:
+            return perm_cycle_type(self._vp, self._n)
 
     def edge_profile(self):
         return perm_cycle_type(self._ep, self._n)
 
     def face_profile(self):
-        return perm_cycle_type(self._fp, self._n)
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics import FatGraph
+            sage: FatGraph('()', '()', '()').face_profile()
+            [0]
+        """
+        if self._n == 0:
+            return [0]
+        else:
+            return perm_cycle_type(self._fp, self._n)
 
     def profile(self):
         return (self.vertex_profile(), self.edge_profile(), self.face_profile())

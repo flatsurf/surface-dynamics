@@ -84,6 +84,7 @@ def augment1(cm, aut_grp, g, callback):
         callback('augment1', True, cm, aaut_grp, g - 1)
         if g > 1:
             augment1(cm, aaut_grp, g - 1, callback)
+        cm.remove_face_trisection(n)
         return
 
     for i in R:
@@ -486,7 +487,7 @@ class FatGraphsTrace:
 #################
 
 class StackCallback:
-    def __init__(self, gmin, gmax, fmin, fmax, emin, emax, vmin, vmax, min_degree, callback, filter):
+    def __init__(self, gmin, gmax, fmin, fmax, emin, emax, vmin, vmax, vertex_min_degree, callback, filter):
         self._gmin = gmin
         self._gmax = gmax
         self._fmin = fmin
@@ -496,7 +497,7 @@ class StackCallback:
         self._vmin = vmin
         self._vmax = vmax
         self._callback = callback
-        self._min_degree = min_degree
+        self._vertex_min_degree = vertex_min_degree
         self._filter = filter
 
     def __call__(self, caller, test, cm, aut, depth):
@@ -504,28 +505,32 @@ class StackCallback:
         nv = cm._nv
         ne = cm._n // 2
         nf = cm._nf
+        g = (-nv + ne - nf)/2 + 1
         assert nv < self._vmax and ne < self._emax and nf < self._fmax, (cm, depth)
 
         if test:
-            if nv >= self._vmin and \
+            if g >= self._gmin and \
+               nv >= self._vmin and \
                ne >= self._emin and \
                nf >= self._fmin and \
+               (self._vertex_min_degree <= 1 or all(d >= self._vertex_min_degree for d in cm.vertex_profile())) and \
                (self._filter is None or self._filter(cm, aut)):
                 self._callback(cm, aut)
 
             if caller == 'augment1':
                 # augment1 creates fat graphs with a single vertex and a single face.
                 # Here: nv=1, nf=1, 2g=e.
+                assert nv == nf == 1
                 if ne >= 2 * self._gmin:
                     # more faces?
                     nfdepth = min(self._fmax - 2, self._emax - ne - 1)
                     if nfdepth:
                         augment2(cm, aut, nfdepth, self)
                     # more vertices?
-                    else:
+                    if nf >= self._fmin:
                         nvdepth = min(self._vmax - 2, self._emax - ne - 1)
                         if nvdepth:
-                            augment3(cm, aut, nvdepth, self._min_degree, self)
+                            augment3(cm, aut, nvdepth, max(1, self._vertex_min_degree), self)
 
             elif caller == 'augment2':
                 # augment2 performs face splitting
@@ -534,7 +539,7 @@ class StackCallback:
                     # more vertices?
                     nvdepth = min(self._vmax - 2, self._emax - ne - 1)
                     if nvdepth:
-                        augment3(cm, aut, nvdepth, self._min_degree, self)
+                        augment3(cm, aut, nvdepth, max(1, self._vertex_min_degree), self)
 
             elif caller == 'augment3':
                 pass
@@ -554,6 +559,7 @@ class StackCallback:
            self._emin <= ne < self._emax and \
            self._fmin <= nf < self._fmax and \
            self._gmin <= g < self._gmax and \
+           self._vertex_min_degree == 0 and \
            (self._filter is None or self._filter(cm, aut)):
                self._callback(cm, None)
 
@@ -561,9 +567,11 @@ class StackCallback:
         if self._gmax > 1:
             augment1(cm, None, self._gmax - 1, self)
         if self._gmin == 0 and self._fmax > 2:
+            assert cm._n == 0, cm
             augment2(cm, None, self._fmax - 2, self)
         if self._gmin == 0 and self._fmin == 1 and self._vmax > 2:
-            augment3(cm, None, self._vmax - 2, self._min_degree, self)
+            assert cm._n == 0, cm
+            augment3(cm, None, self._vmax - 2, max(1, self._vertex_min_degree), self)
 
 ##############
 # Main class #
@@ -696,8 +704,25 @@ class FatGraphs:
         [FatGraph('(0)(1)', '(0,1)', '(0,1)')]
         sage: FatGraphs(g=0, ne=1).list()
         [FatGraph('(0,1)', '(0,1)', '(0)(1)'), FatGraph('(0)(1)', '(0,1)', '(0,1)')]
+
+        sage: F3 = FatGraphs(g=0, nf_max=4, vertex_min_degree=3)
+        sage: for fg in F3.list(): assert all(d >= 3 for d in fg.vertex_profile()), fg
+        sage: F3.cardinality_and_weighted_cardinality()
+        (3, 7/6)
+        sage: F4 = FatGraphs(g=0, nf_max=4, vertex_min_degree=4)
+        sage: for fg in F4.list(): assert all(d >= 4 for d in fg.vertex_profile()), fg
+        sage: F4.cardinality_and_weighted_cardinality()
+        (1, 1/2)
+
+        sage: FatGraphs(g=1, ne=3).list()
+        [FatGraph('(0,5,4,1,2,3)', '(0,2)(1,3)(4,5)', '(0,1,2,3,4)(5)'),
+         FatGraph('(0,5,1,2,4,3)', '(0,2)(1,3)(4,5)', '(0,1,4)(2,3,5)'),
+         FatGraph('(0,5,1,2,3,4)', '(0,2)(1,3)(4,5)', '(0,1,2,4)(3,5)'),
+         FatGraph('(0,4,1,2,3)(5)', '(0,2)(1,3)(4,5)', '(0,1,2,3,4,5)'),
+         FatGraph('(0,4,2,3)(1,5)', '(0,2)(1,3)(4,5)', '(0,4,1,2,3,5)'),
+         FatGraph('(0,4,3)(1,2,5)', '(0,2)(1,3)(4,5)', '(0,1,4,2,3,5)')]
     """
-    def __init__(self, g=None, nf=None, ne=None, nv=None, vertex_min_degree=1, g_min=None, g_max=None, nf_min=None, nf_max=None, ne_min=None, ne_max=None, nv_min=None, nv_max=None):
+    def __init__(self, g=None, nf=None, ne=None, nv=None, vertex_min_degree=0, g_min=None, g_max=None, nf_min=None, nf_max=None, ne_min=None, ne_max=None, nv_min=None, nv_max=None):
         r"""
        INPUT:
 
@@ -715,11 +740,12 @@ class FatGraphs:
         self._fmin, self._fmax = self._get_interval(nf, nf_min, nf_max, 1, 'nf')
         self._vmin, self._vmax = self._get_interval(nv, nv_min, nv_max, 1, 'nv')
         self._emin, self._emax = self._get_interval(ne, ne_min, ne_max, 0, 'ne')
-        self._adjust_bounds()
 
         self._vertex_min_degree = ZZ(vertex_min_degree)
         if self._vertex_min_degree < 0:
-            raise ValueError('vertex_min_degree must be positive')
+            raise ValueError('vertex_min_degree must be non-negative')
+
+        self._adjust_bounds()
 
     def _get_interval(self, v, vmin, vmax, low_bnd, name):
         if v is not None:
@@ -747,33 +773,62 @@ class FatGraphs:
         return vmin, vmax
 
     def _adjust_bounds(self):
-        # TODO: take into account vertex_min_degree
-        if self._fmax is None:
-            if self._emax is None:
-                raise ValueError("'fmax' or 'emax' must be set")
-            self._fmax = 2*self._emax
-        if self._vmax is None:
-            if self._emax is None:
-                raise ValueError("'vmax' or 'emax' must be set")
-            self._vmax = 2*self._emax
-        if self._emax is None:
-            # e = 2g - 2 + v  + f
-            self._emax = 2*(self._gmax-1) - 2 + (self._vmax-1) + (self._fmax-1) + 1
-        # v, e, f, g
-        # -2 + v - e + f + 2g = 0
+        r"""
+        TESTS::
+
+            sage: from surface_dynamics import FatGraphs
+            sage: FatGraphs(g=0, nv_max=4, vertex_min_degree=3)
+            Traceback (most recent call last):
+            ...
+            ValueError: infinitely many fat graphs
+            sage: FatGraphs(g=0, nf_max=4, vertex_min_degree=3)
+            FatGraphs(g=0, nf_min=2, nf_max=4, ne_min=1, ne_max=4, nv_min=1, nv_max=3, vertex_min_degree=3)
+
+            sage: F = FatGraphs(g=0, nv=2, ne=1, nf=2)
+            sage: F
+            EmptySet
+            sage: F.cardinality_and_weighted_cardinality()
+            (0, 0)
+
+            sage: FatGraphs(ne=0).list()
+            [FatGraph('()', '()', '()')]
+            sage: FatGraphs(ne=1).list()
+            [FatGraph('(0,1)', '(0,1)', '(0)(1)'),
+             FatGraph('(0)(1)', '(0,1)', '(0,1)')]
+            sage: FatGraphs(ne=2).list()
+            [FatGraph('(0,1,2,3)', '(0,2)(1,3)', '(0,1,2,3)'),
+             FatGraph('(0,2,1)(3)', '(0,1)(2,3)', '(0,2,3)(1)'),
+             FatGraph('(0,2)(1,3)', '(0,1)(2,3)', '(0,3)(1,2)'),
+             FatGraph('(0,3,2,1)', '(0,1)(2,3)', '(0,2)(1)(3)'),
+             FatGraph('(0,2)(1)(3)', '(0,1)(2,3)', '(0,1,2,3)')]
+        """
+        # variable order: v, e, f, g
         from sage.geometry.polyhedron.constructor import Polyhedron
-        P = Polyhedron(ieqs=[
-            (-self._vmin,   1, 0, 0, 0),
-            (self._vmax-1, -1, 0, 0, 0),
-            (-self._emin,  0,  1, 0, 0),
-            (self._emax-1, 0, -1, 0, 0),
-            (-self._fmin,  0, 0,  1, 0),
-            (self._fmax-1, 0, 0, -1, 0),
-            (-self._gmin,  0, 0, 0,  1),
-            (self._gmax-1, 0, 0, 0, -1)],
-            eqns = [(-2, 1, -1, 1, 2)])
+        eqns = [(-2, 1, -1, 1, 2)] # -2 + v - e + f + 2g = 0
+        ieqs = [(-self._vmin,  1, 0, 0, 0), # -vim + v >= 0
+                (-self._emin,  0, 1, 0, 0), # -emin + e >= 0
+                (-self._fmin,  0, 0, 1, 0), # -fmin + f >= 0
+                (-self._gmin,  0, 0, 0, 1), # -gmin + g >= 0
+                (0, -self._vertex_min_degree, 2, 0, 0)]  # -v_min_degree*v + 2e >= 0
+        if self._vmax is not None:
+            ieqs.append((self._vmax-1, -1, 0, 0, 0)) # v < vmax
+        if self._emax is not None:
+            ieqs.append((self._emax-1, 0, -1, 0, 0)) # e < emax
+        if self._fmax is not None:
+            ieqs.append((self._fmax-1, 0, 0, -1, 0)) # f < fmax
+        if self._gmax is not None:
+            ieqs.append((self._gmax-1, 0, 0, 0, -1)) # g < gmax
+        P = Polyhedron(ieqs=ieqs, eqns=eqns, ambient_dim=4, base_ring=QQ)
         if P.is_empty():
-            raise ValueError('conditions lead to an empty set')
+            self._vmin = self._vmax = 1
+            self._emin = self._emax = 0
+            self._fmin = self._fmax = 1
+            self._gmin = self._gmax = 0
+            self._vertex_min_degree = 0
+            return
+        if not P.is_compact():
+            raise ValueError('infinitely many fat graphs')
+
         half = QQ((1,2))
         self._vmin, self._vmax = minmax([v[0] for v in P.vertices_list()])
         self._vmin = self._vmin.floor()
@@ -800,6 +855,9 @@ class FatGraphs:
             sage: FatGraphs(g=0, nf_min=2, nf_max=5, nv_min=1, nv_max=5, vertex_min_degree=3)
             FatGraphs(g=0, nf_min=2, nf_max=5, ne_min=1, ne_max=7, nv_min=1, nv_max=5, vertex_min_degree=3)
         """
+        if self._vmin == self._vmax:
+            return 'EmptySet'
+
         if self._gmax == self._gmin + 1:
             genus = 'g=%d' % self._gmin
         else:
@@ -821,7 +879,7 @@ class FatGraphs:
             vertices = 'nv_min=%d, nv_max=%d' % (self._vmin, self._vmax)
 
         constraints = []
-        if self._vertex_min_degree != 1:
+        if self._vertex_min_degree > 1:
             constraints.append("vertex_min_degree=%d" % self._vertex_min_degree)
 
         return "FatGraphs({})".format(", ".join([genus, faces, edges, vertices] + constraints))
