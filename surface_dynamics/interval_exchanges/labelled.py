@@ -105,28 +105,23 @@ from __future__ import print_function, absolute_import
 from six.moves import range, map, filter, zip
 
 from sage.structure.sage_object import SageObject
-from sage.misc.lazy_attribute import lazy_attribute
 
 from copy import copy
-
-import time
 
 from surface_dynamics.misc.permutation import perm_check, perm_init
 import surface_dynamics.interval_exchanges.lyapunov_exponents as lyapunov_exponents  # the cython bindings
 
-from sage.combinat.words.alphabet import Alphabet, OrderedAlphabet
-from sage.combinat.words.morphism import WordMorphism
-from sage.rings.all import ZZ
-
-from sage.matrix.constructor import Matrix, identity_matrix
-from sage.rings.integer import Integer
 from sage.combinat.words.alphabet import Alphabet
-from sage.rings.infinity import Infinity
+from sage.combinat.words.morphism import WordMorphism
+
+from sage.matrix.constructor import identity_matrix
+from sage.rings.integer import Integer
 
 from .template import (OrientablePermutationIET, OrientablePermutationLI,
                        FlippedPermutationIET, FlippedPermutationLI,
                        RauzyDiagram, FlippedRauzyDiagram,
                        interval_conversion, side_conversion)
+
 
 class LabelledPermutation(SageObject):
     r"""

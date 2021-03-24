@@ -942,7 +942,6 @@ class IntervalExchangeTransformation:
             self.length() == other.length())
 
         from .labelled import LabelledPermutationIET
-        from sage.combinat.words.words import Words
 
         other_sg = other.range_singularities()[1:]
         self_sg = self.domain_singularities()[1:]
@@ -953,8 +952,8 @@ class IntervalExchangeTransformation:
         interval_other = other._permutation._labels[1]
         interval_self = self._permutation._labels[0]
 
-        d_other = dict([(i,[]) for i in interval_other])
-        d_self = dict([(i,[]) for i in interval_self])
+        d_other = dict([(i, []) for i in interval_other])
+        d_self = dict([(i, []) for i in interval_self])
 
         i_other = 0
         i_self = 0

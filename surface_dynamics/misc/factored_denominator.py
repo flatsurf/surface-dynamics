@@ -16,13 +16,14 @@ from six.moves import range, map, filter, zip
 from six import iteritems
 
 from sage.misc.cachefunc import cached_method
-from sage.structure.element import Element, parent
+from sage.structure.element import Element
 from sage.structure.parent import Parent
-from sage.structure.richcmp import op_LT, op_EQ, op_NE, op_LE, op_GE, op_GT, op_LT
+from sage.structure.richcmp import op_LT, op_EQ, op_NE, op_LE, op_GE, op_GT
 from sage.structure.unique_representation import UniqueRepresentation
-from sage.categories.all import CommutativeAlgebras, Rings
+from sage.categories.all import Rings
 from sage.rings.all import ZZ, QQ
 from sage.modules.vector_integer_dense import Vector_integer_dense
+
 
 def laurent_monomial(R, arg):
     r"""
