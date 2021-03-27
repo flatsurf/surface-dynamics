@@ -1,6 +1,9 @@
 #!/usr/bin/env python
+r"""
+Check the Carrell-Chapuy formula "Simple recurrence formulas to count maps on orientable surfaces" (2015)
+"""
 #*****************************************************************************
-#       Copyright (C) 2020 Vincent Delecroix <20100.delecroix@gmail.com>
+#       Copyright (C) 2020-2021 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
@@ -8,41 +11,67 @@
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
-import sys
-import pytest
+from sage.all import ZZ, cached_function
 
-from sage.all import ZZ, QQ, factorial, parent
-
-class CarrellChapuyCount():
-    def __init__(self, R):
-        self.R = R
-        self.count = R.zero()
+class CarrellChapuyCount:
+    r"""
+    Weighted sum of combinatorial maps with weight x^#{faces of m}
+    """
+    def __init__(self, ne):
+        self.R = ZZ['x']
+        self.x = self.R.gen()
+        self.counter = self.R.zero()
+        self.ne = ne
     def __call__(self, cm, aut):
-        x,y = R.gens()
-        self.count += x**cm.num_vertices() * y**cm.num_edges() * z**cm.num_faces()
+        # NOTE: in order to count rooted maps, we multiply by 2 ne / |Aut|
+        self.counter += 2 * self.ne // (1 if aut is None else aut.group_cardinality()) * self.x ** cm.num_faces()
+
+@cached_function
+def carrell_chapuy_polynomial(g, n):
+    if n == 0:
+        R = ZZ['x']
+        if g == 0:
+            return R.gen()
+        else:
+            return R.zero()
+
+    from surface_dynamics import FatGraphs
+    F = FatGraphs(g, ne=n)
+    C = CarrellChapuyCount(n)
+    F.map_reduce(C)
+    return C.counter
+
+def check_carrell_chapuy(g, n):
+    R = ZZ['x']
+    x = R.gen()
+
+    lhs = (n+1) / ZZ(6) * carrell_chapuy_polynomial(g, n)
+
+    if n > 0:
+        rhs1 = (1 + x) * (2*n - 1) / ZZ(3) * carrell_chapuy_polynomial(g, n-1)
+    else:
+        rhs1 = R.zero()
+
+    if n > 1 and g > 0:
+        rhs2 = (2*n - 3) * (2*n - 2) * (2*n - 1) / ZZ(12) * carrell_chapuy_polynomial(g-1, n-2)
+    else:
+        rhs2 = R.zero()
+
+    # 1 <= k <= n-1
+    # 0 <= i <= g
+    rhs3 = 1 / ZZ(2) * sum((2*k - 1) * (2*(n-k) - 1) * carrell_chapuy_polynomial(i, k-1) * carrell_chapuy_polynomial(g-i, n-k-1) for k in range(1,n) for i in range(g+1))
+
+    assert lhs == rhs1 + rhs2 + rhs3
+
+def test_carrell_chapuy_initial_condition():
+    x = ZZ['x'].gen()
+    assert carrell_chapuy_polynomial(0, 0) == x
+    assert carrell_chapuy_polynomial(0, 1) == x**2 + x
+    assert carrell_chapuy_polynomial(0, 2) == 2*x**3 + 5*x**2 + 2*x
 
 def test_carrell_chapuy():
-    return
-    # Q_g^{n, f}  (ne=n, nf=f)
-    # 2 - 2g = nv - n + f  =>  nv = 2 - 2g - ne + nf is fixed >= 1
-    # 2 - 2g + n = nv + f
-    # bound on n: n = 2g-2 + nv + f
-    from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs_g_nf_nv
-
-    R = QQ['x,y,z']
-
-    numbers = {}
-    for g in [1,2]:
-        for n in range(2*g, 2*g+4):
-            # here we would like to bound nv+nf instead of nv and nf
-            # (equivalently we would like to fix ne)
-            print(g, n)
-            nv_min = nf_min = 1
-            nv_max = nf_max = 2-2*g+n-1
-            print("FatGraphs_g_nf_nv(g=%d, nv_min=%d, nv_max=%d, nf_min=%d, nf_max=%d)" % (g, nv_min, nv_max, nf_min, nf_max))
-            F = FatGraphs_g_nf_nv(g=g, nv_min=nv_min, nv_max=nv_max,
-                                       nf_min=nf_min, nf_max=nf_max)
-            C = CarrellChapuyCount(R)
-            F.map_reduce(C)
-            print(g, n, F.count)
-
+    for n in range(1,7):
+        check_carrell_chapuy(0, n)
+        check_carrell_chapuy(1, n)
+        check_carrell_chapuy(2, n)
+        check_carrell_chapuy(3, n)
