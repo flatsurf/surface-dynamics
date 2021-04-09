@@ -22,6 +22,11 @@ from distutils.command.build_py import build_py as _build_py
 
 from Cython.Build import cythonize
 
+# NOTE: without this option, tab-completion and documentation are mostly broken within sage
+# See https://trac.sagemath.org/ticket/31632
+import Cython.Compiler.Options
+Cython.Compiler.Options.embed_pos_in_docstring = True
+
 with open("surface_dynamics/version.py") as f:
     version = f.read().strip()
     prefix = "version='"
