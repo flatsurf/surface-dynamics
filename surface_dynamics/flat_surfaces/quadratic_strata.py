@@ -484,11 +484,7 @@ class QuadraticStratum(Stratum):
 
             spin = ((k1-k3)/4) mod 2
 
-        The proof of that formula is the object of [La04]_.
-
-        REFERENCES:
-
-        .. [La04] E. Lanneau, "Spin"
+        The proof of that formula is the object of [Lan04]_.
 
         EXAMPLES::
 

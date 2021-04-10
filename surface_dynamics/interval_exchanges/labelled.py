@@ -4,8 +4,8 @@ Labelled permutations
 A labelled (generalized) permutation is better suited to study the dynamic of
 a translation surface than a reduced one (see the module
 :mod:`surface_dynamics.interval_exchanges.reduced`). The latter is more adapted to the
-study of strata. This kind of permutation was introduced by Yoccoz [Yoc05]_
-(see also [MMY03]_).
+study of strata. This kind of permutation was introduced by Yoccoz [Yoc06]_
+(see also [MarMouYoc05]_).
 
 In fact, there is a geometric counterpart of labelled permutations. They
 correspond to translation surface with marked outgoing separatrices (i.e. we fi
@@ -83,14 +83,6 @@ TESTS::
     a->abcd, b->bab, c->cdc, d->dcbababcd
     sage: s1.incidence_matrix() == s2.incidence_matrix().transpose()
     True
-
-REFERENCES:
-
-.. [Yoc05] Jean-Cristophe Yoccoz "Echange d'Intervalles", Cours au college de
-   France
-
-.. [MMY03] Jean-Cristophe Yoccoz, Stefano Marmi and Pierre Moussa "On the
-   cohomological equation for interval exchange maps", arXiv:math/0304469v1
 """
 #*****************************************************************************
 #       Copyright (C) 2008 Vincent Delecroix <20100.delecroix@gmail.com>

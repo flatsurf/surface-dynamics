@@ -296,7 +296,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
         r"""
         Cardinality of Rauzy diagram
 
-        As proved in [Del10], there exists a closed formula for the cardinality
+        As proved in [Del13]_, there exists a closed formula for the cardinality
         of Rauzy diagrams. This function uses the formula without any
         explicit computation of the rauzy class.
 

@@ -12,8 +12,6 @@ where the `m_i` are monomials and `d_i` are positive integers.
 
 REFERENCES:
 
-DH:03
-
 [LHTY] De Loera, R. Hemmecke, J. Tauzer, R. Yoshida
  "Effective lattice point counting in rational convex polytopes"
  (LattE)

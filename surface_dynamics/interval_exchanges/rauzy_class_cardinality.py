@@ -1,8 +1,8 @@
 r"""
 Cardinality of Rauzy classes
 
-The following functions implement algorithms relative to article [Del2010]_ and
-[Boi2010]_ where are given formulas for the cardinality of Rauzy classes of
+The following functions implement algorithms relative to article [Del13]_ and
+[Boi13]_ where are given formulas for the cardinality of Rauzy classes of
 permutations.
 
   - ``c``: number of standard labeled permutations
@@ -19,16 +19,6 @@ permutations.
 AUTHOR:
 
 Vincent Delecroix
-
-REFERENCES:
-
-.. [Boi2010] Boissy 2010
-
-.. [Del2010] Delecroix 2010
-
-.. [Vee1982] W. Veech, "Gauss measures for transformations on the space of
-   interval exchange maps", Ann. of Math., vol. 115, no. 2 (1982), pp. 201-242.
-
 """
 #*****************************************************************************
 #       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
