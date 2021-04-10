@@ -25,7 +25,7 @@ This representation of a surface is used in various constructions:
 
     - We need a more general structure to encode configurations of structure of
       saddle connections (which need not be completely periodic directions (see
-      [EMZ]_, [MZ]_)
+      [EskMasZor03]_)
 
     - Gray code for conjugacy classes of permutation in order to optimize the
       generation of separatrix and cylinder diagrams.
@@ -40,18 +40,6 @@ This representation of a surface is used in various constructions:
 
     - enumerators for fat graphs of genus g with prescribed vertex degrees
       (possibly up to isomorphism)
-
-REFERENCES:
-
-.. [EMZ] A. Eskin, H. Masur, A. Zorich "Principal boundary ... and Siegel-Veech
-         constant"
-
-.. [MZ]  H. Masur, A. Zorich "Multiple saddle connections on flat surfaces and
-         the principal boundary of the moduli spaces of quadratic
-         differentials"
-
-.. [N]   Y. Naveh "Tight upper bounds on the number of invariant components on
-         translation surfaces", Isr. J. Math. 165, 211-231 (2008)
 
 EXAMPLES::
 

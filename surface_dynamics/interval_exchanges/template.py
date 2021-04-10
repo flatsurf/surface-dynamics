@@ -2758,7 +2758,7 @@ class PermutationLI(Permutation):
 
         where no corners is empty, or exactly one corner is empty
         and it is on the left, or two and they are both on the
-        right or on the left. The definition is due to [BL08]_ where they prove
+        right or on the left. The definition is due to [BoiLan09]_ where they prove
         that the property of being irreducible is stable under Rauzy induction.
 
         INPUT:
@@ -3972,10 +3972,6 @@ class OrientablePermutationIET(PermutationIET):
             sage: p = iet.Permutation('a b c d','d c b a')
             sage: p.genus()
             2
-
-        REFERENCES:
-
-            Veech, 1982
         """
         p = self.profile()
         return Integer((sum(p)-len(p))//2+1)
@@ -4034,15 +4030,6 @@ class OrientablePermutationIET(PermutationIET):
             sage: p0 = iet.Permutation(a,b0)
             sage: p0.arf_invariant()
             0
-
-        REFERENCES:
-
-        [Jo80] D. Johnson, "Spin structures and quadratic forms on surfaces", J.
-        London Math. Soc (2), 22, 1980, 365-373
-
-        [KoZo03] M. Kontsevich, A. Zorich "Connected components of the moduli
-        spaces of Abelian differentials with prescribed singularities",
-        Inventiones Mathematicae, 153, 2003, 631-678
         """
         if any((z+1)%2 for z in self.profile()):
             return None
@@ -4547,15 +4534,6 @@ class OrientablePermutationIET(PermutationIET):
             True
             sage: iet.Permutation('0 1 2 3 4 5','5 2 1 4 3 0').is_hyperelliptic()
             False
-
-        REFERENCES:
-
-        Gerard Rauzy, "Echanges d'intervalles et transformations induites",
-        Acta Arith. 34, no. 3, 203-212, 1980
-
-        M. Kontsevich, A. Zorich "Connected components of the moduli space
-        of Abelian differentials with prescripebd singularities" Invent. math.
-        153, 631-678 (2003)
         """
         test = self.erase_marked_points()
 

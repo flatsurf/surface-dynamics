@@ -1,7 +1,7 @@
 r"""
 Topological recursion for Masur-Veech volumes.
 
-This is the topological recursion as developed in Andersen et al.
+This is the topological recursion as developed in [AndBorChaDelGiacLewWhe]_.
 
 EXAMPLES:
 
@@ -20,14 +20,6 @@ Masur-Veech volumes (without the pi power)::
     1 3 11/60
     2 1 29/840
     2 2 337/18144
-
-REFERENCES:
-
-- J. E. Andersen, G. Borot, S. Charbonnier, V. Delecroix, A. Giacchetto,
-  D. Lewanski and C. Wheeler
-  "Topological recursion for Masur-Veech volumes"
-  arXiv:1905.10352
-
 
 .. TODO::
 

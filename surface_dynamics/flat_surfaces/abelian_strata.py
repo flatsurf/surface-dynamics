@@ -42,33 +42,15 @@ The implementation is available as
 - for connected stratum :meth:`~AbelianStratumComponent.single_cylinder_representative`
 
 - for hyperelliptic component
-  :meth:`~HypAbelianStratumComponent.single_cylinder_representative
+  :meth:`~HypAbelianStratumComponent.single_cylinder_representative`
 
 - for odd component :meth:`~OddAbelianStratumComponent.single_cylinder_representative`
 
 - for even component :meth:`~EvenAbelianStratumComponent.single_cylinder_representative`
 
-REFERENCES:
-
-.. [Jef19] L. Jeffreys "Single-cylinder square-tiled surfaces and the ubiquity
-    of ratio-optimising pseudo-Anosovs", Preprint (2019),
-    (https://arxiv.org/pdf/1906.02016.pdf)
-
-.. [KonZor03] M. Kontsevich, A. Zorich "Connected components of the moduli space
-   of Abelian differentials with prescripebd singularities" Invent. math. 153,
-   631-678 (2003)
-
-.. [Zor08] A. Zorich "Explicit Jenkins-Strebel representatives of all strata of
-   Abelian and quadratic differentials", Journal of Modern Dynamics, vol. 2,
-   no 1, 139-185 (2008) (http://www.math.psu.edu/jmd)
-
-.. [ZS] Anton Zorich, "Generalized Permutation software"
-   (http://perso.univ-rennes1.fr/anton.zorich/Software/software_en.html)
-
 AUTHORS:
 
 - Vincent Delecroix (2009-09-29): initial version
-
 
 EXAMPLES:
 

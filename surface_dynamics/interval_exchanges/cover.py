@@ -1074,7 +1074,7 @@ class PermutationCover(object):
             sage: c.lyapunov_exponents_H_plus(nb_iterations=2**19) # abs tol 0.05
             [0.666666]
 
-        Some cyclic covers (see [EKZ]_ for the formulas)::
+        Some cyclic covers (see [EskKonZor11]_ for the formulas)::
 
             sage: p = iet.GeneralizedPermutation('c a a', 'b b c', alphabet='abc')
             sage: def cyclic(n,a):
@@ -1125,11 +1125,6 @@ class PermutationCover(object):
             sage: c = p.cover([a, b])
             sage: c.lyapunov_exponents_H_plus(nb_iterations=2**19)  # abs tol 0.05
             [1.0, 0.0, 0.0]
-
-        REFERENCES:
-
-        .. [EKZ] A. Eskin, M. Kontsevich, A. Zorich "Lyapunov spectrum of
-                 square-tiled cyclic cover", J. Mod. Dyn. 5 (2011), no. 2, 319-353.
         """
         import surface_dynamics.interval_exchanges.lyapunov_exponents as lyapunov_exponents
         import time
