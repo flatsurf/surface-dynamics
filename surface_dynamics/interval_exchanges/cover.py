@@ -1043,8 +1043,8 @@ class PermutationCover(object):
          - ``return_char`` -- whether or not return the character corresponding to
            the isotypic component.
 
-         - ``verbose`` -- if ``True`` provide additional informations rather than
-           returning only the Lyapunov exponents (i.e. ellapsed time, confidence
+         - ``verbose`` -- if ``True`` provide additional information rather than
+           returning only the Lyapunov exponents (i.e. elapsed time, confidence
            intervals, ...)
 
          - ``float`` -- whether the isotypical decomposition and projectors are computed
