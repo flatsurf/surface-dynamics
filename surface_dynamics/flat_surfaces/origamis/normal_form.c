@@ -117,6 +117,11 @@ void origami_normal_form(int *x, int *y, int *renum, unsigned int n)
 	int * tmp;
 
     SF_realloc(n);
+    if (n == 1)
+    {
+        renum[0] = 0;
+        return;
+    }
 
 	/* set SF_xxx = MAX and SF_yyy = MAX */
 	/* set SF_vertices = x y x^-1 y ^-1  */
