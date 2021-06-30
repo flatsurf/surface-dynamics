@@ -1,28 +1,29 @@
 r"""
 Factored denominators and associated free modules
 """
-#*****************************************************************************
+# ****************************************************************************
 #       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
+# ****************************************************************************
 
 from __future__ import absolute_import, print_function
-from six.moves import range, map, filter, zip
+from six.moves import range, zip
 
 from six import iteritems
 
 from sage.misc.cachefunc import cached_method
-from sage.structure.element import Element, parent
+from sage.structure.element import Element
 from sage.structure.parent import Parent
-from sage.structure.richcmp import op_LT, op_EQ, op_NE, op_LE, op_GE, op_GT, op_LT
+from sage.structure.richcmp import op_LT, op_EQ, op_NE, op_LE, op_GE, op_GT
 from sage.structure.unique_representation import UniqueRepresentation
-from sage.categories.all import CommutativeAlgebras, Rings
+from sage.categories.all import Rings
 from sage.rings.all import ZZ, QQ
 from sage.modules.vector_integer_dense import Vector_integer_dense
+
 
 def laurent_monomial(R, arg):
     r"""
@@ -44,7 +45,8 @@ def laurent_monomial(R, arg):
         raise TypeError("tuple key must have same length as ngens")
 
     from sage.misc.misc_c import prod
-    return prod(x**int(i) for (x,i) in zip(R.gens(), arg))
+    return prod(x**int(i) for (x, i) in zip(R.gens(), arg))
+
 
 def vector_to_monomial_string(u, var_names):
     r"""
@@ -61,7 +63,7 @@ def vector_to_monomial_string(u, var_names):
         'x0*x2^-1'
     """
     s = []
-    for i,j in enumerate(u):
+    for i, j in enumerate(u):
         if j:
             if isinstance(var_names, str):
                 var = '%s%d' % (var_names, i)
@@ -74,6 +76,7 @@ def vector_to_monomial_string(u, var_names):
                 s.append('%s^%d' % (var, j))
 
     return '*'.join(s) if s else '1'
+
 
 def vector_to_linear_form_string(u, var_names):
     r"""
@@ -99,7 +102,7 @@ def vector_to_linear_form_string(u, var_names):
     """
     s = ''
     first = True
-    for i,j in enumerate(u):
+    for i, j in enumerate(u):
         if j:
             if isinstance(var_names, str):
                 var = '%s%d' % (var_names, i)
@@ -125,7 +128,6 @@ def vector_to_linear_form_string(u, var_names):
             first = False
 
     return '0' if not s else s
-
 
 
 # NOTE: should this be an instance of Factorization?
@@ -185,7 +187,7 @@ class FactoredDenominator(object):
         elif isinstance(data, dict):
             if V is not None:
                 self._dict = {}
-                for k,v in data.items():
+                for k, v in data.items():
                     k = V(k)
                     k.set_immutable()
                     self._dict[k] = v
@@ -294,7 +296,7 @@ class FactoredDenominator(object):
             T = S.one()
 
         ans = S.one()
-        for a,i in self._tuple:
+        for a, i in self._tuple:
             ans *= (S.one() - R.monomial(*a) * T ** sum(a)) ** i
         return ans
 
@@ -362,7 +364,7 @@ class FactoredDenominator(object):
         """
         if not self._tuple:
             return ZZ.zero()
-        return sum(m for _,m in self._tuple)
+        return sum(m for _, m in self._tuple)
 
     # TODO
     # this method does not really make sense at this level of generality!
@@ -495,7 +497,7 @@ class FactoredDenominator(object):
             raise TypeError
 
         new_data = self._dict.copy()
-        for i,j in other._dict.items():
+        for i, j in other._dict.items():
             if i in new_data:
                 new_data[i] += j
                 if new_data[i].is_zero():
@@ -525,7 +527,7 @@ class FactoredDenominator(object):
         sd = self._dict
         od = other._dict
         nd = sd.copy()
-        for i,j in od.items():
+        for i, j in od.items():
             jj = sd.get(i, -1)
             if j > jj:
                 raise ArithmeticError
@@ -559,7 +561,7 @@ class FactoredDenominator(object):
 
         sd = self._dict
         od = other._dict
-        for i,j in od.items():
+        for i, j in od.items():
             if j > sd.get(i, -1):
                 sd[i] = j
 
@@ -600,7 +602,7 @@ class FactoredDenominator(object):
 
         sd = self._dict
         od = other._dict
-        for i,j in od.items():
+        for i, j in od.items():
             if j < sd.get(i, j):
                 sd[i] = j
 
@@ -656,6 +658,7 @@ class FactoredDenominator(object):
 
         return '*'.join(terms)
 
+
 # TODO: make it possible to use Laurent polynomials in denominator
 # TODO: monomial substitution
 # TODO: coefficient expansion Verdoolaege-Woods
@@ -690,7 +693,7 @@ class AbstractMSum(Element):
             return
 
         for term in data:
-            if not isinstance(term, (tuple,list)) or len(term) != 2:
+            if not isinstance(term, (tuple, list)) or len(term) != 2:
                 raise ValueError
             den, num = term
 
@@ -743,7 +746,6 @@ class AbstractMSum(Element):
             terms.append(fraction)
 
         return ' + '.join(terms)
-
 
     def is_trivial_zero(self):
         r"""
@@ -804,7 +806,7 @@ class AbstractMSum(Element):
             return self
 
         ans_data = self._data.copy()
-        for den,num in other._data.items():
+        for den, num in other._data.items():
             if den in ans_data:
                 ans_data[den] += num
                 if ans_data[den].is_zero():
@@ -841,7 +843,7 @@ class AbstractMSum(Element):
             0
         """
         ans_data = {}
-        for den1,num1 in self._data.items():
+        for den1, num1 in self._data.items():
             for den2, num2 in other._data.items():
                 den = den1 * den2
                 num = num1 * num2
@@ -919,6 +921,7 @@ class AbstractMSum(Element):
                 raise ValueError('singular numerator')
             res.add(den.degree())
         return res
+
 
 # TODO: the UniqueRepresentation should normalize the Laurent polynomial
 class AbstractMSumRing(UniqueRepresentation, Parent):
@@ -1098,4 +1101,3 @@ class AbstractMSumRing(UniqueRepresentation, Parent):
         """
         num = self._polynomial_ring(arg)
         return self.element_class(self, [([], num)], self.free_module())
-

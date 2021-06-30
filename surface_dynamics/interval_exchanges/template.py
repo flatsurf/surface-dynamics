@@ -3216,7 +3216,7 @@ class PermutationLI(Permutation):
             sage: p.is_hyperelliptic()
             True
 
-        Check for the correspondance::
+        Check for the correspondence::
 
             sage: q = QuadraticStratum(6,6)
             sage: c_hyp, c_reg, c_irr = q.components()

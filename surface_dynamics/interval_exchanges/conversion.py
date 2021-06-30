@@ -69,9 +69,10 @@ def iet_to_pyintervalxt(T):
     import pyintervalxt
     return pyintervalxt.IntervalExchangeTransformation(lengths, perm)
 
+
 def lengths_to_sage(lengths):
     try:
-        # NOTE: the module is not used anywere but importing it triggers some
+        # NOTE: the module is not used anywhere but importing it triggers some
         # needed coercions
         import gmpxxyy
     except ImportError:
