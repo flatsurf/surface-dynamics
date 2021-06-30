@@ -11,23 +11,7 @@ This file contains generators for level sequences of
  * rooted plane trees
  * plane trees
 
-REFERENCES:
-
-  * Beyer-Hedetniemi "Constant time generation of rooted trees", 1980
-  Generation of rooted trees (a root but no cyclic order at vertices). They use
-  a successor function on level sequences.
-  (good explanation of the algorithm)
-  A regular tree is a tree such that for all vertices, its sequence of subtrees
-  is in decreasing order.
-  How do PREV and SAVE work ?
-
-  * Wright-Richmond-Odlyzko-McKay "Constant time generation of free trees", 1986
-  TODO: look at
-
-.. [Nak02]   Nakano "Efficient generation of plane trees", 2002
-  For him, rooted means left-right ordering of children of each node.
-  Enumerating rooted plane trees with at most `n` vertices is elementary (a
-  depth-first search in the tree of trees).
+See [BeyHed80]_, [RichOdlMcKWri86]_ and [Nak02]_ for algorithms.
 """
 #*****************************************************************************
 #       Copyright (C) 2016-2019 Vincent Delecroix <20100.delecroix@gmail.com>

@@ -9,8 +9,8 @@
 #*****************************************************************************
 
 import pytest
-
-from sage.all import ZZ, QQ, factorial, parent
+import itertools
+from sage.all import ZZ, QQ, factorial, multinomial, parent, Partitions, prod
 
 def test_kontsevich():
     from surface_dynamics.topological_recursion import KontsevichTR
@@ -107,8 +107,40 @@ def test_kontsevich():
     assert K.F(3, 3, [4, 3, 2]) == QQ((1765575, 256))
     assert K.F(3, 3, [3, 3, 3]) == QQ((3570875, 512))
 
-    # Witten <tau_{3g-2}>_{g,1} = 1 / (24^g g!)
-    assert all((24**g * factorial(g) * K.F(g, 1, [3*g-2]) == ZZ(6*g-3).multifactorial(2)) for g in range(1,10))
+def test_kontsevich_genus0_formula():
+    from surface_dynamics.topological_recursion.kontsevich import psi_correlator
+
+    # d1 + ... + dn = n-3
+    # equivalently (d1+1) + ... + (dn+1) = 2n-3
+    # <tau_{d1} ... tau_{dn}> = (n-3)! / prod d_i!
+    for n in range(3, 10):
+        for p in Partitions(2*n-3, length=n):
+            p = tuple(i-1 for i in p)
+            val = QQ((factorial(n-3), prod(factorial(d) for d in p)))
+            assert psi_correlator(*p) == val, p
+
+def test_kontsevich_genus1_formula():
+    # from Andersen-Borot-Charbonnier-Delecroix-Giacchetto-Lewanski-Wheeler
+    # appendix A
+
+    from surface_dynamics.topological_recursion.kontsevich import psi_correlator
+
+    # d1 + ... + dn = n
+    # equivalently (d1+1) + ... + (dn+1) = 2n
+    for n in range(1, 8):
+        for p in Partitions(2*n, length=n):
+            p = tuple(i-1 for i in p)
+            s = sum(multinomial([i-j for i,j in zip(p,diff)]) * factorial(sum(diff) - 2) for diff in itertools.product([0,1], repeat=n) if sum(diff) >= 2)
+            assert 24 * psi_correlator(*p) == multinomial(p) - s, (p, s)
+
+def test_kontsevich_witten_formula():
+    from surface_dynamics.topological_recursion.kontsevich import psi_correlator
+
+    # <tau_{3g-2}>_{g,1} = 1 / (24^g g!)
+    from surface_dynamics.topological_recursion import KontsevichTR
+    K = KontsevichTR()
+    for g in range(1, 10):
+        assert 24**g * factorial(g) * psi_correlator(3*g-2) == 1, g
 
 def test_masur_veech():
     from surface_dynamics.topological_recursion import MasurVeechTR

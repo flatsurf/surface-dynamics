@@ -46,6 +46,14 @@ Module documentation
     interval_exchanges
     database
 
+References
+----------
+
+.. toctree::
+    :maxdepth: 2
+
+    references
+
 Citation
 --------
 

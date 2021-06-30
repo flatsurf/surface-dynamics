@@ -84,7 +84,7 @@ def psi_correlator(*args):
     if (s - n) % 3:
         raise ValueError("the composition should sum up to 3*g - 3 + n")
     g = (s - n) // 3 + 1
-    return KontsevichTR().F(g, n, args) / prod((2 * i + 1).multifactorial(2) for i in args)
+    return KontsevichTR().F(g, n, args) / prod(ZZ(2 * i + 1).multifactorial(2) for i in args)
 
 
 class KontsevichTR(UniqueRepresentation, TopologicalRecursion):

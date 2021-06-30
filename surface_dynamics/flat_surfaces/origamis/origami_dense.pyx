@@ -1078,16 +1078,19 @@ cdef class Origami_dense_pyx:
             True
             sage: [uu[lab[i]] for i in range(9)] == [lab[u[i]] for i in range(9)]
             True
+
+        Special one square case (see https://github.com/flatsurf/surface_dynamics/issues/20)::
+
+            sage: o = Origami('(1)', '(1)')
+            sage: o._set_standard_form(True)
+            (0,)
         """
-        cdef int *ren = <int *> malloc(self._n * sizeof(int))
+        cdef int *ren = <int *> calloc(self._n, sizeof(int))
         m = None
 
-        if self._n != 1:
-            origami_normal_form(self._r, self._u, ren, self._n)
-
+        origami_normal_form(self._r, self._u, ren, self._n)
         if return_map:
             m = array_to_tuple(ren, self._n)
-
         free(ren)
         return m
 
@@ -3438,6 +3441,15 @@ cdef class Origami_dense_pyx:
             ...
             ValueError: the origami is not connected! The Veech group
             computation is disabled in that case.
+
+        Check the one-square torus (see https://github.com/flatsurf/surface_dynamics/issues/20)::
+
+            sage: Origami('(1)', '(1)').veech_group()
+            Arithmetic subgroup with permutations of right cosets
+             S2=()
+             S3=()
+             L=()
+             R=()
         """
         return self.teichmueller_curve().veech_group()
 

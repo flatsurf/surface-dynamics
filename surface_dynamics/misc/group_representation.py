@@ -178,16 +178,12 @@ def isotypic_projection_matrix(G, d, chi, deg, conj_mats=None, floating_point=Fa
     - ``floating_point`` -- whether to return matrices with floating point entries instead
                    of elements in the cyclotomic field
 
-    Recall the formula for the projection as given in Theorem 8 in [Ser]_. If
+    Recall the formula for the projection as given in Theorem 8 in [Ser67]_. If
     `G` is a permutation group, then
 
     .. MATH::
 
         \pi_\chi = \sum_{g \in G} \overline_{\chi(g)} g
-
-    REFERENCES::
-
-    .. [Serre] J.-P. Serre, "Représentation des groupes finis."
 
     EXAMPLES::
 

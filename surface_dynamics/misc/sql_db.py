@@ -107,10 +107,6 @@ def regexp(expr, item):
     parameter ``expr``.
     Returns ``False`` otherwise (i.e.: no match).
 
-    REFERENCES:
-
-    - [Ha2005]_
-
     EXAMPLES::
 
         sage: from sage.databases.sql_db import regexp
