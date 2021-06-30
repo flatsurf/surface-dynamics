@@ -23,7 +23,6 @@ compute Lyapunov exponents.
 
 from __future__ import print_function, absolute_import
 
-import operator
 import numpy as np
 
 from six.moves import range, map, filter, zip
@@ -32,7 +31,6 @@ from sage.misc.misc_c import prod
 
 from sage.categories.additive_groups import AdditiveGroups
 from sage.categories.groups import Groups
-from sage.structure.sage_object import SageObject
 from sage.groups.perm_gps.permgroup import PermutationGroup
 from sage.groups.libgap_group import GroupLibGAP
 
@@ -377,7 +375,6 @@ class PermutationCover(object):
                 self._inv_permut_cover[rank(label)]
 
         for orbit in base_diagram:
-            init_label = orbit[0][0]
             cover_copies = set(range(self.degree()))
             while cover_copies:
                 d = d_init = cover_copies.pop()
@@ -385,7 +382,7 @@ class PermutationCover(object):
                 while True:
                     # lift a loop from downstair
                     for base_singularity in orbit:
-                        label,s = base_singularity
+                        label, s = base_singularity
                         if s == -1:
                             dd = perm(s,label)[d]
                         else:
@@ -620,7 +617,6 @@ class PermutationCover(object):
             sage: p.cover(['(1,2)', '(1,3)', '']).monodromy()
             Permutation Group with generators [(1,2), (1,3), ()]
         """
-        from sage.groups.perm_gps.permgroup import PermutationGroup
         return PermutationGroup([self.covering_data(a) for a in self._base.letters()], canonicalize=False)
 
     @cached_method
@@ -638,7 +634,6 @@ class PermutationCover(object):
             Permutation Group with generators [()]
         """
         from sage.groups.perm_gps.permgroup_named import SymmetricGroup
-        from sage.groups.perm_gps.permgroup import PermutationGroup
 
         Sd = SymmetricGroup(self.degree())
         G = libgap.Subgroup(Sd, [self.covering_data(a) for a in self._base.letters()])

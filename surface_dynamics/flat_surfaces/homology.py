@@ -1415,12 +1415,7 @@ class RibbonGraphWithHolonomies(RibbonGraph):
         if len(holonomies) != self.num_darts():
             raise ValueError("there are %d angles and %d darts" %(len(angles),self.num_darts()))
 
-        from sage.modules.free_module import FreeModule
-        V = FreeModule(ZZ,2)
+        V = FreeModule(ZZ, 2)
         self._holonomies = list(map(V, holonomies))
 
         #self._angles = map(angle, self._holonomies)
-
-
-
-
