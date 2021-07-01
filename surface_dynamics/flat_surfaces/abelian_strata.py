@@ -3618,7 +3618,7 @@ class AbelianStrata(Strata):
         """
         return (isinstance(other, AbelianStrata) and
                 (self._dimension == other._dimension) and
-                (self._genus == other._genus)         and
+                (self._genus == other._genus) and
                 (self._fake_zeros == other._fake_zeros))
 
     def __ne__(self, other):

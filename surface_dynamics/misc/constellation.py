@@ -759,7 +759,7 @@ class Constellation_class(Element):
             True
         """
         if i is None:
-            return [p[j] for p in  self._g]
+            return [p[j] for p in self._g]
         else:
             return self._g[i][j]
 
