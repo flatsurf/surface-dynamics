@@ -700,7 +700,7 @@ class IntervalExchangeTransformation:
 
         i0 = tb[0] - 1
         i1 = tt[0] - 1
-        if len(newtop) > 2  and i0 > 0 and i1 > 0 and tt[i0] == i1:
+        if len(newtop) > 2 and i0 > 0 and i1 > 0 and tt[i0] == i1:
             # left end fake zero
             # the permutation looks like
             # A ... C B ...
@@ -1388,7 +1388,7 @@ class IntervalExchangeTransformation:
 
     def backward_rauzy_move(self, winner, side='right'):
         r"""
-        Return a new interval exchange transformation obtained by performing a backward rauzy move.
+        Return a new interval exchange transformation obtained by performing a backward Rauzy move.
 
         EXAMPLES::
 
@@ -1501,7 +1501,6 @@ class IntervalExchangeTransformation:
             return res, path
         else:
             return res
-
 
     def _rauzy_move(self, side=-1, error_on_saddles=True):
         r"""
@@ -1622,7 +1621,7 @@ class IntervalExchangeTransformation:
 
     def _backward_rauzy_move(self, winner, side=-1):
         r"""
-        Inplace backward rauzy move.
+        Inplace backward Rauzy move.
 
         EXAMPLES::
 

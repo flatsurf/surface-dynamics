@@ -354,7 +354,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
     def filename(self, comp, ncyls):
         r"""
         Returns the name of the file for the given component ``comp`` and the
-        given of number of cyliders ``ncyls``.
+        given of number of cylinders ``ncyls``.
 
         EXAMPLES::
 

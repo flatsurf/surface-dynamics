@@ -159,7 +159,7 @@ class PermutationCover(object):
             a b c
             c b a
         """
-        s = 'Covering of degree %i of the permutation:\n'%(self.degree())
+        s = 'Covering of degree %i of the permutation:\n' % (self.degree())
         s += str(self._base)
         return s
 
@@ -1141,10 +1141,14 @@ class PermutationCover(object):
         nb_experiments = int(nb_experiments)
         nb_iterations = int(nb_iterations)
 
-        if nb_vectors < 0 :     raise ValueError("the number of vectors must be positive")
-        if nb_vectors == 0:     return []
-        if nb_experiments <= 0: raise ValueError("the number of experiments must be positive")
-        if nb_iterations <= 0 : raise ValueError("the number of iterations must be positive")
+        if nb_vectors < 0:
+            raise ValueError("the number of vectors must be positive")
+        if nb_vectors == 0:
+            return []
+        if nb_experiments <= 0:
+            raise ValueError("the number of experiments must be positive")
+        if nb_iterations <= 0:
+            raise ValueError("the number of iterations must be positive")
 
         if verbose:
             output_file.write("Stratum: {}\n".format(self.stratum()))
@@ -1195,7 +1199,7 @@ class PermutationCover(object):
             for i_char in range(nc):
                 res_int = []
                 if verbose:
-                    output_file.write("##### char_%d #####\n"%(i_char))
+                    output_file.write("##### char_%d #####\n" % (i_char))
                     output_file.write("chi = {}\n".format(self._real_characters()[0][i_char]))
                     output_file.write("dim = {}\n".format(dimensions[i_char]))
                 for i in range(i_0, i_0 + dimensions[i_char]):
@@ -1369,7 +1373,7 @@ class RegularCover(PermutationCover):
         # monodromy as permutations
         try:
             d = self._grp.cardinality()
-        except:
+        except AttributeError:
             # cardinality not implemented yet on GroupLibGAP
             d = self._grp._libgap.Size().sage()
 
@@ -1392,7 +1396,7 @@ class RegularCover(PermutationCover):
     def degree(self):
         try:
             d = self._grp.cardinality()
-        except:
+        except AttributeError:
             # cardinality not implemented yet on GroupLibGAP
             d = self._grp._libgap.Size().sage()
         return d
