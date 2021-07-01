@@ -4,6 +4,7 @@
 .pypirc
 MANIFEST
 build/
+rever/
 doc/build/
 dist/
 surface_dynamics/flat_surfaces/origamis/origami_dense.c
