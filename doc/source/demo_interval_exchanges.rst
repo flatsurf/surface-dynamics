@@ -7,15 +7,15 @@ This file is a good entry point to learn how to use interval exchange
 transformations in `surface_dynamics
 <https://github.com/flatsurf/surface_dynamics>`_. Recall that an interval
 exchange transformation is a piecewise translation of an interval. It can be
-encoded by a pair `(\pi, \lambda)` where `\pi` is a permutation and `\lambda`
-is a vector of positive real numbers.  These are respectively called the
-*combinatorial datum* and the *length datum* of the interval echange
-transformation.
+encoded by a pair :math:`(\pi, \lambda)` where :math:`\pi` is a permutation and
+:math:`\lambda` is a vector of positive real numbers.  These are respectively
+called the *combinatorial datum* and the *length datum* of the interval
+exchange transformation.
 
 Building an interval exchange transformation and simple manipulations
 ---------------------------------------------------------------------
 
-Here is a simple interval exchange transformation on 4 subintervals
+Here is an example of interval exchange transformation on 4 subintervals
 with rational lengths::
 
     sage: from surface_dynamics import iet
@@ -32,19 +32,30 @@ It can be visualized with::
     sage: t.plot_function().show(aspect_ratio=1)
     sage: t.plot_two_intervals().show(axes=False)
 
-Given a point in the interval `[0, 6172/5187[` it is possible to compute
-its image under the map `t`::
+Given a point in the interval :math:`[0, 6172/5187[` it is possible to compute
+its image under the map :math:`t`::
 
     sage: x = 1/12
     sage: t(x)
+    19501/20748
 
-Can you compute the first 20 elements of the orbit of `x`, that is the
-list `[x, t(x), t^2(x), \ldots, t^{19}(x)]`? ::
+To know which translation has been applied to the point :math:`x` you can
+use::
+
+    sage: t.in_which_interval(x)
+    'a'
+    sage: t.translations()
+    (1481/1729, 176/741, -142/399, -253/273)
+    sage: x + t.translations()[0] == t(x)
+    True
+
+Can you compute the first 20 elements of the orbit of :math:`x`, that is the
+sequence :math:`(x, t(x), t^2(x), \ldots, t^{19}(x))`? ::
 
     sage: # edit here
 
-Can you determine whether the orbit of `x` is periodic, that is whether
-there exists `n > 0` such that `t^n(x) = x`? ::
+Can you determine whether the orbit of :math:`x` is periodic, that is whether
+there exists :math:`n > 0` such that :math:`t^n(x) = x`? ::
 
     sage: # edit here
 
@@ -65,7 +76,7 @@ Rauzy induction and self-similar iet
 ------------------------------------
 
 Rauzy induction is a map from the space of interval exchange transformations to itself.
-The image `\mathcal{R}(t)` of an iet `t` is an induced map.::
+The image :math:`\mathcal{R}(t)` of an iet :math:`t` is an induced map.::
 
     sage: t3 = t2.rauzy_move()
     sage: r = max(set(flatten(t2.singularities())) - set([0,3*sqrt2+3]))
@@ -90,16 +101,26 @@ interval exchange transformation::
 
 ::
 
-    sage: a, t4 = f.self_similar_iet()
+    sage: dilatation, t4 = f.self_similar_iet()
+    sage: print(dilatation, '~', dilatation.n())
+    3*a + 2 ~ 6.85410196624968
+
+Above ``dilatation`` is the expansion of the self-similarity and ``t4`` is the self-similar
+exchange transformation associated to the flip sequence ``f``::
+
     sage: t5 = t4.rauzy_move(iterations=len(seq))
-    sage: a * t5.length() == t4.length()
-    True
+    sage: (t4.plot() + t5.plot(position=(0,-.5))).show(axes=False)
 
 ::
 
-    sage: (t4.plot() + t5.plot(position=(0,-.5))).show(axes=False)
+    sage: print(t4.lengths())
+    (1, 6/5*a + 2/5, 3/5*a + 1/5, 6/5*a + 2/5)
+    sage: print(t5.lengths())
+    (-3*a + 5, 6/5*a - 8/5, 3/5*a - 4/5, 6/5*a - 8/5)
+    sage: dilatation * t5.lengths() == t4.lengths()
+    True
 
-The command below checks that it is indeed self induced::
+The command below checks that ``t4`` is indeed self induced::
 
     sage: t4.normalize() == t5.normalize()
     True
@@ -108,7 +129,7 @@ Suspension
 ----------
 
 `sage-flatsurf <https://flatsurf.github.io/sage-flatsurf/>`_ is a Python library for translation
-surfaces (and more generally similarity surfaces). ::
+surfaces (and more generally similarity surfaces). One can build Masur polygons via::
 
     sage: height = [1, 0, 0, -1]
     sage: S = perm.masur_polygon(length2, height) # optional - sage_flatsurf
@@ -127,9 +148,10 @@ Using pyintervalxt
 ------------------
 
 `intervalxt <https://github.com/flatsurf/intervalxt>`_ is a C++ library with a Python interface
-that implements optimized routines to deal with interval exchange transformations. If it is part
-of your installation you can convert interval exchange transformations back and forth between
-``surface_dynamics`` and ``pyintervalxt``::
+that implements optimized routines to deal with interval exchange
+transformations. If ``intervalxt`` is part of your installation you can convert
+interval exchange transformations back and forth between ``surface_dynamics``
+and ``pyintervalxt``::
 
     sage: from surface_dynamics.interval_exchanges.conversion import iet_to_pyintervalxt, iet_from_pyintervalxt # optional - gmpxxyy, pyintervalxt
     sage: u2 = iet_to_pyintervalxt(t2) # optional - gmpxxyy, pyintervalxt
@@ -146,16 +168,29 @@ One feature of ``intervalxt`` is that it can certify that an iet has no periodic
     sage: u2.boshernitzanNoPeriodicTrajectory() # optional - gmpxxyy, pyintervalxt
     True
 
+Other features
+--------------
+
+This short tour did not exhaust all the possibilities of ``surface_dynamics``, in particular
+
+- iet statistics :mod:`~surface_dynamics.interval_exchanges.integer_iet`
+
+- linear families of iet :mod:`~surface_dynamics.interval_exchanges.iet_family`
+
+- coverings and Lyapunov exponents of the Kontsevich-Zorich cocycle
+
+These topics might be included in later versions of this document.
+
 Missing features
 ----------------
 
 - generalizations (linear involution associated to generalized permutations,
-  interval exchange transformations with flips, affine iet)
+  interval exchange transformations with flips, affine iet, system of isometries)
 
 - Veech zippered rectangle construction
 
 - constructing the self-similar surface (aka pseudo-Anosov) associated to a
   flip sequence
 
-If you are interested in developing any of these, get in touch with us at
-https://github.com/flatsurf/surface_dynamics
+If you are interested in developing any of these or have any request, get in
+touch with us at https://github.com/flatsurf/surface_dynamics
