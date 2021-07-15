@@ -51,7 +51,7 @@ Module documentation
     strata
     surface_topology
     origamis
-    interval_exchanges
+    interval_exchanges/index
     database
 
 References
