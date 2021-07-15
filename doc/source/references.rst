@@ -16,6 +16,10 @@ References
    induction for quadratic differentials"
    Ergodic Theory Dyn. Syst. 29, No. 3, 767-816 (2009).
 
+.. [CheMoeSauZag20] D. Chen, M. Möller, A. Sauvaget, D. Zagier "Masur–Veech
+   volumes and intersection theory on moduli spaces of Abelian differentials"
+   Invent. Math. 222, No. 1, 283-373 (2020).
+
 .. [DanNog90] C. Danthony, A. Nogueira "Measured foliations on nonorientable
    surfaces"
    Ann. Sci. Éc. Norm. Supér. (4) 23, No. 3, 469-494 (1990).
@@ -77,7 +81,11 @@ References
    "Constant time generation of free trees"
    SIAM J. Comput. 15, 540-548 (1986).
 
-.. [Ser67] J.-P. Serre, "Représentations linéaires des groupes finis"
+.. [Sau18] A. Sauvaget "Volumes and Siegel-Veech constants of H(2g-2) and
+   Hodge integrals"
+   Geom. Funct. Anal. 28, No. 6, 1756-1779 (2018).
+
+.. [Ser67] J.-P. Serre "Représentations linéaires des groupes finis"
    Hermann & Cie. (1967).
 
 .. [Vee78] W. A. Veech "Interval exchange transformations"
