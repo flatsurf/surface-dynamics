@@ -1,7 +1,14 @@
-.. linkall:
+.. -*- coding: utf-8 *-*
+.. linkall
 
 Interval exchange transformations
 =================================
+
+.. contents::
+   :depth: 1
+
+Introduction
+------------
 
 This file is a good entry point to learn how to use interval exchange
 transformations in `surface_dynamics
@@ -88,7 +95,10 @@ From a flip sequence given combinatorially you can build the associated self-sim
 interval exchange transformation::
 
     sage: R = perm.rauzy_diagram()
-    sage: R.graph().plot(color_by_label=True, edge_labels=True, vertex_size=800).show(figsize=12)
+    sage: G = R.graph()
+    sage: P = G.plot(color_by_label=True, edge_labels=True, vertex_size=800) # random (numpy warning in conda)
+    sage: P
+    Graphics object consisting of 42 graphics primitives
 
 ::
 
