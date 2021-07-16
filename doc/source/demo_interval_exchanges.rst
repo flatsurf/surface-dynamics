@@ -38,7 +38,7 @@ It can be visualized with::
 
     sage: G = t.plot_function()
     sage: G.set_aspect_ratio(1)
-    sage: G
+    sage: G # random (matplotlib warning in conda)
     Graphics object consisting of 4 graphics primitives
     sage: t.plot_two_intervals()
     Graphics object consisting of 16 graphics primitives
