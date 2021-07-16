@@ -36,8 +36,12 @@ with rational lengths::
 
 It can be visualized with::
 
-    sage: t.plot_function().show(aspect_ratio=1)
-    sage: t.plot_two_intervals().show(axes=False)
+    sage: G = t.plot_function()
+    sage: G.set_aspect_ratio(1)
+    sage: G
+    Graphics object consisting of 4 graphics primitives
+    sage: t.plot_two_intervals()
+    Graphics object consisting of 16 graphics primitives
 
 Given a point in the interval :math:`[0, 6172/5187[` it is possible to compute
 its image under the map :math:`t`::
@@ -89,7 +93,9 @@ The image :math:`\mathcal{R}(t)` of an iet :math:`t` is an induced map.::
     sage: r = max(set(flatten(t2.singularities())) - set([0,3*sqrt2+3]))
     sage: G = t2.plot_two_intervals() + t3.plot_two_intervals(position=(0,-.8))
     sage: G += line2d([(r, -1.), (r, .2)], color='black', linestyle='dotted')
-    sage: G.show(axes=False)
+    sage: G.axes(False)
+    sage: G
+    Graphics object consisting of 33 graphics primitives
 
 From a flip sequence given combinatorially you can build the associated self-similar
 interval exchange transformation::
@@ -119,7 +125,10 @@ Above ``dilatation`` is the expansion of the self-similarity and ``t4`` is the s
 exchange transformation associated to the flip sequence ``f``::
 
     sage: t5 = t4.rauzy_move(iterations=len(seq))
-    sage: (t4.plot() + t5.plot(position=(0,-.5))).show(axes=False)
+    sage: G = t4.plot() + t5.plot(position=(0,-.5))
+    sage: G.axes(False)
+    sage: G
+    Graphics object consisting of 32 graphics primitives
 
 ::
 
