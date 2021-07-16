@@ -192,30 +192,15 @@ Authors
 * Luke Jeffreys: single cylinder representatives for strata of Abelian
   differentials
 
-Citation
---------
+How to cite this project
+------------------------
 
-To cite the software, use the following Bibtex entry::
-
-    @manual{ Sdyn,
-      Author = { Delecroix, V. et al. },
-      Month  = { March },
-      Year   = { 2019 },
-      Title  = { surface_dynamics - SageMath package, Version 0.4.1 },
-      Doi    = { 10.5281/zenodo.3237923 },
-      Url    = { https://doi.org/10.5281/zenodo.3237923 }
-    }
+If you have used this project for please cite us
+as described `on our zenodo site <https://zenodo.org/badge/latestdoi/347440823>`_.
 
 Versions
 --------
 
-* 0.4.6 was released on 2021-03-13 (as a Python package on PyPI)
-* 0.4.5 was released on 2020-10-22 (as a Python package on PyPI)
-* 0.4.4 was released on 2020-01-31 (as a Python package on PyPI)
-* 0.4.3 was released on 2019-07-28 (as a Python package on PyPI)
-* 0.4.2 was released on 2019-06-21 (as a Python package on PyPI)
-* 0.4.1 was released on 2019-03-26 (as a Python package on PyPI)
-* 0.4.0 was released on 2018-05-14 (as a Python package on PyPI)
-* 0.3 was released on 2017-08-11 (as a Python package on PyPI)
-* 0.2 was released on 2015-11-15 (as a Sage spkg)
-* 0.1 was released on 2015-07-30 (as a Sage spkg)
+The first release of ``surface_dynamics`` as a sagemath spkg happened on the
+30th of july 2015. Versions are now track on `zenodo
+<https://zenodo.org/badge/latestdoi/347440823>`_.
