@@ -1267,7 +1267,7 @@ class RibbonGraphWithAngles(RibbonGraph):
         Return the spin parity of the Ribbon graph with angles.
 
         The surface should be holonomy free and with odd multiple of 2 pi
-        angles.
+        angles. Implements the formula of [Joh80]_.
 
         EXAMPLES:
 

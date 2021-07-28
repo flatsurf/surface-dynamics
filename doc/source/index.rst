@@ -53,6 +53,8 @@ Module documentation
     origamis
     interval_exchanges/index
     database
+    topological_recursion/index
+    misc/index
 
 References
 ----------

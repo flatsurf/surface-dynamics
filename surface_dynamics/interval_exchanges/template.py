@@ -4814,6 +4814,8 @@ class OrientablePermutationIET(PermutationIET):
         r"""
         Return the invariant density for the Rauzy induction.
 
+        Goes via the zippered rectangle construction of [Vee1982]_.
+
         EXAMPLES::
 
             sage: from surface_dynamics import iet

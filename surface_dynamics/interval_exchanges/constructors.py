@@ -419,9 +419,10 @@ def GeneralizedPermutation(arg1, arg2=None, reduced=None, flips=None, alphabet=N
     Returns a permutation of an interval exchange transformation.
 
     Those permutations are the combinatoric part of linear involutions and were
-    introduced by Danthony-Nogueira [DanNog90]_. The full combinatoric study and
-    precise links with strata of quadratic differentials was achieved few years
-    later by Boissy-Lanneau [BoiLan09]_.
+    introduced by Danthony-Nogueira [DanNog90]_ (the flipped version is also
+    considered in [Nog89]_). The full combinatoric study and precise links with
+    strata of quadratic differentials was achieved few years later by
+    Boissy-Lanneau [BoiLan09]_.
 
     INPUT:
 
