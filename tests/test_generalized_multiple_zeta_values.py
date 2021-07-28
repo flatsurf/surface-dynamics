@@ -9,8 +9,14 @@
 #*****************************************************************************
 import pytest
 import sage.all
+import cypari2
 
-pytest.importorskip('sage.modular.multiple_zeta')
+try:
+    import sage.modular.multiple_zeta
+except ImportError:
+    pytest.skip("sage.modular.multiple_zeta not present")
+except cypari2.handle_error.PariError:
+    pytest.skip("sage.modular.multiple_zeta not functional")
 
 import itertools
 import random
