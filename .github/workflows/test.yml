@@ -34,10 +34,8 @@ jobs:
 
           while read -r line; do
             optional=$(echo "$line" | grep -o '# optional: [^ ]*' | awk '{ print $3; }') || true
-            (test "$optional" == '' || (echo "${{ matrix.optionals }}" | grep -E '\b'"$optional"'\b') > /dev/null) && echo $line || true
+            (test "$optional" == '' || (echo "${{ matrix.optionals }}" | grep -E '\b'"$optional"'\b') > /dev/null) && echo "$line" || true
           done < environment.yml > environment.test.yml
-
-          cat environment.test.yml
 
           mamba env update --quiet -n test -f environment.test.yml
 
