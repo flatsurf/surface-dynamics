@@ -34,6 +34,14 @@ Other sources of information:
 - development webpage (including source code):
   https://github.com/flatsurf/surface_dynamics
 
+Walk through
+------------
+
+.. toctree::
+    :maxdepth: 1
+
+    demo_interval_exchanges
+
 Module documentation
 --------------------
 
@@ -43,7 +51,7 @@ Module documentation
     strata
     surface_topology
     origamis
-    interval_exchanges
+    interval_exchanges/index
     database
 
 References

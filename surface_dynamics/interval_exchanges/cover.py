@@ -1031,7 +1031,7 @@ class PermutationCover(object):
            standard output.
 
          - ``return_speed`` -- whether or not return the lyapunov exponents list
-         in a pair with the speed of the geodesic.
+           in a pair with the speed of the geodesic.
 
          - ``isotypic_decomposition`` -- either a boolean or a character or a list of characters.
 
