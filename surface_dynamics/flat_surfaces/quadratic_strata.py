@@ -974,7 +974,7 @@ class QuadraticStratumComponent(StratumComponent):
         Compute the `H^+` part of Lyapunov exponents spectrum.
 
         All arguments and keywords are sent to
-        :meth:`~surface_dynamics.interval_exchanges.labelled.LabelledPermutation.lyapunov_exponents_H_plus`.
+        ?
 
         EXAMPLES::
 

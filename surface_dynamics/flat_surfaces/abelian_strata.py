@@ -29,7 +29,7 @@ Abelian stratum at different level (approximately one for each component):
 The inverse operation (pass from an interval exchange transformation to
 the connected component) is partially written in [KonZor03]_ and
 simply named here
-:meth:`~surface_dynamics.interval_exchanges.template.PermutationIET.components`.
+?
 
 Some of the code here was first available on Mathematica [ZS]_.
 

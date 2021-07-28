@@ -4,7 +4,7 @@ Database of reduced origamis.
 Origamis are cover of the torus over one point. The group `SL(2,\ZZ)` act on them
 (as their mapping class group). This file contains the implementation of a
 database of these SL(2,Z)-orbits. To do concrete computations with origamis see
-:mod:`~surface_dynamics.flat_surfaces.origamis.origami`.
+?.
 
 The database of origamis contain informations about `SL(2,\ZZ)` orbits of the
 origamis that are *arithmetic Teichmueller curves*.

@@ -1,14 +1,6 @@
 References
 ==========
 
-.. [AndBorChaDelGiacLewWhe] J. E. Andersen, G. Borot, S. Charbonnier,
-   V. Delecroix, A. Giacchetto, D. Lewanski and C. Wheeler "Topological
-   recursion for Masur-Veech volumes"
-   arXiv:1905.10352
-
-.. [BeyHed80] T. Beyer, S. Mitchell "Constant time generation of rooted trees"
-   SIAM J. Comput. 9, 706-712 (1980).
-
 .. [Boi13] C. Boissy "Labeled Rauzy classes and framed translation surfaces"
    Ann. Inst. Fourier 63, No. 2, 547-572 (2013); erratum ibid. 65, No. 2, 905-932 (2015).
 
@@ -36,16 +28,9 @@ References
    of ratio-optimising pseudo-Anosovs", Preprint (2019),
    (https://arxiv.org/pdf/1906.02016.pdf)
 
-.. [Joh80] D. Johnson "Spin structures and quadratic forms on surfaces"
-   J. Lond. Math. Soc., II. Ser. 22, 365-373 (1980).
-
 .. [KonZor03] M. Kontsevich, A. Zorich "Connected components of the moduli
    spaces of Abelian differentials with prescribed singularities"
    Invent. Math. 153, No. 3, 631-678 (2003).
-
-.. [LanZvo04] S. Lando, A. Zvonkine "Graphs on surfaces and their
-   applications"
-   Springer (2004).
 
 .. [Lan04] E. Lanneau "Parity of the spin structure defined by a quadratic
    differential"
@@ -59,33 +44,11 @@ References
    equation for Roth-type interval exchange maps"
    J. Am. Math. Soc. 18, No. 4, 823-872 (2005).
 
-.. [Nak02] S.-i. Nakano "Efficient generation of plane trees"
-   Inf. Process. Lett. 84, No. 3, 167-172 (2002).
-
-.. [Nav08] Y. Naveh "Tight upper bounds on the number of invariant components
-   on translation surfaces"
-   Isr. J. Math. 165, 211-231 (2008).
-
-.. [Nog89] A. Nogueira "Almost all interval exchange transformations with flips
-   are nonergodic"
-   Ergodic Theory Dyn. Syst. 9, No. 3, 515-525 (1989).
-
 .. [Rau80] G. Rauzy "Echanges d'intervalles et transformations induites"
    Acta Arith. 34, no. 3, 203-212, (1980)
 
-.. [RichOdlMcKWri86] B. D. McKay, A. Odlyzko, B. Richmond, R. A. Wright
-   "Constant time generation of free trees"
-   SIAM J. Comput. 15, 540-548 (1986).
-
-.. [Ser67] J.-P. Serre, "Représentations linéaires des groupes finis"
-   Hermann & Cie. (1967).
-
 .. [Vee78] W. A. Veech "Interval exchange transformations"
    J. Anal. Math. 33, 222-272 (1978).
-
-.. [Vee1982] W. Veech "Gauss measures for transformations on the space of
-   interval exchange maps"
-   Ann. of Math., vol. 115, no. 2 (1982), pp. 201-242.
 
 .. [Yoc06] J.-C. Yoccoz "Continued fraction algorithms for interval exchange
    maps: an introduction"
