@@ -23,3 +23,4 @@ Interval exchange transformations
    iet
    integer_iet
    iet_family
+   flip_sequence
