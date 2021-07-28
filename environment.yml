@@ -1,0 +1,28 @@
+# This file lists the dependencies needed to build and test all of
+# surface-dynamics.
+# Create a Conda environment with these dependencies preinstalled with:
+# conda env create -f environment.yml
+name: surface-dynamics-build
+channels:
+  - flatsurf
+  - conda-forge
+  - defaults
+dependencies:
+  - c-compiler
+  - cxx-compiler
+  - pytest
+  - pytest-xdist
+  - ipywidgets
+  - scipy
+  - matplotlib-base
+  - gap-defaults
+  - sympy
+  - sagemath-db-conway-polynomials
+  - sagelib
+  # Work around https://github.com/conda-forge/givaro-feedstock/issues/13
+  - givaro=4.1.1=h192cbe9_1
+  - sage-flatsurf  # optional: sage_flatsurf
+  - pyflatsurf >=3.6.4,<4  # optional: sage_flatsurf
+  - pyeantic >=1.0.0,<2  # optional: pyeantic
+  - pyintervalxt >= 3.1.0,<4  # optional: pyintervalxt
+  - pip

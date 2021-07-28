@@ -10,17 +10,17 @@ jobs:
       matrix:
         include:
           - optionals: "sage,pplpy"
-            packages: "sagelib=8.8"
+            sagelib: "8.8"
           - optionals: "sage,pplpy"
-            packages: "sagelib=8.9"
+            sagelib: "8.9"
           - optionals: "sage,pplpy"
-            packages: "sagelib=9.1"
+            sagelib: "9.1"
           - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
-            packages: "sagelib=9.1 sage-flatsurf pyflatsurf>=1.1.0 pyeantic pyintervalxt>=3.1.0"
+            sagelib: "9.1"
           - optionals: "sage,pplpy,mzv"
-            packages: "sagelib=9.2"
+            sagelib: "9.2"
           - optionals: "sage,pplpy,mzv,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
-            packages: "sagelib=9.2 sage-flatsurf pyflatsurf>=1.1.0 pyeantic pyintervalxt>=3.1.0"
+            sagelib: "9.2"
     steps:
       - uses: actions/checkout@v2
         with: { submodules: recursive }
@@ -29,10 +29,16 @@ jobs:
       - name: Install dependencies
         shell: bash -l {0}
         run: |
-          mamba install --yes --quiet c-compiler cxx-compiler pip pytest pytest-xdist ipywidgets scipy matplotlib-base gap-defaults sympy sagemath-db-conway-polynomials ${{ matrix.packages }}
-          # Work around https://github.com/conda-forge/givaro-feedstock/issues/13
-          mamba install --yes --quiet givaro=4.1.1=h192cbe9_1
-          conda activate test
+          mamba install -n test sagelib=${{ matrix.sagelib }}
+          echo "sagelib ==${{ matrix.sagelib }}" >> $CONDA_PREFIX/conda-meta/pinned
+
+          while read -r line; do
+            optional=$(echo "$line" | grep -o '# optional: [^ ]*' | awk '{ print $3; }') || true
+            (test "$optional" == '' || (echo "${{ matrix.optionals }}" | grep -E '\b'"$optional"'\b') > /dev/null) && echo $line || true
+          done < environment.yml > environment.test.yml
+
+          mamba env update --quiet -n test -f environment.test.yml
+
           conda list
       - name: Install surface-dynamics
         shell: bash -l {0}
