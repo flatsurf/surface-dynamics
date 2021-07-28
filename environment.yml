@@ -25,4 +25,8 @@ dependencies:
   - pyflatsurf >=3.6.4,<4  # optional: sage_flatsurf
   - pyeantic >=1.0.0,<2  # optional: pyeantic
   - pyintervalxt >= 3.1.0,<4  # optional: pyintervalxt
+  - sphinx
   - pip
+  - pip:
+    - linkchecker
+    - sphinx_rtd_theme
