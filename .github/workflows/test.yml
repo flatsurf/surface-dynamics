@@ -37,6 +37,8 @@ jobs:
             (test "$optional" == '' || (echo "${{ matrix.optionals }}" | grep -E '\b'"$optional"'\b') > /dev/null) && echo $line || true
           done < environment.yml > environment.test.yml
 
+          cat environment.test.yml
+
           mamba env update --quiet -n test -f environment.test.yml
 
           conda list
