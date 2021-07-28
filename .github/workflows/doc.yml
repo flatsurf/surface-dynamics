@@ -24,6 +24,7 @@ jobs:
       - name: install surface-dynamics
         shell: bash -l {0}
         run: |
+          which pip
           pip install .
       - name: build documentation
         shell: bash -l {0}
