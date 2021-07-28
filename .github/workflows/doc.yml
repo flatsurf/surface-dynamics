@@ -19,7 +19,7 @@ jobs:
       - name: install surface-dynamics
         shell: bash -l {0}
         run: |
-          pip install .
+          pip install --no-index .
       - name: fix permissions
         shell: bash -l {0}
         run: |
