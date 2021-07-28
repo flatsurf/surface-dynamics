@@ -35,7 +35,9 @@ jobs:
         run: |
           python -m http.server 8880 --directory html &
           sleep 1
-          linkchecker --check-extern http://localhost:8880
+          # We ignore _modules since sphinx puts all modules in the module
+          # overview but does not generate pages for .pyx modules.
+          linkchecker --check-extern --ignore-url=_modules/ http://localhost:8880
       - uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
