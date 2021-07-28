@@ -14,9 +14,9 @@ import cypari2
 try:
     import sage.modular.multiple_zeta
 except ImportError:
-    pytest.skip("sage.modular.multiple_zeta not present")
+    pytestmark = pytest.mark.skip(reason="sage.modular.multiple_zeta not present")
 except cypari2.handle_error.PariError:
-    pytest.skip("sage.modular.multiple_zeta not functional")
+    pytestmark = pytest.mark.skip(reason="sage.modular.multiple_zeta not functional")
 
 import itertools
 import random
