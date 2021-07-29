@@ -15,6 +15,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
+    'sphinx.ext.extlinks',
     'sphinx_rtd_theme',
 ]
 
@@ -46,6 +47,9 @@ html_static_path = []
 intersphinx_mapping = {
     'sage': 'https://doc.sagemath.org/html/en/reference/objects.inv',
 }
+
+# Shortcuts for external links
+from sage.misc.sagedoc import extlinks
 
 nitpick_ignore = [
         # Something is complaining when rendering a class that's inheriting in
