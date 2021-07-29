@@ -30,6 +30,8 @@ from cpython.tuple cimport *
 
 from cpython cimport bool
 
+from libc.math cimport isnan
+
 # NOTE: This one line seems need to not get Cython confused on compilation...
 # Otherwise we end up with the strange error
 #     sage: from .origami import Origami
@@ -1878,6 +1880,7 @@ cdef class Origami_dense_pyx:
         from time import time
         cdef origami_with_involution_data * o
         cdef double * theta
+        cdef size_t i, n, n_p, n_m
         n_p = nb_vectors_p
         n_m = nb_vectors_m
 
@@ -1906,6 +1909,8 @@ cdef class Origami_dense_pyx:
         R = RealField()
         for _ in range(nb_experiments):
             lyapunov_exponents_with_involution(o, nb_iterations, theta)
+            while any(isnan(theta[i]) for i in range(n+1)):
+                lyapunov_exponents_with_involution(o, nb_iterations, theta)
             for i in range(n):
                 res[i].append(R(theta[i+1] / (2*theta[0])))
 
@@ -1928,9 +1933,10 @@ cdef class Origami_dense_pyx:
         import sys
         cdef origami_data * o
         cdef double * theta
+        cdef size_t i, n
         n = max(2, nb_vectors)
 
-        res = [[] for _ in range(n)]
+        res = [[] for i in range(n)]
         theta = <double *> malloc((n+1)*sizeof(double))
 
         o = new_origami_data(
@@ -1943,6 +1949,8 @@ cdef class Origami_dense_pyx:
         R = RealField()
         for _ in range(nb_experiments):
             lyapunov_exponents(o, nb_iterations, theta)
+            while any(isnan(theta[i]) for i in range(n+1)):
+                lyapunov_exponents(o, nb_iterations, theta)
             for i in range(n):
                 res[i].append(R(theta[i+1] / (2*theta[0])))
 
