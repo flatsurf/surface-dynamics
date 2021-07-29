@@ -67,16 +67,7 @@ References
 Citation
 --------
 
-To cite the library, follow the following Bibtex entry::
-
-    @manual{ Sdyn,
-       Author = { Delecroix, V. et al. },
-       Month  = { March },
-       Year   = { 2019 },
-       Title  = { surface_dynamics - SageMath package, Version 0.4.1 },
-       Doi    = { 10.5281/zenodo.3237923 },
-       Url    = { https://doi.org/10.5281/zenodo.3237923 }
-    }
+To cite the library, follow the instructions on our `zenodo website <https://zenodo.org/badge/latestdoi/347440823>`_.
 
 Indices and tables
 ------------------
