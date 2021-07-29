@@ -55,6 +55,8 @@ nitpick_ignore = [
         ('py:class', 'sage.structure.sage_object.SageObject'),
         # WARNING: py:class reference target not found: sage.structure.parent.Parent
         ('py:class', 'sage.structure.parent.Parent'),
+        # WARNING: py:class reference target not found: sage.structure.element.Element
+        ('py:class', 'sage.structure.element.Element'),
         # WARNING: py:class reference target not found: sage.structure.unique_representation.UniqueRepresentation
         ('py:class', 'sage.structure.unique_representation.UniqueRepresentation'),
         # WARNING: py:class reference target not found: surface_dynamics.misc.sql_db.SQLQuery
@@ -62,3 +64,4 @@ nitpick_ignore = [
         # WARNING: py:class reference target not found: surface_dynamics.misc.sql_db.SQLDatabase
         ('py:class', 'surface_dynamics.misc.sql_db.SQLDatabase'),
 ]
+
