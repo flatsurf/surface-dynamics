@@ -22,7 +22,6 @@ dependencies:
   # Work around https://github.com/conda-forge/givaro-feedstock/issues/13
   - givaro=4.1.1=h192cbe9_1
   - sage-flatsurf  # optional: sage_flatsurf
-  - pyflatsurf >=3.6.4,<4  # optional: sage_flatsurf
   - pyeantic >=1.0.0,<2  # optional: pyeantic
   - pyintervalxt >= 3.1.0,<4  # optional: pyintervalxt
   # sphinx 4 produces a warning currently that looks like a bug in sphinx:
