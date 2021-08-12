@@ -350,9 +350,7 @@ class AbelianStratum(Stratum):
 
     def zeros(self, fake_zeros=True):
         r"""
-        Returns the list of zeros of self.
-
-        The return list *should not* be modified
+        Return the multiplicities of the zeros.
 
         EXAMPLES::
 
