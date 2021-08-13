@@ -15,6 +15,7 @@ except ImportError:
 import sys
 import os
 import numpy as np
+import cypari2
 
 from distutils.core import setup
 from distutils.extension import Extension
@@ -55,6 +56,9 @@ try:
     import sage.modular.multiple_zeta
 except ImportError:
     sys.stderr.write('Warning: multiple_zeta not available in Sage\n')
+    WITH_MZV = False
+except cypari2.handle_error.PariError:
+    sys.stderr.write('Warning: multiple_zeta not functional in Sage\n')
     WITH_MZV = False
 else:
     WITH_MZV = True

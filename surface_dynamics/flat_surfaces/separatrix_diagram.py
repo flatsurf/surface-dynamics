@@ -1552,6 +1552,8 @@ def separatrix_diagram_fast_iterator(profile,ncyls=None):
     once in general. If you want a unique representative in each isomorphism
     class you may consider the method separatrix_diagram_iterator instead.
 
+    Uses bounds from [Nav08]_.
+
     EXAMPLES::
 
         sage: from surface_dynamics import *

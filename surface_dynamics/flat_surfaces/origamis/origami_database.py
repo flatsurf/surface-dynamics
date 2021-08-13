@@ -4,7 +4,7 @@ Database of reduced origamis.
 Origamis are cover of the torus over one point. The group `SL(2,\ZZ)` act on them
 (as their mapping class group). This file contains the implementation of a
 database of these SL(2,Z)-orbits. To do concrete computations with origamis see
-:mod:`~surface_dynamics.flat_surfaces.origamis.origami`.
+?.
 
 The database of origamis contain informations about `SL(2,\ZZ)` orbits of the
 origamis that are *arithmetic Teichmueller curves*.
@@ -1222,7 +1222,7 @@ def build_lyapunov_exponents(o, nb_iterations=0X10000, nb_experiments=10):
         sage: o = Origami('(1,2)', '(1,3)')
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
         sage: data = odb.build_lyapunov_exponents(o)
-        sage: data       # abs tol 1e-2
+        sage: data       # abs tol .1
         {'L_exp_approx': [0.333348091]}
     """
     data = {}

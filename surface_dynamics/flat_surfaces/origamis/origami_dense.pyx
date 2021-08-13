@@ -30,6 +30,8 @@ from cpython.tuple cimport *
 
 from cpython cimport bool
 
+from libc.math cimport isnan
+
 # NOTE: This one line seems need to not get Cython confused on compilation...
 # Otherwise we end up with the strange error
 #     sage: from .origami import Origami
@@ -1815,13 +1817,13 @@ cdef class Origami_dense_pyx:
             sage: from surface_dynamics.all import Origami
 
             sage: o = Origami('(1,2)(3,4)(5,6)', '(2,3)(4,5)')
-            sage: lexp = o.lyapunov_exponents_approx(nb_iterations=2**19)
-            sage: lexp # abs tol 0.05
+            sage: lexp = o.lyapunov_exponents_approx(nb_iterations=2**21)
+            sage: lexp # abs tol .05
             [0.6666, 0.3333]
 
             sage: o = Origami('(1,2)(3,4)(5,6)(7,8)(9,10)', '(2,3)(4,5)(6,7)(8,9)')
             sage: s = SymmetricGroup(10)('(1,10)(2,9)(3,8)(4,7)(5,6)')
-            sage: o.lyapunov_exponents_approx(involution=s, nb_iterations=2**19)  # abs tol 0.05
+            sage: o.lyapunov_exponents_approx(involution=s, nb_iterations=2**21)  # abs tol .05
             ([0.6000, 0.2000],
              [0.8000, 0.4000])
         """
@@ -1878,6 +1880,7 @@ cdef class Origami_dense_pyx:
         from time import time
         cdef origami_with_involution_data * o
         cdef double * theta
+        cdef size_t i, n, n_p, n_m
         n_p = nb_vectors_p
         n_m = nb_vectors_m
 
@@ -1906,6 +1909,8 @@ cdef class Origami_dense_pyx:
         R = RealField()
         for _ in range(nb_experiments):
             lyapunov_exponents_with_involution(o, nb_iterations, theta)
+            while any(isnan(theta[i]) for i in range(n+1)):
+                lyapunov_exponents_with_involution(o, nb_iterations, theta)
             for i in range(n):
                 res[i].append(R(theta[i+1] / (2*theta[0])))
 
@@ -1928,9 +1933,10 @@ cdef class Origami_dense_pyx:
         import sys
         cdef origami_data * o
         cdef double * theta
+        cdef size_t i, n
         n = max(2, nb_vectors)
 
-        res = [[] for _ in range(n)]
+        res = [[] for i in range(n)]
         theta = <double *> malloc((n+1)*sizeof(double))
 
         o = new_origami_data(
@@ -1943,6 +1949,8 @@ cdef class Origami_dense_pyx:
         R = RealField()
         for _ in range(nb_experiments):
             lyapunov_exponents(o, nb_iterations, theta)
+            while any(isnan(theta[i]) for i in range(n+1)):
+                lyapunov_exponents(o, nb_iterations, theta)
             for i in range(n):
                 res[i].append(R(theta[i+1] / (2*theta[0])))
 

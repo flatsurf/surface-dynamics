@@ -6,7 +6,7 @@ This module deals with combinatorial data for covering of connected components o
 strata of Abelian and quadratic differentials. The main feature is to be able to
 compute Lyapunov exponents.
 
-.. TODO::
+.. todo::
 
     It should be possible to compute the KZ action directly on isotypical
     components. That would dramatically reduce the dimension of the space!
@@ -1033,7 +1033,8 @@ class PermutationCover(object):
          - ``return_speed`` -- whether or not return the lyapunov exponents list
            in a pair with the speed of the geodesic.
 
-         - ``isotypic_decomposition`` -- either a boolean or a character or a list of characters.
+         - ``isotypic_decomposition`` -- either a boolean or a character or a
+           list of characters.
 
          - ``return_char`` -- whether or not return the character corresponding to
            the isotypic component.
@@ -1044,7 +1045,6 @@ class PermutationCover(object):
 
          - ``float`` -- whether the isotypical decomposition and projectors are computed
            over exact or floating point numbers
-
 
         EXAMPLES::
 

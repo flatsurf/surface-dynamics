@@ -41,7 +41,8 @@ $ACTIVITIES = [
 ]
 
 $VERSION_BUMP_PATTERNS = [
-    ('surface_dynamics/version.py', r"version=>, r>version='$VERSION'")
+    ('surface_dynamics/version.py', r"version=", r"version='$VERSION'"),
+    ('doc/source/conf.py', r"release = ", r"release = '$VERSION'")
 ]
 
 $CHANGELOG_FILENAME = 'NEWS'

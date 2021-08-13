@@ -9,18 +9,24 @@
 #*****************************************************************************
 import pytest
 import sage.all
+import cypari2
 
-pytest.importorskip('sage.modular.multiple_zeta')
+try:
+    import sage.modular.multiple_zeta
+    from sage.all import Multizetas
+    from surface_dynamics.misc.generalized_multiple_zeta_values import linear_forms, handle_term, is_convergent, Z2, to_Z2, Z3, to_Z3, is_Z3_convergent, clean_term, convergent_multizeta
+    # put more multiple zeta values in the cache
+    from sage.modular.multiple_zeta import Values
+    Values.reset(max_weight=12)
+except ImportError:
+    pytestmark = pytest.mark.skip(reason="sage.modular.multiple_zeta not present")
+except cypari2.handle_error.PariError:
+    pytestmark = pytest.mark.skip(reason="sage.modular.multiple_zeta not functional")
 
 import itertools
 import random
 
-from sage.all import FreeModule, ZZ, QQ, matrix, Multizetas
-from surface_dynamics.misc.generalized_multiple_zeta_values import linear_forms, handle_term, is_convergent, Z2, to_Z2, Z3, to_Z3, is_Z3_convergent, clean_term, convergent_multizeta
-
-# put more multiple zeta values in the cache
-from sage.modular.multiple_zeta import Values
-Values.reset(max_weight=12)
+from sage.all import FreeModule, ZZ, QQ, matrix
 
 def V1gens():
     return linear_forms(1)

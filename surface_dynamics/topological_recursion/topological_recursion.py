@@ -21,6 +21,7 @@ REFS:
 
 TODO:
 
+- generic symbolic TR
 - other recursions:
   - ELSV, Eynard Bouchard-Marino conjectures and simple Hurwitz numbers (lambda classes)
   - bundle of quadratic differentials and co
@@ -70,7 +71,6 @@ class TopologicalRecursion:
 
     - :class:`~surface_dynamics.topological_recursion.kontsevich.KontsevichTR`
     - :class:`~surface_dynamics.topological_recursion.masur_veech.MasurVeechTR`
-    - :class:`~surface_dynamics.topological_recursion.symbolic.SymbolicTR`
     """
     def __init__(self, cache_all=False, base_ring=None):
         self._cache = {}
