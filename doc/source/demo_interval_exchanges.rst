@@ -11,8 +11,8 @@ Introduction
 ------------
 
 This file is a good entry point to learn how to use interval exchange
-transformations in `surface_dynamics
-<https://github.com/flatsurf/surface_dynamics>`_. Recall that an interval
+transformations in `surface-dynamics
+<https://github.com/flatsurf/surface-dynamics>`_. Recall that an interval
 exchange transformation is a piecewise translation of an interval. It can be
 encoded by a pair :math:`(\pi, \lambda)` where :math:`\pi` is a permutation and
 :math:`\lambda` is a vector of positive real numbers.  These are respectively
@@ -190,7 +190,7 @@ One feature of ``intervalxt`` is that it can certify that an iet has no periodic
 Other features
 --------------
 
-This short tour did not exhaust all the possibilities of ``surface_dynamics``, in particular
+This short tour did not exhaust all the possibilities of ``surface-dynamics``, in particular
 
 - iet statistics :mod:`~surface_dynamics.interval_exchanges.integer_iet`
 
@@ -212,4 +212,4 @@ Missing features
   flip sequence
 
 If you are interested in developing any of these or have any request, get in
-touch with us at https://github.com/flatsurf/surface_dynamics
+touch with us at https://github.com/flatsurf/surface-dynamics
