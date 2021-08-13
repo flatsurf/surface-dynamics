@@ -1,0 +1,626 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Flip sequences &mdash; surface-dynamics 0.4.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Database of cylinder diagrams and quadratic permutations" href="../database.html" />
+    <link rel="prev" title="Interval exchange families" href="iet_family.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> surface-dynamics
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../demo_interval_exchanges.html">Interval exchange transformations</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../origamis.html">Origamis</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Interval exchange transformations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#permutations">Permutations</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#id1">Interval exchange transformations</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="iet.html">Interval exchange transformations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integer_iet.html">Integral interval exchanges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet_family.html">Interval exchange families</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Flip sequences</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topological_recursion/index.html">Topological recursion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/index.html">Miscellaneous</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">surface-dynamics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Interval exchange transformations</a> &raquo;</li>
+        
+      <li>Flip sequences</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/interval_exchanges/flip_sequence.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-surface_dynamics.interval_exchanges.flip_sequence">
+<span id="flip-sequences"></span><h1>Flip sequences<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.flip_sequence" title="Permalink to this headline">¶</a></h1>
+<p>Flip sequence of permutation of iet</p>
+<p>A concatenation of:
+- left rauzy moves (top or bottom)
+- right rauzy moves (top or bottom)
+- left_right_inverse, top_bottom_inverse, symmetric
+- relabeled</p>
+<dl class="py class">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.flip_sequence.</span></code><code class="sig-name descname"><span class="pre">IETFlipSequence</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rauzy_moves</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_bottom_inverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_right_inverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relabelling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sage.structure.sage_object.SageObject</span></code></p>
+<p>A flip sequence of interval exchange transformations.</p>
+<p>Each step is a Rauzy move either on the left or on the right.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
+</pre></div>
+</div>
+<p>Making substitutions from a flip sequence:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">],[</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">]])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">g</span><span class="o">.</span><span class="n">is_complete</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">orbit_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+<span class="n">a</span><span class="o">-&gt;</span><span class="n">adbd</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">adbdbd</span><span class="p">,</span> <span class="n">c</span><span class="o">-&gt;</span><span class="n">adccd</span><span class="p">,</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">adcd</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+<span class="n">a</span><span class="o">-&gt;</span><span class="n">abcd</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">bab</span><span class="p">,</span> <span class="n">c</span><span class="o">-&gt;</span><span class="n">cdc</span><span class="p">,</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">dcbababcd</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s1</span><span class="o">.</span><span class="n">incidence_matrix</span><span class="p">()</span> <span class="o">==</span> <span class="n">s2</span><span class="o">.</span><span class="n">incidence_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>The minimal dilatations in H(2g-2)^hyp from Boissy-Lanneau:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="k">def</span> <span class="nf">gamma</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)),</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">f</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="p">),</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">assert</span> <span class="n">f</span><span class="o">.</span><span class="n">is_complete</span><span class="p">()</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">return</span> <span class="n">f</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">polygen</span><span class="p">(</span><span class="n">QQ</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">gamma</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span><span class="o">.</span><span class="n">charpoly</span><span class="p">()</span>
+<span class="n">x</span><span class="o">^</span><span class="mi">4</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">gamma</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span><span class="o">.</span><span class="n">charpoly</span><span class="p">()</span>
+<span class="n">x</span><span class="o">^</span><span class="mi">6</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">5</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">4</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">gamma</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span><span class="o">.</span><span class="n">charpoly</span><span class="p">()</span>
+<span class="n">x</span><span class="o">^</span><span class="mi">6</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">5</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">gamma</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span><span class="o">.</span><span class="n">charpoly</span><span class="p">()</span>
+<span class="n">x</span><span class="o">^</span><span class="mi">8</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">7</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">6</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">5</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">4</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">gamma</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span><span class="o">.</span><span class="n">charpoly</span><span class="p">()</span>
+<span class="n">x</span><span class="o">^</span><span class="mi">8</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">7</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">6</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">5</span> <span class="o">+</span> <span class="n">x</span><span class="o">^</span><span class="mi">4</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">gamma</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span><span class="o">.</span><span class="n">charpoly</span><span class="p">()</span>
+<span class="n">x</span><span class="o">^</span><span class="mi">8</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">7</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">6</span> <span class="o">+</span> <span class="n">x</span><span class="o">^</span><span class="mi">5</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.close">
+<code class="sig-name descname"><span class="pre">close</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d e f&#39;</span><span class="p">,</span> <span class="s1">&#39;f e d c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">],</span>
+<span class="o">....</span><span class="p">:</span>                      <span class="n">top_bottom_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="o">....</span><span class="p">:</span>                      <span class="n">left_right_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span>
+<span class="n">FlipSequence</span><span class="p">(</span><span class="s1">&#39;a b f c d e</span><span class="se">\n</span><span class="s1">f a e b d c&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,3)(4,5)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.dual_substitution">
+<code class="sig-name descname"><span class="pre">dual_substitution</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_plain_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.dual_substitution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the substitution of intervals.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s0</span> <span class="o">=</span> <span class="n">p0</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">s0</span><span class="p">)</span>
+<span class="n">a</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">ba</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+<span class="n">a</span><span class="o">-&gt;</span><span class="n">ab</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">b</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">p0</span> <span class="o">*</span> <span class="n">p1</span><span class="p">)</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span> <span class="o">==</span> <span class="n">s1</span> <span class="o">*</span> <span class="n">s0</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">p1</span> <span class="o">*</span> <span class="n">p0</span><span class="p">)</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span> <span class="o">==</span> <span class="n">s0</span> <span class="o">*</span> <span class="n">s1</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span> <span class="s1">&#39;d c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f0</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="n">relabelling</span><span class="o">=</span><span class="s2">&quot;(0,1,2)&quot;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f1</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">f0</span><span class="o">.</span><span class="n">_end</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="n">relabelling</span><span class="o">=</span><span class="s2">&quot;(1,3,2)&quot;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f2</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">f1</span><span class="o">.</span><span class="n">_end</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="n">relabelling</span><span class="o">=</span><span class="s2">&quot;(0,3,1,2)&quot;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="n">f0</span> <span class="o">*</span> <span class="n">f1</span> <span class="o">*</span> <span class="n">f2</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span>
+<span class="n">WordMorphism</span><span class="p">:</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">ba</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">cdbadbadbc</span><span class="p">,</span> <span class="n">c</span><span class="o">-&gt;</span><span class="n">dbadbcdbadb</span><span class="p">,</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">adbcba</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">(</span><span class="n">as_plain_list</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+ <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+ <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+ <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s0</span> <span class="o">=</span> <span class="n">f0</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">f1</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">f2</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span> <span class="o">==</span> <span class="n">s2</span> <span class="o">*</span> <span class="n">s1</span> <span class="o">*</span> <span class="n">s0</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.find_closure">
+<code class="sig-name descname"><span class="pre">find_closure</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.find_closure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.find_closure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the unique permutation of the labels that allows to make a
+closed loop out of this path. If no such permutation exists, return
+<code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d e f&#39;</span><span class="p">,</span> <span class="s1">&#39;f e d c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">],</span>
+<span class="o">....</span><span class="p">:</span>                      <span class="n">top_bottom_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="o">....</span><span class="p">:</span>                      <span class="n">left_right_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">find_closure</span><span class="p">()</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.interval_substitution">
+<code class="sig-name descname"><span class="pre">interval_substitution</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_plain_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.interval_substitution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.interval_substitution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the substitution of intervals.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s0</span> <span class="o">=</span> <span class="n">p0</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">s0</span><span class="p">)</span>
+<span class="n">a</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">ba</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+<span class="n">a</span><span class="o">-&gt;</span><span class="n">ab</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">b</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">p0</span> <span class="o">*</span> <span class="n">p1</span><span class="p">)</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span> <span class="o">==</span> <span class="n">s1</span> <span class="o">*</span> <span class="n">s0</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">p1</span> <span class="o">*</span> <span class="n">p0</span><span class="p">)</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span> <span class="o">==</span> <span class="n">s0</span> <span class="o">*</span> <span class="n">s1</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span> <span class="s1">&#39;d c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f0</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="n">relabelling</span><span class="o">=</span><span class="s2">&quot;(0,1,2)&quot;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f1</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">f0</span><span class="o">.</span><span class="n">_end</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="n">relabelling</span><span class="o">=</span><span class="s2">&quot;(1,3,2)&quot;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f2</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">f1</span><span class="o">.</span><span class="n">_end</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="n">relabelling</span><span class="o">=</span><span class="s2">&quot;(0,3,1,2)&quot;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="n">f0</span> <span class="o">*</span> <span class="n">f1</span> <span class="o">*</span> <span class="n">f2</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span>
+<span class="n">WordMorphism</span><span class="p">:</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">ba</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">cdbadbadbc</span><span class="p">,</span> <span class="n">c</span><span class="o">-&gt;</span><span class="n">dbadbcdbadb</span><span class="p">,</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">adbcba</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">(</span><span class="n">as_plain_list</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+ <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+ <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+ <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s0</span> <span class="o">=</span> <span class="n">f0</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">f1</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">f2</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">interval_substitution</span><span class="p">()</span> <span class="o">==</span> <span class="n">s2</span> <span class="o">*</span> <span class="n">s1</span> <span class="o">*</span> <span class="n">s0</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_complete">
+<code class="sig-name descname"><span class="pre">is_complete</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.is_complete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether that all winners appear.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d e f&#39;</span><span class="p">,</span> <span class="s1">&#39;f e d c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">],</span>
+<span class="o">....</span><span class="p">:</span>                      <span class="n">top_bottom_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="o">....</span><span class="p">:</span>                      <span class="n">left_right_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">is_complete</span><span class="p">()</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_full">
+<code class="sig-name descname"><span class="pre">is_full</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_full" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether that all winners appear.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d e f&#39;</span><span class="p">,</span> <span class="s1">&#39;f e d c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">],</span>
+<span class="o">....</span><span class="p">:</span>                      <span class="n">top_bottom_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="o">....</span><span class="p">:</span>                      <span class="n">left_right_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">is_complete</span><span class="p">()</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_loop">
+<code class="sig-name descname"><span class="pre">is_loop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.is_loop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_loop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.left_right_inverse">
+<code class="sig-name descname"><span class="pre">left_right_inverse</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.left_right_inverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.left_right_inverse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.losers">
+<code class="sig-name descname"><span class="pre">losers</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.losers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.losers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of the loosers along this flip sequence.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">losers</span><span class="p">()</span>
+<span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">losers</span><span class="p">()</span>
+<span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.matrix">
+<code class="sig-name descname"><span class="pre">matrix</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.orbit_substitution">
+<code class="sig-name descname"><span class="pre">orbit_substitution</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_plain_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.orbit_substitution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.orbit_substitution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the substitution on the orbit.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g0</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s0</span> <span class="o">=</span> <span class="n">g0</span><span class="o">.</span><span class="n">orbit_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">s0</span><span class="p">)</span>
+<span class="n">a</span><span class="o">-&gt;</span><span class="n">ab</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">b</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g1</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">g1</span><span class="o">.</span><span class="n">orbit_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+<span class="n">a</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">ab</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">g0</span> <span class="o">*</span> <span class="n">g1</span><span class="p">)</span><span class="o">.</span><span class="n">orbit_substitution</span><span class="p">()</span> <span class="o">==</span> <span class="n">s0</span> <span class="o">*</span> <span class="n">s1</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">g1</span> <span class="o">*</span> <span class="n">g0</span><span class="p">)</span><span class="o">.</span><span class="n">orbit_substitution</span><span class="p">()</span> <span class="o">==</span> <span class="n">s1</span> <span class="o">*</span> <span class="n">s0</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.rauzy_move">
+<code class="sig-name descname"><span class="pre">rauzy_move</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">winner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'right'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.rauzy_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.rauzy_move" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.relabel">
+<code class="sig-name descname"><span class="pre">relabel</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.relabel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.relabel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.self_similar_iet">
+<code class="sig-name descname"><span class="pre">self_similar_iet</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.self_similar_iet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the dilatation and the self-similar interval exchange
+transformation associated to this path.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
+</pre></div>
+</div>
+<p>The golden rotation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">self_similar_iet</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">lengths</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+<span class="n">Vector</span> <span class="n">space</span> <span class="n">of</span> <span class="n">dimension</span> <span class="mi">2</span> <span class="n">over</span> <span class="n">Number</span> <span class="n">Field</span> <span class="o">...</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">lengths</span><span class="p">()</span><span class="o">.</span><span class="n">n</span><span class="p">()</span>
+<span class="p">(</span><span class="mf">1.00000000000000</span><span class="p">,</span> <span class="mf">1.61803398874989</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>An example from Do-Schmidt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">code</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">code</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">self_similar_iet</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.self_similar_interval_exchange_transformation">
+<code class="sig-name descname"><span class="pre">self_similar_interval_exchange_transformation</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.self_similar_interval_exchange_transformation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.self_similar_interval_exchange_transformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the dilatation and the self-similar interval exchange
+transformation associated to this path.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
+</pre></div>
+</div>
+<p>The golden rotation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">self_similar_iet</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">lengths</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+<span class="n">Vector</span> <span class="n">space</span> <span class="n">of</span> <span class="n">dimension</span> <span class="mi">2</span> <span class="n">over</span> <span class="n">Number</span> <span class="n">Field</span> <span class="o">...</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">lengths</span><span class="p">()</span><span class="o">.</span><span class="n">n</span><span class="p">()</span>
+<span class="p">(</span><span class="mf">1.00000000000000</span><span class="p">,</span> <span class="mf">1.61803398874989</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>An example from Do-Schmidt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">code</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">code</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">self_similar_iet</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.substitution">
+<code class="sig-name descname"><span class="pre">substitution</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_plain_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.substitution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the substitution on the orbit.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g0</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s0</span> <span class="o">=</span> <span class="n">g0</span><span class="o">.</span><span class="n">orbit_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">s0</span><span class="p">)</span>
+<span class="n">a</span><span class="o">-&gt;</span><span class="n">ab</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">b</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g1</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">g1</span><span class="o">.</span><span class="n">orbit_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+<span class="n">a</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">ab</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">g0</span> <span class="o">*</span> <span class="n">g1</span><span class="p">)</span><span class="o">.</span><span class="n">orbit_substitution</span><span class="p">()</span> <span class="o">==</span> <span class="n">s0</span> <span class="o">*</span> <span class="n">s1</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">g1</span> <span class="o">*</span> <span class="n">g0</span><span class="p">)</span><span class="o">.</span><span class="n">orbit_substitution</span><span class="p">()</span> <span class="o">==</span> <span class="n">s1</span> <span class="o">*</span> <span class="n">s0</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.top_bottom_inverse">
+<code class="sig-name descname"><span class="pre">top_bottom_inverse</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.top_bottom_inverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.top_bottom_inverse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.winners">
+<code class="sig-name descname"><span class="pre">winners</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.winners"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.winners" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of winners along this flip sequence.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">winners</span><span class="p">()</span>
+<span class="p">[]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">winners</span><span class="p">()</span>
+<span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">winners</span><span class="p">()</span>
+<span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.winners_losers">
+<code class="sig-name descname"><span class="pre">winners_losers</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.winners_losers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.winners_losers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of winners.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../database.html" class="btn btn-neutral float-right" title="Database of cylinder diagrams and quadratic permutations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="iet_family.html" class="btn btn-neutral float-left" title="Interval exchange families" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the surface-dynamics authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,2046 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>surface_dynamics.interval_exchanges.labelled &mdash; surface-dynamics 0.4.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> surface-dynamics
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../demo_interval_exchanges.html">Interval exchange transformations</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../origamis.html">Origamis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interval_exchanges/index.html">Interval exchange transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../topological_recursion/index.html">Topological recursion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/index.html">Miscellaneous</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">surface-dynamics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>surface_dynamics.interval_exchanges.labelled</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for surface_dynamics.interval_exchanges.labelled</h1><div class="highlight"><pre>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Labelled permutations</span>
+
+<span class="sd">A labelled (generalized) permutation is better suited to study the dynamic of</span>
+<span class="sd">a translation surface than a reduced one (see the module</span>
+<span class="sd">:mod:`surface_dynamics.interval_exchanges.reduced`). The latter is more adapted to the</span>
+<span class="sd">study of strata. This kind of permutation was introduced by Yoccoz [Yoc06]_</span>
+<span class="sd">(see also [MarMouYoc05]_).</span>
+
+<span class="sd">In fact, there is a geometric counterpart of labelled permutations. They</span>
+<span class="sd">correspond to translation surface with marked outgoing separatrices (i.e. we fi</span>
+<span class="sd">a label for each of them).</span>
+
+<span class="sd">Remarks that Rauzy diagram of reduced objects are significantly smaller than</span>
+<span class="sd">the one for labelled object (for the permutation a b d b e / e d c a c the</span>
+<span class="sd">labelled Rauzy diagram contains 8760 permutations, and the reduced only 73).</span>
+<span class="sd">But, as it is in geometrical way, the labelled Rauzy diagram is a covering of</span>
+<span class="sd">the reduced Rauzy diagram.</span>
+
+<span class="sd">AUTHORS:</span>
+
+<span class="sd">- Vincent Delecroix (2009-09-29) : initial version</span>
+
+<span class="sd">- Vincent Delecroix (2010-02-11) : correction and simplification of datatypes</span>
+
+<span class="sd">TESTS::</span>
+
+<span class="sd">    sage: from surface_dynamics.interval_exchanges.labelled import LabelledPermutationIET</span>
+<span class="sd">    sage: LabelledPermutationIET([[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;],[&#39;c&#39;,&#39;b&#39;,&#39;a&#39;]])</span>
+<span class="sd">    a b c</span>
+<span class="sd">    c b a</span>
+<span class="sd">    sage: LabelledPermutationIET([[1,2,3,4],[4,1,2,3]])</span>
+<span class="sd">    1 2 3 4</span>
+<span class="sd">    4 1 2 3</span>
+<span class="sd">    sage: from surface_dynamics.interval_exchanges.labelled import LabelledPermutationLI</span>
+<span class="sd">    sage: LabelledPermutationLI([[1,1],[2,2,3,3,4,4]])</span>
+<span class="sd">    1 1</span>
+<span class="sd">    2 2 3 3 4 4</span>
+<span class="sd">    sage: LabelledPermutationLI([[&#39;a&#39;,&#39;a&#39;,&#39;b&#39;,&#39;b&#39;,&#39;c&#39;,&#39;c&#39;],[&#39;d&#39;,&#39;d&#39;]])</span>
+<span class="sd">    a a b b c c</span>
+<span class="sd">    d d</span>
+<span class="sd">    sage: from surface_dynamics.interval_exchanges.labelled import FlippedLabelledPermutationIET</span>
+<span class="sd">    sage: FlippedLabelledPermutationIET([[1,2,3],[3,2,1]],flips=[1,2])</span>
+<span class="sd">    -1 -2  3</span>
+<span class="sd">     3 -2 -1</span>
+<span class="sd">    sage: FlippedLabelledPermutationIET([[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;],[&#39;b&#39;,&#39;c&#39;,&#39;a&#39;]],flips=&#39;b&#39;)</span>
+<span class="sd">     a -b  c</span>
+<span class="sd">    -b  c  a</span>
+<span class="sd">    sage: from surface_dynamics.interval_exchanges.labelled import FlippedLabelledPermutationLI</span>
+<span class="sd">    sage: FlippedLabelledPermutationLI([[1,1],[2,2,3,3,4,4]], flips=[1,4])</span>
+<span class="sd">    -1 -1</span>
+<span class="sd">     2  2  3  3 -4 -4</span>
+<span class="sd">    sage: FlippedLabelledPermutationLI([[&#39;a&#39;,&#39;a&#39;,&#39;b&#39;,&#39;b&#39;],[&#39;c&#39;,&#39;c&#39;]],flips=&#39;ac&#39;)</span>
+<span class="sd">    -a -a  b  b</span>
+<span class="sd">    -c -c</span>
+<span class="sd">    sage: from surface_dynamics.interval_exchanges.labelled import LabelledRauzyDiagram</span>
+<span class="sd">    sage: p = LabelledPermutationIET([[1,2,3],[3,2,1]])</span>
+<span class="sd">    sage: d1 = LabelledRauzyDiagram(p)</span>
+<span class="sd">    sage: p = LabelledPermutationIET([[&#39;a&#39;,&#39;b&#39;],[&#39;b&#39;,&#39;a&#39;]])</span>
+<span class="sd">    sage: d = p.rauzy_diagram()</span>
+<span class="sd">    sage: g1 = d.path(p, &#39;top&#39;, &#39;bottom&#39;)</span>
+<span class="sd">    sage: g1.matrix()</span>
+<span class="sd">    [1 1]</span>
+<span class="sd">    [1 2]</span>
+<span class="sd">    sage: g2 = d.path(p, &#39;bottom&#39;, &#39;top&#39;)</span>
+<span class="sd">    sage: g2.matrix()</span>
+<span class="sd">    [2 1]</span>
+<span class="sd">    [1 1]</span>
+<span class="sd">    sage: p = LabelledPermutationIET([[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;],[&#39;d&#39;,&#39;c&#39;,&#39;b&#39;,&#39;a&#39;]])</span>
+<span class="sd">    sage: d = p.rauzy_diagram()</span>
+<span class="sd">    sage: g = d.path(p, &#39;t&#39;, &#39;t&#39;, &#39;b&#39;, &#39;t&#39;, &#39;b&#39;, &#39;b&#39;, &#39;t&#39;, &#39;b&#39;)</span>
+<span class="sd">    sage: g</span>
+<span class="sd">    Path of length 8 in a Rauzy diagram</span>
+<span class="sd">    sage: g.is_loop()</span>
+<span class="sd">    True</span>
+<span class="sd">    sage: g.is_full()</span>
+<span class="sd">    True</span>
+<span class="sd">    sage: s1 = g.orbit_substitution()</span>
+<span class="sd">    sage: print(s1)</span>
+<span class="sd">    a-&gt;adbd, b-&gt;adbdbd, c-&gt;adccd, d-&gt;adcd</span>
+<span class="sd">    sage: s2 = g.interval_substitution()</span>
+<span class="sd">    sage: print(s2)</span>
+<span class="sd">    a-&gt;abcd, b-&gt;bab, c-&gt;cdc, d-&gt;dcbababcd</span>
+<span class="sd">    sage: s1.incidence_matrix() == s2.incidence_matrix().transpose()</span>
+<span class="sd">    True</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1">#*****************************************************************************</span>
+<span class="c1">#       Copyright (C) 2008 Vincent Delecroix &lt;20100.delecroix@gmail.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1">#  Distributed under the terms of the GNU General Public License (GPL)</span>
+<span class="c1">#  as published by the Free Software Foundation; either version 2 of</span>
+<span class="c1">#  the License, or (at your option) any later version.</span>
+<span class="c1">#                  https://www.gnu.org/licenses/</span>
+<span class="c1">#*****************************************************************************</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">range</span><span class="p">,</span> <span class="nb">map</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="nb">zip</span>
+
+<span class="kn">from</span> <span class="nn">sage.structure.sage_object</span> <span class="kn">import</span> <span class="n">SageObject</span>
+
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
+
+<span class="kn">from</span> <span class="nn">surface_dynamics.misc.permutation</span> <span class="kn">import</span> <span class="n">perm_check</span><span class="p">,</span> <span class="n">perm_init</span>
+<span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.lyapunov_exponents</span> <span class="k">as</span> <span class="nn">lyapunov_exponents</span>  <span class="c1"># the cython bindings</span>
+
+<span class="kn">from</span> <span class="nn">sage.combinat.words.alphabet</span> <span class="kn">import</span> <span class="n">Alphabet</span>
+<span class="kn">from</span> <span class="nn">sage.combinat.words.morphism</span> <span class="kn">import</span> <span class="n">WordMorphism</span>
+
+<span class="kn">from</span> <span class="nn">sage.matrix.constructor</span> <span class="kn">import</span> <span class="n">identity_matrix</span>
+<span class="kn">from</span> <span class="nn">sage.rings.integer</span> <span class="kn">import</span> <span class="n">Integer</span>
+
+<span class="kn">from</span> <span class="nn">.template</span> <span class="kn">import</span> <span class="p">(</span><span class="n">OrientablePermutationIET</span><span class="p">,</span> <span class="n">OrientablePermutationLI</span><span class="p">,</span>
+                       <span class="n">FlippedPermutationIET</span><span class="p">,</span> <span class="n">FlippedPermutationLI</span><span class="p">,</span>
+                       <span class="n">RauzyDiagram</span><span class="p">,</span> <span class="n">FlippedRauzyDiagram</span><span class="p">,</span>
+                       <span class="n">interval_conversion</span><span class="p">,</span> <span class="n">side_conversion</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="LabelledPermutation"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation">[docs]</a><span class="k">class</span> <span class="nc">LabelledPermutation</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    General template for labelled objects.</span>
+
+<span class="sd">    .. WARNING::</span>
+
+<span class="sd">       Internal class! Do not use directly!</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation([0,1,2,3],[3,2,1,0])</span>
+<span class="sd">            sage: p[0][0]</span>
+<span class="sd">            0</span>
+<span class="sd">            sage: p[1][2]</span>
+<span class="sd">            1</span>
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c&#39;,&#39;c b a&#39;)</span>
+<span class="sd">            sage: p[0]</span>
+<span class="sd">            [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span>
+<span class="sd">            sage: p[1]</span>
+<span class="sd">            [&#39;c&#39;, &#39;b&#39;, &#39;a&#39;]</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b&#39;, &#39;b a&#39;, flips=&#39;a&#39;)</span>
+<span class="sd">            sage: p[0]</span>
+<span class="sd">            [&#39;a&#39;, &#39;b&#39;]</span>
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;c p p&#39;, &#39;t t c&#39;, flips=&#39;ct&#39;)</span>
+<span class="sd">            sage: p[1]</span>
+<span class="sd">            [&#39;t&#39;, &#39;t&#39;, &#39;c&#39;]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="o">.</span><span class="n">unrank</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+<div class="viewcode-block" id="LabelledPermutation.list"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a list of two lists corresponding to the intervals.</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``flips`` - boolean (default: False) - if ``True`` returns instead of</span>
+<span class="sd">          letters use pair of letter and flip.</span>
+
+<span class="sd">        OUTPUT: two lists of labels (or labels with flips)</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">        The list of an permutation from iet::</span>
+
+<span class="sd">            sage: p1 = iet.Permutation(&#39;1 2 3&#39;, &#39;3 1 2&#39;)</span>
+<span class="sd">            sage: p1.list()</span>
+<span class="sd">            [[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;], [&#39;3&#39;, &#39;1&#39;, &#39;2&#39;]]</span>
+<span class="sd">            sage: p1.alphabet(&quot;abc&quot;)</span>
+<span class="sd">            sage: p1.list()</span>
+<span class="sd">            [[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;], [&#39;c&#39;, &#39;a&#39;, &#39;b&#39;]]</span>
+
+<span class="sd">        Recovering the permutation from this list (and the alphabet)::</span>
+
+<span class="sd">            sage: q1 = iet.Permutation(p1.list(),alphabet=p1.alphabet())</span>
+<span class="sd">            sage: p1 == q1</span>
+<span class="sd">            True</span>
+
+<span class="sd">        The list of a quadratic permutation::</span>
+
+<span class="sd">            sage: p2 = iet.GeneralizedPermutation(&#39;g o o&#39;, &#39;d d g&#39;)</span>
+<span class="sd">            sage: p2.list()</span>
+<span class="sd">            [[&#39;g&#39;, &#39;o&#39;, &#39;o&#39;], [&#39;d&#39;, &#39;d&#39;, &#39;g&#39;]]</span>
+
+<span class="sd">        Recovering the permutation::</span>
+
+<span class="sd">            sage: q2 = iet.GeneralizedPermutation(p2.list(),alphabet=p2.alphabet())</span>
+<span class="sd">            sage: p2 == q2</span>
+<span class="sd">            True</span>
+
+<span class="sd">        Some non-orientable examples::</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;0 0 1 2 2 1&#39;, &#39;3 3&#39;, flips=&#39;1&#39;)</span>
+<span class="sd">            sage: p.list(flips=True)</span>
+<span class="sd">            [[(&#39;0&#39;, 1), (&#39;0&#39;, 1), (&#39;1&#39;, -1), (&#39;2&#39;, 1), (&#39;2&#39;, 1), (&#39;1&#39;, -1)], [(&#39;3&#39;, 1), (&#39;3&#39;, 1)]]</span>
+<span class="sd">            sage: p.list(flips=False)</span>
+<span class="sd">            [[&#39;0&#39;, &#39;0&#39;, &#39;1&#39;, &#39;2&#39;, &#39;2&#39;, &#39;1&#39;], [&#39;3&#39;, &#39;3&#39;]]</span>
+
+<span class="sd">            sage: iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;).list(flips=True)</span>
+<span class="sd">            [[(&#39;a&#39;, 1), (&#39;b&#39;, 1), (&#39;c&#39;, 1)], [(&#39;c&#39;, 1), (&#39;b&#39;, 1), (&#39;a&#39;, 1)]]</span>
+
+<span class="sd">        The list can be used to reconstruct the permutation::</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c&#39;,&#39;c b a&#39;,flips=&#39;ab&#39;)</span>
+<span class="sd">            sage: p == iet.Permutation(p.list(), flips=p.flips())</span>
+<span class="sd">            True</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a b b c&#39;,&#39;c d d a&#39;,flips=&#39;ad&#39;)</span>
+<span class="sd">            sage: p == iet.GeneralizedPermutation(p.list(), flips=p.flips())</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">flips</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flips</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">flips</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">flips</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flips</span>
+            <span class="n">a0</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="o">.</span><span class="n">unrank</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">flips</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="n">a1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="o">.</span><span class="n">unrank</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">flips</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">a0</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="o">.</span><span class="n">unrank</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="n">a1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="o">.</span><span class="n">unrank</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">a0</span><span class="p">,</span><span class="n">a1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="LabelledPermutation.relabel"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation.relabel">[docs]</a>    <span class="k">def</span> <span class="nf">relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Relabel this permutation according to ``p``.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import iet</span>
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c \n c b a&#39;)</span>
+<span class="sd">            sage: p.relabel([2, 1, 0])</span>
+<span class="sd">            sage: p</span>
+<span class="sd">            c b a</span>
+<span class="sd">            a b c</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">perm_check</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">perm_init</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="o">.</span><span class="n">cardinality</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]]</span></div>
+
+<div class="viewcode-block" id="LabelledPermutation.rauzy_move_matrix"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation.rauzy_move_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_move_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the Rauzy move matrix.</span>
+
+<span class="sd">        This matrix corresponds to the action of a Rauzy move on the vector of</span>
+<span class="sd">        lengths. By convention (to get a positive matrix), the matrix is define</span>
+<span class="sd">        as the inverse transformation on the length vector.</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        matrix -- a square matrix of positive integers</span>
+
+<span class="sd">        EXAMPLES:</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b&#39;,&#39;b a&#39;)</span>
+<span class="sd">            sage: p.rauzy_move_matrix(&#39;t&#39;)</span>
+<span class="sd">            [1 0]</span>
+<span class="sd">            [1 1]</span>
+<span class="sd">            sage: p.rauzy_move_matrix(&#39;b&#39;)</span>
+<span class="sd">            [1 1]</span>
+<span class="sd">            [0 1]</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c d&#39;,&#39;b d a c&#39;)</span>
+<span class="sd">            sage: q = p.left_right_inverse()</span>
+<span class="sd">            sage: m0 = p.rauzy_move_matrix(winner=&#39;top&#39;,side=&#39;right&#39;)</span>
+<span class="sd">            sage: n0 = q.rauzy_move_matrix(winner=&#39;top&#39;,side=&#39;left&#39;)</span>
+<span class="sd">            sage: m0 == n0</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: m1 = p.rauzy_move_matrix(winner=&#39;bottom&#39;,side=&#39;right&#39;)</span>
+<span class="sd">            sage: n1 = q.rauzy_move_matrix(winner=&#39;bottom&#39;,side=&#39;left&#39;)</span>
+<span class="sd">            sage: m1 == n1</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">winner</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">side</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">identity_matrix</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+        <span class="n">winner</span> <span class="o">=</span> <span class="n">interval_conversion</span><span class="p">(</span><span class="n">winner</span><span class="p">)</span>
+        <span class="n">side</span> <span class="o">=</span> <span class="n">side_conversion</span><span class="p">(</span><span class="n">side</span><span class="p">)</span>
+
+        <span class="n">winner_letter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">][</span><span class="n">side</span><span class="p">]</span>
+        <span class="n">loser_letter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">][</span><span class="n">side</span><span class="p">]</span>
+
+        <span class="n">m</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">identity_matrix</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span>
+        <span class="n">m</span><span class="p">[</span><span class="n">winner_letter</span><span class="p">,</span> <span class="n">loser_letter</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">m</span></div>
+
+<div class="viewcode-block" id="LabelledPermutation.rauzy_move_winner"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation.rauzy_move_winner">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_move_winner</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">winner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">side</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the winner of a Rauzy move.</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``winner`` - either &#39;top&#39; or &#39;bottom&#39; (&#39;t&#39; or &#39;b&#39; for short)</span>
+
+<span class="sd">        - ``side`` - either &#39;left&#39; or &#39;right&#39; (&#39;l&#39; or &#39;r&#39; for short)</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        -- a label</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c d&#39;,&#39;b d a c&#39;)</span>
+<span class="sd">            sage: p.rauzy_move_winner(&#39;top&#39;,&#39;right&#39;)</span>
+<span class="sd">            &#39;d&#39;</span>
+<span class="sd">            sage: p.rauzy_move_winner(&#39;bottom&#39;,&#39;right&#39;)</span>
+<span class="sd">            &#39;c&#39;</span>
+<span class="sd">            sage: p.rauzy_move_winner(&#39;top&#39;,&#39;left&#39;)</span>
+<span class="sd">            &#39;a&#39;</span>
+<span class="sd">            sage: p.rauzy_move_winner(&#39;bottom&#39;,&#39;left&#39;)</span>
+<span class="sd">            &#39;b&#39;</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a b b c&#39;,&#39;d c a e d e&#39;)</span>
+<span class="sd">            sage: p.rauzy_move_winner(&#39;top&#39;,&#39;right&#39;)</span>
+<span class="sd">            &#39;c&#39;</span>
+<span class="sd">            sage: p.rauzy_move_winner(&#39;bottom&#39;,&#39;right&#39;)</span>
+<span class="sd">            &#39;e&#39;</span>
+<span class="sd">            sage: p.rauzy_move_winner(&#39;top&#39;,&#39;left&#39;)</span>
+<span class="sd">            &#39;a&#39;</span>
+<span class="sd">            sage: p.rauzy_move_winner(&#39;bottom&#39;,&#39;left&#39;)</span>
+<span class="sd">            &#39;d&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">winner</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">side</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">winner</span> <span class="o">=</span> <span class="n">interval_conversion</span><span class="p">(</span><span class="n">winner</span><span class="p">)</span>
+        <span class="n">side</span> <span class="o">=</span> <span class="n">side_conversion</span><span class="p">(</span><span class="n">side</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">winner</span><span class="p">][</span><span class="n">side</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="LabelledPermutation.rauzy_move_loser"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation.rauzy_move_loser">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_move_loser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">winner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">side</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the loser of a Rauzy move</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``winner`` - either &#39;top&#39; or &#39;bottom&#39; (&#39;t&#39; or &#39;b&#39; for short)</span>
+
+<span class="sd">        - ``side`` - either &#39;left&#39; or &#39;right&#39; (&#39;l&#39; or &#39;r&#39; for short)</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        -- a label</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c d&#39;,&#39;b d a c&#39;)</span>
+<span class="sd">            sage: p.rauzy_move_loser(&#39;top&#39;,&#39;right&#39;)</span>
+<span class="sd">            &#39;c&#39;</span>
+<span class="sd">            sage: p.rauzy_move_loser(&#39;bottom&#39;,&#39;right&#39;)</span>
+<span class="sd">            &#39;d&#39;</span>
+<span class="sd">            sage: p.rauzy_move_loser(&#39;top&#39;,&#39;left&#39;)</span>
+<span class="sd">            &#39;b&#39;</span>
+<span class="sd">            sage: p.rauzy_move_loser(&#39;bottom&#39;,&#39;left&#39;)</span>
+<span class="sd">            &#39;a&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">winner</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">side</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">winner</span> <span class="o">=</span> <span class="n">interval_conversion</span><span class="p">(</span><span class="n">winner</span><span class="p">)</span>
+        <span class="n">side</span> <span class="o">=</span> <span class="n">side_conversion</span><span class="p">(</span><span class="n">side</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">][</span><span class="n">side</span><span class="p">]</span></div></div>
+
+<div class="viewcode-block" id="LabelledPermutationsIET_iterator"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationsIET_iterator">[docs]</a><span class="k">def</span> <span class="nf">LabelledPermutationsIET_iterator</span><span class="p">(</span>
+    <span class="n">nintervals</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">irreducible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns an iterator over labelled permutations.</span>
+
+<span class="sd">    INPUT:</span>
+
+<span class="sd">    - ``nintervals`` - integer or None</span>
+
+<span class="sd">    - ``irreducible`` - boolean (default: True)</span>
+
+<span class="sd">    - ``alphabet`` - something that should be converted to an alphabet of at least nintervals letters</span>
+
+<span class="sd">    OUTPUT:</span>
+
+<span class="sd">    iterator -- an iterator over permutations</span>
+
+<span class="sd">    TESTS::</span>
+
+<span class="sd">        sage: from surface_dynamics import iet</span>
+
+<span class="sd">        sage: for p in sorted(iet.Permutations_iterator(2, alphabet=&quot;ab&quot;)):</span>
+<span class="sd">        ....:     print(&quot;%s\n****&quot; % p)  #indirect doctest</span>
+<span class="sd">        a b</span>
+<span class="sd">        b a</span>
+<span class="sd">        ****</span>
+<span class="sd">        b a</span>
+<span class="sd">        a b</span>
+<span class="sd">        ****</span>
+<span class="sd">        sage: for p in iet.Permutations_iterator(3, alphabet=&quot;abc&quot;):</span>
+<span class="sd">        ....:     print(&quot;%s\n*****&quot; %p)   #indirect doctest</span>
+<span class="sd">        a b c</span>
+<span class="sd">        b c a</span>
+<span class="sd">        *****</span>
+<span class="sd">        a b c</span>
+<span class="sd">        c a b</span>
+<span class="sd">        *****</span>
+<span class="sd">        a b c</span>
+<span class="sd">        c b a</span>
+<span class="sd">        *****</span>
+<span class="sd">        a c b</span>
+<span class="sd">        b a c</span>
+<span class="sd">        *****</span>
+<span class="sd">        a c b</span>
+<span class="sd">        b c a</span>
+<span class="sd">        *****</span>
+<span class="sd">        a c b</span>
+<span class="sd">        c b a</span>
+<span class="sd">        *****</span>
+<span class="sd">        b a c</span>
+<span class="sd">        a c b</span>
+<span class="sd">        *****</span>
+<span class="sd">        b a c</span>
+<span class="sd">        c a b</span>
+<span class="sd">        *****</span>
+<span class="sd">        b a c</span>
+<span class="sd">        c b a</span>
+<span class="sd">        *****</span>
+<span class="sd">        b c a</span>
+<span class="sd">        a b c</span>
+<span class="sd">        *****</span>
+<span class="sd">        b c a</span>
+<span class="sd">        a c b</span>
+<span class="sd">        *****</span>
+<span class="sd">        b c a</span>
+<span class="sd">        c a b</span>
+<span class="sd">        *****</span>
+<span class="sd">        c a b</span>
+<span class="sd">        a b c</span>
+<span class="sd">        *****</span>
+<span class="sd">        c a b</span>
+<span class="sd">        b a c</span>
+<span class="sd">        *****</span>
+<span class="sd">        c a b</span>
+<span class="sd">        b c a</span>
+<span class="sd">        *****</span>
+<span class="sd">        c b a</span>
+<span class="sd">        a b c</span>
+<span class="sd">        *****</span>
+<span class="sd">        c b a</span>
+<span class="sd">        a c b</span>
+<span class="sd">        *****</span>
+<span class="sd">        c b a</span>
+<span class="sd">        b a c</span>
+<span class="sd">        *****</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
+    <span class="kn">from</span> <span class="nn">sage.combinat.permutation</span> <span class="kn">import</span> <span class="n">Permutations</span>
+
+    <span class="k">if</span> <span class="n">irreducible</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">nintervals</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;choose a number of intervals&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">nintervals</span><span class="p">,(</span><span class="nb">int</span><span class="p">,</span><span class="n">Integer</span><span class="p">)))</span>
+            <span class="k">assert</span><span class="p">(</span><span class="n">nintervals</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">LabelledPermutationIET</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])],</span>
+                                              <span class="n">alphabet</span><span class="o">=</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="n">alphabet</span> <span class="o">=</span> <span class="n">Alphabet</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">alphabet</span><span class="o">.</span><span class="n">unrank</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+            <span class="n">P</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">Permutations</span><span class="p">(</span><span class="n">nintervals</span><span class="p">))</span>
+            <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">product</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="n">repeat</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">filter</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_irreducible</span><span class="p">(),</span>
+            <span class="n">LabelledPermutationsIET_iterator</span><span class="p">(</span><span class="n">nintervals</span><span class="p">,</span><span class="kc">False</span><span class="p">,</span><span class="n">alphabet</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="LabelledPermutationIET"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET">[docs]</a><span class="k">class</span> <span class="nc">LabelledPermutationIET</span><span class="p">(</span><span class="n">LabelledPermutation</span><span class="p">,</span> <span class="n">OrientablePermutationIET</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Labelled permutation for iet</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: from surface_dynamics import *</span>
+
+<span class="sd">    Reducibility testing::</span>
+
+<span class="sd">        sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;)</span>
+<span class="sd">        sage: p.is_irreducible()</span>
+<span class="sd">        True</span>
+
+<span class="sd">        sage: q = iet.Permutation(&#39;a b c d&#39;, &#39;b a d c&#39;)</span>
+<span class="sd">        sage: q.is_irreducible()</span>
+<span class="sd">        False</span>
+
+<span class="sd">    Rauzy movability and Rauzy move::</span>
+
+<span class="sd">        sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;)</span>
+<span class="sd">        sage: p.has_rauzy_move(&#39;top&#39;)</span>
+<span class="sd">        True</span>
+<span class="sd">        sage: p.rauzy_move(&#39;bottom&#39;)</span>
+<span class="sd">        a c b</span>
+<span class="sd">        c b a</span>
+<span class="sd">        sage: p.has_rauzy_move(&#39;top&#39;)</span>
+<span class="sd">        True</span>
+<span class="sd">        sage: p.rauzy_move(&#39;top&#39;)</span>
+<span class="sd">        a b c</span>
+<span class="sd">        c a b</span>
+
+<span class="sd">    Rauzy diagram::</span>
+
+<span class="sd">        sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;)</span>
+<span class="sd">        sage: d = p.rauzy_diagram()</span>
+<span class="sd">        sage: p in d</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LabelledPermutationIET.reduced"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET.reduced">[docs]</a>    <span class="k">def</span> <span class="nf">reduced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the associated reduced abelian permutation.</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        a reduced permutation -- the underlying reduced permutation</span>
+
+
+<span class="sd">        EXAMPLES:</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&quot;a b c d&quot;,&quot;d c a b&quot;)</span>
+<span class="sd">            sage: q = iet.Permutation(&quot;a b c d&quot;,&quot;d c a b&quot;,reduced=True)</span>
+<span class="sd">            sage: p.reduced() == q</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.reduced</span> <span class="kn">import</span> <span class="n">ReducedPermutationIET</span>
+
+        <span class="k">return</span> <span class="n">ReducedPermutationIET</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="p">(),</span> <span class="n">alphabet</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LabelledPermutationIET.rauzy_move_interval_substitution"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET.rauzy_move_interval_substitution">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_move_interval_substitution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">winner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">side</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the interval substitution associated.</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``winner`` - the winner interval (&#39;top&#39; or &#39;bottom&#39;)</span>
+
+<span class="sd">        - ``side`` - (default: &#39;right&#39;) the side (&#39;left&#39; or &#39;right&#39;)</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        WordMorphism -- a substitution on the alphabet of the permutation</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b&#39;,&#39;b a&#39;)</span>
+<span class="sd">            sage: print(p.rauzy_move_interval_substitution(&#39;top&#39;,&#39;right&#39;))</span>
+<span class="sd">            a-&gt;a, b-&gt;ba</span>
+<span class="sd">            sage: print(p.rauzy_move_interval_substitution(&#39;bottom&#39;,&#39;right&#39;))</span>
+<span class="sd">            a-&gt;ab, b-&gt;b</span>
+<span class="sd">            sage: print(p.rauzy_move_interval_substitution(&#39;top&#39;,&#39;left&#39;))</span>
+<span class="sd">            a-&gt;ba, b-&gt;b</span>
+<span class="sd">            sage: print(p.rauzy_move_interval_substitution(&#39;bottom&#39;,&#39;left&#39;))</span>
+<span class="sd">            a-&gt;a, b-&gt;ab</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">letter</span><span class="p">,[</span><span class="n">letter</span><span class="p">])</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">letters</span><span class="p">()])</span>
+
+        <span class="k">if</span> <span class="n">winner</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">side</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">WordMorphism</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+        <span class="n">winner</span> <span class="o">=</span> <span class="n">interval_conversion</span><span class="p">(</span><span class="n">winner</span><span class="p">)</span>
+        <span class="n">side</span> <span class="o">=</span> <span class="n">side_conversion</span><span class="p">(</span><span class="n">side</span><span class="p">)</span>
+
+        <span class="n">winner_letter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rauzy_move_winner</span><span class="p">(</span><span class="n">winner</span><span class="p">,</span><span class="n">side</span><span class="p">)</span>
+        <span class="n">loser_letter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rauzy_move_loser</span><span class="p">(</span><span class="n">winner</span><span class="p">,</span><span class="n">side</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">side</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">winner_letter</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">loser_letter</span><span class="p">,</span><span class="n">winner_letter</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">winner_letter</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">winner_letter</span><span class="p">,</span><span class="n">loser_letter</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">WordMorphism</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LabelledPermutationIET.rauzy_move_orbit_substitution"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET.rauzy_move_orbit_substitution">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_move_orbit_substitution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">winner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">side</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the action of the rauzy_move on the orbit.</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``i`` - integer</span>
+
+<span class="sd">        - ``winner`` - the winner interval (&#39;top&#39; or &#39;bottom&#39;)</span>
+
+<span class="sd">        - ``side`` - (default: &#39;right&#39;) the side (&#39;right&#39; or &#39;left&#39;)</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        WordMorphism -- a substitution on the alphabet of self</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b&#39;,&#39;b a&#39;)</span>
+<span class="sd">            sage: print(p.rauzy_move_orbit_substitution(&#39;top&#39;,&#39;right&#39;))</span>
+<span class="sd">            a-&gt;ab, b-&gt;b</span>
+<span class="sd">            sage: print(p.rauzy_move_orbit_substitution(&#39;bottom&#39;,&#39;right&#39;))</span>
+<span class="sd">            a-&gt;a, b-&gt;ab</span>
+<span class="sd">            sage: print(p.rauzy_move_orbit_substitution(&#39;top&#39;,&#39;left&#39;))</span>
+<span class="sd">            a-&gt;a, b-&gt;ba</span>
+<span class="sd">            sage: print(p.rauzy_move_orbit_substitution(&#39;bottom&#39;,&#39;left&#39;))</span>
+<span class="sd">            a-&gt;ba, b-&gt;b</span>
+
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a1 a2&#39;, &#39;a2 a1&#39;)</span>
+<span class="sd">            sage: p.rauzy_move_orbit_substitution(&#39;top&#39;,&#39;right&#39;).codomain().alphabet()</span>
+<span class="sd">            {&#39;a1&#39;, &#39;a2&#39;}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">letter</span><span class="p">,[</span><span class="n">letter</span><span class="p">])</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">letters</span><span class="p">()])</span>
+
+        <span class="k">if</span> <span class="n">winner</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">side</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">WordMorphism</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+        <span class="n">winner</span> <span class="o">=</span> <span class="n">interval_conversion</span><span class="p">(</span><span class="n">winner</span><span class="p">)</span>
+        <span class="n">side</span> <span class="o">=</span> <span class="n">side_conversion</span><span class="p">(</span><span class="n">side</span><span class="p">)</span>
+
+        <span class="n">loser_letter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rauzy_move_loser</span><span class="p">(</span><span class="n">winner</span><span class="p">,</span><span class="n">side</span><span class="p">)</span>
+
+        <span class="n">top_letter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span><span class="p">()</span><span class="o">.</span><span class="n">unrank</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">side</span><span class="p">])</span>
+        <span class="n">bottom_letter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span><span class="p">()</span><span class="o">.</span><span class="n">unrank</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">side</span><span class="p">])</span>
+
+        <span class="n">d</span><span class="p">[</span><span class="n">loser_letter</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">bottom_letter</span><span class="p">,</span><span class="n">top_letter</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">WordMorphism</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LabelledPermutationIET.rauzy_diagram"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET.rauzy_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the associated Rauzy diagram.</span>
+
+<span class="sd">        For more information try help(iet.RauzyDiagram).</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        Rauzy diagram -- the Rauzy diagram of the permutation</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;)</span>
+<span class="sd">            sage: d = p.rauzy_diagram()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">LabelledRauzyDiagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LabelledPermutationIET.lyapunov_exponents_approx"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET.lyapunov_exponents_approx">[docs]</a>    <span class="k">def</span> <span class="nf">lyapunov_exponents_approx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_vectors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nb_experiments</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                  <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">65536</span><span class="p">,</span> <span class="n">return_speed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                  <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return approximate Lyapunov exponents of the KZ-cocycle.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation([1,2,3],[3,2,1])</span>
+<span class="sd">            sage: p.lyapunov_exponents_approx()  # abs tol .08</span>
+<span class="sd">            [1.000]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flips</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Lyapunov exponents not implemented for permutations with flips&quot;</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cover</span><span class="p">([[</span><span class="mi">0</span><span class="p">]]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">as_tuple</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span>
+                    <span class="n">nb_vectors</span><span class="o">=</span><span class="n">nb_vectors</span><span class="p">,</span> <span class="n">nb_experiments</span><span class="o">=</span><span class="n">nb_experiments</span><span class="p">,</span>
+                    <span class="n">nb_iterations</span><span class="o">=</span><span class="n">nb_iterations</span><span class="p">,</span> <span class="n">return_speed</span><span class="o">=</span><span class="n">return_speed</span><span class="p">,</span>
+                    <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="LabelledPermutationLI"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI">[docs]</a><span class="k">class</span> <span class="nc">LabelledPermutationLI</span><span class="p">(</span><span class="n">LabelledPermutation</span><span class="p">,</span> <span class="n">OrientablePermutationLI</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Labelled quadratic (or generalized) permutation</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: from surface_dynamics import *</span>
+
+<span class="sd">    Reducibility testing::</span>
+
+<span class="sd">        sage: p = iet.GeneralizedPermutation(&#39;a b b&#39;, &#39;c c a&#39;)</span>
+<span class="sd">        sage: p.is_irreducible()</span>
+<span class="sd">        True</span>
+
+<span class="sd">    Reducibility testing with associated decomposition::</span>
+
+<span class="sd">        sage: p = iet.GeneralizedPermutation(&#39;a b c a&#39;, &#39;b d d c&#39;)</span>
+<span class="sd">        sage: p.is_irreducible()</span>
+<span class="sd">        False</span>
+<span class="sd">        sage: test, decomposition = p.is_irreducible(return_decomposition = True)</span>
+<span class="sd">        sage: test</span>
+<span class="sd">        False</span>
+<span class="sd">        sage: decomposition</span>
+<span class="sd">        ([&#39;a&#39;], [&#39;c&#39;, &#39;a&#39;], [], [&#39;c&#39;])</span>
+
+<span class="sd">    Rauzy movability and Rauzy move::</span>
+
+<span class="sd">        sage: p = iet.GeneralizedPermutation(&#39;a a b b c c&#39;, &#39;d d&#39;)</span>
+<span class="sd">        sage: p.has_rauzy_move(0)</span>
+<span class="sd">        False</span>
+<span class="sd">        sage: p.has_rauzy_move(1)</span>
+<span class="sd">        True</span>
+<span class="sd">        sage: q = p.rauzy_move(1)</span>
+<span class="sd">        sage: q</span>
+<span class="sd">        a a b b c</span>
+<span class="sd">        c d d</span>
+<span class="sd">        sage: q.has_rauzy_move(0)</span>
+<span class="sd">        True</span>
+<span class="sd">        sage: q.has_rauzy_move(1)</span>
+<span class="sd">        True</span>
+
+<span class="sd">    Rauzy diagrams::</span>
+
+<span class="sd">        sage: p = iet.GeneralizedPermutation(&#39;0 0 1 1&#39;,&#39;2 2&#39;)</span>
+<span class="sd">        sage: r = p.rauzy_diagram()</span>
+<span class="sd">        sage: p in r</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LabelledPermutationLI.has_right_rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.has_right_rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">has_right_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test of Rauzy movability with a specified winner)</span>
+
+<span class="sd">        A quadratic (or generalized) permutation is rauzy_movable type</span>
+<span class="sd">        depending on the possible length of the last interval. It&#39;s</span>
+<span class="sd">        dependent of the length equation.</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``winner`` - &#39;top&#39; (or &#39;t&#39; or 0) or &#39;bottom&#39; (or &#39;b&#39; or 1)</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        bool -- True if self has a Rauzy move</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a&#39;,&#39;b b&#39;)</span>
+<span class="sd">            sage: p.has_right_rauzy_move(&#39;top&#39;)</span>
+<span class="sd">            False</span>
+<span class="sd">            sage: p.has_right_rauzy_move(&#39;bottom&#39;)</span>
+<span class="sd">            False</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a b&#39;,&#39;b c c&#39;)</span>
+<span class="sd">            sage: p.has_right_rauzy_move(&#39;top&#39;)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: p.has_right_rauzy_move(&#39;bottom&#39;)</span>
+<span class="sd">            True</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a&#39;,&#39;b b c c&#39;)</span>
+<span class="sd">            sage: p.has_right_rauzy_move(&#39;top&#39;)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: p.has_right_rauzy_move(&#39;bottom&#39;)</span>
+<span class="sd">            False</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a b b&#39;,&#39;c c&#39;)</span>
+<span class="sd">            sage: p.has_right_rauzy_move(&#39;top&#39;)</span>
+<span class="sd">            False</span>
+<span class="sd">            sage: p.has_right_rauzy_move(&#39;bottom&#39;)</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">winner</span> <span class="o">=</span> <span class="n">interval_conversion</span><span class="p">(</span><span class="n">winner</span><span class="p">)</span>
+        <span class="n">loser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># the same letter at the right-end (False)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># the winner (or loser) letter is repeated on the other interval (True)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="c1"># the loser letters is the only letter repeated in the loser</span>
+        <span class="c1"># interval (False)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">])):</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="n">loser</span> <span class="ow">and</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">][</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="LabelledPermutationLI.right_rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.right_rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">right_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a Rauzy move on the right (the standard one).</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``winner`` - &#39;top&#39; (or &#39;t&#39; or 0) or &#39;bottom&#39; (or &#39;b&#39; or 1)</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        boolean -- True if self has a Rauzy move</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a b&#39;,&#39;b c c&#39;)</span>
+<span class="sd">            sage: p.right_rauzy_move(0)</span>
+<span class="sd">            a a b</span>
+<span class="sd">            b c c</span>
+<span class="sd">            sage: p.right_rauzy_move(1)</span>
+<span class="sd">            a a</span>
+<span class="sd">            b b c c</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a b b&#39;,&#39;c c a&#39;)</span>
+<span class="sd">            sage: p.right_rauzy_move(0)</span>
+<span class="sd">            a a b b</span>
+<span class="sd">            c c</span>
+<span class="sd">            sage: p.right_rauzy_move(1)</span>
+<span class="sd">            a b b</span>
+<span class="sd">            c c a</span>
+
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a b&#39;,&#39;b c c&#39;)</span>
+<span class="sd">            sage: q = p.top_bottom_inverse()</span>
+<span class="sd">            sage: q = q.right_rauzy_move(0)</span>
+<span class="sd">            sage: q = q.top_bottom_inverse()</span>
+<span class="sd">            sage: q == p.right_rauzy_move(1)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: q = p.top_bottom_inverse()</span>
+<span class="sd">            sage: q = q.right_rauzy_move(1)</span>
+<span class="sd">            sage: q = q.top_bottom_inverse()</span>
+<span class="sd">            sage: q == p.right_rauzy_move(0)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: p = p.left_right_inverse()</span>
+<span class="sd">            sage: q = q.left_rauzy_move(0)</span>
+<span class="sd">            sage: q = q.left_right_inverse()</span>
+<span class="sd">            sage: q == p.right_rauzy_move(0)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: q = p.left_right_inverse()</span>
+<span class="sd">            sage: q = q.left_rauzy_move(1)</span>
+<span class="sd">            sage: q = q.left_right_inverse()</span>
+<span class="sd">            sage: q == p.right_rauzy_move(1)</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">winner_letter</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">loser_letter</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">winner_letter</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">loser_to</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">winner_letter</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">loser_to</span><span class="p">,</span> <span class="n">loser_letter</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">loser_to</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">winner_letter</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">loser_to</span><span class="p">,</span> <span class="n">loser_letter</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="LabelledPermutationLI.left_rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.left_rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">left_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a Rauzy move on the left.</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``winner`` - &#39;top&#39; or &#39;bottom&#39;</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        permutation -- the Rauzy move of self</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a b&#39;,&#39;b c c&#39;)</span>
+<span class="sd">            sage: p.left_rauzy_move(0)</span>
+<span class="sd">            a a b b</span>
+<span class="sd">            c c</span>
+<span class="sd">            sage: p.left_rauzy_move(1)</span>
+<span class="sd">            a a b</span>
+<span class="sd">            b c c</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a b b&#39;,&#39;c c a&#39;)</span>
+<span class="sd">            sage: p.left_rauzy_move(0)</span>
+<span class="sd">            a b b</span>
+<span class="sd">            c c a</span>
+<span class="sd">            sage: p.left_rauzy_move(1)</span>
+<span class="sd">            b b</span>
+<span class="sd">            c c a a</span>
+
+
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a b&#39;,&#39;b c c&#39;)</span>
+<span class="sd">            sage: q = p.top_bottom_inverse()</span>
+<span class="sd">            sage: q = q.left_rauzy_move(0)</span>
+<span class="sd">            sage: q = q.top_bottom_inverse()</span>
+<span class="sd">            sage: q == p.left_rauzy_move(1)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: q = p.top_bottom_inverse()</span>
+<span class="sd">            sage: q = q.left_rauzy_move(1)</span>
+<span class="sd">            sage: q = q.top_bottom_inverse()</span>
+<span class="sd">            sage: q == p.left_rauzy_move(0)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: q = p.left_right_inverse()</span>
+<span class="sd">            sage: q = q.right_rauzy_move(0)</span>
+<span class="sd">            sage: q = q.left_right_inverse()</span>
+<span class="sd">            sage: q == p.left_rauzy_move(0)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: q = p.left_right_inverse()</span>
+<span class="sd">            sage: q = q.right_rauzy_move(1)</span>
+<span class="sd">            sage: q = q.left_right_inverse()</span>
+<span class="sd">            sage: q == p.left_rauzy_move(1)</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">winner_letter</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">loser_letter</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">winner_letter</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">][</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">loser_to</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">winner_letter</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">loser_to</span><span class="p">,</span> <span class="n">loser_letter</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">loser_to</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">winner_letter</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">loser_to</span><span class="p">,</span> <span class="n">loser_letter</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="LabelledPermutationLI.reduced"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.reduced">[docs]</a>    <span class="k">def</span> <span class="nf">reduced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the associated reduced quadratic permutations.</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        permutation -- the underlying reduced permutation</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a&#39;,&#39;b b c c&#39;)</span>
+<span class="sd">            sage: q = p.reduced()</span>
+<span class="sd">            sage: q</span>
+<span class="sd">            a a</span>
+<span class="sd">            b b c c</span>
+<span class="sd">            sage: p.rauzy_move(0).reduced() == q.rauzy_move(0)</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.reduced</span> <span class="kn">import</span> <span class="n">ReducedPermutationLI</span>
+
+        <span class="k">return</span> <span class="n">ReducedPermutationLI</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="p">(),</span><span class="n">alphabet</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LabelledPermutationLI.rauzy_diagram"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.rauzy_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the associated RauzyDiagram.</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        Rauzy diagram -- the Rauzy diagram of the permutation</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a b c b&#39;, &#39;c d d a&#39;)</span>
+<span class="sd">            sage: d = p.rauzy_diagram()</span>
+<span class="sd">            sage: p in d</span>
+<span class="sd">            True</span>
+
+<span class="sd">        For more information, try help(iet.RauzyDiagram)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">LabelledRauzyDiagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LabelledPermutationLI.lyapunov_exponents_H_plus"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.lyapunov_exponents_H_plus">[docs]</a>    <span class="k">def</span> <span class="nf">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_vectors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nb_experiments</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                  <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">65536</span><span class="p">,</span> <span class="n">return_speed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                  <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the H^+ Lyapunov exponents of the stratum associated to this</span>
+<span class="sd">        permutation.</span>
+
+<span class="sd">        This method calls a C library. It might be  significantly faster if</span>
+<span class="sd">        ``nb_vectors=1`` (or if it is not provided but genus is 1).</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``nb_vectors`` -- the number of exponents to compute. The number of</span>
+<span class="sd">          vectors must not exceed the dimension of the space!</span>
+
+<span class="sd">         - ``nb_experiments`` -- the number of experiments to perform. It might</span>
+<span class="sd">           be around 100 (default value) in order that the estimation of</span>
+<span class="sd">           confidence interval is accurate enough.</span>
+
+<span class="sd">         - ``nb_iterations`` -- the number of iteration of the Rauzy-Zorich</span>
+<span class="sd">           algorithm to perform for each experiments. The default is 2^15=32768</span>
+<span class="sd">           which is rather small but provide a good compromise between speed and</span>
+<span class="sd">           quality of approximation.</span>
+
+<span class="sd">        - ``verbose`` -- if ``True`` provide additional information rather than</span>
+<span class="sd">          returning only the Lyapunov exponents (i.e. elapsed time, confidence</span>
+<span class="sd">          intervals, ...)</span>
+
+<span class="sd">        - ``output_file`` -- if provided (as a file object or a string) output</span>
+<span class="sd">          the additional information in the given file rather than on the</span>
+<span class="sd">          standard output.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+<span class="sd">            sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()</span>
+<span class="sd">            sage: p = Q.permutation_representative(reduced=False)</span>
+<span class="sd">            sage: p.lyapunov_exponents_H_plus(nb_iterations=2**20) # abs tol .08</span>
+<span class="sd">            [0.6666]</span>
+
+<span class="sd">            sage: Q_reg = QuadraticStratum([12]).regular_component()</span>
+<span class="sd">            sage: p_reg = Q_reg.permutation_representative(reduced=False)</span>
+<span class="sd">            sage: p_reg.lyapunov_exponents_H_plus(nb_iterations=2**20) # abs tol .08</span>
+<span class="sd">            [0.662, 0.448, 0.230, 0.087]</span>
+<span class="sd">            sage: sum(_)  # abs tol .08</span>
+<span class="sd">            1.428</span>
+
+<span class="sd">            sage: Q_irr = QuadraticStratum([12]).irregular_component()</span>
+<span class="sd">            sage: p_irr = Q_irr.permutation_representative(reduced=False)</span>
+<span class="sd">            sage: p_irr.lyapunov_exponents_H_plus(nb_iterations=2**20) # abs tol .08</span>
+<span class="sd">            [0.747, 0.491, 0.245, 0.090]</span>
+<span class="sd">            sage: sum(_) # abs tol .08</span>
+<span class="sd">            1.572</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flips</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Lyapunov exponents not implemented for permutations with flips&quot;</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cover</span><span class="p">([[</span><span class="mi">0</span><span class="p">]]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">as_tuple</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span>
+                    <span class="n">nb_vectors</span><span class="o">=</span><span class="n">nb_vectors</span><span class="p">,</span> <span class="n">nb_experiments</span><span class="o">=</span><span class="n">nb_experiments</span><span class="p">,</span>
+                    <span class="n">nb_iterations</span><span class="o">=</span><span class="n">nb_iterations</span><span class="p">,</span> <span class="n">return_speed</span><span class="o">=</span><span class="n">return_speed</span><span class="p">,</span>
+                    <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LabelledPermutationLI.lyapunov_exponents_H_minus"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.lyapunov_exponents_H_minus">[docs]</a>    <span class="k">def</span> <span class="nf">lyapunov_exponents_H_minus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_vectors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nb_experiments</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                  <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">65536</span><span class="p">,</span> <span class="n">return_speed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                  <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the H^+ Lyapunov exponents of the stratum associated to this</span>
+<span class="sd">        permutation.</span>
+
+<span class="sd">        This method calls a C library. It might be significantly faster if</span>
+<span class="sd">        ``nb_vectors=1`` (or if it is not provided but genus is 1).</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``nb_vectors`` -- the number of exponents to compute. The number of</span>
+<span class="sd">          vectors must not exceed the dimension of the space!</span>
+
+<span class="sd">         - ``nb_experiments`` -- the number of experiments to perform. It might</span>
+<span class="sd">           be around 100 (default value) in order that the estimation of</span>
+<span class="sd">           confidence interval is accurate enough.</span>
+
+<span class="sd">         - ``nb_iterations`` -- the number of iteration of the Rauzy-Zorich</span>
+<span class="sd">           algorithm to perform for each experiments. The default is `2^16=65536`</span>
+<span class="sd">           which is rather small but provide a good compromise between speed and</span>
+<span class="sd">           quality of approximation.</span>
+
+<span class="sd">        - ``verbose`` -- if ``True`` provide additional information rather than</span>
+<span class="sd">          returning only the Lyapunov exponents (i.e. elapsed time, confidence</span>
+<span class="sd">          intervals, ...)</span>
+
+<span class="sd">        - ``output_file`` -- if provided (as a file object or a string) output</span>
+<span class="sd">          the additional information in the given file rather than on the</span>
+<span class="sd">          standard output.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+<span class="sd">            sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()</span>
+<span class="sd">            sage: p = Q.permutation_representative(reduced=False)</span>
+<span class="sd">            sage: p.lyapunov_exponents_H_minus(nb_iterations=2**20) # abs tol .08</span>
+<span class="sd">            [1.000, 0.333]</span>
+
+<span class="sd">            sage: Q_reg = QuadraticStratum([12]).regular_component()</span>
+<span class="sd">            sage: p_reg = Q_reg.permutation_representative(reduced=False)</span>
+<span class="sd">            sage: p_reg.lyapunov_exponents_H_minus(nb_iterations=2**19) # abs tol .08</span>
+<span class="sd">            [1.000, 0.309, 0.119]</span>
+<span class="sd">            sage: sum(_)  # abs tol .08</span>
+<span class="sd">            1.428</span>
+
+<span class="sd">            sage: Q_irr = QuadraticStratum([12]).irregular_component()</span>
+<span class="sd">            sage: p_irr = Q_irr.permutation_representative(reduced=False)</span>
+<span class="sd">            sage: p_irr.lyapunov_exponents_H_minus(nb_iterations=2**19) # abs tol .08</span>
+<span class="sd">            [1.000, 0.444, 0.128]</span>
+<span class="sd">            sage: sum(_) # abs tol .08</span>
+<span class="sd">            1.5725</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flips</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Lyapunov exponents not implemented for permutations with flips&quot;</span><span class="p">)</span>
+
+        <span class="c1"># we know that the double cover gives rise to two characters. We need to</span>
+        <span class="c1"># find the one corresponding to H^-. We just pick the one which is not</span>
+        <span class="c1"># constantly 1 and correspond to H^+.</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientation_cover</span><span class="p">()</span>
+        <span class="n">c0</span><span class="p">,</span><span class="n">c1</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">_real_characters</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">i0</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="ow">in</span> <span class="n">c0</span><span class="p">)</span>
+        <span class="n">i1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="ow">in</span> <span class="n">c1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i0</span> <span class="ow">and</span> <span class="n">i1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;not a generalized permutation&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">i0</span><span class="p">:</span>
+            <span class="n">character</span> <span class="o">=</span> <span class="n">c0</span>
+        <span class="k">elif</span> <span class="n">i1</span><span class="p">:</span>
+            <span class="n">character</span> <span class="o">=</span> <span class="n">c1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;trouble with permutation=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span>
+                    <span class="n">nb_vectors</span><span class="o">=</span><span class="n">nb_vectors</span><span class="p">,</span> <span class="n">nb_experiments</span><span class="o">=</span><span class="n">nb_experiments</span><span class="p">,</span>
+                    <span class="n">nb_iterations</span><span class="o">=</span><span class="n">nb_iterations</span><span class="p">,</span> <span class="n">return_speed</span><span class="o">=</span><span class="n">return_speed</span><span class="p">,</span>
+                    <span class="n">isotypic_decomposition</span><span class="o">=</span><span class="n">character</span><span class="p">,</span>
+                    <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="FlippedLabelledPermutationIET"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationIET">[docs]</a><span class="k">class</span> <span class="nc">FlippedLabelledPermutationIET</span><span class="p">(</span><span class="n">FlippedPermutationIET</span><span class="p">,</span> <span class="n">LabelledPermutationIET</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Flipped labelled permutation from iet.</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: from surface_dynamics import *</span>
+
+<span class="sd">    Reducibility testing (does not depends of flips)::</span>
+
+<span class="sd">        sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;,flips=&#39;a&#39;)</span>
+<span class="sd">        sage: p.is_irreducible()</span>
+<span class="sd">        True</span>
+<span class="sd">        sage: q = iet.Permutation(&#39;a b c d&#39;, &#39;b a d c&#39;, flips=&#39;bc&#39;)</span>
+<span class="sd">        sage: q.is_irreducible()</span>
+<span class="sd">        False</span>
+
+<span class="sd">    Rauzy movability and Rauzy move::</span>
+
+<span class="sd">        sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;,flips=&#39;a&#39;)</span>
+<span class="sd">        sage: p</span>
+<span class="sd">        -a  b  c</span>
+<span class="sd">         c  b -a</span>
+<span class="sd">        sage: p.rauzy_move(1)</span>
+<span class="sd">        -c -a  b</span>
+<span class="sd">        -c  b -a</span>
+<span class="sd">        sage: p.rauzy_move(0)</span>
+<span class="sd">        -a  b  c</span>
+<span class="sd">         c -a  b</span>
+
+<span class="sd">    Rauzy diagrams::</span>
+
+<span class="sd">        sage: d = iet.RauzyDiagram(&#39;a b c d&#39;,&#39;d a b c&#39;,flips=&#39;a&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FlippedLabelledPermutationIET.reduced"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationIET.reduced">[docs]</a>    <span class="k">def</span> <span class="nf">reduced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The associated reduced permutation.</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        permutation -- the associated reduced permutation</span>
+
+<span class="sd">        EXAMPLE::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c&#39;,&#39;c b a&#39;,flips=&#39;a&#39;)</span>
+<span class="sd">            sage: q = iet.Permutation(&#39;a b c&#39;,&#39;c b a&#39;,flips=&#39;a&#39;,reduced=True)</span>
+<span class="sd">            sage: p.reduced() == q</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.reduced</span> <span class="kn">import</span> <span class="n">FlippedReducedPermutationIET</span>
+
+        <span class="k">return</span> <span class="n">FlippedReducedPermutationIET</span><span class="p">(</span>
+            <span class="n">intervals</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="n">flips</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="n">flips</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">flips</span><span class="p">(),</span>
+            <span class="n">alphabet</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span><span class="p">(),</span>
+            <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FlippedLabelledPermutationIET.rauzy_diagram"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationIET.rauzy_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the Rauzy diagram associated to this permutation.</span>
+
+<span class="sd">        For more information, try help(iet.RauzyDiagram)</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        RauzyDiagram -- the Rauzy diagram of self</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;,flips=&#39;a&#39;)</span>
+<span class="sd">            sage: p.rauzy_diagram()</span>
+<span class="sd">            Rauzy diagram with 3 permutations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">FlippedLabelledRauzyDiagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="FlippedLabelledPermutationLI"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationLI">[docs]</a><span class="k">class</span> <span class="nc">FlippedLabelledPermutationLI</span><span class="p">(</span><span class="n">FlippedPermutationLI</span><span class="p">,</span> <span class="n">LabelledPermutationLI</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Flipped labelled quadratic (or generalized) permutation.</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">    Rauzy movability and Rauzy move::</span>
+
+<span class="sd">        sage: p = iet.GeneralizedPermutation(&#39;a a b b c c&#39;, &#39;d d&#39;, flips=&#39;d&#39;)</span>
+<span class="sd">        sage: p.has_rauzy_move(0)</span>
+<span class="sd">        False</span>
+<span class="sd">        sage: p.has_rauzy_move(1)</span>
+<span class="sd">        True</span>
+<span class="sd">        sage: p = iet.GeneralizedPermutation(&#39;a a b&#39;,&#39;b c c&#39;,flips=&#39;c&#39;)</span>
+<span class="sd">        sage: p.has_rauzy_move(0)</span>
+<span class="sd">        True</span>
+<span class="sd">        sage: p.has_rauzy_move(1)</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FlippedLabelledPermutationLI.reduced"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationLI.reduced">[docs]</a>    <span class="k">def</span> <span class="nf">reduced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The associated reduced permutation.</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        permutation -- the associated reduced permutation</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a&#39;,&#39;b b c c&#39;,flips=&#39;a&#39;)</span>
+<span class="sd">            sage: q = iet.GeneralizedPermutation(&#39;a a&#39;,&#39;b b c c&#39;,flips=&#39;a&#39;,reduced=True)</span>
+<span class="sd">            sage: p.reduced() == q</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.reduced</span> <span class="kn">import</span> <span class="n">FlippedReducedPermutationLI</span>
+
+        <span class="k">return</span> <span class="n">FlippedReducedPermutationLI</span><span class="p">(</span>
+            <span class="n">intervals</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="n">flips</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="n">flips</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">flips</span><span class="p">(),</span>
+            <span class="n">alphabet</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span><span class="p">(),</span>
+            <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FlippedLabelledPermutationLI.right_rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationLI.right_rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">right_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a Rauzy move on the right (the standard one).</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``winner`` - either &#39;top&#39; or &#39;bottom&#39; (&#39;t&#39; or &#39;b&#39; for short)</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        permutation -- the Rauzy move of self</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a b&#39;,&#39;b c c&#39;,flips=&#39;c&#39;)</span>
+<span class="sd">            sage: p.right_rauzy_move(0)</span>
+<span class="sd">             a  a  b</span>
+<span class="sd">            -c  b -c</span>
+<span class="sd">            sage: p.right_rauzy_move(1)</span>
+<span class="sd">             a  a</span>
+<span class="sd">            -b -c -b -c</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a b b&#39;,&#39;c c a&#39;,flips=&#39;ab&#39;)</span>
+<span class="sd">            sage: p.right_rauzy_move(0)</span>
+<span class="sd">             a -b  a -b</span>
+<span class="sd">             c  c</span>
+<span class="sd">            sage: p.right_rauzy_move(1)</span>
+<span class="sd">             b -a  b</span>
+<span class="sd">             c  c -a</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">winner_letter</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">winner_flip</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_flips</span><span class="p">[</span><span class="n">winner</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">loser_letter</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">loser_flip</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_flips</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">loser_letter</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">]:</span>
+            <span class="n">loser_twin</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">loser_letter</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">_flips</span><span class="p">[</span><span class="n">winner</span><span class="p">][</span><span class="n">loser_twin</span><span class="p">]</span> <span class="o">=</span> <span class="n">loser_flip</span><span class="o">*</span><span class="n">winner_flip</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">loser_twin</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">loser_letter</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">_flips</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">][</span><span class="n">loser_twin</span><span class="p">]</span> <span class="o">=</span> <span class="n">loser_flip</span><span class="o">*</span><span class="n">winner_flip</span>
+
+        <span class="k">if</span> <span class="n">winner_letter</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">loser_to</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">winner_letter</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">winner_flip</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="n">loser_to</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">loser_to</span><span class="p">,</span> <span class="n">loser_letter</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">_flips</span><span class="p">[</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">loser_to</span><span class="p">,</span> <span class="n">loser_flip</span><span class="o">*</span><span class="n">winner_flip</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">loser_to</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">winner_letter</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">loser_flip</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="n">loser_to</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">loser_to</span><span class="p">,</span> <span class="n">loser_letter</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">_flips</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">loser_to</span><span class="p">,</span> <span class="n">loser_flip</span><span class="o">*</span><span class="n">winner_flip</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="FlippedLabelledPermutationLI.left_rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationLI.left_rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">left_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a Rauzy move on the left.</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``winner`` - either &#39;top&#39; or &#39;bottom&#39; (&#39;t&#39; or &#39;b&#39; for short)</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        -- a permutation</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a b&#39;,&#39;b c c&#39;)</span>
+<span class="sd">            sage: p.left_rauzy_move(0)</span>
+<span class="sd">            a a b b</span>
+<span class="sd">            c c</span>
+<span class="sd">            sage: p.left_rauzy_move(1)</span>
+<span class="sd">            a a b</span>
+<span class="sd">            b c c</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a b b&#39;,&#39;c c a&#39;)</span>
+<span class="sd">            sage: p.left_rauzy_move(0)</span>
+<span class="sd">            a b b</span>
+<span class="sd">            c c a</span>
+<span class="sd">            sage: p.left_rauzy_move(1)</span>
+<span class="sd">            b b</span>
+<span class="sd">            c c a a</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">winner_letter</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">loser_letter</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">winner_letter</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">][</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">loser_to</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">winner_letter</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">loser_to</span><span class="p">,</span> <span class="n">loser_letter</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">loser_to</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">winner_letter</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">loser_to</span><span class="p">,</span> <span class="n">loser_letter</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="FlippedLabelledPermutationLI.rauzy_diagram"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationLI.rauzy_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the associated Rauzy diagram.</span>
+
+<span class="sd">        For more information, try help(RauzyDiagram)</span>
+
+<span class="sd">        OUTPUT :</span>
+
+<span class="sd">        -- a RauzyDiagram</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a b b a&#39;, &#39;c d c d&#39;)</span>
+<span class="sd">            sage: d = p.rauzy_diagram()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">FlippedLabelledRauzyDiagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="LabelledRauzyDiagram"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram">[docs]</a><span class="k">class</span> <span class="nc">LabelledRauzyDiagram</span><span class="p">(</span><span class="n">RauzyDiagram</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Template for Rauzy diagrams of labelled permutations.</span>
+
+<span class="sd">        ...DO NOT USE...</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LabelledRauzyDiagram.Path"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.Path">[docs]</a>    <span class="k">class</span> <span class="nc">Path</span><span class="p">(</span><span class="n">RauzyDiagram</span><span class="o">.</span><span class="n">Path</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Path in Labelled Rauzy diagram.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LabelledRauzyDiagram.Path.matrix"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.Path.matrix">[docs]</a>        <span class="k">def</span> <span class="nf">matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Returns the matrix associated to a path.</span>
+
+<span class="sd">            The matrix associated to a Rauzy induction, is the linear</span>
+<span class="sd">            application that allows to recover the lengths of self from the</span>
+<span class="sd">            lengths of the induced.</span>
+
+<span class="sd">            OUTPUT:</span>
+
+<span class="sd">            matrix -- a square matrix of integers</span>
+
+<span class="sd">            EXAMPLES::</span>
+
+<span class="sd">                sage: from surface_dynamics import *</span>
+
+<span class="sd">                sage: p = iet.Permutation(&#39;a1 a2&#39;,&#39;a2 a1&#39;)</span>
+<span class="sd">                sage: d = p.rauzy_diagram()</span>
+<span class="sd">                sage: g = d.path(p,&#39;top&#39;)</span>
+<span class="sd">                sage: g.matrix()</span>
+<span class="sd">                [1 0]</span>
+<span class="sd">                [1 1]</span>
+<span class="sd">                sage: g = d.path(p,&#39;bottom&#39;)</span>
+<span class="sd">                sage: g.matrix()</span>
+<span class="sd">                [1 1]</span>
+<span class="sd">                [0 1]</span>
+
+<span class="sd">            ::</span>
+
+<span class="sd">                sage: p = iet.Permutation(&#39;a b c&#39;,&#39;c b a&#39;)</span>
+<span class="sd">                sage: d = p.rauzy_diagram()</span>
+<span class="sd">                sage: g = d.path(p)</span>
+<span class="sd">                sage: g.matrix() == identity_matrix(3)</span>
+<span class="sd">                True</span>
+<span class="sd">                sage: g = d.path(p,&#39;top&#39;)</span>
+<span class="sd">                sage: g.matrix()</span>
+<span class="sd">                [1 0 0]</span>
+<span class="sd">                [0 1 0]</span>
+<span class="sd">                [1 0 1]</span>
+<span class="sd">                sage: g = d.path(p,&#39;bottom&#39;)</span>
+<span class="sd">                sage: g.matrix()</span>
+<span class="sd">                [1 0 1]</span>
+<span class="sd">                [0 1 0]</span>
+<span class="sd">                [0 0 1]</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">composition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">edge_to_matrix</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LabelledRauzyDiagram.Path.interval_substitution"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.Path.interval_substitution">[docs]</a>        <span class="k">def</span> <span class="nf">interval_substitution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Returns the substitution of intervals obtained.</span>
+
+<span class="sd">            OUTPUT:</span>
+
+<span class="sd">            WordMorphism -- the word morphism corresponding to the interval</span>
+
+<span class="sd">            EXAMPLES::</span>
+
+<span class="sd">                sage: from surface_dynamics import *</span>
+
+<span class="sd">                sage: p = iet.Permutation(&#39;a b&#39;,&#39;b a&#39;)</span>
+<span class="sd">                sage: r = p.rauzy_diagram()</span>
+<span class="sd">                sage: p0 = r.path(p,0)</span>
+<span class="sd">                sage: s0 = p0.interval_substitution()</span>
+<span class="sd">                sage: print(s0)</span>
+<span class="sd">                a-&gt;a, b-&gt;ba</span>
+<span class="sd">                sage: p1 = r.path(p,1)</span>
+<span class="sd">                sage: s1 = p1.interval_substitution()</span>
+<span class="sd">                sage: print(s1)</span>
+<span class="sd">                a-&gt;ab, b-&gt;b</span>
+<span class="sd">                sage: (p0 + p1).interval_substitution() == s1 * s0</span>
+<span class="sd">                True</span>
+<span class="sd">                sage: (p1 + p0).interval_substitution() == s0 * s1</span>
+<span class="sd">                True</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_composition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">edge_to_interval_substitution</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LabelledRauzyDiagram.Path.orbit_substitution"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.Path.orbit_substitution">[docs]</a>        <span class="k">def</span> <span class="nf">orbit_substitution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Returns the substitution on the orbit of the left extremity.</span>
+
+<span class="sd">            OUTPUT:</span>
+
+<span class="sd">            WordMorphism -- the word morphism corresponding to the orbit</span>
+
+<span class="sd">            EXAMPLES::</span>
+
+<span class="sd">                sage: from surface_dynamics import *</span>
+
+<span class="sd">                sage: p = iet.Permutation(&#39;a b&#39;,&#39;b a&#39;)</span>
+<span class="sd">                sage: d = p.rauzy_diagram()</span>
+<span class="sd">                sage: g0 = d.path(p,&#39;top&#39;)</span>
+<span class="sd">                sage: s0 = g0.orbit_substitution()</span>
+<span class="sd">                sage: print(s0)</span>
+<span class="sd">                a-&gt;ab, b-&gt;b</span>
+<span class="sd">                sage: g1 = d.path(p,&#39;bottom&#39;)</span>
+<span class="sd">                sage: s1 = g1.orbit_substitution()</span>
+<span class="sd">                sage: print(s1)</span>
+<span class="sd">                a-&gt;a, b-&gt;ab</span>
+<span class="sd">                sage: (g0 + g1).orbit_substitution() == s0 * s1</span>
+<span class="sd">                True</span>
+<span class="sd">                sage: (g1 + g0).orbit_substitution() == s1 * s0</span>
+<span class="sd">                True</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">composition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">edge_to_orbit_substitution</span><span class="p">)</span></div>
+
+        <span class="n">substitution</span> <span class="o">=</span> <span class="n">orbit_substitution</span>  <span class="c1"># standard name</span>
+        <span class="n">dual_substitution</span> <span class="o">=</span> <span class="n">interval_substitution</span>  <span class="c1"># standard name</span>
+
+<div class="viewcode-block" id="LabelledRauzyDiagram.Path.is_full"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.Path.is_full">[docs]</a>        <span class="k">def</span> <span class="nf">is_full</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Tests the fullness.</span>
+
+<span class="sd">            A path is full if all intervals win at least one time.</span>
+
+<span class="sd">            OUTPUT:</span>
+
+<span class="sd">            boolean -- True if the path is full and False else</span>
+
+<span class="sd">            EXAMPLE::</span>
+
+<span class="sd">                sage: from surface_dynamics import *</span>
+
+<span class="sd">                sage: p = iet.Permutation(&#39;a b c&#39;,&#39;c b a&#39;)</span>
+<span class="sd">                sage: r = p.rauzy_diagram()</span>
+<span class="sd">                sage: g0 = r.path(p,&#39;t&#39;,&#39;b&#39;,&#39;t&#39;)</span>
+<span class="sd">                sage: g1 = r.path(p,&#39;b&#39;,&#39;t&#39;,&#39;b&#39;)</span>
+<span class="sd">                sage: g0.is_full()</span>
+<span class="sd">                False</span>
+<span class="sd">                sage: g1.is_full()</span>
+<span class="sd">                False</span>
+<span class="sd">                sage: (g0 + g1).is_full()</span>
+<span class="sd">                True</span>
+<span class="sd">                sage: (g1 + g0).is_full()</span>
+<span class="sd">                True</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">letters</span><span class="p">())</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">winners</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="LabelledRauzyDiagram.Path.self_similar_iet"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.Path.self_similar_iet">[docs]</a>        <span class="k">def</span> <span class="nf">self_similar_iet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">):</span>
+            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Return the self-similar interval exchange transformation associated to this path</span>
+
+<span class="sd">            INPUT:</span>
+
+<span class="sd">            - ``name`` - an optional name for the generator of the number field</span>
+
+<span class="sd">            EXAMPLES::</span>
+
+<span class="sd">                sage: from surface_dynamics import *</span>
+
+<span class="sd">            The golden rotation::</span>
+
+<span class="sd">                sage: p = iet.Permutation(&#39;a b&#39;, &#39;b a&#39;)</span>
+<span class="sd">                sage: R = p.rauzy_diagram()</span>
+<span class="sd">                sage: g = R.path(p, &#39;t&#39;, &#39;b&#39;)</span>
+<span class="sd">                sage: T = g.self_similar_iet()</span>
+<span class="sd">                sage: T.lengths().parent()</span>
+<span class="sd">                Vector space of dimension 2 over Number Field ...</span>
+<span class="sd">                sage: T.lengths().n()</span>
+<span class="sd">                (1.00000000000000, 1.61803398874989)</span>
+
+<span class="sd">            An example from Do-Schmidt::</span>
+
+<span class="sd">                sage: code = [1,0,1,0,1,0,0,0,1,0,0,1,1,1,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,0]</span>
+<span class="sd">                sage: p = iet.Permutation([0,1,2,3,4,5,6],[6,5,4,3,2,1,0])</span>
+<span class="sd">                sage: R = p.rauzy_diagram()</span>
+<span class="sd">                sage: g = R.path(p, *code)</span>
+<span class="sd">                sage: T = g.self_similar_iet()</span>
+<span class="sd">                sage: T.sah_arnoux_fathi_invariant()</span>
+<span class="sd">                (0, 0, 0)</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_loop</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_full</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the path must be a full loop&quot;</span><span class="p">)</span>
+
+            <span class="kn">from</span> <span class="nn">sage.rings.qqbar</span> <span class="kn">import</span> <span class="n">AA</span>
+            <span class="kn">from</span> <span class="nn">sage.rings.number_field.number_field</span> <span class="kn">import</span> <span class="n">NumberField</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span>
+            <span class="n">poly</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">charpoly</span><span class="p">()</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">poly</span><span class="o">.</span><span class="n">roots</span><span class="p">(</span><span class="n">AA</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+            <span class="n">K</span> <span class="o">=</span> <span class="n">NumberField</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">minpoly</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="n">l</span><span class="p">)</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">gen</span><span class="p">()</span>
+            <span class="n">lengths</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">right_kernel</span><span class="p">()</span><span class="o">.</span><span class="n">basis</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lengths</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;wrong Perron-Frobenius eigenvector: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lengths</span><span class="p">))</span>
+
+            <span class="c1"># NOTE: the above code makes &quot;lengths&quot; with parent being the right kernel (that is</span>
+            <span class="c1"># a submodule of R^d)</span>
+            <span class="n">lengths</span> <span class="o">=</span> <span class="n">lengths</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span><span class="o">.</span><span class="n">ambient_vector_space</span><span class="p">()(</span><span class="n">lengths</span><span class="p">)</span>
+
+            <span class="kn">from</span> <span class="nn">.iet</span> <span class="kn">import</span> <span class="n">IntervalExchangeTransformation</span>
+            <span class="k">return</span> <span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">(),</span> <span class="n">lengths</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="LabelledRauzyDiagram.edge_to_interval_substitution"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.edge_to_interval_substitution">[docs]</a>    <span class="k">def</span> <span class="nf">edge_to_interval_substitution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edge_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the interval substitution associated to an edge</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        WordMorphism -- the WordMorphism corresponding to the edge</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c&#39;,&#39;c b a&#39;)</span>
+<span class="sd">            sage: r = p.rauzy_diagram()</span>
+<span class="sd">            sage: print(r.edge_to_interval_substitution(None,None))</span>
+<span class="sd">            a-&gt;a, b-&gt;b, c-&gt;c</span>
+<span class="sd">            sage: print(r.edge_to_interval_substitution(p,0))</span>
+<span class="sd">            a-&gt;a, b-&gt;b, c-&gt;ca</span>
+<span class="sd">            sage: print(r.edge_to_interval_substitution(p,1))</span>
+<span class="sd">            a-&gt;ac, b-&gt;b, c-&gt;c</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">edge_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">WordMorphism</span><span class="p">(</span><span class="nb">dict</span><span class="p">((</span><span class="n">a</span><span class="p">,[</span><span class="n">a</span><span class="p">])</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">letters</span><span class="p">()))</span>
+
+        <span class="n">function_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edge_types</span><span class="p">[</span><span class="n">edge_type</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_interval_substitution&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element_class</span><span class="p">,</span><span class="n">function_name</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">WordMorphism</span><span class="p">(</span><span class="nb">dict</span><span class="p">((</span><span class="n">a</span><span class="p">,[</span><span class="n">a</span><span class="p">])</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">letters</span><span class="p">()))</span>
+
+        <span class="n">arguments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edge_types</span><span class="p">[</span><span class="n">edge_type</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">function_name</span><span class="p">)(</span><span class="o">*</span><span class="n">arguments</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LabelledRauzyDiagram.edge_to_orbit_substitution"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.edge_to_orbit_substitution">[docs]</a>    <span class="k">def</span> <span class="nf">edge_to_orbit_substitution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edge_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the interval substitution associated to an edge</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        WordMorphism -- the word morphism corresponding to the edge</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c&#39;,&#39;c b a&#39;)</span>
+<span class="sd">            sage: r = p.rauzy_diagram()</span>
+<span class="sd">            sage: print(r.edge_to_orbit_substitution(None,None))</span>
+<span class="sd">            a-&gt;a, b-&gt;b, c-&gt;c</span>
+<span class="sd">            sage: print(r.edge_to_orbit_substitution(p,0))</span>
+<span class="sd">            a-&gt;ac, b-&gt;b, c-&gt;c</span>
+<span class="sd">            sage: print(r.edge_to_orbit_substitution(p,1))</span>
+<span class="sd">            a-&gt;a, b-&gt;b, c-&gt;ac</span>
+
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: pi0 = iet.Permutation(&#39;A1 A2 B&#39;, &#39;B A1 A2&#39;)</span>
+<span class="sd">            sage: G = pi0.rauzy_diagram()</span>
+<span class="sd">            sage: s1 = G.edge_to_orbit_substitution(pi0,0)</span>
+<span class="sd">            sage: s1.domain().alphabet()</span>
+<span class="sd">            {&#39;A1&#39;, &#39;A2&#39;, &#39;B&#39;}</span>
+<span class="sd">            sage: s1.codomain().alphabet()</span>
+<span class="sd">            {&#39;A1&#39;, &#39;A2&#39;, &#39;B&#39;}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">edge_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">WordMorphism</span><span class="p">(</span><span class="nb">dict</span><span class="p">((</span><span class="n">a</span><span class="p">,[</span><span class="n">a</span><span class="p">])</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">letters</span><span class="p">()))</span>
+
+        <span class="n">function_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edge_types</span><span class="p">[</span><span class="n">edge_type</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_orbit_substitution&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element_class</span><span class="p">,</span><span class="n">function_name</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">WordMorphism</span><span class="p">(</span><span class="nb">dict</span><span class="p">((</span><span class="n">a</span><span class="p">,[</span><span class="n">a</span><span class="p">])</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">letters</span><span class="p">()))</span>
+
+        <span class="n">arguments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edge_types</span><span class="p">[</span><span class="n">edge_type</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">function_name</span><span class="p">)(</span><span class="o">*</span><span class="n">arguments</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LabelledRauzyDiagram.full_loop_iterator"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.full_loop_iterator">[docs]</a>    <span class="k">def</span> <span class="nf">full_loop_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns an iterator over all full path starting at start.</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``start`` - the start point</span>
+
+<span class="sd">        - ``max_length`` - a limit on the length of the paths</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        iterator -- iterator over full loops</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b&#39;,&#39;b a&#39;)</span>
+<span class="sd">            sage: r = p.rauzy_diagram()</span>
+<span class="sd">            sage: for g in r.full_loop_iterator(p,2):</span>
+<span class="sd">            ....:     print(&quot;%s\n*****&quot; % g.matrix())</span>
+<span class="sd">            [1 1]</span>
+<span class="sd">            [1 2]</span>
+<span class="sd">            *****</span>
+<span class="sd">            [2 1]</span>
+<span class="sd">            [1 1]</span>
+<span class="sd">            *****</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+
+        <span class="n">ifull</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_loop</span><span class="p">()</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">is_full</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_all_path_extension</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">max_length</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">copy</span><span class="p">,</span><span class="n">ifull</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LabelledRauzyDiagram.full_nloop_iterator"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.full_nloop_iterator">[docs]</a>    <span class="k">def</span> <span class="nf">full_nloop_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns an iterator over all full loops of given length.</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``start`` - the initial permutation</span>
+
+<span class="sd">        - ``length`` - the length to consider</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        iterator -- an iterator over the full loops of given length</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b&#39;,&#39;b a&#39;)</span>
+<span class="sd">            sage: d = p.rauzy_diagram()</span>
+<span class="sd">            sage: for g in d.full_nloop_iterator(p,2):</span>
+<span class="sd">            ....:     print(&quot;%s\n*****&quot; % g.matrix())</span>
+<span class="sd">            [1 1]</span>
+<span class="sd">            [1 2]</span>
+<span class="sd">            *****</span>
+<span class="sd">            [2 1]</span>
+<span class="sd">            [1 1]</span>
+<span class="sd">            *****</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+
+        <span class="n">ifull</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_loop</span><span class="p">()</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">is_full</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_all_npath_extension</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">length</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">ifull</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_permutation_to_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Translation of a labelled permutation to a vertex</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``p`` - a labelled Permutation</span>
+
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c&#39;,&#39;c b a&#39;)</span>
+<span class="sd">            sage: r = p.rauzy_diagram()</span>
+<span class="sd">            sage: p in r   #indirect doctest</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+        <span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+        <span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+    <span class="k">def</span> <span class="nf">_set_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets self._element with data</span>
+
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c&#39;,&#39;c b a&#39;)</span>
+<span class="sd">            sage: r = p.rauzy_diagram()</span>
+<span class="sd">            sage: r[p][0] == p.rauzy_move(0)   #indirect doctest</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: r[p][1] == p.rauzy_move(1)   #indirect doctest</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_labels</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_twin</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">])]</span></div>
+
+<div class="viewcode-block" id="FlippedLabelledRauzyDiagram"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledRauzyDiagram">[docs]</a><span class="k">class</span> <span class="nc">FlippedLabelledRauzyDiagram</span><span class="p">(</span><span class="n">FlippedRauzyDiagram</span><span class="p">,</span> <span class="n">LabelledRauzyDiagram</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rauzy diagram of flipped labelled permutations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_permutation_to_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns what must be stored from p.</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``p`` - a Flipped labelled permutation</span>
+
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c&#39;,&#39;c b a&#39;,flips=&#39;a&#39;)</span>
+<span class="sd">            sage: r = p.rauzy_diagram()</span>
+<span class="sd">            sage: p in r   #indirect doctest</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                <span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                <span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_flips</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_flips</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+    <span class="k">def</span> <span class="nf">_set_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns what the vertex i as a permutation.</span>
+
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b&#39;,&#39;b a&#39;,flips=&#39;a&#39;)</span>
+<span class="sd">            sage: r = p.rauzy_diagram()</span>
+<span class="sd">            sage: p in r   #indirect doctest</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_labels</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_twin</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">])]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_flips</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">]),</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">5</span><span class="p">])]</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the surface-dynamics authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

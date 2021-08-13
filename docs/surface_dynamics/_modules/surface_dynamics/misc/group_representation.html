@@ -1,0 +1,488 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>surface_dynamics.misc.group_representation &mdash; surface-dynamics 0.4.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> surface-dynamics
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../demo_interval_exchanges.html">Interval exchange transformations</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../origamis.html">Origamis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interval_exchanges/index.html">Interval exchange transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../topological_recursion/index.html">Topological recursion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/index.html">Miscellaneous</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">surface-dynamics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>surface_dynamics.misc.group_representation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for surface_dynamics.misc.group_representation</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding: utf-8</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Some utility function for representations of finite groups</span>
+
+<span class="sd">Most of the functions are just GAP wrappers.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># *************************************************************************</span>
+<span class="c1"># Copyright (C) 2015-2016 Charles Fougeron &lt;charlesfougeron@gmail.com&gt;</span>
+<span class="c1">#                         Vincent Delecroix &lt;20100.delecroix@gmail.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1">#  Distributed under the terms of the GNU General Public License (GPL)</span>
+<span class="c1">#  as published by the Free Software Foundation; either version 2 of</span>
+<span class="c1">#  the License, or (at your option) any later version.</span>
+<span class="c1">#                  https://www.gnu.org/licenses/</span>
+<span class="c1"># *************************************************************************</span>
+
+<span class="kn">from</span> <span class="nn">sage.rings.all</span> <span class="kn">import</span> <span class="n">ZZ</span>
+<span class="kn">from</span> <span class="nn">sage.libs.gap.libgap</span> <span class="kn">import</span> <span class="n">libgap</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="real_characters"><a class="viewcode-back" href="../../../misc/group_representation.html#surface_dynamics.misc.group_representation.real_characters">[docs]</a><span class="k">def</span> <span class="nf">real_characters</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a pair ``(table of characters, character degrees)`` for the</span>
+<span class="sd">    group ``G``.</span>
+
+<span class="sd">    OUTPUT:</span>
+
+<span class="sd">    - table of characters - a list of characters. Each character is represented</span>
+<span class="sd">      as the list of its values on conjugacy classes. The order of conjugacy</span>
+<span class="sd">      classes is the same as the one returned by GAP.</span>
+
+<span class="sd">    - degrees - the list of degrees of the characters</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: from surface_dynamics.misc.group_representation import real_characters</span>
+<span class="sd">        sage: T, deg = real_characters(AlternatingGroup(5))</span>
+<span class="sd">        sage: T</span>
+<span class="sd">        [(1, 1, 1, 1, 1),</span>
+<span class="sd">         (3, -1, 0, -E(5) - E(5)^4, -E(5)^2 - E(5)^3),</span>
+<span class="sd">         (3, -1, 0, -E(5)^2 - E(5)^3, -E(5) - E(5)^4),</span>
+<span class="sd">         (4, 0, 1, -1, -1),</span>
+<span class="sd">         (5, 1, -1, 0, 0)]</span>
+<span class="sd">        sage: set(parent(x) for chi in T for x in chi)</span>
+<span class="sd">        {Universal Cyclotomic Field}</span>
+<span class="sd">        sage: deg</span>
+<span class="sd">        [1, 3, 3, 4, 5]</span>
+
+<span class="sd">        sage: T, deg = real_characters(CyclicPermutationGroup(6))</span>
+<span class="sd">        sage: T</span>
+<span class="sd">        [(1, 1, 1, 1, 1, 1),</span>
+<span class="sd">         (1, -1, 1, -1, 1, -1),</span>
+<span class="sd">         (2, -1, -1, 2, -1, -1),</span>
+<span class="sd">         (2, 1, -1, -2, -1, 1)]</span>
+<span class="sd">        sage: deg</span>
+<span class="sd">        [1, 1, 1, 1]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">sage.rings.universal_cyclotomic_field</span> <span class="kn">import</span> <span class="n">UniversalCyclotomicField</span>
+
+    <span class="n">G</span> <span class="o">=</span> <span class="n">libgap</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+    <span class="n">UCF</span> <span class="o">=</span> <span class="n">UniversalCyclotomicField</span><span class="p">()</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">ConjugacyClasses</span><span class="p">()</span><span class="o">.</span><span class="n">Length</span><span class="p">()</span>
+    <span class="n">Tgap</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">CharacterTable</span><span class="p">()</span><span class="o">.</span><span class="n">Irr</span><span class="p">()</span>
+    <span class="n">degrees</span> <span class="o">=</span> <span class="p">[</span><span class="n">chi</span><span class="o">.</span><span class="n">Degree</span><span class="p">()</span><span class="o">.</span><span class="n">sage</span><span class="p">()</span> <span class="k">for</span> <span class="n">chi</span> <span class="ow">in</span> <span class="n">Tgap</span><span class="p">]</span>
+    <span class="n">Tgap</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">UCF</span><span class="p">(</span><span class="n">chi</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="k">for</span> <span class="n">chi</span> <span class="ow">in</span> <span class="n">Tgap</span><span class="p">]</span>
+
+    <span class="n">real_T</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">real_degrees</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chi</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Tgap</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">chi</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">real_degrees</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">degrees</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">is_real</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">chi</span><span class="p">):</span>
+            <span class="n">real_T</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chi</span><span class="p">)</span>
+            <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">chi</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">chi</span><span class="p">)</span>
+            <span class="n">chi_bar</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">chi</span><span class="p">)</span>
+            <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">chi_bar</span><span class="p">)</span>
+            <span class="n">real_T</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">chi</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">chi</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">real_T</span><span class="p">,</span> <span class="n">real_degrees</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="conjugacy_class_matrix"><a class="viewcode-back" href="../../../misc/group_representation.html#surface_dynamics.misc.group_representation.conjugacy_class_matrix">[docs]</a><span class="k">def</span> <span class="nf">conjugacy_class_matrix</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the matrix associated to a given conjugacy class of a permutation</span>
+<span class="sd">    group.</span>
+
+<span class="sd">    The result is a `d \times d` matrix that is invariant under conjugation by</span>
+<span class="sd">    the group action on `\ZZ^d`. It is used to produce the projection matrices</span>
+<span class="sd">    on the isotypic subspaces.</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: from surface_dynamics.misc.group_representation import conjugacy_class_matrix</span>
+
+<span class="sd">        sage: G = QuaternionGroup()</span>
+<span class="sd">        sage: Ggap = libgap(G)</span>
+<span class="sd">        sage: cls = Ggap.ConjugacyClasses()</span>
+<span class="sd">        sage: m = conjugacy_class_matrix(cls[2], 8)</span>
+<span class="sd">        sage: m</span>
+<span class="sd">        [0 0 1 0 0 0 0 0]</span>
+<span class="sd">        [0 0 0 1 0 0 0 0]</span>
+<span class="sd">        [1 0 0 0 0 0 0 0]</span>
+<span class="sd">        [0 1 0 0 0 0 0 0]</span>
+<span class="sd">        [0 0 0 0 0 0 1 0]</span>
+<span class="sd">        [0 0 0 0 0 0 0 1]</span>
+<span class="sd">        [0 0 0 0 1 0 0 0]</span>
+<span class="sd">        [0 0 0 0 0 1 0 0]</span>
+
+<span class="sd">        sage: for cl in cls:</span>
+<span class="sd">        ....:      m = conjugacy_class_matrix(cl, 8)</span>
+<span class="sd">        ....:      for g in G:</span>
+<span class="sd">        ....:          g = g.matrix()</span>
+<span class="sd">        ....:          assert g*m*~g == m</span>
+
+<span class="sd">        sage: A = AlternatingGroup(5)</span>
+<span class="sd">        sage: Agap = libgap(A)</span>
+<span class="sd">        sage: Ggap = Agap.Action(Agap)</span>
+<span class="sd">        sage: gens = libgap.GeneratorsOfGroup(Ggap).sage()</span>
+<span class="sd">        sage: G = PermutationGroup(gens)</span>
+<span class="sd">        sage: cls = Ggap.ConjugacyClasses()</span>
+<span class="sd">        sage: for cl in cls:</span>
+<span class="sd">        ....:      m = conjugacy_class_matrix(cls[2], 60)</span>
+<span class="sd">        ....:      for _ in range(20):</span>
+<span class="sd">        ....:           g = G.random_element().matrix()</span>
+<span class="sd">        ....:           assert g*m*~g == m</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">d</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">)]</span>
+
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">cl</span><span class="o">.</span><span class="n">AsList</span><span class="p">():</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">libgap</span><span class="o">.</span><span class="n">ListPerm</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">sage</span><span class="p">()]</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+            <span class="n">res</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">p</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="kn">from</span> <span class="nn">sage.matrix.constructor</span> <span class="kn">import</span> <span class="n">matrix</span>
+    <span class="k">return</span> <span class="n">matrix</span><span class="p">(</span><span class="n">ZZ</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="regular_conjugacy_class_matrix"><a class="viewcode-back" href="../../../misc/group_representation.html#surface_dynamics.misc.group_representation.regular_conjugacy_class_matrix">[docs]</a><span class="k">def</span> <span class="nf">regular_conjugacy_class_matrix</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span> <span class="n">G</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the matrix of the conjugacy class ``cl`` associated to the regular</span>
+<span class="sd">    representation of ``G``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Glist</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">AsList</span><span class="p">()</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">Size</span><span class="p">()</span><span class="o">.</span><span class="n">sage</span><span class="p">()</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">d</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">cl</span><span class="o">.</span><span class="n">AsList</span><span class="p">():</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">libgap</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Glist</span><span class="p">,</span> <span class="n">libgap</span><span class="o">.</span><span class="n">OnRight</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">libgap</span><span class="o">.</span><span class="n">ListPerm</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+            <span class="n">res</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">p</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="kn">from</span> <span class="nn">sage.matrix.constructor</span> <span class="kn">import</span> <span class="n">matrix</span>
+    <span class="k">return</span> <span class="n">matrix</span><span class="p">(</span><span class="n">ZZ</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="isotypic_projection_matrix"><a class="viewcode-back" href="../../../misc/group_representation.html#surface_dynamics.misc.group_representation.isotypic_projection_matrix">[docs]</a><span class="k">def</span> <span class="nf">isotypic_projection_matrix</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">chi</span><span class="p">,</span> <span class="n">deg</span><span class="p">,</span> <span class="n">conj_mats</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">floating_point</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return an isotypic projection matrix</span>
+
+<span class="sd">    INPUT:</span>
+
+<span class="sd">    - ``G`` -- a permutation group</span>
+
+<span class="sd">    - ``d`` -- (integer) the domain of the group is `\{1, 2, \ldots, d\}`</span>
+
+<span class="sd">    - ``chi`` -- (tuple) real or complex character</span>
+
+<span class="sd">    - ``deg`` -- (integer) degree of the character</span>
+
+<span class="sd">    - ``conj_mats`` -- (optional list) matrices of the conjugacy classes</span>
+
+<span class="sd">    - ``floating_point`` -- whether to return matrices with floating point entries instead</span>
+<span class="sd">                   of elements in the cyclotomic field</span>
+
+<span class="sd">    Recall the formula for the projection as given in Theorem 8 in [Ser67]_. If</span>
+<span class="sd">    `G` is a permutation group, then</span>
+
+<span class="sd">    .. MATH::</span>
+
+<span class="sd">        \pi_\chi = \sum_{g \in G} \overline_{\chi(g)} g</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: from surface_dynamics.misc.group_representation import real_characters, isotypic_projection_matrix</span>
+<span class="sd">        sage: G = AlternatingGroup(5)</span>
+<span class="sd">        sage: T,deg = real_characters(G)</span>
+<span class="sd">        sage: isotypic_projection_matrix(G, 5, T[0], deg[0])</span>
+<span class="sd">        [1/5 1/5 1/5 1/5 1/5]</span>
+<span class="sd">        [1/5 1/5 1/5 1/5 1/5]</span>
+<span class="sd">        [1/5 1/5 1/5 1/5 1/5]</span>
+<span class="sd">        [1/5 1/5 1/5 1/5 1/5]</span>
+<span class="sd">        [1/5 1/5 1/5 1/5 1/5]</span>
+<span class="sd">        sage: isotypic_projection_matrix(G, 5, T[1], deg[1])</span>
+<span class="sd">        [0 0 0 0 0]</span>
+<span class="sd">        [0 0 0 0 0]</span>
+<span class="sd">        [0 0 0 0 0]</span>
+<span class="sd">        [0 0 0 0 0]</span>
+<span class="sd">        [0 0 0 0 0]</span>
+<span class="sd">        sage: isotypic_projection_matrix(G, 5, T[2], deg[2])</span>
+<span class="sd">        [0 0 0 0 0]</span>
+<span class="sd">        [0 0 0 0 0]</span>
+<span class="sd">        [0 0 0 0 0]</span>
+<span class="sd">        [0 0 0 0 0]</span>
+<span class="sd">        [0 0 0 0 0]</span>
+<span class="sd">        sage: isotypic_projection_matrix(G, 5, T[3], deg[3])</span>
+<span class="sd">        [ 4/5 -1/5 -1/5 -1/5 -1/5]</span>
+<span class="sd">        [-1/5  4/5 -1/5 -1/5 -1/5]</span>
+<span class="sd">        [-1/5 -1/5  4/5 -1/5 -1/5]</span>
+<span class="sd">        [-1/5 -1/5 -1/5  4/5 -1/5]</span>
+<span class="sd">        [-1/5 -1/5 -1/5 -1/5  4/5]</span>
+<span class="sd">        sage: isotypic_projection_matrix(G, 5, T[3], deg[3], floating_point=True)</span>
+<span class="sd">        array([[ 0.8, -0.2, -0.2, -0.2, -0.2],</span>
+<span class="sd">               [-0.2,  0.8, -0.2, -0.2, -0.2],</span>
+<span class="sd">               [-0.2, -0.2,  0.8, -0.2, -0.2],</span>
+<span class="sd">               [-0.2, -0.2, -0.2,  0.8, -0.2],</span>
+<span class="sd">               [-0.2, -0.2, -0.2, -0.2,  0.8]])</span>
+<span class="sd">        sage: isotypic_projection_matrix(G, 5, T[4], deg[4])</span>
+<span class="sd">        [0 0 0 0 0]</span>
+<span class="sd">        [0 0 0 0 0]</span>
+<span class="sd">        [0 0 0 0 0]</span>
+<span class="sd">        [0 0 0 0 0]</span>
+<span class="sd">        [0 0 0 0 0]</span>
+
+<span class="sd">        sage: sum(isotypic_projection_matrix(G, 5, T[i], deg[i]) for i in range(5)).is_one()</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">sage.matrix.special</span> <span class="kn">import</span> <span class="n">zero_matrix</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">zero_matrix</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+    <span class="n">Ggap</span> <span class="o">=</span> <span class="n">libgap</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">cl</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Ggap</span><span class="o">.</span><span class="n">ConjugacyClasses</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="n">conj_mats</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">conjugacy_class_matrix</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">conj_mats</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">floating_point</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="n">chi</span><span class="p">[</span><span class="n">t</span><span class="p">])</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="n">chi</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span>
+
+    <span class="k">if</span> <span class="n">floating_point</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">deg</span><span class="p">)</span> <span class="o">*</span> <span class="n">res</span> <span class="o">/</span> <span class="nb">int</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">cardinality</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">deg</span> <span class="o">*</span> <span class="n">res</span> <span class="o">/</span> <span class="n">G</span><span class="o">.</span><span class="n">cardinality</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="real_isotypic_projection_matrices"><a class="viewcode-back" href="../../../misc/group_representation.html#surface_dynamics.misc.group_representation.real_isotypic_projection_matrices">[docs]</a><span class="k">def</span> <span class="nf">real_isotypic_projection_matrices</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the real projections</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: from surface_dynamics.misc.group_representation import real_isotypic_projection_matrices</span>
+
+<span class="sd">        sage: G = AlternatingGroup(5)</span>
+<span class="sd">        sage: mats = real_isotypic_projection_matrices(G, 6)</span>
+<span class="sd">        sage: sum(mats).is_one()</span>
+<span class="sd">        True</span>
+
+<span class="sd">        sage: G = CyclicPermutationGroup(6)</span>
+<span class="sd">        sage: mats = real_isotypic_projection_matrices(G, 6)</span>
+<span class="sd">        sage: sum(mats).is_one()</span>
+<span class="sd">        True</span>
+
+<span class="sd">        sage: G = QuaternionGroup()</span>
+<span class="sd">        sage: mats = real_isotypic_projection_matrices(G, 8)</span>
+<span class="sd">        sage: sum(mats).is_one()</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">isotypic_projection_matrix</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">chi</span><span class="p">,</span> <span class="n">deg</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">chi</span><span class="p">,</span> <span class="n">deg</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">real_characters</span><span class="p">(</span><span class="n">G</span><span class="p">))]</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the surface-dynamics authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

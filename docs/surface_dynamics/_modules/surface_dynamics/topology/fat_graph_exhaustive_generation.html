@@ -1,0 +1,1186 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>surface_dynamics.topology.fat_graph_exhaustive_generation &mdash; surface-dynamics 0.4.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> surface-dynamics
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../demo_interval_exchanges.html">Interval exchange transformations</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../origamis.html">Origamis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interval_exchanges/index.html">Interval exchange transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../topological_recursion/index.html">Topological recursion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/index.html">Miscellaneous</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">surface-dynamics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>surface_dynamics.topology.fat_graph_exhaustive_generation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for surface_dynamics.topology.fat_graph_exhaustive_generation</h1><div class="highlight"><pre>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Exhaustive generation of fat graphs.</span>
+
+<span class="sd">This is done following the McKay canonical augmentation. This module</span>
+<span class="sd">is experimental.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># ****************************************************************************</span>
+<span class="c1">#       Copyright (C) 2019 Vincent Delecroix &lt;20100.delecroix@gmail.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1">#  Distributed under the terms of the GNU General Public License (GPL)</span>
+<span class="c1">#  as published by the Free Software Foundation; either version 2 of</span>
+<span class="c1">#  the License, or (at your option) any later version.</span>
+<span class="c1">#                  https://www.gnu.org/licenses/</span>
+<span class="c1"># ****************************************************************************</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">range</span>
+
+<span class="kn">import</span> <span class="nn">numbers</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">from</span> <span class="nn">sage.rings.integer_ring</span> <span class="kn">import</span> <span class="n">ZZ</span>
+<span class="kn">from</span> <span class="nn">sage.rings.rational_field</span> <span class="kn">import</span> <span class="n">QQ</span>
+
+<span class="kn">from</span> <span class="nn">.fat_graph</span> <span class="kn">import</span> <span class="n">FatGraph</span><span class="p">,</span> <span class="n">list_extrems</span>
+
+<span class="c1">###########################</span>
+<span class="c1"># Miscellaneous functions #</span>
+<span class="c1">###########################</span>
+
+<div class="viewcode-block" id="minmax"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.minmax">[docs]</a><span class="k">def</span> <span class="nf">minmax</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">M</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">M</span><span class="p">:</span>
+            <span class="n">M</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">m</span><span class="p">,</span> <span class="n">M</span></div>
+
+
+<div class="viewcode-block" id="num_and_weighted_num"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.num_and_weighted_num">[docs]</a><span class="k">def</span> <span class="nf">num_and_weighted_num</span><span class="p">(</span><span class="n">it</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">sage.rings.integer_ring</span> <span class="kn">import</span> <span class="n">ZZ</span>
+    <span class="kn">from</span> <span class="nn">sage.rings.rational_field</span> <span class="kn">import</span> <span class="n">QQ</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">QQ</span><span class="o">.</span><span class="n">zero</span><span class="p">()</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">ZZ</span><span class="o">.</span><span class="n">zero</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">aut</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="n">ZZ</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">aut</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="n">QQ</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">aut</span><span class="o">.</span><span class="n">group_cardinality</span><span class="p">()))</span>
+    <span class="k">return</span> <span class="n">n</span><span class="p">,</span> <span class="n">s</span></div>
+
+
+<span class="c1">##########################</span>
+<span class="c1"># Augmentation functions #</span>
+<span class="c1">##########################</span>
+
+<span class="c1"># augment1: trisection</span>
+<div class="viewcode-block" id="augment1"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.augment1">[docs]</a><span class="k">def</span> <span class="nf">augment1</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given a unicellular map ``cm`` with a single vertex and automorphism group</span>
+<span class="sd">    ``aut_grp``, iterate through all its canonical extensions that are</span>
+<span class="sd">    uniface-univertex maps of greater genus.</span>
+
+<span class="sd">    This operation inserts two edges.</span>
+
+<span class="sd">    This augmentation function is sufficient to iterate through unicellular map.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_n</span>
+    <span class="n">fd</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_fd</span>
+    <span class="n">fl</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_fl</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_fp</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">aut_grp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">aut_grp</span><span class="o">.</span><span class="n">reset_iterator</span><span class="p">()</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">aut_grp</span>
+
+    <span class="k">if</span> <span class="n">cm</span><span class="o">.</span><span class="n">_n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">cm</span><span class="o">.</span><span class="n">_set_genus1_square</span><span class="p">()</span>
+        <span class="n">aaut_grp</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">()</span>
+        <span class="n">callback</span><span class="p">(</span><span class="s1">&#39;augment1&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aaut_grp</span><span class="p">,</span> <span class="n">g</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">g</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">augment1</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aaut_grp</span><span class="p">,</span> <span class="n">g</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
+        <span class="n">cm</span><span class="o">.</span><span class="n">remove_face_trisection</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">R</span><span class="p">:</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="k">for</span> <span class="n">sj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">fd</span><span class="p">[</span><span class="n">fl</span><span class="p">[</span><span class="n">i</span><span class="p">]]):</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="n">j</span>
+            <span class="k">for</span> <span class="n">sk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">fd</span><span class="p">[</span><span class="n">fl</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-</span> <span class="n">sj</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">)):</span>
+                <span class="n">cm</span><span class="o">.</span><span class="n">trisect_face</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+                <span class="n">test</span><span class="p">,</span> <span class="n">aaut_grp</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_is_canonical</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                <span class="n">callback</span><span class="p">(</span><span class="s1">&#39;augment1&#39;</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aaut_grp</span><span class="p">,</span> <span class="n">g</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">test</span> <span class="ow">and</span> <span class="n">g</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">augment1</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aaut_grp</span><span class="p">,</span> <span class="n">g</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
+
+                <span class="n">cm</span><span class="o">.</span><span class="n">remove_face_trisection</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                <span class="n">k</span> <span class="o">=</span> <span class="n">fp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">fp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">fp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span></div>
+
+
+<span class="c1"># augment2: face split</span>
+<span class="c1"># (essentially the same as augment3)</span>
+<div class="viewcode-block" id="augment2"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.augment2">[docs]</a><span class="k">def</span> <span class="nf">augment2</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given a map ``cm`` with a single vertex and automorphism group ``aut_grp``</span>
+<span class="sd">    iterate through all its canonical extensions that are obtained by splitting</span>
+<span class="sd">    one of its faces (by adding a single edge).</span>
+
+<span class="sd">    Because of the chosen canonical labellings, we only need to consider the</span>
+<span class="sd">    faces with maximal degree and split in such way that the secondly created</span>
+<span class="sd">    face is still at least as big as the second biggest.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_n</span>
+    <span class="n">nf</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_nf</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_fp</span>
+    <span class="n">fd</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_fd</span>
+    <span class="n">fl</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_fl</span>
+
+    <span class="k">if</span> <span class="n">cm</span><span class="o">.</span><span class="n">_n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># trivial map -&gt; loop (1 vertex, 2 faces)</span>
+        <span class="n">cm</span><span class="o">.</span><span class="n">_set_genus0_loop</span><span class="p">()</span>
+        <span class="n">aaut_grp</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">()</span>
+        <span class="n">callback</span><span class="p">(</span><span class="s1">&#39;augment2&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aaut_grp</span><span class="p">,</span> <span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">depth</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">augment2</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aaut_grp</span><span class="p">,</span> <span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
+        <span class="n">cm</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">if</span> <span class="n">aut_grp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">aut_grp</span><span class="o">.</span><span class="n">reset_iterator</span><span class="p">()</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">aut_grp</span>
+
+    <span class="c1"># TODO find edges with the highest face degrees on their sides</span>
+    <span class="c1"># (the split must remain higher than them)</span>
+    <span class="n">fdmax0</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">fdmax1</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nf</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">fd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">fdmax0</span><span class="p">:</span>
+            <span class="n">fdmax1</span> <span class="o">=</span> <span class="n">fdmax0</span>
+            <span class="n">fdmax0</span> <span class="o">=</span> <span class="n">fd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="c1"># if callback is not None:</span>
+    <span class="c1">#     parent = cm.to_string()</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">R</span><span class="p">:</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="k">if</span> <span class="n">fdmax1</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">fd</span><span class="p">[</span><span class="n">fl</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&lt;</span> <span class="n">fdmax0</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">niter</span> <span class="o">=</span> <span class="n">fd</span><span class="p">[</span><span class="n">fl</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="k">elif</span> <span class="n">fd</span><span class="p">[</span><span class="n">fl</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">!=</span> <span class="n">fdmax0</span> <span class="ow">or</span> <span class="n">fd</span><span class="p">[</span><span class="n">fl</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fdmax1</span> <span class="o">-</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">fdmax1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">j</span> <span class="o">=</span> <span class="n">fp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">niter</span> <span class="o">=</span> <span class="n">fd</span><span class="p">[</span><span class="n">fl</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fdmax1</span> <span class="o">+</span> <span class="mi">3</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">niter</span><span class="p">):</span>
+            <span class="n">cm</span><span class="o">.</span><span class="n">split_face</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+            <span class="n">test</span><span class="p">,</span> <span class="n">aaut_grp</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_is_canonical</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+            <span class="n">callback</span><span class="p">(</span><span class="s1">&#39;augment2&#39;</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aaut_grp</span><span class="p">,</span> <span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">test</span> <span class="ow">and</span> <span class="n">depth</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">augment2</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aaut_grp</span><span class="p">,</span> <span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
+            <span class="n">cm</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">fp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span></div>
+
+
+<span class="c1"># augment3: vertex split</span>
+<div class="viewcode-block" id="augment3"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.augment3">[docs]</a><span class="k">def</span> <span class="nf">augment3</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">min_degree</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given a map ``cm``, its automorphism group ``aut_grp`` and a minimum</span>
+<span class="sd">    degree ``min_degree``, iterate through all the canonical extensions of</span>
+<span class="sd">    ``cm`` that are obtained by splitting ``depth`` times a vertices into</span>
+<span class="sd">    two vertices.</span>
+
+<span class="sd">    This augmentation add ``depth`` edges to the fat graph.</span>
+
+<span class="sd">    In principle, because of the chosen canonical labellings, we only need to</span>
+<span class="sd">    consider the vertices with maximal degree.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_n</span>
+    <span class="n">nv</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_nv</span>
+    <span class="n">vp</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_vp</span>
+    <span class="n">vd</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_vd</span>
+    <span class="n">vl</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_vl</span>
+
+    <span class="k">if</span> <span class="n">cm</span><span class="o">.</span><span class="n">_n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># trivial map -&gt; edge (2 vertices, 1 face)</span>
+        <span class="n">cm</span><span class="o">.</span><span class="n">_set_genus0_edge</span><span class="p">()</span>
+        <span class="n">aaut_grp</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">()</span>
+        <span class="n">callback</span><span class="p">(</span><span class="s1">&#39;augment3&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aaut_grp</span><span class="p">,</span> <span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">depth</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">augment3</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aaut_grp</span><span class="p">,</span> <span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">min_degree</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
+        <span class="n">cm</span><span class="o">.</span><span class="n">contract_edge</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">if</span> <span class="n">aut_grp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">aut_grp</span><span class="o">.</span><span class="n">reset_iterator</span><span class="p">()</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">aut_grp</span>
+
+    <span class="c1"># TODO: find edges with the highest vertex degrees on their ends</span>
+    <span class="c1"># the split must remain higher than them</span>
+    <span class="n">vdmax0</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">vdmax1</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nv</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">vd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">vdmax0</span><span class="p">:</span>
+            <span class="n">vdmax1</span> <span class="o">=</span> <span class="n">vdmax0</span>
+            <span class="n">vdmax0</span> <span class="o">=</span> <span class="n">vd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">min_degree_loc</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">min_degree</span><span class="p">,</span> <span class="n">vdmax1</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">R</span><span class="p">:</span>
+        <span class="c1"># vertex degrees are split as d -&gt; (d1 + 1, d2 + 1)</span>
+        <span class="c1"># so, if min_degree &gt; 1 we can ignore the first/last half edges</span>
+        <span class="c1"># moreover, by the chosen canonical labelling, the degrees of</span>
+        <span class="c1"># the split vertices must remain larger than any other</span>
+
+        <span class="n">j</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="k">if</span> <span class="n">min_degree_loc</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">vd</span><span class="p">[</span><span class="n">vl</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&lt;</span> <span class="n">vdmax0</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">niter</span> <span class="o">=</span> <span class="n">vd</span><span class="p">[</span><span class="n">vl</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="k">elif</span> <span class="n">vd</span><span class="p">[</span><span class="n">vl</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">!=</span> <span class="n">vdmax0</span> <span class="ow">or</span> <span class="n">vd</span><span class="p">[</span><span class="n">vl</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">min_degree_loc</span> <span class="o">-</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">min_degree_loc</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">j</span> <span class="o">=</span> <span class="n">vp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">niter</span> <span class="o">=</span> <span class="n">vd</span><span class="p">[</span><span class="n">vl</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">min_degree_loc</span> <span class="o">+</span> <span class="mi">3</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">niter</span><span class="p">):</span>
+            <span class="n">cm</span><span class="o">.</span><span class="n">split_vertex</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">vd</span><span class="p">[</span><span class="n">vl</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&gt;=</span> <span class="n">min_degree_loc</span>
+            <span class="k">assert</span> <span class="n">vd</span><span class="p">[</span><span class="n">vl</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">&gt;=</span> <span class="n">min_degree_loc</span>
+            <span class="n">test</span><span class="p">,</span> <span class="n">aaut_grp</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_is_canonical</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+            <span class="n">callback</span><span class="p">(</span><span class="s1">&#39;augment3&#39;</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aaut_grp</span><span class="p">,</span> <span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">test</span> <span class="ow">and</span> <span class="n">depth</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">augment3</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aaut_grp</span><span class="p">,</span> <span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">min_degree</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
+            <span class="n">cm</span><span class="o">.</span><span class="n">contract_edge</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">vp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span></div>
+
+<span class="c1"># TODO</span>
+<span class="c1"># def augment4(cm):</span>
+<span class="c1">#    r&quot;&quot;&quot;</span>
+<span class="c1">#    Plant vertices of degree 1,2.</span>
+<span class="c1">#    &quot;&quot;&quot;</span>
+
+<span class="c1">########################################</span>
+<span class="c1"># Callbacks for the various map reduce #</span>
+<span class="c1">########################################</span>
+
+
+<span class="c1"># callback to count elements (behaves somehow as a 2-tuple)</span>
+<div class="viewcode-block" id="CountAndWeightedCount"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.CountAndWeightedCount">[docs]</a><span class="k">class</span> <span class="nc">CountAndWeightedCount</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="n">ZZ</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weighted_count</span> <span class="o">=</span> <span class="n">QQ</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;(</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weighted_count</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">2</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Integral</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">weighted_count</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">&quot;index out of range&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">count</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">weighted_count</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">weighted_count</span>
+
+    <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">count</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">weighted_count</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">weighted_count</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aut</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="n">ZZ</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weighted_count</span> <span class="o">+=</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">aut</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">aut</span><span class="o">.</span><span class="n">group_cardinality</span><span class="p">())))</span></div>
+
+<span class="c1"># callback to list elements</span>
+<div class="viewcode-block" id="ListCallback"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.ListCallback">[docs]</a><span class="k">class</span> <span class="nc">ListCallback</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aut</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+
+<div class="viewcode-block" id="ListCallback.list"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.ListCallback.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span></div></div>
+
+
+<span class="c1"># TODO: make it work again! This is the most precious piece of information</span>
+<span class="c1"># to enhance the exhaustive generation...</span>
+<span class="c1"># Callback for getting a full trace of the execution</span>
+<span class="n">graphviz_header</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;/****************************************************************/</span>
+<span class="s2">/* Trace execution of fat graphs generation                     */</span>
+<span class="s2">/*                                                              */</span>
+<span class="s2">/* root: vp=</span><span class="si">{vp:6}</span><span class="s2"> ep=</span><span class="si">{ep:6}</span><span class="s2"> fp=</span><span class="si">{fp:6}</span><span class="s2">                          */</span>
+<span class="s2">/* g = </span><span class="si">{g:2}</span><span class="s2">                                                       */</span>
+<span class="s2">/* nf = </span><span class="si">{nf:2}</span><span class="s2">                                                      */</span>
+<span class="s2">/* nv = </span><span class="si">{nv:2}</span><span class="s2">                                                      */</span>
+<span class="s2">                                                                */</span>
+<span class="s2"> To compile to a graph in pdf format run                        */</span>
+<span class="s2">                                                                */</span>
+<span class="s2">      $ sfpdf -Tpdf -o OUTPUT.pdf INPUT.dot                     */</span>
+<span class="s2">                                                                */</span>
+<span class="s2">/****************************************************************/</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="FatGraphsTrace"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace">[docs]</a><span class="k">class</span> <span class="nc">FatGraphsTrace</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to trace the execution of the fat graphs generation.</span>
+
+<span class="sd">    It is mostly used for debugging/profiling/illustration purposes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbosity</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_verbosity</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">verbosity</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_properties</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_k</span> <span class="o">=</span> <span class="mi">0</span>             <span class="c1"># current number of vertices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vdepth</span> <span class="o">=</span> <span class="p">{}</span>       <span class="c1"># vertex -&gt; depth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vnum</span> <span class="o">=</span> <span class="p">{}</span>         <span class="c1"># vertex -&gt; apparition in the iteration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span> <span class="o">=</span> <span class="p">{}</span>        <span class="c1"># parent -&gt; child</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bad_explore</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># vertex -&gt; number of dead end</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vaut</span> <span class="o">=</span> <span class="p">{}</span>         <span class="c1"># number of automorphisms</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;FatGraphs trace for {</span><span class="si">%s</span><span class="s1">}&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">=</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                                                       <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_properties</span><span class="o">.</span><span class="n">items</span><span class="p">())))</span>
+
+<div class="viewcode-block" id="FatGraphsTrace.summary"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stdout</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">stdout</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vdepth</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="n">count_by_depth</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vdepth</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">count_by_depth</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">max_depth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">count_by_depth</span><span class="p">)</span>
+        <span class="n">mean_depth</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">count_by_depth</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">count_by_depth</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="n">childless_by_depth</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vdepth</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">!=</span> <span class="n">max_depth</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">child</span><span class="p">:</span>
+                <span class="n">childless_by_depth</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_vdepth</span><span class="p">[</span><span class="n">v</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">bad_explore_by_depth</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">num</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bad_explore</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">bad_explore_by_depth</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_vdepth</span><span class="p">[</span><span class="n">v</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">num</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;depth                   : </span><span class="si">%d</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">max_depth</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;mean depth              : </span><span class="si">%f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">mean_depth</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;total num fat graphs    : </span><span class="si">%d</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vdepth</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;by depth num fat graphs : </span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">count_by_depth</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;total bad explore       : </span><span class="si">%d</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">sum</span><span class="p">(</span><span class="n">bad_explore_by_depth</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;by depth bad explore    : </span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">bad_explore_by_depth</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;total childless         : </span><span class="si">%d</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">sum</span><span class="p">(</span><span class="n">childless_by_depth</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;by depth childless      : </span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">childless_by_depth</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span>
+
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aut</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="FatGraphsTrace.add_vertex"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.add_vertex">[docs]</a>    <span class="k">def</span> <span class="nf">add_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">depth</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbosity</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;add_vertex(s=</span><span class="si">{}</span><span class="s1">, depth=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">depth</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vdepth</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;already explored vertex!&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vdepth</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">depth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bad_explore</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vnum</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_k</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_k</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vaut</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">aut_grp</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">aut_grp</span><span class="o">.</span><span class="n">group_cardinality</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="FatGraphsTrace.add_edge"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.add_edge">[docs]</a>    <span class="k">def</span> <span class="nf">add_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">s1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbosity</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;add_edge(s0=</span><span class="si">{}</span><span class="s1">, s1=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s0</span><span class="p">,</span> <span class="n">s1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">s0</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;_edges not properly initialized&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">s0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FatGraphsTrace.root"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.root">[docs]</a>    <span class="k">def</span> <span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_k</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;trying to set root in a non-empty trace&quot;</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbosity</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;root(cm=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FatGraphsTrace.canonical_edge"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.canonical_edge">[docs]</a>    <span class="k">def</span> <span class="nf">canonical_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">caller</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbosity</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;canonical_edge(parent=</span><span class="si">{}</span><span class="s1">, cm=</span><span class="si">{}</span><span class="s1">, caller=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">caller</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">parent</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;_edges not properly initialized at </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;s already in _edges&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vdepth</span><span class="p">[</span><span class="n">parent</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FatGraphsTrace.non_canonical_edge"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.non_canonical_edge">[docs]</a>    <span class="k">def</span> <span class="nf">non_canonical_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">caller</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbosity</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;non_canonical_edge(parent=</span><span class="si">{}</span><span class="s1">, caller=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">caller</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">parent</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;_edges not properly initialized at </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bad_explore</span><span class="p">[</span><span class="n">parent</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="FatGraphsTrace.graphviz_tree"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.graphviz_tree">[docs]</a>    <span class="k">def</span> <span class="nf">graphviz_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stdout</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">stdout</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">graphviz_header</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="n">vp</span><span class="p">,</span> <span class="n">ep</span><span class="o">=</span><span class="n">ep</span><span class="p">,</span> <span class="n">fp</span><span class="o">=</span><span class="n">fp</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="n">g</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="n">nf</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="n">nv</span><span class="p">))</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;digraph Tree {</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;   rankdir = TB;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="n">col1</span> <span class="o">=</span> <span class="s2">&quot;#FF0000&quot;</span>
+        <span class="n">col2</span> <span class="o">=</span> <span class="s2">&quot;#00FF00&quot;</span>
+        <span class="n">col3</span> <span class="o">=</span> <span class="s2">&quot;#0000FF&quot;</span>
+
+        <span class="n">a0</span> <span class="o">=</span> <span class="n">cm0</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">()</span>
+        <span class="n">s0</span> <span class="o">=</span> <span class="n">cm0</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;   </span><span class="si">%s</span><span class="s2"> [label=&quot;</span><span class="si">%s</span><span class="s2">&quot;];</span><span class="se">\n</span><span class="s2">&quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">s0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">cm1</span><span class="p">,</span> <span class="n">a1</span> <span class="ow">in</span> <span class="n">augment1</span><span class="p">(</span><span class="n">cm0</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="n">s1</span> <span class="o">=</span> <span class="n">cm1</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">s0</span> <span class="o">!=</span> <span class="n">s1</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;   </span><span class="si">%s</span><span class="s2"> [label=&quot;</span><span class="si">%s</span><span class="s2">&quot;];</span><span class="se">\n</span><span class="s2">&quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;   </span><span class="si">%s</span><span class="s2"> -&gt; </span><span class="si">%s</span><span class="s2"> [color=&quot;</span><span class="si">%s</span><span class="s2">&quot;];</span><span class="se">\n</span><span class="s2">&quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">s0</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">col1</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">cm2</span><span class="p">,</span> <span class="n">a2</span> <span class="ow">in</span> <span class="n">augment2</span><span class="p">(</span><span class="n">cm1</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">nnf</span><span class="p">,</span> <span class="n">intermediate</span><span class="p">):</span>
+                <span class="n">s2</span> <span class="o">=</span> <span class="n">cm2</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">s2</span> <span class="o">!=</span> <span class="n">s1</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;   </span><span class="si">%s</span><span class="s2"> [label=&quot;</span><span class="si">%s</span><span class="s2">&quot;];</span><span class="se">\n</span><span class="s2">&quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">s2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;   </span><span class="si">%s</span><span class="s2"> -&gt; </span><span class="si">%s</span><span class="s2"> [color=&quot;</span><span class="si">%s</span><span class="s2">&quot;];</span><span class="se">\n</span><span class="s2">&quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">col2</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">cm3</span><span class="p">,</span> <span class="n">a3</span> <span class="ow">in</span> <span class="n">augment3</span><span class="p">(</span><span class="n">cm2</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">nnv</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="p">,</span> <span class="n">intermediate</span><span class="p">):</span>
+                    <span class="n">s3</span> <span class="o">=</span> <span class="n">cm3</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">s3</span> <span class="o">!=</span> <span class="n">s2</span><span class="p">:</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;   </span><span class="si">%s</span><span class="s2"> [label=&quot;</span><span class="si">%s</span><span class="s2">&quot;];</span><span class="se">\n</span><span class="s2">&quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">s3</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;   </span><span class="si">%s</span><span class="s2"> -&gt; </span><span class="si">%s</span><span class="s2"> [color=&quot;</span><span class="si">%s</span><span class="s2">&quot;];</span><span class="se">\n</span><span class="s2">&quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">s2</span><span class="p">,</span> <span class="n">s3</span><span class="p">,</span> <span class="n">col3</span><span class="p">))</span>
+                    <span class="k">yield</span> <span class="n">cm3</span><span class="p">,</span> <span class="n">a3</span></div></div>
+
+<span class="c1">#################</span>
+<span class="c1"># Main iterator #</span>
+<span class="c1">#################</span>
+
+<div class="viewcode-block" id="StackCallback"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.StackCallback">[docs]</a><span class="k">class</span> <span class="nc">StackCallback</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gmin</span><span class="p">,</span> <span class="n">gmax</span><span class="p">,</span> <span class="n">fmin</span><span class="p">,</span> <span class="n">fmax</span><span class="p">,</span> <span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">,</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span> <span class="o">=</span> <span class="n">gmin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span> <span class="o">=</span> <span class="n">gmax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span> <span class="o">=</span> <span class="n">fmin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span> <span class="o">=</span> <span class="n">fmax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_emin</span> <span class="o">=</span> <span class="n">emin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_emax</span> <span class="o">=</span> <span class="n">emax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vmin</span> <span class="o">=</span> <span class="n">vmin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="o">=</span> <span class="n">vmax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span> <span class="o">=</span> <span class="n">vertex_min_degree</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filter</span> <span class="o">=</span> <span class="nb">filter</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">caller</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aut</span><span class="p">,</span> <span class="n">depth</span><span class="p">):</span>
+        <span class="c1"># argument test: answers whether this is a canonical map</span>
+        <span class="n">nv</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_nv</span>
+        <span class="n">ne</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_n</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">nf</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">_nf</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">nv</span> <span class="o">+</span> <span class="n">ne</span> <span class="o">-</span> <span class="n">nf</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">assert</span> <span class="n">nv</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="ow">and</span> <span class="n">ne</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emax</span> <span class="ow">and</span> <span class="n">nf</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span><span class="p">,</span> <span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">test</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">g</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span> <span class="ow">and</span> \
+               <span class="n">nv</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmin</span> <span class="ow">and</span> \
+               <span class="n">ne</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emin</span> <span class="ow">and</span> \
+               <span class="n">nf</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span> <span class="ow">and</span> \
+               <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="nb">all</span><span class="p">(</span><span class="n">d</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">cm</span><span class="o">.</span><span class="n">vertex_profile</span><span class="p">()))</span> <span class="ow">and</span> \
+               <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filter</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_callback</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">caller</span> <span class="o">==</span> <span class="s1">&#39;augment1&#39;</span><span class="p">:</span>
+                <span class="c1"># augment1 creates fat graphs with a single vertex and a single face.</span>
+                <span class="c1"># Here: nv=1, nf=1, 2g=e.</span>
+                <span class="k">assert</span> <span class="n">nv</span> <span class="o">==</span> <span class="n">nf</span> <span class="o">==</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">ne</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span><span class="p">:</span>
+                    <span class="c1"># more faces?</span>
+                    <span class="n">nfdepth</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emax</span> <span class="o">-</span> <span class="n">ne</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">nfdepth</span><span class="p">:</span>
+                        <span class="n">augment2</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut</span><span class="p">,</span> <span class="n">nfdepth</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                    <span class="c1"># more vertices?</span>
+                    <span class="k">if</span> <span class="n">nf</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span><span class="p">:</span>
+                        <span class="n">nvdepth</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emax</span> <span class="o">-</span> <span class="n">ne</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">nvdepth</span><span class="p">:</span>
+                            <span class="n">augment3</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut</span><span class="p">,</span> <span class="n">nvdepth</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">caller</span> <span class="o">==</span> <span class="s1">&#39;augment2&#39;</span><span class="p">:</span>
+                <span class="c1"># augment2 performs face splitting</span>
+                <span class="c1"># Here: nv=1</span>
+                <span class="k">if</span> <span class="n">nf</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span><span class="p">:</span>
+                    <span class="c1"># more vertices?</span>
+                    <span class="n">nvdepth</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emax</span> <span class="o">-</span> <span class="n">ne</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">nvdepth</span><span class="p">:</span>
+                        <span class="n">augment3</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut</span><span class="p">,</span> <span class="n">nvdepth</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">caller</span> <span class="o">==</span> <span class="s1">&#39;augment3&#39;</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;unknown caller&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="StackCallback.run"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.StackCallback.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># trivial map (g = 0, nv = 1, nf = 1)</span>
+        <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">)</span>
+        <span class="n">nv</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">ne</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">nf</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmin</span> <span class="o">&lt;=</span> <span class="n">nv</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="ow">and</span> \
+           <span class="bp">self</span><span class="o">.</span><span class="n">_emin</span> <span class="o">&lt;=</span> <span class="n">ne</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emax</span> <span class="ow">and</span> \
+           <span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span> <span class="o">&lt;=</span> <span class="n">nf</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span> <span class="ow">and</span> \
+           <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span> <span class="o">&lt;=</span> <span class="n">g</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span> <span class="ow">and</span> \
+           <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> \
+           <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filter</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut</span><span class="p">)):</span>
+               <span class="bp">self</span><span class="o">.</span><span class="n">_callback</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">cm</span><span class="o">.</span><span class="n">_realloc</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_emax</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">augment1</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">cm</span><span class="o">.</span><span class="n">_n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cm</span>
+            <span class="n">augment2</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">cm</span><span class="o">.</span><span class="n">_n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cm</span>
+            <span class="n">augment3</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span></div></div>
+
+<span class="c1">##############</span>
+<span class="c1"># Main class #</span>
+<span class="c1">##############</span>
+
+<div class="viewcode-block" id="FatGraphs"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs">[docs]</a><span class="k">class</span> <span class="nc">FatGraphs</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Isomorphism classes of fat graphs with topological constraints.</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: from surface_dynamics import FatGraphs</span>
+
+<span class="sd">    Trees and their dual (maps with single vertex) in genus zero are counted by</span>
+<span class="sd">    Catalan numbers::</span>
+
+<span class="sd">        sage: for n in range(2, 10):</span>
+<span class="sd">        ....:     ntrees1 = 2 * (n-1) * FatGraphs(g=0, nf=n, nv=1).weighted_cardinality()</span>
+<span class="sd">        ....:     ntrees2 = 2 * (n-1) * FatGraphs(g=0, nf=1, nv=n).weighted_cardinality()</span>
+<span class="sd">        ....:     assert catalan_number(n-1) == ntrees1 == ntrees2, (n, ntrees1, ntrees2)</span>
+
+<span class="sd">    Tutte formulas in genus 0 (combinatorial maps counted by number of edges)::</span>
+
+<span class="sd">        sage: R.&lt;t&gt; = QQ[]</span>
+<span class="sd">        sage: F = FatGraphs(g=0, ne_max=8)</span>
+<span class="sd">        sage: poly = R.zero()</span>
+<span class="sd">        sage: def update(cm, aut):</span>
+<span class="sd">        ....:     global poly</span>
+<span class="sd">        ....:     p = [cm.face_profile()]</span>
+<span class="sd">        ....:     aut_card = 1 if aut is None else aut.group_cardinality()</span>
+<span class="sd">        ....:     poly += 2*cm.num_edges() // aut_card * t**cm.num_edges()</span>
+<span class="sd">        sage: F.map_reduce(update)</span>
+<span class="sd">        sage: poly</span>
+<span class="sd">        208494*t^7 + 24057*t^6 + 2916*t^5 + 378*t^4 + 54*t^3 + 9*t^2 + 2*t</span>
+<span class="sd">        sage: sum(2 * 3**n / (n+2) / (n+1) * binomial(2*n,n) *t**n for n in range(1,8))</span>
+<span class="sd">        208494*t^7 + 24057*t^6 + 2916*t^5 + 378*t^4 + 54*t^3 + 9*t^2 + 2*t</span>
+
+<span class="sd">    Genus zero with same number of vertices and faces::</span>
+
+<span class="sd">        sage: FatGraphs(g=0, nf=2, nv=2).cardinality_and_weighted_cardinality()</span>
+<span class="sd">        (2, 5/4)</span>
+<span class="sd">        sage: FatGraphs(g=0, nf=3, nv=3).cardinality_and_weighted_cardinality()</span>
+<span class="sd">        (23, 41/2)</span>
+<span class="sd">        sage: FatGraphs(g=0, nf=4, nv=4).cardinality_and_weighted_cardinality()</span>
+<span class="sd">        (761, 8885/12)</span>
+
+<span class="sd">    Duality checks</span>
+
+<span class="sd">        sage: for g,nf,nv in [(0,2,3), (0,2,4), (0,3,4),</span>
+<span class="sd">        ....:                 (1,1,2), (1,1,3), (1,1,4), (1,1,5), (1,2,3), (1,2,4), (1,3,4),</span>
+<span class="sd">        ....:                 (2,1,2), (2,1,3)]:</span>
+<span class="sd">        ....:     n1 = FatGraphs(g=g, nf=nf, nv=nv).cardinality_and_weighted_cardinality()</span>
+<span class="sd">        ....:     n2 = FatGraphs(g=g, nf=nv, nv=nf).cardinality_and_weighted_cardinality()</span>
+<span class="sd">        ....:     assert n1 == n2</span>
+<span class="sd">        ....:     print(g, nf, nv, n1)</span>
+<span class="sd">        0 2 3 (5, 11/3)</span>
+<span class="sd">        0 2 4 (14, 93/8)</span>
+<span class="sd">        0 3 4 (108, 103)</span>
+<span class="sd">        1 1 2 (3, 5/3)</span>
+<span class="sd">        1 1 3 (11, 35/4)</span>
+<span class="sd">        1 1 4 (46, 42)</span>
+<span class="sd">        1 1 5 (204, 385/2)</span>
+<span class="sd">        1 2 3 (180, 172)</span>
+<span class="sd">        1 2 4 (1198, 14065/12)</span>
+<span class="sd">        1 3 4 (18396, 18294)</span>
+<span class="sd">        2 1 2 (53, 483/10)</span>
+<span class="sd">        2 1 3 (553, 539)</span>
+
+<span class="sd">    Unicellular map with one vertex in genus 3::</span>
+
+<span class="sd">        sage: FatGraphs(g=3, nf=1, nv=1).cardinality_and_weighted_cardinality()</span>
+<span class="sd">        (131, 495/4)</span>
+
+<span class="sd">    Minimum vertex degree bounds::</span>
+
+<span class="sd">        sage: for k in range(2,5):</span>
+<span class="sd">        ....:    F = FatGraphs(g=1, nf=2, nv=2, vertex_min_degree=1)</span>
+<span class="sd">        ....:    c1 = F.cardinality_and_weighted_cardinality(lambda cm,_: cm.vertex_degree_min() &gt;= k)</span>
+<span class="sd">        ....:    G = FatGraphs(g=1, nf=2, nv=2, vertex_min_degree=k)</span>
+<span class="sd">        ....:    c2 = G.cardinality_and_weighted_cardinality()</span>
+<span class="sd">        ....:    assert c1 == c2</span>
+<span class="sd">        ....:    print(c1)</span>
+<span class="sd">        (14, 87/8)</span>
+<span class="sd">        (8, 47/8)</span>
+<span class="sd">        (4, 15/8)</span>
+
+<span class="sd">        sage: for k in range(2,6):</span>
+<span class="sd">        ....:    F = FatGraphs(g=0, nf=5, nv=2, vertex_min_degree=1)</span>
+<span class="sd">        ....:    c1 = F.cardinality_and_weighted_cardinality(lambda cm,_: cm.vertex_degree_min() &gt;= k)</span>
+<span class="sd">        ....:    G = FatGraphs(g=0, nf=5, nv=2, vertex_min_degree=k)</span>
+<span class="sd">        ....:    c2 = G.cardinality_and_weighted_cardinality()</span>
+<span class="sd">        ....:    assert c1 == c2</span>
+<span class="sd">        ....:    print(c1)</span>
+<span class="sd">        (28, 123/5)</span>
+<span class="sd">        (21, 88/5)</span>
+<span class="sd">        (13, 48/5)</span>
+<span class="sd">        (7, 18/5)</span>
+
+<span class="sd">    Using ranges for vertex and face numbers::</span>
+
+<span class="sd">        sage: F = FatGraphs(g=1, nv_min=2, nv_max=4, nf_min=2, nf_max=4)</span>
+<span class="sd">        sage: def check(cm,aut):</span>
+<span class="sd">        ....:    if cm.num_vertices() &lt; 2 or \</span>
+<span class="sd">        ....:       cm.num_vertices() &gt;= 4 or \</span>
+<span class="sd">        ....:       cm.num_faces() &lt; 2 or \</span>
+<span class="sd">        ....:       cm.num_faces() &gt;= 4:</span>
+<span class="sd">        ....:           raise ValueError(str(cm))</span>
+<span class="sd">        sage: F.map_reduce(check)</span>
+<span class="sd">        sage: for nf in [2,3]:</span>
+<span class="sd">        ....:     for nv in [2,3]:</span>
+<span class="sd">        ....:         c1 = F.cardinality_and_weighted_cardinality(lambda cm,_: cm.num_vertices() == nv and cm.num_faces() == nf)</span>
+<span class="sd">        ....:         c2 = FatGraphs(g=1, nf=nf, nv=nv).cardinality_and_weighted_cardinality()</span>
+<span class="sd">        ....:         assert c1 == c2</span>
+<span class="sd">        ....:         print(nf, nv, c1)</span>
+<span class="sd">        2 2 (24, 167/8)</span>
+<span class="sd">        2 3 (180, 172)</span>
+<span class="sd">        3 2 (180, 172)</span>
+<span class="sd">        3 3 (2048, 6041/3)</span>
+
+<span class="sd">    TESTS::</span>
+
+<span class="sd">        sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs</span>
+<span class="sd">        sage: FatGraphs(g=0, nf=1, nv=1).list()</span>
+<span class="sd">        [FatGraph(&#39;()&#39;, &#39;()&#39;, &#39;()&#39;)]</span>
+<span class="sd">        sage: FatGraphs(g=1, nf=1, nv=1).list()</span>
+<span class="sd">        [FatGraph(&#39;(0,1,2,3)&#39;, &#39;(0,2)(1,3)&#39;, &#39;(0,1,2,3)&#39;)]</span>
+<span class="sd">        sage: FatGraphs(g=0, nf=2, nv=1).list()</span>
+<span class="sd">        [FatGraph(&#39;(0,1)&#39;, &#39;(0,1)&#39;, &#39;(0)(1)&#39;)]</span>
+<span class="sd">        sage: FatGraphs(g=0, nf=1, nv=2).list()</span>
+<span class="sd">        [FatGraph(&#39;(0)(1)&#39;, &#39;(0,1)&#39;, &#39;(0,1)&#39;)]</span>
+<span class="sd">        sage: FatGraphs(g=0, ne=1).list()</span>
+<span class="sd">        [FatGraph(&#39;(0,1)&#39;, &#39;(0,1)&#39;, &#39;(0)(1)&#39;), FatGraph(&#39;(0)(1)&#39;, &#39;(0,1)&#39;, &#39;(0,1)&#39;)]</span>
+
+<span class="sd">        sage: F3 = FatGraphs(g=0, nf_max=4, vertex_min_degree=3)</span>
+<span class="sd">        sage: for fg in F3.list(): assert all(d &gt;= 3 for d in fg.vertex_profile()), fg</span>
+<span class="sd">        sage: F3.cardinality_and_weighted_cardinality()</span>
+<span class="sd">        (3, 7/6)</span>
+<span class="sd">        sage: F4 = FatGraphs(g=0, nf_max=4, vertex_min_degree=4)</span>
+<span class="sd">        sage: for fg in F4.list(): assert all(d &gt;= 4 for d in fg.vertex_profile()), fg</span>
+<span class="sd">        sage: F4.cardinality_and_weighted_cardinality()</span>
+<span class="sd">        (1, 1/2)</span>
+
+<span class="sd">        sage: FatGraphs(g=1, ne=3).list()</span>
+<span class="sd">        [FatGraph(&#39;(0,5,4,1,2,3)&#39;, &#39;(0,2)(1,3)(4,5)&#39;, &#39;(0,1,2,3,4)(5)&#39;),</span>
+<span class="sd">         FatGraph(&#39;(0,5,1,2,4,3)&#39;, &#39;(0,2)(1,3)(4,5)&#39;, &#39;(0,1,4)(2,3,5)&#39;),</span>
+<span class="sd">         FatGraph(&#39;(0,5,1,2,3,4)&#39;, &#39;(0,2)(1,3)(4,5)&#39;, &#39;(0,1,2,4)(3,5)&#39;),</span>
+<span class="sd">         FatGraph(&#39;(0,4,1,2,3)(5)&#39;, &#39;(0,2)(1,3)(4,5)&#39;, &#39;(0,1,2,3,4,5)&#39;),</span>
+<span class="sd">         FatGraph(&#39;(0,4,2,3)(1,5)&#39;, &#39;(0,2)(1,3)(4,5)&#39;, &#39;(0,4,1,2,3,5)&#39;),</span>
+<span class="sd">         FatGraph(&#39;(0,4,3)(1,2,5)&#39;, &#39;(0,2)(1,3)(4,5)&#39;, &#39;(0,1,4,2,3,5)&#39;)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ne</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">g_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">g_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ne_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ne_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv_max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">       INPUT:</span>
+
+<span class="sd">        - ``g``, ``g_min``, ``g_max`` - the genus</span>
+
+<span class="sd">        - ``nf``, ``nf_min``, ``nf_max`` - number of faces</span>
+
+<span class="sd">        - ``ne``, `ne_min``, ``ne_max`` - number of edges</span>
+
+<span class="sd">        - ``nv``, ``nv_min``, ``nv_max`` - number of vertices</span>
+
+<span class="sd">        - ``vertex_min_degree`` - minimal degree of vertices (default to ``1``)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_interval</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">g_min</span><span class="p">,</span> <span class="n">g_max</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_interval</span><span class="p">(</span><span class="n">nf</span><span class="p">,</span> <span class="n">nf_min</span><span class="p">,</span> <span class="n">nf_max</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;nf&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_interval</span><span class="p">(</span><span class="n">nv</span><span class="p">,</span> <span class="n">nv_min</span><span class="p">,</span> <span class="n">nv_max</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;nv&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_emin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_interval</span><span class="p">(</span><span class="n">ne</span><span class="p">,</span> <span class="n">ne_min</span><span class="p">,</span> <span class="n">ne_max</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;ne&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span> <span class="o">=</span> <span class="n">ZZ</span><span class="p">(</span><span class="n">vertex_min_degree</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;vertex_min_degree must be non-negative&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_bounds</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">low_bnd</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Integral</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> must be an integral&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">ZZ</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">low_bnd</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> must be &gt;= </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">low_bnd</span><span class="p">))</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">vmax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vmax</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Integral</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_max must be integral&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">vmax</span> <span class="o">=</span> <span class="n">ZZ</span><span class="p">(</span><span class="n">vmax</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">vmin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">vmin</span> <span class="o">=</span> <span class="n">low_bnd</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Integral</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_min must be integral&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">vmin</span> <span class="o">=</span> <span class="n">ZZ</span><span class="p">(</span><span class="n">vmin</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">vmin</span> <span class="o">&lt;</span> <span class="n">low_bnd</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_min must be &gt;= </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">low_bnd</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span>
+
+    <span class="k">def</span> <span class="nf">_adjust_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import FatGraphs</span>
+<span class="sd">            sage: FatGraphs(g=0, nv_max=4, vertex_min_degree=3)</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">            ...</span>
+<span class="sd">            ValueError: infinitely many fat graphs</span>
+<span class="sd">            sage: FatGraphs(g=0, nf_max=4, vertex_min_degree=3)</span>
+<span class="sd">            FatGraphs(g=0, nf_min=2, nf_max=4, ne_min=1, ne_max=4, nv_min=1, nv_max=3, vertex_min_degree=3)</span>
+
+<span class="sd">            sage: F = FatGraphs(g=0, nv=2, ne=1, nf=2)</span>
+<span class="sd">            sage: F</span>
+<span class="sd">            EmptySet</span>
+<span class="sd">            sage: F.cardinality_and_weighted_cardinality()</span>
+<span class="sd">            (0, 0)</span>
+
+<span class="sd">            sage: FatGraphs(ne=0).list()</span>
+<span class="sd">            [FatGraph(&#39;()&#39;, &#39;()&#39;, &#39;()&#39;)]</span>
+<span class="sd">            sage: FatGraphs(ne=1).list()</span>
+<span class="sd">            [FatGraph(&#39;(0,1)&#39;, &#39;(0,1)&#39;, &#39;(0)(1)&#39;),</span>
+<span class="sd">             FatGraph(&#39;(0)(1)&#39;, &#39;(0,1)&#39;, &#39;(0,1)&#39;)]</span>
+<span class="sd">            sage: FatGraphs(ne=2).list()</span>
+<span class="sd">            [FatGraph(&#39;(0,1,2,3)&#39;, &#39;(0,2)(1,3)&#39;, &#39;(0,1,2,3)&#39;),</span>
+<span class="sd">             FatGraph(&#39;(0,2,1)(3)&#39;, &#39;(0,1)(2,3)&#39;, &#39;(0,2,3)(1)&#39;),</span>
+<span class="sd">             FatGraph(&#39;(0,2)(1,3)&#39;, &#39;(0,1)(2,3)&#39;, &#39;(0,3)(1,2)&#39;),</span>
+<span class="sd">             FatGraph(&#39;(0,3,2,1)&#39;, &#39;(0,1)(2,3)&#39;, &#39;(0,2)(1)(3)&#39;),</span>
+<span class="sd">             FatGraph(&#39;(0,2)(1)(3)&#39;, &#39;(0,1)(2,3)&#39;, &#39;(0,1,2,3)&#39;)]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># variable order: v, e, f, g</span>
+        <span class="kn">from</span> <span class="nn">sage.geometry.polyhedron.constructor</span> <span class="kn">import</span> <span class="n">Polyhedron</span>
+        <span class="n">eqns</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span> <span class="c1"># -2 + v - e + f + 2g = 0</span>
+        <span class="n">ieqs</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">_vmin</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="c1"># -vim + v &gt;= 0</span>
+                <span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">_emin</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="c1"># -emin + e &gt;= 0</span>
+                <span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="c1"># -fmin + f &gt;= 0</span>
+                <span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="c1"># -gmin + g &gt;= 0</span>
+                <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>  <span class="c1"># -v_min_degree*v + 2e &gt;= 0</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ieqs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="c1"># v &lt; vmax</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ieqs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_emax</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="c1"># e &lt; emax</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ieqs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="c1"># f &lt; fmax</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ieqs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="c1"># g &lt; gmax</span>
+        <span class="n">P</span> <span class="o">=</span> <span class="n">Polyhedron</span><span class="p">(</span><span class="n">ieqs</span><span class="o">=</span><span class="n">ieqs</span><span class="p">,</span> <span class="n">eqns</span><span class="o">=</span><span class="n">eqns</span><span class="p">,</span> <span class="n">ambient_dim</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">base_ring</span><span class="o">=</span><span class="n">QQ</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">P</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_vmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_emin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emax</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">P</span><span class="o">.</span><span class="n">is_compact</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;infinitely many fat graphs&#39;</span><span class="p">)</span>
+
+        <span class="n">half</span> <span class="o">=</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="o">=</span> <span class="n">minmax</span><span class="p">([</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">P</span><span class="o">.</span><span class="n">vertices_list</span><span class="p">()])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmin</span><span class="o">.</span><span class="n">floor</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="o">+</span> <span class="n">half</span><span class="p">)</span><span class="o">.</span><span class="n">ceil</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_emin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emax</span> <span class="o">=</span> <span class="n">minmax</span><span class="p">([</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">P</span><span class="o">.</span><span class="n">vertices_list</span><span class="p">()])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_emin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emin</span><span class="o">.</span><span class="n">floor</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_emax</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_emax</span> <span class="o">+</span> <span class="n">half</span><span class="p">)</span><span class="o">.</span><span class="n">ceil</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span> <span class="o">=</span> <span class="n">minmax</span><span class="p">([</span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">P</span><span class="o">.</span><span class="n">vertices_list</span><span class="p">()])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span><span class="o">.</span><span class="n">floor</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span> <span class="o">+</span> <span class="n">half</span><span class="p">)</span><span class="o">.</span><span class="n">ceil</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span> <span class="o">=</span> <span class="n">minmax</span><span class="p">([</span><span class="n">v</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">P</span><span class="o">.</span><span class="n">vertices_list</span><span class="p">()])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span><span class="o">.</span><span class="n">floor</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span> <span class="o">+</span> <span class="n">half</span><span class="p">)</span><span class="o">.</span><span class="n">ceil</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import FatGraphs</span>
+<span class="sd">            sage: FatGraphs(g=0, ne=1)</span>
+<span class="sd">            FatGraphs(g=0, nf_min=1, nf_max=3, ne=1, nv_min=1, nv_max=3)</span>
+<span class="sd">            sage: FatGraphs(g=0, nf=5, nv=1, vertex_min_degree=3)</span>
+<span class="sd">            FatGraphs(g=0, nf=5, ne=4, nv=1, vertex_min_degree=3)</span>
+<span class="sd">            sage: FatGraphs(g=0, nf_min=2, nf_max=5, nv_min=1, nv_max=5, vertex_min_degree=3)</span>
+<span class="sd">            FatGraphs(g=0, nf_min=2, nf_max=5, ne_min=1, ne_max=7, nv_min=1, nv_max=5, vertex_min_degree=3)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmin</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;EmptySet&#39;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">genus</span> <span class="o">=</span> <span class="s1">&#39;g=</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">genus</span> <span class="o">=</span> <span class="s1">&#39;gmin=</span><span class="si">%d</span><span class="s1">, gmax=</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">faces</span> <span class="o">=</span> <span class="s1">&#39;nf=</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">faces</span> <span class="o">=</span> <span class="s1">&#39;nf_min=</span><span class="si">%d</span><span class="s1">, nf_max=</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emax</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emin</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">edges</span> <span class="o">=</span> <span class="s1">&#39;ne=</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emin</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">edges</span> <span class="o">=</span> <span class="s1">&#39;ne_min=</span><span class="si">%d</span><span class="s1">, ne_max=</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_emin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emax</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmin</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">vertices</span> <span class="o">=</span> <span class="s1">&#39;nv=</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmin</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">vertices</span> <span class="o">=</span> <span class="s1">&#39;nv_min=</span><span class="si">%d</span><span class="s1">, nv_max=</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span><span class="p">)</span>
+
+        <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;vertex_min_degree=</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s2">&quot;FatGraphs(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">genus</span><span class="p">,</span> <span class="n">faces</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">vertices</span><span class="p">]</span> <span class="o">+</span> <span class="n">constraints</span><span class="p">))</span>
+
+<div class="viewcode-block" id="FatGraphs.map_reduce"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.map_reduce">[docs]</a>    <span class="k">def</span> <span class="nf">map_reduce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import FatGraphs</span>
+<span class="sd">            sage: FatGraphs(g=1, nf=2, nv=2).map_reduce(lambda x,y: print(x))</span>
+<span class="sd">            FatGraph(&#39;(0,6,5,4,1,2,3)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,3,4,6,7)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,6,1,2,3)(4,7,5)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,3,6,4,7)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,4,1,6,2,3)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,6,7,1,2,3,4)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,7,2,3)(1,6,5,4)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,7,1,2,3,4,6)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,4,1,2,6,3)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,6,7,2,3,4)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,7,3)(1,2,6,5,4)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,7,2,3,4,6)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,4,1,2,3,6)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,6,7,3,4)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,7)(1,2,3,6,5,4)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,7,3,4,6)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,4,6,1,2,3)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,3,6,7,4)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,4,6,2,3)(1,7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,6,1,2,3,7,4)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,6,4,1,2,3)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,3,4)(5,6,7)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,6,1,2,3)(4,7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,3,6,4)(5,7)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,6,2,3)(1,7,4)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,6,1,2,3,4)(5,7)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,6,3)(1,2,7,4)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,6,2,3,4)(5,7)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,6,5,1,2,4,3)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,4,6,7)(2,3,5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,6,1,2,4,3)(5,7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,4,7)(2,3,6,5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,6,4,3)(1,2,7,5)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,4,7)(2,3,5,6)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,6,5,1,2,3,4)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,4,6,7)(3,5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,1,6,2,3,4)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,6,7,1,2,4)(3,5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,1,6,3,4)(2,7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,7,1,6,2,4)(3,5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,1,2,3,6,4)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,4)(3,5,6,7)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,1,2,3,6)(4,7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,6,4)(3,5,7)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,7,4)(1,2,3,6,5)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,4,6)(3,5,7)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,7,4)(1,2,3,6)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,4)(3,6,5,7)&#39;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">StackCallback</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_emin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emax</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_vmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span><span class="p">,</span>
+                <span class="n">callback</span><span class="p">,</span>
+                <span class="nb">filter</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="FatGraphs.cardinality_and_weighted_cardinality"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.cardinality_and_weighted_cardinality">[docs]</a>    <span class="k">def</span> <span class="nf">cardinality_and_weighted_cardinality</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">CountAndWeightedCount</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">map_reduce</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="nb">filter</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">N</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FatGraphs.weighted_cardinality"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.weighted_cardinality">[docs]</a>    <span class="k">def</span> <span class="nf">weighted_cardinality</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">CountAndWeightedCount</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">map_reduce</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="nb">filter</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">N</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="FatGraphs.list"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import FatGraphs</span>
+<span class="sd">            sage: L21 = FatGraphs(g=0, nf=2, nv=1).list()</span>
+<span class="sd">            sage: L21[0].num_faces()</span>
+<span class="sd">            2</span>
+<span class="sd">            sage: L21[0].num_vertices()</span>
+<span class="sd">            1</span>
+
+<span class="sd">            sage: L12 = FatGraphs(g=0, nf=1, nv=2).list()</span>
+<span class="sd">            sage: L12[0].num_faces()</span>
+<span class="sd">            1</span>
+<span class="sd">            sage: L12[0].num_vertices()</span>
+<span class="sd">            2</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="n">ListCallback</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">map_reduce</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">L</span><span class="o">.</span><span class="n">list</span><span class="p">()</span></div></div>
+
+<span class="c1">###################</span>
+<span class="c1"># Deprecated code #</span>
+<span class="c1">###################</span>
+
+<div class="viewcode-block" id="FatGraphs_g_nf_nv"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs_g_nf_nv">[docs]</a><span class="k">def</span> <span class="nf">FatGraphs_g_nf_nv</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">g_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">g_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv_max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    TESTS::</span>
+
+<span class="sd">        sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs_g_nf_nv</span>
+<span class="sd">        sage: F = FatGraphs_g_nf_nv(g=1, nf=1, nv=1)</span>
+<span class="sd">        doctest:warning</span>
+<span class="sd">        ...</span>
+<span class="sd">        DeprecationWarning: FatGraphs_g_nf_nv is deprecated. Use FatGraphs</span>
+<span class="sd">        sage: F.list()</span>
+<span class="sd">        [FatGraph(&#39;(0,1,2,3)&#39;, &#39;(0,2)(1,3)&#39;, &#39;(0,1,2,3)&#39;)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
+    <span class="n">warn</span><span class="p">(</span><span class="s1">&#39;FatGraphs_g_nf_nv is deprecated. Use FatGraphs&#39;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="n">g</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="n">nf</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="n">nv</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="o">=</span><span class="n">vertex_min_degree</span><span class="p">,</span> <span class="n">g_min</span><span class="o">=</span><span class="n">g_min</span><span class="p">,</span> <span class="n">g_max</span><span class="o">=</span><span class="n">g_max</span><span class="p">,</span> <span class="n">nf_min</span><span class="o">=</span><span class="n">nf_min</span><span class="p">,</span> <span class="n">nf_max</span><span class="o">=</span><span class="n">nf_max</span><span class="p">,</span> <span class="n">nv_min</span><span class="o">=</span><span class="n">nv_min</span><span class="p">,</span> <span class="n">nv_max</span><span class="o">=</span><span class="n">nv_max</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the surface-dynamics authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,318 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Welcome to the surface_dynamics documentation! &mdash; surface-dynamics 0.4.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Interval exchange transformations" href="demo_interval_exchanges.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> surface-dynamics
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="demo_interval_exchanges.html">Interval exchange transformations</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="origamis.html">Origamis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interval_exchanges/index.html">Interval exchange transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topological_recursion/index.html">Topological recursion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/index.html">Miscellaneous</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">surface-dynamics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Welcome to the surface_dynamics documentation!</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="welcome-to-the-surface-dynamics-documentation">
+<h1>Welcome to the surface_dynamics documentation!<a class="headerlink" href="#welcome-to-the-surface-dynamics-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>The basic way to install the surface_dynamics package is via the pip
+Python installer that comes with your <a class="reference external" href="http://www.sagemath.org/">SageMath</a>
+installation.</p>
+<p>If you installed Sage from a downloaded binary (including the Cygwin version
+on Windows) or if you compiled Sage from source, then run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sage -pip install surface_dynamics
+</pre></div>
+</div>
+<p>You might want (or need) to provide the option <code class="docutils literal notranslate"><span class="pre">--user</span></code> to this command in order
+to install surface_dynamics in your home directory and keep intact your SageMath
+installation.</p>
+<p>In case you use the sagemath package in a Debian or Ubuntu system you need to perform
+a two step installation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ source /usr/share/sagemath/bin/sage-env
+$ sage -pip install surface_dynamics --user
+</pre></div>
+</div>
+<p>If you use the sagemath package from Archlinux, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip3 install git+https://github.com/flatsurf/surface_dynamics --user
+</pre></div>
+</div>
+<p>Other sources of information:</p>
+<ul class="simple">
+<li><p>short tutorial: <a class="reference external" href="http://www.labri.fr/perso/vdelecro/flatsurf.html">http://www.labri.fr/perso/vdelecro/flatsurf.html</a></p></li>
+<li><p>development webpage (including source code):
+<a class="reference external" href="https://github.com/flatsurf/surface_dynamics">https://github.com/flatsurf/surface_dynamics</a></p></li>
+</ul>
+</div>
+<div class="section" id="walk-through">
+<h2>Walk through<a class="headerlink" href="#walk-through" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="demo_interval_exchanges.html">Interval exchange transformations</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="module-documentation">
+<h2>Module documentation<a class="headerlink" href="#module-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="strata.html">Strata of Abelian and quadratic differentials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="strata.html#module-surface_dynamics.flat_surfaces.strata">Template file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="strata.html#module-surface_dynamics.flat_surfaces.abelian_strata">Abelian strata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="strata.html#module-surface_dynamics.flat_surfaces.quadratic_strata">Quadratic strata</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="surface_topology.html">Surface topology and geometry</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="surface_topology.html#module-surface_dynamics.flat_surfaces.separatrix_diagram">Separatrix diagrams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="surface_topology.html#module-surface_dynamics.flat_surfaces.homology">Homology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="surface_topology.html#module-surface_dynamics.topology.fat_graph">Fat graphs (or combinatorial maps)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="origamis.html">Origamis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="origamis.html#module-surface_dynamics.flat_surfaces.origamis.origami_dense">Individual origamis and Teichmüller curves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="origamis.html#module-surface_dynamics.flat_surfaces.origamis.origami_database">Database</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interval_exchanges/index.html">Interval exchange transformations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interval_exchanges/index.html#permutations">Permutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interval_exchanges/index.html#id1">Interval exchange transformations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topological_recursion/index.html">Topological recursion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="topological_recursion/topological_recursion.html">Generic topological recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topological_recursion/kontsevich.html">Kontsevich topological recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topological_recursion/masur_veech.html">Masur-Veech topological recursion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="misc/index.html">Miscellaneous</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="misc/constellation.html">Constellations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/group_representation.html">Finite group representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/plane_tree.html">Plane trees</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="citation">
+<h2>Citation<a class="headerlink" href="#citation" title="Permalink to this headline">¶</a></h2>
+<p>To cite the library, follow the instructions on our <a class="reference external" href="https://zenodo.org/badge/latestdoi/347440823">zenodo website</a>.</p>
+</div>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="demo_interval_exchanges.html" class="btn btn-neutral float-right" title="Interval exchange transformations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the surface-dynamics authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

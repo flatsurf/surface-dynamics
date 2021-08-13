@@ -1,0 +1,1082 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>surface_dynamics.interval_exchanges.rauzy_class_cardinality &mdash; surface-dynamics 0.4.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> surface-dynamics
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../demo_interval_exchanges.html">Interval exchange transformations</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../origamis.html">Origamis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interval_exchanges/index.html">Interval exchange transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../topological_recursion/index.html">Topological recursion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/index.html">Miscellaneous</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">surface-dynamics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>surface_dynamics.interval_exchanges.rauzy_class_cardinality</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for surface_dynamics.interval_exchanges.rauzy_class_cardinality</h1><div class="highlight"><pre>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Cardinality of Rauzy classes</span>
+
+<span class="sd">The following functions implement algorithms relative to article [Del13]_ and</span>
+<span class="sd">[Boi13]_ where are given formulas for the cardinality of Rauzy classes of</span>
+<span class="sd">permutations.</span>
+
+<span class="sd">  - ``c``: number of standard labeled permutations</span>
+<span class="sd">  - ``d``: spin difference of standard labeled permutations</span>
+<span class="sd">  - ``gamma_std``: number of standard permutations (with given profile and</span>
+<span class="sd">    marking)</span>
+<span class="sd">  - ``gamma_irr``: number of irreducible permutations (with given profile and</span>
+<span class="sd">    marking)</span>
+<span class="sd">  - ``delta_std``: spin difference for standard permutations (with given profile</span>
+<span class="sd">    and marking)</span>
+<span class="sd">  - ``delta_irr``: spin difference for irreducible permutations (with given</span>
+<span class="sd">    profile and marking)</span>
+
+<span class="sd">AUTHOR:</span>
+
+<span class="sd">Vincent Delecroix</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1">#*****************************************************************************</span>
+<span class="c1">#       Copyright (C) 2019 Vincent Delecroix &lt;20100.delecroix@gmail.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1">#  Distributed under the terms of the GNU General Public License (GPL)</span>
+<span class="c1">#  as published by the Free Software Foundation; either version 2 of</span>
+<span class="c1">#  the License, or (at your option) any later version.</span>
+<span class="c1">#                  https://www.gnu.org/licenses/</span>
+<span class="c1">#*****************************************************************************</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">range</span>
+
+<span class="kn">from</span> <span class="nn">sage.misc.cachefunc</span> <span class="kn">import</span> <span class="n">cached_function</span>
+
+<span class="kn">from</span> <span class="nn">sage.rings.integer</span> <span class="kn">import</span> <span class="n">Integer</span>
+
+<span class="kn">from</span> <span class="nn">sage.combinat.partition</span> <span class="kn">import</span> <span class="n">Partition</span>
+<span class="kn">from</span> <span class="nn">sage.arith.all</span> <span class="kn">import</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">binomial</span>
+
+<span class="c1">#########################</span>
+<span class="c1"># PROFILES AND MARKINGS #</span>
+<span class="c1">#########################</span>
+
+<div class="viewcode-block" id="marking_iterator"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.marking_iterator">[docs]</a><span class="k">def</span> <span class="nf">marking_iterator</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">left</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">standard</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the marked profile associated to a partition</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rcc</span>
+<span class="sd">        sage: p = Partition([3,2,2])</span>
+<span class="sd">        sage: list(rcc.marking_iterator(p))</span>
+<span class="sd">        [(1, 2, 0),</span>
+<span class="sd">         (1, 2, 1),</span>
+<span class="sd">         (1, 3, 0),</span>
+<span class="sd">         (1, 3, 1),</span>
+<span class="sd">         (1, 3, 2),</span>
+<span class="sd">         (2, 2, 2),</span>
+<span class="sd">         (2, 2, 3),</span>
+<span class="sd">         (2, 3, 2)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span><span class="o">.</span><span class="n">to_exp_dict</span><span class="p">()</span>
+    <span class="n">ek</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">left</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">assert</span><span class="p">(</span><span class="n">left</span> <span class="ow">in</span> <span class="n">e</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">left</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">left</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span> <span class="n">keys</span> <span class="o">=</span> <span class="n">ek</span>
+
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">standard</span><span class="p">:</span> <span class="n">angles</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span> <span class="n">angles</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">m</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">angles</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">m_l</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">m_r</span> <span class="ow">in</span> <span class="n">ek</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m_l</span> <span class="o">!=</span> <span class="n">m_r</span> <span class="ow">or</span> <span class="n">e</span><span class="p">[</span><span class="n">m_l</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">m_l</span><span class="p">,</span><span class="n">m_r</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="split"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.split">[docs]</a><span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Splits the i-th term of p into two parts of size k and n-k-1</span>
+
+<span class="sd">    There is a symmetry split(p, k, i) = split(p, p[i]-k-1, i)</span>
+
+<span class="sd">    INPUT:</span>
+
+<span class="sd">    - ``p`` - a partition</span>
+
+<span class="sd">    - ``k`` - an integer between 2 and p[i]</span>
+
+<span class="sd">    - ``i`` - integer - the index of the element to split</span>
+
+<span class="sd">    OUTPUT: a partition</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rcc</span>
+<span class="sd">        sage: p = Partition([5,1])</span>
+<span class="sd">        sage: rcc.split(p,1,0)</span>
+<span class="sd">        [3, 1, 1]</span>
+<span class="sd">        sage: rcc.split(p,2,0)</span>
+<span class="sd">        [2, 2, 1]</span>
+<span class="sd">        sage: rcc.split(p,3,0)</span>
+<span class="sd">        [3, 1, 1]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Partition</span><span class="p">(</span><span class="n">l</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="collapse"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.collapse">[docs]</a><span class="k">def</span> <span class="nf">collapse</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collapses the i-th term and the j-th term of a permutation</span>
+
+<span class="sd">    INPUT:</span>
+
+<span class="sd">    - ``p`` - a partition</span>
+
+<span class="sd">    - ``i,j`` - two different indices of p</span>
+
+<span class="sd">    OUTPUT:</span>
+
+<span class="sd">    - a partition</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rcc</span>
+<span class="sd">        sage: p = Partition([4,2,1])</span>
+<span class="sd">        sage: rcc.collapse(p, 0, 1)</span>
+<span class="sd">        [5, 1]</span>
+<span class="sd">        sage: rcc.collapse(p, 0, 2)</span>
+<span class="sd">        [4, 2]</span>
+<span class="sd">        sage: rcc.collapse(p, 1, 2)</span>
+<span class="sd">        [4, 2]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">)</span>
+
+    <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+    <span class="n">n_i</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">n_j</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+
+    <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_i</span><span class="o">+</span><span class="n">n_j</span><span class="o">-</span><span class="mi">1</span>
+    <span class="k">del</span> <span class="n">l</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+
+    <span class="n">l</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Partition</span><span class="p">(</span><span class="n">l</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="check_std_marking"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.check_std_marking">[docs]</a><span class="k">def</span> <span class="nf">check_std_marking</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">marking</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tiny internal function that checks the validity of ``marking`` on the</span>
+<span class="sd">    partition ``p``.</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rcc</span>
+<span class="sd">        sage: p = Partition([3,2,2])</span>
+<span class="sd">        sage: rcc.check_std_marking(p, (1,3,1))</span>
+<span class="sd">        (1, 3, 1)</span>
+<span class="sd">        sage: rcc.check_std_marking(p, (1,3,0))</span>
+<span class="sd">        Traceback (most recent call last):</span>
+<span class="sd">        ...</span>
+<span class="sd">        ValueError: marking[2] is not good</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">marking</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;marking must be a 3-tuple (t,i,j)&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">marking</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;marking[1] not in p&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;marking[2] is not good&quot;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">marking</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">to_exp</span><span class="p">()[</span><span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;wrong marking type 2&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">p</span> <span class="ow">or</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;marking not in p&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;marking[0] must be 1 or 2&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">marking</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="check_marking"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.check_marking">[docs]</a><span class="k">def</span> <span class="nf">check_marking</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">marking</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tiny internal function that checks that ``marking`` is compatible with ``p``.</span>
+
+<span class="sd">    OUTPUT:</span>
+
+<span class="sd">        A 3-tuple.</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rcc</span>
+<span class="sd">        sage: p = Partition([3,2,2])</span>
+<span class="sd">        sage: rcc.check_marking(p, (1,3,1))</span>
+<span class="sd">        (1, 3, 1)</span>
+<span class="sd">        sage: rcc.check_marking(p, (1,3,2))</span>
+<span class="sd">        (1, 3, 2)</span>
+<span class="sd">        sage: rcc.check_marking(p, (1,3,3))</span>
+<span class="sd">        Traceback (most recent call last):</span>
+<span class="sd">        ...</span>
+<span class="sd">        ValueError: marking[2] is not good</span>
+<span class="sd">        sage: rcc.check_marking(p, (1,3,-1))</span>
+<span class="sd">        Traceback (most recent call last):</span>
+<span class="sd">        ...</span>
+<span class="sd">        ValueError: marking[2] is not good</span>
+<span class="sd">        sage: rcc.check_marking(p, (2,3,2))</span>
+<span class="sd">        (2, 3, 2)</span>
+<span class="sd">        sage: rcc.check_marking(p, (2,3,3))</span>
+<span class="sd">        Traceback (most recent call last):</span>
+<span class="sd">        ...</span>
+<span class="sd">        ValueError: wrong marking type 2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">marking</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;marking must be a 3-tuple (t,i,j)&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">marking</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;marking[1] not in p&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;marking[2] is not good&quot;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">marking</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">to_exp</span><span class="p">()[</span><span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;wrong marking type 2&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">p</span> <span class="ow">or</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;marking not in p&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;marking[0] must be 1 or 2&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">marking</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="bidecompositions"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.bidecompositions">[docs]</a><span class="k">def</span> <span class="nf">bidecompositions</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Iterator through the pair of partitions ``(q1,q2)`` such that the union of</span>
+<span class="sd">    the parts of ``q1`` and ``q2`` equal ``p``.</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rcc</span>
+<span class="sd">        sage: list(rcc.bidecompositions(Partition([3,1])))</span>
+<span class="sd">        [([], [3, 1]), ([3], [1]), ([1], [3]), ([3, 1], [])]</span>
+<span class="sd">        sage: list(rcc.bidecompositions(Partition([2,1,1])))</span>
+<span class="sd">        [([], [2, 1, 1]),</span>
+<span class="sd">         ([2], [1, 1]),</span>
+<span class="sd">         ([1], [2, 1]),</span>
+<span class="sd">         ([2, 1], [1]),</span>
+<span class="sd">         ([1, 1], [2]),</span>
+<span class="sd">         ([2, 1, 1], [])]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
+
+    <span class="n">exp</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">to_exp</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">exp</span><span class="p">)):</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">(</span><span class="n">exp</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">(</span><span class="n">exp</span><span class="o">=</span><span class="p">[</span><span class="n">exp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">-</span><span class="n">i</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">exp</span><span class="p">))])</span>
+        <span class="k">yield</span> <span class="n">p1</span><span class="p">,</span><span class="n">p2</span></div>
+
+<span class="c1">#########################</span>
+<span class="c1"># STANDARD PERMUTATIONS #</span>
+<span class="c1">#########################</span>
+
+<span class="c1"># number of permutations</span>
+
+<span class="nd">@cached_function</span>
+<span class="k">def</span> <span class="nf">_c_rec</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Recurrence function that is called by :func:`c`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="k">return</span> <span class="n">factorial</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+         <span class="nb">sum</span><span class="p">(</span><span class="n">_c_rec</span><span class="p">(</span><span class="n">split</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">k</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">+</span>
+         <span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">_c_rec</span><span class="p">(</span><span class="n">collapse</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">))))</span>
+
+<div class="viewcode-block" id="c"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.c">[docs]</a><span class="k">def</span> <span class="nf">c</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Number of labeled standard permutations with given profile</span>
+
+<span class="sd">    There is an explicit formula for this number</span>
+
+<span class="sd">    .. MATH::</span>
+
+<span class="sd">        c(p) = \frac{2 (n-1)!}{n+1} \left( \sum_{q \subset (p_2,p_3,\ldots,p_k)} (-1)^{s(q)-l(q)} \binom{n}{s(q)}^{-1} \right).</span>
+
+<span class="sd">    Though, for huge partition `p` this is not very useful. This function</span>
+<span class="sd">    implements an induction formula to compute `c(p)`.</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rcc</span>
+
+<span class="sd">    Partition of length 1::</span>
+
+<span class="sd">        sage: n = 7</span>
+<span class="sd">        sage: rcc.c([n]) == 2 * factorial(n-1) / (n+1)</span>
+<span class="sd">        True</span>
+<span class="sd">        sage: all(rcc.c([n]) == 2 * factorial(n-1) / (n+1) for n in range(11,18,2))</span>
+<span class="sd">        True</span>
+
+<span class="sd">    Partitions of length 2 with two odd numbers::</span>
+
+<span class="sd">        sage: p = [5,3]</span>
+<span class="sd">        sage: n = sum(p)</span>
+<span class="sd">        sage: b = binomial(n,p[0])</span>
+<span class="sd">        sage: rcc.c(p) == 2 * factorial(n-1) * (1 + 1 / binomial(n,p[0])) / (n+1)</span>
+<span class="sd">        True</span>
+
+<span class="sd">        sage: p = [13,5]</span>
+<span class="sd">        sage: n = sum(p)</span>
+<span class="sd">        sage: b = binomial(n,p[0])</span>
+<span class="sd">        sage: rcc.c(p) == 2 * factorial(n-1) * (1 + 1 / binomial(n,p[0])) / (n+1)</span>
+<span class="sd">        True</span>
+
+<span class="sd">    Partitions of length 2 with even numbers::</span>
+
+<span class="sd">        sage: p = [4,4]</span>
+<span class="sd">        sage: n = sum(p)</span>
+<span class="sd">        sage: b = binomial(n,p[0])</span>
+<span class="sd">        sage: rcc.c(p) == 2 * factorial(n-1) * (1 - 1 / binomial(n,p[0])) / (n+1)</span>
+<span class="sd">        True</span>
+
+<span class="sd">        sage: p = [10,2]</span>
+<span class="sd">        sage: n = sum(p)</span>
+<span class="sd">        sage: b = binomial(n,p[0])</span>
+<span class="sd">        sage: rcc.c(p) == 2 * factorial(n-1) * (1 - 1 / binomial(n,p[0])) / (n+1)</span>
+<span class="sd">        True</span>
+
+<span class="sd">    Add marked points to an integer partition::</span>
+
+<span class="sd">        sage: p = [3,2,2]</span>
+<span class="sd">        sage: n = sum(p)</span>
+<span class="sd">        sage: all(rcc.c(p + [1]*k) == factorial(n+k-1) / factorial(n-1) * rcc.c(p) for k in range(1,6))</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_c_rec</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="n">p</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="gamma_std"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.gamma_std">[docs]</a><span class="k">def</span> <span class="nf">gamma_std</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">marking</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the number of standard permutations of given profile</span>
+
+<span class="sd">    INPUT:</span>
+
+<span class="sd">    - ``profile`` - an integer partition such that the its sum plus its length</span>
+<span class="sd">      is congruent to 0 modulo 2</span>
+
+<span class="sd">    - ``marking`` - either None, an element of the profile or a 3-tuple ``(1, n1, a)`` or ``(2, n1, n2)``</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rcc</span>
+
+<span class="sd">    A ValueError is raised if the partition does not satisfy the requirement::</span>
+
+<span class="sd">        sage: rcc.gamma_std([5,2])</span>
+<span class="sd">        Traceback (most recent call last):</span>
+<span class="sd">        ...</span>
+<span class="sd">        ValueError: the sum of the profile (=[5, 2]) plus its length must be congruent to 0 modulo 2</span>
+
+<span class="sd">    The Rauzy classes associated to connected strata in genus 3::</span>
+
+<span class="sd">        sage: from surface_dynamics import AbelianStratum</span>
+<span class="sd">        sage: cc = AbelianStratum(1,1,1,1).unique_component()</span>
+<span class="sd">        sage: d = cc.rauzy_diagram()</span>
+<span class="sd">        sage: d</span>
+<span class="sd">        Rauzy diagram with 1255 permutations</span>
+<span class="sd">        sage: sum(1 for _ in filter(lambda x: x.is_standard(), d)) == rcc.gamma_std([2,2,2,2])</span>
+<span class="sd">        True</span>
+
+<span class="sd">        sage: cc = AbelianStratum(2,1,1).unique_component()</span>
+<span class="sd">        sage: d = cc.rauzy_diagram()</span>
+<span class="sd">        sage: d</span>
+<span class="sd">        Rauzy diagram with 2177 permutations</span>
+<span class="sd">        sage: sum(1 for _ in filter(lambda x: x.is_standard(), d)) == rcc.gamma_std([3,2,2])</span>
+<span class="sd">        True</span>
+
+<span class="sd">        sage: cc = AbelianStratum(3,1).unique_component()</span>
+<span class="sd">        sage: d = cc.rauzy_diagram()</span>
+<span class="sd">        sage: d</span>
+<span class="sd">        Rauzy diagram with 770 permutations</span>
+<span class="sd">        sage: sum(1 for _ in filter(lambda x: x.is_standard(), d)) == rcc.gamma_std([4,2])</span>
+<span class="sd">        True</span>
+
+<span class="sd">    The non connected strata in genus 3::</span>
+
+<span class="sd">        sage: cc_odd = AbelianStratum(2,2).odd_component()</span>
+<span class="sd">        sage: cc_hyp = AbelianStratum(2,2).hyperelliptic_component()</span>
+<span class="sd">        sage: d_odd = cc_odd.rauzy_diagram()</span>
+<span class="sd">        sage: d_hyp = cc_hyp.rauzy_diagram()</span>
+<span class="sd">        sage: d_odd</span>
+<span class="sd">        Rauzy diagram with 294 permutations</span>
+<span class="sd">        sage: d_hyp</span>
+<span class="sd">        Rauzy diagram with 63 permutations</span>
+<span class="sd">        sage: n_odd = sum(1 for _ in filter(lambda x: x.is_standard(), d_odd))</span>
+<span class="sd">        sage: n_hyp = sum(1 for _ in filter(lambda x: x.is_standard(), d_hyp))</span>
+<span class="sd">        sage: n_odd + n_hyp == rcc.gamma_std([3,3])</span>
+<span class="sd">        True</span>
+
+<span class="sd">        sage: cc_odd = AbelianStratum(4).odd_component()</span>
+<span class="sd">        sage: cc_hyp = AbelianStratum(4).hyperelliptic_component()</span>
+<span class="sd">        sage: d_odd = cc_odd.rauzy_diagram()</span>
+<span class="sd">        sage: d_hyp = cc_hyp.rauzy_diagram()</span>
+<span class="sd">        sage: d_odd</span>
+<span class="sd">        Rauzy diagram with 134 permutations</span>
+<span class="sd">        sage: d_hyp</span>
+<span class="sd">        Rauzy diagram with 31 permutations</span>
+<span class="sd">        sage: n_odd = sum(1 for _ in filter(lambda x: x.is_standard(), d_odd))</span>
+<span class="sd">        sage: n_hyp = sum(1 for _ in filter(lambda x: x.is_standard(), d_hyp))</span>
+<span class="sd">        sage: n_odd + n_hyp == rcc.gamma_std([5])</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the sum of the profile (=</span><span class="si">%s</span><span class="s2">) plus its length must be congruent to 0 modulo 2&quot;</span> <span class="o">%</span> <span class="n">p</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span> <span class="ow">and</span> <span class="n">marking</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">marking</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">gamma_std</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">marking_iterator</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">left</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">standard</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">marking</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">Integer</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">gamma_std</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">marking_iterator</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">left</span><span class="o">=</span><span class="n">marking</span><span class="p">,</span><span class="n">standard</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="n">marking</span> <span class="o">=</span> <span class="n">check_std_marking</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">marking</span><span class="p">)</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">marking</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># marking of type 1</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">del</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">_c_rec</span><span class="p">(</span><span class="n">split</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">i</span><span class="p">))</span> <span class="o">/</span> <span class="n">Partition</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">.</span><span class="n">centralizer_size</span><span class="p">()</span>
+
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># marking of type 2</span>
+        <span class="n">i0</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">i1</span> <span class="o">=</span> <span class="n">i0</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">l</span><span class="p">[</span><span class="n">i0</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">i1</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">i0</span><span class="p">,</span><span class="n">i1</span> <span class="o">=</span> <span class="n">i1</span><span class="p">,</span><span class="n">i0</span>
+        <span class="k">del</span> <span class="n">l</span><span class="p">[</span><span class="n">i1</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">l</span><span class="p">[</span><span class="n">i0</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">_c_rec</span><span class="p">(</span><span class="n">collapse</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">i0</span><span class="p">,</span><span class="n">i1</span><span class="p">))</span> <span class="o">/</span> <span class="n">Partition</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">.</span><span class="n">centralizer_size</span><span class="p">()</span></div>
+
+<span class="n">number_of_standard_permutations</span> <span class="o">=</span> <span class="n">gamma_std</span>
+
+<span class="c1"># spin difference</span>
+
+<div class="viewcode-block" id="d"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.d">[docs]</a><span class="k">def</span> <span class="nf">d</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Difference between the number of odd spin parity and even spin parity</span>
+<span class="sd">    standard labeled permutations with given profile</span>
+
+<span class="sd">    There is an explicit formula</span>
+
+<span class="sd">    .. MATH::</span>
+
+<span class="sd">        d(p) = \frac{(n-1)!}{2^{(n-k)/2}}</span>
+
+<span class="sd">    where `n` is the sum of the partition `p` and `k` is its length.</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rcc</span>
+<span class="sd">        sage: p = [3,3,1]</span>
+<span class="sd">        sage: rcc.d([3,3,1]) == factorial(6) / 2**2</span>
+<span class="sd">        True</span>
+<span class="sd">        sage: rcc.d([13]) == factorial(12) / 2**6</span>
+<span class="sd">        True</span>
+
+<span class="sd">     Adding marked points::</span>
+
+<span class="sd">        sage: p = [5,3,3]</span>
+<span class="sd">        sage: n = sum(p)</span>
+<span class="sd">        sage: all(rcc.d(p + [1]*k) == factorial(n+k-1) / factorial(n-1) * rcc.d(p) for k in range(1,6))</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">**</span><span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="delta_std"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.delta_std">[docs]</a><span class="k">def</span> <span class="nf">delta_std</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">marking</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the difference odd-even in the given stratum</span>
+
+<span class="sd">    INPUT:</span>
+
+<span class="sd">    - ``p`` - partition with odd terms</span>
+
+<span class="sd">    - ``marking`` - a 3-tuple ``(1, n1, a)`` or ``(2, n1, n2)``</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rcc</span>
+
+
+<span class="sd">    A ValueError is raised if the partition does not fulfill the requirement::</span>
+
+<span class="sd">        sage: rcc.delta_std([5,2])</span>
+<span class="sd">        Traceback (most recent call last):</span>
+<span class="sd">        ...</span>
+<span class="sd">        ValueError: the profile (=[5, 2]) must contain only odd numbers</span>
+
+<span class="sd">    Non connected strata in genus 3 has two connected components distinguished</span>
+<span class="sd">    by their spin parity::</span>
+
+<span class="sd">        sage: from surface_dynamics import AbelianStratum</span>
+<span class="sd">        sage: cc_odd = AbelianStratum(2,2).odd_component()</span>
+<span class="sd">        sage: cc_hyp = AbelianStratum(2,2).hyperelliptic_component()</span>
+<span class="sd">        sage: d_odd = cc_odd.rauzy_diagram()</span>
+<span class="sd">        sage: d_hyp = cc_hyp.rauzy_diagram()</span>
+<span class="sd">        sage: d_odd</span>
+<span class="sd">        Rauzy diagram with 294 permutations</span>
+<span class="sd">        sage: d_hyp</span>
+<span class="sd">        Rauzy diagram with 63 permutations</span>
+<span class="sd">        sage: n_odd = sum(1 for _ in filter(lambda x: x.is_standard(), d_odd))</span>
+<span class="sd">        sage: n_hyp = sum(1 for _ in filter(lambda x: x.is_standard(), d_hyp))</span>
+<span class="sd">        sage: n_odd - n_hyp == rcc.delta_std([3,3])</span>
+<span class="sd">        True</span>
+
+<span class="sd">        sage: cc_odd = AbelianStratum(4).odd_component()</span>
+<span class="sd">        sage: cc_hyp = AbelianStratum(4).hyperelliptic_component()</span>
+<span class="sd">        sage: d_odd = cc_odd.rauzy_diagram()</span>
+<span class="sd">        sage: d_hyp = cc_hyp.rauzy_diagram()</span>
+<span class="sd">        sage: d_odd</span>
+<span class="sd">        Rauzy diagram with 134 permutations</span>
+<span class="sd">        sage: d_hyp</span>
+<span class="sd">        Rauzy diagram with 31 permutations</span>
+<span class="sd">        sage: n_odd = sum(1 for _ in filter(lambda x: x.is_standard(), d_odd))</span>
+<span class="sd">        sage: n_hyp = sum(1 for _ in filter(lambda x: x.is_standard(), d_hyp))</span>
+<span class="sd">        sage: n_odd - n_hyp == rcc.delta_std([5])</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="ow">not</span> <span class="n">x</span><span class="o">%</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">p</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the profile (=</span><span class="si">%s</span><span class="s2">) must contain only odd numbers&quot;</span> <span class="o">%</span> <span class="n">p</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">marking</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">delta_std</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">marking_iterator</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">left</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">standard</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">marking</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">Integer</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">delta_std</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">marking_iterator</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">left</span><span class="o">=</span><span class="n">marking</span><span class="p">,</span><span class="n">standard</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="n">marking</span> <span class="o">=</span> <span class="n">check_std_marking</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">marking</span><span class="p">)</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">marking</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># marking of type 1</span>
+        <span class="k">if</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">del</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">d</span><span class="p">(</span><span class="n">split</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">i</span><span class="p">))</span> <span class="o">/</span> <span class="n">Partition</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">.</span><span class="n">centralizer_size</span><span class="p">()</span>
+
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># marking of type 2</span>
+        <span class="n">i0</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">i1</span> <span class="o">=</span> <span class="n">i0</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">l</span><span class="p">[</span><span class="n">i0</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">i1</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">i0</span><span class="p">,</span><span class="n">i1</span> <span class="o">=</span> <span class="n">i1</span><span class="p">,</span><span class="n">i0</span>
+        <span class="k">del</span> <span class="n">l</span><span class="p">[</span><span class="n">i1</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">l</span><span class="p">[</span><span class="n">i0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">d</span><span class="p">(</span><span class="n">collapse</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">i0</span><span class="p">,</span><span class="n">i1</span><span class="p">))</span> <span class="o">/</span> <span class="n">Partition</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">.</span><span class="n">centralizer_size</span><span class="p">()</span></div>
+
+<span class="n">spin_difference_for_standard_permutations</span> <span class="o">=</span> <span class="n">delta_std</span>
+
+<span class="c1">#####################################</span>
+<span class="c1"># FROM STANDARD PERMUTATIONS TO ALL #</span>
+<span class="c1">#####################################</span>
+
+<span class="nd">@cached_function</span>
+<span class="k">def</span> <span class="nf">_gamma_irr_rec</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">marking</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Internal recursive function called by :func:`gamma_irr`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">marking</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="n">pp</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_list</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">p</span><span class="o">.</span><span class="n">_list</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:])</span> <span class="c1"># the partition p&#39;</span>
+
+        <span class="n">N</span> <span class="o">=</span> <span class="n">gamma_std</span><span class="p">(</span><span class="n">pp</span><span class="o">.</span><span class="n">_list</span> <span class="o">+</span> <span class="p">[</span><span class="n">m</span><span class="o">+</span><span class="mi">2</span><span class="p">],(</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">-</span><span class="n">a</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">m1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">m2</span> <span class="o">=</span> <span class="n">m</span><span class="o">-</span><span class="n">m1</span><span class="o">-</span><span class="mi">1</span>
+            <span class="k">for</span> <span class="n">a1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">a</span><span class="o">-</span><span class="n">m2</span><span class="p">),</span><span class="nb">min</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">m1</span><span class="p">)):</span>
+                <span class="n">a2</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">a1</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="k">for</span> <span class="n">p1</span><span class="p">,</span><span class="n">p2</span> <span class="ow">in</span> <span class="n">bidecompositions</span><span class="p">(</span><span class="n">pp</span><span class="p">):</span>
+                    <span class="n">l1</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">m1</span><span class="p">]</span><span class="o">+</span><span class="n">p1</span><span class="o">.</span><span class="n">_list</span><span class="p">,</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">l2</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">m2</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">p2</span><span class="o">.</span><span class="n">_list</span><span class="p">,</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">l1</span><span class="p">))</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">l2</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">l2</span><span class="p">))</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">N</span> <span class="o">-=</span> <span class="p">(</span><span class="n">_gamma_irr_rec</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="n">l1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">m1</span><span class="p">,</span><span class="n">a1</span><span class="p">))</span> <span class="o">*</span>
+                              <span class="n">gamma_std</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="n">l2</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="n">m2</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">m2</span><span class="o">-</span><span class="n">a2</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">N</span>
+
+
+    <span class="k">elif</span> <span class="n">marking</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">m1</span> <span class="o">=</span> <span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">m2</span> <span class="o">=</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">i1</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span>
+        <span class="n">i2</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">m1</span> <span class="o">==</span> <span class="n">m2</span><span class="p">:</span> <span class="n">i2</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">i2</span> <span class="o">&lt;</span> <span class="n">i1</span><span class="p">:</span> <span class="n">i1</span><span class="p">,</span><span class="n">i2</span> <span class="o">=</span> <span class="n">i2</span><span class="p">,</span><span class="n">i1</span>
+        <span class="n">pp</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_list</span><span class="p">[:</span><span class="n">i1</span><span class="p">]</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">_list</span><span class="p">[</span><span class="n">i1</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">i2</span><span class="p">]</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">_list</span><span class="p">[</span><span class="n">i2</span><span class="o">+</span><span class="mi">1</span><span class="p">:])</span>
+
+        <span class="n">N</span> <span class="o">=</span> <span class="n">gamma_std</span><span class="p">(</span><span class="n">pp</span><span class="o">.</span><span class="n">_list</span> <span class="o">+</span> <span class="p">[</span><span class="n">m1</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">m2</span><span class="o">+</span><span class="mi">1</span><span class="p">],(</span><span class="mi">2</span><span class="p">,</span><span class="n">m1</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">m2</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">p1</span><span class="p">,</span><span class="n">p2</span> <span class="ow">in</span> <span class="n">bidecompositions</span><span class="p">(</span><span class="n">pp</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">k1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">m1</span><span class="p">):</span> <span class="c1"># remove (m&#39;_1|.) (m&#39;&#39;_1 o m_2)</span>
+                <span class="n">k2</span> <span class="o">=</span> <span class="n">m1</span><span class="o">-</span><span class="n">k1</span><span class="o">-</span><span class="mi">1</span>
+                <span class="n">l1</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">_list</span><span class="o">+</span><span class="p">[</span><span class="n">k1</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">l2</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">p2</span><span class="o">.</span><span class="n">_list</span><span class="o">+</span><span class="p">[</span><span class="n">k2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">m2</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">l1</span><span class="p">))</span> <span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">l2</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">l2</span><span class="p">))</span> <span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k1</span><span class="p">):</span> <span class="c1"># a is an angle</span>
+                        <span class="n">N</span> <span class="o">-=</span> <span class="p">(</span><span class="n">_gamma_irr_rec</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="n">l1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">k1</span><span class="p">,</span><span class="n">a</span><span class="p">))</span><span class="o">*</span>
+                              <span class="n">gamma_std</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="n">l2</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="n">k2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">m2</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
+
+            <span class="k">for</span> <span class="n">k1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">m2</span><span class="p">):</span> <span class="c1"># remove (m_1 o m&#39;_2) (m&#39;&#39;_2|.)</span>
+                <span class="n">k2</span> <span class="o">=</span> <span class="n">m2</span><span class="o">-</span><span class="n">k1</span><span class="o">-</span><span class="mi">1</span>
+                <span class="n">l1</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">_list</span><span class="o">+</span><span class="p">[</span><span class="n">m1</span><span class="p">,</span><span class="n">k1</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">l2</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">p2</span><span class="o">.</span><span class="n">_list</span><span class="o">+</span><span class="p">[</span><span class="n">k2</span><span class="o">+</span><span class="mi">2</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">l1</span><span class="p">))</span> <span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">l2</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">l2</span><span class="p">))</span> <span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">k2</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span> <span class="c1"># a is an angle for standard perm</span>
+                        <span class="n">N</span> <span class="o">-=</span> <span class="p">(</span><span class="n">_gamma_irr_rec</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="n">l1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">m1</span><span class="p">,</span><span class="n">k1</span><span class="p">))</span> <span class="o">*</span>
+                              <span class="n">gamma_std</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="n">l2</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="n">k2</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">a</span><span class="p">)))</span>
+
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">pp</span><span class="o">.</span><span class="n">to_exp_dict</span><span class="p">():</span> <span class="c1"># remove (m_1, k_1) (k_2, m_2) for k1+k2+1 an other zero</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">_list</span><span class="p">[:]</span>
+            <span class="k">del</span> <span class="n">q</span><span class="p">[</span><span class="n">q</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+            <span class="k">for</span> <span class="n">p1</span><span class="p">,</span><span class="n">p2</span> <span class="ow">in</span> <span class="n">bidecompositions</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="n">q</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">k1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="p">):</span>
+                    <span class="n">k2</span> <span class="o">=</span> <span class="n">m</span><span class="o">-</span><span class="n">k1</span><span class="o">-</span><span class="mi">1</span>
+                    <span class="n">l1</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">_list</span><span class="o">+</span><span class="p">[</span><span class="n">m1</span><span class="p">,</span><span class="n">k1</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">l2</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">p2</span><span class="o">.</span><span class="n">_list</span><span class="o">+</span><span class="p">[</span><span class="n">k2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">m2</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">l1</span><span class="p">))</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">l2</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">l2</span><span class="p">))</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">N</span> <span class="o">-=</span> <span class="p">(</span><span class="n">_gamma_irr_rec</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="n">l1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">m1</span><span class="p">,</span><span class="n">k1</span><span class="p">))</span> <span class="o">*</span>
+                              <span class="n">gamma_std</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="n">l2</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="n">k2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">m2</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
+
+        <span class="k">return</span> <span class="n">N</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;marking must be a 3-tuple of the form (1,m,a) or (2,m1,m2)&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="gamma_irr"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.gamma_irr">[docs]</a><span class="k">def</span> <span class="nf">gamma_irr</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">marking</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Number of permutations for the given profile and marking</span>
+
+<span class="sd">    INPUT:</span>
+
+<span class="sd">    - ``profile`` - an integer partition such that its sum plus its length is</span>
+<span class="sd">      congruent to 0 modulo 2</span>
+
+<span class="sd">    - ``markings`` - None, an element of the profile or a 3-tuple</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rcc</span>
+
+<span class="sd">    The connected strata in genus 3::</span>
+
+<span class="sd">        sage: from surface_dynamics import AbelianStratum</span>
+
+<span class="sd">        sage: c = AbelianStratum(1,1,1,1).unique_component()</span>
+<span class="sd">        sage: c.rauzy_diagram()</span>
+<span class="sd">        Rauzy diagram with 1255 permutations</span>
+<span class="sd">        sage: rcc.gamma_irr([2,2,2,2])</span>
+<span class="sd">        1255</span>
+
+<span class="sd">        sage: c = AbelianStratum(2,1,1).unique_component()</span>
+<span class="sd">        sage: c.rauzy_diagram()</span>
+<span class="sd">        Rauzy diagram with 2177 permutations</span>
+<span class="sd">        sage: rcc.gamma_irr([3,2,2])</span>
+<span class="sd">        2177</span>
+
+<span class="sd">        sage: c = AbelianStratum(3,1).unique_component()</span>
+<span class="sd">        sage: c.rauzy_diagram()</span>
+<span class="sd">        Rauzy diagram with 770 permutations</span>
+<span class="sd">        sage: rcc.gamma_irr([4,2])</span>
+<span class="sd">        770</span>
+
+<span class="sd">    The non connected strata in genus 3::</span>
+
+<span class="sd">        sage: c_odd = AbelianStratum(2,2).odd_component()</span>
+<span class="sd">        sage: c_hyp = AbelianStratum(2,2).hyperelliptic_component()</span>
+<span class="sd">        sage: c_odd.rauzy_diagram()</span>
+<span class="sd">        Rauzy diagram with 294 permutations</span>
+<span class="sd">        sage: c_hyp.rauzy_diagram()</span>
+<span class="sd">        Rauzy diagram with 63 permutations</span>
+<span class="sd">        sage: rcc.gamma_irr([3,3]) == 294 + 63</span>
+<span class="sd">        True</span>
+
+<span class="sd">        sage: c_odd = AbelianStratum(4).odd_component()</span>
+<span class="sd">        sage: c_hyp = AbelianStratum(4).hyperelliptic_component()</span>
+<span class="sd">        sage: c_odd.rauzy_diagram()</span>
+<span class="sd">        Rauzy diagram with 134 permutations</span>
+<span class="sd">        sage: c_hyp.rauzy_diagram()</span>
+<span class="sd">        Rauzy diagram with 31 permutations</span>
+<span class="sd">        sage: rcc.gamma_irr([5]) == 134 + 31</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">marking</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">gamma_irr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">marking_iterator</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">left</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">marking</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">Integer</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">gamma_irr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">marking_iterator</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">left</span><span class="o">=</span><span class="n">marking</span><span class="p">))</span>
+
+    <span class="n">marking</span> <span class="o">=</span> <span class="n">check_marking</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">marking</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_gamma_irr_rec</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">marking</span><span class="p">)</span></div>
+
+<span class="n">number_of_irreducible_permutations</span> <span class="o">=</span> <span class="n">gamma_irr</span>
+
+<span class="nd">@cached_function</span>
+<span class="k">def</span> <span class="nf">_delta_irr_rec</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">marking</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Internal recursive function called by :func:`delta_irr`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">marking</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="n">pp</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_list</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">p</span><span class="o">.</span><span class="n">_list</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:])</span> <span class="c1"># the partition p&#39;</span>
+
+        <span class="n">N</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="n">a</span><span class="o">*</span> <span class="n">delta_std</span><span class="p">(</span>
+                <span class="n">pp</span><span class="o">.</span><span class="n">_list</span> <span class="o">+</span> <span class="p">[</span><span class="n">m</span><span class="o">+</span><span class="mi">2</span><span class="p">],</span>
+                <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">m</span><span class="o">-</span><span class="n">a</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">m1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">m2</span> <span class="o">=</span> <span class="n">m</span><span class="o">-</span><span class="n">m1</span><span class="o">-</span><span class="mi">1</span>
+            <span class="k">for</span> <span class="n">a1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">a</span><span class="o">-</span><span class="n">m2</span><span class="p">),</span><span class="nb">min</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">m1</span><span class="p">)):</span>
+                <span class="n">a2</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">a1</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="k">for</span> <span class="n">p1</span><span class="p">,</span><span class="n">p2</span> <span class="ow">in</span> <span class="n">bidecompositions</span><span class="p">(</span><span class="n">pp</span><span class="p">):</span>
+                    <span class="n">l1</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">m1</span><span class="p">]</span><span class="o">+</span><span class="n">p1</span><span class="o">.</span><span class="n">_list</span><span class="p">,</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">l2</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">m2</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">p2</span><span class="o">.</span><span class="n">_list</span><span class="p">,</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">N</span> <span class="o">+=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="n">a2</span><span class="o">*</span><span class="p">(</span><span class="n">_delta_irr_rec</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="n">l1</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="n">m1</span><span class="p">,</span><span class="n">a1</span><span class="p">))</span> <span class="o">*</span>
+                        <span class="n">spin_difference_for_standard_permutations</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="n">l2</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="n">m2</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">m2</span><span class="o">-</span><span class="n">a2</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">N</span>
+
+    <span class="k">elif</span> <span class="n">marking</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">m1</span> <span class="o">=</span> <span class="n">marking</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">m2</span> <span class="o">=</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">i1</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span>
+        <span class="n">i2</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">m1</span> <span class="o">==</span> <span class="n">m2</span><span class="p">:</span> <span class="n">i2</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">i2</span> <span class="o">&lt;</span> <span class="n">i1</span><span class="p">:</span> <span class="n">i1</span><span class="p">,</span><span class="n">i2</span> <span class="o">=</span> <span class="n">i2</span><span class="p">,</span><span class="n">i1</span>
+        <span class="n">pp</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_list</span><span class="p">[:</span><span class="n">i1</span><span class="p">]</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">_list</span><span class="p">[</span><span class="n">i1</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">i2</span><span class="p">]</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">_list</span><span class="p">[</span><span class="n">i2</span><span class="o">+</span><span class="mi">1</span><span class="p">:])</span>
+
+        <span class="n">N</span> <span class="o">=</span> <span class="n">d</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">pp</span><span class="o">.</span><span class="n">_list</span><span class="o">+</span><span class="p">[</span><span class="n">m1</span><span class="o">+</span><span class="n">m2</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span> <span class="o">/</span>  <span class="n">pp</span><span class="o">.</span><span class="n">centralizer_size</span><span class="p">()</span>
+        <span class="c1"># nb of standard permutations that corresponds to extension of good</span>
+        <span class="c1"># guys</span>
+
+        <span class="k">for</span> <span class="n">p1</span><span class="p">,</span><span class="n">p2</span> <span class="ow">in</span> <span class="n">bidecompositions</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="n">pp</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">k1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">m1</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span> <span class="c1"># remove (k1|.) (k2 o m_2)</span>
+                <span class="n">k2</span> <span class="o">=</span> <span class="n">m1</span><span class="o">-</span><span class="n">k1</span><span class="o">-</span><span class="mi">1</span>
+                <span class="n">q1</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">_list</span><span class="o">+</span><span class="p">[</span><span class="n">k1</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+                <span class="n">q2</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">p2</span><span class="o">.</span><span class="n">_list</span><span class="o">+</span><span class="p">[</span><span class="n">k2</span><span class="o">+</span><span class="n">m2</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k1</span><span class="p">):</span> <span class="c1"># a is a angle</span>
+                    <span class="n">N</span> <span class="o">+=</span> <span class="n">_delta_irr_rec</span><span class="p">(</span><span class="n">q1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">k1</span><span class="p">,</span><span class="n">a</span><span class="p">))</span> <span class="o">*</span> <span class="n">d</span><span class="p">(</span><span class="n">q2</span><span class="p">)</span> <span class="o">/</span> <span class="n">p2</span><span class="o">.</span><span class="n">centralizer_size</span><span class="p">()</span>
+
+            <span class="k">for</span> <span class="n">k1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">m2</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span> <span class="c1"># remove (m_1 o k1) (k2|.)</span>
+                <span class="n">k2</span> <span class="o">=</span> <span class="n">m2</span><span class="o">-</span><span class="n">k1</span><span class="o">-</span><span class="mi">1</span>
+                <span class="n">l1</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">_list</span><span class="o">+</span><span class="p">[</span><span class="n">m1</span><span class="p">,</span><span class="n">k1</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">l2</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">p2</span><span class="o">.</span><span class="n">_list</span><span class="o">+</span><span class="p">[</span><span class="n">k2</span><span class="o">+</span><span class="mi">2</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">k2</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span> <span class="c1"># a is an angle for standard perm</span>
+                    <span class="n">N</span> <span class="o">+=</span> <span class="p">(</span><span class="n">_delta_irr_rec</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="n">l1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">m1</span><span class="p">,</span><span class="n">k1</span><span class="p">))</span> <span class="o">*</span>
+                        <span class="n">spin_difference_for_standard_permutations</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="n">l2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">k2</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">a</span><span class="p">)))</span>
+
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">pp</span><span class="o">.</span><span class="n">to_exp_dict</span><span class="p">():</span> <span class="c1"># remove (m_1 o k_1) (k_2 o m_2) for k1+k2+1 an other zero</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">_list</span><span class="p">[:]</span>
+            <span class="k">del</span> <span class="n">q</span><span class="p">[</span><span class="n">q</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+            <span class="k">for</span> <span class="n">p1</span><span class="p">,</span><span class="n">p2</span> <span class="ow">in</span> <span class="n">bidecompositions</span><span class="p">(</span><span class="n">Partition</span><span class="p">(</span><span class="n">q</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">k1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span>
+                    <span class="n">k2</span> <span class="o">=</span> <span class="n">m</span><span class="o">-</span><span class="n">k1</span><span class="o">-</span><span class="mi">1</span>
+                    <span class="n">q1</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">_list</span><span class="o">+</span><span class="p">[</span><span class="n">m1</span><span class="p">,</span><span class="n">k1</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+                    <span class="n">q2</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">p2</span><span class="o">.</span><span class="n">_list</span><span class="o">+</span><span class="p">[</span><span class="n">k2</span><span class="o">+</span><span class="n">m2</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+                    <span class="n">N</span> <span class="o">+=</span> <span class="n">_delta_irr_rec</span><span class="p">(</span><span class="n">q1</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">m1</span><span class="p">,</span><span class="n">k1</span><span class="p">))</span> <span class="o">*</span> <span class="n">d</span><span class="p">(</span><span class="n">q2</span><span class="p">)</span> <span class="o">/</span> <span class="n">p2</span><span class="o">.</span><span class="n">centralizer_size</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">N</span>
+
+<div class="viewcode-block" id="delta_irr"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.delta_irr">[docs]</a><span class="k">def</span> <span class="nf">delta_irr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">marking</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Spin difference for the given profile and marking</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rcc</span>
+
+<span class="sd">    The non connected strata in genus 3::</span>
+
+<span class="sd">        sage: from surface_dynamics import AbelianStratum</span>
+
+<span class="sd">        sage: c_odd = AbelianStratum(2,2).odd_component()</span>
+<span class="sd">        sage: c_hyp = AbelianStratum(2,2).hyperelliptic_component()</span>
+<span class="sd">        sage: c_odd.rauzy_diagram()</span>
+<span class="sd">        Rauzy diagram with 294 permutations</span>
+<span class="sd">        sage: c_hyp.rauzy_diagram()</span>
+<span class="sd">        Rauzy diagram with 63 permutations</span>
+<span class="sd">        sage: rcc.delta_irr([3,3]) == 294 - 63</span>
+<span class="sd">        True</span>
+
+<span class="sd">        sage: c_odd = AbelianStratum(4).odd_component()</span>
+<span class="sd">        sage: c_hyp = AbelianStratum(4).hyperelliptic_component()</span>
+<span class="sd">        sage: c_odd.rauzy_diagram()</span>
+<span class="sd">        Rauzy diagram with 134 permutations</span>
+<span class="sd">        sage: c_hyp.rauzy_diagram()</span>
+<span class="sd">        Rauzy diagram with 31 permutations</span>
+<span class="sd">        sage: rcc.delta_irr([5]) == 134 - 31</span>
+<span class="sd">        True</span>
+
+<span class="sd">    A non connected strata in genus 4::</span>
+
+<span class="sd">        sage: import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc</span>
+<span class="sd">        sage: a = AbelianStratum(6)</span>
+<span class="sd">        sage: c_hyp = a.hyperelliptic_component()</span>
+<span class="sd">        sage: c_odd = a.odd_component()</span>
+<span class="sd">        sage: c_even = a.even_component()</span>
+<span class="sd">        sage: c_hyp.rauzy_diagram()</span>
+<span class="sd">        Rauzy diagram with 127 permutations</span>
+<span class="sd">        sage: c_hyp.rauzy_class_cardinality()</span>
+<span class="sd">        127</span>
+<span class="sd">        sage: c_odd.rauzy_diagram()</span>
+<span class="sd">        Rauzy diagram with 5209 permutations</span>
+<span class="sd">        sage: c_odd.rauzy_class_cardinality()</span>
+<span class="sd">        5209</span>
+<span class="sd">        sage: c_even = a.even_component()</span>
+<span class="sd">        sage: c_even.rauzy_diagram()</span>
+<span class="sd">        Rauzy diagram with 2327 permutations</span>
+<span class="sd">        sage: c_even.rauzy_class_cardinality()</span>
+<span class="sd">        2327</span>
+<span class="sd">        sage: 5209 - 2327 - 127</span>
+<span class="sd">        2755</span>
+<span class="sd">        sage: rdc.delta_irr([7])</span>
+<span class="sd">        2755</span>
+
+<span class="sd">    An example with a very big Rauzy class::</span>
+
+<span class="sd">        sage: c = AbelianStratum(6,6).odd_component()</span>
+<span class="sd">        sage: c.rauzy_class_cardinality()</span>
+<span class="sd">        11609364656</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">marking</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">delta_irr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">marking_iterator</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">left</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">marking</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">Integer</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">delta_irr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">marking_iterator</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">left</span><span class="o">=</span><span class="n">marking</span><span class="p">))</span>
+
+    <span class="n">marking</span> <span class="o">=</span> <span class="n">check_marking</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">marking</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_delta_irr_rec</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">marking</span><span class="p">)</span></div>
+
+<span class="n">spin_difference_for_irreducible_permutations</span> <span class="o">=</span> <span class="n">delta_irr</span>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the surface-dynamics authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

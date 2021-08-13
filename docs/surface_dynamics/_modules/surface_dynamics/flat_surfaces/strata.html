@@ -1,0 +1,891 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>surface_dynamics.flat_surfaces.strata &mdash; surface-dynamics 0.4.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> surface-dynamics
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../demo_interval_exchanges.html">Interval exchange transformations</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../origamis.html">Origamis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interval_exchanges/index.html">Interval exchange transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../topological_recursion/index.html">Topological recursion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/index.html">Miscellaneous</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">surface-dynamics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>surface_dynamics.flat_surfaces.strata</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for surface_dynamics.flat_surfaces.strata</h1><div class="highlight"><pre>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Strata of differential on Riemann surfaces</span>
+
+<span class="sd">This file gather common code used in</span>
+<span class="sd">:mod:`~surface_dynamics.flat_surfaces.abelian_strata` and</span>
+<span class="sd">:mod:`~surface_dynamics.flat_surfaces.quadratic_strata`.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1">#*****************************************************************************</span>
+<span class="c1">#       Copyright (C) 2009-2019 Vincent Delecroix &lt;20100.delecroix@gmail.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1">#  Distributed under the terms of the GNU General Public License (GPL)</span>
+<span class="c1">#  as published by the Free Software Foundation; either version 2 of</span>
+<span class="c1">#  the License, or (at your option) any later version.</span>
+<span class="c1">#                  https://www.gnu.org/licenses/</span>
+<span class="c1">#*****************************************************************************</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">range</span><span class="p">,</span> <span class="nb">map</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="nb">zip</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">total_ordering</span>
+
+<span class="kn">from</span> <span class="nn">sage.structure.unique_representation</span> <span class="kn">import</span> <span class="n">UniqueRepresentation</span>
+<span class="kn">from</span> <span class="nn">sage.structure.sage_object</span> <span class="kn">import</span> <span class="n">SageObject</span>
+<span class="kn">from</span> <span class="nn">sage.structure.parent</span> <span class="kn">import</span> <span class="n">Parent</span>
+
+<div class="viewcode-block" id="list_to_exp_list"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.list_to_exp_list">[docs]</a><span class="k">def</span> <span class="nf">list_to_exp_list</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert list into exponential notation.</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: from surface_dynamics import *</span>
+
+<span class="sd">        sage: from surface_dynamics.flat_surfaces.strata import list_to_exp_list</span>
+<span class="sd">        sage: l = [0,0,2,2,3,2,0,0,0]</span>
+<span class="sd">        sage: list_to_exp_list(l)</span>
+<span class="sd">        [(0, 2), (2, 2), (3, 1), (2, 1), (0, 3)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="ow">and</span> <span class="n">l</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">j</span><span class="o">-</span><span class="n">i</span><span class="p">))</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">j</span>
+    <span class="k">return</span> <span class="n">d</span></div>
+
+<span class="c1">#</span>
+<span class="c1"># Stratum, stratum component</span>
+<span class="c1">#</span>
+
+<div class="viewcode-block" id="Stratum"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum">[docs]</a><span class="k">class</span> <span class="nc">Stratum</span><span class="p">(</span><span class="n">UniqueRepresentation</span><span class="p">,</span> <span class="n">SageObject</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generic class for stratum of flat surfaces.</span>
+
+<span class="sd">    Assumes there are</span>
+
+<span class="sd">    - a method ``.zeros()`` which returns the list of all zeros</span>
+
+<span class="sd">    - a method ``.nb_zeros()`` which returns the number of zeros with an option</span>
+<span class="sd">      fake_zeros which could be true or false</span>
+
+<span class="sd">    - a method ``.nb_fake_zeros()`` which returns the number of fake zeros (or</span>
+<span class="sd">      marked points)</span>
+
+<span class="sd">    - a method ``.dimension()`` which returns the dimension of the stratum</span>
+
+<span class="sd">    - an attribute ``._cc`` which is a list of classes associated to the</span>
+<span class="sd">      connected components of self</span>
+
+<span class="sd">    There may be</span>
+
+<span class="sd">    - an attribute ``._name`` which corresponds to the beginning of the string</span>
+<span class="sd">      representation (default is the empty string)</span>
+
+<span class="sd">    - an attribute ``._latex_name`` which corresponds to the beginning of the latex</span>
+<span class="sd">      string representation (uses ``_name`` by default)</span>
+
+<span class="sd">    TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: A = AbelianStratum(2,2)</span>
+<span class="sd">            sage: B = AbelianStratum(1,1)</span>
+<span class="sd">            sage: hash(A) == hash(B)</span>
+<span class="sd">            False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">_latex_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="c1">#</span>
+    <span class="c1"># String representation</span>
+    <span class="c1">#</span>
+
+    <span class="k">def</span> <span class="nf">_flat_zero_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        String representation of the zeros.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: a = AbelianStratum({2:3})</span>
+<span class="sd">            sage: a._flat_zero_str()</span>
+<span class="sd">            &#39;2, 2, 2&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">zeros</span><span class="p">()))</span>
+
+    <span class="k">def</span> <span class="nf">_exp_zero_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        String representation with exponential notation</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: a = AbelianStratum(2,2,2)</span>
+<span class="sd">            sage: a._exp_zero_str()</span>
+<span class="sd">            &#39;2^3&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">^</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">e</span><span class="p">)</span> <span class="k">if</span> <span class="n">e</span> <span class="o">!=</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="n">i</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">e</span><span class="p">)</span> <span class="ow">in</span> <span class="n">list_to_exp_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zeros</span><span class="p">()))</span>
+
+    <span class="c1"># this attribute can be switched between _flat_zero_str and _exp_zero_str</span>
+    <span class="n">_zero_str</span> <span class="o">=</span> <span class="n">_exp_zero_str</span>
+
+    <span class="k">def</span> <span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: repr(AbelianStratum(1,1))       # indirect doctest</span>
+<span class="sd">            &#39;H_2(1^2)&#39;</span>
+<span class="sd">            sage: repr(QuadraticStratum(1,1,1,1)) # indirect doctest</span>
+<span class="sd">            &#39;Q_2(1^4)&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genus</span><span class="p">())</span> <span class="o">+</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zero_str</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_latex_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Latex string representation</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: AbelianStratum(0)._latex_()</span>
+<span class="sd">            &#39;\\mathcal{H}_1(0)&#39;</span>
+<span class="sd">            sage: QuadraticStratum({-1:4})._latex_()</span>
+<span class="sd">            &#39;\\mathcal{Q}_0(-1^4)&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_latex_name</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genus</span><span class="p">())</span> <span class="o">+</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zero_str</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+
+    <span class="c1">#</span>
+    <span class="c1"># Equality and comparisons</span>
+    <span class="c1">#</span>
+
+    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Comparison</span>
+
+<span class="sd">        ALGORITHM:</span>
+
+<span class="sd">        First compare the class, then the dimension and then the list of zeros.</span>
+
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: AbelianStratum(0) == AbelianStratum(0)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: QuadraticStratum(5,-1) == QuadraticStratum(5,-1)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: QuadraticStratum(5,-1) != QuadraticStratum(5,-1)</span>
+<span class="sd">            False</span>
+
+<span class="sd">            sage: AbelianStratum(12) == QuadraticStratum(12)</span>
+<span class="sd">            False</span>
+<span class="sd">            sage: QuadraticStratum(12,0,0) == QuadraticStratum(12,0)</span>
+<span class="sd">            False</span>
+
+<span class="sd">            sage: AbelianStratum(2,0) == AbelianStratum(2)</span>
+<span class="sd">            False</span>
+<span class="sd">            sage: AbelianStratum(2,0) != AbelianStratum(2)</span>
+<span class="sd">            True</span>
+
+<span class="sd">            sage: AbelianStratum(1,1) &lt; AbelianStratum(1,1,0)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: AbelianStratum(1,1,0) &lt; AbelianStratum(1,1)</span>
+<span class="sd">            False</span>
+<span class="sd">            sage: AbelianStratum(1,1,0) &lt; AbelianStratum(1,1,0,0)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: AbelianStratum(2) &lt; AbelianStratum(1,1)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: AbelianStratum(4,0) &gt; AbelianStratum(1,1,1,1)</span>
+<span class="sd">            False</span>
+<span class="sd">            sage: AbelianStratum(4,0,0,0) &gt; AbelianStratum(1,1,1,1)</span>
+<span class="sd">            True</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            sage: QuadraticStratum(2,2) &lt; QuadraticStratum(2,2,0)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: QuadraticStratum(2,2,0) &lt; QuadraticStratum(2,2)</span>
+<span class="sd">            False</span>
+<span class="sd">            sage: QuadraticStratum(2,2,0) &lt; QuadraticStratum(2,2,0,0)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: QuadraticStratum(4) &lt; QuadraticStratum(2,2)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: QuadraticStratum(4,0) &gt; QuadraticStratum(1,1,1,1)</span>
+<span class="sd">            False</span>
+
+<span class="sd">            sage: Q1 = QuadraticStratum(4,0,0,0)</span>
+<span class="sd">            sage: Q2 = QuadraticStratum(1,1,1,1)</span>
+<span class="sd">            sage: Q1 &gt; Q2</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: Q1 &gt;= Q2</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: Q1 &lt; Q2</span>
+<span class="sd">            False</span>
+<span class="sd">            sage: Q1 &lt;= Q2</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Stratum</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Stratum</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="c1"># compare the dimension</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">dimension</span><span class="p">():</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">dimension</span><span class="p">():</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="c1"># compare the list of zeros</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">zeros</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">zeros</span><span class="p">():</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">zeros</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">zeros</span><span class="p">():</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="c1"># equality</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sname</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="n">oname</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="k">if</span> <span class="n">sname</span> <span class="o">&lt;</span> <span class="n">oname</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">sname</span> <span class="o">&gt;</span> <span class="n">oname</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="k">return</span> <span class="kc">False</span>
+    
+    <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
+
+    <span class="k">def</span> <span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span> <span class="ow">or</span> <span class="bp">self</span> <span class="o">&lt;</span> <span class="n">other</span>
+
+    <span class="k">def</span> <span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">&lt;</span> <span class="n">other</span>
+
+    <span class="k">def</span> <span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">&lt;=</span> <span class="n">other</span>
+
+    <span class="c1">#</span>
+    <span class="c1"># Connected components</span>
+    <span class="c1">#</span>
+
+<div class="viewcode-block" id="Stratum.is_connected"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.is_connected">[docs]</a>    <span class="k">def</span> <span class="nf">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test if the strata is connected.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: AbelianStratum([2]).is_connected()</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: AbelianStratum([2,2]).is_connected()</span>
+<span class="sd">            False</span>
+<span class="sd">            sage: QuadraticStratum([-1,-1,-1,-1]).is_connected()</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: QuadraticStratum([12]).is_connected()</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cc</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="Stratum.permutation_representative"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.permutation_representative">[docs]</a>    <span class="k">def</span> <span class="nf">permutation_representative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a permutation of interval exchanges associated to this stratum.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">        Examples from Abelian differentials::</span>
+
+<span class="sd">            sage: a = AbelianStratum([3,2,1,0,0])</span>
+<span class="sd">            sage: p = a.permutation_representative()</span>
+<span class="sd">            sage: p.stratum()</span>
+<span class="sd">            H_4(3, 2, 1, 0^2)</span>
+<span class="sd">            sage: a = AbelianStratum([2, 2, 2])</span>
+<span class="sd">            sage: p = a.permutation_representative()</span>
+<span class="sd">            sage: p.stratum()</span>
+<span class="sd">            H_4(2^3)</span>
+
+<span class="sd">        Examples from quadratic differentials::</span>
+
+<span class="sd">            sage: a = QuadraticStratum([6,-1,-1])</span>
+<span class="sd">            sage: p = a.permutation_representative()</span>
+<span class="sd">            sage: p.stratum()</span>
+<span class="sd">            Q_2(6, -1^2)</span>
+<span class="sd">            sage: a = QuadraticStratum([-1,-1,-1,-1,0,0])</span>
+<span class="sd">            sage: p = a.permutation_representative()</span>
+<span class="sd">            sage: p.stratum()</span>
+<span class="sd">            Q_0(0^2, -1^4)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">one_component</span><span class="p">()</span><span class="o">.</span><span class="n">permutation_representative</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwds</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Stratum.is_empty"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.is_empty">[docs]</a>    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return True if the stratum is empty</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: AbelianStratum(2).is_empty()</span>
+<span class="sd">            False</span>
+<span class="sd">            sage: QuadraticStratum(1,-1).is_empty()</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cc</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="Stratum.number_of_components"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.number_of_components">[docs]</a>    <span class="k">def</span> <span class="nf">number_of_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the number of connected components of self</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: AbelianStratum(2).number_of_components()</span>
+<span class="sd">            1</span>
+<span class="sd">            sage: AbelianStratum(4).number_of_components()</span>
+<span class="sd">            2</span>
+<span class="sd">            sage: AbelianStratum(3,3).number_of_components()</span>
+<span class="sd">            2</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cc</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Stratum.one_component"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.one_component">[docs]</a>    <span class="k">def</span> <span class="nf">one_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a connected component of this stratum.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: AbelianStratum(2).one_component()</span>
+<span class="sd">            H_2(2)^hyp</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="kn">from</span> <span class="nn">sage.categories.sets_cat</span> <span class="kn">import</span> <span class="n">EmptySetError</span>
+        <span class="k">raise</span> <span class="n">EmptySetError</span><span class="p">(</span><span class="s2">&quot;The stratum is empty&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Stratum.unique_component"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.unique_component">[docs]</a>    <span class="k">def</span> <span class="nf">unique_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the unique component of self or raise a ValueError.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: a = AbelianStratum(1,1); a</span>
+<span class="sd">            H_2(1^2)</span>
+<span class="sd">            sage: a.unique_component()</span>
+<span class="sd">            H_2(1^2)^hyp</span>
+
+<span class="sd">            sage: a = AbelianStratum(3,2,1); a</span>
+<span class="sd">            H_4(3, 2, 1)</span>
+<span class="sd">            sage: a.unique_component()</span>
+<span class="sd">            H_4(3, 2, 1)^c</span>
+
+<span class="sd">            sage: QuadraticStratum({1:1, -1:5}).unique_component()</span>
+<span class="sd">            Q_0(1, -1^5)^c</span>
+<span class="sd">            sage: QuadraticStratum(3,2,-1).unique_component()</span>
+<span class="sd">            Q_2(3, 2, -1)^nonhyp</span>
+
+<span class="sd">            sage: QuadraticStratum(12).unique_component()</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">            ...</span>
+<span class="sd">            ValueError: several components for this stratum</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cc</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;several components for this stratum&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Stratum.random_component"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.random_component">[docs]</a>    <span class="k">def</span> <span class="nf">random_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a random connected component of this stratum.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: Q = QuadraticStratum(6,6)</span>
+<span class="sd">            sage: Q.random_component()</span>
+<span class="sd">            Q_4(6^2)^hyp</span>
+<span class="sd">            sage: Q.random_component()</span>
+<span class="sd">            Q_4(6^2)^reg</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">():</span>
+            <span class="kn">from</span> <span class="nn">sage.misc.prandom</span> <span class="kn">import</span> <span class="n">choice</span>
+            <span class="k">return</span> <span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">())</span>
+        <span class="kn">from</span> <span class="nn">sage.categories.sets_cat</span> <span class="kn">import</span> <span class="n">EmptySetError</span>
+        <span class="k">raise</span> <span class="n">EmptySetError</span><span class="p">(</span><span class="s2">&quot;The stratum is empty&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Stratum.components"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.components">[docs]</a>    <span class="k">def</span> <span class="nf">components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lists the connected components of the Stratum.</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        list -- a list of connected components of stratum</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">        Some abelian strata::</span>
+
+<span class="sd">            sage: AbelianStratum(0).components()</span>
+<span class="sd">            [H_1(0)^hyp]</span>
+<span class="sd">            sage: AbelianStratum(2).components()</span>
+<span class="sd">            [H_2(2)^hyp]</span>
+<span class="sd">            sage: AbelianStratum(4).components()</span>
+<span class="sd">            [H_3(4)^hyp, H_3(4)^odd]</span>
+<span class="sd">            sage: AbelianStratum(2,2).components()</span>
+<span class="sd">            [H_3(2^2)^hyp, H_3(2^2)^odd]</span>
+<span class="sd">            sage: AbelianStratum(1,1,1,1).components()</span>
+<span class="sd">            [H_3(1^4)^c]</span>
+
+<span class="sd">        Some quadratic strata::</span>
+
+<span class="sd">            sage: QuadraticStratum(12).components()</span>
+<span class="sd">            [Q_4(12)^reg, Q_4(12)^irr]</span>
+<span class="sd">            sage: QuadraticStratum(6,-1,-1).components()</span>
+<span class="sd">            [Q_2(6, -1^2)^hyp, Q_2(6, -1^2)^nonhyp]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span><span class="p">))</span></div></div>
+
+<div class="viewcode-block" id="StratumComponent"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.StratumComponent">[docs]</a><span class="k">class</span> <span class="nc">StratumComponent</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generic class for connected component of a stratum of flat surfaces.</span>
+
+<span class="sd">    Assumes there are implemented</span>
+
+<span class="sd">    - a method .permutation_representative()</span>
+
+<span class="sd">    There may be</span>
+
+<span class="sd">    - an attribute ._name</span>
+
+<span class="sd">    - an attribute ._latex_name</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">_latex_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        TEST::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: a = AbelianStratum(4,4).one_component()</span>
+<span class="sd">            sage: a == loads(dumps(a))</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: q = QuadraticStratum(5,5,-1,-1).one_component()</span>
+<span class="sd">            sage: q == loads(dumps(q))</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span> <span class="o">=</span> <span class="n">stratum</span>
+
+    <span class="k">def</span> <span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reduce method for pickling</span>
+
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">        Tests for Abelian strata::</span>
+
+<span class="sd">            sage: a = AbelianStratum(2,2)</span>
+<span class="sd">            sage: all(loads(dumps(cc)) == cc for cc in a.components())</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: a = AbelianStratum(3,3)</span>
+<span class="sd">            sage: all(loads(dumps(cc)) == cc for cc in a.components())</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: a = AbelianStratum(6)</span>
+<span class="sd">            sage: all(loads(dumps(cc)) == cc for cc in a.components())</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: a = AbelianStratum(1,1,1,1)</span>
+<span class="sd">            sage: all(loads(dumps(cc)) == cc for cc in a.components())</span>
+<span class="sd">            True</span>
+
+<span class="sd">        Tests for quadratic strata::</span>
+
+<span class="sd">            sage: q = QuadraticStratum(-1,-1,-1,-1)</span>
+<span class="sd">            sage: all(loads(dumps(cc)) == cc for cc in q.components())</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: q = QuadraticStratum(12)</span>
+<span class="sd">            sage: all(loads(dumps(cc)) == cc for cc in q.components())</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="p">,))</span>
+
+    <span class="k">def</span> <span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        String representation</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: a_hyp = AbelianStratum(4).hyperelliptic_component()</span>
+<span class="sd">            sage: a_hyp._repr_()</span>
+<span class="sd">            &#39;H_3(4)^hyp&#39;</span>
+<span class="sd">            sage: a_odd = AbelianStratum(4).odd_component()</span>
+<span class="sd">            sage: a_odd._repr_()</span>
+<span class="sd">            &#39;H_3(4)^odd&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;^&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: A4hyp = AbelianStratum(4).hyperelliptic_component()</span>
+<span class="sd">            sage: A4odd = AbelianStratum(4).odd_component()</span>
+<span class="sd">            sage: hash(A4hyp) != hash(A4odd)</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: A22hyp = AbelianStratum(2,2).hyperelliptic_component()</span>
+<span class="sd">            sage: hash(A22hyp) != hash(A4hyp)</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="p">)</span> <span class="o">^</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="StratumComponent.stratum"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.StratumComponent.stratum">[docs]</a>    <span class="k">def</span> <span class="nf">stratum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the stratum associated to self</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: a = AbelianStratum(4,4)</span>
+<span class="sd">            sage: all([c.stratum() == a for c in a.components()])</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span></div>
+
+<div class="viewcode-block" id="StratumComponent.genus"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.StratumComponent.genus">[docs]</a>    <span class="k">def</span> <span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return genus of the corresponding stratum</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: a = AbelianStratum(4,4)</span>
+<span class="sd">            sage: a.one_component().genus()</span>
+<span class="sd">            5</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="StratumComponent.dimension"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.StratumComponent.dimension">[docs]</a>    <span class="k">def</span> <span class="nf">dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the (complex) dimension of this GL(2,R)-invariant orbifold.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import AbelianStratum, QuadraticStratum</span>
+
+<span class="sd">            sage: AbelianStratum(4).odd_component().dimension()</span>
+<span class="sd">            6</span>
+<span class="sd">            sage: QuadraticStratum(12).regular_component().dimension()</span>
+<span class="sd">            7</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">dimension</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="StratumComponent.rank"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.StratumComponent.rank">[docs]</a>    <span class="k">def</span> <span class="nf">rank</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the rank of this GL(2,R)-invariant orbifold.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import AbelianStratum, QuadraticStratum</span>
+
+<span class="sd">            sage: AbelianStratum(4).odd_component().rank()</span>
+<span class="sd">            3</span>
+<span class="sd">            sage: QuadraticStratum(12).regular_component().rank()</span>
+<span class="sd">            3</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">rank</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">other</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Equality test</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: c_hyp = AbelianStratum(6).hyperelliptic_component()</span>
+<span class="sd">            sage: c_odd = AbelianStratum(6).odd_component()</span>
+<span class="sd">            sage: c_hyp == c_hyp</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: c_hyp == c_odd</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">StratumComponent</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">StratumComponent</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_stratum</span>
+
+    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Comparison</span>
+
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: a1 = AbelianStratum(1,1,1,1)</span>
+<span class="sd">            sage: c1 = a1.components()[0]</span>
+<span class="sd">            sage: a2 = AbelianStratum(3,1)</span>
+<span class="sd">            sage: c2 = a2.components()[0]</span>
+<span class="sd">            sage: c1 == c1</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: c1 == c2</span>
+<span class="sd">            False</span>
+<span class="sd">            sage: a1 = AbelianStratum(1,1,1,1)</span>
+<span class="sd">            sage: c1 = a1.components()[0]</span>
+<span class="sd">            sage: a2 = AbelianStratum(2, 2)</span>
+<span class="sd">            sage: c2_hyp, c2_odd = a2.components()</span>
+<span class="sd">            sage: c1 != c1</span>
+<span class="sd">            False</span>
+<span class="sd">            sage: c1 != c2_hyp</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: c2_hyp != c2_odd</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">StratumComponent</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">StratumComponent</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">_stratum</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">_stratum</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<span class="c1">#</span>
+<span class="c1"># Strata (family of strata)</span>
+<span class="c1">#</span>
+
+<div class="viewcode-block" id="Strata"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Strata">[docs]</a><span class="k">class</span> <span class="nc">Strata</span><span class="p">(</span><span class="n">Parent</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Strata of Abelian or Quadratic differentials.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the surface-dynamics authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

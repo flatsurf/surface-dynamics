@@ -1,0 +1,1003 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>surface_dynamics.interval_exchanges.reduced &mdash; surface-dynamics 0.4.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> surface-dynamics
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../demo_interval_exchanges.html">Interval exchange transformations</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../origamis.html">Origamis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interval_exchanges/index.html">Interval exchange transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../topological_recursion/index.html">Topological recursion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/index.html">Miscellaneous</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">surface-dynamics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>surface_dynamics.interval_exchanges.reduced</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for surface_dynamics.interval_exchanges.reduced</h1><div class="highlight"><pre>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Reduced permutations</span>
+
+<span class="sd">A reduced (generalized) permutation is better suited to study strata of Abelian</span>
+<span class="sd">(or quadratic) holomorphic forms on Riemann surfaces. The Rauzy diagram is an</span>
+<span class="sd">invariant of such a component. Corentin Boissy proved the identification of</span>
+<span class="sd">Rauzy diagrams with connected components of stratas. But the geometry of the</span>
+<span class="sd">diagram and the relation with the strata is not yet totally understood.</span>
+
+<span class="sd">AUTHORS:</span>
+
+<span class="sd">- Vincent Delecroix (2000-09-29): initial version</span>
+
+<span class="sd">TESTS::</span>
+
+<span class="sd">    sage: from surface_dynamics.interval_exchanges.reduced import ReducedPermutationIET</span>
+<span class="sd">    sage: ReducedPermutationIET([[&#39;a&#39;,&#39;b&#39;],[&#39;b&#39;,&#39;a&#39;]])</span>
+<span class="sd">    a b</span>
+<span class="sd">    b a</span>
+<span class="sd">    sage: ReducedPermutationIET([[1,2,3],[3,1,2]])</span>
+<span class="sd">    1 2 3</span>
+<span class="sd">    3 1 2</span>
+<span class="sd">    sage: from surface_dynamics.interval_exchanges.reduced import ReducedPermutationLI</span>
+<span class="sd">    sage: ReducedPermutationLI([[1,1],[2,2,3,3,4,4]])</span>
+<span class="sd">    1 1</span>
+<span class="sd">    2 2 3 3 4 4</span>
+<span class="sd">    sage: ReducedPermutationLI([[&#39;a&#39;,&#39;a&#39;,&#39;b&#39;,&#39;b&#39;,&#39;c&#39;,&#39;c&#39;],[&#39;d&#39;,&#39;d&#39;]])</span>
+<span class="sd">    a a b b c c</span>
+<span class="sd">    d d</span>
+<span class="sd">    sage: from surface_dynamics.interval_exchanges.reduced import FlippedReducedPermutationIET</span>
+<span class="sd">    sage: FlippedReducedPermutationIET([[1,2,3],[3,2,1]],flips=[1,2])</span>
+<span class="sd">    -1 -2  3</span>
+<span class="sd">     3 -2 -1</span>
+<span class="sd">    sage: FlippedReducedPermutationIET([[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;],[&#39;b&#39;,&#39;c&#39;,&#39;a&#39;]],flips=&#39;b&#39;)</span>
+<span class="sd">     a -b  c</span>
+<span class="sd">    -b  c  a</span>
+<span class="sd">    sage: from surface_dynamics.interval_exchanges.reduced import FlippedReducedPermutationLI</span>
+<span class="sd">    sage: FlippedReducedPermutationLI([[1,1],[2,2,3,3,4,4]], flips=[1,4])</span>
+<span class="sd">    -1 -1</span>
+<span class="sd">     2  2  3  3 -4 -4</span>
+<span class="sd">    sage: FlippedReducedPermutationLI([[&#39;a&#39;,&#39;a&#39;,&#39;b&#39;,&#39;b&#39;],[&#39;c&#39;,&#39;c&#39;]],flips=&#39;ac&#39;)</span>
+<span class="sd">    -a -a  b  b</span>
+<span class="sd">    -c -c</span>
+<span class="sd">    sage: from surface_dynamics.interval_exchanges.reduced import ReducedRauzyDiagram</span>
+<span class="sd">    sage: p = ReducedPermutationIET([[1,2,3],[3,2,1]])</span>
+<span class="sd">    sage: d = ReducedRauzyDiagram(p)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1">#*****************************************************************************</span>
+<span class="c1">#       Copyright (C) 2008 Vincent Delecroix &lt;20100.delecroix@gmail.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1">#  Distributed under the terms of the GNU General Public License (GPL)</span>
+<span class="c1">#  as published by the Free Software Foundation; either version 2 of</span>
+<span class="c1">#  the License, or (at your option) any later version.</span>
+<span class="c1">#                  https://www.gnu.org/licenses/</span>
+<span class="c1">#*****************************************************************************</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">range</span><span class="p">,</span> <span class="nb">map</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="nb">zip</span>
+
+<span class="kn">from</span> <span class="nn">sage.structure.sage_object</span> <span class="kn">import</span> <span class="n">SageObject</span>
+
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
+
+<span class="kn">from</span> <span class="nn">sage.combinat.words.alphabet</span> <span class="kn">import</span> <span class="n">Alphabet</span>
+<span class="kn">from</span> <span class="nn">sage.rings.integer</span> <span class="kn">import</span> <span class="n">Integer</span>
+
+<span class="kn">from</span> <span class="nn">.template</span> <span class="kn">import</span> <span class="n">OrientablePermutationIET</span><span class="p">,</span> <span class="n">OrientablePermutationLI</span>   <span class="c1"># permutations</span>
+<span class="kn">from</span> <span class="nn">.template</span> <span class="kn">import</span> <span class="n">FlippedPermutationIET</span><span class="p">,</span> <span class="n">FlippedPermutationLI</span>         <span class="c1"># flipped permutations</span>
+<span class="kn">from</span> <span class="nn">.template</span> <span class="kn">import</span> <span class="n">RauzyDiagram</span><span class="p">,</span> <span class="n">FlippedRauzyDiagram</span>
+
+<span class="kn">from</span> <span class="nn">.template</span> <span class="kn">import</span> <span class="n">interval_conversion</span><span class="p">,</span> <span class="n">side_conversion</span>
+
+
+<div class="viewcode-block" id="ReducedPermutation"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutation">[docs]</a><span class="k">class</span> <span class="nc">ReducedPermutation</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Template for reduced objects.</span>
+
+<span class="sd">    .. warning::</span>
+
+<span class="sd">        Internal class! Do not use directly!</span>
+<span class="sd">   &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b&#39;, &#39;b a&#39;, reduced=True)</span>
+<span class="sd">            sage: p[0]</span>
+<span class="sd">            [&#39;a&#39;, &#39;b&#39;]</span>
+<span class="sd">            sage: p[1]</span>
+<span class="sd">            [&#39;b&#39;, &#39;a&#39;]</span>
+<span class="sd">            sage: p.alphabet([0,1])</span>
+<span class="sd">            sage: p[0]</span>
+<span class="sd">            [0, 1]</span>
+<span class="sd">            sage: p[1]</span>
+<span class="sd">            [1, 0]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="p">()[</span><span class="n">i</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ReducedPermutationsIET_iterator"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationsIET_iterator">[docs]</a><span class="k">def</span> <span class="nf">ReducedPermutationsIET_iterator</span><span class="p">(</span>
+    <span class="n">nintervals</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">irreducible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns an iterator over reduced permutations</span>
+
+<span class="sd">    INPUT:</span>
+
+<span class="sd">    - ``nintervals`` - integer or None</span>
+
+<span class="sd">    - ``irreducible`` - boolean</span>
+
+<span class="sd">    - ``alphabet`` - something that should be converted to an alphabet</span>
+<span class="sd">      of at least nintervals letters</span>
+
+<span class="sd">    TESTS::</span>
+
+<span class="sd">        sage: from surface_dynamics import *</span>
+
+<span class="sd">        sage: for p in iet.Permutations_iterator(3,reduced=True,alphabet=&quot;abc&quot;):</span>
+<span class="sd">        ....:     print(p)  #indirect doctest</span>
+<span class="sd">        a b c</span>
+<span class="sd">        b c a</span>
+<span class="sd">        a b c</span>
+<span class="sd">        c a b</span>
+<span class="sd">        a b c</span>
+<span class="sd">        c b a</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">sage.combinat.permutation</span> <span class="kn">import</span> <span class="n">Permutations</span>
+
+    <span class="k">if</span> <span class="n">irreducible</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">nintervals</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;choose a number of intervals&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">nintervals</span><span class="p">,(</span><span class="nb">int</span><span class="p">,</span><span class="n">Integer</span><span class="p">)))</span>
+            <span class="k">assert</span><span class="p">(</span><span class="n">nintervals</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+
+            <span class="n">a0</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">nintervals</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">ReducedPermutationIET</span><span class="p">([</span><span class="n">a0</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span>
+                                             <span class="n">alphabet</span><span class="o">=</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Permutations</span><span class="p">(</span><span class="n">nintervals</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_irreducible</span><span class="p">(),</span>
+        <span class="n">ReducedPermutationsIET_iterator</span><span class="p">(</span><span class="n">nintervals</span><span class="p">,</span><span class="kc">False</span><span class="p">,</span><span class="n">alphabet</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ReducedPermutationIET"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationIET">[docs]</a><span class="k">class</span> <span class="nc">ReducedPermutationIET</span><span class="p">(</span><span class="n">ReducedPermutation</span><span class="p">,</span> <span class="n">OrientablePermutationIET</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reduced permutation from iet</span>
+
+<span class="sd">    Permutation from iet without numerotation of intervals. For initialization,</span>
+<span class="sd">    you should use GeneralizedPermutation which is the class factory for all</span>
+<span class="sd">    permutation types.</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: from surface_dynamics import *</span>
+
+<span class="sd">    Equality testing (no equality of letters but just of ordering)::</span>
+
+<span class="sd">        sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;, reduced = True)</span>
+<span class="sd">        sage: q = iet.Permutation(&#39;p q r&#39;, &#39;r q p&#39;, reduced = True)</span>
+<span class="sd">        sage: p == q</span>
+<span class="sd">        True</span>
+
+<span class="sd">    Reducibility testing::</span>
+
+<span class="sd">        sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;, reduced = True)</span>
+<span class="sd">        sage: p.is_irreducible()</span>
+<span class="sd">        True</span>
+
+<span class="sd">    ::</span>
+
+<span class="sd">        sage: q = iet.Permutation(&#39;a b c d&#39;, &#39;b a d c&#39;, reduced = True)</span>
+<span class="sd">        sage: q.is_irreducible()</span>
+<span class="sd">        False</span>
+
+
+<span class="sd">    Rauzy movability and Rauzy move::</span>
+
+<span class="sd">        sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;, reduced = True)</span>
+<span class="sd">        sage: p.has_rauzy_move(1)</span>
+<span class="sd">        True</span>
+<span class="sd">        sage: p.rauzy_move(1)</span>
+<span class="sd">        a b c</span>
+<span class="sd">        b c a</span>
+
+<span class="sd">    Rauzy diagrams::</span>
+
+<span class="sd">        sage: p = iet.Permutation(&#39;a b c d&#39;, &#39;d a b c&#39;)</span>
+<span class="sd">        sage: p_red = iet.Permutation(&#39;a b c d&#39;, &#39;d a b c&#39;, reduced = True)</span>
+<span class="sd">        sage: d = p.rauzy_diagram()</span>
+<span class="sd">        sage: d_red = p_red.rauzy_diagram()</span>
+<span class="sd">        sage: p.rauzy_move(0) in d</span>
+<span class="sd">        True</span>
+<span class="sd">        sage: d.cardinality()</span>
+<span class="sd">        12</span>
+<span class="sd">        sage: d_red.cardinality()</span>
+<span class="sd">        6</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ReducedPermutationIET.list"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationIET.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a list of two list that represents the permutation.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a b&#39;,&#39;b a&#39;,reduced=True)</span>
+<span class="sd">            sage: p.list() == [[&#39;a&#39;, &#39;b&#39;], [&#39;b&#39;, &#39;a&#39;]]</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a&#39;,&#39;b b&#39;,reduced=True)</span>
+<span class="sd">            sage: p.list() == [[&#39;a&#39;, &#39;a&#39;], [&#39;b&#39;, &#39;b&#39;]]</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="o">.</span><span class="n">unrank</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">])))),</span>
+            <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="o">.</span><span class="n">unrank</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">]))]</span></div>
+
+<div class="viewcode-block" id="ReducedPermutationIET.rauzy_move_relabel"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationIET.rauzy_move_relabel">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_move_relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the relabelization obtained from this move.</span>
+
+<span class="sd">        EXAMPLE::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c d&#39;,&#39;d c b a&#39;)</span>
+<span class="sd">            sage: q = p.reduced()</span>
+<span class="sd">            sage: p_t = p.rauzy_move(&#39;t&#39;)</span>
+<span class="sd">            sage: q_t = q.rauzy_move(&#39;t&#39;)</span>
+<span class="sd">            sage: s_t = q.rauzy_move_relabel(&#39;t&#39;)</span>
+<span class="sd">            sage: print(s_t)</span>
+<span class="sd">            a-&gt;a, b-&gt;b, c-&gt;c, d-&gt;d</span>
+<span class="sd">            sage: list(map(s_t, p_t[0])) == list(map(Word, q_t[0]))</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: list(map(s_t, p_t[1])) == list(map(Word, q_t[1]))</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: p_b = p.rauzy_move(&#39;b&#39;)</span>
+<span class="sd">            sage: q_b = q.rauzy_move(&#39;b&#39;)</span>
+<span class="sd">            sage: s_b = q.rauzy_move_relabel(&#39;b&#39;)</span>
+<span class="sd">            sage: print(s_b)</span>
+<span class="sd">            a-&gt;a, b-&gt;d, c-&gt;b, d-&gt;c</span>
+<span class="sd">            sage: list(map(s_b, q_b[0])) == list(map(Word, p_b[0]))</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: list(map(s_b, q_b[1])) == list(map(Word, p_b[1]))</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.labelled</span> <span class="kn">import</span> <span class="n">LabelledPermutationIET</span>
+        <span class="kn">from</span> <span class="nn">sage.combinat.words.morphism</span> <span class="kn">import</span> <span class="n">WordMorphism</span>
+
+        <span class="n">winner</span> <span class="o">=</span> <span class="n">interval_conversion</span><span class="p">(</span><span class="n">winner</span><span class="p">)</span>
+        <span class="n">side</span> <span class="o">=</span> <span class="n">side_conversion</span><span class="p">(</span><span class="n">side</span><span class="p">)</span>
+
+        <span class="n">p</span> <span class="o">=</span> <span class="n">LabelledPermutationIET</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="p">())</span>
+
+        <span class="n">l0_q</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">l0_q</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))])</span>
+
+        <span class="k">return</span> <span class="n">WordMorphism</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReducedPermutationIET.rauzy_diagram"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationIET.rauzy_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a Rauzy diagram associated to this permutation</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``extended`` - boolean (default: False) - if True return extended</span>
+<span class="sd">          Rauzy diagram</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        A Rauzy diagram</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c d&#39;, &#39;d a b c&#39;,reduced=True)</span>
+<span class="sd">            sage: d = p.rauzy_diagram()</span>
+<span class="sd">            sage: p.rauzy_move(0) in d</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: p.rauzy_move(1) in d</span>
+<span class="sd">            True</span>
+
+<span class="sd">        For more information, try help RauzyDiagram</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="n">kwds</span>
+        <span class="k">if</span> <span class="n">extended</span><span class="p">:</span>
+            <span class="n">options</span><span class="p">[</span><span class="s1">&#39;symmetric&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">ReducedRauzyDiagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReducedPermutationIET.rauzy_class_cardinality"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationIET.rauzy_class_cardinality">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_class_cardinality</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cardinality of Rauzy diagram</span>
+
+<span class="sd">        As proved in [Del13]_, there exists a closed formula for the cardinality</span>
+<span class="sd">        of Rauzy diagrams. This function uses the formula without any</span>
+<span class="sd">        explicit computation of the rauzy class.</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``extended`` - boolean (default: False) - return cardinality for</span>
+<span class="sd">          extended Rauzy diagrams</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">        Examples for permutations such that the suspensions are tori::</span>
+
+<span class="sd">            sage: p=iet.Permutation(&#39;a b&#39;,&#39;b a&#39;,reduced=True)</span>
+<span class="sd">            sage: p.stratum()</span>
+<span class="sd">            H_1(0)</span>
+<span class="sd">            sage: p.rauzy_diagram()</span>
+<span class="sd">            Rauzy diagram with 1 permutation</span>
+<span class="sd">            sage: p.rauzy_class_cardinality()</span>
+<span class="sd">            1</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a 1 b&#39;,&#39;b 1 a&#39;,reduced=True)</span>
+<span class="sd">            sage: p.stratum()</span>
+<span class="sd">            H_1(0^2)</span>
+<span class="sd">            sage: p.rauzy_diagram()</span>
+<span class="sd">            Rauzy diagram with 3 permutations</span>
+<span class="sd">            sage: p.rauzy_class_cardinality()</span>
+<span class="sd">            3</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a 1 2 b&#39;,&#39;b 1 2 a&#39;,reduced=True)</span>
+<span class="sd">            sage: p.stratum()</span>
+<span class="sd">            H_1(0^3)</span>
+<span class="sd">            sage: p.rauzy_diagram()</span>
+<span class="sd">            Rauzy diagram with 6 permutations</span>
+<span class="sd">            sage: p.rauzy_class_cardinality()</span>
+<span class="sd">            6</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a 1 2 3 b&#39;,&#39;b 1 2 3 a&#39;,reduced=True)</span>
+<span class="sd">            sage: p.rauzy_class_cardinality()</span>
+<span class="sd">            10</span>
+<span class="sd">            sage: p = iet.Permutation(&#39;a 1 2 3 4 b&#39;,&#39;b 1 2 3 4 a&#39;,reduced=True)</span>
+<span class="sd">            sage: p.rauzy_class_cardinality()</span>
+<span class="sd">            15</span>
+
+<span class="sd">        You should have recognize the sequence 1, 3, 6, 10, 15... which is the</span>
+<span class="sd">        sequence with general term the binomial ``n(n+1)/2``.</span>
+
+<span class="sd">        An example of extended Rauzy diagram which is different from Rauzy</span>
+<span class="sd">        diagram::</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c d e f g&#39;,&#39;g c b f e d a&#39;,reduced=True)</span>
+<span class="sd">            sage: p.marked_profile()</span>
+<span class="sd">            2o4 [4, 2]</span>
+<span class="sd">            sage: pp = p.left_right_inverse()</span>
+<span class="sd">            sage: pp.marked_profile()</span>
+<span class="sd">            4o2 [4, 2]</span>
+<span class="sd">            sage: p.rauzy_class_cardinality()</span>
+<span class="sd">            261</span>
+<span class="sd">            sage: pp.rauzy_class_cardinality()</span>
+<span class="sd">            509</span>
+<span class="sd">            sage: p.rauzy_class_cardinality(extended=True)</span>
+<span class="sd">            770</span>
+<span class="sd">            sage: 261 + 509 == 770</span>
+<span class="sd">            True</span>
+
+<span class="sd">        And one can check that this the algorithm for cardinality is True::</span>
+
+<span class="sd">            sage: p.rauzy_diagram()</span>
+<span class="sd">            Rauzy diagram with 261 permutations</span>
+<span class="sd">            sage: pp.rauzy_diagram()</span>
+<span class="sd">            Rauzy diagram with 509 permutations</span>
+<span class="sd">            sage: p.rauzy_diagram(extended=True)</span>
+<span class="sd">            Rauzy diagram with 770 permutations</span>
+
+<span class="sd">        And we end by an example of Rauzy diagram associated to an hyperelliptic</span>
+<span class="sd">        component::</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c d e 0 f&#39;,&#39;f e d c b 0 a&#39;,reduced=True)</span>
+<span class="sd">            sage: p.rauzy_diagram()</span>
+<span class="sd">            Rauzy diagram with 37 permutations</span>
+<span class="sd">            sage: p.rauzy_class_cardinality()</span>
+<span class="sd">            37</span>
+<span class="sd">            sage: p.rauzy_diagram(extended=True)</span>
+<span class="sd">            Rauzy diagram with 254 permutations</span>
+<span class="sd">            sage: p.rauzy_class_cardinality(extended=True)</span>
+<span class="sd">            254</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.rauzy_class_cardinality</span> <span class="kn">import</span> <span class="n">gamma_irr</span><span class="p">,</span><span class="n">delta_irr</span>
+        <span class="kn">from</span> <span class="nn">sage.arith.all</span> <span class="kn">import</span> <span class="n">binomial</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>
+        <span class="n">mp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">marked_profile</span><span class="p">()</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">partition</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">extended</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stratum_component</span><span class="p">()</span><span class="o">.</span><span class="n">rauzy_class_cardinality</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">is_connected</span><span class="p">():</span>  <span class="c1"># easy stuff</span>
+            <span class="k">return</span> <span class="n">gamma_irr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">mp</span><span class="o">.</span><span class="n">left</span><span class="p">())</span>
+
+        <span class="n">cc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stratum_component</span><span class="p">()</span>
+        <span class="n">zeros</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">fake_zeros</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">zeros</span> <span class="o">==</span> <span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">g</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="ow">or</span> <span class="n">zeros</span> <span class="o">==</span> <span class="p">[</span><span class="n">g</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">g</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>  <span class="c1"># hyp component + others</span>
+            <span class="k">if</span> <span class="n">cc</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span> <span class="o">==</span> <span class="n">s</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span><span class="o">.</span><span class="n">spin</span><span class="p">():</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="c1"># number of intervals of self</span>
+                <span class="k">if</span> <span class="n">g</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># genus 1 is particular</span>
+                    <span class="n">nb_hyp</span> <span class="o">=</span> <span class="n">binomial</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">k</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">nb_fake_zeros</span><span class="p">()</span>
+                    <span class="n">d</span> <span class="o">-=</span> <span class="n">k</span>
+                    <span class="k">if</span> <span class="n">extended</span><span class="p">:</span>
+                        <span class="n">nb_hyp</span> <span class="o">=</span> <span class="n">binomial</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">d</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">binomial</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">d</span>
+                    <span class="k">elif</span> <span class="n">mp</span><span class="o">.</span><span class="n">left</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">nb_hyp</span> <span class="o">=</span> <span class="n">binomial</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="n">d</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="o">+</span><span class="n">d</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">mp</span><span class="o">.</span><span class="n">left</span><span class="p">()</span> <span class="o">==</span> <span class="n">d</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                        <span class="n">nb_hyp</span> <span class="o">=</span> <span class="n">binomial</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="n">d</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;this should not happen&quot;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">cc</span> <span class="o">==</span> <span class="n">s</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">():</span> <span class="c1"># hyp</span>
+                    <span class="k">return</span> <span class="n">nb_hyp</span>
+
+                <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">number_of_components</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span> <span class="c1"># other is alone</span>
+                    <span class="n">N</span> <span class="o">=</span> <span class="n">gamma_irr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">mp</span><span class="o">.</span><span class="n">left</span><span class="p">())</span>
+
+                <span class="k">else</span><span class="p">:</span> <span class="c1"># others are odd and even</span>
+                    <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">cc</span><span class="o">.</span><span class="n">spin</span><span class="p">())</span>
+                    <span class="n">N</span> <span class="o">=</span> <span class="p">(</span><span class="n">gamma_irr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">mp</span><span class="o">.</span><span class="n">left</span><span class="p">())</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">delta_irr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">mp</span><span class="o">.</span><span class="n">left</span><span class="p">()))</span> <span class="o">//</span> <span class="mi">2</span>
+
+                <span class="k">return</span> <span class="n">N</span> <span class="o">-</span> <span class="n">nb_hyp</span>
+
+            <span class="k">else</span><span class="p">:</span> <span class="c1"># cc.spin() != s.hyperelliptic_component().spin()</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">cc</span><span class="o">.</span><span class="n">spin</span><span class="p">())</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">gamma_irr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">mp</span><span class="o">.</span><span class="n">left</span><span class="p">())</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">delta_irr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">mp</span><span class="o">.</span><span class="n">left</span><span class="p">()))</span> <span class="o">//</span> <span class="mi">2</span>
+
+        <span class="k">else</span><span class="p">:</span>   <span class="c1"># odd and even components</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">cc</span><span class="o">.</span><span class="n">spin</span><span class="p">())</span>  <span class="c1"># 1 if odd and -1 if even</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">gamma_irr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">mp</span><span class="o">.</span><span class="n">left</span><span class="p">())</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">delta_irr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">mp</span><span class="o">.</span><span class="n">left</span><span class="p">()))</span> <span class="o">//</span> <span class="mi">2</span></div></div>
+
+<div class="viewcode-block" id="ReducedPermutationLI"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationLI">[docs]</a><span class="k">class</span> <span class="nc">ReducedPermutationLI</span><span class="p">(</span><span class="n">ReducedPermutation</span><span class="p">,</span> <span class="n">OrientablePermutationLI</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reduced quadratic (or generalized) permutation.</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: from surface_dynamics import *</span>
+
+<span class="sd">    Reducibility testing::</span>
+
+<span class="sd">        sage: p = iet.GeneralizedPermutation(&#39;a b b&#39;, &#39;c c a&#39;, reduced = True)</span>
+<span class="sd">        sage: p.is_irreducible()</span>
+<span class="sd">        True</span>
+
+<span class="sd">    ::</span>
+
+<span class="sd">        sage: p = iet.GeneralizedPermutation(&#39;a b c a&#39;, &#39;b d d c&#39;, reduced = True)</span>
+<span class="sd">        sage: p.is_irreducible()</span>
+<span class="sd">        False</span>
+<span class="sd">        sage: test, decomposition = p.is_irreducible(return_decomposition = True)</span>
+<span class="sd">        sage: test</span>
+<span class="sd">        False</span>
+<span class="sd">        sage: decomposition</span>
+<span class="sd">        ([&#39;a&#39;], [&#39;c&#39;, &#39;a&#39;], [], [&#39;c&#39;])</span>
+
+<span class="sd">    Rauzy movavability and Rauzy move::</span>
+
+<span class="sd">        sage: p = iet.GeneralizedPermutation(&#39;a b b&#39;, &#39;c c a&#39;, reduced = True)</span>
+<span class="sd">        sage: p.has_rauzy_move(0)</span>
+<span class="sd">        True</span>
+<span class="sd">        sage: p.rauzy_move(0)</span>
+<span class="sd">        a a b b</span>
+<span class="sd">        c c</span>
+<span class="sd">        sage: p.rauzy_move(0).has_rauzy_move(0)</span>
+<span class="sd">        False</span>
+<span class="sd">        sage: p.rauzy_move(1)</span>
+<span class="sd">        a b b</span>
+<span class="sd">        c c a</span>
+
+<span class="sd">    Rauzy diagrams::</span>
+
+<span class="sd">        sage: p_red = iet.GeneralizedPermutation(&#39;a b b&#39;, &#39;c c a&#39;, reduced = True)</span>
+<span class="sd">        sage: d_red = p_red.rauzy_diagram()</span>
+<span class="sd">        sage: d_red.cardinality()</span>
+<span class="sd">        4</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ReducedPermutationLI.list"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationLI.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The permutations as a list of two lists.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a b b&#39;, &#39;c c a&#39;, reduced = True)</span>
+<span class="sd">            sage: list(p)</span>
+<span class="sd">            [[&#39;a&#39;, &#39;b&#39;, &#39;b&#39;], [&#39;c&#39;, &#39;c&#39;, &#39;a&#39;]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">i_a</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">False</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">]),[</span><span class="kc">False</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="c1"># False means empty here</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+                <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                    <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="p">[</span><span class="n">i_a</span><span class="p">]</span>
+                    <span class="n">l</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]][</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="p">[</span><span class="n">i_a</span><span class="p">]</span>
+                    <span class="n">i_a</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">l</span></div>
+
+<div class="viewcode-block" id="ReducedPermutationLI.rauzy_diagram"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationLI.rauzy_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the associated Rauzy diagram.</span>
+
+<span class="sd">        The Rauzy diagram of a permutation corresponds to all permutations</span>
+<span class="sd">        that we could obtain from this one by Rauzy move. The set obtained</span>
+<span class="sd">        is a labelled Graph. The label of vertices being 0 or 1 depending</span>
+<span class="sd">        on the type.</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        Rauzy diagram -- the graph of permutations obtained by rauzy induction</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c d&#39;, &#39;d a b c&#39;)</span>
+<span class="sd">            sage: d = p.rauzy_diagram()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ReducedRauzyDiagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="labelize_flip"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.labelize_flip">[docs]</a><span class="k">def</span> <span class="nf">labelize_flip</span><span class="p">(</span><span class="n">couple</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a string from a 2-uple couple of the form (name, flip).</span>
+
+<span class="sd">    TESTS::</span>
+
+<span class="sd">        sage: from surface_dynamics.interval_exchanges.reduced import labelize_flip</span>
+<span class="sd">        sage: labelize_flip((4,1))</span>
+<span class="sd">        &#39; 4&#39;</span>
+<span class="sd">        sage: labelize_flip((&#39;a&#39;,-1))</span>
+<span class="sd">        &#39;-a&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">couple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="k">return</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">couple</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">couple</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+<span class="n">FlippedReducedPermutation</span> <span class="o">=</span> <span class="n">ReducedPermutation</span>
+
+<div class="viewcode-block" id="FlippedReducedPermutationIET"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationIET">[docs]</a><span class="k">class</span> <span class="nc">FlippedReducedPermutationIET</span><span class="p">(</span>
+    <span class="n">FlippedReducedPermutation</span><span class="p">,</span>
+    <span class="n">FlippedPermutationIET</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Flipped Reduced Permutation from iet</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: from surface_dynamics import *</span>
+
+<span class="sd">        sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;, flips=[&#39;a&#39;], reduced=True)</span>
+<span class="sd">        sage: p.rauzy_move(1)</span>
+<span class="sd">        -a -b  c</span>
+<span class="sd">        -a  c -b</span>
+
+<span class="sd">    TESTS::</span>
+
+<span class="sd">        sage: p = iet.Permutation(&#39;a b&#39;,&#39;b a&#39;,flips=[&#39;a&#39;])</span>
+<span class="sd">        sage: p == loads(dumps(p))</span>
+<span class="sd">        True</span>
+
+<span class="sd">        sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c a b&#39;, flips=[&#39;b&#39;], reduced=True)</span>
+<span class="sd">        sage: for q in sorted(p.rauzy_diagram()):</span>
+<span class="sd">        ....:     print(&#39;%s\n********&#39; % q)</span>
+<span class="sd">        -a  b -c</span>
+<span class="sd">         b -a -c</span>
+<span class="sd">        ********</span>
+<span class="sd">         a -b -c</span>
+<span class="sd">        -b  a -c</span>
+<span class="sd">        ********</span>
+<span class="sd">         a -b  c</span>
+<span class="sd">         c  a -b</span>
+<span class="sd">        ********</span>
+<span class="sd">         a  b -c</span>
+<span class="sd">         b -c  a</span>
+<span class="sd">        ********</span>
+<span class="sd">         a -b  c</span>
+<span class="sd">         c -b  a</span>
+<span class="sd">        ********</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FlippedReducedPermutationIET.list"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationIET.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a list representation of self.</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``flips`` - boolean (default: False) if True the output contains</span>
+<span class="sd">           2-uple of (label, flip)</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import iet</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b&#39;,&#39;b a&#39;,reduced=True,flips=&#39;b&#39;)</span>
+<span class="sd">            sage: p.list(flips=True)</span>
+<span class="sd">            [[(&#39;a&#39;, 1), (&#39;b&#39;, -1)], [(&#39;b&#39;, -1), (&#39;a&#39;, 1)]]</span>
+<span class="sd">            sage: p.list(flips=False)</span>
+<span class="sd">            [[&#39;a&#39;, &#39;b&#39;], [&#39;b&#39;, &#39;a&#39;]]</span>
+<span class="sd">            sage: p.alphabet([0,1])</span>
+<span class="sd">            sage: p.list(flips=True)</span>
+<span class="sd">            [[(0, 1), (1, -1)], [(1, -1), (0, 1)]]</span>
+<span class="sd">            sage: p.list(flips=False)</span>
+<span class="sd">            [[0, 1], [1, 0]]</span>
+
+<span class="sd">        One can recover the initial permutation from this list::</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b&#39;,&#39;b a&#39;,reduced=True,flips=&#39;a&#39;)</span>
+<span class="sd">            sage: iet.Permutation(p.list(), flips=p.flips(), reduced=True) == p</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">flips</span><span class="p">:</span>
+            <span class="n">a0</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span><span class="p">()</span><span class="o">.</span><span class="n">unrank</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flips</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="n">a1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span><span class="p">()</span><span class="o">.</span><span class="n">unrank</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flips</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">a0</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span><span class="p">()</span><span class="o">.</span><span class="n">unrank</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))))</span>
+            <span class="n">a1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span><span class="p">()</span><span class="o">.</span><span class="n">unrank</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">a0</span><span class="p">,</span><span class="n">a1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="FlippedReducedPermutationIET.rauzy_diagram"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationIET.rauzy_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the associated Rauzy diagram.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b&#39;,&#39;b a&#39;,reduced=True,flips=&#39;a&#39;)</span>
+<span class="sd">            sage: r = p.rauzy_diagram()</span>
+<span class="sd">            sage: p in r</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">FlippedReducedRauzyDiagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="FlippedReducedPermutationLI"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationLI">[docs]</a><span class="k">class</span> <span class="nc">FlippedReducedPermutationLI</span><span class="p">(</span>
+    <span class="n">FlippedReducedPermutation</span><span class="p">,</span>
+    <span class="n">FlippedPermutationLI</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Flipped Reduced Permutation from li</span>
+
+<span class="sd">    EXAMPLES:</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">    Creation using the GeneralizedPermutation function::</span>
+
+<span class="sd">        sage: p = iet.GeneralizedPermutation(&#39;a a b&#39;, &#39;b c c&#39;, reduced=True, flips=&#39;a&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FlippedReducedPermutationLI.list"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationLI.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a list representation of self.</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``flips`` - boolean (default: False) return the list with flips</span>
+
+<span class="sd">        EXAMPLES:</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a&#39;,&#39;b b&#39;,reduced=True,flips=&#39;a&#39;)</span>
+<span class="sd">            sage: p.list(flips=True)</span>
+<span class="sd">            [[(&#39;a&#39;, -1), (&#39;a&#39;, -1)], [(&#39;b&#39;, 1), (&#39;b&#39;, 1)]]</span>
+<span class="sd">            sage: p.list(flips=False)</span>
+<span class="sd">            [[&#39;a&#39;, &#39;a&#39;], [&#39;b&#39;, &#39;b&#39;]]</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a b&#39;,&#39;b c c&#39;,reduced=True,flips=&#39;abc&#39;)</span>
+<span class="sd">            sage: p.list(flips=True)</span>
+<span class="sd">            [[(&#39;a&#39;, -1), (&#39;a&#39;, -1), (&#39;b&#39;, -1)], [(&#39;b&#39;, -1), (&#39;c&#39;, -1), (&#39;c&#39;, -1)]]</span>
+<span class="sd">            sage: p.list(flips=False)</span>
+<span class="sd">            [[&#39;a&#39;, &#39;a&#39;, &#39;b&#39;], [&#39;b&#39;, &#39;c&#39;, &#39;c&#39;]]</span>
+
+<span class="sd">        One can rebuild the permutation from the list::</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a b&#39;,&#39;b c c&#39;,flips=&#39;a&#39;,reduced=True)</span>
+<span class="sd">            sage: iet.GeneralizedPermutation(p.list(),flips=p.flips(),reduced=True) == p</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">i_a</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">False</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">]),[</span><span class="kc">False</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+
+        <span class="k">if</span> <span class="n">flips</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>  <span class="c1"># False means empty here</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+                    <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                        <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="o">.</span><span class="n">unrank</span><span class="p">(</span><span class="n">i_a</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flips</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+                        <span class="n">l</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]][</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+                        <span class="n">i_a</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>  <span class="c1"># False means empty here</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+                    <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                        <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="o">.</span><span class="n">unrank</span><span class="p">(</span><span class="n">i_a</span><span class="p">)</span>
+                        <span class="n">l</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]][</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+                        <span class="n">i_a</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">l</span></div>
+
+<div class="viewcode-block" id="FlippedReducedPermutationLI.rauzy_diagram"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationLI.rauzy_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the associated Rauzy diagram.</span>
+
+<span class="sd">        For more explanation and a list of arguments try help(iet.RauzyDiagram)</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a a b&#39;,&#39;c c b&#39;,reduced=True)</span>
+<span class="sd">            sage: r = p.rauzy_diagram()</span>
+<span class="sd">            sage: p in r</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">FlippedReducedRauzyDiagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="ReducedRauzyDiagram"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedRauzyDiagram">[docs]</a><span class="k">class</span> <span class="nc">ReducedRauzyDiagram</span><span class="p">(</span><span class="n">RauzyDiagram</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rauzy diagram of reduced permutations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_permutation_to_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The necessary data to store the permutation.</span>
+
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c&#39;,&#39;c b a&#39;,reduced=True)   #indirect doctest</span>
+<span class="sd">            sage: r = p.rauzy_diagram()</span>
+<span class="sd">            sage: p in r</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+    <span class="k">def</span> <span class="nf">_set_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets self._element with data.</span>
+
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: p = iet.Permutation(&#39;a b c&#39;,&#39;c b a&#39;,reduced=True)</span>
+<span class="sd">            sage: r = p.rauzy_diagram()</span>
+<span class="sd">            sage: p in r   #indirect doctest</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_twin</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span></div>
+
+<div class="viewcode-block" id="FlippedReducedRauzyDiagram"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedRauzyDiagram">[docs]</a><span class="k">class</span> <span class="nc">FlippedReducedRauzyDiagram</span><span class="p">(</span><span class="n">FlippedRauzyDiagram</span><span class="p">,</span> <span class="n">ReducedRauzyDiagram</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rauzy diagram of flipped reduced permutations.</span>
+
+<span class="sd">    TESTS::</span>
+
+<span class="sd">        sage: from surface_dynamics import *</span>
+
+<span class="sd">        sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c a b&#39;, flips=[&#39;b&#39;], reduced=True)</span>
+<span class="sd">        sage: r = p.rauzy_diagram()</span>
+<span class="sd">        sage: r</span>
+<span class="sd">        Rauzy diagram with 5 permutations</span>
+<span class="sd">        sage: p in r</span>
+<span class="sd">        True</span>
+<span class="sd">        sage: p.rauzy_move(&#39;t&#39;,&#39;r&#39;) in r</span>
+<span class="sd">        True</span>
+<span class="sd">        sage: p.rauzy_move(&#39;b&#39;,&#39;r&#39;) in r</span>
+<span class="sd">        True</span>
+
+<span class="sd">        sage: p = iet.GeneralizedPermutation(&#39;a b b&#39;,&#39;c c a&#39;,flips=&#39;a&#39;,reduced=True)</span>
+<span class="sd">        sage: r = p.rauzy_diagram()</span>
+<span class="sd">        Traceback (most recent call last):</span>
+<span class="sd">        ...</span>
+<span class="sd">        NotImplementedError: irreducibility test not implemented for generalized permutations with flips</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_permutation_to_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                <span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_flips</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_flips</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+    <span class="k">def</span> <span class="nf">_set_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_twin</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_flips</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">])]</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the surface-dynamics authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,877 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Interval exchange constructors &mdash; surface-dynamics 0.4.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Permutation template" href="template.html" />
+    <link rel="prev" title="Interval exchange transformations" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> surface-dynamics
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../demo_interval_exchanges.html">Interval exchange transformations</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../origamis.html">Origamis</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Interval exchange transformations</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#permutations">Permutations</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Interval exchange constructors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html">Permutation template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html">Labelled permutations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reduced.html">Reduced permutations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rauzy_class_cardinality.html">Rauzy class cardinality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html">Covering construction</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#id1">Interval exchange transformations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topological_recursion/index.html">Topological recursion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/index.html">Miscellaneous</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">surface-dynamics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Interval exchange transformations</a> &raquo;</li>
+        
+      <li>Interval exchange constructors</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/interval_exchanges/constructors.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-surface_dynamics.interval_exchanges.constructors">
+<span id="interval-exchange-constructors"></span><h1>Interval exchange constructors<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.constructors" title="Permalink to this headline">¶</a></h1>
+<p>Interval exchange transformations</p>
+<p>This library is designed for the usage and manipulation of interval
+exchange transformations and linear involutions. It defines specialized
+types of permutation (constructed using <a class="reference internal" href="#surface_dynamics.interval_exchanges.constructors.Permutation" title="surface_dynamics.interval_exchanges.constructors.Permutation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Permutation()</span></code></a>) some
+associated graph (constructed using ?) and some maps
+of intervals (constructed using <a class="reference internal" href="#surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformation" title="surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformation"><code class="xref py py-func docutils literal notranslate"><span class="pre">IntervalExchangeTransformation()</span></code></a>).</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>Creation of an interval exchange transformation (iet):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">),(</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">a</span> <span class="n">b</span>
+<span class="n">b</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>It can also be initialized using permutation (group theoritic ones):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Permutation</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
+<span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>As the iet’s are functions, you can compose and invert them:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">),(</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">*</span><span class="n">T</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">aa</span> <span class="n">ab</span> <span class="n">ba</span>
+<span class="n">ab</span> <span class="n">ba</span> <span class="n">aa</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">inverse</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">b</span> <span class="n">a</span>
+<span class="n">a</span> <span class="n">b</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span> <span class="o">*</span> <span class="n">T</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">aa</span> <span class="n">bb</span>
+<span class="n">aa</span> <span class="n">bb</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">is_identity</span><span class="p">()</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">*</span> <span class="n">S</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">bb</span> <span class="n">aa</span>
+<span class="n">bb</span> <span class="n">aa</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">T</span> <span class="o">*</span> <span class="n">S</span><span class="p">)</span><span class="o">.</span><span class="n">is_identity</span><span class="p">()</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>For the manipulation of permutations of iet, there are special types provided by
+this module. All of them can be constructed using the constructor
+iet.Permutation. For the creation of labelled permutations of interval exchange
+transformation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p1</span> <span class="o">=</span>  <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span> <span class="s1">&#39;c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p1</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
+<span class="n">c</span> <span class="n">b</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>They can be used for initialization of an iet:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">a</span> <span class="n">b</span>
+<span class="n">b</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>You can also, create labelled permutations of linear involutions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b c c&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span>
+<span class="n">a</span> <span class="n">a</span> <span class="n">b</span>
+<span class="n">b</span> <span class="n">c</span> <span class="n">c</span>
+</pre></div>
+</div>
+<p>By default, the permutations are labelled (it means that the labels are
+important and (a b / b a) differs from (b a / a b)). It sometimes useful to deal
+with reduced permutations for which the order does not import:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span> <span class="s1">&#39;c b a&#39;</span><span class="p">,</span> <span class="n">reduced</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
+<span class="n">c</span> <span class="n">b</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>Permutations with flips:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span> <span class="s1">&#39;c b a&#39;</span><span class="p">,</span> <span class="n">flips</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p1</span>
+<span class="o">-</span><span class="n">a</span>  <span class="n">b</span> <span class="o">-</span><span class="n">c</span>
+<span class="o">-</span><span class="n">c</span>  <span class="n">b</span> <span class="o">-</span><span class="n">a</span>
+</pre></div>
+</div>
+<p>Creation of Rauzy diagrams:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">RauzyDiagram</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span> <span class="s1">&#39;c b a&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Reduced Rauzy diagrams are constructed using the same arguments than for
+permutations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">RauzyDiagram</span><span class="p">(</span><span class="s1">&#39;a b b&#39;</span><span class="p">,</span><span class="s1">&#39;c c a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r_red</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">RauzyDiagram</span><span class="p">(</span><span class="s1">&#39;a b b&#39;</span><span class="p">,</span><span class="s1">&#39;c c a&#39;</span><span class="p">,</span><span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">cardinality</span><span class="p">()</span>
+<span class="mi">12</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r_red</span><span class="o">.</span><span class="n">cardinality</span><span class="p">()</span>
+<span class="mi">4</span>
+</pre></div>
+</div>
+<p>By default, Rauzy diagram are generated by induction on the right. You can use
+several options to enlarge (or restrict) the diagram (try help(iet.RauzyDiagram) for
+more precisions):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">RauzyDiagram</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">,</span><span class="n">right_induction</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r2</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">RauzyDiagram</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">,</span><span class="n">left_right_inversion</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can consider self similar iet using path in Rauzy diagrams and eigenvectors
+of the corresponding matrix:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s2">&quot;a b c d&quot;</span><span class="p">,</span> <span class="s2">&quot;d c b a&quot;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span>
+<span class="n">Path</span> <span class="n">of</span> <span class="n">length</span> <span class="mi">8</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">Rauzy</span> <span class="n">diagram</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span><span class="o">.</span><span class="n">is_loop</span><span class="p">()</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span><span class="o">.</span><span class="n">is_full</span><span class="p">()</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">m</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">v</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">eigenvectors_right</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T1</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T2</span> <span class="o">=</span> <span class="n">T1</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T1</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">T2</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>AUTHORS:</p>
+<ul class="simple">
+<li><p>Vincent Delecroix (2009-09-29): initial version</p></li>
+</ul>
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.constructors.FlipSequence">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">FlipSequence</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#FlipSequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.FlipSequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a flip sequence corresponding to a path in a Rauzy diagram.</p>
+<p>A flip sequence is built from an initial permutation (built from <a class="reference internal" href="#surface_dynamics.interval_exchanges.constructors.Permutation" title="surface_dynamics.interval_exchanges.constructors.Permutation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Permutation()</span></code></a> or
+<a class="reference internal" href="#surface_dynamics.interval_exchanges.constructors.GeneralizedPermutation" title="surface_dynamics.interval_exchanges.constructors.GeneralizedPermutation"><code class="xref py py-func docutils literal notranslate"><span class="pre">GeneralizedPermutation()</span></code></a>) and a sequence of Rauzy inductions that could be of the
+following form:</p>
+<ul class="simple">
+<li><p>a letter <code class="docutils literal notranslate"><span class="pre">'t'</span></code> or <code class="docutils literal notranslate"><span class="pre">'b'</span></code> for top right and bottom right induction
+respectively</p></li>
+<li><p>a pair of letters <code class="docutils literal notranslate"><span class="pre">'tr'</span></code>, <code class="docutils literal notranslate"><span class="pre">'br'</span></code>, <code class="docutils literal notranslate"><span class="pre">'tl'</span></code> or <code class="docutils literal notranslate"><span class="pre">'bl'</span></code> for top right,
+bottom right, top left and bottom left induction respectively</p></li>
+</ul>
+<p>For all available options, see <a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence" title="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">IETFlipSequence</span></code></a>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">substitution</span><span class="p">()</span>
+<span class="n">WordMorphism</span><span class="p">:</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">ab</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">abb</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;tr&#39;</span><span class="p">,</span> <span class="s1">&#39;bl&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">substitution</span><span class="p">()</span>
+<span class="n">WordMorphism</span><span class="p">:</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">bab</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">b</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.constructors.GeneralizedPermutation">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">GeneralizedPermutation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduced</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flips</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphabet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#GeneralizedPermutation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.GeneralizedPermutation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a permutation of an interval exchange transformation.</p>
+<p>Those permutations are the combinatoric part of linear involutions and were
+introduced by Danthony-Nogueira <a class="reference internal" href="../references.html#dannog90" id="id1"><span>[DanNog90]</span></a> (the flipped version is also
+considered in <a class="reference internal" href="../references.html#nog89" id="id2"><span>[Nog89]</span></a>). The full combinatoric study and precise links with
+strata of quadratic differentials was achieved few years later by
+Boissy-Lanneau <a class="reference internal" href="../references.html#boilan09" id="id3"><span>[BoiLan09]</span></a>.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">intervals</span></code> - strings, list, tuples</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reduced</span></code> - boolean (default: False) specifies reduction. False means
+labelled permutation and True means reduced permutation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">flips</span></code> -  iterable (default: None) the letters which correspond to
+flipped intervals.</p></li>
+</ul>
+<p>OUTPUT:</p>
+<p>generalized permutation – the output type depends on the data.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>Creation of labelled generalized permutations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a b b&#39;</span><span class="p">,</span><span class="s1">&#39;c c a&#39;</span><span class="p">)</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">b</span>
+<span class="n">c</span> <span class="n">c</span> <span class="n">a</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a&#39;</span><span class="p">,</span><span class="s1">&#39;b b c c&#39;</span><span class="p">)</span>
+<span class="n">a</span> <span class="n">a</span>
+<span class="n">b</span> <span class="n">b</span> <span class="n">c</span> <span class="n">c</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">1</span>
+<span class="mi">4</span> <span class="mi">2</span> <span class="mi">5</span> <span class="mi">3</span> <span class="mi">5</span> <span class="mi">4</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>Creation of reduced generalized permutations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a b b&#39;</span><span class="p">,</span> <span class="s1">&#39;c c a&#39;</span><span class="p">,</span> <span class="n">reduced</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">b</span>
+<span class="n">c</span> <span class="n">c</span> <span class="n">a</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a b b&#39;</span><span class="p">,</span> <span class="s1">&#39;c c d d&#39;</span><span class="p">,</span> <span class="n">reduced</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">a</span> <span class="n">a</span> <span class="n">b</span> <span class="n">b</span>
+<span class="n">c</span> <span class="n">c</span> <span class="n">d</span> <span class="n">d</span>
+</pre></div>
+</div>
+<p>Creation of flipped generalized permutations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a b c a&#39;</span><span class="p">,</span> <span class="s1">&#39;d c d b&#39;</span><span class="p">,</span> <span class="n">flips</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
+<span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">b</span>  <span class="n">c</span> <span class="o">-</span><span class="n">a</span>
+ <span class="n">d</span>  <span class="n">c</span>  <span class="n">d</span> <span class="o">-</span><span class="n">b</span>
+</pre></div>
+</div>
+<p>TESTS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sage: type(iet.GeneralizedPermutation(&#39;a b b&#39;, &#39;c c a&#39;, reduced=True))
+&lt;class &#39;surface_dynamics.interval_exchanges.reduced.ReducedPermutationLI&#39;&gt;
+sage: type(iet.GeneralizedPermutation(&#39;a b b&#39;, &#39;c c a&#39;, reduced=False))
+&lt;class &#39;surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI&#39;&gt;
+sage: type(iet.GeneralizedPermutation(&#39;a b b&#39;, &#39;c c a&#39;, reduced=True, flips=[&#39;a&#39;,&#39;b&#39;]))
+&lt;class &#39;surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationLI&#39;&gt;
+sage: type(iet.GeneralizedPermutation(&#39;a b b&#39;, &#39;c c a&#39;, reduced=False, flips=[&#39;a&#39;,&#39;b&#39;]))
+&lt;class &#39;surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationLI&#39;&gt;
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.constructors.IET">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">IET</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">permutation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lengths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.IET" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs an Interval exchange transformation.</p>
+<p>An interval exchange transformation (or iet) is a map from an
+interval to itself. It is defined on the interval except at a finite
+number of points (the singularities) and is a translation on each
+connected component of the complement of the singularities. Moreover it is a
+bijection on its image (or it is injective).</p>
+<p>An interval exchange transformation is encoded by two datas. A permutation
+(that corresponds to the way we echange the intervals) and a vector of
+positive reals (that corresponds to the lengths of the complement of the
+singularities).</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">permutation</span></code> - a permutation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lengths</span></code> - a list or a dictionary of lengths</p></li>
+</ul>
+<p>OUTPUT:</p>
+<p>interval exchange transformation – an map of an interval</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>Two initialization methods, the first using a iet.Permutation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="mf">0.4523</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">:</span><span class="mf">2.8</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>The second is more direct:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">),{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>It’s also possible to initialize the lengths only with a list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">),[</span><span class="mf">0.123</span><span class="p">,</span><span class="mf">0.4</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The two fundamental operations are Rauzy move and normalization:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">),[</span><span class="mf">0.123</span><span class="p">,</span><span class="mf">0.4</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s_n</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">length</span><span class="p">())</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s_n</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">length</span><span class="p">()</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>A not too simple example of a self similar interval exchange transformation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span><span class="s1">&#39;d c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">m</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">v</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">eigenvectors_right</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.constructors.IETFamily">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">IETFamily</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.IETFamily" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a linear family of interval exchange transformations</p>
+<p>INPUT: either an interval exchange transformation or a pair consisting of a
+permutation and a cone</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rays</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">rays</span><span class="p">)</span>    <span class="c1"># optional - pplpy</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformation">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">IntervalExchangeTransformation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">permutation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lengths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#IntervalExchangeTransformation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs an Interval exchange transformation.</p>
+<p>An interval exchange transformation (or iet) is a map from an
+interval to itself. It is defined on the interval except at a finite
+number of points (the singularities) and is a translation on each
+connected component of the complement of the singularities. Moreover it is a
+bijection on its image (or it is injective).</p>
+<p>An interval exchange transformation is encoded by two datas. A permutation
+(that corresponds to the way we echange the intervals) and a vector of
+positive reals (that corresponds to the lengths of the complement of the
+singularities).</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">permutation</span></code> - a permutation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lengths</span></code> - a list or a dictionary of lengths</p></li>
+</ul>
+<p>OUTPUT:</p>
+<p>interval exchange transformation – an map of an interval</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>Two initialization methods, the first using a iet.Permutation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="mf">0.4523</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">:</span><span class="mf">2.8</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>The second is more direct:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">),{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>It’s also possible to initialize the lengths only with a list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">),[</span><span class="mf">0.123</span><span class="p">,</span><span class="mf">0.4</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The two fundamental operations are Rauzy move and normalization:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">),[</span><span class="mf">0.123</span><span class="p">,</span><span class="mf">0.4</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s_n</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">length</span><span class="p">())</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s_n</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">length</span><span class="p">()</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>A not too simple example of a self similar interval exchange transformation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span><span class="s1">&#39;d c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">m</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">v</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">eigenvectors_right</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformationFamily">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">IntervalExchangeTransformationFamily</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#IntervalExchangeTransformationFamily"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformationFamily" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a linear family of interval exchange transformations</p>
+<p>INPUT: either an interval exchange transformation or a pair consisting of a
+permutation and a cone</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rays</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">rays</span><span class="p">)</span>    <span class="c1"># optional - pplpy</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.constructors.Permutation">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">Permutation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduced</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flips</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphabet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#Permutation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.Permutation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a permutation of an interval exchange transformation.</p>
+<p>Those permutations are the combinatoric part of an interval exchange
+transformation (IET). The combinatorial study of those objects starts with
+Gerard Rauzy <a class="reference internal" href="../references.html#rau80" id="id4"><span>[Rau80]</span></a> and William Veech <a class="reference internal" href="../references.html#vee78" id="id5"><span>[Vee78]</span></a>.</p>
+<p>The combinatoric part of interval exchange transformation can be taken
+independently from its dynamical origin. It has an important link with
+strata of Abelian differential (see ?)</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">intervals</span></code> - string, two strings, list, tuples that can be converted to
+two lists</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reduced</span></code> - boolean (default: False) specifies reduction. False means
+labelled permutation and True means reduced permutation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">flips</span></code> -  iterable (default: None) the letters which correspond to
+flipped intervals.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">alphabet</span></code> - (optional)</p></li>
+</ul>
+<p>OUTPUT:</p>
+<p>permutation – the output type depends of the data.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>Creation of labelled permutations</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span><span class="s1">&#39;d c b a&#39;</span><span class="p">)</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="n">d</span>
+<span class="n">d</span> <span class="n">c</span> <span class="n">b</span> <span class="n">a</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
+<span class="mi">2</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">0</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">])</span>
+<span class="mi">0</span> <span class="n">A</span> <span class="n">B</span> <span class="mi">1</span>
+<span class="n">B</span> <span class="mi">0</span> <span class="mi">1</span> <span class="n">A</span>
+</pre></div>
+</div>
+<p>Creation of reduced permutations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span> <span class="s1">&#39;c b a&#39;</span><span class="p">,</span> <span class="n">reduced</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
+<span class="n">c</span> <span class="n">b</span> <span class="n">a</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
+<span class="mi">1</span> <span class="mi">3</span> <span class="mi">0</span> <span class="mi">2</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="mi">1</span> <span class="mi">2</span>
+<span class="mi">2</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Managing the alphabet: two labelled permutations with different (ordered)
+alphabet but with the same labels are different:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="s1">&#39;ab&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="s1">&#39;ba&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">==</span> <span class="n">q</span>
+<span class="kc">False</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move_matrix</span><span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">1</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">1</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span><span class="o">.</span><span class="n">rauzy_move_matrix</span><span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">1</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">0</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>For reduced permutations, the alphabet does not play any role excepted for
+printing the object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">==</span> <span class="n">q</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>Creation of flipped permutations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span> <span class="s1">&#39;c b a&#39;</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
+<span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">b</span>  <span class="n">c</span>
+ <span class="n">c</span> <span class="o">-</span><span class="n">b</span> <span class="o">-</span><span class="n">a</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span> <span class="s1">&#39;c b a&#39;</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">b</span>  <span class="n">c</span>
+ <span class="n">c</span> <span class="o">-</span><span class="n">b</span> <span class="o">-</span><span class="n">a</span>
+</pre></div>
+</div>
+<p>TESTS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sage: type(iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;, reduced=True))
+&lt;class &#39;surface_dynamics.interval_exchanges.reduced.ReducedPermutationIET&#39;&gt;
+sage: type(iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;, reduced=False))
+&lt;class &#39;surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET&#39;&gt;
+sage: type(iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;, reduced=True, flips=[&#39;a&#39;,&#39;b&#39;]))
+&lt;class &#39;surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationIET&#39;&gt;
+sage: type(iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;, reduced=False, flips=[&#39;a&#39;,&#39;b&#39;]))
+&lt;class &#39;surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationIET&#39;&gt;
+
+sage: p = iet.Permutation((&#39;a b c&#39;,&#39;c b a&#39;))
+sage: iet.Permutation(p) == p
+True
+sage: q = iet.Permutation(p, reduced=True)
+sage: q == p
+False
+sage: q == p.reduced()
+True
+
+sage: p = iet.Permutation(&#39;a&#39;, &#39;a&#39;, flips=&#39;a&#39;, reduced=True)
+sage: iet.Permutation(p) == p
+True
+
+sage: p = iet.Permutation(&#39;a b c&#39;,&#39;c b a&#39;,flips=&#39;a&#39;)
+sage: iet.Permutation(p) == p
+True
+sage: iet.Permutation(p, reduced=True) == p.reduced()
+True
+
+sage: p = iet.Permutation(&#39;a b c&#39;,&#39;c b a&#39;,reduced=True)
+sage: iet.Permutation(p) == p
+True
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.constructors.Permutations_iterator">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">Permutations_iterator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nintervals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">irreducible</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduced</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphabet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#Permutations_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.Permutations_iterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator over permutations.</p>
+<p>This iterator allows you to iterate over permutations with given
+constraints. If you want to iterate over permutations coming from a given
+stratum you have to use the module ? and
+generate Rauzy diagrams from connected components.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nintervals</span></code> - non negative integer</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">irreducible</span></code> - boolean (default: True)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reduced</span></code> - boolean (default: False)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">alphabet</span></code> - alphabet (default: None)</p></li>
+</ul>
+<p>OUTPUT:</p>
+<p>iterator – an iterator over permutations</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>Generates all reduced permutations with given number of intervals:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">P</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutations_iterator</span><span class="p">(</span><span class="n">nintervals</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">alphabet</span><span class="o">=</span><span class="s2">&quot;ab&quot;</span><span class="p">,</span><span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">P</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\n</span><span class="s2">* *&quot;</span> <span class="o">%</span> <span class="n">p</span><span class="p">)</span>
+<span class="n">a</span> <span class="n">b</span>
+<span class="n">b</span> <span class="n">a</span>
+<span class="o">*</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">P</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutations_iterator</span><span class="p">(</span><span class="n">nintervals</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">alphabet</span><span class="o">=</span><span class="s2">&quot;abc&quot;</span><span class="p">,</span><span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">P</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\n</span><span class="s2">* * *&quot;</span> <span class="o">%</span> <span class="n">p</span><span class="p">)</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
+<span class="n">b</span> <span class="n">c</span> <span class="n">a</span>
+<span class="o">*</span> <span class="o">*</span> <span class="o">*</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
+<span class="n">c</span> <span class="n">a</span> <span class="n">b</span>
+<span class="o">*</span> <span class="o">*</span> <span class="o">*</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
+<span class="n">c</span> <span class="n">b</span> <span class="n">a</span>
+<span class="o">*</span> <span class="o">*</span> <span class="o">*</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.constructors.RauzyDiagram">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">RauzyDiagram</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduced</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flips</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphabet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_induction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_induction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_right_inversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_bottom_inversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symmetric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#RauzyDiagram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.RauzyDiagram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an object coding a Rauzy diagram.</p>
+<p>The Rauzy diagram is an oriented graph with labelled edges. The set of
+vertices corresponds to the permutations obtained by different operations
+(mainly the .rauzy_move() operations that corresponds to an induction of
+interval exchange transformation). The edges correspond to the action of the
+different operations considered.</p>
+<p>It first appeard in the original article of Rauzy <a class="reference internal" href="../references.html#rau80" id="id6"><span>[Rau80]</span></a>.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">intervals</span></code> - lists, or strings, or tuples</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reduced</span></code> - boolean (default: False) to precise reduction</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">flips</span></code> - list (default: []) for flipped permutations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">right_induction</span></code> - boolean (default: True) consideration of left
+induction in the diagram</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">left_induction</span></code> - boolean (default: False) consideration of right
+induction in the diagram</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">left_right_inversion</span></code> - boolean (default: False) consideration of
+inversion</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">top_bottom_inversion</span></code> - boolean (default: False) consideration of
+reversion</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">symmetric</span></code> - boolean (default: False) consideration of the symmetric
+operation</p></li>
+</ul>
+<p>OUTPUT:</p>
+<p>Rauzy diagram – the Rauzy diagram that corresponds to your request</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>Standard Rauzy diagrams:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">RauzyDiagram</span><span class="p">(</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span> <span class="s1">&#39;d b c a&#39;</span><span class="p">)</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">12</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">RauzyDiagram</span><span class="p">(</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span> <span class="s1">&#39;d b c a&#39;</span><span class="p">,</span> <span class="n">reduced</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">6</span> <span class="n">permutations</span>
+</pre></div>
+</div>
+<p>Extended Rauzy diagrams:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">RauzyDiagram</span><span class="p">(</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span> <span class="s1">&#39;d b c a&#39;</span><span class="p">,</span> <span class="n">symmetric</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">144</span> <span class="n">permutations</span>
+</pre></div>
+</div>
+<p>Using Rauzy diagrams and path in Rauzy diagrams:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">RauzyDiagram</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span> <span class="s1">&#39;c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">3</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">r</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g0</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom&#39;</span><span class="p">,</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g1</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g0</span><span class="o">.</span><span class="n">is_loop</span><span class="p">()</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g1</span><span class="o">.</span><span class="n">is_loop</span><span class="p">()</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g0</span><span class="o">.</span><span class="n">is_full</span><span class="p">()</span>
+<span class="kc">False</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g1</span><span class="o">.</span><span class="n">is_full</span><span class="p">()</span>
+<span class="kc">False</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="n">g0</span> <span class="o">+</span> <span class="n">g1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span>
+<span class="n">Path</span> <span class="n">of</span> <span class="n">length</span> <span class="mi">6</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">Rauzy</span> <span class="n">diagram</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span><span class="o">.</span><span class="n">is_loop</span><span class="p">()</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span><span class="o">.</span><span class="n">is_full</span><span class="p">()</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">m</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">m</span>
+<span class="p">[</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">2</span> <span class="mi">4</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">orbit_substitution</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="n">a</span><span class="o">-&gt;</span><span class="n">acbbc</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">acbbcbbc</span><span class="p">,</span> <span class="n">c</span><span class="o">-&gt;</span><span class="n">acbc</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">incidence_matrix</span><span class="p">()</span> <span class="o">==</span> <span class="n">m</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>We can then create the corresponding interval exchange transformation and
+comparing the orbit of <cite>0</cite> to the fixed point of the orbit substitution:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">v</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">eigenvectors_right</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
+<span class="n">c</span> <span class="n">b</span> <span class="n">a</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">w1</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>  <span class="n">w1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">in_which_interval</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="o">....</span><span class="p">:</span>  <span class="n">x</span> <span class="o">=</span> <span class="n">T</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">w1</span> <span class="o">=</span> <span class="n">Word</span><span class="p">(</span><span class="n">w1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">w1</span>
+<span class="n">word</span><span class="p">:</span> <span class="n">acbbcacbcacbbcbbcacb</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">w2</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">fixed_point</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">w2</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span>
+<span class="n">word</span><span class="p">:</span> <span class="n">acbbcacbcacbbcbbcacb</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">w2</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span> <span class="o">==</span> <span class="n">w1</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="template.html" class="btn btn-neutral float-right" title="Permutation template" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Interval exchange transformations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the surface-dynamics authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

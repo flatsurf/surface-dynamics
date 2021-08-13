@@ -1,0 +1,978 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Rauzy class cardinality &mdash; surface-dynamics 0.4.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Covering construction" href="cover.html" />
+    <link rel="prev" title="Reduced permutations" href="reduced.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> surface-dynamics
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../demo_interval_exchanges.html">Interval exchange transformations</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../origamis.html">Origamis</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Interval exchange transformations</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#permutations">Permutations</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="constructors.html">Interval exchange constructors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html">Permutation template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html">Labelled permutations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reduced.html">Reduced permutations</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Rauzy class cardinality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html">Covering construction</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#id1">Interval exchange transformations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topological_recursion/index.html">Topological recursion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/index.html">Miscellaneous</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">surface-dynamics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Interval exchange transformations</a> &raquo;</li>
+        
+      <li>Rauzy class cardinality</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/interval_exchanges/rauzy_class_cardinality.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-surface_dynamics.interval_exchanges.rauzy_class_cardinality">
+<span id="rauzy-class-cardinality"></span><h1>Rauzy class cardinality<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.rauzy_class_cardinality" title="Permalink to this headline">¶</a></h1>
+<p>Cardinality of Rauzy classes</p>
+<p>The following functions implement algorithms relative to article <a class="reference internal" href="../references.html#del13" id="id1"><span>[Del13]</span></a> and
+<a class="reference internal" href="../references.html#boi13" id="id2"><span>[Boi13]</span></a> where are given formulas for the cardinality of Rauzy classes of
+permutations.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>: number of standard labeled permutations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">d</span></code>: spin difference of standard labeled permutations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gamma_std</span></code>: number of standard permutations (with given profile and
+marking)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gamma_irr</span></code>: number of irreducible permutations (with given profile and
+marking)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delta_std</span></code>: spin difference for standard permutations (with given profile
+and marking)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delta_irr</span></code>: spin difference for irreducible permutations (with given
+profile and marking)</p></li>
+</ul>
+</div></blockquote>
+<p>AUTHOR:</p>
+<p>Vincent Delecroix</p>
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.rauzy_class_cardinality.bidecompositions">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.rauzy_class_cardinality.</span></code><code class="sig-name descname"><span class="pre">bidecompositions</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/rauzy_class_cardinality.html#bidecompositions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.rauzy_class_cardinality.bidecompositions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterator through the pair of partitions <code class="docutils literal notranslate"><span class="pre">(q1,q2)</span></code> such that the union of
+the parts of <code class="docutils literal notranslate"><span class="pre">q1</span></code> and <code class="docutils literal notranslate"><span class="pre">q2</span></code> equal <code class="docutils literal notranslate"><span class="pre">p</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rcc</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">rcc</span><span class="o">.</span><span class="n">bidecompositions</span><span class="p">(</span><span class="n">Partition</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">])))</span>
+<span class="p">[([],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="p">([</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[])]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">rcc</span><span class="o">.</span><span class="n">bidecompositions</span><span class="p">(</span><span class="n">Partition</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])))</span>
+<span class="p">[([],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+ <span class="p">([</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+ <span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+ <span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+ <span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+ <span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[])]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.rauzy_class_cardinality.c">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.rauzy_class_cardinality.</span></code><code class="sig-name descname"><span class="pre">c</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/rauzy_class_cardinality.html#c"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.rauzy_class_cardinality.c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of labeled standard permutations with given profile</p>
+<p>There is an explicit formula for this number</p>
+<div class="math notranslate nohighlight">
+\[c(p) = \frac{2 (n-1)!}{n+1} \left( \sum_{q \subset (p_2,p_3,\ldots,p_k)} (-1)^{s(q)-l(q)} \binom{n}{s(q)}^{-1} \right).\]</div>
+<p>Though, for huge partition <cite>p</cite> this is not very useful. This function
+implements an induction formula to compute <cite>c(p)</cite>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rcc</span>
+</pre></div>
+</div>
+<p>Partition of length 1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">c</span><span class="p">([</span><span class="n">n</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">all</span><span class="p">(</span><span class="n">rcc</span><span class="o">.</span><span class="n">c</span><span class="p">([</span><span class="n">n</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>Partitions of length 2 with two odd numbers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">b</span> <span class="o">=</span> <span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">c</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">b</span> <span class="o">=</span> <span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">c</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>Partitions of length 2 with even numbers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">b</span> <span class="o">=</span> <span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">c</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">b</span> <span class="o">=</span> <span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">c</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>Add marked points to an integer partition:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">all</span><span class="p">(</span><span class="n">rcc</span><span class="o">.</span><span class="n">c</span><span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">k</span><span class="p">)</span> <span class="o">==</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">rcc</span><span class="o">.</span><span class="n">c</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.rauzy_class_cardinality.check_marking">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.rauzy_class_cardinality.</span></code><code class="sig-name descname"><span class="pre">check_marking</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marking</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/rauzy_class_cardinality.html#check_marking"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.rauzy_class_cardinality.check_marking" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tiny internal function that checks that <code class="docutils literal notranslate"><span class="pre">marking</span></code> is compatible with <code class="docutils literal notranslate"><span class="pre">p</span></code>.</p>
+<p>OUTPUT:</p>
+<blockquote>
+<div><p>A 3-tuple.</p>
+</div></blockquote>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rcc</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">check_marking</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">check_marking</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">check_marking</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">good</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">check_marking</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">good</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">check_marking</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">check_marking</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">wrong</span> <span class="n">marking</span> <span class="nb">type</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.rauzy_class_cardinality.check_std_marking">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.rauzy_class_cardinality.</span></code><code class="sig-name descname"><span class="pre">check_std_marking</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marking</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/rauzy_class_cardinality.html#check_std_marking"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.rauzy_class_cardinality.check_std_marking" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tiny internal function that checks the validity of <code class="docutils literal notranslate"><span class="pre">marking</span></code> on the
+partition <code class="docutils literal notranslate"><span class="pre">p</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rcc</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">check_std_marking</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">check_std_marking</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">marking</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">good</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.rauzy_class_cardinality.collapse">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.rauzy_class_cardinality.</span></code><code class="sig-name descname"><span class="pre">collapse</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/rauzy_class_cardinality.html#collapse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.rauzy_class_cardinality.collapse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collapses the i-th term and the j-th term of a permutation</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code> - a partition</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">i,j</span></code> - two different indices of p</p></li>
+</ul>
+<p>OUTPUT:</p>
+<ul class="simple">
+<li><p>a partition</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rcc</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">collapse</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">collapse</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">collapse</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.rauzy_class_cardinality.d">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.rauzy_class_cardinality.</span></code><code class="sig-name descname"><span class="pre">d</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/rauzy_class_cardinality.html#d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.rauzy_class_cardinality.d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Difference between the number of odd spin parity and even spin parity
+standard labeled permutations with given profile</p>
+<p>There is an explicit formula</p>
+<div class="math notranslate nohighlight">
+\[d(p) = \frac{(n-1)!}{2^{(n-k)/2}}\]</div>
+<p>where <cite>n</cite> is the sum of the partition <cite>p</cite> and <cite>k</cite> is its length.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rcc</span>
+   <span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+   <span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">d</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="n">factorial</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">**</span><span class="mi">2</span>
+   <span class="kc">True</span>
+   <span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">d</span><span class="p">([</span><span class="mi">13</span><span class="p">])</span> <span class="o">==</span> <span class="n">factorial</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">**</span><span class="mi">6</span>
+   <span class="kc">True</span>
+
+<span class="n">Adding</span> <span class="n">marked</span> <span class="n">points</span><span class="p">::</span>
+
+   <span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+   <span class="n">sage</span><span class="p">:</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+   <span class="n">sage</span><span class="p">:</span> <span class="nb">all</span><span class="p">(</span><span class="n">rcc</span><span class="o">.</span><span class="n">d</span><span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">k</span><span class="p">)</span> <span class="o">==</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">rcc</span><span class="o">.</span><span class="n">d</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+   <span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.rauzy_class_cardinality.delta_irr">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.rauzy_class_cardinality.</span></code><code class="sig-name descname"><span class="pre">delta_irr</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/rauzy_class_cardinality.html#delta_irr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.rauzy_class_cardinality.delta_irr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spin difference for the given profile and marking</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rcc</span>
+</pre></div>
+</div>
+<p>The non connected strata in genus 3:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">294</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">63</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">delta_irr</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="mi">294</span> <span class="o">-</span> <span class="mi">63</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">134</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">31</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">delta_irr</span><span class="p">([</span><span class="mi">5</span><span class="p">])</span> <span class="o">==</span> <span class="mi">134</span> <span class="o">-</span> <span class="mi">31</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>A non connected strata in genus 4:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rdc</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_even</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">even_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">127</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span><span class="o">.</span><span class="n">rauzy_class_cardinality</span><span class="p">()</span>
+<span class="mi">127</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">5209</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span><span class="o">.</span><span class="n">rauzy_class_cardinality</span><span class="p">()</span>
+<span class="mi">5209</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_even</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">even_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_even</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">2327</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_even</span><span class="o">.</span><span class="n">rauzy_class_cardinality</span><span class="p">()</span>
+<span class="mi">2327</span>
+<span class="n">sage</span><span class="p">:</span> <span class="mi">5209</span> <span class="o">-</span> <span class="mi">2327</span> <span class="o">-</span> <span class="mi">127</span>
+<span class="mi">2755</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rdc</span><span class="o">.</span><span class="n">delta_irr</span><span class="p">([</span><span class="mi">7</span><span class="p">])</span>
+<span class="mi">2755</span>
+</pre></div>
+</div>
+<p>An example with a very big Rauzy class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">rauzy_class_cardinality</span><span class="p">()</span>
+<span class="mi">11609364656</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.rauzy_class_cardinality.delta_std">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.rauzy_class_cardinality.</span></code><code class="sig-name descname"><span class="pre">delta_std</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/rauzy_class_cardinality.html#delta_std"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.rauzy_class_cardinality.delta_std" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the difference odd-even in the given stratum</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code> - partition with odd terms</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">marking</span></code> - a 3-tuple <code class="docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">n1,</span> <span class="pre">a)</span></code> or <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">n1,</span> <span class="pre">n2)</span></code></p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rcc</span>
+</pre></div>
+</div>
+<p>A ValueError is raised if the partition does not fulfill the requirement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">delta_std</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">the</span> <span class="n">profile</span> <span class="p">(</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="n">must</span> <span class="n">contain</span> <span class="n">only</span> <span class="n">odd</span> <span class="n">numbers</span>
+</pre></div>
+</div>
+<p>Non connected strata in genus 3 has two connected components distinguished
+by their spin parity:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc_odd</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc_hyp</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_odd</span> <span class="o">=</span> <span class="n">cc_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_hyp</span> <span class="o">=</span> <span class="n">cc_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_odd</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">294</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_hyp</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">63</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_odd</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d_odd</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_hyp</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d_hyp</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_odd</span> <span class="o">-</span> <span class="n">n_hyp</span> <span class="o">==</span> <span class="n">rcc</span><span class="o">.</span><span class="n">delta_std</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc_odd</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc_hyp</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_odd</span> <span class="o">=</span> <span class="n">cc_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_hyp</span> <span class="o">=</span> <span class="n">cc_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_odd</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">134</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_hyp</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">31</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_odd</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d_odd</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_hyp</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d_hyp</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_odd</span> <span class="o">-</span> <span class="n">n_hyp</span> <span class="o">==</span> <span class="n">rcc</span><span class="o">.</span><span class="n">delta_std</span><span class="p">([</span><span class="mi">5</span><span class="p">])</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.rauzy_class_cardinality.gamma_irr">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.rauzy_class_cardinality.</span></code><code class="sig-name descname"><span class="pre">gamma_irr</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/rauzy_class_cardinality.html#gamma_irr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.rauzy_class_cardinality.gamma_irr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of permutations for the given profile and marking</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">profile</span></code> - an integer partition such that its sum plus its length is
+congruent to 0 modulo 2</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">markings</span></code> - None, an element of the profile or a 3-tuple</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rcc</span>
+</pre></div>
+</div>
+<p>The connected strata in genus 3:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">1255</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_irr</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="mi">1255</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">2177</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_irr</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="mi">2177</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">770</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_irr</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="mi">770</span>
+</pre></div>
+</div>
+<p>The non connected strata in genus 3:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">294</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">63</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_irr</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="mi">294</span> <span class="o">+</span> <span class="mi">63</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">134</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">31</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_irr</span><span class="p">([</span><span class="mi">5</span><span class="p">])</span> <span class="o">==</span> <span class="mi">134</span> <span class="o">+</span> <span class="mi">31</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.rauzy_class_cardinality.gamma_std">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.rauzy_class_cardinality.</span></code><code class="sig-name descname"><span class="pre">gamma_std</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/rauzy_class_cardinality.html#gamma_std"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.rauzy_class_cardinality.gamma_std" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of standard permutations of given profile</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">profile</span></code> - an integer partition such that the its sum plus its length
+is congruent to 0 modulo 2</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">marking</span></code> - either None, an element of the profile or a 3-tuple <code class="docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">n1,</span> <span class="pre">a)</span></code> or <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">n1,</span> <span class="pre">n2)</span></code></p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rcc</span>
+</pre></div>
+</div>
+<p>A ValueError is raised if the partition does not satisfy the requirement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_std</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">the</span> <span class="nb">sum</span> <span class="n">of</span> <span class="n">the</span> <span class="n">profile</span> <span class="p">(</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="n">plus</span> <span class="n">its</span> <span class="n">length</span> <span class="n">must</span> <span class="n">be</span> <span class="n">congruent</span> <span class="n">to</span> <span class="mi">0</span> <span class="n">modulo</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>The Rauzy classes associated to connected strata in genus 3:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">1255</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d</span><span class="p">))</span> <span class="o">==</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_std</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">2177</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d</span><span class="p">))</span> <span class="o">==</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_std</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">770</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d</span><span class="p">))</span> <span class="o">==</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_std</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>The non connected strata in genus 3:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">cc_odd</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc_hyp</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_odd</span> <span class="o">=</span> <span class="n">cc_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_hyp</span> <span class="o">=</span> <span class="n">cc_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_odd</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">294</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_hyp</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">63</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_odd</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d_odd</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_hyp</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d_hyp</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_odd</span> <span class="o">+</span> <span class="n">n_hyp</span> <span class="o">==</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_std</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc_odd</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc_hyp</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_odd</span> <span class="o">=</span> <span class="n">cc_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_hyp</span> <span class="o">=</span> <span class="n">cc_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_odd</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">134</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_hyp</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">31</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_odd</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d_odd</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_hyp</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d_hyp</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_odd</span> <span class="o">+</span> <span class="n">n_hyp</span> <span class="o">==</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_std</span><span class="p">([</span><span class="mi">5</span><span class="p">])</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.rauzy_class_cardinality.marking_iterator">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.rauzy_class_cardinality.</span></code><code class="sig-name descname"><span class="pre">marking_iterator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standard</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/rauzy_class_cardinality.html#marking_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.rauzy_class_cardinality.marking_iterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the marked profile associated to a partition</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rcc</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">rcc</span><span class="o">.</span><span class="n">marking_iterator</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+<span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+ <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+ <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+ <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+ <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+ <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+ <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+ <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.rauzy_class_cardinality.number_of_irreducible_permutations">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.rauzy_class_cardinality.</span></code><code class="sig-name descname"><span class="pre">number_of_irreducible_permutations</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.rauzy_class_cardinality.number_of_irreducible_permutations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of permutations for the given profile and marking</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">profile</span></code> - an integer partition such that its sum plus its length is
+congruent to 0 modulo 2</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">markings</span></code> - None, an element of the profile or a 3-tuple</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rcc</span>
+</pre></div>
+</div>
+<p>The connected strata in genus 3:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">1255</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_irr</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="mi">1255</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">2177</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_irr</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="mi">2177</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">770</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_irr</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="mi">770</span>
+</pre></div>
+</div>
+<p>The non connected strata in genus 3:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">294</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">63</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_irr</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="mi">294</span> <span class="o">+</span> <span class="mi">63</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">134</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">31</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_irr</span><span class="p">([</span><span class="mi">5</span><span class="p">])</span> <span class="o">==</span> <span class="mi">134</span> <span class="o">+</span> <span class="mi">31</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.rauzy_class_cardinality.number_of_standard_permutations">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.rauzy_class_cardinality.</span></code><code class="sig-name descname"><span class="pre">number_of_standard_permutations</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.rauzy_class_cardinality.number_of_standard_permutations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of standard permutations of given profile</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">profile</span></code> - an integer partition such that the its sum plus its length
+is congruent to 0 modulo 2</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">marking</span></code> - either None, an element of the profile or a 3-tuple <code class="docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">n1,</span> <span class="pre">a)</span></code> or <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">n1,</span> <span class="pre">n2)</span></code></p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rcc</span>
+</pre></div>
+</div>
+<p>A ValueError is raised if the partition does not satisfy the requirement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_std</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">the</span> <span class="nb">sum</span> <span class="n">of</span> <span class="n">the</span> <span class="n">profile</span> <span class="p">(</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="n">plus</span> <span class="n">its</span> <span class="n">length</span> <span class="n">must</span> <span class="n">be</span> <span class="n">congruent</span> <span class="n">to</span> <span class="mi">0</span> <span class="n">modulo</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>The Rauzy classes associated to connected strata in genus 3:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">1255</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d</span><span class="p">))</span> <span class="o">==</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_std</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">2177</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d</span><span class="p">))</span> <span class="o">==</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_std</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">770</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d</span><span class="p">))</span> <span class="o">==</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_std</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>The non connected strata in genus 3:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">cc_odd</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc_hyp</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_odd</span> <span class="o">=</span> <span class="n">cc_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_hyp</span> <span class="o">=</span> <span class="n">cc_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_odd</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">294</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_hyp</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">63</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_odd</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d_odd</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_hyp</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d_hyp</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_odd</span> <span class="o">+</span> <span class="n">n_hyp</span> <span class="o">==</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_std</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc_odd</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc_hyp</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_odd</span> <span class="o">=</span> <span class="n">cc_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_hyp</span> <span class="o">=</span> <span class="n">cc_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_odd</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">134</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_hyp</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">31</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_odd</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d_odd</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_hyp</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d_hyp</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_odd</span> <span class="o">+</span> <span class="n">n_hyp</span> <span class="o">==</span> <span class="n">rcc</span><span class="o">.</span><span class="n">gamma_std</span><span class="p">([</span><span class="mi">5</span><span class="p">])</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.rauzy_class_cardinality.spin_difference_for_irreducible_permutations">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.rauzy_class_cardinality.</span></code><code class="sig-name descname"><span class="pre">spin_difference_for_irreducible_permutations</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.rauzy_class_cardinality.spin_difference_for_irreducible_permutations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spin difference for the given profile and marking</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rcc</span>
+</pre></div>
+</div>
+<p>The non connected strata in genus 3:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">294</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">63</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">delta_irr</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="mi">294</span> <span class="o">-</span> <span class="mi">63</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">134</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">31</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">delta_irr</span><span class="p">([</span><span class="mi">5</span><span class="p">])</span> <span class="o">==</span> <span class="mi">134</span> <span class="o">-</span> <span class="mi">31</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>A non connected strata in genus 4:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rdc</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_even</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">even_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">127</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_hyp</span><span class="o">.</span><span class="n">rauzy_class_cardinality</span><span class="p">()</span>
+<span class="mi">127</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">5209</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_odd</span><span class="o">.</span><span class="n">rauzy_class_cardinality</span><span class="p">()</span>
+<span class="mi">5209</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_even</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">even_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_even</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">2327</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c_even</span><span class="o">.</span><span class="n">rauzy_class_cardinality</span><span class="p">()</span>
+<span class="mi">2327</span>
+<span class="n">sage</span><span class="p">:</span> <span class="mi">5209</span> <span class="o">-</span> <span class="mi">2327</span> <span class="o">-</span> <span class="mi">127</span>
+<span class="mi">2755</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rdc</span><span class="o">.</span><span class="n">delta_irr</span><span class="p">([</span><span class="mi">7</span><span class="p">])</span>
+<span class="mi">2755</span>
+</pre></div>
+</div>
+<p>An example with a very big Rauzy class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">rauzy_class_cardinality</span><span class="p">()</span>
+<span class="mi">11609364656</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.rauzy_class_cardinality.spin_difference_for_standard_permutations">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.rauzy_class_cardinality.</span></code><code class="sig-name descname"><span class="pre">spin_difference_for_standard_permutations</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.rauzy_class_cardinality.spin_difference_for_standard_permutations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the difference odd-even in the given stratum</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code> - partition with odd terms</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">marking</span></code> - a 3-tuple <code class="docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">n1,</span> <span class="pre">a)</span></code> or <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">n1,</span> <span class="pre">n2)</span></code></p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rcc</span>
+</pre></div>
+</div>
+<p>A ValueError is raised if the partition does not fulfill the requirement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">delta_std</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">the</span> <span class="n">profile</span> <span class="p">(</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="n">must</span> <span class="n">contain</span> <span class="n">only</span> <span class="n">odd</span> <span class="n">numbers</span>
+</pre></div>
+</div>
+<p>Non connected strata in genus 3 has two connected components distinguished
+by their spin parity:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc_odd</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc_hyp</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_odd</span> <span class="o">=</span> <span class="n">cc_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_hyp</span> <span class="o">=</span> <span class="n">cc_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_odd</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">294</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_hyp</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">63</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_odd</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d_odd</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_hyp</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d_hyp</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_odd</span> <span class="o">-</span> <span class="n">n_hyp</span> <span class="o">==</span> <span class="n">rcc</span><span class="o">.</span><span class="n">delta_std</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc_odd</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cc_hyp</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_odd</span> <span class="o">=</span> <span class="n">cc_odd</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_hyp</span> <span class="o">=</span> <span class="n">cc_hyp</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_odd</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">134</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">d_hyp</span>
+<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">31</span> <span class="n">permutations</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_odd</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d_odd</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_hyp</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">d_hyp</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">n_odd</span> <span class="o">-</span> <span class="n">n_hyp</span> <span class="o">==</span> <span class="n">rcc</span><span class="o">.</span><span class="n">delta_std</span><span class="p">([</span><span class="mi">5</span><span class="p">])</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.rauzy_class_cardinality.split">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.rauzy_class_cardinality.</span></code><code class="sig-name descname"><span class="pre">split</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/rauzy_class_cardinality.html#split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.rauzy_class_cardinality.split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits the i-th term of p into two parts of size k and n-k-1</p>
+<p>There is a symmetry split(p, k, i) = split(p, p[i]-k-1, i)</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code> - a partition</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">k</span></code> - an integer between 2 and p[i]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code> - integer - the index of the element to split</p></li>
+</ul>
+<p>OUTPUT: a partition</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">surface_dynamics.interval_exchanges.rauzy_class_cardinality</span> <span class="k">as</span> <span class="nn">rcc</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Partition</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rcc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="cover.html" class="btn btn-neutral float-right" title="Covering construction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="reduced.html" class="btn btn-neutral float-left" title="Reduced permutations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the surface-dynamics authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,528 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Interval exchange families &mdash; surface-dynamics 0.4.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Flip sequences" href="flip_sequence.html" />
+    <link rel="prev" title="Integral interval exchanges" href="integer_iet.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> surface-dynamics
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../demo_interval_exchanges.html">Interval exchange transformations</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../origamis.html">Origamis</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Interval exchange transformations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#permutations">Permutations</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#id1">Interval exchange transformations</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="iet.html">Interval exchange transformations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integer_iet.html">Integral interval exchanges</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Interval exchange families</a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html">Flip sequences</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topological_recursion/index.html">Topological recursion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/index.html">Miscellaneous</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">surface-dynamics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Interval exchange transformations</a> &raquo;</li>
+        
+      <li>Interval exchange families</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/interval_exchanges/iet_family.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-surface_dynamics.interval_exchanges.iet_family">
+<span id="interval-exchange-families"></span><h1>Interval exchange families<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.iet_family" title="Permalink to this headline">¶</a></h1>
+<p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 1)</p>
+<p>Linear families of interval exchange transformations</p>
+<dl class="py class">
+<dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.iet_family.</span></code><code class="sig-name descname"><span class="pre">IETFamily</span></code><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 140)</p>
+<p>A linear family of interval exchange transformations</p>
+<p>This class consists of two attributes:</p>
+<ul class="simple">
+<li><p>a permutation (must be labeled)</p></li>
+<li><p>a cone of lengths (a subcone of the positive cone)</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span> <span class="s1">&#39;d c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="n">ZZ</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">basis</span><span class="p">())</span>    <span class="c1"># optional - pplpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span>  <span class="c1"># optional - pplpy</span>
+<span class="n">top</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
+<span class="n">bot</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">0</span>
+<span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)])</span> <span class="c1"># optional - pplpy</span>
+<span class="n">top</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
+<span class="n">bot</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">0</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">2</span> <span class="mi">3</span> <span class="mi">0</span> <span class="mi">0</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)])</span> <span class="c1"># optional - pplpy</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">C</span> <span class="n">must</span> <span class="n">be</span> <span class="n">a</span> <span class="n">subcone</span> <span class="n">of</span> <span class="n">the</span> <span class="n">non</span><span class="o">-</span><span class="n">negative</span> <span class="n">cone</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Polyhedron</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)]))</span> <span class="c1"># optional - pplpy</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">should</span> <span class="n">have</span> <span class="n">only</span> <span class="n">zero</span> <span class="k">as</span> <span class="n">vertices</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.children">
+<code class="sig-name descname"><span class="pre">children</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.children" title="Permalink to this definition">¶</a></dt>
+<dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 503)</p>
+<p>Compute the children of the pair <code class="docutils literal notranslate"><span class="pre">(p,</span> <span class="pre">C)</span></code> composed of a permutation and a
+slice of a Rauzy simplex.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span> <span class="s1">&#39;d c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Polyhedron</span><span class="p">(</span><span class="n">rays</span><span class="o">=</span><span class="p">(</span><span class="n">ZZ</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">basis</span><span class="p">()))</span> <span class="c1"># optional - pplpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">children</span><span class="p">()</span> <span class="c1"># optional - pplpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">top</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># optional - pplpy</span>
+<span class="s1">&#39;t&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">top</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># optional - pplpy</span>
+<span class="n">top</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
+<span class="n">bot</span> <span class="mi">3</span> <span class="mi">0</span> <span class="mi">2</span> <span class="mi">1</span>
+<span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">bot</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># optional - pplpy</span>
+<span class="s1">&#39;b&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">bot</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># optional - pplpy</span>
+<span class="n">top</span> <span class="mi">0</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">2</span>
+<span class="n">bot</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">0</span>
+<span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d e f&#39;</span><span class="p">,</span> <span class="s1">&#39;e b f c a d&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Polyhedron</span><span class="p">(</span><span class="n">rays</span><span class="o">=</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)]))</span> <span class="c1"># optional - pplpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">children</span><span class="p">()</span> <span class="c1"># optional - pplpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="c1"># optional - pplpy</span>
+<span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># optional - pplpy</span>
+<span class="s1">&#39;t&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># optional - pplpy</span>
+<span class="n">top</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span>
+<span class="n">bot</span> <span class="mi">4</span> <span class="mi">1</span> <span class="mi">5</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">0</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Polyhedron</span><span class="p">(</span><span class="n">rays</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)]))</span> <span class="c1"># optional - pplpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">children</span><span class="p">()</span> <span class="c1"># optional - pplpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="c1"># optional - pplpy</span>
+<span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># optional - pplpy</span>
+<span class="s1">&#39;b&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># optional - pplpy</span>
+<span class="n">top</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">5</span> <span class="mi">4</span>
+<span class="n">bot</span> <span class="mi">4</span> <span class="mi">1</span> <span class="mi">5</span> <span class="mi">2</span> <span class="mi">0</span> <span class="mi">3</span>
+<span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.has_connection">
+<code class="sig-name descname"><span class="pre">has_connection</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.has_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 444)</p>
+<p>Check whether this family has a connection.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;A B C D E&#39;</span><span class="p">,</span> <span class="s1">&#39;E D C B A&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C0</span> <span class="o">=</span> <span class="n">Polyhedron</span><span class="p">(</span><span class="n">rays</span><span class="o">=</span><span class="p">(</span><span class="n">ZZ</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">basis</span><span class="p">())</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">C0</span><span class="p">)</span><span class="o">.</span><span class="n">has_connection</span><span class="p">()</span> <span class="c1"># optional - pplpy</span>
+<span class="kc">False</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Polyhedron</span><span class="p">(</span><span class="n">rays</span><span class="o">=</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span><span class="o">.</span><span class="n">has_connection</span><span class="p">()</span> <span class="c1"># optional - pplpy</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Polyhedron</span><span class="p">(</span><span class="n">rays</span><span class="o">=</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span><span class="o">.</span><span class="n">has_connection</span><span class="p">()</span> <span class="c1"># optional - pplpy</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Polyhedron</span><span class="p">(</span><span class="n">rays</span><span class="o">=</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span><span class="o">.</span><span class="n">has_connection</span><span class="p">()</span> <span class="c1"># optional - pplpy</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Polyhedron</span><span class="p">(</span><span class="n">rays</span><span class="o">=</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span><span class="o">.</span><span class="n">has_connection</span><span class="p">()</span> <span class="c1"># optional - pplpy</span>
+<span class="kc">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.permutation">
+<code class="sig-name descname"><span class="pre">permutation</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.permutation" title="Permalink to this definition">¶</a></dt>
+<dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 353)</p>
+<p>Return the permutation as a list of integers</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element">
+<code class="sig-name descname"><span class="pre">random_element</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element" title="Permalink to this definition">¶</a></dt>
+<dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 667)</p>
+<p>Return a random point in the cone</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.linalg</span> <span class="kn">import</span> <span class="n">deformation_space</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rays</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">rays</span><span class="p">)</span> <span class="c1"># optional - pplpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span> <span class="c1"># optional - pplpy</span>
+<span class="n">top</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span>
+<span class="n">bot</span> <span class="mi">5</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">4</span>
+<span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span>
+<span class="mi">3</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">2</span>
+<span class="mi">5</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">0</span> <span class="mi">3</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">polygen</span><span class="p">(</span><span class="n">ZZ</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">K</span><span class="o">.&lt;</span><span class="n">a</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">NumberField</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="mi">10</span> <span class="o">-</span> <span class="mi">3</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="n">AA</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">random_element</span><span class="p">(</span><span class="n">K</span><span class="p">)</span> <span class="c1"># optional - pplpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">V</span> <span class="o">=</span> <span class="n">deformation_space</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">lengths</span><span class="p">())</span> <span class="c1"># optional - pplpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">QQ</span><span class="o">**</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">subspace</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">rays</span><span class="p">())</span> <span class="o">==</span> <span class="n">V</span> <span class="c1"># optional - pplpy</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element_statistics">
+<code class="sig-name descname"><span class="pre">random_element_statistics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element_statistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 708)</p>
+<p>Return a triple <code class="docutils literal notranslate"><span class="pre">(num_minimals,</span> <span class="pre">num_saddles,</span> <span class="pre">num_unknowns)</span></code> of number
+of interval exchange transformations found to be respectively minimal, with
+a saddle connection or “unknown” by mean of at most <code class="docutils literal notranslate"><span class="pre">num_iterations</span></code> steps
+of Zorich induction over a sample of <code class="docutils literal notranslate"><span class="pre">num_exp</span></code> random interval exchange
+transformations in this family.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ring</span></code> – the ring in which is taken the lengths (usually a number field)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_exp</span></code> – number of experiments</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_iterations</span></code> – the number of Zorich move to be performed on the
+interval exchange transformations to find a saddle connection</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">intervalxt</span></code> – whether to use pyintervalxt for iteration (much faster for
+large number of induction steps)</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rays</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">rays</span><span class="p">)</span>  <span class="c1"># optional - pplpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">polygen</span><span class="p">(</span><span class="n">QQ</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">K</span><span class="o">.&lt;</span><span class="n">cbrt3</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">NumberField</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">3</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="n">AA</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span><span class="o">.</span><span class="n">random_element_statistics</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">intervalxt</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># optional - pplpy</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span><span class="o">.</span><span class="n">random_element_statistics</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">intervalxt</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># optional - pplpy gmpxxyy pyeantic pyintervalxt</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A conjectural counterexample to Dynnikov-Skripshenko conjecture:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;bbbbbtbttbttbbttbtttbbbbttbttbtbbtbbtbbtt&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d e f g h i&#39;</span><span class="p">,</span> <span class="s1">&#39;i h g f e d c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">self_similar_iet</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>  <span class="c1"># optional - pplpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span>  <span class="c1"># optional - pplpy</span>
+<span class="n">top</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span>
+<span class="n">bot</span> <span class="mi">8</span> <span class="mi">7</span> <span class="mi">6</span> <span class="mi">5</span> <span class="mi">4</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">0</span>
+<span class="mi">71</span> <span class="mi">67</span> <span class="mi">70</span> <span class="mi">107</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">19</span> <span class="mi">2</span> <span class="mi">0</span>
+<span class="mi">95</span> <span class="mi">63</span> <span class="mi">21</span> <span class="mi">44</span> <span class="mi">35</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">43</span>
+<span class="mi">105</span> <span class="mi">94</span> <span class="mi">88</span> <span class="mi">147</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">15</span> <span class="mi">19</span>
+<span class="mi">253</span> <span class="mi">310</span> <span class="mi">0</span> <span class="mi">243</span> <span class="mi">34</span> <span class="mi">101</span> <span class="mi">68</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="mi">425</span> <span class="mi">395</span> <span class="mi">404</span> <span class="mi">611</span> <span class="mi">14</span> <span class="mi">0</span> <span class="mi">129</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="mi">524</span> <span class="mi">703</span> <span class="mi">0</span> <span class="mi">628</span> <span class="mi">0</span> <span class="mi">245</span> <span class="mi">51</span> <span class="mi">68</span> <span class="mi">0</span>
+<span class="mi">619</span> <span class="mi">462</span> <span class="mi">0</span> <span class="mi">229</span> <span class="mi">238</span> <span class="mi">63</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">272</span>
+<span class="mi">701</span> <span class="mi">910</span> <span class="mi">0</span> <span class="mi">823</span> <span class="mi">0</span> <span class="mi">308</span> <span class="mi">0</span> <span class="mi">119</span> <span class="mi">51</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">minimals</span><span class="p">,</span> <span class="n">saddles</span><span class="p">,</span> <span class="n">unknowns</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">random_element_statistics</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">num_exp</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">intervalxt</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># optional - pplpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">minimals</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">saddles</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">unknowns</span> <span class="o">&gt;</span> <span class="mi">17</span><span class="p">,</span> <span class="p">(</span><span class="n">minimals</span><span class="p">,</span> <span class="n">saddles</span><span class="p">,</span> <span class="n">unknowns</span><span class="p">)</span> <span class="c1"># optional - pplpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">minimals</span><span class="p">,</span> <span class="n">saddles</span><span class="p">,</span> <span class="n">unknowns</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">random_element_statistics</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">num_exp</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">intervalxt</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># optional - pplpy gmpxxyy pyeantic pyintervalxt</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">minimals</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">saddles</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">unknowns</span> <span class="o">&gt;</span> <span class="mi">17</span><span class="p">,</span> <span class="p">(</span><span class="n">minimals</span><span class="p">,</span> <span class="n">saddles</span><span class="p">,</span> <span class="n">unknowns</span><span class="p">)</span> <span class="c1"># optional - pplpy gmpxxyy pyeantic pyintervalxt</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.random_integer_point_statistics">
+<code class="sig-name descname"><span class="pre">random_integer_point_statistics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_integer_point_statistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 813)</p>
+<p>OUTPUT: a dictionary whose keys are integers <code class="docutils literal notranslate"><span class="pre">i</span></code> and values are the
+number of integer points found so that the number of cylinders is
+<code class="docutils literal notranslate"><span class="pre">i</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.ray_coefficient">
+<code class="sig-name descname"><span class="pre">ray_coefficient</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.ray_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 227)</p>
+<p>Return the <code class="docutils literal notranslate"><span class="pre">i</span></code>-th coefficient of the <code class="docutils literal notranslate"><span class="pre">nray</span></code>-th ray</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span> <span class="s1">&#39;d c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)])</span> <span class="c1"># optional - pplpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span><span class="o">.</span><span class="n">ray_coefficient</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># optional - pplpy</span>
+<span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span><span class="o">.</span><span class="n">ray_coefficient</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># optional - pplpy</span>
+<span class="mi">2</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span><span class="o">.</span><span class="n">ray_coefficient</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># optional - pplpy</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">IndexError</span><span class="p">:</span> <span class="n">row</span> <span class="n">index</span> <span class="n">out</span> <span class="n">of</span> <span class="nb">range</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span><span class="o">.</span><span class="n">ray_coefficient</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="c1"># optional - pplpy</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">IndexError</span><span class="p">:</span> <span class="n">column</span> <span class="n">index</span> <span class="n">out</span> <span class="n">of</span> <span class="nb">range</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.rays">
+<code class="sig-name descname"><span class="pre">rays</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.rays" title="Permalink to this definition">¶</a></dt>
+<dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 257)</p>
+<p>Return the rays as vectors</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span> <span class="s1">&#39;d c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)])</span> <span class="c1"># optional - pplpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span><span class="o">.</span><span class="n">rays</span><span class="p">()</span> <span class="c1"># optional - pplpy</span>
+<span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.tree">
+<code class="sig-name descname"><span class="pre">tree</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 598)</p>
+<p>The tree should be smarter in several ways:</p>
+<ul class="simple">
+<li><p>once a saddle connection is found it should check whether it is stable and
+whether it corresponds to a splitting, a cylinder decomposition, etc</p></li>
+<li><p>implement a C version!</p></li>
+<li><p>understand what the parabolic are doing!</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">rays</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IETFamily</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">rays</span><span class="p">)</span> <span class="c1"># optional - pplpy</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="flip_sequence.html" class="btn btn-neutral float-right" title="Flip sequences" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="integer_iet.html" class="btn btn-neutral float-left" title="Integral interval exchanges" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the surface-dynamics authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

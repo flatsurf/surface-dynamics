@@ -1,0 +1,1154 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Interval exchange transformations &mdash; surface-dynamics 0.4.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Integral interval exchanges" href="integer_iet.html" />
+    <link rel="prev" title="Covering construction" href="cover.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> surface-dynamics
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../demo_interval_exchanges.html">Interval exchange transformations</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../origamis.html">Origamis</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Interval exchange transformations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#permutations">Permutations</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#id1">Interval exchange transformations</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Interval exchange transformations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integer_iet.html">Integral interval exchanges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet_family.html">Interval exchange families</a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html">Flip sequences</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topological_recursion/index.html">Topological recursion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/index.html">Miscellaneous</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">surface-dynamics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Interval exchange transformations</a> &raquo;</li>
+        
+      <li>Interval exchange transformations</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/interval_exchanges/iet.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-surface_dynamics.interval_exchanges.iet">
+<span id="interval-exchange-transformations"></span><h1>Interval exchange transformations<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.iet" title="Permalink to this headline">¶</a></h1>
+<p>Interval Exchange Transformations and Linear Involution</p>
+<p>An interval exchange transformation is a map defined on an interval (see
+help(iet.IntervalExchangeTransformation) for a more complete help.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>Initialization of a simple iet with integer lengths:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]),</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
+<span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Rotation corresponds to iet with two intervals:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">in_which_interval</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="s1">&#39;a&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">in_which_interval</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="s1">&#39;a&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">in_which_interval</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="mi">0</span><span class="p">)))</span>
+<span class="s1">&#39;b&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">in_which_interval</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="mi">0</span><span class="p">))))</span>
+<span class="s1">&#39;a&#39;</span>
+</pre></div>
+</div>
+<p>There are two plotting methods for iet:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.iet.</span></code><code class="sig-name descname"><span class="pre">IntervalExchangeTransformation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">permutation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lengths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_ring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Interval exchange transformation</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">permutation</span></code> - a permutation (LabelledPermutationIET)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lengths</span></code> - the list of lengths</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>Direct initialization:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IET</span><span class="p">((</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">),{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">permutation</span><span class="p">()</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
+<span class="n">c</span> <span class="n">b</span> <span class="n">a</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">lengths</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Initialization from a iet.Permutation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">perm</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">l</span> <span class="o">=</span> <span class="n">vector</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">1.2</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IET</span><span class="p">(</span><span class="n">perm</span><span class="p">,</span><span class="n">l</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">permutation</span><span class="p">()</span> <span class="o">==</span> <span class="n">perm</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">lengths</span><span class="p">()</span> <span class="o">==</span> <span class="n">l</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>Initialization from a Permutation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Permutation</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">IET</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
+<span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>If it is not possible to convert lengths to real values an error is raised:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">),[</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">])</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">TypeError</span><span class="p">:</span> <span class="n">unable</span> <span class="n">to</span> <span class="n">convert</span> <span class="n">x</span> <span class="p">(</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">)</span> <span class="n">into</span> <span class="n">a</span> <span class="n">real</span> <span class="n">number</span>
+</pre></div>
+</div>
+<p>The value for the lengths must be positive:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">IET</span><span class="p">((</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">),[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">lengths</span> <span class="n">must</span> <span class="n">be</span> <span class="n">non</span><span class="o">-</span><span class="n">negative</span><span class="p">,</span> <span class="n">got</span> <span class="o">-</span><span class="mf">1.0</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.backward_rauzy_move">
+<code class="sig-name descname"><span class="pre">backward_rauzy_move</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">winner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'right'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.backward_rauzy_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.backward_rauzy_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new interval exchange transformation obtained by performing a backward Rauzy move.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">perm</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d e f&#39;</span><span class="p">,</span> <span class="s1">&#39;f c b e d a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">polygen</span><span class="p">(</span><span class="n">QQ</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">poly</span> <span class="o">=</span> <span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">root</span> <span class="o">=</span> <span class="n">AA</span><span class="o">.</span><span class="n">polynomial_root</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">RIF</span><span class="p">(</span><span class="mf">1.8</span><span class="p">,</span> <span class="mf">1.9</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">K</span><span class="o">.&lt;</span><span class="n">a</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">NumberField</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="n">root</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">perm</span><span class="p">,</span> <span class="p">[</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span> <span class="o">-</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">a</span> <span class="o">+</span> <span class="mi">2</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="n">d</span> <span class="n">e</span> <span class="n">f</span>
+<span class="n">f</span> <span class="n">c</span> <span class="n">b</span> <span class="n">e</span> <span class="n">d</span> <span class="n">a</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">backward_rauzy_move</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">backward_rauzy_move</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">backward_rauzy_move</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">7</span><span class="o">*</span><span class="n">a</span> <span class="o">+</span> <span class="mi">4</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="n">f</span> <span class="n">d</span> <span class="n">e</span>
+<span class="n">f</span> <span class="n">b</span> <span class="n">e</span> <span class="n">d</span> <span class="n">a</span> <span class="n">c</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="n">T</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.base_ring">
+<code class="sig-name descname"><span class="pre">base_ring</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.base_ring"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.base_ring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the base ring over which the lengths are defined</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">base_ring</span><span class="p">()</span>
+<span class="n">Integer</span> <span class="n">Ring</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="o">/</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">base_ring</span><span class="p">()</span>
+<span class="n">Rational</span> <span class="n">Field</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="n">AA</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">base_ring</span><span class="p">()</span>
+<span class="n">Algebraic</span> <span class="n">Real</span> <span class="n">Field</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">sqrt2</span> <span class="o">=</span> <span class="n">QuadraticField</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">gen</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">sqrt2</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">base_ring</span><span class="p">()</span>
+<span class="n">Number</span> <span class="n">Field</span> <span class="ow">in</span> <span class="n">a</span> <span class="o">...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.domain_singularities">
+<code class="sig-name descname"><span class="pre">domain_singularities</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.domain_singularities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.domain_singularities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of singularities of T</p>
+<p>OUTPUT:</p>
+<dl class="simple">
+<dt>list – positive reals that corresponds to singularities in the top</dt><dd><p>interval</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IET</span><span class="p">((</span><span class="s2">&quot;a b&quot;</span><span class="p">,</span><span class="s2">&quot;b a&quot;</span><span class="p">),</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">domain_singularities</span><span class="p">()</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.erase_marked_points">
+<code class="sig-name descname"><span class="pre">erase_marked_points</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.erase_marked_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.erase_marked_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the marked points.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T1</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T1</span><span class="o">.</span><span class="n">erase_marked_points</span><span class="p">()</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">40</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="mi">0</span> <span class="mi">4</span>
+<span class="mi">4</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>TESTS:</p>
+<blockquote>
+<div><p>sage: K.&lt;a&gt; = NumberField(x^5 - 2, embedding=AA(2)**(1/5))</p>
+</div></blockquote>
+<p>Left side fake zero:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T1</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="n">a</span><span class="o">**</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">a</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T2</span> <span class="o">=</span> <span class="n">T1</span><span class="o">.</span><span class="n">erase_marked_points</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T2</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="n">a</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">a</span> <span class="o">+</span> <span class="mi">2</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="mi">1</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">2</span>
+<span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">4</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T2</span><span class="o">.</span><span class="n">permutation</span><span class="p">()</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>
+<span class="n">H_2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T2</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T2</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T2</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T2</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">==</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T1</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span> <span class="o">==</span> <span class="n">T2</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Right side fake zero:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T1</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">a</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span><span class="n">a</span><span class="o">**</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T2</span> <span class="o">=</span> <span class="n">T1</span><span class="o">.</span><span class="n">erase_marked_points</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T2</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="mi">1</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">2</span>
+<span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">4</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T2</span><span class="o">.</span><span class="n">permutation</span><span class="p">()</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>
+<span class="n">H_2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T2</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T2</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T2</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T2</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">==</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T1</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span> <span class="o">==</span> <span class="n">T2</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Left and right sides fake zeros:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T1</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">a</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">a</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span><span class="n">a</span><span class="o">**</span><span class="mi">4</span><span class="o">-</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="o">**</span><span class="mi">3</span><span class="o">+</span><span class="n">a</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T2</span> <span class="o">=</span> <span class="n">T1</span><span class="o">.</span><span class="n">erase_marked_points</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T2</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">5</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="mi">1</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">2</span>
+<span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">4</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T2</span><span class="o">.</span><span class="n">permutation</span><span class="p">()</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>
+<span class="n">H_2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T2</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T2</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T2</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T2</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">==</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T1</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span> <span class="o">==</span> <span class="n">T2</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Left-right fake zero:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T1</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="n">a</span><span class="o">**</span><span class="mi">4</span><span class="o">-</span><span class="n">a</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T2</span> <span class="o">=</span> <span class="n">T1</span><span class="o">.</span><span class="n">erase_marked_points</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T2</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">2</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="mi">1</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">2</span>
+<span class="mi">2</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">4</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T2</span><span class="o">.</span><span class="n">permutation</span><span class="p">()</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>
+<span class="n">H_2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T2</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T2</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T2</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T2</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">==</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">T1</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T1</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span> <span class="o">==</span> <span class="n">T2</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>A small example that end up wrong:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">K</span><span class="o">.&lt;</span><span class="n">a</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">NumberField</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="n">AA</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lengths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">lengths</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">U</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">erase_marked_points</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">U</span><span class="o">.</span><span class="n">permutation</span><span class="p">()</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span> 
+<span class="n">H_2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span> <span class="o">==</span> <span class="n">U</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">top</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">bot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">polygen</span><span class="p">(</span><span class="n">QQ</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">poly</span> <span class="o">=</span> <span class="n">x</span><span class="o">^</span><span class="mi">6</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">9</span><span class="o">*</span><span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">3</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">emb</span> <span class="o">=</span> <span class="n">AA</span><span class="o">.</span><span class="n">polynomial_root</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">RIF</span><span class="p">(</span><span class="mf">1.25</span><span class="p">,</span> <span class="mf">1.30</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">K</span><span class="o">.&lt;</span><span class="n">a</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">NumberField</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="n">emb</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lengths</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">7</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">-</span> <span class="mi">17</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">19</span><span class="p">,</span> <span class="o">-</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">6</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">7</span><span class="p">,</span>
+<span class="o">....</span><span class="p">:</span>     <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">11</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">20</span><span class="p">,</span>
+<span class="o">....</span><span class="p">:</span>     <span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">11</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">8</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">-</span> <span class="mi">35</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">8</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">-</span> <span class="mi">35</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">36</span><span class="p">,</span>
+<span class="o">....</span><span class="p">:</span>     <span class="o">-</span><span class="mi">29</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">42</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">43</span><span class="p">,</span> <span class="o">-</span><span class="mi">29</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">42</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">8</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">-</span> <span class="mi">28</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">39</span><span class="p">,</span>
+<span class="o">....</span><span class="p">:</span>     <span class="mi">8</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">-</span> <span class="mi">28</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">39</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">20</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span>
+<span class="o">....</span><span class="p">:</span>     <span class="o">-</span><span class="mi">8</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">16</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">8</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">4</span> <span class="o">-</span> <span class="mi">14</span><span class="o">*</span><span class="n">a</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">lengths</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">permutation</span><span class="p">()</span><span class="o">.</span><span class="n">stratum_component</span><span class="p">()</span>
+<span class="n">H_4</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="o">^</span><span class="mi">9</span><span class="p">)</span><span class="o">^</span><span class="n">hyp</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">U</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">erase_marked_points</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">U</span><span class="o">.</span><span class="n">permutation</span><span class="p">()</span><span class="o">.</span><span class="n">stratum_component</span><span class="p">()</span>
+<span class="n">H_4</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">^</span><span class="n">hyp</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">U</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.in_which_interval">
+<code class="sig-name descname"><span class="pre">in_which_interval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.in_which_interval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.in_which_interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the letter for which x is in this interval.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> - a positive number</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">interval</span></code> - (default: ‘top’) ‘top’ or ‘bottom’</p></li>
+</ul>
+<p>OUTPUT:</p>
+<p>label – a label corresponding to an interval</p>
+<p>TESTS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">),[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">in_which_interval</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="s1">&#39;a&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">in_which_interval</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="s1">&#39;a&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">in_which_interval</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="s1">&#39;b&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">in_which_interval</span><span class="p">(</span><span class="mf">1.9</span><span class="p">)</span>
+<span class="s1">&#39;b&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">in_which_interval</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="s1">&#39;c&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">in_which_interval</span><span class="p">(</span><span class="mf">2.1</span><span class="p">)</span>
+<span class="s1">&#39;c&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">in_which_interval</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">your</span> <span class="n">value</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">lie</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">;</span> <span class="mi">3</span><span class="p">[</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.inverse">
+<code class="sig-name descname"><span class="pre">inverse</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.inverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.inverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the inverse iet.</p>
+<p>OUTPUT:</p>
+<p>iet – the inverse interval exchange transformation</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s2">&quot;a b&quot;</span><span class="p">,</span><span class="s2">&quot;b a&quot;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IET</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">inverse</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">permutation</span><span class="p">()</span>
+<span class="n">b</span> <span class="n">a</span>
+<span class="n">a</span> <span class="n">b</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">lengths</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">*</span><span class="n">s</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">aa</span> <span class="n">bb</span>
+<span class="n">aa</span> <span class="n">bb</span>
+</pre></div>
+</div>
+<p>We can verify with the method .is_identity():</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s2">&quot;a b c d&quot;</span><span class="p">,</span><span class="s2">&quot;d a c b&quot;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IET</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">s</span> <span class="o">*</span> <span class="n">s</span><span class="o">.</span><span class="n">inverse</span><span class="p">())</span><span class="o">.</span><span class="n">is_identity</span><span class="p">()</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">inverse</span><span class="p">()</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">is_identity</span><span class="p">()</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.is_identity">
+<code class="sig-name descname"><span class="pre">is_identity</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.is_identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.is_identity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if self is the identity.</p>
+<p>OUTPUT:</p>
+<p>boolean – the answer</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s2">&quot;a b&quot;</span><span class="p">,</span><span class="s2">&quot;b a&quot;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s2">&quot;c d&quot;</span><span class="p">,</span><span class="s2">&quot;d c&quot;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IET</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IET</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">s</span><span class="o">*</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">is_identity</span><span class="p">()</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">t</span><span class="o">*</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">is_identity</span><span class="p">()</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.length">
+<code class="sig-name descname"><span class="pre">length</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the length of a subinterval, or if <code class="docutils literal notranslate"><span class="pre">label</span></code> is None the total length.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">),</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">length</span><span class="p">()</span>
+<span class="mi">4</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="mi">3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.lengths">
+<code class="sig-name descname"><span class="pre">lengths</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.lengths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.lengths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of lengths associated to this iet.</p>
+<p>OUTPUT:</p>
+<dl class="simple">
+<dt>vector – the list of lengths of subinterval (the order of the entries</dt><dd><p>correspond to the alphabet)</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">),[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">lengths</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.normalize">
+<code class="sig-name descname"><span class="pre">normalize</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">total</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a interval exchange transformation of normalized lengths.</p>
+<p>The normalization consist in consider a constant homothetic value for
+each lengths in such way that the sum is given (default is 1).</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">total</span></code> - (default: 1) The total length of the interval</p></li>
+</ul>
+<p>OUTPUT:</p>
+<p>iet – the normalized iet</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">),</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">length</span><span class="p">()</span>
+<span class="mi">4</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">length</span><span class="p">()</span>
+<span class="mi">2</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">lengths</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.permutation">
+<code class="sig-name descname"><span class="pre">permutation</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.permutation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.permutation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the permutation associated to this iet.</p>
+<p>OUTPUT:</p>
+<p>permutation – the permutation associated to this iet</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">perm</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">perm</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">permutation</span><span class="p">()</span> <span class="o">==</span> <span class="n">perm</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.plot">
+<code class="sig-name descname"><span class="pre">plot</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_alignment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'center'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal_alignment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'left'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">14</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a picture of the interval exchange transformation.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">position</span></code> - a 2-uple of the position</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">horizontal_alignment</span></code> - left (default), center or right</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">labels</span></code> - boolean (default: True)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fontsize</span></code> - the size of the label</p></li>
+</ul>
+<p>OUTPUT:</p>
+<p>2d plot – a plot of the two intervals (domain and range)</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">),[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">plot_two_intervals</span><span class="p">()</span> <span class="c1"># random output due to matplotlib deprecation warnings with SageMath &lt;9.1</span>
+<span class="n">Graphics</span> <span class="nb">object</span> <span class="n">consisting</span> <span class="n">of</span> <span class="mi">8</span> <span class="n">graphics</span> <span class="n">primitives</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.plot_function">
+<code class="sig-name descname"><span class="pre">plot_function</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.plot_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.plot_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a plot of the interval exchange transformation as a
+function.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p>Any option that is accepted by line2d</p></li>
+</ul>
+<p>OUTPUT:</p>
+<p>2d plot – a plot of the iet as a function</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span><span class="s1">&#39;d a c b&#39;</span><span class="p">),[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">plot_function</span><span class="p">(</span><span class="n">rgbcolor</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>    <span class="c1"># not tested (problem with matplotlib font cache)</span>
+<span class="n">Graphics</span> <span class="nb">object</span> <span class="n">consisting</span> <span class="n">of</span> <span class="mi">4</span> <span class="n">graphics</span> <span class="n">primitives</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.plot_towers">
+<code class="sig-name descname"><span class="pre">plot_towers</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.plot_towers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.plot_towers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the towers of this interval exchange obtained from Rauzy induction.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nb_iterations</span></code> – the number of steps of Rauzy induction</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">colors</span></code> – (optional) colors for the towers</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;A B&#39;</span><span class="p">,</span> <span class="s1">&#39;B A&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.41510826</span><span class="p">,</span> <span class="mf">0.58489174</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">plot_towers</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>   <span class="c1"># not tested (problem with matplotlib font cache)</span>
+<span class="n">Graphics</span> <span class="nb">object</span> <span class="n">consisting</span> <span class="n">of</span> <span class="mi">65</span> <span class="n">graphics</span> <span class="n">primitives</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.plot_two_intervals">
+<code class="sig-name descname"><span class="pre">plot_two_intervals</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_alignment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'center'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal_alignment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'left'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">14</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.plot_two_intervals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.plot_two_intervals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a picture of the interval exchange transformation.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">position</span></code> - a 2-uple of the position</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">horizontal_alignment</span></code> - left (default), center or right</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">labels</span></code> - boolean (default: True)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fontsize</span></code> - the size of the label</p></li>
+</ul>
+<p>OUTPUT:</p>
+<p>2d plot – a plot of the two intervals (domain and range)</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">),[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">plot_two_intervals</span><span class="p">()</span> <span class="c1"># random output due to matplotlib deprecation warnings with SageMath &lt;9.1</span>
+<span class="n">Graphics</span> <span class="nb">object</span> <span class="n">consisting</span> <span class="n">of</span> <span class="mi">8</span> <span class="n">graphics</span> <span class="n">primitives</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.range_singularities">
+<code class="sig-name descname"><span class="pre">range_singularities</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.range_singularities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.range_singularities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of singularities of <cite>T^{-1}</cite></p>
+<p>OUTPUT:</p>
+<p>list – real numbers that are singular for <cite>T^{-1}</cite></p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IET</span><span class="p">((</span><span class="s2">&quot;a b&quot;</span><span class="p">,</span><span class="s2">&quot;b a&quot;</span><span class="p">),</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">range_singularities</span><span class="p">()</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.rauzy_move">
+<code class="sig-name descname"><span class="pre">rauzy_move</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">side</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'right'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_on_saddles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.rauzy_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.rauzy_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a Rauzy move.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">side</span></code> - ‘left’ (or ‘l’ or 0) or ‘right’ (or ‘r’ or 1)</p></li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">iterations</span></code> - integer (default :1) the number of iteration of Rauzy</dt><dd><p>moves to perform</p>
+</dd>
+</dl>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code> - whether to return also the paths and composition of towers</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_on_saddles</span></code> - (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) whether to stop when a saddle
+is encountered</p></li>
+</ul>
+<p>OUTPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">iet</span></code> – the Rauzy move of self</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code> – (if <code class="docutils literal notranslate"><span class="pre">data=True</span></code>) a list of ‘t’ and ‘b’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">towers</span></code> – (if <code class="docutils literal notranslate"><span class="pre">data=True</span></code>) the towers of the Rauzy induction as a word morphism</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sage: from surface_dynamics import *
+
+sage: phi = QQbar((sqrt(5)-1)/2)
+sage: t1 = iet.IntervalExchangeTransformation((&#39;a b&#39;,&#39;b a&#39;),[1,phi])
+sage: t2 = t1.rauzy_move().normalize(t1.length())
+sage: l2 = t2.lengths()
+sage: l1 = t1.lengths()
+sage: l2[0] == l1[1] and l2[1] == l1[0]
+True
+
+sage: tt,path,sub = t1.rauzy_move(iterations=3, data=True)
+sage: tt
+Interval exchange transformation of [0, 0.3819660112501051?[ with
+permutation
+a b
+b a
+sage: path
+[&#39;b&#39;, &#39;t&#39;, &#39;b&#39;]
+sage: sub
+WordMorphism: a-&gt;aab, b-&gt;aabab
+</pre></div>
+</div>
+<p>The substitution can also be recovered from the Rauzy diagram:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">t1</span><span class="o">.</span><span class="n">permutation</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">substitution</span><span class="p">()</span> <span class="o">==</span> <span class="n">sub</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>An other examples involving 3 intervals:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">),[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
+<span class="n">c</span> <span class="n">b</span> <span class="n">a</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t1</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t1</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
+<span class="n">c</span> <span class="n">a</span> <span class="n">b</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">t1</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t2</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
+<span class="n">c</span> <span class="n">b</span> <span class="n">a</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t2</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">()</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">saddle</span> <span class="n">connection</span> <span class="n">found</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t2</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="n">error_on_saddles</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">a</span> <span class="n">b</span>
+<span class="n">a</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>Degenerate cases:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="n">error_on_saddles</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">a</span>
+<span class="n">a</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.recoding">
+<code class="sig-name descname"><span class="pre">recoding</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.recoding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.recoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recode this interval exchange transformation on the words of length
+<code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a d c b&#39;</span><span class="p">,</span> <span class="s1">&#39;b c a d&#39;</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="s1">&#39;abcd&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">119</span><span class="p">,</span><span class="mi">213</span><span class="p">,</span><span class="mi">82</span><span class="p">,</span><span class="mi">33</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">recoding</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">447</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">ab</span> <span class="n">db</span> <span class="n">cc</span> <span class="n">cb</span> <span class="n">ba</span> <span class="n">bd</span> <span class="n">bc</span>
+<span class="n">ba</span> <span class="n">bd</span> <span class="n">bc</span> <span class="n">cc</span> <span class="n">cb</span> <span class="n">ab</span> <span class="n">db</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">recoding</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">447</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">aba</span> <span class="n">abd</span> <span class="n">abc</span> <span class="n">dbc</span> <span class="n">ccb</span> <span class="n">cba</span> <span class="n">bab</span> <span class="n">bdb</span> <span class="n">bcc</span> <span class="n">bcb</span>
+<span class="n">cba</span> <span class="n">aba</span> <span class="n">abd</span> <span class="n">abc</span> <span class="n">dbc</span> <span class="n">bcc</span> <span class="n">bcb</span> <span class="n">ccb</span> <span class="n">bab</span> <span class="n">bdb</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.sah_arnoux_fathi_invariant">
+<code class="sig-name descname"><span class="pre">sah_arnoux_fathi_invariant</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.sah_arnoux_fathi_invariant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.sah_arnoux_fathi_invariant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the Sah-Arnoux-Fathi invariant</p>
+<p>The interval exchange needs to be defined over a number field. The output
+is then a vector with rational entries of dimension <cite>d (d-1) / 2</cite> where
+<cite>d</cite> is the degree of the field.</p>
+<p>EXAMPLES:</p>
+<p>The golden rotation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">self_similar_iet</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The Sah-Arnoux-Fathi invariant is not changed under Rauzy
+(or Zorich) induction:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">S</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">zorich_move</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">length</span><span class="p">()</span><span class="o">.</span><span class="n">n</span><span class="p">(),</span> <span class="n">S</span><span class="o">.</span><span class="n">length</span><span class="p">()</span><span class="o">.</span><span class="n">n</span><span class="p">())</span>
+<span class="p">(</span><span class="mf">2.61803398874989</span><span class="p">,</span> <span class="mf">0.000000000000000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>An other rotation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">self_similar_iet</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">()</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Arnoux-Yoccoz in genus 3:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">polygen</span><span class="p">(</span><span class="n">ZZ</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">poly</span> <span class="o">=</span> <span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">l</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">poly</span><span class="o">.</span><span class="n">roots</span><span class="p">(</span><span class="n">AA</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">K</span><span class="o">.&lt;</span><span class="n">a</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">NumberField</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="n">l</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">top</span> <span class="o">=</span> <span class="s1">&#39;A1l A1r A2 B1 B2 C1 C2&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">bot</span> <span class="o">=</span> <span class="s1">&#39;A1r B2 B1 C2 C1 A2 A1l&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lengths</span> <span class="o">=</span> <span class="n">vector</span><span class="p">((</span><span class="n">a</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">lengths</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Arnoux-Yoccoz examples in genus 4 (an auto-similar iet):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">polygen</span><span class="p">(</span><span class="n">ZZ</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">poly</span> <span class="o">=</span> <span class="n">x</span><span class="o">^</span><span class="mi">4</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">l</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">poly</span><span class="o">.</span><span class="n">roots</span><span class="p">(</span><span class="n">AA</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">K</span><span class="o">.&lt;</span><span class="n">a</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">NumberField</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="n">l</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">top</span> <span class="o">=</span> <span class="s1">&#39;A1l A1r A2 B1 B2 C1 C2 D1 D2&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">bot</span> <span class="o">=</span> <span class="s1">&#39;A1r B2 B1 C2 C1 D2 D1 A2 A1l&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lengths</span> <span class="o">=</span> <span class="n">vector</span><span class="p">((</span><span class="n">a</span><span class="o">**</span><span class="mi">4</span><span class="o">-</span><span class="n">a</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">3</span><span class="o">-</span><span class="n">a</span><span class="o">**</span><span class="mi">4</span><span class="p">,</span> <span class="n">a</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">lengths</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">zorich_move</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A cubic example in genus 4 (H_4(6)^hyp):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">polygen</span><span class="p">(</span><span class="n">QQ</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">poly</span> <span class="o">=</span> <span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">9</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="mi">3</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">emb</span> <span class="o">=</span> <span class="n">AA</span><span class="o">.</span><span class="n">polynomial_root</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">RIF</span><span class="p">(</span><span class="mf">1.64</span><span class="p">,</span> <span class="mf">1.66</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">K</span><span class="o">.&lt;</span><span class="n">A</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">NumberField</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="n">emb</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lengths</span><span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">A</span> <span class="o">+</span> <span class="mi">18</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">19</span><span class="o">*</span><span class="n">A</span> <span class="o">-</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">168</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">355</span><span class="o">*</span><span class="n">A</span> <span class="o">+</span> <span class="mi">128</span><span class="p">,</span>
+<span class="o">....</span><span class="p">:</span>           <span class="mi">586</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1317</span><span class="o">*</span><span class="n">A</span> <span class="o">+</span> <span class="mi">576</span><span class="p">,</span> <span class="o">-</span><span class="mi">725</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1626</span><span class="o">*</span><span class="n">A</span> <span class="o">-</span> <span class="mi">707</span><span class="p">,</span>
+<span class="o">....</span><span class="p">:</span>           <span class="o">-</span><span class="mi">11</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">A</span> <span class="o">+</span> <span class="mi">41</span><span class="p">,</span> <span class="o">-</span><span class="mi">32</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">100</span><span class="o">*</span><span class="n">A</span> <span class="o">-</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">20</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">71</span><span class="o">*</span><span class="n">A</span> <span class="o">+</span> <span class="mi">63</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">lengths</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">permutation</span><span class="p">()</span><span class="o">.</span><span class="n">stratum_component</span><span class="p">()</span>
+<span class="n">H_4</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">^</span><span class="n">hyp</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">zorich_move</span><span class="p">(</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="mi">17</span><span class="p">)</span> <span class="o">==</span> <span class="n">S</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>A quartic example in genus 4 (H_4(6)^even):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">poly</span> <span class="o">=</span> <span class="n">x</span><span class="o">^</span><span class="mi">4</span> <span class="o">-</span> <span class="mi">7</span><span class="o">*</span><span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">14</span><span class="o">*</span><span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">8</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">emb</span> <span class="o">=</span> <span class="n">AA</span><span class="o">.</span><span class="n">polynomial_root</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">RIF</span><span class="p">(</span><span class="mf">0.17</span><span class="p">,</span> <span class="mf">0.18</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">K</span><span class="o">.&lt;</span><span class="n">A</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">NumberField</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="n">emb</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lengths</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">18</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">44</span><span class="o">*</span><span class="n">A</span> <span class="o">-</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">55</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">60</span><span class="o">*</span><span class="n">A</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span>
+<span class="o">....</span><span class="p">:</span>    <span class="mi">15</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">90</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">120</span><span class="o">*</span><span class="n">A</span> <span class="o">-</span> <span class="mi">15</span><span class="p">,</span> <span class="o">-</span><span class="mi">16</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">94</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">132</span><span class="o">*</span><span class="n">A</span> <span class="o">+</span> <span class="mi">22</span><span class="p">,</span>
+<span class="o">....</span><span class="p">:</span>    <span class="mi">9</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">56</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">88</span><span class="o">*</span><span class="n">A</span> <span class="o">-</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">4</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">16</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">A</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span>
+<span class="o">....</span><span class="p">:</span>    <span class="o">-</span><span class="mi">8</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">57</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">101</span><span class="o">*</span><span class="n">A</span> <span class="o">+</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">26</span><span class="o">*</span><span class="n">A</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">38</span><span class="o">*</span><span class="n">A</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">lengths</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">permutation</span><span class="p">()</span><span class="o">.</span><span class="n">stratum_component</span><span class="p">()</span>
+<span class="n">H_4</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">^</span><span class="n">even</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">sah_arnoux_fathi_invariant</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">zorich_move</span><span class="p">(</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="mi">38</span><span class="p">)</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span> <span class="o">==</span> <span class="n">S</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.show">
+<code class="sig-name descname"><span class="pre">show</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.show"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows a picture of the interval exchange transformation</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">phi</span> <span class="o">=</span> <span class="n">QQbar</span><span class="p">((</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">),[</span><span class="mi">1</span><span class="p">,</span><span class="n">phi</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># not tested (problem with matplotlib font cache)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.singularities">
+<code class="sig-name descname"><span class="pre">singularities</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.singularities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.singularities" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of singularities of ‘T’ and ‘T^{-1}’.</p>
+<p>OUTPUT:</p>
+<dl class="simple">
+<dt>list – two lists of positive numbers which corresponds to extremities</dt><dd><p>of subintervals</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">((</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">),[</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">singularities</span><span class="p">()</span>
+<span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.translations">
+<code class="sig-name descname"><span class="pre">translations</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.translations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.translations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the vector of translations operated on each intervals.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span> <span class="s1">&#39;c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">translations</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The order of the entries correspond to the alphabet:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a c d b&#39;</span><span class="p">,</span> <span class="s1">&#39;b d c a&#39;</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="s1">&#39;abcd&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">translations</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This vector is covariant with respect to the Rauzy matrices:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span> <span class="s1">&#39;d c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="s1">&#39;ttbtbtbtbb&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">self_similar_iet</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">S</span><span class="p">,</span> <span class="n">code</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">zorich_move</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">gg</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">code</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">m</span> <span class="o">=</span> <span class="n">gg</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">assert</span> <span class="n">m</span> <span class="o">*</span> <span class="n">S</span><span class="o">.</span><span class="n">lengths</span><span class="p">()</span> <span class="o">==</span> <span class="n">T</span><span class="o">.</span><span class="n">lengths</span><span class="p">()</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">assert</span> <span class="n">m</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span> <span class="o">*</span> <span class="n">T</span><span class="o">.</span><span class="n">translations</span><span class="p">()</span> <span class="o">==</span> <span class="n">S</span><span class="o">.</span><span class="n">translations</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.vector_space">
+<code class="sig-name descname"><span class="pre">vector_space</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.vector_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.vector_space" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.zorich_move">
+<code class="sig-name descname"><span class="pre">zorich_move</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">side</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'right'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#IntervalExchangeTransformation.zorich_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.zorich_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a Rauzy move.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">side</span></code> - ‘left’ (or ‘l’ or 0) or ‘right’ (or ‘r’ or 1)</p></li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">iterations</span></code> - integer (default :1) the number of iteration of Rauzy</dt><dd><p>moves to perform</p>
+</dd>
+</dl>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code> - whether to return also the path</p></li>
+</ul>
+<p>OUTPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">iet</span></code> – the Rauzy move of self</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code> – (if <code class="docutils literal notranslate"><span class="pre">data=True</span></code>) a list of ‘t’ and ‘b’</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span> <span class="s1">&#39;c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">67</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">zorich_move</span><span class="p">()</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">55</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
+<span class="n">c</span> <span class="n">a</span> <span class="n">b</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">T</span><span class="o">.</span><span class="n">permutation</span><span class="p">()</span> <span class="o">==</span> <span class="n">p</span> <span class="ow">and</span> <span class="n">T</span><span class="o">.</span><span class="n">lengths</span><span class="p">()</span> <span class="o">==</span> <span class="n">vector</span><span class="p">((</span><span class="mi">12</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="mi">67</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>A self similar example in genus 2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span> <span class="s1">&#39;d a c b&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mi">4</span> <span class="o">+</span> <span class="s1">&#39;t&#39;</span><span class="o">*</span><span class="mi">1</span> <span class="o">+</span> <span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="s1">&#39;t&#39;</span><span class="o">*</span><span class="mi">1</span> <span class="o">+</span> <span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="s1">&#39;t&#39;</span><span class="o">*</span><span class="mi">1</span> <span class="o">+</span> <span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mi">1</span> <span class="o">+</span> <span class="s1">&#39;t&#39;</span><span class="o">*</span><span class="mi">1</span> <span class="o">+</span> <span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mi">4</span> <span class="o">+</span> <span class="s1">&#39;t&#39;</span><span class="o">*</span><span class="mi">1</span> <span class="o">+</span> <span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mi">2</span> <span class="o">+</span> <span class="s1">&#39;t&#39;</span><span class="o">*</span><span class="mi">7</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">code</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">m</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">poly</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">charpoly</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">l</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">poly</span><span class="o">.</span><span class="n">roots</span><span class="p">(</span><span class="n">AA</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">K</span><span class="o">.&lt;</span><span class="n">a</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">NumberField</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="n">l</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lengths</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">right_kernel</span><span class="p">()</span><span class="o">.</span><span class="n">basis</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">lengths</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span>
+<span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="n">d</span>
+<span class="n">d</span> <span class="n">a</span> <span class="n">c</span> <span class="n">b</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T2</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">zorich_move</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span><span class="o">*</span><span class="n">T2</span><span class="o">.</span><span class="n">lengths</span><span class="p">()</span> <span class="o">==</span> <span class="n">T</span><span class="o">.</span><span class="n">lengths</span><span class="p">()</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">path</span> <span class="o">==</span> <span class="n">code</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>Saddle connection detection:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span> <span class="s1">&#39;c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">41</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">135</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">zorich_move</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">saddle</span> <span class="n">connection</span> <span class="n">found</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d e f&#39;</span><span class="p">,</span> <span class="s1">&#39;f c b e d a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="mi">41</span><span class="p">,</span> <span class="mi">132</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">135</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">333</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">zorich_move</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">saddle</span> <span class="n">connection</span> <span class="n">found</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.iet.wedge">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.iet.</span></code><code class="sig-name descname"><span class="pre">wedge</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/iet.html#wedge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet.wedge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the wedge of the vectors <code class="docutils literal notranslate"><span class="pre">u</span></code> and <code class="docutils literal notranslate"><span class="pre">v</span></code></p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="integer_iet.html" class="btn btn-neutral float-right" title="Integral interval exchanges" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cover.html" class="btn btn-neutral float-left" title="Covering construction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the surface-dynamics authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

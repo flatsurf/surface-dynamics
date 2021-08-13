@@ -1,0 +1,609 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Integral interval exchanges &mdash; surface-dynamics 0.4.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Interval exchange families" href="iet_family.html" />
+    <link rel="prev" title="Interval exchange transformations" href="iet.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> surface-dynamics
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../demo_interval_exchanges.html">Interval exchange transformations</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../origamis.html">Origamis</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Interval exchange transformations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#permutations">Permutations</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#id1">Interval exchange transformations</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="iet.html">Interval exchange transformations</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Integral interval exchanges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet_family.html">Interval exchange families</a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html">Flip sequences</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topological_recursion/index.html">Topological recursion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/index.html">Miscellaneous</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">surface-dynamics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Interval exchange transformations</a> &raquo;</li>
+        
+      <li>Integral interval exchanges</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/interval_exchanges/integer_iet.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-surface_dynamics.interval_exchanges.integer_iet">
+<span id="integral-interval-exchanges"></span><h1>Integral interval exchanges<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.integer_iet" title="Permalink to this headline">¶</a></h1>
+<p>File: surface_dynamics/interval_exchanges/integer_iet.pyx (starting at line 1)</p>
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.integer_iet.cylinder_number">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.integer_iet.</span></code><code class="sig-name descname"><span class="pre">cylinder_number</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.integer_iet.cylinder_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>File: surface_dynamics/interval_exchanges/integer_iet.pyx (starting at line 714)</p>
+<p>Return the number of cylinders and of a given interval exchange</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.integer_iet</span> <span class="kn">import</span> <span class="n">cylinder_number</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">top</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">bot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_number</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">24</span><span class="p">])</span>
+<span class="mi">1</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">top</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">bot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_number</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="mi">2</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">top</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">bot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_number</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="mi">3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.integer_iet.cylinder_statistics">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.integer_iet.</span></code><code class="sig-name descname"><span class="pre">cylinder_statistics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.integer_iet.cylinder_statistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>File: surface_dynamics/interval_exchanges/integer_iet.pyx (starting at line 567)</p>
+<p>Return the statistics of the number of cylinders for a given total length</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">top</span></code> – (list) composition of the top of the cylinder</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bot</span></code> – (list) composition of the bottom of the cylinder</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L</span></code> – (positive integer) the length we are considering</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kind</span></code> (integer) – choose the statistics to gather
+- <code class="docutils literal notranslate"><span class="pre">kind=0</span></code>: number of cylinders
+- <code class="docutils literal notranslate"><span class="pre">kind=1</span></code>: number of components
+- <code class="docutils literal notranslate"><span class="pre">kind=2</span></code>: tuple of cylinder widths
+- <code class="docutils literal notranslate"><span class="pre">kind=3</span></code>: tuple of cylinder heights
+- <code class="docutils literal notranslate"><span class="pre">kind=4</span></code>: tuple of pairs (cylinder width, cylinder height)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">flat</span></code> (boolean, default <code class="docutils literal notranslate"><span class="pre">False</span></code>) - whether to return the result
+as a dictionary or as a list.</p></li>
+</ul>
+<p>OUTPUT: if <code class="docutils literal notranslate"><span class="pre">flat=False</span></code> a dictionary whose keys are integers or tuples
+and the value associated to a key <code class="docutils literal notranslate"><span class="pre">k</span></code> is the number of length data with
+sum <code class="docutils literal notranslate"><span class="pre">L</span></code> which corresponds to an iet with data <code class="docutils literal notranslate"><span class="pre">top</span></code> and <code class="docutils literal notranslate"><span class="pre">bot</span></code> and
+whose cylinder decomposition has statistics <code class="docutils literal notranslate"><span class="pre">k</span></code>. If <code class="docutils literal notranslate"><span class="pre">flat=True</span></code> a list
+for each each term is a statistics.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.integer_iet</span> <span class="kn">import</span> <span class="n">cylinder_statistics</span>
+</pre></div>
+</div>
+<p>The case of H(0,0):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">top</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">bot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">20</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">s</span> <span class="o">=</span> <span class="n">cylinder_statistics</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%2d</span><span class="s2"> : </span><span class="si">%3d</span><span class="s2"> </span><span class="si">%3d</span><span class="s2"> </span><span class="si">%3d</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+ <span class="mi">2</span> <span class="p">:</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">2</span>
+ <span class="mi">3</span> <span class="p">:</span>   <span class="mi">4</span>   <span class="mi">2</span>   <span class="mi">6</span>
+ <span class="mi">4</span> <span class="p">:</span>   <span class="mi">7</span>   <span class="mi">5</span>  <span class="mi">12</span>
+ <span class="mi">5</span> <span class="p">:</span>  <span class="mi">16</span>   <span class="mi">4</span>  <span class="mi">20</span>
+ <span class="mi">6</span> <span class="p">:</span>  <span class="mi">15</span>  <span class="mi">15</span>  <span class="mi">30</span>
+ <span class="mi">7</span> <span class="p">:</span>  <span class="mi">36</span>   <span class="mi">6</span>  <span class="mi">42</span>
+ <span class="mi">8</span> <span class="p">:</span>  <span class="mi">35</span>  <span class="mi">21</span>  <span class="mi">56</span>
+ <span class="mi">9</span> <span class="p">:</span>  <span class="mi">52</span>  <span class="mi">20</span>  <span class="mi">72</span>
+<span class="mi">10</span> <span class="p">:</span>  <span class="mi">53</span>  <span class="mi">37</span>  <span class="mi">90</span>
+<span class="mi">11</span> <span class="p">:</span> <span class="mi">100</span>  <span class="mi">10</span> <span class="mi">110</span>
+<span class="mi">12</span> <span class="p">:</span>  <span class="mi">65</span>  <span class="mi">67</span> <span class="mi">132</span>
+<span class="mi">13</span> <span class="p">:</span> <span class="mi">144</span>  <span class="mi">12</span> <span class="mi">156</span>
+<span class="mi">14</span> <span class="p">:</span> <span class="mi">115</span>  <span class="mi">67</span> <span class="mi">182</span>
+<span class="mi">15</span> <span class="p">:</span> <span class="mi">132</span>  <span class="mi">78</span> <span class="mi">210</span>
+<span class="mi">16</span> <span class="p">:</span> <span class="mi">155</span>  <span class="mi">85</span> <span class="mi">240</span>
+<span class="mi">17</span> <span class="p">:</span> <span class="mi">256</span>  <span class="mi">16</span> <span class="mi">272</span>
+<span class="mi">18</span> <span class="p">:</span> <span class="mi">165</span> <span class="mi">141</span> <span class="mi">306</span>
+<span class="mi">19</span> <span class="p">:</span> <span class="mi">324</span>  <span class="mi">18</span> <span class="mi">342</span>
+</pre></div>
+</div>
+<p>Which are the same numbers as Q(0,-1^4):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">top1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">bot1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">top2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">bot2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">n</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">s1</span> <span class="o">=</span> <span class="n">cylinder_statistics</span><span class="p">(</span><span class="n">top1</span><span class="p">,</span> <span class="n">bot1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">s2</span> <span class="o">=</span> <span class="n">cylinder_statistics</span><span class="p">(</span><span class="n">top2</span><span class="p">,</span> <span class="n">bot2</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">assert</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">s1</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">s2</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">s1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.integer_iet.cylinder_widths">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.integer_iet.</span></code><code class="sig-name descname"><span class="pre">cylinder_widths</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.integer_iet.cylinder_widths" title="Permalink to this definition">¶</a></dt>
+<dd><p>File: surface_dynamics/interval_exchanges/integer_iet.pyx (starting at line 777)</p>
+<p>Return the widths of cylinders of the interval exchange determined by <code class="docutils literal notranslate"><span class="pre">top</span></code>, <code class="docutils literal notranslate"><span class="pre">bot</span></code>, <code class="docutils literal notranslate"><span class="pre">lengths</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.integer_iet</span> <span class="kn">import</span> <span class="n">cylinder_widths</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">top</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">bot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">24</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span><span class="n">L</span><span class="p">]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">top</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">bot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span><span class="n">L</span><span class="p">,</span> <span class="mi">2</span><span class="n">L</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Genus 0 examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">top</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">bot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span><span class="n">L</span><span class="p">,</span> <span class="mi">2</span><span class="n">L</span><span class="p">,</span> <span class="mi">8</span><span class="n">L</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">1298</span><span class="p">,</span> <span class="mi">814</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">1034</span><span class="p">,</span> <span class="mi">819</span><span class="p">,</span> <span class="mi">142</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">2</span><span class="n">L</span><span class="p">,</span> <span class="mi">3</span><span class="n">L</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">78745</span><span class="p">,</span> <span class="mi">39773</span><span class="p">,</span> <span class="mi">19984</span><span class="p">,</span> <span class="mi">21665</span><span class="p">,</span> <span class="mi">31239</span><span class="p">,</span> <span class="mi">437</span><span class="p">,</span> <span class="mi">85161</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span><span class="n">L</span><span class="p">,</span> <span class="mi">1</span><span class="n">L</span><span class="p">,</span> <span class="mi">1</span><span class="n">L</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">57453</span><span class="p">,</span> <span class="mi">9483</span><span class="p">,</span> <span class="mi">110211</span><span class="p">,</span> <span class="mi">100249</span><span class="p">,</span> <span class="mi">36644</span><span class="p">,</span> <span class="mi">9853</span><span class="p">,</span> <span class="mi">30401</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span><span class="n">L</span><span class="p">,</span> <span class="mi">1</span><span class="n">L</span><span class="p">,</span> <span class="mi">3</span><span class="n">L</span><span class="p">]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">top</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">bot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">746825</span><span class="p">,</span> <span class="mi">30952</span><span class="p">,</span> <span class="mi">206252</span><span class="p">,</span> <span class="mi">348</span><span class="p">,</span> <span class="mi">538642</span><span class="p">,</span> <span class="mi">32535</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span><span class="n">L</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">219989</span><span class="p">,</span> <span class="mi">91122</span><span class="p">,</span> <span class="mi">70542</span><span class="p">,</span> <span class="mi">187806</span><span class="p">,</span> <span class="mi">5742</span><span class="p">,</span> <span class="mi">47021</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span><span class="n">L</span><span class="p">,</span> <span class="mi">2</span><span class="n">L</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">49622</span><span class="p">,</span> <span class="mi">73834</span><span class="p">,</span> <span class="mi">4390</span><span class="p">,</span> <span class="mi">46944</span><span class="p">,</span> <span class="mi">43358</span><span class="p">,</span> <span class="mi">28764</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">2</span><span class="n">L</span><span class="p">,</span> <span class="mi">10</span><span class="n">L</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">25489</span><span class="p">,</span> <span class="mi">109646</span><span class="p">,</span> <span class="mi">25473</span><span class="p">,</span> <span class="mi">7492</span><span class="p">,</span> <span class="mi">11490</span><span class="p">,</span> <span class="mi">90680</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span><span class="n">L</span><span class="p">,</span> <span class="mi">2</span><span class="n">L</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Genus 3 example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">top</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">bot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span><span class="n">L</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span><span class="n">L</span><span class="p">,</span> <span class="mi">1</span><span class="n">L</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span><span class="n">L</span><span class="p">,</span> <span class="mi">1</span><span class="n">L</span><span class="p">,</span> <span class="mi">2</span><span class="n">L</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="p">[</span><span class="mi">948</span><span class="p">,</span> <span class="mi">803</span><span class="p">,</span> <span class="mi">775</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">951</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span><span class="n">L</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.integer_iet.cylinder_widths_and_heights">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.integer_iet.</span></code><code class="sig-name descname"><span class="pre">cylinder_widths_and_heights</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.integer_iet.cylinder_widths_and_heights" title="Permalink to this definition">¶</a></dt>
+<dd><p>File: surface_dynamics/interval_exchanges/integer_iet.pyx (starting at line 743)</p>
+<p>Return the list of pairs <code class="docutils literal notranslate"><span class="pre">(width,</span> <span class="pre">height)</span></code> of each periodic component of the
+iet determined by <code class="docutils literal notranslate"><span class="pre">top</span></code>, <code class="docutils literal notranslate"><span class="pre">bot</span></code> and <code class="docutils literal notranslate"><span class="pre">lengths</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.integer_iet</span> <span class="kn">import</span> <span class="n">cylinder_widths_and_heights</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths_and_heights</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="p">[(</span><span class="mi">1</span><span class="n">L</span><span class="p">,</span> <span class="mi">7</span><span class="n">L</span><span class="p">)]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths_and_heights</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">8</span><span class="p">,</span><span class="mi">12</span><span class="p">])</span>
+<span class="p">[(</span><span class="mi">4</span><span class="n">L</span><span class="p">,</span> <span class="mi">5</span><span class="n">L</span><span class="p">)]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths_and_heights</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="p">[(</span><span class="mi">1</span><span class="n">L</span><span class="p">,</span> <span class="mi">10</span><span class="n">L</span><span class="p">)]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths_and_heights</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)),</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)),</span> <span class="p">[</span><span class="mi">1386</span><span class="p">,</span><span class="mi">924</span><span class="p">,</span><span class="mi">660</span><span class="p">,</span><span class="mi">495</span><span class="p">,</span><span class="mi">385</span><span class="p">,</span><span class="mi">308</span><span class="p">,</span><span class="mi">252</span><span class="p">,</span><span class="mi">210</span><span class="p">])</span>
+<span class="p">[(</span><span class="mi">2</span><span class="n">L</span><span class="p">,</span> <span class="mi">930</span><span class="n">L</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="n">L</span><span class="p">,</span> <span class="mi">920</span><span class="n">L</span><span class="p">)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.integer_iet.interval_exchange_statistics">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.integer_iet.</span></code><code class="sig-name descname"><span class="pre">interval_exchange_statistics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.integer_iet.interval_exchange_statistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>File: surface_dynamics/interval_exchanges/integer_iet.pyx (starting at line 294)</p>
+<p>Return the statistics about cylinder decompositions of the integral interval
+exchanges with given permutation <code class="docutils literal notranslate"><span class="pre">(top,</span> <span class="pre">bot)</span></code> and total length <code class="docutils literal notranslate"><span class="pre">L</span></code>.</p>
+<p>An integral interval exchange transformation (or iet for short)
+decomposes into periodic components. This function allows to study
+these components (ie number and geometry).</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">top</span></code>, <code class="docutils literal notranslate"><span class="pre">bot</span></code> (lists) – top and bottom labels (as list of
+numbers from <code class="docutils literal notranslate"><span class="pre">0</span></code> to <code class="docutils literal notranslate"><span class="pre">n-1</span></code> where <code class="docutils literal notranslate"><span class="pre">n</span></code> is the number of intervals)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L</span></code> (integer) – the total length of the integral iets to be
+tested</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kind</span></code> (integer) – choose the statistics to gather
+- <code class="docutils literal notranslate"><span class="pre">kind=0</span></code>: number of cylinders
+- <code class="docutils literal notranslate"><span class="pre">kind=1</span></code>: number of components
+- <code class="docutils literal notranslate"><span class="pre">kind=2</span></code>: tuple of cylinder widths
+- <code class="docutils literal notranslate"><span class="pre">kind=3</span></code>: tuple of cylinder heights
+- <code class="docutils literal notranslate"><span class="pre">kind=4</span></code>: tuple of pairs (cylinder width, cylinder height)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">flat</span></code> (boolean, default <code class="docutils literal notranslate"><span class="pre">False</span></code>) - whether to return the result
+as a dictionary or as a list.</p></li>
+</ul>
+<p>OUTPUT: if <code class="docutils literal notranslate"><span class="pre">flat=False</span></code> a dictionary whose keys are integers or tuples
+and the value associated to a key <code class="docutils literal notranslate"><span class="pre">k</span></code> is the number of length data with
+sum <code class="docutils literal notranslate"><span class="pre">L</span></code> which corresponds to an iet with data <code class="docutils literal notranslate"><span class="pre">top</span></code> and <code class="docutils literal notranslate"><span class="pre">bot</span></code> and
+whose cylinder decomposition has statistics <code class="docutils literal notranslate"><span class="pre">k</span></code>. If <code class="docutils literal notranslate"><span class="pre">flat=True</span></code> a list
+for each each term is a statistics.</p>
+<p>EXAMPLES:</p>
+<p>Rotations always give a unique cylinder:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.integer_iet</span> <span class="kn">import</span> <span class="n">interval_exchange_statistics</span>
+   <span class="n">sage</span><span class="p">:</span> <span class="n">interval_exchange_statistics</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+   <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">9</span><span class="p">}</span>
+
+<span class="n">Though</span><span class="p">,</span> <span class="n">the</span> <span class="n">widths</span> <span class="n">of</span> <span class="n">this</span> <span class="n">unique</span> <span class="n">cylinder</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">gcd</span> <span class="n">of</span> <span class="n">the</span> <span class="n">two</span> <span class="n">lengths</span><span class="p">::</span>
+
+   <span class="n">sage</span><span class="p">:</span> <span class="n">interval_exchange_statistics</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+   <span class="p">{</span><span class="mi">1</span><span class="n">L</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="n">L</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="n">L</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+   <span class="n">sage</span><span class="p">:</span> <span class="p">[</span><span class="n">gcd</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">10</span><span class="o">-</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)]</span>
+   <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Complete information about the heights of cylinders are obtained by setting <code class="docutils literal notranslate"><span class="pre">kind=2</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">interval_exchange_statistics</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">s2</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%-6s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="n">s2</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">)</span>   <span class="p">:</span> <span class="mi">34</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="mi">16</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="mi">16</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mi">4</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span> <span class="mi">6</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span> <span class="mi">2</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="mi">4</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>You can recover <code class="docutils literal notranslate"><span class="pre">kind=0</span></code> and <code class="docutils literal notranslate"><span class="pre">kind=1</span></code> by looking and lengths and sums:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s0</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">s2</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">s0</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">k</span><span class="p">)]</span> <span class="o">+=</span> <span class="n">v</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">s1</span><span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="n">k</span><span class="p">)]</span> <span class="o">+=</span> <span class="n">v</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">s0</span><span class="p">)</span> <span class="o">==</span> <span class="n">interval_exchange_statistics</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">==</span> <span class="n">interval_exchange_statistics</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>To get statistics for the heights, consider using <code class="docutils literal notranslate"><span class="pre">kind=3</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">s3</span> <span class="o">=</span> <span class="n">interval_exchange_statistics</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">s3</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%-6s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="n">s3</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span> <span class="mi">4</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span> <span class="mi">4</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span> <span class="mi">4</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="mi">4</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mi">2</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span> <span class="mi">8</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span> <span class="mi">6</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span> <span class="mi">8</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span> <span class="mi">2</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span> <span class="mi">8</span>
+<span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="p">:</span> <span class="mi">34</span>
+</pre></div>
+</div>
+<p>And for both lengths and heights, <code class="docutils literal notranslate"><span class="pre">kind=4</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">s4</span> <span class="o">=</span> <span class="n">interval_exchange_statistics</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">s4</span><span class="p">:</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">assert</span> <span class="nb">sum</span><span class="p">(</span><span class="n">l</span><span class="o">*</span><span class="n">h</span> <span class="k">for</span> <span class="n">l</span><span class="p">,</span><span class="n">h</span> <span class="ow">in</span> <span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">10</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.integer_iet.interval_exchange_statistics_sample">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.integer_iet.</span></code><code class="sig-name descname"><span class="pre">interval_exchange_statistics_sample</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.integer_iet.interval_exchange_statistics_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>File: surface_dynamics/interval_exchanges/integer_iet.pyx (starting at line 440)</p>
+<p>Return the statistics of cylinder decomposition of a random sample of <code class="docutils literal notranslate"><span class="pre">sample_size</span></code>
+integral iet with given permutation <code class="docutils literal notranslate"><span class="pre">top</span></code> and <code class="docutils literal notranslate"><span class="pre">bot</span></code>.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">top</span></code>, <code class="docutils literal notranslate"><span class="pre">bot</span></code> – top and bottom permutation (as list of
+numbers starting from <code class="docutils literal notranslate"><span class="pre">0</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L</span></code> (integer) – a magnitude order for the total length of the integral
+iet to be generated</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sample_size</span></code> – size of the sample</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kind</span></code> (integer) – choose the statistics to gather
+- <code class="docutils literal notranslate"><span class="pre">kind=0</span></code>: number of cylinders
+- <code class="docutils literal notranslate"><span class="pre">kind=1</span></code>: number of components
+- <code class="docutils literal notranslate"><span class="pre">kind=2</span></code>: tuple of cylinder widths
+- <code class="docutils literal notranslate"><span class="pre">kind=3</span></code>: tuple of cylinder heights
+- <code class="docutils literal notranslate"><span class="pre">kind=4</span></code>: tuple of pairs (cylinder width, cylinder height)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">flat</span></code> (boolean, default <code class="docutils literal notranslate"><span class="pre">False</span></code>) - whether to return the result
+as a dictionary or as a list.</p></li>
+</ul>
+<p>OUTPUT: if <code class="docutils literal notranslate"><span class="pre">flat=False</span></code> a dictionary whose keys are integers or tuples
+and the value associated to a key <code class="docutils literal notranslate"><span class="pre">k</span></code> is the number of length data with
+sum <code class="docutils literal notranslate"><span class="pre">L</span></code> which corresponds to an iet with data <code class="docutils literal notranslate"><span class="pre">top</span></code> and <code class="docutils literal notranslate"><span class="pre">bot</span></code> and
+whose cylinder decomposition has statistics <code class="docutils literal notranslate"><span class="pre">k</span></code>. If <code class="docutils literal notranslate"><span class="pre">flat=True</span></code> a list
+for each each term is a statistics.</p>
+<p>EXAMPLES:</p>
+<p>Rotations always give a unique cylinder:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.integer_iet</span> <span class="kn">import</span> <span class="n">interval_exchange_statistics</span>
+   <span class="n">sage</span><span class="p">:</span> <span class="n">interval_exchange_statistics</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="mi">10</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+   <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">9</span><span class="p">}</span>
+
+<span class="n">Though</span><span class="p">,</span> <span class="n">the</span> <span class="n">widths</span> <span class="n">of</span> <span class="n">this</span> <span class="n">unique</span> <span class="n">cylinder</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">gcd</span> <span class="n">of</span> <span class="n">the</span> <span class="n">two</span> <span class="n">lengths</span><span class="p">::</span>
+
+   <span class="n">sage</span><span class="p">:</span> <span class="n">interval_exchange_statistics</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+   <span class="p">{</span><span class="mi">1</span><span class="n">L</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="n">L</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="n">L</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+   <span class="n">sage</span><span class="p">:</span> <span class="p">[</span><span class="n">gcd</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">10</span><span class="o">-</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)]</span>
+   <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Complete information about the heights of cylinders are obtained by setting <code class="docutils literal notranslate"><span class="pre">kind=2</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">interval_exchange_statistics</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">s2</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%-6s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="n">s2</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">)</span>   <span class="p">:</span> <span class="mi">34</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="mi">16</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="mi">16</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mi">4</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span> <span class="mi">6</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span> <span class="mi">2</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="mi">4</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>You can recover <code class="docutils literal notranslate"><span class="pre">kind=0</span></code> and <code class="docutils literal notranslate"><span class="pre">kind=1</span></code> by looking and lengths and sums:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s0</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">s2</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">s0</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">k</span><span class="p">)]</span> <span class="o">+=</span> <span class="n">v</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">s1</span><span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="n">k</span><span class="p">)]</span> <span class="o">+=</span> <span class="n">v</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">s0</span><span class="p">)</span> <span class="o">==</span> <span class="n">interval_exchange_statistics</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">==</span> <span class="n">interval_exchange_statistics</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>An example of flat statistics in <cite>Q(1,1,1,1)</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">stats</span> <span class="o">=</span> <span class="n">interval_exchange_statistics</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+<span class="mi">40</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">stats</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="p">[((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">)),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">))]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">stats</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">==</span> <span class="p">[((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.interval_exchanges.integer_iet.perm_to_twin">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.integer_iet.</span></code><code class="sig-name descname"><span class="pre">perm_to_twin</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.integer_iet.perm_to_twin" title="Permalink to this definition">¶</a></dt>
+<dd><p>File: surface_dynamics/interval_exchanges/integer_iet.pyx (starting at line 118)</p>
+<p>Return the twin associated to the permutation <code class="docutils literal notranslate"><span class="pre">p</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.integer_iet</span> <span class="kn">import</span> <span class="n">perm_to_twin</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">perm_to_twin</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">perm_to_twin</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">p</span> <span class="n">must</span> <span class="n">contain</span> <span class="n">integer</span> <span class="n">only</span> <span class="n">between</span> <span class="mi">0</span> <span class="ow">and</span> <span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">perm_to_twin</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">each</span> <span class="n">label</span> <span class="n">must</span> <span class="n">appear</span> <span class="n">exactly</span> <span class="n">twice</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">perm_to_twin</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">p</span> <span class="n">must</span> <span class="n">have</span> <span class="n">even</span> <span class="n">length</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="iet_family.html" class="btn btn-neutral float-right" title="Interval exchange families" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="iet.html" class="btn btn-neutral float-left" title="Interval exchange transformations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, the surface-dynamics authors.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
