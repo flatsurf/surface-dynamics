@@ -23,7 +23,8 @@ dependencies:
   - givaro=4.1.1=h192cbe9_1
   - sage-flatsurf  # optional: sage_flatsurf
   - pyeantic >=1.0.0,<2  # optional: pyeantic
-  - pyintervalxt >= 3.1.0,<4  # optional: pyintervalxt
+  - pyintervalxt >=3.1.0,<4  # optional: pyintervalxt
+  - gmpxxyy >=1.0.1,<2  # optional: gmpxxyy
   # sphinx 4 produces a warning currently that looks like a bug in sphinx:
   # <unknown>:1:py:obj reference target not found: surface_dynamics.flat_surfaces.abelian_strata.c
   - sphinx >=3.0.0,<4 # optional: doc
