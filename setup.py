@@ -127,7 +127,7 @@ class build_py(_build_py):
                 if mod != 'generalized_multiple_zeta_values']
         return modules
 
-setup(name='surface_dynamics',
+setup(name='surface-dynamics',
       version=version,
       description="Dynamics on surfaces",
       long_description=long_description,

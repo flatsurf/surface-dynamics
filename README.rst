@@ -2,7 +2,7 @@
 Surface dynamics
 ================
 
-The ``surface_dynamics`` package for SageMath adds functionality related to
+The ``surface-dynamics`` package for SageMath adds functionality related to
 interval exchange transformations, translation surfaces, mapping classes
 and more. It is based on `SageMath <http://www.sagemath.org>`_ and relies
 heavily on:
@@ -16,10 +16,10 @@ heavily on:
 Prerequisites
 -------------
 
-Installing ``surface_dynamics`` requires a working Sage installation (with
+Installing ``surface-dynamics`` requires a working Sage installation (with
 Cython and gcc). Installing the optional SageMath packages ``gap_packages``,
 and ``latte_int`` is recommended and will improve or extend the functionality
-in ``surface_dynamics``. The optional package ``database_gap`` is also
+in ``surface-dynamics``. The optional package ``database_gap`` is also
 recommended if using SageMath < 8.6 (in SageMath 8.6 it was merged partly
 into the ``gap`` and partly into the ``gap_packages`` packages).
 
@@ -31,7 +31,7 @@ Python package manager ``pip``. If you downloaded a binary from the SageMath
 website (including the Cygwin version running on Windows) or compiled
 from source, run the following command::
 
-    $ sage -pip install surface_dynamics [--user]
+    $ sage -pip install surface-dynamics [--user]
 
 The ``--user`` option is optional and allows to install the module in your
 user space (and does not require administrator rights).
@@ -41,7 +41,7 @@ system's package manager (that is, the package ``sagemath``), run these
 two commands::
 
     $ source /usr/share/sagemath/bin/sage-env
-    $ pip install surface_dynamics --user
+    $ pip install surface-dynamics --user
 
 If you use Arch Linux, you need to install from source (see next section).
 
@@ -49,7 +49,7 @@ Install and use source version
 ------------------------------
 
 This section provides detailed instructions on how to download, modify
-and install the development version of ``surface_dynamics``. In all commands,
+and install the development version of ``surface-dynamics``. In all commands,
 
 * ``PIP`` has to be replaced by either ``pip``, ``pip2``, or ``sage -pip``
 * ``PYTHON`` has to be replaced by either ``python``, ``python2`` or ``sage -python``
@@ -60,7 +60,7 @@ or installed it from source use ``PIP='sage -pip'`` and ``PYTHON='sage -python'`
 
 You can install the latest development version in one line with::
 
-    $ PIP install git+https://github.com/flatsurf/surface_dynamics [--user]
+    $ PIP install git+https://github.com/flatsurf/surface-dynamics [--user]
 
 As before, the ``--user`` option is optional and when specified will
 install the module in your user space.
@@ -68,13 +68,13 @@ install the module in your user space.
 You can also perform a two stage installation that will allow you to
 modify the source code. The first step is to clone the repository::
 
-    $ git clone https://github.com/flatsurf/surface_dynamics
+    $ git clone https://github.com/flatsurf/surface-dynamics
 
-The above command creates a repository ``surface_dynamics`` with the source code,
+The above command creates a repository ``surface-dynamics`` with the source code,
 documentation and miscellaneous files. You can then change to the directory
 thus created and install the surface dynamics module with::
 
-    $ cd surface_dynamics
+    $ cd surface-dynamics
     $ PIP install . [--user]
 
 Do not forget the ``.`` that refers to the current directory.
@@ -92,7 +92,7 @@ SageMath session::
 
     sage: import surface_dynamics
     sage: surface_dynamics.__path__        # random
-    ['/home/you/surface_dynamics/surface_dynamics/']
+    ['/home/you/surface-dynamics/surface_dynamics/']
 
 The result of the command must correspond to the path of the repository
 created by the command ``git clone`` given above. The compilation step
@@ -101,7 +101,7 @@ a C or Cython source file (i.e. with ``.c``, ``.h``, ``.pxd`` or ``.pyx``
 extension). In other words, it is not needed if you only
 modify or create Python files (i.e. ``.py`` files).
 
-If you wish to install your custom version of ``surface_dynamics``
+If you wish to install your custom version of ``surface-dynamics``
 just use ``PIP`` as indicated before.
 
 Documentation
@@ -113,7 +113,7 @@ Documentation
 Check
 -----
 
-After installing ``surface_dynamics``, check that it works by launching Sage
+After installing ``surface-dynamics``, check that it works by launching Sage
 and typing the following commands. You should get the same
 output as below. ::
 
@@ -169,12 +169,12 @@ Installing development version - source code
 
 The development webpage is
 
-* https://github.com/flatsurf/surface_dynamics
+* https://github.com/flatsurf/surface-dynamics
 
 Assuming you have the program ``git`` on your computer, you can install the
 development version with the command::
 
-    $ sage -pip install git+https://github.com/flatsurf/surface_dynamics [--user]
+    $ sage -pip install git+https://github.com/flatsurf/surface-dynamics [--user]
 
 Contact
 -------
@@ -201,6 +201,6 @@ as described `on our zenodo site <https://zenodo.org/badge/latestdoi/347440823>`
 Versions
 --------
 
-The first release of ``surface_dynamics`` as a sagemath spkg happened on the
+The first release of ``surface-dynamics`` as a sagemath spkg happened on the
 30th of july 2015. Versions are now track on `zenodo
 <https://zenodo.org/badge/latestdoi/347440823>`_.

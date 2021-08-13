@@ -169,7 +169,7 @@ Using pyintervalxt
 `intervalxt <https://github.com/flatsurf/intervalxt>`_ is a C++ library with a Python interface
 that implements optimized routines to deal with interval exchange
 transformations. If ``intervalxt`` is part of your installation you can convert
-interval exchange transformations back and forth between ``surface_dynamics``
+interval exchange transformations back and forth between ``surface-dynamics``
 and ``pyintervalxt``::
 
     sage: from surface_dynamics.interval_exchanges.conversion import iet_to_pyintervalxt, iet_from_pyintervalxt # optional - gmpxxyy, pyintervalxt
