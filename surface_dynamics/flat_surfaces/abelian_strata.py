@@ -1269,13 +1269,13 @@ class AbelianStratumComponent(StratumComponent):
 
             sage: from surface_dynamics import *
 
-            sage: AbelianStratum(2).unique_component().lyapunov_exponents_approx(nb_iterations=2**19)  # abs tol 0.05
+            sage: AbelianStratum(2).unique_component().lyapunov_exponents_approx(nb_iterations=2**21)  # abs tol .05
             [1.000, 0.333]
 
             sage: H4hyp, H4odd = AbelianStratum(4).components()
-            sage: H4hyp.lyapunov_exponents_approx(nb_iterations=2**19) # abs tol 0.05
+            sage: H4hyp.lyapunov_exponents_approx(nb_iterations=2**21) # abs tol .05
             [1.000, 0.616, 0.184]
-            sage: H4odd.lyapunov_exponents_approx(nb_iterations=2**19) # abs tol 0.05
+            sage: H4odd.lyapunov_exponents_approx(nb_iterations=2**21) # abs tol .05
             [1.000, 0.418, 0.182]
         """
         perm = self.permutation_representative(reduced=False)
