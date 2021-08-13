@@ -1,8 +1,8 @@
 # -- Project information -----------------------------------------------------
 
-project = 'surface_dynamics'
-copyright = '2021, the surface_dynamics authors'
-author = 'the surface_dynamics authors'
+project = 'surface-dynamics'
+copyright = '2021, the surface-dynamics authors'
+author = 'the surface-dynamics authors'
 
 # The full version, including alpha/beta/rc tags
 release = '0.4.7'
