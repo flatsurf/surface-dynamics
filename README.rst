@@ -108,7 +108,7 @@ Documentation
 -------------
 
 * short tutorial: http://www.labri.fr/perso/vdelecro/flatsurf.html
-* complete module documentation: http://www.labri.fr/perso/vdelecro/surface-dynamics/
+* complete module documentation: https://flatsurf.github.io/surface-dynamics/
 
 Check
 -----
