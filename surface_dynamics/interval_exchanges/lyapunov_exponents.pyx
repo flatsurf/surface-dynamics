@@ -172,12 +172,13 @@ def lyapunov_exponents_H_plus_cover(
     res = [[] for _ in range(nn)]
 
     if nb_vectors == 1:
-        for i in range(nb_experiments):
+        i = 0
+        while i < nb_experiments:
             top_lyapunov_exponents_H_plus(qcc, theta, nb_iterations)
-            if any(isnan(theta[j]) or isinf(theta[j]) for j in range(nn)):
-                raise RuntimeError('got NaN or Inf')
-            for j in range(nn):
-                res[j].append(theta[j])
+            if not any(isnan(theta[j]) or isinf(theta[j]) for j in range(nn)):
+                for j in range(nn):
+                    res[j].append(theta[j])
+                i += 1
     else:
         init_GS(nb_vectors)
 
@@ -191,24 +192,24 @@ def lyapunov_exponents_H_plus_cover(
             for i from 0 <= i < (n * degree)**2 * nc:
                  proj[i] = flat_projections[i]
 
-            for i in range(nb_experiments):
+            i = 0
+            while i < nb_experiments:
                 lyapunov_exponents_isotypic(qcc, theta, nb_iterations, nc, dim, proj)
-                #cleaning some experiments which return NaN or inf as a lyapunov exponent
-                if any(isnan(theta[j]) or isinf(theta[j]) for j in range(nn)):
-                    raise RuntimeError('got NaN or Inf')
-                for j in range(nn):
-                    res[j].append(theta[j])
+                if not any(isnan(theta[j]) or isinf(theta[j]) for j in range(nn)):
+                    for j in range(nn):
+                        res[j].append(theta[j])
+                    i += 1
             free(proj)
             free(dim)
 
         else:
-            for i in range(nb_experiments):
+            i = 0
+            while i < nb_experiments:
                 lyapunov_exponents_H_plus(qcc, theta, nb_iterations)
-                if any(isnan(theta[j]) or isinf(theta[j]) for j in range(nn)):
-                    raise RuntimeError('got NaN or Inf')
-                else:
+                if not any(isnan(theta[j]) or isinf(theta[j]) for j in range(nn)):
                     for j in range(nn):
                         res[j].append(theta[j])
+                    i += 1
 
     free(s[0])
     free(s)
