@@ -58,6 +58,7 @@ from ppl.polyhedron cimport C_Polyhedron
 
 from sage.ext.stdsage cimport PY_NEW
 from sage.rings.integer cimport Integer
+from sage.rings.rational_field import QQ
 
 #from gmpy2 cimport import_gmpy2, MPZ_Object, MPZ, GMPy_MPZ_New
 #import_gmpy2()
@@ -200,11 +201,24 @@ cdef class IETFamily:
         free(self.entries)
         free(self.rows)
 
-    def __init__(self, p, C_Polyhedron C):
+    def __init__(self, p, C):
         # convert and check input
         from surface_dynamics.interval_exchanges.labelled import LabelledPermutationIET
         if not isinstance(p, LabelledPermutationIET):
             raise ValueError('p must be a labelled permutation')
+
+        if not isinstance(C, C_Polyhedron):
+            try:
+                C = C._ppl_polyhedron
+            except AttributeError:
+                from sage.geometry.polyhedron.constructor import Polyhedron
+                try:
+                    C = Polyhedron(C, base_ring=QQ)
+                    C = C._ppl_polyhedron
+                except Exception:
+                    raise TypeError('invalid input')
+
+        cdef C_Polyhedron CC = <C_Polyhedron> C
 
         from surface_dynamics.misc.ppl_utils import ppl_check_non_negative_cone
         ppl_check_non_negative_cone(C)
@@ -762,6 +776,17 @@ cdef class IETFamily:
             sage: assert minimals == 0 and saddles < 3 and unknowns > 17, (minimals, saddles, unknowns) # optional - pplpy
             sage: minimals, saddles, unknowns = F.random_element_statistics(K, num_exp=20, num_iterations=200, intervalxt=True) # optional - pplpy gmpxxyy pyeantic pyintervalxt
             sage: assert minimals == 0 and saddles < 3 and unknowns > 17, (minimals, saddles, unknowns) # optional - pplpy gmpxxyy pyeantic pyintervalxt
+
+        Another interesting family in H(4) (where we do not get a 100%)::
+
+            sage: R = [[13, 5, 0, 6, 21, 10, 1, 0],
+            ....:      [259, 77, 0, 0, 219, 178, 25, 18],
+            ....:      [28, 0, 7, 0, 22, 19, 2, 2],
+            ....:      [46, 0, 15, 22, 72, 35, 2, 0]]
+            sage: p = iet.Permutation('a b c d e f g h', 'h g f e d c b a')
+            sage: F = iet.IETFamily(p, Polyhedron(rays=R))
+            sage: F.random_element_statistics(K, num_exp=100, num_iterations=4096) # random
+            (0, 24, 76)
         """
         if intervalxt is None:
             try:
