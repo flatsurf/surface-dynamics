@@ -6,7 +6,7 @@ This module deals with combinatorial data for covering of connected components o
 strata of Abelian and quadratic differentials. The main feature is to be able to
 compute Lyapunov exponents.
 
-.. TODO::
+.. todo::
 
     It should be possible to compute the KZ action directly on isotypical
     components. That would dramatically reduce the dimension of the space!
@@ -23,7 +23,6 @@ compute Lyapunov exponents.
 
 from __future__ import print_function, absolute_import
 
-import operator
 import numpy as np
 
 from six.moves import range, map, filter, zip
@@ -32,7 +31,6 @@ from sage.misc.misc_c import prod
 
 from sage.categories.additive_groups import AdditiveGroups
 from sage.categories.groups import Groups
-from sage.structure.sage_object import SageObject
 from sage.groups.perm_gps.permgroup import PermutationGroup
 from sage.groups.libgap_group import GroupLibGAP
 
@@ -161,7 +159,7 @@ class PermutationCover(object):
             a b c
             c b a
         """
-        s = 'Covering of degree %i of the permutation:\n'%(self.degree())
+        s = 'Covering of degree %i of the permutation:\n' % (self.degree())
         s += str(self._base)
         return s
 
@@ -377,7 +375,6 @@ class PermutationCover(object):
                 self._inv_permut_cover[rank(label)]
 
         for orbit in base_diagram:
-            init_label = orbit[0][0]
             cover_copies = set(range(self.degree()))
             while cover_copies:
                 d = d_init = cover_copies.pop()
@@ -385,7 +382,7 @@ class PermutationCover(object):
                 while True:
                     # lift a loop from downstair
                     for base_singularity in orbit:
-                        label,s = base_singularity
+                        label, s = base_singularity
                         if s == -1:
                             dd = perm(s,label)[d]
                         else:
@@ -620,7 +617,6 @@ class PermutationCover(object):
             sage: p.cover(['(1,2)', '(1,3)', '']).monodromy()
             Permutation Group with generators [(1,2), (1,3), ()]
         """
-        from sage.groups.perm_gps.permgroup import PermutationGroup
         return PermutationGroup([self.covering_data(a) for a in self._base.letters()], canonicalize=False)
 
     @cached_method
@@ -638,7 +634,6 @@ class PermutationCover(object):
             Permutation Group with generators [()]
         """
         from sage.groups.perm_gps.permgroup_named import SymmetricGroup
-        from sage.groups.perm_gps.permgroup import PermutationGroup
 
         Sd = SymmetricGroup(self.degree())
         G = libgap.Subgroup(Sd, [self.covering_data(a) for a in self._base.letters()])
@@ -1036,20 +1031,20 @@ class PermutationCover(object):
            standard output.
 
          - ``return_speed`` -- whether or not return the lyapunov exponents list
-         in a pair with the speed of the geodesic.
+           in a pair with the speed of the geodesic.
 
-         - ``isotypic_decomposition`` -- either a boolean or a character or a list of characters.
+         - ``isotypic_decomposition`` -- either a boolean or a character or a
+           list of characters.
 
          - ``return_char`` -- whether or not return the character corresponding to
            the isotypic component.
 
-         - ``verbose`` -- if ``True`` provide additional informations rather than
-           returning only the Lyapunov exponents (i.e. ellapsed time, confidence
+         - ``verbose`` -- if ``True`` provide additional information rather than
+           returning only the Lyapunov exponents (i.e. elapsed time, confidence
            intervals, ...)
 
          - ``float`` -- whether the isotypical decomposition and projectors are computed
            over exact or floating point numbers
-
 
         EXAMPLES::
 
@@ -1146,10 +1141,14 @@ class PermutationCover(object):
         nb_experiments = int(nb_experiments)
         nb_iterations = int(nb_iterations)
 
-        if nb_vectors < 0 :     raise ValueError("the number of vectors must be positive")
-        if nb_vectors == 0:     return []
-        if nb_experiments <= 0: raise ValueError("the number of experiments must be positive")
-        if nb_iterations <= 0 : raise ValueError("the number of iterations must be positive")
+        if nb_vectors < 0:
+            raise ValueError("the number of vectors must be positive")
+        if nb_vectors == 0:
+            return []
+        if nb_experiments <= 0:
+            raise ValueError("the number of experiments must be positive")
+        if nb_iterations <= 0:
+            raise ValueError("the number of iterations must be positive")
 
         if verbose:
             output_file.write("Stratum: {}\n".format(self.stratum()))
@@ -1200,7 +1199,7 @@ class PermutationCover(object):
             for i_char in range(nc):
                 res_int = []
                 if verbose:
-                    output_file.write("##### char_%d #####\n"%(i_char))
+                    output_file.write("##### char_%d #####\n" % (i_char))
                     output_file.write("chi = {}\n".format(self._real_characters()[0][i_char]))
                     output_file.write("dim = {}\n".format(dimensions[i_char]))
                 for i in range(i_0, i_0 + dimensions[i_char]):
@@ -1374,7 +1373,7 @@ class RegularCover(PermutationCover):
         # monodromy as permutations
         try:
             d = self._grp.cardinality()
-        except:
+        except AttributeError:
             # cardinality not implemented yet on GroupLibGAP
             d = self._grp._libgap.Size().sage()
 
@@ -1397,7 +1396,7 @@ class RegularCover(PermutationCover):
     def degree(self):
         try:
             d = self._grp.cardinality()
-        except:
+        except AttributeError:
             # cardinality not implemented yet on GroupLibGAP
             d = self._grp._libgap.Size().sage()
         return d

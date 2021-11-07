@@ -12,8 +12,10 @@ except ImportError:
                      "If you are using Ubuntu with Sage installed from the official apt repository, run\n"
                      "first in a console \"$ source /usr/share/sagemath/bin/sage-env\"\n")
 
-import sys, os
+import sys
+import os
 import numpy as np
+import cypari2
 
 from distutils.core import setup
 from distutils.extension import Extension
@@ -54,6 +56,9 @@ try:
     import sage.modular.multiple_zeta
 except ImportError:
     sys.stderr.write('Warning: multiple_zeta not available in Sage\n')
+    WITH_MZV = False
+except cypari2.handle_error.PariError:
+    sys.stderr.write('Warning: multiple_zeta not functional in Sage\n')
     WITH_MZV = False
 else:
     WITH_MZV = True
@@ -122,13 +127,17 @@ class build_py(_build_py):
                 if mod != 'generalized_multiple_zeta_values']
         return modules
 
-setup(name='surface_dynamics',
+setup(name='surface-dynamics',
       version=version,
       description="Dynamics on surfaces",
       long_description=long_description,
       author='Vincent Delecroix',
       author_email='vincent.delecroix@u-bordeaux.fr',
-      url='http://www.labri.fr/perso/vdelecro/surface-dynamics/latest/',
+      project_urls={
+       "Bug Tracker": "https://github.com/flatsurf/surface-dynamics/issues",
+       "Documentation": "https://flatsurf.github.io/surface-dynamics/",
+       "Source Code": "https://github.com/flatsurf/surface-dynamics",
+      },
       license="GPL v2",
       packages=['surface_dynamics',
                 'surface_dynamics/misc',
@@ -156,5 +165,5 @@ setup(name='surface_dynamics',
       'Topic :: Scientific/Engineering :: Mathematics',
     ],
     keywords='surfaces, dynamics, geometry, flat surfaces, Abelian differentials, quadratic differentials, Riemann surfaces',
-    cmdclass={'build_py':build_py}
+    cmdclass={'build_py': build_py}
 )

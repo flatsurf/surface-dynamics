@@ -1267,7 +1267,7 @@ class RibbonGraphWithAngles(RibbonGraph):
         Return the spin parity of the Ribbon graph with angles.
 
         The surface should be holonomy free and with odd multiple of 2 pi
-        angles.
+        angles. Implements the formula of [Joh80]_.
 
         EXAMPLES:
 
@@ -1415,12 +1415,7 @@ class RibbonGraphWithHolonomies(RibbonGraph):
         if len(holonomies) != self.num_darts():
             raise ValueError("there are %d angles and %d darts" %(len(angles),self.num_darts()))
 
-        from sage.modules.free_module import FreeModule
-        V = FreeModule(ZZ,2)
+        V = FreeModule(ZZ, 2)
         self._holonomies = list(map(V, holonomies))
 
         #self._angles = map(angle, self._holonomies)
-
-
-
-

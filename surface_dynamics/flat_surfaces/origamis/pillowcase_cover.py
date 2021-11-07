@@ -61,14 +61,14 @@ def PillowcaseCover(g0, g1, g2, g3=None,
         if len(g1) != N or len(g2) != N or len(g3) != N:
             raise ValueError("the four tuples must be of the same length")
         for i in range(N):
-            if not i in g0:
-                raise ValueError("%d is not in g0=%s" %(i,str(g0)))
-            if not i in g1:
-                raise ValueError("%d is not in g1=%s" %(i,str(g1)))
-            if not i in g2:
-                raise ValueError("%d is not in g2=%s"%(i,str(g2)))
-            if not i in g3:
-                raise ValueError("%d is not in g3=%s"%(i,str(g3)))
+            if i not in g0:
+                raise ValueError("%d is not in g0=%s" % (i, str(g0)))
+            if i not in g1:
+                raise ValueError("%d is not in g1=%s" % (i, str(g1)))
+            if i not in g2:
+                raise ValueError("%d is not in g2=%s" % (i, str(g2)))
+            if i not in g3:
+                raise ValueError("%d is not in g3=%s" % (i, str(g3)))
 
     pcc = PillowcaseCover_dense(tuple(g0),tuple(g1),tuple(g2),tuple(g3))
 

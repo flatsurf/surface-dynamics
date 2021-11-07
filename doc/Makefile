@@ -4,7 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    = "-v"
 SPHINXBUILD   = sphinx-build
-SPHINXPROJ    = surface_dynamics
+SPHINXPROJ    = surface-dynamics
 SOURCEDIR     = source
 BUILDDIR      = build
 

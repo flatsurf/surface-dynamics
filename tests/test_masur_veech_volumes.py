@@ -10,10 +10,17 @@
 
 import pytest
 import sage.all
+import cypari2
 
-pytest.importorskip('sage.modular.multiple_zeta')
+try:
+    import sage.modular.multiple_zeta
+    from sage.all import Multizeta as M
+except ImportError:
+    pytestmark = pytest.mark.skip(reason="sage.modular.multiple_zeta not present")
+except cypari2.handle_error.PariError:
+    pytestmark = pytest.mark.skip(reason="sage.modular.multiple_zeta not functional")
 
-from sage.all import QQ, Multizeta as M
+from sage.all import QQ
 from surface_dynamics import AbelianStratum
 from surface_dynamics.flat_surfaces.masur_veech_volumes import masur_veech_volume
 

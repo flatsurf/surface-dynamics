@@ -33,7 +33,8 @@ from .labelled import LabelledPermutation
 from .constructors import GeneralizedPermutation
 from surface_dynamics.misc.permutation import (perm_init, perm_check,
         perm_compose, perm_one, perm_cycle_string, perm_orbit,
-        perm_on_list_inplace, perm_invert, perm_is_one)
+        perm_on_list_inplace, perm_invert)
+
 
 class IETFlipSequence(SageObject):
     r"""

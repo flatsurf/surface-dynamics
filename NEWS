@@ -1,8 +1,15 @@
 ===========================
-surface_dynamics Change Log
+surface-dynamics Change Log
 ===========================
 
 .. current developments
+
+v0.4.8
+======
+
+**Changed:**
+
+* tutorial for interval exchange transformations
 
 v0.4.7
 ======
@@ -14,6 +21,8 @@ v0.4.7
 **Fixed:**
 
 * Make fat graph exhaustive generation works in all cases
+
+
 
 v0.4.6
 ======

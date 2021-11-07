@@ -4,7 +4,7 @@ Interval exchange transformations
 This library is designed for the usage and manipulation of interval
 exchange transformations and linear involutions. It defines specialized
 types of permutation (constructed using :func:`Permutation`) some
-associated graph (constructed using :func:`iet.RauzyGraph`) and some maps
+associated graph (constructed using ?) and some maps
 of intervals (constructed using :func:`IntervalExchangeTransformation`).
 
 
@@ -256,7 +256,7 @@ def Permutation(arg1, arg2=None, reduced=None, flips=None, alphabet=None):
 
     The combinatoric part of interval exchange transformation can be taken
     independently from its dynamical origin. It has an important link with
-    strata of Abelian differential (see :mod:`~sage.combinat.iet.strata`)
+    strata of Abelian differential (see ?)
 
     INPUT:
 
@@ -419,9 +419,10 @@ def GeneralizedPermutation(arg1, arg2=None, reduced=None, flips=None, alphabet=N
     Returns a permutation of an interval exchange transformation.
 
     Those permutations are the combinatoric part of linear involutions and were
-    introduced by Danthony-Nogueira [DanNog90]_. The full combinatoric study and
-    precise links with strata of quadratic differentials was achieved few years
-    later by Boissy-Lanneau [BoiLan09]_.
+    introduced by Danthony-Nogueira [DanNog90]_ (the flipped version is also
+    considered in [Nog89]_). The full combinatoric study and precise links with
+    strata of quadratic differentials was achieved few years later by
+    Boissy-Lanneau [BoiLan09]_.
 
     INPUT:
 
@@ -541,7 +542,7 @@ def Permutations_iterator(nintervals=None,
 
     This iterator allows you to iterate over permutations with given
     constraints. If you want to iterate over permutations coming from a given
-    stratum you have to use the module :mod:`~sage.combinat.iet.strata` and
+    stratum you have to use the module ? and
     generate Rauzy diagrams from connected components.
 
     INPUT:

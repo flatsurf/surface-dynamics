@@ -700,7 +700,7 @@ class IntervalExchangeTransformation:
 
         i0 = tb[0] - 1
         i1 = tt[0] - 1
-        if len(newtop) > 2  and i0 > 0 and i1 > 0 and tt[i0] == i1:
+        if len(newtop) > 2 and i0 > 0 and i1 > 0 and tt[i0] == i1:
             # left end fake zero
             # the permutation looks like
             # A ... C B ...
@@ -942,7 +942,6 @@ class IntervalExchangeTransformation:
             self.length() == other.length())
 
         from .labelled import LabelledPermutationIET
-        from sage.combinat.words.words import Words
 
         other_sg = other.range_singularities()[1:]
         self_sg = self.domain_singularities()[1:]
@@ -953,8 +952,8 @@ class IntervalExchangeTransformation:
         interval_other = other._permutation._labels[1]
         interval_self = self._permutation._labels[0]
 
-        d_other = dict([(i,[]) for i in interval_other])
-        d_self = dict([(i,[]) for i in interval_self])
+        d_other = dict([(i, []) for i in interval_other])
+        d_self = dict([(i, []) for i in interval_self])
 
         i_other = 0
         i_self = 0
@@ -1389,7 +1388,7 @@ class IntervalExchangeTransformation:
 
     def backward_rauzy_move(self, winner, side='right'):
         r"""
-        Return a new interval exchange transformation obtained by performing a backward rauzy move.
+        Return a new interval exchange transformation obtained by performing a backward Rauzy move.
 
         EXAMPLES::
 
@@ -1502,7 +1501,6 @@ class IntervalExchangeTransformation:
             return res, path
         else:
             return res
-
 
     def _rauzy_move(self, side=-1, error_on_saddles=True):
         r"""
@@ -1623,7 +1621,7 @@ class IntervalExchangeTransformation:
 
     def _backward_rauzy_move(self, winner, side=-1):
         r"""
-        Inplace backward rauzy move.
+        Inplace backward Rauzy move.
 
         EXAMPLES::
 
