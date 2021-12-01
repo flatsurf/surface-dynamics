@@ -443,7 +443,7 @@ def no_two_even(real_zeros):
         real_zeros.remove(4)
         real_zeros.remove(4)
 
-        if real_zeros != []:
+        if real_zeros:
             odd_perm = AbelianStratum(real_zeros).odd_component().single_cylinder_representative()
             return cylinder_concatenation(even_4_4,odd_perm)
         else:

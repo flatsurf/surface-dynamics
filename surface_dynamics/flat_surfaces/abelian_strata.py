@@ -2021,7 +2021,7 @@ class AbelianStratumComponent(StratumComponent):
         elif odd_zeros == [1,1]:
             perm = only_odds_11(even_zeros)
         else:
-            if even_zeros != []:
+            if even_zeros:
                 even_perm = AbelianStratum(even_zeros).odd_component().single_cylinder_representative()
             else:
                 even_perm = GeneralizedPermutation([0],[0])

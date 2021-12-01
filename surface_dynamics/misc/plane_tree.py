@@ -214,7 +214,7 @@ def rooted_plane_tree_iterator(nmin,nmax=None, verbose=False):
                 if verbose: print(" pop")
                 b.pop(-1)
                 l.pop(-1)
-            if b == []:
+            if not b:
                 break
             if verbose: print(" modify last to become %d"%b[-1])
             b[-1] -= 1
@@ -483,7 +483,7 @@ def unrooted_plane_tree_iterator(nmin,nmax=None,verbose=False, check=False):
                     assert s[-1] == len(t)
                 d.pop(-1)
                 s.pop(-1)
-            if b == []:
+            if not b:
                 break
             if verbose:
                 print(" modify last to become %d"%(b[-1]-1))
@@ -561,7 +561,7 @@ def _TMP_admissible_plane_tree_iterator(a, verbose=False):
                 t.pop(-1)
                 n -= 1
                 l -= 1
-            if b == []:
+            if not b:
                 break
             if verbose:
                 print(" modify last")
@@ -660,7 +660,7 @@ def admissible_plane_tree_iterator(a,verbose=False):
                 s.pop(-1)
                 n -= 1
                 l -= 1
-            if b == []:
+            if not b:
                 break
             if verbose:
                 print(" modify last to become %d"%(b[-1]-1))
