@@ -1,70 +1,31 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Interval exchange families &mdash; surface-dynamics 0.4.7 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Interval exchange families &mdash; surface-dynamics 0.4.7 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Flip sequences" href="flip_sequence.html" />
     <link rel="prev" title="Integral interval exchanges" href="integer_iet.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> surface-dynamics
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -72,18 +33,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../demo_interval_exchanges.html">Interval exchange transformations</a></li>
 </ul>
@@ -110,80 +60,38 @@
 <li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">surface-dynamics</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Interval exchange transformations</a> &raquo;</li>
-        
       <li>Interval exchange families</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/interval_exchanges/iet_family.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="module-surface_dynamics.interval_exchanges.iet_family">
-<span id="interval-exchange-families"></span><h1>Interval exchange families<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.iet_family" title="Permalink to this headline">¶</a></h1>
+<span id="interval-exchange-families"></span><h1>Interval exchange families<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.iet_family" title="Permalink to this headline"></a></h1>
 <p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 1)</p>
 <p>Linear families of interval exchange transformations</p>
 <dl class="py class">
 <dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.iet_family.</span></code><code class="sig-name descname"><span class="pre">IETFamily</span></code><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.iet_family.</span></code><code class="sig-name descname"><span class="pre">IETFamily</span></code><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 140)</p>
 <p>A linear family of interval exchange transformations</p>
@@ -223,7 +131,7 @@
 </div>
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.children">
-<code class="sig-name descname"><span class="pre">children</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.children" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">children</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.children" title="Permalink to this definition"></a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 503)</p>
 <p>Compute the children of the pair <code class="docutils literal notranslate"><span class="pre">(p,</span> <span class="pre">C)</span></code> composed of a permutation and a
 slice of a Rauzy simplex.</p>
@@ -283,7 +191,7 @@ slice of a Rauzy simplex.</p>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.has_connection">
-<code class="sig-name descname"><span class="pre">has_connection</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.has_connection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">has_connection</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.has_connection" title="Permalink to this definition"></a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 444)</p>
 <p>Check whether this family has a connection.</p>
 <p>EXAMPLES:</p>
@@ -314,14 +222,14 @@ slice of a Rauzy simplex.</p>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.permutation">
-<code class="sig-name descname"><span class="pre">permutation</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.permutation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">permutation</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.permutation" title="Permalink to this definition"></a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 353)</p>
 <p>Return the permutation as a list of integers</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element">
-<code class="sig-name descname"><span class="pre">random_element</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">random_element</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element" title="Permalink to this definition"></a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 667)</p>
 <p>Return a random point in the cone</p>
 <p>EXAMPLES:</p>
@@ -348,7 +256,7 @@ slice of a Rauzy simplex.</p>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element_statistics">
-<code class="sig-name descname"><span class="pre">random_element_statistics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element_statistics" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">random_element_statistics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element_statistics" title="Permalink to this definition"></a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 708)</p>
 <p>Return a triple <code class="docutils literal notranslate"><span class="pre">(num_minimals,</span> <span class="pre">num_saddles,</span> <span class="pre">num_unknowns)</span></code> of number
 of interval exchange transformations found to be respectively minimal, with
@@ -406,7 +314,7 @@ large number of induction steps)</p></li>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.random_integer_point_statistics">
-<code class="sig-name descname"><span class="pre">random_integer_point_statistics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_integer_point_statistics" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">random_integer_point_statistics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_integer_point_statistics" title="Permalink to this definition"></a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 813)</p>
 <p>OUTPUT: a dictionary whose keys are integers <code class="docutils literal notranslate"><span class="pre">i</span></code> and values are the
 number of integer points found so that the number of cylinders is
@@ -415,7 +323,7 @@ number of integer points found so that the number of cylinders is
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.ray_coefficient">
-<code class="sig-name descname"><span class="pre">ray_coefficient</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.ray_coefficient" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">ray_coefficient</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.ray_coefficient" title="Permalink to this definition"></a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 227)</p>
 <p>Return the <code class="docutils literal notranslate"><span class="pre">i</span></code>-th coefficient of the <code class="docutils literal notranslate"><span class="pre">nray</span></code>-th ray</p>
 <p>EXAMPLES:</p>
@@ -440,7 +348,7 @@ number of integer points found so that the number of cylinders is
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.rays">
-<code class="sig-name descname"><span class="pre">rays</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.rays" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">rays</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.rays" title="Permalink to this definition"></a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 257)</p>
 <p>Return the rays as vectors</p>
 <p>EXAMPLES:</p>
@@ -455,7 +363,7 @@ number of integer points found so that the number of cylinders is
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.iet_family.IETFamily.tree">
-<code class="sig-name descname"><span class="pre">tree</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.tree" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">tree</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.tree" title="Permalink to this definition"></a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 598)</p>
 <p>The tree should be smarter in several ways:</p>
 <ul class="simple">
@@ -479,50 +387,33 @@ whether it corresponds to a splitting, a cylinder decomposition, etc</p></li>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="flip_sequence.html" class="btn btn-neutral float-right" title="Flip sequences" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="integer_iet.html" class="btn btn-neutral float-left" title="Integral interval exchanges" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="flip_sequence.html" class="btn btn-neutral float-right" title="Flip sequences" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, the surface-dynamics authors.
-
-    </p>
+    <p>&#169; Copyright 2021, the surface-dynamics authors.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

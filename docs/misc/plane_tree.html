@@ -1,70 +1,31 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Plane trees &mdash; surface-dynamics 0.4.7 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Plane trees &mdash; surface-dynamics 0.4.7 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="References" href="../references.html" />
     <link rel="prev" title="Finite group representation" href="group_representation.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> surface-dynamics
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -72,18 +33,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../demo_interval_exchanges.html">Interval exchange transformations</a></li>
 </ul>
@@ -108,78 +58,36 @@
 <li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">surface-dynamics</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Miscellaneous</a> &raquo;</li>
-        
       <li>Plane trees</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/misc/plane_tree.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="module-surface_dynamics.misc.plane_tree">
-<span id="plane-trees"></span><h1>Plane trees<a class="headerlink" href="#module-surface_dynamics.misc.plane_tree" title="Permalink to this headline">¶</a></h1>
+<span id="plane-trees"></span><h1>Plane trees<a class="headerlink" href="#module-surface_dynamics.misc.plane_tree" title="Permalink to this headline"></a></h1>
 <p>Plane trees.</p>
 <div class="section" id="generation-of-plane-trees">
-<h2>Generation of plane trees<a class="headerlink" href="#generation-of-plane-trees" title="Permalink to this headline">¶</a></h2>
+<h2>Generation of plane trees<a class="headerlink" href="#generation-of-plane-trees" title="Permalink to this headline"></a></h2>
 <p>This file contains generators for level sequences of</p>
 <blockquote>
 <div><ul class="simple">
@@ -192,7 +100,7 @@
 <p>See <a class="reference internal" href="../references.html#beyhed80" id="id1"><span>[BeyHed80]</span></a>, <a class="reference internal" href="../references.html#richodlmckwri86" id="id2"><span>[RichOdlMcKWri86]</span></a> and <a class="reference internal" href="../references.html#nak02" id="id3"><span>[Nak02]</span></a> for algorithms.</p>
 <dl class="py function">
 <dt id="surface_dynamics.misc.plane_tree.admissible_plane_tree_iterator">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.plane_tree.</span></code><code class="sig-name descname"><span class="pre">admissible_plane_tree_iterator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/plane_tree.html#admissible_plane_tree_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.plane_tree.admissible_plane_tree_iterator" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.plane_tree.</span></code><code class="sig-name descname"><span class="pre">admissible_plane_tree_iterator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/plane_tree.html#admissible_plane_tree_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.plane_tree.admissible_plane_tree_iterator" title="Permalink to this definition"></a></dt>
 <dd><p>Plane tree for separatrix diagram of hyperelliptic strata. Return triple
 (t,n,l) where t is a tree, n its number of nodes and l its number of leaves.</p>
 <p>A plane tree with n nodes and l leaves is <em>a-admissible</em> if it satisfies
@@ -216,19 +124,19 @@
 
 <dl class="py function">
 <dt id="surface_dynamics.misc.plane_tree.cmp_halves">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.plane_tree.</span></code><code class="sig-name descname"><span class="pre">cmp_halves</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/plane_tree.html#cmp_halves"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.plane_tree.cmp_halves" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.plane_tree.</span></code><code class="sig-name descname"><span class="pre">cmp_halves</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/plane_tree.html#cmp_halves"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.plane_tree.cmp_halves" title="Permalink to this definition"></a></dt>
 <dd><p>Compare the subtrees [2:i] and [i:].</p>
 <p>Used in the case of a central edge in the tree.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt id="surface_dynamics.misc.plane_tree.cmp_subtree">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.plane_tree.</span></code><code class="sig-name descname"><span class="pre">cmp_subtree</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/plane_tree.html#cmp_subtree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.plane_tree.cmp_subtree" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.plane_tree.</span></code><code class="sig-name descname"><span class="pre">cmp_subtree</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/plane_tree.html#cmp_subtree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.plane_tree.cmp_subtree" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt id="surface_dynamics.misc.plane_tree.half_turn">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.plane_tree.</span></code><code class="sig-name descname"><span class="pre">half_turn</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/plane_tree.html#half_turn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.plane_tree.half_turn" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.plane_tree.</span></code><code class="sig-name descname"><span class="pre">half_turn</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/plane_tree.html#half_turn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.plane_tree.half_turn" title="Permalink to this definition"></a></dt>
 <dd><p>Half turn of canonical form of a tree t which has an odd diameter.</p>
 <p>INPUT:</p>
 <ul class="simple">
@@ -253,7 +161,7 @@
 
 <dl class="py function">
 <dt id="surface_dynamics.misc.plane_tree.is_lyndon">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.plane_tree.</span></code><code class="sig-name descname"><span class="pre">is_lyndon</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/plane_tree.html#is_lyndon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.plane_tree.is_lyndon" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.plane_tree.</span></code><code class="sig-name descname"><span class="pre">is_lyndon</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/plane_tree.html#is_lyndon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.plane_tree.is_lyndon" title="Permalink to this definition"></a></dt>
 <dd><p>Returns
 Lyndon -&gt; True
 periodic -&gt; period
@@ -303,7 +211,7 @@ otherwise -&gt; False</p>
 
 <dl class="py function">
 <dt id="surface_dynamics.misc.plane_tree.rooted_plane_tree_iterator">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.plane_tree.</span></code><code class="sig-name descname"><span class="pre">rooted_plane_tree_iterator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/plane_tree.html#rooted_plane_tree_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.plane_tree.rooted_plane_tree_iterator" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.plane_tree.</span></code><code class="sig-name descname"><span class="pre">rooted_plane_tree_iterator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/plane_tree.html#rooted_plane_tree_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.plane_tree.rooted_plane_tree_iterator" title="Permalink to this definition"></a></dt>
 <dd><p>Iterator through rooted plane trees with at least <code class="docutils literal notranslate"><span class="pre">nmin</span></code> and at most
 <code class="docutils literal notranslate"><span class="pre">nmax</span></code> vertices. If <code class="docutils literal notranslate"><span class="pre">nmax</span></code> is not furnished then it is automatically set
 to <code class="docutils literal notranslate"><span class="pre">nmin</span></code>.</p>
@@ -330,7 +238,7 @@ Nakano <a class="reference internal" href="../references.html#nak02" id="id4"><s
 
 <dl class="py function">
 <dt id="surface_dynamics.misc.plane_tree.rooted_tree_iterator">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.plane_tree.</span></code><code class="sig-name descname"><span class="pre">rooted_tree_iterator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/plane_tree.html#rooted_tree_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.plane_tree.rooted_tree_iterator" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.plane_tree.</span></code><code class="sig-name descname"><span class="pre">rooted_tree_iterator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/plane_tree.html#rooted_tree_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.plane_tree.rooted_tree_iterator" title="Permalink to this definition"></a></dt>
 <dd><p>Iterator through regular level sequences of rooted trees.
 (only works for n &gt;= 3)</p>
 <p>EXAMPLES:</p>
@@ -394,7 +302,7 @@ Nakano <a class="reference internal" href="../references.html#nak02" id="id4"><s
 
 <dl class="py function">
 <dt id="surface_dynamics.misc.plane_tree.unrooted_plane_tree_iterator">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.plane_tree.</span></code><code class="sig-name descname"><span class="pre">unrooted_plane_tree_iterator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/plane_tree.html#unrooted_plane_tree_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.plane_tree.unrooted_plane_tree_iterator" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.plane_tree.</span></code><code class="sig-name descname"><span class="pre">unrooted_plane_tree_iterator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/plane_tree.html#unrooted_plane_tree_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.plane_tree.unrooted_plane_tree_iterator" title="Permalink to this definition"></a></dt>
 <dd><p>Iterator through plane trees with at most nmax vertices. A representative of
 each equivalence class of rooted tree is returned. The order is decreasing
 among level sequences.</p>
@@ -445,50 +353,33 @@ position and there is not enough available vertices to go deeply enough.</p>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../references.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="group_representation.html" class="btn btn-neutral float-left" title="Finite group representation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../references.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, the surface-dynamics authors.
-
-    </p>
+    <p>&#169; Copyright 2021, the surface-dynamics authors.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

@@ -1,71 +1,32 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Finite group representation &mdash; surface-dynamics 0.4.7 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Finite group representation &mdash; surface-dynamics 0.4.7 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Plane trees" href="plane_tree.html" />
     <link rel="prev" title="Constellations" href="constellation.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> surface-dynamics
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -73,18 +34,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../demo_interval_exchanges.html">Interval exchange transformations</a></li>
 </ul>
@@ -106,80 +56,38 @@
 <li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">surface-dynamics</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Miscellaneous</a> &raquo;</li>
-        
       <li>Finite group representation</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/misc/group_representation.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="module-surface_dynamics.misc.group_representation">
-<span id="finite-group-representation"></span><h1>Finite group representation<a class="headerlink" href="#module-surface_dynamics.misc.group_representation" title="Permalink to this headline">¶</a></h1>
+<span id="finite-group-representation"></span><h1>Finite group representation<a class="headerlink" href="#module-surface_dynamics.misc.group_representation" title="Permalink to this headline"></a></h1>
 <p>Some utility function for representations of finite groups</p>
 <p>Most of the functions are just GAP wrappers.</p>
 <dl class="py function">
 <dt id="surface_dynamics.misc.group_representation.conjugacy_class_matrix">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.group_representation.</span></code><code class="sig-name descname"><span class="pre">conjugacy_class_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/group_representation.html#conjugacy_class_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.group_representation.conjugacy_class_matrix" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.group_representation.</span></code><code class="sig-name descname"><span class="pre">conjugacy_class_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/group_representation.html#conjugacy_class_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.group_representation.conjugacy_class_matrix" title="Permalink to this definition"></a></dt>
 <dd><p>Return the matrix associated to a given conjugacy class of a permutation
 group.</p>
 <p>The result is a <cite>d times d</cite> matrix that is invariant under conjugation by
@@ -225,7 +133,7 @@ on the isotypic subspaces.</p>
 
 <dl class="py function">
 <dt id="surface_dynamics.misc.group_representation.isotypic_projection_matrix">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.group_representation.</span></code><code class="sig-name descname"><span class="pre">isotypic_projection_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conj_mats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">floating_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/group_representation.html#isotypic_projection_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.group_representation.isotypic_projection_matrix" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.group_representation.</span></code><code class="sig-name descname"><span class="pre">isotypic_projection_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conj_mats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">floating_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/group_representation.html#isotypic_projection_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.group_representation.isotypic_projection_matrix" title="Permalink to this definition"></a></dt>
 <dd><p>Return an isotypic projection matrix</p>
 <p>INPUT:</p>
 <ul class="simple">
@@ -293,7 +201,7 @@ on the isotypic subspaces.</p>
 
 <dl class="py function">
 <dt id="surface_dynamics.misc.group_representation.real_characters">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.group_representation.</span></code><code class="sig-name descname"><span class="pre">real_characters</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/group_representation.html#real_characters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.group_representation.real_characters" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.group_representation.</span></code><code class="sig-name descname"><span class="pre">real_characters</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/group_representation.html#real_characters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.group_representation.real_characters" title="Permalink to this definition"></a></dt>
 <dd><p>Return a pair <code class="docutils literal notranslate"><span class="pre">(table</span> <span class="pre">of</span> <span class="pre">characters,</span> <span class="pre">character</span> <span class="pre">degrees)</span></code> for the
 group <code class="docutils literal notranslate"><span class="pre">G</span></code>.</p>
 <p>OUTPUT:</p>
@@ -331,7 +239,7 @@ classes is the same as the one returned by GAP.</p></li>
 
 <dl class="py function">
 <dt id="surface_dynamics.misc.group_representation.real_isotypic_projection_matrices">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.group_representation.</span></code><code class="sig-name descname"><span class="pre">real_isotypic_projection_matrices</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/group_representation.html#real_isotypic_projection_matrices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.group_representation.real_isotypic_projection_matrices" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.group_representation.</span></code><code class="sig-name descname"><span class="pre">real_isotypic_projection_matrices</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/group_representation.html#real_isotypic_projection_matrices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.group_representation.real_isotypic_projection_matrices" title="Permalink to this definition"></a></dt>
 <dd><p>Return the real projections</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.group_representation</span> <span class="kn">import</span> <span class="n">real_isotypic_projection_matrices</span>
@@ -356,7 +264,7 @@ classes is the same as the one returned by GAP.</p></li>
 
 <dl class="py function">
 <dt id="surface_dynamics.misc.group_representation.regular_conjugacy_class_matrix">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.group_representation.</span></code><code class="sig-name descname"><span class="pre">regular_conjugacy_class_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/group_representation.html#regular_conjugacy_class_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.group_representation.regular_conjugacy_class_matrix" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.group_representation.</span></code><code class="sig-name descname"><span class="pre">regular_conjugacy_class_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/group_representation.html#regular_conjugacy_class_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.group_representation.regular_conjugacy_class_matrix" title="Permalink to this definition"></a></dt>
 <dd><p>Return the matrix of the conjugacy class <code class="docutils literal notranslate"><span class="pre">cl</span></code> associated to the regular
 representation of <code class="docutils literal notranslate"><span class="pre">G</span></code>.</p>
 </dd></dl>
@@ -365,50 +273,33 @@ representation of <code class="docutils literal notranslate"><span class="pre">G
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="plane_tree.html" class="btn btn-neutral float-right" title="Plane trees" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="constellation.html" class="btn btn-neutral float-left" title="Constellations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="plane_tree.html" class="btn btn-neutral float-right" title="Plane trees" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, the surface-dynamics authors.
-
-    </p>
+    <p>&#169; Copyright 2021, the surface-dynamics authors.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

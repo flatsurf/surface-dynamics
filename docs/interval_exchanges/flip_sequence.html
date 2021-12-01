@@ -1,70 +1,31 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Flip sequences &mdash; surface-dynamics 0.4.7 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Flip sequences &mdash; surface-dynamics 0.4.7 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Database of cylinder diagrams and quadratic permutations" href="../database.html" />
     <link rel="prev" title="Interval exchange families" href="iet_family.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> surface-dynamics
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -72,18 +33,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../demo_interval_exchanges.html">Interval exchange transformations</a></li>
 </ul>
@@ -110,75 +60,33 @@
 <li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">surface-dynamics</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Interval exchange transformations</a> &raquo;</li>
-        
       <li>Flip sequences</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/interval_exchanges/flip_sequence.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="module-surface_dynamics.interval_exchanges.flip_sequence">
-<span id="flip-sequences"></span><h1>Flip sequences<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.flip_sequence" title="Permalink to this headline">¶</a></h1>
+<span id="flip-sequences"></span><h1>Flip sequences<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.flip_sequence" title="Permalink to this headline"></a></h1>
 <p>Flip sequence of permutation of iet</p>
 <p>A concatenation of:
 - left rauzy moves (top or bottom)
@@ -187,7 +95,7 @@
 - relabeled</p>
 <dl class="py class">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.flip_sequence.</span></code><code class="sig-name descname"><span class="pre">IETFlipSequence</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rauzy_moves</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_bottom_inverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_right_inverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relabelling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.flip_sequence.</span></code><code class="sig-name descname"><span class="pre">IETFlipSequence</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rauzy_moves</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_bottom_inverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_right_inverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relabelling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sage.structure.sage_object.SageObject</span></code></p>
 <p>A flip sequence of interval exchange transformations.</p>
 <p>Each step is a Rauzy move either on the left or on the right.</p>
@@ -235,7 +143,7 @@
 </div>
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.close">
-<code class="sig-name descname"><span class="pre">close</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.close" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">close</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.close" title="Permalink to this definition"></a></dt>
 <dd><p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
 
@@ -253,7 +161,7 @@
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.dual_substitution">
-<code class="sig-name descname"><span class="pre">dual_substitution</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_plain_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.dual_substitution" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">dual_substitution</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_plain_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.dual_substitution" title="Permalink to this definition"></a></dt>
 <dd><p>Return the substitution of intervals.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -295,7 +203,7 @@
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.find_closure">
-<code class="sig-name descname"><span class="pre">find_closure</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.find_closure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.find_closure" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">find_closure</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.find_closure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.find_closure" title="Permalink to this definition"></a></dt>
 <dd><p>Return the unique permutation of the labels that allows to make a
 closed loop out of this path. If no such permutation exists, return
 <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
@@ -315,7 +223,7 @@ closed loop out of this path. If no such permutation exists, return
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.interval_substitution">
-<code class="sig-name descname"><span class="pre">interval_substitution</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_plain_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.interval_substitution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.interval_substitution" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">interval_substitution</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_plain_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.interval_substitution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.interval_substitution" title="Permalink to this definition"></a></dt>
 <dd><p>Return the substitution of intervals.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -357,7 +265,7 @@ closed loop out of this path. If no such permutation exists, return
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_complete">
-<code class="sig-name descname"><span class="pre">is_complete</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.is_complete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_complete" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">is_complete</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.is_complete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_complete" title="Permalink to this definition"></a></dt>
 <dd><p>Return whether that all winners appear.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
@@ -376,7 +284,7 @@ closed loop out of this path. If no such permutation exists, return
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_full">
-<code class="sig-name descname"><span class="pre">is_full</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_full" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">is_full</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_full" title="Permalink to this definition"></a></dt>
 <dd><p>Return whether that all winners appear.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
@@ -395,17 +303,17 @@ closed loop out of this path. If no such permutation exists, return
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_loop">
-<code class="sig-name descname"><span class="pre">is_loop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.is_loop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_loop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">is_loop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.is_loop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_loop" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.left_right_inverse">
-<code class="sig-name descname"><span class="pre">left_right_inverse</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.left_right_inverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.left_right_inverse" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">left_right_inverse</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.left_right_inverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.left_right_inverse" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.losers">
-<code class="sig-name descname"><span class="pre">losers</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.losers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.losers" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">losers</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.losers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.losers" title="Permalink to this definition"></a></dt>
 <dd><p>Return the list of the loosers along this flip sequence.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
@@ -421,12 +329,12 @@ closed loop out of this path. If no such permutation exists, return
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.matrix">
-<code class="sig-name descname"><span class="pre">matrix</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.matrix" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">matrix</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.matrix" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.orbit_substitution">
-<code class="sig-name descname"><span class="pre">orbit_substitution</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_plain_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.orbit_substitution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.orbit_substitution" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">orbit_substitution</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_plain_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.orbit_substitution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.orbit_substitution" title="Permalink to this definition"></a></dt>
 <dd><p>Return the substitution on the orbit.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -450,17 +358,17 @@ closed loop out of this path. If no such permutation exists, return
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.rauzy_move">
-<code class="sig-name descname"><span class="pre">rauzy_move</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">winner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'right'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.rauzy_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.rauzy_move" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">rauzy_move</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">winner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'right'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.rauzy_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.rauzy_move" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.relabel">
-<code class="sig-name descname"><span class="pre">relabel</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.relabel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.relabel" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">relabel</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.relabel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.relabel" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.self_similar_iet">
-<code class="sig-name descname"><span class="pre">self_similar_iet</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.self_similar_iet" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">self_similar_iet</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.self_similar_iet" title="Permalink to this definition"></a></dt>
 <dd><p>Return the dilatation and the self-similar interval exchange
 transformation associated to this path.</p>
 <p>EXAMPLES:</p>
@@ -490,7 +398,7 @@ transformation associated to this path.</p>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.self_similar_interval_exchange_transformation">
-<code class="sig-name descname"><span class="pre">self_similar_interval_exchange_transformation</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.self_similar_interval_exchange_transformation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.self_similar_interval_exchange_transformation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">self_similar_interval_exchange_transformation</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.self_similar_interval_exchange_transformation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.self_similar_interval_exchange_transformation" title="Permalink to this definition"></a></dt>
 <dd><p>Return the dilatation and the self-similar interval exchange
 transformation associated to this path.</p>
 <p>EXAMPLES:</p>
@@ -520,7 +428,7 @@ transformation associated to this path.</p>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.substitution">
-<code class="sig-name descname"><span class="pre">substitution</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_plain_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.substitution" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">substitution</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_plain_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.substitution" title="Permalink to this definition"></a></dt>
 <dd><p>Return the substitution on the orbit.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -544,12 +452,12 @@ transformation associated to this path.</p>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.top_bottom_inverse">
-<code class="sig-name descname"><span class="pre">top_bottom_inverse</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.top_bottom_inverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.top_bottom_inverse" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">top_bottom_inverse</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.top_bottom_inverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.top_bottom_inverse" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.winners">
-<code class="sig-name descname"><span class="pre">winners</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.winners"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.winners" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">winners</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.winners"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.winners" title="Permalink to this definition"></a></dt>
 <dd><p>Return the list of winners along this flip sequence.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
@@ -567,7 +475,7 @@ transformation associated to this path.</p>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.winners_losers">
-<code class="sig-name descname"><span class="pre">winners_losers</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.winners_losers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.winners_losers" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">winners_losers</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.winners_losers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.winners_losers" title="Permalink to this definition"></a></dt>
 <dd><p>Return the list of winners.</p>
 </dd></dl>
 
@@ -577,50 +485,33 @@ transformation associated to this path.</p>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../database.html" class="btn btn-neutral float-right" title="Database of cylinder diagrams and quadratic permutations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="iet_family.html" class="btn btn-neutral float-left" title="Interval exchange families" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../database.html" class="btn btn-neutral float-right" title="Database of cylinder diagrams and quadratic permutations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, the surface-dynamics authors.
-
-    </p>
+    <p>&#169; Copyright 2021, the surface-dynamics authors.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
