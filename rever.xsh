@@ -48,6 +48,7 @@ $VERSION_BUMP_PATTERNS = [
 $CHANGELOG_FILENAME = 'NEWS'
 $CHANGELOG_TEMPLATE = 'TEMPLATE.rst'
 $CHANGELOG_NEWS = 'doc/news'
+$CHANGELOG_CATEGORIES = ('Added', 'Changed', 'Deprecated', 'Removed', 'Fixed', 'Performance')
 $PUSH_TAG_REMOTE = 'git@github.com:flatsurf/surface-dynamics.git'
 
 $GITHUB_ORG = 'flatsurf'
