@@ -8,7 +8,7 @@ A concatenation of:
 - relabeled
 """
 #*****************************************************************************
-#       Copyright (C) 2021 Vincent Delecroix <20100.delecroix@gmail.com>
+#       Copyright (C) 2021-2022 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
@@ -35,7 +35,6 @@ from surface_dynamics.misc.permutation import (perm_init, perm_check,
         perm_compose, perm_one, perm_cycle_string, perm_orbit,
         perm_on_list_inplace, perm_invert)
 
-
 class IETFlipSequence(SageObject):
     r"""
     A flip sequence of interval exchange transformations.
@@ -49,7 +48,7 @@ class IETFlipSequence(SageObject):
     Making substitutions from a flip sequence::
 
         sage: p = iet.Permutation([['a','b','c','d'],['d','c','b','a']])
-        sage: g = iet.FlipSequence(p, ['t', 't', 'b', 't', 'b', 'b', 't', 'b'])
+        sage: g = iet.FlipSequence(p, 'ttbtbbtb')
         sage: assert g.is_complete()
         sage: s1 = g.orbit_substitution()
         sage: print(s1)
@@ -59,6 +58,13 @@ class IETFlipSequence(SageObject):
         a->abcd, b->bab, c->cdc, d->dcbababcd
         sage: s1.incidence_matrix() == s2.incidence_matrix().transpose()
         True
+
+    If large powers appear in the path it might be more convenient to use
+    power notations as in the following example::
+
+        sage: p = iet.Permutation([['a','b','c','d'],['d','c','b','a']])
+        sage: iet.FlipSequence(p, 't^5b^3tbt^3b')
+        FlipSequence('a b c d\nd c b a', ['t', 't', 't', 't', 't', 'b', 'b', 'b', 't', 'b', 't', 't', 't', 'b'], False, False, '()')
 
     The minimal dilatations in H(2g-2)^hyp from Boissy-Lanneau::
 
@@ -83,6 +89,37 @@ class IETFlipSequence(SageObject):
         x^8 - x^7 - x^6 - x^5 + x^4 - x^3 - x^2 - x + 1
         sage: gamma(8, 3).matrix().charpoly()
         x^8 - x^7 - x^6 + x^5 - x^4 + x^3 - x^2 - x + 1
+
+    The path of non-orientable flipped iet from Bas-Lopez that gives non-unique
+    ergodic examples. Since :class:`FlipSequence` uses labelled permutations, the
+    path needs a relabelling at the end to get a closed path::
+
+        sage: p0 = iet.Permutation([1,2,3,4,5,6,7,8,9,10], [9,10,1,2,3,4,5,6,7,8], flips=[1,2,3,4,5,6,7,10])
+        sage: fs1 = iet.FlipSequence(p0, 't^7btbbtbtbtb')
+        sage: p16 = fs1.end()
+        sage: fs2 = iet.FlipSequence(p16, 'b')
+        sage: assert fs2.is_closed()
+        sage: fs3 = iet.FlipSequence(p16, 'tb^2t^3b^4t^5b^5')
+        sage: p37 = fs3.end()
+        sage: fs4 = iet.FlipSequence(p37, 't')
+        sage: assert fs4.is_closed()
+        sage: fs5 = iet.FlipSequence(p37, 'bt^7btb')
+        sage: p49 = fs5.end()
+        sage: assert p49.reduced() == p0.reduced()
+        sage: fs = fs1 * fs2 * fs3 * fs4 * fs5
+        sage: fs.relabel([7,1,2,3,4,5,6,9,8,0])
+        sage: assert fs.end() == p0
+        sage: fs.matrix()
+        [ 2  2  2  2  2  2  2  2  3  2]
+        [ 2  4  2  2  2  2  1  0  0  0]
+        [ 0  0  2  2  2  1  0  0  0  0]
+        [ 0  0  0  3  2  0  0  0  0  0]
+        [ 0  0  1  2  2  0  0  0  0  0]
+        [ 1  2  2  2  2  2  0  0  0  0]
+        [ 2  3  2  2  2  2  2  0  0  0]
+        [ 0  0  0  0  0  0  0  1  1  1]
+        [ 1  1  1  1  1  1  1  1  2  1]
+        [ 6 10 10 14 13  8  4  2  3  3]
     """
     def __init__(self, p, rauzy_moves=None, top_bottom_inverse=False, left_right_inverse=False, relabelling=None):
         r"""
@@ -111,11 +148,26 @@ class IETFlipSequence(SageObject):
         self._relabelling = perm_one(len(self._start))
 
         if rauzy_moves is not None:
-            for r in rauzy_moves:
-                if isinstance(r, numbers.Integral):
-                    self.rauzy_move(r)
-                else:
-                    self.rauzy_move(*r)
+            if isinstance(rauzy_moves, str):
+                    i = 0
+                    while i < len(rauzy_moves):
+                        r = rauzy_moves[i]
+                        if i + 1 < len(rauzy_moves) and rauzy_moves[i+1] == '^':
+                            k = i+2
+                            while k < len(rauzy_moves) and rauzy_moves[k].isdigit():
+                                k += 1
+                            power = int(rauzy_moves[i+2:k])
+                            self.rauzy_move(r, iterations=power)
+                            i = k
+                        else:
+                            self.rauzy_move(r)
+                            i += 1
+            else:
+                for r in rauzy_moves:
+                    if isinstance(r, numbers.Integral):
+                        self.rauzy_move(r)
+                    else:
+                        self.rauzy_move(*r)
 
         if top_bottom_inverse:
             self.top_bottom_inverse()
@@ -123,6 +175,18 @@ class IETFlipSequence(SageObject):
             self.left_right_inverse()
         if relabelling is not None:
             self.relabel(relabelling)
+
+    def start(self):
+        r"""
+        Return the start of the path.
+        """
+        return self._start.__copy__()
+
+    def end(self):
+        r"""
+        Return the end of the path.
+        """
+        return self._end.__copy__()
 
     def __eq__(self, other):
         if type(self) != type(other):
@@ -332,12 +396,27 @@ class IETFlipSequence(SageObject):
         self._end.relabel(p)
         self._relabelling = perm_compose(self._relabelling, p)
 
-    def is_loop(self):
+    def is_closed(self):
+        r"""
+        Return whether the path is closed, that is whether its start and end coincide.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import iet
+
+            sage: p = iet.Permutation('a b c d e f', 'f e d c b a')
+            sage: iet.FlipSequence(p, 't^5').is_closed()
+            True
+            sage: iet.FlipSequence(p, 't^4').is_closed()
+            False
+        """
         return self._start == self._end
+
+    is_loop = is_closed
 
     def winners_losers(self):
         r"""
-        Return the list of winners.
+        Return the pair of list of winner letters and list of loser letters along the path.
         """
         winners = []
         losers = []
