@@ -90,9 +90,9 @@ class IETFlipSequence(SageObject):
         sage: gamma(8, 3).matrix().charpoly()
         x^8 - x^7 - x^6 + x^5 - x^4 + x^3 - x^2 - x + 1
 
-    The path of non-orientable flipped iet from Bas-Lopez that gives non-unique
+    The path of non-orientable flipped iet from Bas-Lopez that gives non-uniquely
     ergodic examples. Since :class:`FlipSequence` uses labelled permutations, the
-    path needs a relabelling at the end to get a closed path::
+    path needs a relabelling to be closed::
 
         sage: p0 = iet.Permutation([1,2,3,4,5,6,7,8,9,10], [9,10,1,2,3,4,5,6,7,8], flips=[1,2,3,4,5,6,7,10])
         sage: fs1 = iet.FlipSequence(p0, 't^7btbbtbtbtb')
@@ -121,7 +121,7 @@ class IETFlipSequence(SageObject):
         [ 6 10 10 14 13  8  4  2  3  3]
 
     A symbolic matrix (with polynomial coefficients) where powers of the paths
-    ``fs2`` and ``fs4`` are variable can be extracted with the function
+    ``fs2`` and ``fs4`` are variables can be obtained with the function
     ``symbolic_matrix_power``::
 
         sage: from surface_dynamics.misc.linalg import symbolic_matrix_power
