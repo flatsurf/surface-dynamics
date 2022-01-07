@@ -106,10 +106,9 @@ class IETFlipSequence(SageObject):
         sage: fs5 = iet.FlipSequence(p37, 'bt^7btb')
         sage: p49 = fs5.end()
         sage: assert p49.reduced() == p0.reduced()
-        sage: fs = fs1 * fs2 * fs3 * fs4 * fs5
-        sage: fs.relabel([7,1,2,3,4,5,6,9,8,0])
-        sage: assert fs.end() == p0
-        sage: fs.matrix()
+        sage: fs6 = iet.FlipSequence(p49, [], relabelling=[7,1,2,3,4,5,6,9,8,0])
+        sage: assert fs6.end() == p0
+        sage: (fs1 * fs2 * fs3 * fs4 * fs5 * fs6).matrix()
         [ 2  2  2  2  2  2  2  2  3  2]
         [ 2  4  2  2  2  2  1  0  0  0]
         [ 0  0  2  2  2  1  0  0  0  0]
@@ -120,6 +119,30 @@ class IETFlipSequence(SageObject):
         [ 0  0  0  0  0  0  0  1  1  1]
         [ 1  1  1  1  1  1  1  1  2  1]
         [ 6 10 10 14 13  8  4  2  3  3]
+
+    A symbolic matrix (with polynomial coefficients) where powers of the paths
+    ``fs2`` and ``fs4`` are variable can be extracted with the function
+    ``symbolic_matrix_power``::
+
+        sage: from surface_dynamics.misc.linalg import symbolic_matrix_power
+        sage: QQrs = QQ['r,s']
+        sage: m1 = fs1.matrix()
+        sage: m2 = symbolic_matrix_power(fs2.matrix(), QQrs.gen(0))
+        sage: m3 = fs3.matrix()
+        sage: m4 = symbolic_matrix_power(fs4.matrix(), QQrs.gen(1))
+        sage: m5 = fs5.matrix()
+        sage: m6 = fs6.matrix()
+        sage: print(m1 * m2 * m3 * m4 * m5 * m6)
+        [      2       2       2       2       2       2       2       2       3       2]
+        [    2*s 2*s + 2       2       2       2       2       1       0       0       0]
+        [      0       0       2       2       2       1       0       0       0       0]
+        [      0       0       0   r + 2   r + 1       0       0       0       0       0]
+        [      0       0       1       2       2       0       0       0       0       0]
+        [      s   s + 1       2       2       2       2       0       0       0       0]
+        [  s + 1   s + 2       2       2       2       2       2       0       0       0]
+        [      0       0       0       0       0       0       0       1       1       1]
+        [      1       1       1       1       1       1       1       1       2       1]
+        [4*s + 2 4*s + 6      10  r + 13  r + 12       8       4       2       3       3]
     """
     def __init__(self, p, rauzy_moves=None, top_bottom_inverse=False, left_right_inverse=False, relabelling=None):
         r"""
@@ -489,13 +512,24 @@ class IETFlipSequence(SageObject):
     is_full = is_complete
 
     def matrix(self):
+        r"""
+        Return the Rauzy matrix of this path.
+
+        TESTS::
+
+            sage: from surface_dynamics import iet
+            sage: p = iet.Permutation('a b', 'b a')
+            sage: iet.FlipSequence(p, '').matrix()
+            [1 0]
+            [0 1]
+        """
         V = FreeModule(ZZ, len(self._start))
         columns = [copy(v) for v in V.basis()]
         for p, winner, side in self:
             winner_letter = p._labels[winner][side]
             loser_letter = p._labels[1-winner][side]
             columns[loser_letter] += columns[winner_letter]
-        m = MatrixSpace(ZZ, len(p))(columns).transpose()
+        m = MatrixSpace(ZZ, len(self._start))(columns).transpose()
         perm_on_list_inplace(self._relabelling, m, swap=sage.matrix.matrix0.Matrix.swap_columns)
         return m
 

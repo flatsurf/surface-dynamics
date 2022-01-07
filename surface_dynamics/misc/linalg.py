@@ -11,6 +11,7 @@ Some linear algebra routines
 #*****************************************************************************
 
 from sage.arith.all import gcd, lcm
+from sage.arith.misc import binomial
 from sage.rings.all import ZZ, QQ
 from sage.geometry.polyhedron.constructor import Polyhedron
 
@@ -196,3 +197,39 @@ def cone_triangulate(C, hyperplane=None):
     for t in P.triangulate():
         simplex = [P.Vrepresentation(i).vector() for i in t]
         yield [(r / gcd(r)).change_ring(ZZ) for r in simplex]
+
+def symbolic_matrix_power(M, n):
+    r"""
+    Return the symbolic power ``M^n`` of the unipotent matrix ``M``.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.linalg import symbolic_matrix_power
+        sage: m = matrix(3, [1,1,1,0,1,1,0,0,1])
+        sage: n = polygen(QQ, 'n')
+        sage: symbolic_matrix_power(m, n)
+        [              1               n 1/2*n^2 + 1/2*n]
+        [              0               1               n]
+        [              0               0               1]
+
+        sage: m = matrix(2, [2,1,1,1])
+        sage: symbolic_matrix_power(m, n)
+        Traceback (most recent call last):
+        ...
+        NotImplementedError: power only implemented for unipotent matrices
+    """
+    d = M.nrows()
+    I = M.parent().identity_matrix()
+    N = M - M.parent().identity_matrix()
+    char = N.charpoly()
+    if any(char[i] for i in range(d)):
+        raise NotImplementedError('power only implemented for unipotent matrices')
+
+    result = I
+    P = N
+    p = 1
+    while P:
+        result += binomial(n, p) * P
+        P *= N
+        p += 1
+    return result

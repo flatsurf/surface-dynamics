@@ -1,3 +1,5 @@
 **Added:**
 
-* allow power notation to input flip sequences
+* power notation for flip sequence input
+
+* symbolic matrix powers
