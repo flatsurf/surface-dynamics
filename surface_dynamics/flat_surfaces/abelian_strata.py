@@ -1285,9 +1285,9 @@ class AbelianStratumComponent(StratumComponent):
     # TODO
     # def carea(self)
 
-    def random_standard_permutation(self, nsteps=64):
+    def random_permutation(self, reduced=True, nsteps=None):
         r"""
-        Perform a random walk on rauzy diagram stopped on a standard permutation.
+        Return a random permutation obtained via a random walk in the extended rauzy diagram.
 
         INPUT:
 
@@ -1302,6 +1302,64 @@ class AbelianStratumComponent(StratumComponent):
         - top rauzy move (proba 9/20)
 
         - bot rauzy move (proba 9/20)
+
+        EXAMPLES:
+
+            sage: from surface_dynamics import *
+
+            sage: C = AbelianStratum(10).hyperelliptic_component()
+            sage: p = C.random_permutation(); p   # random
+            0 1 2 3 4 5 6 7 8 9 10 11
+            11 10 9 8 7 6 5 4 3 2 1 0
+            sage: p.stratum_component()
+            H_6(10)^hyp
+
+
+        TESTS::
+
+            sage: from surface_dynamics import *
+            sage: from surface_dynamics.interval_exchanges.reduced import ReducedPermutationIET
+            sage: from surface_dynamics.interval_exchanges.labelled import LabelledPermutationIET
+            sage: for A in [AbelianStratum(6), AbelianStratum(1,1,1,1), AbelianStratum(3,3)]:
+            ....:     p = C.random_permutation(reduced=True)
+            ....:     assert isinstance(p, ReducedPermutationIET), C
+            ....:     assert p._labels is None, C
+            ....:     p = C.random_permutation(reduced=False)
+            ....:     assert isinstance(p, LabelledPermutationIET), C
+            ....:     assert p._labels is not None, C
+        """
+        import sage.misc.prandom as prandom
+
+        p = self.permutation_representative(reduced=True)
+        if nsteps is None:
+            nsteps = 64 * self.stratum().dimension()
+
+        for _ in range(nsteps):
+            rd = prandom.random()
+            if rd < 0.1:   # (inplace) symmetric with proba 1/10
+                p._inversed_twin()
+                p._reversed_twin()
+            elif rd < .55: # (inplace) rauzy move top with proba 9/20
+                p._move(1, 0, 1, p._twin[0][0])
+            else:          # (inplace) rauzy move bot with proba 9/20
+                p._move(0, 0, 0, p._twin[1][0])
+
+        p._check()
+        if reduced:
+            return p
+        if not reduced:
+            from surface_dynamics.interval_exchanges.labelled import LabelledPermutationIET
+            return LabelledPermutationIET([p[0], p[1]], reduced=False)
+
+    def random_standard_permutation(self, reduced=True, nsteps=None):
+        r"""
+        Return a random standard permutation representative obtained by performing a random
+        walk in the Rauzy diagram.
+
+        INPUT:
+
+        - ``nsteps`` - integer or None - perform nsteps and then stops as soon
+          as a Strebel differential is found.
 
         EXAMPLES:
 
@@ -1338,34 +1396,7 @@ class AbelianStratumComponent(StratumComponent):
             sage: p.stratum_component()
             H_17(32)^odd
         """
-        import sage.misc.prandom as prandom
-
-        p = self.permutation_representative()
-        if nsteps is None:
-            nsteps = 64 * self.stratum().dimension()
-        d = len(p)-1
-
-        for _ in range(nsteps):
-            rd = prandom.random()
-            if rd < 0.1:   # (inplace) symmetric with proba 1/10
-                p._inversed_twin()
-                p._reversed_twin()
-            elif rd < .55: # (inplace) rauzy move top with proba 9/20
-                p._move(1, 0, 1, p._twin[0][0])
-            else:          # (inplace) rauzy move bot with proba 9/20
-                p._move(0, 0, 0, p._twin[1][0])
-
-        while not p.is_standard():
-            rd = prandom.random()
-            if rd < 0.1:   # (inplace) symmetric with proba 1/10
-                p._inversed_twin()
-                p._reversed_twin()
-            elif rd < .55: # (inplace) rauzy move top with proba 9/20
-                p._move(1, 0, 1, p._twin[0][0])
-            else:          # (inplace) rauzy move bot with proba 9/20
-                p._move(0, 0, 0, p._twin[1][0])
-
-        return p
+        return self.random_permutation(reduced, nsteps).to_standard()
 
     def rauzy_diagram(self, *args, **kwds):
         r"""
