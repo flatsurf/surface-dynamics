@@ -1250,11 +1250,10 @@ class AbelianStratumComponent(StratumComponent):
 
         if reduced:
             from surface_dynamics.interval_exchanges.reduced import ReducedPermutationIET
-            p = ReducedPermutationIET([l0, l1])
-
+            p = ReducedPermutationIET([l0, l1], reduced=True)
         else:
             from surface_dynamics.interval_exchanges.labelled import LabelledPermutationIET
-            p = LabelledPermutationIET([l0, l1])
+            p = LabelledPermutationIET([l0, l1], reduced=False)
 
         p.alphabet(alphabet)
         return p
@@ -2195,6 +2194,20 @@ class HypAbelianStratumComponent(ASC):
             1
             sage: p.rauzy_diagram()
             Rauzy diagram with 20 permutations
+
+        TESTS::
+
+            sage: from surface_dynamics import AbelianStratum
+            sage: from surface_dynamics.interval_exchanges.reduced import ReducedPermutationIET
+            sage: from surface_dynamics.interval_exchanges.labelled import LabelledPermutationIET
+            sage: for A in [AbelianStratum(6), AbelianStratum(1,1,1,1), AbelianStratum(3,3)]:
+            ....:     for C in A.components():
+            ....:         p = C.permutation_representative(reduced=True)
+            ....:         assert isinstance(p, ReducedPermutationIET)
+            ....:         assert p._labels is None, C
+            ....:         p = C.permutation_representative(reduced=False)
+            ....:         assert isinstance(p, LabelledPermutationIET)
+            ....:         assert p._labels is not None, C
         """
         g = self._stratum.genus()
         n = self._stratum.nb_fake_zeros()
@@ -2241,15 +2254,16 @@ class HypAbelianStratumComponent(ASC):
 
         if reduced:
             from surface_dynamics.interval_exchanges.reduced import ReducedPermutationIET
-            p = ReducedPermutationIET([l0, l1])
-
+            p = ReducedPermutationIET([l0, l1], reduced=True)
         else:
             from surface_dynamics.interval_exchanges.labelled import LabelledPermutationIET
-            p = LabelledPermutationIET([l0, l1])
+            p = LabelledPermutationIET([l0, l1], reduced=False)
         if alphabet is not None:
             p.alphabet(alphabet)
         elif relabel:
             p.alphabet(range(len(p)))
+
+        p._check()
         return p
 
     def rauzy_class_cardinality(self, left_degree=None, reduced=True):
@@ -2413,10 +2427,10 @@ class HypAbelianStratumComponent(ASC):
 
             if reduced:
                 from surface_dynamics.interval_exchanges.reduced import ReducedPermutationIET
-                p = ReducedPermutationIET([l0, l1])
+                p = ReducedPermutationIET([l0, l1], reduced=True)
             else:
                 from surface_dynamics.interval_exchanges.labelled import LabelledPermutationIET
-                p = LabelledPermutationIET([l0, l1])
+                p = LabelledPermutationIET([l0, l1], reduced=False)
 
             return [p]
 
@@ -2866,11 +2880,10 @@ class EvenAbelianStratumComponent(ASC):
 
         if reduced:
             from surface_dynamics.interval_exchanges.reduced import ReducedPermutationIET
-            p = ReducedPermutationIET([l0, l1])
-
+            p = ReducedPermutationIET([l0, l1], reduced=True)
         else:
             from surface_dynamics.interval_exchanges.labelled import LabelledPermutationIET
-            p = LabelledPermutationIET([l0, l1])
+            p = LabelledPermutationIET([l0, l1], reduced=False)
 
         if alphabet is not None:
             p.alphabet(alphabet)
@@ -3226,11 +3239,10 @@ class OddAbelianStratumComponent(ASC):
 
         if reduced:
             from surface_dynamics.interval_exchanges.reduced import ReducedPermutationIET
-            p = ReducedPermutationIET([l0, l1])
-
+            p = ReducedPermutationIET([l0, l1], reduced=True)
         else:
             from surface_dynamics.interval_exchanges.labelled import LabelledPermutationIET
-            p = LabelledPermutationIET([l0, l1])
+            p = LabelledPermutationIET([l0, l1], reduced=False)
 
         if alphabet is not None:
             p.alphabet(alphabet)
