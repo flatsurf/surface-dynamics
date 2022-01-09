@@ -740,20 +740,31 @@ cdef class IETFamily:
         - ``intervalxt`` -- whether to use pyintervalxt for iteration (much faster for
           large number of induction steps)
 
+        - extra argument are transfered to the method :meth:`random_element`
+
         EXAMPLES::
 
             sage: from surface_dynamics import *
+
+            sage: kwds = {'num_bound': 10000, 'den_bound': 1}
+
             sage: q = iet.Permutation([0,1,2,3,4,5],[5,3,2,1,0,4])
             sage: rays = [[0, 0, 0, 1, 1, 0], [3, 1, 0, 1, 0, 2], [5, 0, 1, 2, 0, 3]]
             sage: F = iet.IETFamily(q, rays)  # optional - pplpy
             sage: x = polygen(QQ)
             sage: K.<cbrt3> = NumberField(x^3 - 3, embedding=AA(3)**(1/3))
-            sage: F.random_element_statistics(K, intervalxt=False) # optional - pplpy
+            sage: F.random_element_statistics(K, intervalxt=False, **kwds) # optional - pplpy
             (0, 100, 0)
-            sage: F.random_element_statistics(K, intervalxt=True) # optional - pplpy gmpxxyy pyeantic pyintervalxt
+            sage: F.random_element_statistics(K, intervalxt=True, **kwds) # optional - pplpy gmpxxyy pyeantic pyintervalxt
             (0, 100, 0)
 
-        A conjectural counterexample to Dynnikov-Skripshenko conjecture::
+            sage: p = iet.Permutation('a b c d', 'd c b a')
+            sage: F = iet.IETFamily(p, Polyhedron(rays=[(1,2,0,1),(3,1,1,0)])) # optional : pplpy
+            sage: F.random_element_statistics(K, **kwds) # optional - pplpy
+            (100, 0, 0)
+
+        A conjectural counterexample to Dynnikov-Skripshenko conjecture in genus 4 (stratum
+        component is H(3,3)^hyp)::
 
             sage: path = 'bbbbbtbttbttbbttbtttbbbbttbttbtbbtbbtbbtt'
             sage: p = iet.Permutation('a b c d e f g h i', 'i h g f e d c b a')
@@ -773,21 +784,8 @@ cdef class IETFamily:
             524 703 0 628 0 245 51 68 0
             619 462 0 229 238 63 0 0 272
             701 910 0 823 0 308 0 119 51
-            sage: minimals, saddles, unknowns = F.random_element_statistics(K, num_exp=20, num_iterations=200, intervalxt=False) # optional - pplpy
-            sage: assert minimals == 0 and saddles < 3 and unknowns > 17, (minimals, saddles, unknowns) # optional - pplpy
-            sage: minimals, saddles, unknowns = F.random_element_statistics(K, num_exp=20, num_iterations=200, intervalxt=True) # optional - pplpy gmpxxyy pyeantic pyintervalxt
-            sage: assert minimals == 0 and saddles < 3 and unknowns > 17, (minimals, saddles, unknowns) # optional - pplpy gmpxxyy pyeantic pyintervalxt
-
-        Another interesting family in H(4) (where we do not get a 100%)::
-
-            sage: R = [[13, 5, 0, 6, 21, 10, 1, 0],
-            ....:      [259, 77, 0, 0, 219, 178, 25, 18],
-            ....:      [28, 0, 7, 0, 22, 19, 2, 2],
-            ....:      [46, 0, 15, 22, 72, 35, 2, 0]]
-            sage: p = iet.Permutation('a b c d e f g h', 'h g f e d c b a')
-            sage: F = iet.IETFamily(p, Polyhedron(rays=R))
-            sage: F.random_element_statistics(K, num_exp=100, num_iterations=4096) # random
-            (0, 24, 76)
+            sage: F.random_element_statistics(K, num_exp=20, num_iterations=256, intervalxt=False, **kwds) # optional - pplpy
+            (0, 0, 20)
         """
         if intervalxt is None:
             try:
@@ -821,7 +819,7 @@ cdef class IETFamily:
                 elif res.result in SADDLE:
                     num_saddles += 1
                 elif res.result in MINIMAL:
-                    num_minimal += 1
+                    num_minimals += 1
                 else:
                     raise RuntimeError("unknown return code from pyintervalxt {}".format(res.result))
         else:
