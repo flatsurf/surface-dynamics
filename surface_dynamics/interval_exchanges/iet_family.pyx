@@ -702,11 +702,12 @@ cdef class IETFamily:
             sage: (QQ**6).subspace(F.rays()) == V # optional - pplpy
             True
         """
-        from .constructors import Permutation, IET
+        from .labelled import LabelledPermutationIET as Permutation
+        from .iet import IntervalExchangeTransformation as IET
 
         top = [self.perm[i] for i in range(self.dim)]
         bot = [self.perm[i] for i in range(self.dim,2*self.dim)]
-        p = Permutation(top, bot, alphabet=range(self.dim))
+        p = Permutation((top, bot), alphabet=range(self.dim))
 
         coeffs = []
         for _ in range(self.length):
