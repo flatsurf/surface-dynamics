@@ -3,6 +3,39 @@
 # distutils: libraries=ppl gmp
 r"""
 Linear families of interval exchange transformations
+
+EXAMPLES:
+
+Using the iterator :function:`surface_dynamics.misc.linalg.isotropic_subspaces`,
+one can explore the SAF=0 subspaces of interval exchange transformations::
+
+    sage: from surface_dynamics import iet
+    sage: from surface_dynamics.misc.linalg import isotropic_subspaces
+
+    sage: p = iet.Permutation([1,2,0,3], [2,1,3,0], alphabet=[0,1,2,3])
+    sage: x = polygen(QQ)
+    sage: K.<cbrt3> = NumberField(x^3 - 3, embedding=AA(3)**(1/3))
+    sage: for vectors in isotropic_subspaces(p.intersection_matrix(), 2, bound=1, contains_positive_vector=True):
+    ....:     P = Polyhedron(lines=vectors).intersection(Polyhedron(rays=(ZZ**4).basis()))
+    ....:     assert P.dimension() == 2
+    ....:     F = iet.IETFamily(p, P)
+    ....:     T = F.random_element(K)
+    ....:     assert T.sah_arnoux_fathi_invariant().is_zero()
+
+For each member of such family, one can look for iet with non-trivial dynamics (here none)::
+
+    sage: x = polygen(QQ)
+    sage: K.<cbrt3> = NumberField(x^3 - 3, embedding=AA(3)**(1/3))
+    sage: p = iet.Permutation('a b c d e f', 'f e d c b a')
+    sage: for vectors in isotropic_subspaces(p.intersection_matrix(), 3, bound=1, contains_positive_vector=True):
+    ....:     P = Polyhedron(lines=vectors).intersection(Polyhedron(rays=(ZZ**6).basis()))
+    ....:     assert P.dimension() == 3
+    ....:     F = iet.IETFamily(p, P)
+    ....:     T = F.random_element(K)
+    ....:     assert T.sah_arnoux_fathi_invariant().is_zero()
+    ....:     n_mins, n_saddles, n_unknowns = F.random_element_statistics(K, num_exp=10, num_iterations=4096)
+    ....:     if n_saddles != 10:
+    ....:         print(vectors, n_mins, n_saddles)
 """
 #*****************************************************************************
 #       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>

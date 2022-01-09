@@ -2,7 +2,7 @@ r"""
 Some linear algebra routines
 """
 #*****************************************************************************
-#       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
+#       Copyright (C) 2019-2021 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
@@ -10,9 +10,8 @@ Some linear algebra routines
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
-from sage.arith.all import gcd, lcm
-from sage.rings.all import ZZ, QQ
-from sage.geometry.polyhedron.constructor import Polyhedron
+from sage.all import ZZ, QQ, vector, Compositions, gcd, lcm, Polyhedron
+from sage.numerical.mip import MixedIntegerLinearProgram, MIPSolverException
 
 def relation_space(v):
     r"""
@@ -122,6 +121,187 @@ def deformation_space(lengths):
 
     return m_lengths.column_space()
 
+def pivots(n, length, force_first=False):
+    r"""
+    Iterator through increasing sequences of given ``length` in ``{0, 1, ..., n-1}``.
+
+    INPUT:
+
+    - ``force_first`` - whether the first pivot is on the first column
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.linalg import pivots
+        sage: list(pivots(4, 3, force_first=False))
+        [[0, 1, 2], [0, 1, 3], [0, 2, 3], [1, 2, 3]]
+        sage: list(pivots(4, 3, force_first=True))
+        [[0, 1, 2], [0, 1, 3], [0, 2, 3]]
+    """
+    if force_first:
+        for gaps in reversed(Compositions(n, length=length)):
+            gaps = [1] + list(gaps)
+            pivots = [gaps[0] - 1]
+            for i in gaps[1:-1]:
+                pivots.append(pivots[-1] + i)
+            yield pivots
+    else:
+        for gaps in reversed(Compositions(n + 1, length=length+1)):
+            pivots = [gaps[0] - 1]
+            for i in gaps[1:-1]:
+                pivots.append(pivots[-1] + i)
+            yield pivots
+
+def isotropic_subspaces(B, d, bound=1, contains_positive_vector=False):
+    r"""
+    Iterator over isotropic subspaces of dimension ``d`` of the symmetric or
+    anti-symmetric bilinear form ``B``.
+
+    INPUT:
+
+    - ``d`` (optional) -- dimension of the slice
+
+    - ``bound`` (optional, default 1) -- bound on the coefficients for generators (in the echelon
+      form)
+
+    - ``contains_positive_vector`` (optional, default ``False``) - if ``True``, then only iterate through subspaces that contain a positive vector
+
+    .. TODO::
+
+        It is only interesting to iterate over subspaces that contain a
+        positive vector ie a vector (v0, v1, ...) with v0 > 0, v1 > 0, ...
+        We might consider cheaper tests that are necessary conditions for the
+        above to hold. For example
+
+        - the first pivot must be in the first column
+
+        - in each non pivot column there must be at least one positive coefficient
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.linalg import isotropic_subspaces
+
+        sage: B = matrix(4, [0, 1, 1, 1, -1, 0, 1, 1, -1, -1, 0, 1, -1, -1, -1, 0])
+        sage: for vectors in isotropic_subspaces(B, 2, bound=2, contains_positive_vector=True):
+        ....:     print(matrix(vectors))
+        ....:     print('*' * 15)
+        [1 0 0 1]
+        [0 1 1 0]
+        ***************
+        [1 0 0 1]
+        [0 1 2 0]
+        ***************
+        [1 0 0 2]
+        [0 1 1 2]
+        ***************
+        [ 1  0  1  0]
+        [ 0  1 -2  1]
+        ***************
+        [1 0 1 2]
+        [0 1 0 1]
+        ***************
+        [1 0 1 2]
+        [0 1 2 2]
+        ***************
+        [ 1  0  1  2]
+        [ 0  1 -2  0]
+        ***************
+        [ 1  0  2  0]
+        [ 0  1 -2  1]
+        ***************
+        [1 0 2 2]
+        [0 1 0 1]
+        ***************
+        [ 1  0 -2  1]
+        [ 0  1  1  2]
+        ***************
+        [ 1  0 -2  1]
+        [ 0  1  2  2]
+        ***************
+        [ 1  0 -2  2]
+        [ 0  1  1  0]
+        ***************
+        [ 1  0 -2  2]
+        [ 0  1  2 -1]
+        ***************
+
+    Some countings::
+
+        sage: B = matrix(4, [0,1,1,1,-1,0,1,1,-1,-1,0,1,-1,-1,-1,0])
+        sage: sum(1 for _ in isotropic_subspaces(B, 2, bound=1, contains_positive_vector=True))
+        1
+        sage: sum(1 for _ in isotropic_subspaces(B, 2, bound=2, contains_positive_vector=True))
+        13
+        sage: sum(1 for _ in isotropic_subspaces(B, 2, bound=1, contains_positive_vector=False))
+        10
+        sage: sum(1 for _ in isotropic_subspaces(B, 2, bound=2, contains_positive_vector=False))
+        66
+
+        sage: B = matrix(5, [0,1,1,1,1,-1,0,1,1,1,-1,-1,0,1,1,-1,-1,-1,0,1,-1,-1,-1,-1,0])
+        sage: sum(1 for _ in isotropic_subspaces(B, 2, bound=1, contains_positive_vector=True))
+        17
+        sage: sum(1 for _ in isotropic_subspaces(B, 3, bound=1, contains_positive_vector=True))
+        0
+        sage: sum(1 for _ in isotropic_subspaces(B, 2, bound=2, contains_positive_vector=True))
+        204
+        sage: sum(1 for _ in isotropic_subspaces(B, 2, bound=1, contains_positive_vector=False))
+        175
+        sage: sum(1 for _ in isotropic_subspaces(B, 3, bound=1, contains_positive_vector=False))
+        2
+        sage: sum(1 for _ in isotropic_subspaces(B, 2, bound=2, contains_positive_vector=False))
+        1649
+    """
+    assert B.is_square()
+    n = B.nrows()
+
+    for piv in pivots(n, d, force_first=contains_positive_vector):
+        positions_to_be_filled = []
+        for i in range(d):
+            positions_to_be_filled.append(list(enumerate(sorted(set(range(piv[i]+1, n)).difference(piv[i+1:])))))
+
+        # backtracking
+        # the ordering on entries is 0, 1, -1, 2, -2, 3, -3, ....
+        vectors = [vector(ZZ, n) for _ in range(d)]
+        for i, j in enumerate(piv):
+            vectors[i][j] = 1
+        products = [vectors[i] * B for i in range(d)]
+
+        if (all(products[i].dot_product(vectors[j]).is_zero() for i in range(d) for j in range(i)) and
+            (not contains_positive_vector or has_positive_linear_combination(vectors, n))):
+            yield vectors
+
+        i = 1
+        while True:
+            # find the next vector at position i
+            v = vectors[i]
+            found_next = False
+            for jpos, j in reversed(positions_to_be_filled[i]):
+                if v[j] == -bound:
+                    v[j] = 0
+                elif v[j] > 0:
+                    v[j] = -v[j]
+                    found_next = True
+                    break
+                else:
+                    v[j] = -v[j] + 1
+                    found_next = True
+                    break
+
+            # backtrack ?
+            if not found_next:
+                i -= 1
+                if i == -1:
+                    break
+                continue
+
+            # go for the next vector if span(vectors) has positive elements and v[i] is orthogonal to the i-1 first vectors
+            products[i] = v * B
+            if all(products[i].dot_product(vectors[j]).is_zero() for j in range(i)):
+                if i == d - 1:
+                    if not contains_positive_vector or has_positive_linear_combination(vectors, n):
+                        yield vectors
+                else:
+                    i = i + 1
+
 def deformation_cone(v):
     r"""
     Return the deformation cone of the given vector ``v``
@@ -196,3 +376,30 @@ def cone_triangulate(C, hyperplane=None):
     for t in P.triangulate():
         simplex = [P.Vrepresentation(i).vector() for i in t]
         yield [(r / gcd(r)).change_ring(ZZ) for r in simplex]
+
+def has_positive_linear_combination(vectors, d, solver="PPL"):
+    r"""
+    Test whether the given ``vectors`` admit a linear combination that is positive.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.linalg import has_positive_linear_combination
+        sage: has_positive_linear_combination([(1,0), (0,1)], 2)
+        True
+        sage: has_positive_linear_combination([(1,-1)], 2)
+        False
+        sage: vectors = [(1, 0, 0, 0, 0, 0), (0, 1, 0, 0, 0, -1), (0, 0, 1, 0, -1, 0)]
+        sage: has_positive_linear_combination(vectors, 3)
+        True
+        sage: has_positive_linear_combination(vectors, 4)
+        False
+    """
+    M = MixedIntegerLinearProgram(solver=solver)
+    x = M.new_variable()
+    for i in range(d):
+        M.add_constraint(M.sum(x[j] * v[i] for j, v in enumerate(vectors)) >= 1)
+        try:
+            M.solve(objective_only=True)
+        except MIPSolverException:
+            return False
+    return True
