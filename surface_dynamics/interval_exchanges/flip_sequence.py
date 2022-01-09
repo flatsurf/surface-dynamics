@@ -33,7 +33,7 @@ from .labelled import LabelledPermutation
 from .constructors import GeneralizedPermutation
 from surface_dynamics.misc.permutation import (perm_init, perm_check,
         perm_compose, perm_one, perm_cycle_string, perm_orbit,
-        perm_on_list_inplace, perm_invert)
+        perm_on_list_inplace, perm_invert, perm_is_one)
 
 class IETFlipSequence(SageObject):
     r"""
@@ -64,7 +64,7 @@ class IETFlipSequence(SageObject):
 
         sage: p = iet.Permutation([['a','b','c','d'],['d','c','b','a']])
         sage: iet.FlipSequence(p, 't^5b^3tbt^3b')
-        FlipSequence('a b c d\nd c b a', ['t', 't', 't', 't', 't', 'b', 'b', 'b', 't', 'b', 't', 't', 't', 'b'], False, False, '()')
+        FlipSequence('a b c d\nd c b a', 'tttttbbbtbtttb')
 
     The minimal dilatations in H(2g-2)^hyp from Boissy-Lanneau::
 
@@ -150,7 +150,10 @@ class IETFlipSequence(SageObject):
 
         - ``p`` - permutation or generalized permutation
 
-        - ``rauzy_moves`` - (optional; default empty) a sequence of Rauzy moves
+        - ``rauzy_moves`` - (optional; default empty) a sequence of Rauzy moves. It can either
+          be a list of valid Rauzy moves or a string with letters ``'t'``, ``'b'``, ``'T'`` or
+          ``'B'`` (meaning respectively top-right, bottom-right, top-left and bottom-left Rauzy
+          inductions)
 
         - ``top_bottom_inverse`` - (optional; default ``False``) whether a
           top-bottom inverse is performed at the end of the flip sequence
@@ -160,6 +163,19 @@ class IETFlipSequence(SageObject):
 
         - ``relabelling`` - (optional; default identity permutation) the
           relabelling to be performed at the end of the flip sequence
+
+        TESTS::
+
+            sage: from surface_dynamics import iet
+            sage: p = iet.Permutation('a b', 'b a')
+            sage: iet.FlipSequence(p, 'tbcf')
+            Traceback (most recent call last):
+            ...
+            ValueError: invalid flip sequence
+            sage: iet.FlipSequence(p, 't^t')
+            Traceback (most recent call last):
+            ...
+            ValueError: invalid flip sequence
         """
         if not isinstance(p, LabelledPermutation):
             p = GeneralizedPermutation(p)
@@ -175,15 +191,25 @@ class IETFlipSequence(SageObject):
                     i = 0
                     while i < len(rauzy_moves):
                         r = rauzy_moves[i]
+                        if r in ['T', 'B']:
+                            s = 0
+                            r = r.lower()
+                        else:
+                            if r not in ['t', 'b']:
+                                raise ValueError('invalid flip sequence')
+                            s = -1
                         if i + 1 < len(rauzy_moves) and rauzy_moves[i+1] == '^':
-                            k = i+2
+                            k = i + 2
+                            if len(rauzy_moves) <= k or rauzy_moves[k] == '0' or not rauzy_moves[k].isdigit():
+                                raise ValueError('invalid flip sequence')
+                            k += 1
                             while k < len(rauzy_moves) and rauzy_moves[k].isdigit():
                                 k += 1
                             power = int(rauzy_moves[i+2:k])
-                            self.rauzy_move(r, iterations=power)
+                            self.rauzy_move(r, s, iterations=power)
                             i = k
                         else:
-                            self.rauzy_move(r)
+                            self.rauzy_move(r, s)
                             i += 1
             else:
                 for r in rauzy_moves:
@@ -289,6 +315,9 @@ class IETFlipSequence(SageObject):
         res._relabelling = perm_compose(self._relabelling, other._relabelling)
         return res
 
+    def __len__(self):
+        return len(self._rauzy_moves)
+
     def __iter__(self):
         p = copy(self._start)
         for winner, side in self._rauzy_moves:
@@ -325,18 +354,23 @@ class IETFlipSequence(SageObject):
             if side == -1:
                 l.append(winner)
             else:
-                l.append(winner + 'l')
-        return l
+                l.append(winner.upper())
+        return ''.join(l)
 
     def _repr_(self):
-        return "FlipSequence({!r}, {!r}, {!r}, {!r}, {!r})".format(
-                self._start.str(),
-                self._simplified_flip_sequence(),
-                self._top_bottom_inverse,
-                self._left_right_inverse,
-                perm_cycle_string(self._relabelling, singletons=False))
+        args = [repr(self._start.str()), repr(self._simplified_flip_sequence())]
+        if self._top_bottom_inverse:
+            args.append('top_bottom_inverse=True')
+        if self._left_right_inverse:
+            args.append('left_right_inverse=True')
+        if not perm_is_one(self._relabelling):
+            args.append('relabelling={}'.format(perm_cycle_string(self._relabelling, singletons=False)))
+        return "FlipSequence({})".format(', '.join(arg for arg in args))
 
     def rauzy_move(self, winner, side='right', iterations=1):
+        r"""
+        Add a Rauzy move to this flip sequence.
+        """
         winner = interval_conversion(winner)
         side = side_conversion(side)
 
@@ -391,6 +425,9 @@ class IETFlipSequence(SageObject):
         return p
 
     def relabel(self, p):
+        r"""
+        Add a relabelling to this flip sequence.
+        """
         if not perm_check(p, len(self._start)):
             p = perm_init(p, n=len(self._start))
         self._end.relabel(p)
@@ -398,6 +435,8 @@ class IETFlipSequence(SageObject):
 
     def close(self):
         r"""
+        Close this path with the unique relabelling that identifies its end to its start.
+
         EXAMPLES::
 
             sage: from surface_dynamics import iet
@@ -409,7 +448,7 @@ class IETFlipSequence(SageObject):
             ....:                      left_right_inverse=True)
             sage: f.close()
             sage: f
-            FlipSequence('a b f c d e\nf a e b d c', ['t', 't', 'b', 'b', 'b', 't', 'b', 't'], True, True, '(0,2,1,3)(4,5)')
+            FlipSequence('a b f c d e\nf a e b d c', 'ttbbbtbt', top_bottom_inverse=True, left_right_inverse=True, relabelling=(0,2,1,3)(4,5))
         """
         if self._start == self._end:
             return
