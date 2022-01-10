@@ -153,28 +153,20 @@ def pivots(n, length, force_first=False):
 
 def isotropic_subspaces(B, d, bound=1, contains_positive_vector=False):
     r"""
-    Iterator over isotropic subspaces of dimension ``d`` of the symmetric or
+    Iterator over rational isotropic subspaces of dimension ``d`` of the
     anti-symmetric bilinear form ``B``.
 
     INPUT:
 
-    - ``d`` (optional) -- dimension of the slice
+    - ``B`` -- anti-symmetric matrix with integral coefficients
 
-    - ``bound`` (optional, default 1) -- bound on the coefficients for generators (in the echelon
+    - ``d`` -- dimension of the isotropic subspace
+
+    - ``bound`` (optional, default 1) -- bound on the coefficients for generators (in echelon
       form)
 
-    - ``contains_positive_vector`` (optional, default ``False``) - if ``True``, then only iterate through subspaces that contain a positive vector
-
-    .. TODO::
-
-        It is only interesting to iterate over subspaces that contain a
-        positive vector ie a vector (v0, v1, ...) with v0 > 0, v1 > 0, ...
-        We might consider cheaper tests that are necessary conditions for the
-        above to hold. For example
-
-        - the first pivot must be in the first column
-
-        - in each non pivot column there must be at least one positive coefficient
+    - ``contains_positive_vector`` (optional, default ``False``) - if ``True``,
+      then only iterate through subspaces that contain a positive vector
 
     EXAMPLES::
 
