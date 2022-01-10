@@ -257,6 +257,8 @@ def isotropic_subspaces(B, d, bound=1, contains_positive_vector=False):
             vectors[i][j] = 1
         products = [vectors[i] * B for i in range(d)]
 
+        piv.append(n)
+
         if (all(products[i].dot_product(vectors[j]).is_zero() for i in range(d) for j in range(i)) and
             (not contains_positive_vector or has_positive_linear_combination(vectors, n))):
             yield vectors
@@ -267,12 +269,26 @@ def isotropic_subspaces(B, d, bound=1, contains_positive_vector=False):
             v = vectors[i]
             found_next = False
             for jpos, j in reversed(positions_to_be_filled[i]):
+                must_be_positive = False
+                if contains_positive_vector and piv[i] < j < piv[i+1]:
+                    # v is the last vector with non-zero entry in this column, it must compensate negative coefficients
+                    if all(vectors[ii][j] <= 0 for ii in range(i)):
+                        must_be_positive = True
                 if v[j] == -bound:
                     v[j] = 0
                 elif v[j] > 0:
-                    v[j] = -v[j]
-                    found_next = True
-                    break
+                    if must_be_positive:
+                        if v[j] == bound:
+                            v[j] = 0
+                        else:
+                            assert v[j] >= 0
+                            v[j] += 1
+                            found_next = True
+                            break
+                    else:
+                        v[j] = -v[j]
+                        found_next = True
+                        break
                 else:
                     v[j] = -v[j] + 1
                     found_next = True
@@ -291,7 +307,7 @@ def isotropic_subspaces(B, d, bound=1, contains_positive_vector=False):
                 if i == d - 1:
                     if not contains_positive_vector or has_positive_linear_combination(vectors, n):
                         yield vectors
-                else:
+                elif not contains_positive_vector or has_positive_linear_combination(vectors[:i+1], piv[i+1]):
                     i = i + 1
 
 def deformation_cone(v):
