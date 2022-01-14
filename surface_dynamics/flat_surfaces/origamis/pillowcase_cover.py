@@ -198,7 +198,7 @@ class PillowcaseCover_dense(PillowcaseCover_dense_pyx):
                 zeros = [(i-2)//2 for i in p]
             else:
                 zeros = [(i-2)//2 for i in p if i != 2]
-            if zeros == []:
+            if not zeros:
                 return AbelianStratum([0])
             return AbelianStratum(zeros)
 

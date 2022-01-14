@@ -7109,7 +7109,7 @@ class RauzyDiagram(SageObject):
             pred[p] = [None] * len(self._edge_types)
             l.append(p)
 
-        while(l != []):
+        while l:
             p = l.pop()
             self._set_element(p)
 
@@ -7244,7 +7244,7 @@ class FlippedRauzyDiagram(RauzyDiagram):
             pred[p] = [None] * len(self._edge_types)
             l.append(p)
 
-        while(l != []):
+        while l:
             p = l.pop()
 
             for t,edge_type in enumerate(self._edge_types):
