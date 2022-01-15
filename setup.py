@@ -45,16 +45,6 @@ except ImportError:
 else:
     WITH_PPL = True
 
-try:
-    import sage.modular.multiple_zeta
-except ImportError:
-    sys.stderr.write('Warning: multiple_zeta not available in Sage\n')
-    WITH_MZV = False
-except cypari2.handle_error.PariError:
-    sys.stderr.write('Warning: multiple_zeta not functional in Sage\n')
-    WITH_MZV = False
-else:
-    WITH_MZV = True
 
 extensions_data = {
     'origamis': {
@@ -106,20 +96,6 @@ for name, data in extensions_data.items():
         source_files.extend(sources)
         source_files.extend(headers)
 
-class build_py(_build_py):
-    r"""
-    Custom build_py command to not install generalized_multiple_zeta_values when
-    corresponding sage module not present.
-    """
-    def find_package_modules(self, package, package_dir):
-        modules = _build_py.find_package_modules(self, package, package_dir)
-        if not WITH_MZV and package == 'surface_dynamics/misc':
-            modules = [
-                (pkg, mod, file)
-                for (pkg, mod, file) in modules
-                if mod != 'generalized_multiple_zeta_values']
-        return modules
-
 setup(name='surface-dynamics',
       version=version,
       description="Dynamics on surfaces",
@@ -157,6 +133,5 @@ setup(name='surface-dynamics',
       'Programming Language :: Cython',
       'Topic :: Scientific/Engineering :: Mathematics',
     ],
-    keywords='surfaces, dynamics, geometry, flat surfaces, Abelian differentials, quadratic differentials, Riemann surfaces',
-    cmdclass={'build_py': build_py}
+    keywords='surfaces, dynamics, geometry, flat surfaces, Abelian differentials, quadratic differentials, Riemann surfaces'
 )
