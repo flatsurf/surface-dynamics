@@ -1010,6 +1010,13 @@ class Permutation(SageObject):
             sage: p.str(sep=' | ')
             'a b b | c c a'
 
+            sage: iet.GeneralizedPermutation([0,0], [1,2,3,2,1,3])
+            0 0
+            1 2 3 2 1 3
+            sage: iet.GeneralizedPermutation([0,1,2,1,0,2], [3,3])
+            0 1 2 1 0 2
+            3 3
+
         Again, the generalized permutation can be rebuilt from the standard string::
 
             sage: p == iet.GeneralizedPermutation(p.str())
@@ -1024,7 +1031,7 @@ class Permutation(SageObject):
              sage: print(p.str('/'))
              -a -a/ b  b
 
-        Alignment::
+        Alignment with alphabet of different sizes::
 
             sage: p = iet.Permutation('aa b ccc d', 'd b ccc aa')
             sage: print(p.str())
@@ -1036,6 +1043,17 @@ class Permutation(SageObject):
             sage: print(p.str(align='right'))
             aa b ccc  d
              d b ccc aa
+
+            sage: p = iet.GeneralizedPermutation('aa fff b ccc b fff d', 'eee d eee ccc aa')
+            sage: print(p.str())
+            aa fff b ccc b fff d
+            eee d eee ccc aa
+            sage: print(p.str(align='left'))
+            aa  fff b   ccc b  fff d
+            eee d   eee ccc aa
+            sage: print(p.str(align='right'))
+             aa fff   b ccc  b fff d
+            eee   d eee ccc aa
         """
         s = []
         if self._flips is None:
@@ -1045,8 +1063,8 @@ class Permutation(SageObject):
             l0, l1 = self.list(flips=True)
             formatter = labelize_flip
 
-        n = max(len(l0), len(l1))
-        for i in range(min(len(l0), len(l1))):
+        n = min(len(l0), len(l1))
+        for i in range(n):
             l0[i] = s0 = formatter(l0[i])
             l1[i] = s1 = formatter(l1[i])
             if align is None:
@@ -1061,6 +1079,10 @@ class Permutation(SageObject):
                     l1[i] = ' ' * (len(s0) - len(s1)) + l1[i]
                 elif align == 'left':
                     l1[i] = l1[i] + ' ' * (len(s0) - len(s1))
+        for i in range(n, len(l0)):
+            l0[i] = formatter(l0[i])
+        for i in range(n, len(l1)):
+            l1[i] = formatter(l1[i])
 
         return sep.join([' '.join(l0), ' '.join(l1)])
 
@@ -2937,7 +2959,7 @@ class PermutationLI(Permutation):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import iet
 
             sage: p = iet.GeneralizedPermutation('a b d a c','c e b e d')
             sage: p.is_irreducible()
