@@ -5,13 +5,6 @@ Installation script for the flatsurf module
 It depends on distutils
 """
 
-try:
-    import sage.all
-except ImportError:
-    raise ValueError("this package currently installs only inside SageMath (http://www.sagemath.org)\n"
-                     "If you are using Ubuntu with Sage installed from the official apt repository, run\n"
-                     "first in a console \"$ source /usr/share/sagemath/bin/sage-env\"\n")
-
 import sys
 import os
 import numpy as np
