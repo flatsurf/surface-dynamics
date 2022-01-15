@@ -91,7 +91,7 @@ class IETFlipSequence(SageObject):
         x^8 - x^7 - x^6 + x^5 - x^4 + x^3 - x^2 - x + 1
 
     The path of non-orientable flipped iet from Bas-Lopez that gives non-uniquely
-    ergodic examples. Since :class:`FlipSequence` uses labelled permutations, the
+    ergodic examples. Since :class:`IETFlipSequence` uses labelled permutations, the
     path needs a relabelling to be closed::
 
         sage: p0 = iet.Permutation([1,2,3,4,5,6,7,8,9,10], [9,10,1,2,3,4,5,6,7,8], flips=[1,2,3,4,5,6,7,10])
