@@ -250,7 +250,7 @@ class Stratum(UniqueRepresentation, SageObject):
                 return False
 
             return False
-    
+
     def __ne__(self, other):
         return not self == other
 

@@ -638,7 +638,7 @@ class IntervalExchangeTransformation:
             sage: lengths = [1, a + 1, a, a + 1, 2*a - 2]
             sage: T = iet.IntervalExchangeTransformation(p, lengths)
             sage: U = T.erase_marked_points()
-            sage: U.permutation().stratum() 
+            sage: U.permutation().stratum()
             H_2(2)
             sage: assert T.sah_arnoux_fathi_invariant() == U.sah_arnoux_fathi_invariant()
 

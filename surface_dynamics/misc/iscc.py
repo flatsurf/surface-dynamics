@@ -1,13 +1,13 @@
-#*****************************************************************************
+# ****************************************************************************
 #       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
-
+# ****************************************************************************
 from sage.cpython.string import bytes_to_str, str_to_bytes
+
 
 def iscc_rg_string(r):
     r"""
@@ -21,21 +21,22 @@ def iscc_rg_string(r):
     """
     boundary_vars = ', '.join('b%d'%i for i in range(r.num_faces()))
     lengths_vars = ', '.join('l%d'%i for i in r.darts())
-    
+
     ieqs = ' and '.join('l%d >= 0' % i for i in r.darts())
     edges = ' and '.join('l%d = l%d' %(i,j) for i,j in r.edges())
-    
+
     eqns = []
     for i,f in enumerate(r.faces()):
         eqns.append('b%d = %s' % (i, ' + '.join('l%d' %j for j in f)))
     eqns = ' and '.join(eqns)
-    
+
     return "[{boundary_vars}] -> {{ [{lengths_vars}] : {ieqs} and {edges} and {eqns} }}".format(
                boundary_vars=boundary_vars,
                lengths_vars=lengths_vars,
                edges=edges,
                ieqs=ieqs,
                eqns=eqns)
+
 
 def iscc_cd_string(cd):
     r"""
@@ -52,24 +53,25 @@ def iscc_cd_string(cd):
     """
     widths_vars = ', '.join('w%d'%i for i in range(cd.ncyls()))
     lengths_vars = ', '.join('l%d'%i for i in range(cd.num_edges()))
-    
+
     ieqs = []
     for i in range(cd.num_edges()):
         ieqs.append('l%d >= 0' % i)
     ieqs = ' and '.join(ieqs)
-    
+
     eqns = []
     for i,(top,bot) in enumerate(cd.cylinders()):
         eqns.append('w%d = %s = %s' % (i,
                         ' + '.join('l%d' %j for j in top),
                         ' + '.join('l%d' %j for j in bot)))
     eqns = ' and '.join(eqns)
-    
+
     return "[{widths_vars}] -> {{ [{lengths_vars}] : {ieqs} and {eqns} }}".format(
                widths_vars = widths_vars,
                lengths_vars=lengths_vars,
                ieqs=ieqs,
                eqns=eqns)
+
 
 def iscc_card(arg):
     r"""
@@ -94,36 +96,38 @@ def iscc_card(arg):
         poly = iscc_rg_string(arg)
 
     from subprocess import Popen, PIPE
-    
+
     cmd = 'P := {};\n'.format(poly)
     cmd += 'q := card P;\n'
     cmd += 'q;'
-    
+
     proc = Popen(['iscc'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
     ans, err = proc.communicate(str_to_bytes(cmd))
-    
+
     return bytes_to_str(ans).strip()
 
+
 def parse_iscc_result(ans, d):
-    R = PolynomialRing(QQ, ['w%d'%i for i in range(d)], d)
-    gens = {'w%d'%i: R.gen(i) for i in range(d)}
-    prefix = '[' + ', '.join('w%d'%i for i in range(d)) + ']'
+    R = PolynomialRing(QQ, ['w%d' % i for i in range(d)], d)
+    gens = {'w%d' % i: R.gen(i) for i in range(d)}
+    prefix = '[' + ', '.join('w%d' % i for i in range(d)) + ']'
     prefix += ' -> { '
     suffix = ' }\n'
     if not ans.startswith(prefix):
         raise ValueError('bad prefix')
     if not ans.endswith(suffix):
         raise ValueError('bad suffix')
-    pieces = ans[len(prefix):len(ans)-len(suffix)].split(';')
+    pieces = ans[len(prefix):len(ans) - len(suffix)].split(';')
     res = []
     for piece in pieces:
         if piece.count(':') != 1:
             raise ValueError('parsing error!')
         i = piece.find(':')
         poly = R(sage_eval(piece[:i], locals=gens))
-        cond = piece[i+1:]
-        res.append((cond,poly))
+        cond = piece[i + 1:]
+        res.append((cond, poly))
     return res
+
 
 def higher_order_terms(p):
     R = p.parent()
@@ -131,5 +135,5 @@ def higher_order_terms(p):
     deg = p.degree()
     for coeff, exp in zip(p.coefficients(), p.exponents()):
         if sum(exp) == deg:
-            p_trunc += R({exp:coeff})
+            p_trunc += R({exp: coeff})
     return p_trunc
