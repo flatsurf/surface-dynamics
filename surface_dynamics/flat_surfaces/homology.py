@@ -359,7 +359,7 @@ class RibbonGraph(SageObject):
         C = self._symmetric_group().centralizer(self.monodromy_group())
         if C.cardinality().is_one():
             return C
-        
+
         if fix_vertices or fix_edges or fix_faces:
             S = self._symmetric_group()
             B = []
