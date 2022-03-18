@@ -10,10 +10,6 @@ jobs:
       matrix:
         include:
           - optionals: "sage,pplpy"
-            sagelib: "8.8"
-          - optionals: "sage,pplpy"
-            sagelib: "8.9"
-          - optionals: "sage,pplpy"
             sagelib: "9.1"
           - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
             sagelib: "9.1"
@@ -25,6 +21,8 @@ jobs:
             sagelib: "9.3"
           - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
             sagelib: "9.3"
+          - optionals: "sage,pplpy"
+            sagelib: "9.5"
     steps:
       - uses: actions/checkout@v2
         with: { submodules: recursive }
