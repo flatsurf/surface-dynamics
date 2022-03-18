@@ -366,7 +366,7 @@ class FatGraph(object):
             f2 = fl[e2]
             if colors[f1] == -1:
                 raise RuntimeError
-            elif colors[f2] == -1:
+            if colors[f2] == -1:
                 # discover a new face
                 colors[f2] = 1 - colors[f1]
                 to_test.extend(perm_orbit(fp, e2))

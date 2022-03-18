@@ -3874,13 +3874,11 @@ class CylinderDiagram(SeparatrixDiagram):
 
         if len(lengths) != self.nseps():
             raise ValueError("the 'lengths' vector has wrong length")
-        else:
-            lengths = [ZZ.coerce(l) for l in lengths]
+        lengths = [ZZ.coerce(l) for l in lengths]
 
         if len(heights) != self.ncyls():
             raise ValueError("the 'heights' vector has wrong length")
-        else:
-            heights = [ZZ.coerce(h) for h in heights]
+        heights = [ZZ.coerce(h) for h in heights]
 
         widths = [sum(lengths[i] for i in bot) for bot,_ in self.cylinders()]
 

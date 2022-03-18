@@ -531,7 +531,7 @@ class FactoredDenominator(object):
             jj = sd.get(i, -1)
             if j > jj:
                 raise ArithmeticError
-            elif j == jj:
+            if j == jj:
                 del nd[i]
             else:
                 nd[i] -= j
@@ -707,8 +707,7 @@ class AbstractMSum(Element):
             if den in self._data:
                 if not allow_multiple:
                     raise ValueError('multiple times the same denominator in the input')
-                else:
-                    self._data[den] += num
+                self._data[den] += num
             else:
                 self._data[den] = num
 

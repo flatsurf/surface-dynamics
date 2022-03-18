@@ -588,11 +588,11 @@ def Permutations_iterator(nintervals=None,
     if nintervals is None:
         if alphabet is None:
             raise ValueError("You must specify an alphabet or a length")
-        else:
-            alphabet = Alphabet(alphabet)
-            if alphabet.cardinality() is Infinity:
-                raise ValueError("You must specify a length with infinite alphabet")
-            nintervals = alphabet.cardinality()
+
+        alphabet = Alphabet(alphabet)
+        if alphabet.cardinality() is Infinity:
+            raise ValueError("You must specify a length with infinite alphabet")
+        nintervals = alphabet.cardinality()
 
     elif alphabet is None:
         alphabet = range(1, nintervals + 1)
@@ -816,7 +816,7 @@ def IntervalExchangeTransformation(permutation=None, lengths=None):
 
     if isinstance(permutation, Permutation_class) and permutation._flips is not None:
         raise TypeError("interval exchange with flips not yet implemented")
-    elif isinstance(permutation, LabelledPermutationIET):
+    if isinstance(permutation, LabelledPermutationIET):
         p = permutation
     elif isinstance(permutation, tuple):
         p = Permutation(*permutation)

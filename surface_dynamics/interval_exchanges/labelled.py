@@ -477,18 +477,18 @@ def LabelledPermutationsIET_iterator(
     if irreducible is False:
         if nintervals is None:
             raise ValueError("choose a number of intervals")
-        else:
-            assert(isinstance(nintervals,(int,Integer)))
-            assert(nintervals > 0)
 
-            def f(x):
-                return LabelledPermutationIET([list(x[0]), list(x[1])],
-                                              alphabet=alphabet, reduced=False)
+        assert(isinstance(nintervals, (int, Integer)))
+        assert(nintervals > 0)
 
-            alphabet = Alphabet(alphabet)
-            g = lambda x: [alphabet.unrank(k-1) for k in x]
-            P = map(g, Permutations(nintervals))
-            return map(f,product(P,repeat=2))
+        def f(x):
+            return LabelledPermutationIET([list(x[0]), list(x[1])],
+                                          alphabet=alphabet, reduced=False)
+
+        alphabet = Alphabet(alphabet)
+        g = lambda x: [alphabet.unrank(k-1) for k in x]
+        P = map(g, Permutations(nintervals))
+        return map(f,product(P,repeat=2))
     else:
         return filter(
             lambda x: x.is_irreducible(),
@@ -1131,7 +1131,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
         i1 = (-1 in c1)
         if i0 and i1:
             raise RuntimeError("not a generalized permutation")
-        elif i0:
+        if i0:
             character = c0
         elif i1:
             character = c1

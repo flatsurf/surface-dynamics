@@ -211,7 +211,7 @@ class QuadraticStratum(Stratum):
             g = sum(zeros) + 4 - nb_poles
             if 4 * genus > g:
                 raise ValueError
-            elif 4 * genus < g:
+            if 4 * genus < g:
                 nb_poles += g - 4*genus
 
         return UniqueRepresentation.__classcall__(QuadraticStratum, zeros, nb_poles, nb_fake_zeros)

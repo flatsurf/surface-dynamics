@@ -1640,9 +1640,9 @@ def uint_base64_str(n, l=None):
     if l is not None:
         if len(s) > l:
             raise ValueError
-        else:
-            s = CHARS[0] * (l - len(s)) + s
+        s = CHARS[0] * (l - len(s)) + s
     return s
+
 
 def uint_from_base64_str(s):
     r"""

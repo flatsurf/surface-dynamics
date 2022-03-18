@@ -1074,11 +1074,11 @@ class AbelianStratum(Stratum):
             ValueError: no 1,1-square-tiled surfaces in this stratum try again with H_2(1^2, 0^2)
         """
         genus = self.genus()
-        nb_real_zeros = self.nb_zeros()-self.nb_fake_zeros()
+        nb_real_zeros = self.nb_zeros() - self.nb_fake_zeros()
 
         if genus == 2 and nb_real_zeros == 1 and self.nb_fake_zeros() < 1:
             raise ValueError("no 1,1-square-tiled surfaces in this stratum try again with H_2(2, 0)")
-        elif genus == 2 and nb_real_zeros == 2 and self.nb_fake_zeros() < 2:
+        if genus == 2 and nb_real_zeros == 2 and self.nb_fake_zeros() < 2:
             raise ValueError("no 1,1-square-tiled surfaces in this stratum try again with H_2(1^2, 0^2)")
 
         return self.one_component().single_cylinder_representative(alphabet, reduced)
@@ -2528,16 +2528,16 @@ class HypAbelianStratumComponent(ASC):
         stratum = self.stratum()
         genus = stratum.genus()
         nb_fk_zeros = stratum.nb_fake_zeros()
-        nb_real_zeros = stratum.nb_zeros()-nb_fk_zeros
+        nb_real_zeros = stratum.nb_zeros() - nb_fk_zeros
         add_fk_zeros = nb_fk_zeros - 2*genus+4-nb_real_zeros
 
         from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
 
         if nb_real_zeros == 1 and add_fk_zeros < 0:
             raise ValueError("no 1,1-square-tiled surfaces in this connected component try again with %s^hyp" %(str(AbelianStratum({2*genus-2:1,0:2*genus-3}))))
-        elif nb_real_zeros == 2 and add_fk_zeros < 0:
+        if nb_real_zeros == 2 and add_fk_zeros < 0:
             raise ValueError("no 1,1-square-tiled surfaces in this connected component try again with %s^hyp" %(str(AbelianStratum({genus-1:2,0:2*genus-2}))))
-        elif not nb_real_zeros:
+        if not nb_real_zeros:
             from surface_dynamics.flat_surfaces.single_cylinder import cylinder_concatenation
             fk_zeros_perm = GeneralizedPermutation([0],[0])
             mk_pt_perm = GeneralizedPermutation([0,1],[1,0])

@@ -129,19 +129,19 @@ def ReducedPermutationsIET_iterator(
     """
     from sage.combinat.permutation import Permutations
 
-    if irreducible is False:
+    if not irreducible:
         if nintervals is None:
             raise NotImplementedError("choose a number of intervals")
-        else:
-            assert(isinstance(nintervals,(int,Integer)))
-            assert(nintervals > 0)
 
-            a0 = range(1,nintervals+1)
+        assert(isinstance(nintervals, (int, Integer)))
+        assert(nintervals > 0)
 
-            def f(x):
-                return ReducedPermutationIET([a0, list(x)],
-                                             alphabet=alphabet, reduced=True)
-            return map(f, Permutations(nintervals))
+        a0 = range(1,nintervals+1)
+
+        def f(x):
+            return ReducedPermutationIET([a0, list(x)],
+                                         alphabet=alphabet, reduced=True)
+        return map(f, Permutations(nintervals))
     else:
         return filter(lambda x: x.is_irreducible(),
         ReducedPermutationsIET_iterator(nintervals,False,alphabet))
