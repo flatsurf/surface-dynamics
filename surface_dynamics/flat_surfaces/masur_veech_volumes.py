@@ -11,8 +11,8 @@ Masur-Veech volumes of Abelian strata
 from sage.all import ZZ, QQ, zeta, pi
 from sage.arith.misc import bernoulli, factorial
 
-from .abelian_strata import AbelianStratum, AbelianStratumComponent
-from .quadratic_strata import QuadraticStratum, QuadraticStratumComponent
+from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum, AbelianStratumComponent
+from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum, QuadraticStratumComponent
 
 # In the table below, the volume is normalized by dividing by zeta(2g)
 # These values appear in
@@ -84,6 +84,12 @@ def masur_veech_volume(C, rational=False, method=None):
         1/4860*pi^6
         sage: masur_veech_volume(AbelianStratum(20))
         1604064377302075061983/792184445986404135075840000000000*pi^22
+        sage: masur_veech_volume(AbelianStratum(4).hyperelliptic_component())
+        1/6720*pi^6
+        sage: masur_veech_volume(AbelianStratum(6).even_component())
+        32/1913625*pi^8
+        sage: masur_veech_volume(AbelianStratum(6).even_component(),rational=True)
+        64/405
 
     TESTS::
 
@@ -93,6 +99,16 @@ def masur_veech_volume(C, rational=False, method=None):
         61/108864*pi^6
         sage: masur_veech_volume(AbelianStratum(4), method='CMSZ')
         61/108864*pi^6
+        sage: masur_veech_volume(AbelianStratum(4).hyperelliptic_component(),method='table')
+        1/6720*pi^6
+        sage: masur_veech_volume(AbelianStratum(4).hyperelliptic_component(),method='CMSZ')
+        1/6720*pi^6
+        sage: masur_veech_volume(AbelianStratum(4).odd_component(),method='table')
+        1/2430*pi^6
+        sage: masur_veech_volume(AbelianStratum(4).odd_component(),method='CMSZ')
+        1/2430*pi^6
+        sage: bool(masur_veech_volume(AbelianStratum(6).hyperelliptic_component())+masur_veech_volume(AbelianStratum(6).even_component())+masur_veech_volume(AbelianStratum(6).odd_component()) == masur_veech_volume(AbelianStratum(6)))
+        True
     """
     if method is None:
         if isinstance(C, AbelianStratum) and len(C.zeros()) == 1:
@@ -117,11 +133,30 @@ def masur_veech_volume(C, rational=False, method=None):
         return vol if rational else vol * zeta(2 * S.genus())
 
     elif method == 'CMSZ':
-        assert isinstance(C, AbelianStratum) and len(C.zeros()) == 1
-        g = C.genus()
-        # be careful, the output starts in genus g=1
-        return minimal_strata_CMSZ(g+1, rational=rational)[g-1]
-
+        if isinstance(C, AbelianStratum):
+            if len(C.zeros()) != 1:
+                raise NotImplementedError
+            g = C.genus()
+            # be careful, the output starts in genus g=1
+            return minimal_strata_CMSZ(g+1, rational=rational)[g-1]
+        elif isinstance(C, AbelianStratumComponent):
+            S=C.stratum()
+            if len(S.zeros())!=1:
+                raise NotImplementedError
+            g = S.genus()
+            if C._name == 'hyp':
+                return minimal_strata_hyp(g,rational)
+            #if ((g+1)//2)%2==0, the hyperelliptic component is even, otherwise it is odd
+            elif C._name == 'odd':
+                if ((g+1)//2)%2==0:
+                    return (minimal_strata_CMSZ(g+1,rational)[g-1]-minimal_strata_spin_diff(g+1,rational)[g-1])/2
+                else:
+                    return (minimal_strata_CMSZ(g+1,rational)[g-1]-minimal_strata_spin_diff(g+1,rational)[g-1])/2 - minimal_strata_hyp(g,rational) 
+            elif C._name == 'even':
+                if ((g+1)//2)%2==0:
+                    return (minimal_strata_CMSZ(g+1,rational)[g-1]+minimal_strata_spin_diff(g+1,rational)[g-1])/2 - minimal_strata_hyp(g,rational) 
+                else:
+                    return (minimal_strata_CMSZ(g+1,rational)[g-1]+minimal_strata_spin_diff(g+1,rational)[g-1])/2
     else:
         raise ValueError("unknown method {!r}".format(method))
 
@@ -173,3 +208,62 @@ def minimal_strata_CMSZ(gmax, rational=False):
         return [-4 * (2*g) / ZZ(2*g-1) / bernoulli(2*g) * tA[2*g] for g in range(1,gmax)]
     else:
         return [2 * (2*pi)**(2*g) * (-1)**g / ZZ(2*g-1) / factorial(2*g-1) * tA[2*g] for g in range(1,gmax)]
+
+    
+def minimal_strata_hyp(g,rational=False):
+    r"""
+    Return the volume of the hyperelliptic component H^{hyp}(2g-2).
+    The explicit formula is from section 6.5 of [CSMZ20]
+    
+    EXAMPLES::
+    
+        sage: minimal_strata_hyp(2)
+        1/120*pi^4
+        sage: minimal_strata_hyp(4)
+        1/580608*pi^8
+        sage: minimal_strata_hyp(10)
+        1/137733277917118464000*pi^20
+        sage: minimal_strata_hyp(10,rational=True)
+        668525/10499279483305984
+    
+    """
+    if rational:
+        return (-1)**(g+1) * 4 * factorial(2*g) / ( (2*g-1)*2*g*(2*g+1) * 2**(4*g-2) * bernoulli(2*g) * factorial(g-1)**2 )
+    else:
+        return 2*pi**(2*g) / ( (2*g-1)*2*g*(2*g+1) * 2**(2*g-2) * factorial(g-1)**2 )
+
+def minimal_strata_spin_diff(gmax,rational=False):
+    r"""
+    Return the differences 
+        'total volume of even components of H(2g-2)' - 'total volume of odd components of H(2g-2)' 
+    for the genus `g` going from ``1`` up to ``gmax-1``.
+    If there are no even/odd components, the corresponding total volume is 0.
+    
+    Formulas are from [CMSZ20].
+    
+    EXAMPLES::
+        
+        sage: minimal_strata_spin_diff(5)
+        [-1/3*pi^2, -1/120*pi^4, -143/544320*pi^6, -15697/1959552000*pi^8]
+        sage: minimal_strata_spin_diff(5,rational=True)
+        [-2, -3/4, -143/576, -15697/207360]
+
+      
+    TESTS::
+    
+        sage: bool(minimal_strata_spin_diff(5)[3] == masur_veech_volume(AbelianStratum(6).even_component()) + masur_veech_volume(AbelianStratum(6).hyperelliptic_component()) - masur_veech_volume(AbelianStratum(6).odd_component()))
+        True
+    """
+    n = 2 * gmax
+    R = QQ['u']
+    u = R.gen()
+    # B(u) = formula (15) in [CMSZ20]
+    B = (2 * (u/2)._sinh_series(n).shift(-1)).inverse_series_trunc(n)
+    # Pz and a in section 6.3 of [CMSZ20]
+    Pz = (sum(-bernoulli(2*j) * u**(2*j) / (2*j) / 2**j for j in range(1,n//2)))._exp_series(n)
+    a = ((u*Pz.inverse_series_trunc(n)).revert_series(n).shift(-1) ).inverse_series_trunc(n)
+    # theorem 6.11 in [CMSZ20], normalized volume v(2g-2)=(2g-1)*Vol(2g-2), note the missing factor 2
+    if rational:
+        return [2* (-2) * a[2*g] * 2*g /(2*g-1) / bernoulli(2*g) for g in range(1,gmax)]
+    else:    
+        return [2* (-1)**(g) * (2*pi)**(2*g) * a[2*g] /(2*g-1) / factorial(2*g -1) for g in range(1,gmax)]
