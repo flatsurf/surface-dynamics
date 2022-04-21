@@ -250,7 +250,7 @@ class Stratum(UniqueRepresentation, SageObject):
                 return False
 
             return False
-    
+
     def __ne__(self, other):
         return not self == other
 
@@ -407,9 +407,9 @@ class Stratum(UniqueRepresentation, SageObject):
             sage: from surface_dynamics import *
 
             sage: Q = QuadraticStratum(6,6)
-            sage: Q.random_component()
+            sage: Q.random_component() # random
             Q_4(6^2)^hyp
-            sage: Q.random_component()
+            sage: Q.random_component() # random
             Q_4(6^2)^reg
         """
         if self.components():
@@ -451,6 +451,32 @@ class Stratum(UniqueRepresentation, SageObject):
             [Q_2(6, -1^2)^hyp, Q_2(6, -1^2)^nonhyp]
         """
         return list(map(lambda x: x(self), self._cc))
+
+    def masur_veech_volume(self, rational=False, method=None):
+        r"""
+        Return the Masur-Veech volume of this stratum.
+
+        INPUT:
+
+        - ``rational`` (optional, boolean) - if ``False`` (default) return the Masur-Veech volume
+          and if ``True`` return the Masur-Veech volume divided by `\zeta(2g)`.
+
+        - ``method`` (optional string) - the method to use to compute the volume either, see
+          :func:`~surface_dynamics.flat_surfaces.masur_veech_volumes.masur_veech_volumes`
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import AbelianStratum
+
+            sage: AbelianStratum(2).masur_veech_volume()
+            1/120*pi^4
+            sage: AbelianStratum(1,1,1,1).masur_veech_volume()
+            1/4860*pi^6
+            sage: AbelianStratum(20).masur_veech_volume()
+            1604064377302075061983/792184445986404135075840000000000*pi^22
+        """
+        from .masur_veech_volumes import masur_veech_volume
+        return masur_veech_volume(self, rational, method)
 
 class StratumComponent(SageObject):
     r"""
@@ -669,6 +695,30 @@ class StratumComponent(SageObject):
             return True
         elif type(self) > type(other):
             return False
+
+    def masur_veech_volume(self, rational=False, method=None):
+        r"""
+        Return the Masur-Veech volume of this stratum component.
+
+        INPUT:
+
+        - ``rational`` (optional, boolean) - if ``False`` (default) return the Masur-Veech volume
+          and if ``True`` return the Masur-Veech volume divided by `\zeta(2g)`.
+
+        - ``method`` (optional string) - the method to use to compute the volume either, see
+          :func:`~surface_dynamics.flat_surfaces.masur_veech_volumes.masur_veech_volumes`
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import AbelianStratum
+
+            sage: AbelianStratum(4).hyperelliptic_component().masur_veech_volume()
+            1/6720*pi^6
+            sage: AbelianStratum(6).even_component().masur_veech_volume()
+            32/1913625*pi^8
+        """
+        from .masur_veech_volumes import masur_veech_volume
+        return masur_veech_volume(self, rational, method)
 
 #
 # Strata (family of strata)
