@@ -1,9 +1,9 @@
 r"""
-Masur-Veech volumes of Abelian strata
+Masur-Veech volumes of Abelian strata and their connected components
 
 .. TODO::
 
-    Implement the known formulas (Moeller-Sauvaget-Zagier for Abelian differentials,
+    Implement more formulas (Moeller-Sauvaget-Zagier for Abelian differentials,
     Chen-Moeller-Zagier for quadratic principal stratum, Elise tables, Eskin-Okounkov,
     Eskin-Okounkov-Pandharipande, etc)
 """
@@ -11,8 +11,8 @@ Masur-Veech volumes of Abelian strata
 from sage.all import ZZ, QQ, zeta, pi
 from sage.arith.misc import bernoulli, factorial
 
-from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum, AbelianStratumComponent
-from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum, QuadraticStratumComponent
+from .abelian_strata import AbelianStratum, AbelianStratumComponent
+from .quadratic_strata import QuadraticStratum, QuadraticStratumComponent
 
 # In the table below, the volume is normalized by dividing by zeta(2g)
 # These values appear in
@@ -63,7 +63,7 @@ abelian_volumes_table = {
     AbelianStratum(2,2,1,1).unique_component(): QQ((131,1440))
 }
 
-def masur_veech_volume(C, rational=False, method=None):
+def masur_veech_volume(C, rational, method):
     r"""
     Return the Masur-Veech volume of the stratum or component of stratum ``C``.
 
@@ -72,46 +72,42 @@ def masur_veech_volume(C, rational=False, method=None):
     - ``rational`` (boolean) - if ``False`` (default) return the Masur-Veech volume
       and if ``True`` return the Masur-Veech volume divided by `\zeta(2g)`.
 
-    - ``method`` - the method to use to compute the volume
+    - ``method`` - the method to use to compute the volume either
 
-    EXAMPLES::
+      - ``"table"`` - for a table lookup (all strata up to dimension 9 and some
+        strata up to dimension 11)
 
-        sage: from surface_dynamics import AbelianStratum
-        sage: from surface_dynamics.flat_surfaces.masur_veech_volumes import masur_veech_volume
-        sage: masur_veech_volume(AbelianStratum(2))
-        1/120*pi^4
-        sage: masur_veech_volume(AbelianStratum(1,1,1,1))
-        1/4860*pi^6
-        sage: masur_veech_volume(AbelianStratum(20))
-        1604064377302075061983/792184445986404135075840000000000*pi^22
-        sage: masur_veech_volume(AbelianStratum(4).hyperelliptic_component())
-        1/6720*pi^6
-        sage: masur_veech_volume(AbelianStratum(6).even_component())
-        32/1913625*pi^8
-        sage: masur_veech_volume(AbelianStratum(6).even_component(),rational=True)
-        64/405
+      - ``"CMSZ"`` - the Chen-Möller-Sauvaget-Zagier recursion (currently only
+        implemented for the principal stratum)
 
     TESTS::
 
         sage: from surface_dynamics import AbelianStratum
         sage: from surface_dynamics.flat_surfaces.masur_veech_volumes import masur_veech_volume
-        sage: masur_veech_volume(AbelianStratum(4), method='table')
+
+        sage: H4 = AbelianStratum(4)
+        sage: masur_veech_volume(H4, False, 'table')
         61/108864*pi^6
-        sage: masur_veech_volume(AbelianStratum(4), method='CMSZ')
+        sage: masur_veech_volume(H4, False, 'CMSZ')
         61/108864*pi^6
-        sage: masur_veech_volume(AbelianStratum(4).hyperelliptic_component(),method='table')
+        sage: masur_veech_volume(H4.hyperelliptic_component(), False, 'table')
         1/6720*pi^6
-        sage: masur_veech_volume(AbelianStratum(4).hyperelliptic_component(),method='CMSZ')
+        sage: masur_veech_volume(H4.hyperelliptic_component(), False, 'CMSZ')
         1/6720*pi^6
-        sage: masur_veech_volume(AbelianStratum(4).odd_component(),method='table')
+        sage: masur_veech_volume(H4.odd_component(), False, 'table')
         1/2430*pi^6
-        sage: masur_veech_volume(AbelianStratum(4).odd_component(),method='CMSZ')
+        sage: masur_veech_volume(H4.odd_component(), False, 'CMSZ')
         1/2430*pi^6
-        sage: bool(masur_veech_volume(AbelianStratum(6).hyperelliptic_component())+masur_veech_volume(AbelianStratum(6).even_component())+masur_veech_volume(AbelianStratum(6).odd_component()) == masur_veech_volume(AbelianStratum(6)))
+
+        sage: H6 = AbelianStratum(6)
+        sage: bool(sum(masur_veech_volume(C, False, None) for C in H6.components()) == masur_veech_volume(H6, False, None))
+        True
+        sage: all(masur_veech_volume(C, True, 'table') == masur_veech_volume(C, True, 'CMSZ') for C in H6.components())
         True
     """
     if method is None:
-        if isinstance(C, AbelianStratum) and len(C.zeros()) == 1:
+        if (isinstance(C, AbelianStratum) and len(C.zeros()) == 1) or \
+           (isinstance(C, AbelianStratumComponent) and len(C.stratum().zeros()) == 1):
             method = 'CMSZ'
         else:
             method = 'table'
@@ -128,7 +124,7 @@ def masur_veech_volume(C, rational=False, method=None):
         elif isinstance(C, QuadraticStratum):
             raise NotImplementedError
         else:
-            raise ValueError
+            raise ValueError('invalid input')
 
         return vol if rational else vol * zeta(2 * S.genus())
 
@@ -140,23 +136,22 @@ def masur_veech_volume(C, rational=False, method=None):
             # be careful, the output starts in genus g=1
             return minimal_strata_CMSZ(g+1, rational=rational)[g-1]
         elif isinstance(C, AbelianStratumComponent):
-            S=C.stratum()
-            if len(S.zeros())!=1:
+            S = C.stratum()
+            if len(S.zeros()) != 1:
                 raise NotImplementedError
             g = S.genus()
             if C._name == 'hyp':
-                return minimal_strata_hyp(g,rational)
-            #if ((g+1)//2)%2==0, the hyperelliptic component is even, otherwise it is odd
-            elif C._name == 'odd':
-                if ((g+1)//2)%2==0:
-                    return (minimal_strata_CMSZ(g+1,rational)[g-1]-minimal_strata_spin_diff(g+1,rational)[g-1])/2
-                else:
-                    return (minimal_strata_CMSZ(g+1,rational)[g-1]-minimal_strata_spin_diff(g+1,rational)[g-1])/2 - minimal_strata_hyp(g,rational) 
-            elif C._name == 'even':
-                if ((g+1)//2)%2==0:
-                    return (minimal_strata_CMSZ(g+1,rational)[g-1]+minimal_strata_spin_diff(g+1,rational)[g-1])/2 - minimal_strata_hyp(g,rational) 
-                else:
-                    return (minimal_strata_CMSZ(g+1,rational)[g-1]+minimal_strata_spin_diff(g+1,rational)[g-1])/2
+                return minimal_strata_hyp(g, rational)
+
+            stratum_volume = minimal_strata_CMSZ(g + 1, rational)[g-1]
+            spin_diff = minimal_strata_spin_diff(g + 1,rational)[g-1]
+            volume = (stratum_volume + spin_diff) / 2 if C.spin() == 0 else (stratum_volume - spin_diff) / 2
+            if C.spin() == S.hyperelliptic_component().spin():
+                volume -= minimal_strata_hyp(g, rational)
+            return volume
+        else:
+            raise NotImplementedError
+
     else:
         raise ValueError("unknown method {!r}".format(method))
 
@@ -185,13 +180,13 @@ def minimal_strata_CMSZ(gmax, rational=False):
         sage: from surface_dynamics.flat_surfaces.masur_veech_volumes import masur_veech_volume
         sage: for rat in [True, False]:
         ....:     V0, V2, V4, V6 = minimal_strata_CMSZ(5, rational=rat)
-        ....:     MV0 = masur_veech_volume(AbelianStratum(0), rational=rat, method='table')
+        ....:     MV0 = masur_veech_volume(AbelianStratum(0), rat, 'table')
         ....:     assert V0 == MV0, (V0, MV0, rat)
-        ....:     MV2 = masur_veech_volume(AbelianStratum(2), rational=rat, method='table')
+        ....:     MV2 = masur_veech_volume(AbelianStratum(2), rat, 'table')
         ....:     assert V2 == MV2, (V2, MV2, rat)
-        ....:     MV4 = masur_veech_volume(AbelianStratum(4), rational=rat, method='table')
+        ....:     MV4 = masur_veech_volume(AbelianStratum(4), rat, 'table')
         ....:     assert V4 == MV4, (V4, MV4, rat)
-        ....:     MV6 = masur_veech_volume(AbelianStratum(6), rational=rat, method='table')
+        ....:     MV6 = masur_veech_volume(AbelianStratum(6), rat, 'table')
         ....:     assert V6 == MV6, (V6, MV6, rat)
     """
     n = 2 * gmax - 1
@@ -207,52 +202,47 @@ def minimal_strata_CMSZ(gmax, rational=False):
     if rational:
         return [-4 * (2*g) / ZZ(2*g-1) / bernoulli(2*g) * tA[2*g] for g in range(1,gmax)]
     else:
-        return [2 * (2*pi)**(2*g) * (-1)**g / ZZ(2*g-1) / factorial(2*g-1) * tA[2*g] for g in range(1,gmax)]
+        return [2 * (2*pi)**(2*g) * (-1)**g / ZZ(2*g-1) / factorial(2*g - 1) * tA[2*g] for g in range(1,gmax)]
 
-    
-def minimal_strata_hyp(g,rational=False):
+
+def minimal_strata_hyp(g, rational=False):
     r"""
     Return the volume of the hyperelliptic component H^{hyp}(2g-2).
-    The explicit formula is from section 6.5 of [CSMZ20]
-    
+
+    The explicit formula appears in section 6.5 of [CheMoeSauZag20]_.
+
     EXAMPLES::
-    
+
+        sage: from surface_dynamics.flat_surfaces.masur_veech_volumes import minimal_strata_hyp
         sage: minimal_strata_hyp(2)
         1/120*pi^4
         sage: minimal_strata_hyp(4)
         1/580608*pi^8
         sage: minimal_strata_hyp(10)
         1/137733277917118464000*pi^20
-        sage: minimal_strata_hyp(10,rational=True)
+        sage: minimal_strata_hyp(10, rational=True)
         668525/10499279483305984
-    
     """
     if rational:
         return (-1)**(g+1) * 4 * factorial(2*g) / ( (2*g-1)*2*g*(2*g+1) * 2**(4*g-2) * bernoulli(2*g) * factorial(g-1)**2 )
     else:
         return 2*pi**(2*g) / ( (2*g-1)*2*g*(2*g+1) * 2**(2*g-2) * factorial(g-1)**2 )
 
-def minimal_strata_spin_diff(gmax,rational=False):
+def minimal_strata_spin_diff(gmax, rational=False):
     r"""
-    Return the differences 
-        'total volume of even components of H(2g-2)' - 'total volume of odd components of H(2g-2)' 
-    for the genus `g` going from ``1`` up to ``gmax-1``.
+    Return the differences of volumes between even and odd components in
+    H(2g-2) for the genus `g` going from ``1`` up to ``gmax-1``.
+
     If there are no even/odd components, the corresponding total volume is 0.
-    
-    Formulas are from [CMSZ20].
-    
+    Formulas are from [CheMoeSauZag20]_.
+
     EXAMPLES::
-        
+
+        sage: from surface_dynamics.flat_surfaces.masur_veech_volumes import minimal_strata_spin_diff
         sage: minimal_strata_spin_diff(5)
         [-1/3*pi^2, -1/120*pi^4, -143/544320*pi^6, -15697/1959552000*pi^8]
-        sage: minimal_strata_spin_diff(5,rational=True)
+        sage: minimal_strata_spin_diff(5, rational=True)
         [-2, -3/4, -143/576, -15697/207360]
-
-      
-    TESTS::
-    
-        sage: bool(minimal_strata_spin_diff(5)[3] == masur_veech_volume(AbelianStratum(6).even_component()) + masur_veech_volume(AbelianStratum(6).hyperelliptic_component()) - masur_veech_volume(AbelianStratum(6).odd_component()))
-        True
     """
     n = 2 * gmax
     R = QQ['u']
@@ -260,10 +250,10 @@ def minimal_strata_spin_diff(gmax,rational=False):
     # B(u) = formula (15) in [CMSZ20]
     B = (2 * (u/2)._sinh_series(n).shift(-1)).inverse_series_trunc(n)
     # Pz and a in section 6.3 of [CMSZ20]
-    Pz = (sum(-bernoulli(2*j) * u**(2*j) / (2*j) / 2**j for j in range(1,n//2)))._exp_series(n)
+    Pz = (sum(-bernoulli(2*j) * u**(2*j) / (2*j) / 2**j for j in range(1, n // 2)))._exp_series(n)
     a = ((u*Pz.inverse_series_trunc(n)).revert_series(n).shift(-1) ).inverse_series_trunc(n)
     # theorem 6.11 in [CMSZ20], normalized volume v(2g-2)=(2g-1)*Vol(2g-2), note the missing factor 2
     if rational:
-        return [2* (-2) * a[2*g] * 2*g /(2*g-1) / bernoulli(2*g) for g in range(1,gmax)]
-    else:    
-        return [2* (-1)**(g) * (2*pi)**(2*g) * a[2*g] /(2*g-1) / factorial(2*g -1) for g in range(1,gmax)]
+        return [2* (-2) * a[2*g] * 2 * g / (2*g - 1) / bernoulli(2 * g) for g in range(1, gmax)]
+    else:
+        return [2* (-1)**(g) * (2*pi)**(2*g) * a[2 * g] /(2*g - 1) / factorial(2*g - 1) for g in range(1, gmax)]
