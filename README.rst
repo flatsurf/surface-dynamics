@@ -191,6 +191,8 @@ Authors
 * Charles Fougeron: Lyapunov exponents for strata coverings
 * Luke Jeffreys: single cylinder representatives for strata of Abelian
   differentials
+* Ivan Yakovlev: Masur-Veech volumes of connected components of minimal strata
+  of Abelian differentials
 
 How to cite this project
 ------------------------
