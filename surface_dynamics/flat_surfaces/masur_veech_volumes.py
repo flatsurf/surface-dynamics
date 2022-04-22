@@ -19,7 +19,7 @@ from .quadratic_strata import QuadraticStratum, QuadraticStratumComponent
 # - Eskin-Masur-Zorich "principal boundary ..."
 abelian_volumes_table = {
     # dim 2
-    AbelianStratum(0).hyperelliptic_component(): QQ((2, 1)),
+    AbelianStratum(0).hyperelliptic_component(): QQ((2,1)),
     # dim 4
     AbelianStratum(2).hyperelliptic_component(): QQ((3,4)),
     # dim 5
@@ -100,8 +100,6 @@ def masur_veech_volume(C, rational, method):
         1/2430*pi^6
 
         sage: H6 = AbelianStratum(6)
-        sage: bool(sum(masur_veech_volume(C, False, None) for C in H6.components()) == masur_veech_volume(H6, False, None))
-        True
         sage: all(masur_veech_volume(C, True, 'table') == masur_veech_volume(C, True, 'CMSZ') for C in H6.components())
         True
     """
@@ -254,6 +252,6 @@ def minimal_strata_spin_diff(gmax, rational=False):
     a = ((u*Pz.inverse_series_trunc(n)).revert_series(n).shift(-1) ).inverse_series_trunc(n)
     # theorem 6.11 in [CMSZ20], normalized volume v(2g-2)=(2g-1)*Vol(2g-2), note the missing factor 2
     if rational:
-        return [2* (-2) * a[2*g] * 2 * g / (2*g - 1) / bernoulli(2 * g) for g in range(1, gmax)]
+        return [2* (-2) * a[2*g] * 2 * g / (2*g - 1) / bernoulli(2*g) for g in range(1, gmax)]
     else:
         return [2* (-1)**(g) * (2*pi)**(2*g) * a[2 * g] /(2*g - 1) / factorial(2*g - 1) for g in range(1, gmax)]
