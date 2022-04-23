@@ -462,7 +462,7 @@ class Stratum(UniqueRepresentation, SageObject):
           and if ``True`` return the Masur-Veech volume divided by `\zeta(2g)`.
 
         - ``method`` (optional string) - the method to use to compute the volume either, see
-          :func:`~surface_dynamics.flat_surfaces.masur_veech_volumes.masur_veech_volumes`
+          :func:`~surface_dynamics.flat_surfaces.masur_veech_volumes.masur_veech_volume`
 
         EXAMPLES::
 
@@ -706,7 +706,7 @@ class StratumComponent(SageObject):
           and if ``True`` return the Masur-Veech volume divided by `\zeta(2g)`.
 
         - ``method`` (optional string) - the method to use to compute the volume either, see
-          :func:`~surface_dynamics.flat_surfaces.masur_veech_volumes.masur_veech_volumes`
+          :func:`~surface_dynamics.flat_surfaces.masur_veech_volumes.masur_veech_volume`
 
         EXAMPLES::
 

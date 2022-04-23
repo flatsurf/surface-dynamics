@@ -15,3 +15,8 @@ Quadratic strata
 ----------------
 
 .. automodule:: surface_dynamics.flat_surfaces.quadratic_strata
+
+Masur Veech volumes
+-------------------
+
+.. automodule:: surface_dynamics.flat_surfaces.masur_veech_volumes
