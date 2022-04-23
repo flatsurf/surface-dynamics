@@ -442,6 +442,7 @@ def even_perm_canonical_label_from(p, i):
 
     return mapping
 
+
 def even_perm_canonical_label(p):
     r"""
     Canonical label for the permutation ``p`` assuming that
@@ -454,7 +455,7 @@ def even_perm_canonical_label(p):
     For the possible starting points, we only need to consider the
     ones that have one side in the largest and the other side in the
     smallest possible. For now, we run through all possibilities.
-    
+
     OUTPUT: a pair ``(canonical_p, map)``
 
     EXAMPLES::
