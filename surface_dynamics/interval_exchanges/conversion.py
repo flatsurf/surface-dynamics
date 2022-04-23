@@ -142,7 +142,7 @@ def iet_from_pyintervalxt(T, alphabet=None):
         Interval exchange transformation of [0, 610367217876793/371542755[ with permutation
         a b
         b a
-        
+
         sage: from pyeantic.real_embedded_number_field import RealEmbeddedNumberField # optional - pyeantic, pyintervalxt
         sage: x = polygen(QQ)
         sage: K.<sqrt2> = NumberField(x^2 - 2, embedding=AA(2).sqrt())
