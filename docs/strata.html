@@ -43,6 +43,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-surface_dynamics.flat_surfaces.strata">Template file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-surface_dynamics.flat_surfaces.abelian_strata">Abelian strata</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-surface_dynamics.flat_surfaces.quadratic_strata">Quadratic strata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-surface_dynamics.flat_surfaces.masur_veech_volumes">Masur Veech volumes</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="surface_topology.html">Surface topology and geometry</a></li>
@@ -194,6 +195,30 @@ string representation (uses <code class="docutils literal notranslate"><span cla
 </dd></dl>
 
 <dl class="py method">
+<dt id="surface_dynamics.flat_surfaces.strata.Stratum.masur_veech_volume">
+<code class="sig-name descname"><span class="pre">masur_veech_volume</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rational</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/flat_surfaces/strata.html#Stratum.masur_veech_volume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.flat_surfaces.strata.Stratum.masur_veech_volume" title="Permalink to this definition"></a></dt>
+<dd><p>Return the Masur-Veech volume of this stratum.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rational</span></code> (optional, boolean) - if <code class="docutils literal notranslate"><span class="pre">False</span></code> (default) return the Masur-Veech volume
+and if <code class="docutils literal notranslate"><span class="pre">True</span></code> return the Masur-Veech volume divided by <cite>zeta(2g)</cite>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">method</span></code> (optional string) - the method to use to compute the volume either, see
+<a class="reference internal" href="#surface_dynamics.flat_surfaces.masur_veech_volumes.masur_veech_volume" title="surface_dynamics.flat_surfaces.masur_veech_volumes.masur_veech_volume"><code class="xref py py-func docutils literal notranslate"><span class="pre">masur_veech_volume()</span></code></a></p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">masur_veech_volume</span><span class="p">()</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">120</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">4</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">masur_veech_volume</span><span class="p">()</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">4860</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">6</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">masur_veech_volume</span><span class="p">()</span>
+<span class="mi">1604064377302075061983</span><span class="o">/</span><span class="mi">792184445986404135075840000000000</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">22</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt id="surface_dynamics.flat_surfaces.strata.Stratum.number_of_components">
 <code class="sig-name descname"><span class="pre">number_of_components</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/flat_surfaces/strata.html#Stratum.number_of_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.flat_surfaces.strata.Stratum.number_of_components" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the number of connected components of self</p>
@@ -263,9 +288,9 @@ string representation (uses <code class="docutils literal notranslate"><span cla
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">QuadraticStratum</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">Q</span><span class="o">.</span><span class="n">random_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">Q</span><span class="o">.</span><span class="n">random_component</span><span class="p">()</span> <span class="c1"># random</span>
 <span class="n">Q_4</span><span class="p">(</span><span class="mi">6</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="o">^</span><span class="n">hyp</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">Q</span><span class="o">.</span><span class="n">random_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">Q</span><span class="o">.</span><span class="n">random_component</span><span class="p">()</span> <span class="c1"># random</span>
 <span class="n">Q_4</span><span class="p">(</span><span class="mi">6</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="o">^</span><span class="n">reg</span>
 </pre></div>
 </div>
@@ -342,6 +367,28 @@ string representation (uses <code class="docutils literal notranslate"><span cla
 <span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">a</span><span class="o">.</span><span class="n">one_component</span><span class="p">()</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span>
 <span class="mi">5</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.flat_surfaces.strata.StratumComponent.masur_veech_volume">
+<code class="sig-name descname"><span class="pre">masur_veech_volume</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rational</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/flat_surfaces/strata.html#StratumComponent.masur_veech_volume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.flat_surfaces.strata.StratumComponent.masur_veech_volume" title="Permalink to this definition"></a></dt>
+<dd><p>Return the Masur-Veech volume of this stratum component.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rational</span></code> (optional, boolean) - if <code class="docutils literal notranslate"><span class="pre">False</span></code> (default) return the Masur-Veech volume
+and if <code class="docutils literal notranslate"><span class="pre">True</span></code> return the Masur-Veech volume divided by <cite>zeta(2g)</cite>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">method</span></code> (optional string) - the method to use to compute the volume either, see
+<a class="reference internal" href="#surface_dynamics.flat_surfaces.masur_veech_volumes.masur_veech_volume" title="surface_dynamics.flat_surfaces.masur_veech_volumes.masur_veech_volume"><code class="xref py py-func docutils literal notranslate"><span class="pre">masur_veech_volume()</span></code></a></p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span><span class="o">.</span><span class="n">masur_veech_volume</span><span class="p">()</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">6720</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">6</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">even_component</span><span class="p">()</span><span class="o">.</span><span class="n">masur_veech_volume</span><span class="p">()</span>
+<span class="mi">32</span><span class="o">/</span><span class="mi">1913625</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">8</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -4345,6 +4392,122 @@ consistency check inside, no prediction as to what may happen otherwise.</p>
 </div>
 </dd></dl>
 
+</dd></dl>
+
+</div>
+<div class="section" id="module-surface_dynamics.flat_surfaces.masur_veech_volumes">
+<span id="masur-veech-volumes"></span><h2>Masur Veech volumes<a class="headerlink" href="#module-surface_dynamics.flat_surfaces.masur_veech_volumes" title="Permalink to this headline"></a></h2>
+<p>Masur-Veech volumes of Abelian strata and their connected components</p>
+<dl class="py function">
+<dt id="surface_dynamics.flat_surfaces.masur_veech_volumes.masur_veech_volume">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.flat_surfaces.masur_veech_volumes.</span></code><code class="sig-name descname"><span class="pre">masur_veech_volume</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rational</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/flat_surfaces/masur_veech_volumes.html#masur_veech_volume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.flat_surfaces.masur_veech_volumes.masur_veech_volume" title="Permalink to this definition"></a></dt>
+<dd><p>Return the Masur-Veech volume of the stratum or component of stratum <code class="docutils literal notranslate"><span class="pre">C</span></code>.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rational</span></code> (boolean) - if <code class="docutils literal notranslate"><span class="pre">False</span></code> (default) return the Masur-Veech volume
+and if <code class="docutils literal notranslate"><span class="pre">True</span></code> return the Masur-Veech volume divided by <cite>zeta(2g)</cite>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">method</span></code> - the method to use to compute the volume either</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;table&quot;</span></code> - for a table lookup (all strata up to dimension 9 and some
+strata up to dimension 11)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;CMSZ&quot;</span></code> - the Chen-Möller-Sauvaget-Zagier recursion (currently only
+implemented for the principal stratum)</p></li>
+</ul>
+</li>
+</ul>
+<p>TESTS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.masur_veech_volumes</span> <span class="kn">import</span> <span class="n">masur_veech_volume</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">H4</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">masur_veech_volume</span><span class="p">(</span><span class="n">H4</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">)</span>
+<span class="mi">61</span><span class="o">/</span><span class="mi">108864</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">6</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">masur_veech_volume</span><span class="p">(</span><span class="n">H4</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;CMSZ&#39;</span><span class="p">)</span>
+<span class="mi">61</span><span class="o">/</span><span class="mi">108864</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">6</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">masur_veech_volume</span><span class="p">(</span><span class="n">H4</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">(),</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">)</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">6720</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">6</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">masur_veech_volume</span><span class="p">(</span><span class="n">H4</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">(),</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;CMSZ&#39;</span><span class="p">)</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">6720</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">6</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">masur_veech_volume</span><span class="p">(</span><span class="n">H4</span><span class="o">.</span><span class="n">odd_component</span><span class="p">(),</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">)</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">2430</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">6</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">masur_veech_volume</span><span class="p">(</span><span class="n">H4</span><span class="o">.</span><span class="n">odd_component</span><span class="p">(),</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;CMSZ&#39;</span><span class="p">)</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">2430</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">6</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">H6</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">all</span><span class="p">(</span><span class="n">masur_veech_volume</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">masur_veech_volume</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;CMSZ&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="n">H6</span><span class="o">.</span><span class="n">components</span><span class="p">())</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.flat_surfaces.masur_veech_volumes.minimal_strata_CMSZ">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.flat_surfaces.masur_veech_volumes.</span></code><code class="sig-name descname"><span class="pre">minimal_strata_CMSZ</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rational</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/flat_surfaces/masur_veech_volumes.html#minimal_strata_CMSZ"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.flat_surfaces.masur_veech_volumes.minimal_strata_CMSZ" title="Permalink to this definition"></a></dt>
+<dd><p>Return the volumes of <cite>cH(2g-2)</cite> for the genus <cite>g</cite> going from <code class="docutils literal notranslate"><span class="pre">1</span></code> up to <code class="docutils literal notranslate"><span class="pre">gmax-1</span></code>.</p>
+<p>The algorithm is the one from Sauvaget <a class="reference internal" href="references.html#sau18" id="id25"><span>[Sau18]</span></a> involving an implicit equation. As explained
+in <a class="reference internal" href="references.html#chemoesauzag20" id="id26"><span>[CheMoeSauZag20]</span></a>, one could go through Lagrange inversion. Note that they miss
+factor 2 in their theorem 4.1.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.masur_veech_volumes</span> <span class="kn">import</span> <span class="n">minimal_strata_CMSZ</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">minimal_strata_CMSZ</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">305</span><span class="o">/</span><span class="mi">576</span><span class="p">,</span> <span class="mi">87983</span><span class="o">/</span><span class="mi">207360</span><span class="p">,</span> <span class="mi">1019547</span><span class="o">/</span><span class="mi">2867200</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">minimal_strata_CMSZ</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span>
+ <span class="mi">1</span><span class="o">/</span><span class="mi">120</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">4</span><span class="p">,</span>
+ <span class="mi">61</span><span class="o">/</span><span class="mi">108864</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">6</span><span class="p">,</span>
+ <span class="mi">12569</span><span class="o">/</span><span class="mi">279936000</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">8</span><span class="p">,</span>
+ <span class="mi">12587</span><span class="o">/</span><span class="mi">3311616000</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">10</span><span class="p">]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.masur_veech_volumes</span> <span class="kn">import</span> <span class="n">masur_veech_volume</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">rat</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]:</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">V0</span><span class="p">,</span> <span class="n">V2</span><span class="p">,</span> <span class="n">V4</span><span class="p">,</span> <span class="n">V6</span> <span class="o">=</span> <span class="n">minimal_strata_CMSZ</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="n">rat</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">MV0</span> <span class="o">=</span> <span class="n">masur_veech_volume</span><span class="p">(</span><span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">rat</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">assert</span> <span class="n">V0</span> <span class="o">==</span> <span class="n">MV0</span><span class="p">,</span> <span class="p">(</span><span class="n">V0</span><span class="p">,</span> <span class="n">MV0</span><span class="p">,</span> <span class="n">rat</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">MV2</span> <span class="o">=</span> <span class="n">masur_veech_volume</span><span class="p">(</span><span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">rat</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">assert</span> <span class="n">V2</span> <span class="o">==</span> <span class="n">MV2</span><span class="p">,</span> <span class="p">(</span><span class="n">V2</span><span class="p">,</span> <span class="n">MV2</span><span class="p">,</span> <span class="n">rat</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">MV4</span> <span class="o">=</span> <span class="n">masur_veech_volume</span><span class="p">(</span><span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">rat</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">assert</span> <span class="n">V4</span> <span class="o">==</span> <span class="n">MV4</span><span class="p">,</span> <span class="p">(</span><span class="n">V4</span><span class="p">,</span> <span class="n">MV4</span><span class="p">,</span> <span class="n">rat</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">MV6</span> <span class="o">=</span> <span class="n">masur_veech_volume</span><span class="p">(</span><span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="n">rat</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">assert</span> <span class="n">V6</span> <span class="o">==</span> <span class="n">MV6</span><span class="p">,</span> <span class="p">(</span><span class="n">V6</span><span class="p">,</span> <span class="n">MV6</span><span class="p">,</span> <span class="n">rat</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.flat_surfaces.masur_veech_volumes.minimal_strata_hyp">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.flat_surfaces.masur_veech_volumes.</span></code><code class="sig-name descname"><span class="pre">minimal_strata_hyp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rational</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/flat_surfaces/masur_veech_volumes.html#minimal_strata_hyp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.flat_surfaces.masur_veech_volumes.minimal_strata_hyp" title="Permalink to this definition"></a></dt>
+<dd><p>Return the volume of the hyperelliptic component H^{hyp}(2g-2).</p>
+<p>The explicit formula appears in section 6.5 of <a class="reference internal" href="references.html#chemoesauzag20" id="id27"><span>[CheMoeSauZag20]</span></a>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.masur_veech_volumes</span> <span class="kn">import</span> <span class="n">minimal_strata_hyp</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">minimal_strata_hyp</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">120</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">4</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">minimal_strata_hyp</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">580608</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">8</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">minimal_strata_hyp</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">137733277917118464000</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">20</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">minimal_strata_hyp</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="mi">668525</span><span class="o">/</span><span class="mi">10499279483305984</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="surface_dynamics.flat_surfaces.masur_veech_volumes.minimal_strata_spin_diff">
+<code class="sig-prename descclassname"><span class="pre">surface_dynamics.flat_surfaces.masur_veech_volumes.</span></code><code class="sig-name descname"><span class="pre">minimal_strata_spin_diff</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rational</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/flat_surfaces/masur_veech_volumes.html#minimal_strata_spin_diff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.flat_surfaces.masur_veech_volumes.minimal_strata_spin_diff" title="Permalink to this definition"></a></dt>
+<dd><p>Return the differences of volumes between even and odd components in
+H(2g-2) for the genus <cite>g</cite> going from <code class="docutils literal notranslate"><span class="pre">1</span></code> up to <code class="docutils literal notranslate"><span class="pre">gmax-1</span></code>.</p>
+<p>If there are no even/odd components, the corresponding total volume is 0.
+Formulas are from <a class="reference internal" href="references.html#chemoesauzag20" id="id28"><span>[CheMoeSauZag20]</span></a>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.masur_veech_volumes</span> <span class="kn">import</span> <span class="n">minimal_strata_spin_diff</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">minimal_strata_spin_diff</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">120</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">143</span><span class="o">/</span><span class="mi">544320</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">15697</span><span class="o">/</span><span class="mi">1959552000</span><span class="o">*</span><span class="n">pi</span><span class="o">^</span><span class="mi">8</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">minimal_strata_spin_diff</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">143</span><span class="o">/</span><span class="mi">576</span><span class="p">,</span> <span class="o">-</span><span class="mi">15697</span><span class="o">/</span><span class="mi">207360</span><span class="p">]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>

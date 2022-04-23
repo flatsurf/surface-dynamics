@@ -482,9 +482,9 @@
 <span class="sd">            sage: from surface_dynamics import *</span>
 
 <span class="sd">            sage: Q = QuadraticStratum(6,6)</span>
-<span class="sd">            sage: Q.random_component()</span>
+<span class="sd">            sage: Q.random_component() # random</span>
 <span class="sd">            Q_4(6^2)^hyp</span>
-<span class="sd">            sage: Q.random_component()</span>
+<span class="sd">            sage: Q.random_component() # random</span>
 <span class="sd">            Q_4(6^2)^reg</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">():</span>
@@ -525,7 +525,33 @@
 <span class="sd">            sage: QuadraticStratum(6,-1,-1).components()</span>
 <span class="sd">            [Q_2(6, -1^2)^hyp, Q_2(6, -1^2)^nonhyp]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span><span class="p">))</span></div></div>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Stratum.masur_veech_volume"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.masur_veech_volume">[docs]</a>    <span class="k">def</span> <span class="nf">masur_veech_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the Masur-Veech volume of this stratum.</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``rational`` (optional, boolean) - if ``False`` (default) return the Masur-Veech volume</span>
+<span class="sd">          and if ``True`` return the Masur-Veech volume divided by `\zeta(2g)`.</span>
+
+<span class="sd">        - ``method`` (optional string) - the method to use to compute the volume either, see</span>
+<span class="sd">          :func:`~surface_dynamics.flat_surfaces.masur_veech_volumes.masur_veech_volume`</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import AbelianStratum</span>
+
+<span class="sd">            sage: AbelianStratum(2).masur_veech_volume()</span>
+<span class="sd">            1/120*pi^4</span>
+<span class="sd">            sage: AbelianStratum(1,1,1,1).masur_veech_volume()</span>
+<span class="sd">            1/4860*pi^6</span>
+<span class="sd">            sage: AbelianStratum(20).masur_veech_volume()</span>
+<span class="sd">            1604064377302075061983/792184445986404135075840000000000*pi^22</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.masur_veech_volumes</span> <span class="kn">import</span> <span class="n">masur_veech_volume</span>
+        <span class="k">return</span> <span class="n">masur_veech_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rational</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="StratumComponent"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.StratumComponent">[docs]</a><span class="k">class</span> <span class="nc">StratumComponent</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -743,7 +769,31 @@
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">False</span></div>
+            <span class="k">return</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="StratumComponent.masur_veech_volume"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.StratumComponent.masur_veech_volume">[docs]</a>    <span class="k">def</span> <span class="nf">masur_veech_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the Masur-Veech volume of this stratum component.</span>
+
+<span class="sd">        INPUT:</span>
+
+<span class="sd">        - ``rational`` (optional, boolean) - if ``False`` (default) return the Masur-Veech volume</span>
+<span class="sd">          and if ``True`` return the Masur-Veech volume divided by `\zeta(2g)`.</span>
+
+<span class="sd">        - ``method`` (optional string) - the method to use to compute the volume either, see</span>
+<span class="sd">          :func:`~surface_dynamics.flat_surfaces.masur_veech_volumes.masur_veech_volume`</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import AbelianStratum</span>
+
+<span class="sd">            sage: AbelianStratum(4).hyperelliptic_component().masur_veech_volume()</span>
+<span class="sd">            1/6720*pi^6</span>
+<span class="sd">            sage: AbelianStratum(6).even_component().masur_veech_volume()</span>
+<span class="sd">            32/1913625*pi^8</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.masur_veech_volumes</span> <span class="kn">import</span> <span class="n">masur_veech_volume</span>
+        <span class="k">return</span> <span class="n">masur_veech_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rational</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span></div></div>
 
 <span class="c1">#</span>
 <span class="c1"># Strata (family of strata)</span>
