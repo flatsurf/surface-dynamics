@@ -792,9 +792,10 @@ cdef class IETFamily:
             (0, 100, 0)
 
             sage: p = iet.Permutation('a b c d', 'd c b a')
-            sage: F = iet.IETFamily(p, Polyhedron(rays=[(1,2,0,1),(3,1,1,0)])) # optional : pplpy
-            sage: F.random_element_statistics(K, **kwds) # optional - pplpy
-            (100, 0, 0)
+            sage: F = iet.IETFamily(p, Polyhedron(rays=[(1,2,0,1), (3,1,1,0)])) # optional : pplpy
+            sage: num_minimals, num_saddles, num_unknowns = F.random_element_statistics(K, **kwds) # optional - pplpy
+            sage: num_saddles # optional: pplpy
+            0
 
         A conjectural counterexample to Dynnikov-Skripshenko conjecture in genus 4 (stratum
         component is H(3,3)^hyp)::
