@@ -140,6 +140,8 @@ def pivots(n, length, force_first=False):
         sage: list(pivots(4, 3, force_first=True))
         [[0, 1, 2], [0, 1, 3], [0, 2, 3]]
     """
+    from sage.combinat.composition import Compositions
+
     if force_first:
         for gaps in reversed(Compositions(n, length=length)):
             gaps = [1] + list(gaps)
