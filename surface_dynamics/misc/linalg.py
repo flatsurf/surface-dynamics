@@ -247,6 +247,8 @@ def isotropic_subspaces(B, d, bound=1, contains_positive_vector=False):
         sage: sum(1 for _ in isotropic_subspaces(B, 2, bound=2, contains_positive_vector=False))
         1649
     """
+    from sage.modules.free_module_element import vector
+
     assert B.is_square()
     n = B.nrows()
 
