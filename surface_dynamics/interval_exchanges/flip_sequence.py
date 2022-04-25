@@ -8,7 +8,7 @@ A concatenation of:
 - relabeled
 """
 #*****************************************************************************
-#       Copyright (C) 2021 Vincent Delecroix <20100.delecroix@gmail.com>
+#       Copyright (C) 2021-2022 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
@@ -33,8 +33,7 @@ from .labelled import LabelledPermutation
 from .constructors import GeneralizedPermutation
 from surface_dynamics.misc.permutation import (perm_init, perm_check,
         perm_compose, perm_one, perm_cycle_string, perm_orbit,
-        perm_on_list_inplace, perm_invert)
-
+        perm_on_list_inplace, perm_invert, perm_is_one)
 
 class IETFlipSequence(SageObject):
     r"""
@@ -49,7 +48,7 @@ class IETFlipSequence(SageObject):
     Making substitutions from a flip sequence::
 
         sage: p = iet.Permutation([['a','b','c','d'],['d','c','b','a']])
-        sage: g = iet.FlipSequence(p, ['t', 't', 'b', 't', 'b', 'b', 't', 'b'])
+        sage: g = iet.FlipSequence(p, 'ttbtbbtb')
         sage: assert g.is_complete()
         sage: s1 = g.orbit_substitution()
         sage: print(s1)
@@ -59,6 +58,13 @@ class IETFlipSequence(SageObject):
         a->abcd, b->bab, c->cdc, d->dcbababcd
         sage: s1.incidence_matrix() == s2.incidence_matrix().transpose()
         True
+
+    If large powers appear in the path it might be more convenient to use
+    power notations as in the following example::
+
+        sage: p = iet.Permutation([['a','b','c','d'],['d','c','b','a']])
+        sage: iet.FlipSequence(p, 't^5b^3tbt^3b')
+        FlipSequence('a b c d\nd c b a', 'tttttbbbtbtttb')
 
     The minimal dilatations in H(2g-2)^hyp from Boissy-Lanneau::
 
@@ -83,6 +89,60 @@ class IETFlipSequence(SageObject):
         x^8 - x^7 - x^6 - x^5 + x^4 - x^3 - x^2 - x + 1
         sage: gamma(8, 3).matrix().charpoly()
         x^8 - x^7 - x^6 + x^5 - x^4 + x^3 - x^2 - x + 1
+
+    The path of non-orientable flipped iet from [BasLop]_ that gives non-uniquely
+    ergodic examples. Since :class:`IETFlipSequence` uses labelled permutations, the
+    path needs a relabelling to be closed::
+
+        sage: p0 = iet.Permutation([1,2,3,4,5,6,7,8,9,10], [9,10,1,2,3,4,5,6,7,8], flips=[1,2,3,4,5,6,7,10])
+        sage: fs1 = iet.FlipSequence(p0, 't^7btbbtbtbtb')
+        sage: p16 = fs1.end()
+        sage: fs2 = iet.FlipSequence(p16, 'b')
+        sage: assert fs2.is_closed()
+        sage: fs3 = iet.FlipSequence(p16, 'tb^2t^3b^4t^5b^5')
+        sage: p37 = fs3.end()
+        sage: fs4 = iet.FlipSequence(p37, 't')
+        sage: assert fs4.is_closed()
+        sage: fs5 = iet.FlipSequence(p37, 'bt^7btb')
+        sage: p49 = fs5.end()
+        sage: assert p49.reduced() == p0.reduced()
+        sage: fs6 = iet.FlipSequence(p49, [], relabelling=[7,1,2,3,4,5,6,9,8,0])
+        sage: assert fs6.end() == p0
+        sage: (fs1 * fs2 * fs3 * fs4 * fs5 * fs6).matrix()
+        [ 2  2  2  2  2  2  2  2  3  2]
+        [ 2  4  2  2  2  2  1  0  0  0]
+        [ 0  0  2  2  2  1  0  0  0  0]
+        [ 0  0  0  3  2  0  0  0  0  0]
+        [ 0  0  1  2  2  0  0  0  0  0]
+        [ 1  2  2  2  2  2  0  0  0  0]
+        [ 2  3  2  2  2  2  2  0  0  0]
+        [ 0  0  0  0  0  0  0  1  1  1]
+        [ 1  1  1  1  1  1  1  1  2  1]
+        [ 6 10 10 14 13  8  4  2  3  3]
+
+    A symbolic matrix (with polynomial coefficients) where powers of the paths
+    ``fs2`` and ``fs4`` are variables can be obtained with the function
+    ``symbolic_matrix_power``::
+
+        sage: from surface_dynamics.misc.linalg import symbolic_matrix_power
+        sage: QQrs = QQ['r,s']
+        sage: m1 = fs1.matrix()
+        sage: m2 = symbolic_matrix_power(fs2.matrix(), QQrs.gen(0))
+        sage: m3 = fs3.matrix()
+        sage: m4 = symbolic_matrix_power(fs4.matrix(), QQrs.gen(1))
+        sage: m5 = fs5.matrix()
+        sage: m6 = fs6.matrix()
+        sage: print(m1 * m2 * m3 * m4 * m5 * m6)
+        [      2       2       2       2       2       2       2       2       3       2]
+        [    2*s 2*s + 2       2       2       2       2       1       0       0       0]
+        [      0       0       2       2       2       1       0       0       0       0]
+        [      0       0       0   r + 2   r + 1       0       0       0       0       0]
+        [      0       0       1       2       2       0       0       0       0       0]
+        [      s   s + 1       2       2       2       2       0       0       0       0]
+        [  s + 1   s + 2       2       2       2       2       2       0       0       0]
+        [      0       0       0       0       0       0       0       1       1       1]
+        [      1       1       1       1       1       1       1       1       2       1]
+        [4*s + 2 4*s + 6      10  r + 13  r + 12       8       4       2       3       3]
     """
     def __init__(self, p, rauzy_moves=None, top_bottom_inverse=False, left_right_inverse=False, relabelling=None):
         r"""
@@ -90,7 +150,10 @@ class IETFlipSequence(SageObject):
 
         - ``p`` - permutation or generalized permutation
 
-        - ``rauzy_moves`` - (optional; default empty) a sequence of Rauzy moves
+        - ``rauzy_moves`` - (optional; default empty) a sequence of Rauzy moves. It can either
+          be a list of valid Rauzy moves or a string with letters ``'t'``, ``'b'``, ``'T'`` or
+          ``'B'`` (meaning respectively top-right, bottom-right, top-left and bottom-left Rauzy
+          inductions)
 
         - ``top_bottom_inverse`` - (optional; default ``False``) whether a
           top-bottom inverse is performed at the end of the flip sequence
@@ -100,6 +163,19 @@ class IETFlipSequence(SageObject):
 
         - ``relabelling`` - (optional; default identity permutation) the
           relabelling to be performed at the end of the flip sequence
+
+        TESTS::
+
+            sage: from surface_dynamics import iet
+            sage: p = iet.Permutation('a b', 'b a')
+            sage: iet.FlipSequence(p, 'tbcf')
+            Traceback (most recent call last):
+            ...
+            ValueError: invalid flip sequence
+            sage: iet.FlipSequence(p, 't^t')
+            Traceback (most recent call last):
+            ...
+            ValueError: invalid flip sequence
         """
         if not isinstance(p, LabelledPermutation):
             p = GeneralizedPermutation(p)
@@ -111,11 +187,36 @@ class IETFlipSequence(SageObject):
         self._relabelling = perm_one(len(self._start))
 
         if rauzy_moves is not None:
-            for r in rauzy_moves:
-                if isinstance(r, numbers.Integral):
-                    self.rauzy_move(r)
-                else:
-                    self.rauzy_move(*r)
+            if isinstance(rauzy_moves, str):
+                    i = 0
+                    while i < len(rauzy_moves):
+                        r = rauzy_moves[i]
+                        if r in ['T', 'B']:
+                            s = 0
+                            r = r.lower()
+                        else:
+                            if r not in ['t', 'b']:
+                                raise ValueError('invalid flip sequence')
+                            s = -1
+                        if i + 1 < len(rauzy_moves) and rauzy_moves[i+1] == '^':
+                            k = i + 2
+                            if len(rauzy_moves) <= k or rauzy_moves[k] == '0' or not rauzy_moves[k].isdigit():
+                                raise ValueError('invalid flip sequence')
+                            k += 1
+                            while k < len(rauzy_moves) and rauzy_moves[k].isdigit():
+                                k += 1
+                            power = int(rauzy_moves[i+2:k])
+                            self.rauzy_move(r, s, iterations=power)
+                            i = k
+                        else:
+                            self.rauzy_move(r, s)
+                            i += 1
+            else:
+                for r in rauzy_moves:
+                    if isinstance(r, numbers.Integral):
+                        self.rauzy_move(r)
+                    else:
+                        self.rauzy_move(*r)
 
         if top_bottom_inverse:
             self.top_bottom_inverse()
@@ -123,6 +224,18 @@ class IETFlipSequence(SageObject):
             self.left_right_inverse()
         if relabelling is not None:
             self.relabel(relabelling)
+
+    def start(self):
+        r"""
+        Return the start of the path.
+        """
+        return self._start.__copy__()
+
+    def end(self):
+        r"""
+        Return the end of the path.
+        """
+        return self._end.__copy__()
 
     def __eq__(self, other):
         if type(self) != type(other):
@@ -202,6 +315,9 @@ class IETFlipSequence(SageObject):
         res._relabelling = perm_compose(self._relabelling, other._relabelling)
         return res
 
+    def __len__(self):
+        return len(self._rauzy_moves)
+
     def __iter__(self):
         p = copy(self._start)
         for winner, side in self._rauzy_moves:
@@ -238,18 +354,23 @@ class IETFlipSequence(SageObject):
             if side == -1:
                 l.append(winner)
             else:
-                l.append(winner + 'l')
-        return l
+                l.append(winner.upper())
+        return ''.join(l)
 
     def _repr_(self):
-        return "FlipSequence({!r}, {!r}, {!r}, {!r}, {!r})".format(
-                self._start.str(),
-                self._simplified_flip_sequence(),
-                self._top_bottom_inverse,
-                self._left_right_inverse,
-                perm_cycle_string(self._relabelling, singletons=False))
+        args = [repr(self._start.str()), repr(self._simplified_flip_sequence())]
+        if self._top_bottom_inverse:
+            args.append('top_bottom_inverse=True')
+        if self._left_right_inverse:
+            args.append('left_right_inverse=True')
+        if not perm_is_one(self._relabelling):
+            args.append('relabelling={}'.format(perm_cycle_string(self._relabelling, singletons=False)))
+        return "FlipSequence({})".format(', '.join(arg for arg in args))
 
     def rauzy_move(self, winner, side='right', iterations=1):
+        r"""
+        Add a Rauzy move to this flip sequence.
+        """
         winner = interval_conversion(winner)
         side = side_conversion(side)
 
@@ -304,6 +425,9 @@ class IETFlipSequence(SageObject):
         return p
 
     def relabel(self, p):
+        r"""
+        Add a relabelling to this flip sequence.
+        """
         if not perm_check(p, len(self._start)):
             p = perm_init(p, n=len(self._start))
         self._end.relabel(p)
@@ -311,6 +435,8 @@ class IETFlipSequence(SageObject):
 
     def close(self):
         r"""
+        Close this path with the unique relabelling that identifies its end to its start.
+
         EXAMPLES::
 
             sage: from surface_dynamics import iet
@@ -322,7 +448,7 @@ class IETFlipSequence(SageObject):
             ....:                      left_right_inverse=True)
             sage: f.close()
             sage: f
-            FlipSequence('a b f c d e\nf a e b d c', ['t', 't', 'b', 'b', 'b', 't', 'b', 't'], True, True, '(0,2,1,3)(4,5)')
+            FlipSequence('a b f c d e\nf a e b d c', 'ttbbbtbt', top_bottom_inverse=True, left_right_inverse=True, relabelling=(0,2,1,3)(4,5))
         """
         if self._start == self._end:
             return
@@ -332,12 +458,27 @@ class IETFlipSequence(SageObject):
         self._end.relabel(p)
         self._relabelling = perm_compose(self._relabelling, p)
 
-    def is_loop(self):
+    def is_closed(self):
+        r"""
+        Return whether the path is closed, that is whether its start and end coincide.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import iet
+
+            sage: p = iet.Permutation('a b c d e f', 'f e d c b a')
+            sage: iet.FlipSequence(p, 't^5').is_closed()
+            True
+            sage: iet.FlipSequence(p, 't^4').is_closed()
+            False
+        """
         return self._start == self._end
+
+    is_loop = is_closed
 
     def winners_losers(self):
         r"""
-        Return the list of winners.
+        Return the pair of list of winner letters and list of loser letters along the path.
         """
         winners = []
         losers = []
@@ -410,13 +551,24 @@ class IETFlipSequence(SageObject):
     is_full = is_complete
 
     def matrix(self):
+        r"""
+        Return the Rauzy matrix of this path.
+
+        TESTS::
+
+            sage: from surface_dynamics import iet
+            sage: p = iet.Permutation('a b', 'b a')
+            sage: iet.FlipSequence(p, '').matrix()
+            [1 0]
+            [0 1]
+        """
         V = FreeModule(ZZ, len(self._start))
         columns = [copy(v) for v in V.basis()]
         for p, winner, side in self:
             winner_letter = p._labels[winner][side]
             loser_letter = p._labels[1-winner][side]
             columns[loser_letter] += columns[winner_letter]
-        m = MatrixSpace(ZZ, len(p))(columns).transpose()
+        m = MatrixSpace(ZZ, len(self._start))(columns).transpose()
         perm_on_list_inplace(self._relabelling, m, swap=sage.matrix.matrix0.Matrix.swap_columns)
         return m
 
