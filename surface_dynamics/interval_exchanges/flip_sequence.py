@@ -90,7 +90,7 @@ class IETFlipSequence(SageObject):
         sage: gamma(8, 3).matrix().charpoly()
         x^8 - x^7 - x^6 + x^5 - x^4 + x^3 - x^2 - x + 1
 
-    The path of non-orientable flipped iet from Bas-Lopez that gives non-uniquely
+    The path of non-orientable flipped iet from [BasLop]_ that gives non-uniquely
     ergodic examples. Since :class:`IETFlipSequence` uses labelled permutations, the
     path needs a relabelling to be closed::
 
