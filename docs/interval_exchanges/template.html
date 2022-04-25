@@ -164,10 +164,10 @@ permutations.</p>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.template.FlippedPermutationIET.rauzy_move">
-<code class="sig-name descname"><span class="pre">rauzy_move</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">winner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/template.html#FlippedPermutationIET.rauzy_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.template.FlippedPermutationIET.rauzy_move" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname"><span class="pre">rauzy_move</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">winner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'right'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/template.html#FlippedPermutationIET.rauzy_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.template.FlippedPermutationIET.rauzy_move" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the permutation after a Rauzy move.</p>
 <p>TESTS:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span> <span class="s1">&#39;c a b&#39;</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
@@ -199,6 +199,14 @@ permutations.</p>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
 <span class="o">-</span><span class="n">b</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">d</span>  <span class="n">a</span>
 <span class="o">-</span><span class="n">d</span>  <span class="n">a</span> <span class="o">-</span><span class="n">b</span> <span class="o">-</span><span class="n">c</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span><span class="s1">&#39;d a b c&#39;</span><span class="p">,</span><span class="n">flips</span><span class="o">=</span><span class="s1">&#39;abcd&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pp</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pp</span> <span class="ow">is</span> <span class="n">p</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span>
+<span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">b</span>  <span class="n">c</span> <span class="o">-</span><span class="n">d</span>
+ <span class="n">c</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">b</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -262,10 +270,10 @@ permutations.</p>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.template.FlippedPermutationLI.rauzy_move">
-<code class="sig-name descname"><span class="pre">rauzy_move</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">winner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/template.html#FlippedPermutationLI.rauzy_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.template.FlippedPermutationLI.rauzy_move" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname"><span class="pre">rauzy_move</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">winner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'right'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/template.html#FlippedPermutationLI.rauzy_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.template.FlippedPermutationLI.rauzy_move" title="Permalink to this definition"></a></dt>
 <dd><p>Rauzy move</p>
 <p>TESTS:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a b c b&#39;</span><span class="p">,</span><span class="s1">&#39;d c d a&#39;</span><span class="p">,</span><span class="n">flips</span><span class="o">=</span><span class="s1">&#39;abcd&#39;</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span>
@@ -283,6 +291,14 @@ permutations.</p>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
 <span class="o">-</span><span class="n">b</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">b</span>
 <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">c</span>  <span class="n">a</span> <span class="o">-</span><span class="n">d</span>  <span class="n">a</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a b c b&#39;</span><span class="p">,</span><span class="s1">&#39;d c d a&#39;</span><span class="p">,</span><span class="n">flips</span><span class="o">=</span><span class="s1">&#39;abcd&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pp</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span>
+ <span class="n">a</span> <span class="o">-</span><span class="n">b</span>  <span class="n">a</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">b</span>
+<span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">d</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pp</span> <span class="ow">is</span> <span class="n">p</span>
+<span class="kc">True</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1324,7 +1340,7 @@ top interval is the first letter of the bottom interval.</p>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.template.OrientablePermutationLI.rauzy_move">
-<code class="sig-name descname"><span class="pre">rauzy_move</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">winner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/template.html#OrientablePermutationLI.rauzy_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.template.OrientablePermutationLI.rauzy_move" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname"><span class="pre">rauzy_move</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">winner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'right'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/template.html#OrientablePermutationLI.rauzy_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.template.OrientablePermutationLI.rauzy_move" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the permutation after a Rauzy move.</p>
 <p>TESTS:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -1345,6 +1361,15 @@ top interval is the first letter of the bottom interval.</p>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">a</span> <span class="n">a</span>
 <span class="n">b</span> <span class="n">b</span> <span class="n">c</span> <span class="n">c</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a b&#39;</span><span class="p">,</span><span class="s1">&#39;b c c&#39;</span><span class="p">,</span><span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pp</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span>
+<span class="n">a</span> <span class="n">a</span> <span class="n">b</span>
+<span class="n">b</span> <span class="n">c</span> <span class="n">c</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pp</span> <span class="ow">is</span> <span class="n">p</span>
+<span class="kc">True</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1882,7 +1907,7 @@ sage: pp.genus()
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.template.Permutation.str">
-<code class="sig-name descname"><span class="pre">str</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\n'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/template.html#Permutation.str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.template.Permutation.str" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname"><span class="pre">str</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\n'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">align</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/template.html#Permutation.str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.template.Permutation.str" title="Permalink to this definition"></a></dt>
 <dd><p>A string representation of the generalized permutation.</p>
 <p>INPUT:</p>
 <ul class="simple">
@@ -1913,6 +1938,13 @@ sage: pp.genus()
 <span class="s1">&#39;a b b</span><span class="se">\n</span><span class="s1">c c a&#39;</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">str</span><span class="p">(</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39; | &#39;</span><span class="p">)</span>
 <span class="s1">&#39;a b b | c c a&#39;</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="mi">0</span> <span class="mi">0</span>
+<span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">3</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">2</span>
+<span class="mi">3</span> <span class="mi">3</span>
 </pre></div>
 </div>
 <p>Again, the generalized permutation can be rebuilt from the standard string:</p>
@@ -1927,6 +1959,30 @@ sage: pp.genus()
  <span class="n">b</span>  <span class="n">b</span>
  <span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">str</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span>
  <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">a</span><span class="o">/</span> <span class="n">b</span>  <span class="n">b</span>
+</pre></div>
+</div>
+<p>Alignment with alphabet of different sizes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;aa b ccc d&#39;</span><span class="p">,</span> <span class="s1">&#39;d b ccc aa&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">str</span><span class="p">())</span>
+<span class="n">aa</span> <span class="n">b</span> <span class="n">ccc</span> <span class="n">d</span>
+<span class="n">d</span> <span class="n">b</span> <span class="n">ccc</span> <span class="n">aa</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">str</span><span class="p">(</span><span class="n">align</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">))</span>
+<span class="n">aa</span> <span class="n">b</span> <span class="n">ccc</span> <span class="n">d</span>
+<span class="n">d</span>  <span class="n">b</span> <span class="n">ccc</span> <span class="n">aa</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">str</span><span class="p">(</span><span class="n">align</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">))</span>
+<span class="n">aa</span> <span class="n">b</span> <span class="n">ccc</span>  <span class="n">d</span>
+ <span class="n">d</span> <span class="n">b</span> <span class="n">ccc</span> <span class="n">aa</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;aa fff b ccc b fff d&#39;</span><span class="p">,</span> <span class="s1">&#39;eee d eee ccc aa&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">str</span><span class="p">())</span>
+<span class="n">aa</span> <span class="n">fff</span> <span class="n">b</span> <span class="n">ccc</span> <span class="n">b</span> <span class="n">fff</span> <span class="n">d</span>
+<span class="n">eee</span> <span class="n">d</span> <span class="n">eee</span> <span class="n">ccc</span> <span class="n">aa</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">str</span><span class="p">(</span><span class="n">align</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">))</span>
+<span class="n">aa</span>  <span class="n">fff</span> <span class="n">b</span>   <span class="n">ccc</span> <span class="n">b</span>  <span class="n">fff</span> <span class="n">d</span>
+<span class="n">eee</span> <span class="n">d</span>   <span class="n">eee</span> <span class="n">ccc</span> <span class="n">aa</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">str</span><span class="p">(</span><span class="n">align</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">))</span>
+ <span class="n">aa</span> <span class="n">fff</span>   <span class="n">b</span> <span class="n">ccc</span>  <span class="n">b</span> <span class="n">fff</span> <span class="n">d</span>
+<span class="n">eee</span>   <span class="n">d</span> <span class="n">eee</span> <span class="n">ccc</span> <span class="n">aa</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2751,7 +2807,7 @@ interval is the same as the last letter in the bottom interval or if the
 laster letter of the top interval is the same as the fist letter of the
 bottom interval.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a b d a c&#39;</span><span class="p">,</span><span class="s1">&#39;c e b e d&#39;</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">is_irreducible</span><span class="p">()</span>

@@ -7,6 +7,10 @@ References
    recursion for Masur-Veech volumes"
    arXiv:1905.10352
 
+.. [BasLop] A. Linero Bas, G. Soler López
+   Minimal non uniquely ergodic flipped IETs
+   arXiv:2001.10989 [nlin.CD]
+
 .. [BeyHed80] T. Beyer, S. Mitchell "Constant time generation of rooted trees"
    SIAM J. Comput. 9, 706-712 (1980).
 

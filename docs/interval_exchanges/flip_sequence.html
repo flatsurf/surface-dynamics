@@ -105,7 +105,7 @@
 </div>
 <p>Making substitutions from a flip sequence:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">],[</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">]])</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;ttbtbbtb&#39;</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">g</span><span class="o">.</span><span class="n">is_complete</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">orbit_substitution</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
@@ -115,6 +115,13 @@
 <span class="n">a</span><span class="o">-&gt;</span><span class="n">abcd</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">bab</span><span class="p">,</span> <span class="n">c</span><span class="o">-&gt;</span><span class="n">cdc</span><span class="p">,</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">dcbababcd</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">s1</span><span class="o">.</span><span class="n">incidence_matrix</span><span class="p">()</span> <span class="o">==</span> <span class="n">s2</span><span class="o">.</span><span class="n">incidence_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
 <span class="kc">True</span>
+</pre></div>
+</div>
+<p>If large powers appear in the path it might be more convenient to use
+power notations as in the following example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">],[</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">]])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;t^5b^3tbt^3b&#39;</span><span class="p">)</span>
+<span class="n">FlipSequence</span><span class="p">(</span><span class="s1">&#39;a b c d</span><span class="se">\n</span><span class="s1">d c b a&#39;</span><span class="p">,</span> <span class="s1">&#39;tttttbbbtbtttb&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The minimal dilatations in H(2g-2)^hyp from Boissy-Lanneau:</p>
@@ -141,10 +148,65 @@
 <span class="n">x</span><span class="o">^</span><span class="mi">8</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">7</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">6</span> <span class="o">+</span> <span class="n">x</span><span class="o">^</span><span class="mi">5</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">-</span> <span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
 </pre></div>
 </div>
+<p>The path of non-orientable flipped iet from <a class="reference internal" href="../references.html#baslop" id="id1"><span>[BasLop]</span></a> that gives non-uniquely
+ergodic examples. Since <a class="reference internal" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence" title="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">IETFlipSequence</span></code></a> uses labelled permutations, the
+path needs a relabelling to be closed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span> <span class="n">flips</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">fs1</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="s1">&#39;t^7btbbtbtbtb&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p16</span> <span class="o">=</span> <span class="n">fs1</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">fs2</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p16</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">fs2</span><span class="o">.</span><span class="n">is_closed</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">fs3</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p16</span><span class="p">,</span> <span class="s1">&#39;tb^2t^3b^4t^5b^5&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p37</span> <span class="o">=</span> <span class="n">fs3</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">fs4</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p37</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">fs4</span><span class="o">.</span><span class="n">is_closed</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">fs5</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p37</span><span class="p">,</span> <span class="s1">&#39;bt^7btb&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p49</span> <span class="o">=</span> <span class="n">fs5</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">p49</span><span class="o">.</span><span class="n">reduced</span><span class="p">()</span> <span class="o">==</span> <span class="n">p0</span><span class="o">.</span><span class="n">reduced</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">fs6</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p49</span><span class="p">,</span> <span class="p">[],</span> <span class="n">relabelling</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">fs6</span><span class="o">.</span><span class="n">end</span><span class="p">()</span> <span class="o">==</span> <span class="n">p0</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">fs1</span> <span class="o">*</span> <span class="n">fs2</span> <span class="o">*</span> <span class="n">fs3</span> <span class="o">*</span> <span class="n">fs4</span> <span class="o">*</span> <span class="n">fs5</span> <span class="o">*</span> <span class="n">fs6</span><span class="p">)</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span>
+<span class="p">[</span> <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">2</span><span class="p">]</span>
+<span class="p">[</span> <span class="mi">2</span>  <span class="mi">4</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span> <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span> <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span> <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span> <span class="mi">6</span> <span class="mi">10</span> <span class="mi">10</span> <span class="mi">14</span> <span class="mi">13</span>  <span class="mi">8</span>  <span class="mi">4</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>A symbolic matrix (with polynomial coefficients) where powers of the paths
+<code class="docutils literal notranslate"><span class="pre">fs2</span></code> and <code class="docutils literal notranslate"><span class="pre">fs4</span></code> are variables can be obtained with the function
+<code class="docutils literal notranslate"><span class="pre">symbolic_matrix_power</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.linalg</span> <span class="kn">import</span> <span class="n">symbolic_matrix_power</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">QQrs</span> <span class="o">=</span> <span class="n">QQ</span><span class="p">[</span><span class="s1">&#39;r,s&#39;</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">m1</span> <span class="o">=</span> <span class="n">fs1</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">m2</span> <span class="o">=</span> <span class="n">symbolic_matrix_power</span><span class="p">(</span><span class="n">fs2</span><span class="o">.</span><span class="n">matrix</span><span class="p">(),</span> <span class="n">QQrs</span><span class="o">.</span><span class="n">gen</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">m3</span> <span class="o">=</span> <span class="n">fs3</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">m4</span> <span class="o">=</span> <span class="n">symbolic_matrix_power</span><span class="p">(</span><span class="n">fs4</span><span class="o">.</span><span class="n">matrix</span><span class="p">(),</span> <span class="n">QQrs</span><span class="o">.</span><span class="n">gen</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">m5</span> <span class="o">=</span> <span class="n">fs5</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">m6</span> <span class="o">=</span> <span class="n">fs6</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">m1</span> <span class="o">*</span> <span class="n">m2</span> <span class="o">*</span> <span class="n">m3</span> <span class="o">*</span> <span class="n">m4</span> <span class="o">*</span> <span class="n">m5</span> <span class="o">*</span> <span class="n">m6</span><span class="p">)</span>
+<span class="p">[</span>      <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">3</span>       <span class="mi">2</span><span class="p">]</span>
+<span class="p">[</span>    <span class="mi">2</span><span class="o">*</span><span class="n">s</span> <span class="mi">2</span><span class="o">*</span><span class="n">s</span> <span class="o">+</span> <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">1</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span>      <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">1</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span>      <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>   <span class="n">r</span> <span class="o">+</span> <span class="mi">2</span>   <span class="n">r</span> <span class="o">+</span> <span class="mi">1</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span>      <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">1</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span>      <span class="n">s</span>   <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span>  <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span>   <span class="n">s</span> <span class="o">+</span> <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">2</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span>      <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">0</span>       <span class="mi">1</span>       <span class="mi">1</span>       <span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span>      <span class="mi">1</span>       <span class="mi">1</span>       <span class="mi">1</span>       <span class="mi">1</span>       <span class="mi">1</span>       <span class="mi">1</span>       <span class="mi">1</span>       <span class="mi">1</span>       <span class="mi">2</span>       <span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">4</span><span class="o">*</span><span class="n">s</span> <span class="o">+</span> <span class="mi">2</span> <span class="mi">4</span><span class="o">*</span><span class="n">s</span> <span class="o">+</span> <span class="mi">6</span>      <span class="mi">10</span>  <span class="n">r</span> <span class="o">+</span> <span class="mi">13</span>  <span class="n">r</span> <span class="o">+</span> <span class="mi">12</span>       <span class="mi">8</span>       <span class="mi">4</span>       <span class="mi">2</span>       <span class="mi">3</span>       <span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.close">
 <code class="sig-name descname"><span class="pre">close</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.close" title="Permalink to this definition"></a></dt>
-<dd><p>EXAMPLES:</p>
+<dd><p>Close this path with the unique relabelling that identifies its end to its start.</p>
+<p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d e f&#39;</span><span class="p">,</span> <span class="s1">&#39;f e d c b a&#39;</span><span class="p">)</span>
@@ -154,7 +216,7 @@
 <span class="o">....</span><span class="p">:</span>                      <span class="n">left_right_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">f</span>
-<span class="n">FlipSequence</span><span class="p">(</span><span class="s1">&#39;a b f c d e</span><span class="se">\n</span><span class="s1">f a e b d c&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,3)(4,5)&#39;</span><span class="p">)</span>
+<span class="n">FlipSequence</span><span class="p">(</span><span class="s1">&#39;a b f c d e</span><span class="se">\n</span><span class="s1">f a e b d c&#39;</span><span class="p">,</span> <span class="s1">&#39;ttbbbtbt&#39;</span><span class="p">,</span> <span class="n">top_bottom_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">left_right_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">relabelling</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -199,6 +261,12 @@
 <span class="kc">True</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.end">
+<code class="sig-name descname"><span class="pre">end</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.end" title="Permalink to this definition"></a></dt>
+<dd><p>Return the end of the path.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -264,6 +332,22 @@ closed loop out of this path. If no such permutation exists, return
 </dd></dl>
 
 <dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_closed">
+<code class="sig-name descname"><span class="pre">is_closed</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.is_closed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_closed" title="Permalink to this definition"></a></dt>
+<dd><p>Return whether the path is closed, that is whether its start and end coincide.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d e f&#39;</span><span class="p">,</span> <span class="s1">&#39;f e d c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;t^5&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">is_closed</span><span class="p">()</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;t^4&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">is_closed</span><span class="p">()</span>
+<span class="kc">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_complete">
 <code class="sig-name descname"><span class="pre">is_complete</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.is_complete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_complete" title="Permalink to this definition"></a></dt>
 <dd><p>Return whether that all winners appear.</p>
@@ -303,8 +387,19 @@ closed loop out of this path. If no such permutation exists, return
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_loop">
-<code class="sig-name descname"><span class="pre">is_loop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.is_loop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_loop" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<code class="sig-name descname"><span class="pre">is_loop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_loop" title="Permalink to this definition"></a></dt>
+<dd><p>Return whether the path is closed, that is whether its start and end coincide.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c d e f&#39;</span><span class="p">,</span> <span class="s1">&#39;f e d c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;t^5&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">is_closed</span><span class="p">()</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;t^4&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">is_closed</span><span class="p">()</span>
+<span class="kc">False</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.left_right_inverse">
@@ -330,7 +425,16 @@ closed loop out of this path. If no such permutation exists, return
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.matrix">
 <code class="sig-name descname"><span class="pre">matrix</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.matrix" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Return the Rauzy matrix of this path.</p>
+<p>TESTS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span>
+<span class="p">[</span><span class="mi">1</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">0</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.orbit_substitution">
@@ -359,12 +463,14 @@ closed loop out of this path. If no such permutation exists, return
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.rauzy_move">
 <code class="sig-name descname"><span class="pre">rauzy_move</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">winner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'right'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.rauzy_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.rauzy_move" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Add a Rauzy move to this flip sequence.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.relabel">
 <code class="sig-name descname"><span class="pre">relabel</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.relabel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.relabel" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Add a relabelling to this flip sequence.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.self_similar_iet">
@@ -427,6 +533,12 @@ transformation associated to this path.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.start">
+<code class="sig-name descname"><span class="pre">start</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.start" title="Permalink to this definition"></a></dt>
+<dd><p>Return the start of the path.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.substitution">
 <code class="sig-name descname"><span class="pre">substitution</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_plain_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.substitution" title="Permalink to this definition"></a></dt>
 <dd><p>Return the substitution on the orbit.</p>
@@ -476,7 +588,7 @@ transformation associated to this path.</p>
 <dl class="py method">
 <dt id="surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.winners_losers">
 <code class="sig-name descname"><span class="pre">winners_losers</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/flip_sequence.html#IETFlipSequence.winners_losers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.winners_losers" title="Permalink to this definition"></a></dt>
-<dd><p>Return the list of winners.</p>
+<dd><p>Return the pair of list of winner letters and list of loser letters along the path.</p>
 </dd></dl>
 
 </dd></dl>
