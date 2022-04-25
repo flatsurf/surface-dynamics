@@ -10,7 +10,10 @@ Some linear algebra routines
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
-from sage.all import ZZ, QQ, vector, Compositions, gcd, lcm, Polyhedron
+from sage.arith.all import gcd, lcm
+from sage.arith.misc import binomial
+from sage.rings.all import ZZ, QQ
+from sage.geometry.polyhedron.constructor import Polyhedron
 from sage.numerical.mip import MixedIntegerLinearProgram, MIPSolverException
 
 def relation_space(v):
@@ -411,3 +414,39 @@ def has_positive_linear_combination(vectors, d, solver="PPL"):
         except MIPSolverException:
             return False
     return True
+
+def symbolic_matrix_power(M, n):
+    r"""
+    Return the symbolic power ``M^n`` of the unipotent matrix ``M``.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.linalg import symbolic_matrix_power
+        sage: m = matrix(3, [1,1,1,0,1,1,0,0,1])
+        sage: n = polygen(QQ, 'n')
+        sage: symbolic_matrix_power(m, n)
+        [              1               n 1/2*n^2 + 1/2*n]
+        [              0               1               n]
+        [              0               0               1]
+
+        sage: m = matrix(2, [2,1,1,1])
+        sage: symbolic_matrix_power(m, n)
+        Traceback (most recent call last):
+        ...
+        NotImplementedError: power only implemented for unipotent matrices
+    """
+    d = M.nrows()
+    I = M.parent().identity_matrix()
+    N = M - M.parent().identity_matrix()
+    char = N.charpoly()
+    if any(char[i] for i in range(d)):
+        raise NotImplementedError('power only implemented for unipotent matrices')
+
+    result = I
+    P = N
+    p = 1
+    while P:
+        result += binomial(n, p) * P
+        P *= N
+        p += 1
+    return result
