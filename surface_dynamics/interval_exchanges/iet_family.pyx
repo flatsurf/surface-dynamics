@@ -3,6 +3,39 @@
 # distutils: libraries=ppl gmp
 r"""
 Linear families of interval exchange transformations
+
+EXAMPLES:
+
+Using the iterator :function:`surface_dynamics.misc.linalg.isotropic_subspaces`,
+one can explore the SAF=0 subspaces of interval exchange transformations::
+
+    sage: from surface_dynamics import iet
+    sage: from surface_dynamics.misc.linalg import isotropic_subspaces
+
+    sage: p = iet.Permutation([1,2,0,3], [2,1,3,0], alphabet=[0,1,2,3])
+    sage: x = polygen(QQ)
+    sage: K.<cbrt3> = NumberField(x^3 - 3, embedding=AA(3)**(1/3))
+    sage: for vectors in isotropic_subspaces(p.intersection_matrix(), 2, bound=1, contains_positive_vector=True):
+    ....:     P = Polyhedron(lines=vectors).intersection(Polyhedron(rays=(ZZ**4).basis()))
+    ....:     assert P.dimension() == 2
+    ....:     F = iet.IETFamily(p, P)
+    ....:     T = F.random_element(K)
+    ....:     assert T.sah_arnoux_fathi_invariant().is_zero()
+
+For each member of such family, one can look for iet with non-trivial dynamics (here none)::
+
+    sage: x = polygen(QQ)
+    sage: K.<cbrt3> = NumberField(x^3 - 3, embedding=AA(3)**(1/3))
+    sage: p = iet.Permutation('a b c d e f', 'f e d c b a')
+    sage: for vectors in isotropic_subspaces(p.intersection_matrix(), 3, bound=1, contains_positive_vector=True):
+    ....:     P = Polyhedron(lines=vectors).intersection(Polyhedron(rays=(ZZ**6).basis()))
+    ....:     assert P.dimension() == 3
+    ....:     F = iet.IETFamily(p, P)
+    ....:     T = F.random_element(K)
+    ....:     assert T.sah_arnoux_fathi_invariant().is_zero()
+    ....:     n_mins, n_saddles, n_unknowns = F.random_element_statistics(K, num_exp=10, num_iterations=4096)
+    ....:     if n_saddles != 10:
+    ....:         print(vectors, n_mins, n_saddles)
 """
 #*****************************************************************************
 #       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
@@ -58,6 +91,7 @@ from ppl.polyhedron cimport C_Polyhedron
 
 from sage.ext.stdsage cimport PY_NEW
 from sage.rings.integer cimport Integer
+from sage.rings.rational_field import QQ
 
 #from gmpy2 cimport import_gmpy2, MPZ_Object, MPZ, GMPy_MPZ_New
 #import_gmpy2()
@@ -200,11 +234,24 @@ cdef class IETFamily:
         free(self.entries)
         free(self.rows)
 
-    def __init__(self, p, C_Polyhedron C):
+    def __init__(self, p, C):
         # convert and check input
         from surface_dynamics.interval_exchanges.labelled import LabelledPermutationIET
         if not isinstance(p, LabelledPermutationIET):
             raise ValueError('p must be a labelled permutation')
+
+        if not isinstance(C, C_Polyhedron):
+            try:
+                C = C._ppl_polyhedron
+            except AttributeError:
+                from sage.geometry.polyhedron.constructor import Polyhedron
+                try:
+                    C = Polyhedron(C, base_ring=QQ)
+                    C = C._ppl_polyhedron
+                except Exception:
+                    raise TypeError('invalid input')
+
+        cdef C_Polyhedron CC = <C_Polyhedron> C
 
         from surface_dynamics.misc.ppl_utils import ppl_check_non_negative_cone
         ppl_check_non_negative_cone(C)
@@ -688,11 +735,12 @@ cdef class IETFamily:
             sage: (QQ**6).subspace(F.rays()) == V # optional - pplpy
             True
         """
-        from .constructors import Permutation, IET
+        from .labelled import LabelledPermutationIET as Permutation
+        from .iet import IntervalExchangeTransformation as IET
 
         top = [self.perm[i] for i in range(self.dim)]
         bot = [self.perm[i] for i in range(self.dim,2*self.dim)]
-        p = Permutation(top, bot, alphabet=range(self.dim))
+        p = Permutation((top, bot), alphabet=range(self.dim))
 
         coeffs = []
         for _ in range(self.length):
@@ -725,20 +773,32 @@ cdef class IETFamily:
         - ``intervalxt`` -- whether to use pyintervalxt for iteration (much faster for
           large number of induction steps)
 
+        - extra argument are transfered to the method :meth:`random_element`
+
         EXAMPLES::
 
             sage: from surface_dynamics import *
+
+            sage: kwds = {'num_bound': 10000, 'den_bound': 1}
+
             sage: q = iet.Permutation([0,1,2,3,4,5],[5,3,2,1,0,4])
             sage: rays = [[0, 0, 0, 1, 1, 0], [3, 1, 0, 1, 0, 2], [5, 0, 1, 2, 0, 3]]
             sage: F = iet.IETFamily(q, rays)  # optional - pplpy
             sage: x = polygen(QQ)
             sage: K.<cbrt3> = NumberField(x^3 - 3, embedding=AA(3)**(1/3))
-            sage: F.random_element_statistics(K, intervalxt=False) # optional - pplpy
+            sage: F.random_element_statistics(K, intervalxt=False, **kwds) # optional - pplpy
             (0, 100, 0)
-            sage: F.random_element_statistics(K, intervalxt=True) # optional - pplpy gmpxxyy pyeantic pyintervalxt
+            sage: F.random_element_statistics(K, intervalxt=True, **kwds) # optional - pplpy gmpxxyy pyeantic pyintervalxt
             (0, 100, 0)
 
-        A conjectural counterexample to Dynnikov-Skripshenko conjecture::
+            sage: p = iet.Permutation('a b c d', 'd c b a')
+            sage: F = iet.IETFamily(p, Polyhedron(rays=[(1,2,0,1), (3,1,1,0)])) # optional : pplpy
+            sage: num_minimals, num_saddles, num_unknowns = F.random_element_statistics(K, **kwds) # optional - pplpy
+            sage: num_saddles # optional: pplpy
+            0
+
+        A conjectural counterexample to Dynnikov-Skripshenko conjecture in genus 4 (stratum
+        component is H(3,3)^hyp)::
 
             sage: path = 'bbbbbtbttbttbbttbtttbbbbttbttbtbbtbbtbbtt'
             sage: p = iet.Permutation('a b c d e f g h i', 'i h g f e d c b a')
@@ -758,10 +818,8 @@ cdef class IETFamily:
             524 703 0 628 0 245 51 68 0
             619 462 0 229 238 63 0 0 272
             701 910 0 823 0 308 0 119 51
-            sage: minimals, saddles, unknowns = F.random_element_statistics(K, num_exp=20, num_iterations=200, intervalxt=False) # optional - pplpy
-            sage: assert minimals == 0 and saddles < 3 and unknowns > 17, (minimals, saddles, unknowns) # optional - pplpy
-            sage: minimals, saddles, unknowns = F.random_element_statistics(K, num_exp=20, num_iterations=200, intervalxt=True) # optional - pplpy gmpxxyy pyeantic pyintervalxt
-            sage: assert minimals == 0 and saddles < 3 and unknowns > 17, (minimals, saddles, unknowns) # optional - pplpy gmpxxyy pyeantic pyintervalxt
+            sage: F.random_element_statistics(K, num_exp=20, num_iterations=256, intervalxt=False, **kwds) # optional - pplpy
+            (0, 0, 20)
         """
         if intervalxt is None:
             try:
@@ -795,7 +853,7 @@ cdef class IETFamily:
                 elif res.result in SADDLE:
                     num_saddles += 1
                 elif res.result in MINIMAL:
-                    num_minimal += 1
+                    num_minimals += 1
                 else:
                     raise RuntimeError("unknown return code from pyintervalxt {}".format(res.result))
         else:
