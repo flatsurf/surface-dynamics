@@ -1087,12 +1087,6 @@ class PermutationCover(object):
              [0.2857, 0.2857],
              [0.5714, 0.5714],
              [0.2857, 0.2857]]
-            sage: c = cyclic_cover_regular(7,1,1,2)
-            sage: c.lyapunov_exponents_H_plus(isotypic_decomposition=True) # abs tol 0.05
-            [[],
-             [0.2857, 0.2857],
-             [0.5714, 0.5714],
-             [0.2857, 0.2857]]
 
             sage: c = cyclic_cover(7, 1, 2, 3)
             sage: lexp = c.lyapunov_exponents_H_plus(isotypic_decomposition=True, return_char=True, nb_iterations=2**19)
