@@ -68,7 +68,7 @@ jobs:
       - name: Run SageMath doctests
         shell: bash -l {0}
         run: |
-          sage -tp --force-lib --long --optional=${{ matrix.optionals }} surface_dynamics doc
+          PYTHONPATH=.github/workflows/disable-pytest:$PYTHONPATH sage -tp --force-lib --long --optional=${{ matrix.optionals }} surface_dynamics doc
       - name: Run pytest
         shell: bash -l {0}
         working-directory: tests
