@@ -1,5 +1,6 @@
 #*****************************************************************************
 #       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
+#                     2022 Julian Rüth <julian.rueth@fsfe.org>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
@@ -25,29 +26,20 @@ def _test_iterator1(int n, int k):
         sage: list(_test_iterator1(1, 0))
         []
 
-        sage: list(_test_iterator1(1, 1))
-        [[1L]]
-        sage: list(_test_iterator1(2, 1))
-        [[2L]]
+        sage: list(_test_iterator1(1, 1)) == [[1]]
+        True
+        sage: list(_test_iterator1(2, 1)) == [[2]]
+        True
 
-        sage: list(_test_iterator1(2, 2))
-        [[1L, 1L]]
-        sage: list(_test_iterator1(3, 2))
-        [[2L, 1L], [1L, 2L]]
-        sage: list(_test_iterator1(4, 2))
-        [[3L, 1L], [2L, 2L], [1L, 3L]]
+        sage: list(_test_iterator1(2, 2)) == [[1, 1]]
+        True
+        sage: list(_test_iterator1(3, 2)) == [[2, 1], [1, 2]]
+        True
+        sage: list(_test_iterator1(4, 2)) == [[3, 1], [2, 2], [1, 3]]
+        True
 
-        sage: list(_test_iterator1(6, 3))
-        [[4L, 1L, 1L],
-         [3L, 2L, 1L],
-         [2L, 3L, 1L],
-         [1L, 4L, 1L],
-         [3L, 1L, 2L],
-         [2L, 2L, 2L],
-         [1L, 3L, 2L],
-         [2L, 1L, 3L],
-         [1L, 2L, 3L],
-         [1L, 1L, 4L]]
+        sage: list(_test_iterator1(6, 3)) == [[4, 1, 1], [3, 2, 1], [2, 3, 1], [1, 4, 1], [3, 1, 2], [2, 2, 2], [1, 3, 2], [2, 1, 3], [1, 2, 3], [1, 1, 4]]
+        True
 
         sage: list(_test_iterator1(3, 4))
         []
@@ -71,36 +63,28 @@ def _test_iterator2(int n, int kfree, int ktop, int kbot):
 
         sage: from surface_dynamics.interval_exchanges.integer_iet import _test_iterator2
 
-        sage: list(_test_iterator2(3, 1, 1, 1))
-        [[1L, 1L, 1L]]
-        sage: list(_test_iterator2(4, 1, 1, 1))
-        [[2L, 1L, 1L]]
-        sage: list(_test_iterator2(5, 1, 1, 1))
-        [[3L, 1L, 1L], [1L, 2L, 2L]]
+        sage: list(_test_iterator2(3, 1, 1, 1)) == [[1, 1, 1]]
+        True
+        sage: list(_test_iterator2(4, 1, 1, 1)) == [[2, 1, 1]]
+        True
+        sage: list(_test_iterator2(5, 1, 1, 1)) == [[3, 1, 1], [1, 2, 2]]
+        True
 
         sage: list(_test_iterator2(3, 0, 1, 1))
         []
-        sage: list(_test_iterator2(4, 0, 2, 1))
-        [[1L, 1L, 2L]]
-        sage: list(_test_iterator2(1, 1, 0, 0))
-        [[1L]]
+        sage: list(_test_iterator2(4, 0, 2, 1)) == [[1, 1, 2]]
+        True
+        sage: list(_test_iterator2(1, 1, 0, 0)) == [[1]]
+        True
 
-        sage: list(_test_iterator2(5, 2, 1, 1))
-        [[2L, 1L, 1L, 1L], [1L, 2L, 1L, 1L]]
-        sage: list(_test_iterator2(7, 2, 2, 1))
-        [[2L, 1L, 1L, 1L, 2L], [1L, 2L, 1L, 1L, 2L]]
-        sage: list(_test_iterator2(8, 2, 2, 1))
-        [[3L, 1L, 1L, 1L, 2L],
-         [2L, 2L, 1L, 1L, 2L],
-         [1L, 3L, 1L, 1L, 2L],
-         [1L, 1L, 2L, 1L, 3L],
-         [1L, 1L, 1L, 2L, 3L]]
-        sage: list(_test_iterator2(8, 2, 1, 2))
-        [[3L, 1L, 2L, 1L, 1L],
-         [2L, 2L, 2L, 1L, 1L],
-         [1L, 3L, 2L, 1L, 1L],
-         [1L, 1L, 3L, 2L, 1L],
-         [1L, 1L, 3L, 1L, 2L]]
+        sage: list(_test_iterator2(5, 2, 1, 1)) == [[2, 1, 1, 1], [1, 2, 1, 1]]
+        True
+        sage: list(_test_iterator2(7, 2, 2, 1)) == [[2, 1, 1, 1, 2], [1, 2, 1, 1, 2]]
+        True
+        sage: list(_test_iterator2(8, 2, 2, 1)) == [[3, 1, 1, 1, 2], [2, 2, 1, 1, 2], [1, 3, 1, 1, 2], [1, 1, 2, 1, 3], [1, 1, 1, 2, 3]]
+        True
+        sage: list(_test_iterator2(8, 2, 1, 2)) == [[3, 1, 2, 1, 1], [2, 2, 2, 1, 1], [1, 3, 2, 1, 1], [1, 1, 3, 2, 1], [1, 1, 3, 1, 2]]
+        True
 
          sage: for a in _test_iterator2(5, 1, 1, 1):
          ....:     assert a[0] + 2*a[1] == a[0] + 2*a[2] == 5
@@ -334,8 +318,8 @@ def interval_exchange_statistics(top, bot, uint64_t L, int kind=0, bint flat=Fal
 
      Though, the widths of this unique cylinder is the gcd of the two lengths::
 
-        sage: interval_exchange_statistics([0,1], [1,0], 10, 1)
-        {1L: 4, 2L: 4, 5L: 1}
+        sage: interval_exchange_statistics([0,1], [1,0], 10, 1) == {1: 4, 2: 4, 5: 1}
+        True
         sage: [gcd(k, 10-k) for k in range(1,10)]
         [1, 2, 1, 2, 5, 2, 1, 2, 1]
 
@@ -478,8 +462,8 @@ def interval_exchange_statistics_sample(top, bot, uint64_t L, uint64_t sample_si
 
      Though, the widths of this unique cylinder is the gcd of the two lengths::
 
-        sage: interval_exchange_statistics([0,1],[1,0],10,1)
-        {1L: 4, 2L: 4, 5L: 1}
+        sage: interval_exchange_statistics([0,1],[1,0],10,1) == {1: 4, 2: 4, 5: 1}
+        True
         sage: [gcd(k, 10-k) for k in range(1,10)]
         [1, 2, 1, 2, 5, 2, 1, 2, 1]
 
@@ -749,16 +733,16 @@ def cylinder_widths_and_heights(top, bot, lengths):
 
         sage: from surface_dynamics.interval_exchanges.integer_iet import cylinder_widths_and_heights
 
-        sage: cylinder_widths_and_heights([0,1],[1,0],[5,2])
-        [(1L, 7L)]
-        sage: cylinder_widths_and_heights([0,1],[1,0],[8,12])
-        [(4L, 5L)]
+        sage: cylinder_widths_and_heights([0,1],[1,0],[5,2]) == [(1, 7)]
+        True
+        sage: cylinder_widths_and_heights([0,1],[1,0],[8,12]) == [(4, 5)]
+        True
 
-        sage: cylinder_widths_and_heights([0,1,2],[2,1,0],[5,3,2])
-        [(1L, 10L)]
+        sage: cylinder_widths_and_heights([0,1,2],[2,1,0],[5,3,2]) == [(1, 10)]
+        True
 
-        sage: cylinder_widths_and_heights(list(range(8)), list(range(7,-1,-1)), [1386,924,660,495,385,308,252,210])
-        [(2L, 930L), (3L, 920L)]
+        sage: cylinder_widths_and_heights(list(range(8)), list(range(7,-1,-1)), [1386,924,660,495,385,308,252,210]) == [(2, 930), (3, 920)]
+        True
     """
     cdef int_iet_t t
     cdef uint64_t * widths
@@ -784,50 +768,50 @@ def cylinder_widths(top, bot, lengths):
 
         sage: top = [0, 1]
         sage: bot = [1, 0]
-        sage: cylinder_widths(top, bot, [13, 24])
-        [1L]
+        sage: cylinder_widths(top, bot, [13, 24]) == [1]
+        True
 
         sage: top = [0, 0]
         sage: bot = [1, 1, 2, 2, 3, 3, 4, 4]
-        sage: cylinder_widths(top, bot, [10, 4, 3, 2, 1])
-        [1L, 2L]
+        sage: cylinder_widths(top, bot, [10, 4, 3, 2, 1]) == [1, 2]
+        True
 
     Genus 0 examples::
 
         sage: top = [0, 0, 1, 1, 2, 2]
         sage: bot = [3, 3, 4, 4, 5, 5, 6, 6]
-        sage: cylinder_widths(top, bot, [8, 7, 10, 8, 10, 1, 6])
-        [1L, 2L, 8L]
-        sage: cylinder_widths(top, bot, [1298, 814, 23, 140, 1034, 819, 142])
-        [2L, 3L]
-        sage: cylinder_widths(top, bot, [78745, 39773, 19984, 21665, 31239, 437, 85161])
-        [1L, 1L, 1L]
-        sage: cylinder_widths(top, bot, [57453, 9483, 110211, 100249, 36644, 9853, 30401])
-        [1L, 1L, 3L]
+        sage: cylinder_widths(top, bot, [8, 7, 10, 8, 10, 1, 6]) == [1, 2, 8]
+        True
+        sage: cylinder_widths(top, bot, [1298, 814, 23, 140, 1034, 819, 142]) == [2, 3]
+        True
+        sage: cylinder_widths(top, bot, [78745, 39773, 19984, 21665, 31239, 437, 85161]) == [1, 1, 1]
+        True
+        sage: cylinder_widths(top, bot, [57453, 9483, 110211, 100249, 36644, 9853, 30401]) == [1, 1, 3]
+        True
 
         sage: top = [0, 0, 1, 1]
         sage: bot = [2, 2, 3, 3, 4, 4, 5, 5]
-        sage: cylinder_widths(top, bot, [746825, 30952, 206252, 348, 538642, 32535])
-        [1L]
-        sage: cylinder_widths(top, bot, [219989, 91122, 70542, 187806, 5742, 47021])
-        [1L, 2L]
-        sage: cylinder_widths(top, bot, [49622, 73834, 4390, 46944, 43358, 28764])
-        [2L, 10L]
-        sage: cylinder_widths(top, bot, [25489, 109646, 25473, 7492, 11490, 90680])
-        [1L, 2L]
+        sage: cylinder_widths(top, bot, [746825, 30952, 206252, 348, 538642, 32535]) == [1]
+        True
+        sage: cylinder_widths(top, bot, [219989, 91122, 70542, 187806, 5742, 47021]) == [1, 2]
+        True
+        sage: cylinder_widths(top, bot, [49622, 73834, 4390, 46944, 43358, 28764]) == [2, 10]
+        True
+        sage: cylinder_widths(top, bot, [25489, 109646, 25473, 7492, 11490, 90680]) == [1, 2]
+        True
 
     Genus 3 example::
 
         sage: top = [0, 1, 2, 3, 4, 5, 3, 4, 6]
         sage: bot = [7, 8, 1, 7, 8, 2, 5, 6, 0]
-        sage: cylinder_widths(top, bot, [8, 10, 8, 12, 7, 3, 10, 11, 8])
-        [1L]
-        sage: cylinder_widths(top, bot, [9, 10, 8, 1, 6, 3, 5, 4, 3])
-        [1L, 1L]
-        sage: cylinder_widths(top, bot, [11, 10, 8, 12, 7, 3, 10, 11, 8])
-        [1L, 1L, 2L]
-        sage: cylinder_widths(top, bot, [948, 803, 775, 12, 7, 951, 10, 11, 8])
-        [1L]
+        sage: cylinder_widths(top, bot, [8, 10, 8, 12, 7, 3, 10, 11, 8]) == [1]
+        True
+        sage: cylinder_widths(top, bot, [9, 10, 8, 1, 6, 3, 5, 4, 3]) == [1, 1]
+        True
+        sage: cylinder_widths(top, bot, [11, 10, 8, 12, 7, 3, 10, 11, 8]) == [1, 1, 2]
+        True
+        sage: cylinder_widths(top, bot, [948, 803, 775, 12, 7, 951, 10, 11, 8]) == [1]
+        True
     """
     cdef int_iet_t t
     cdef uint64_t * widths
