@@ -454,8 +454,11 @@ class MultiplicativeMultivariateGeneratingSeries(AbstractMSum):
             sage: M = MultiplicativeMultivariateGeneratingSeriesRing('x', 2)
             sage: R = M.polynomial_ring()
             sage: x0, x1 = R.gens()
-            sage: type(M.term(1, [((1,0),1)]).taylor(10))
-            <type 'sage.rings.polynomial.multi_polynomial_libsingular.MPolynomial_libsingular'>
+
+            sage: import sage.rings.polynomial.multi_polynomial_libsingular
+            sage: isinstance(M.term(1, [((1,0),1)]).taylor(10), sage.rings.polynomial.multi_polynomial_libsingular.MPolynomial_libsingular)
+            True
+
         """
         M = self.parent()
         R = M.polynomial_ring().polynomial_ring()

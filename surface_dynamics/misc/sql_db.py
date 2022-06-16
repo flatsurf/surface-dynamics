@@ -354,7 +354,12 @@ def _create_print_table(cur, cols, **kwds):
             cur_str.append(field_val)
         return ' '.join(cur_str)
 
-    from sage.server.support import EMBEDDED_MODE
+    try:
+        # Very old versions of SageMath set EMBEDDED_MODE when running the notebook.
+        from sage.server.support import EMBEDDED_MODE
+    except ModuleNotFoundError:
+        EMBEDDED_MODE = None
+
     if EMBEDDED_MODE or ('html_table' in kwds and kwds['html_table']):
         # Notebook Version
         ret = '<html><!--notruncate-->\n'
