@@ -354,8 +354,7 @@ def _create_print_table(cur, cols, **kwds):
             cur_str.append(field_val)
         return ' '.join(cur_str)
 
-    from sage.server.support import EMBEDDED_MODE
-    if EMBEDDED_MODE or ('html_table' in kwds and kwds['html_table']):
+    if 'html_table' in kwds and kwds['html_table']:
         # Notebook Version
         ret = '<html><!--notruncate-->\n'
         ret += '  <table bgcolor=lightgrey cellpadding=0>\n'
