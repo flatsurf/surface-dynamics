@@ -70,10 +70,10 @@ extensions_data = {
         },
 
     # build iet_family only if pplpy is available
-    'iet_family': {
-        'name': 'surface_dynamics.interval_exchanges.iet_family',
+    'iet_family_pyx': {
+        'name': 'surface_dynamics.interval_exchanges.iet_family_pyx',
         'dir': 'interval_exchanges',
-        'sources': ['iet_family.pyx'],
+        'sources': ['iet_family_pyx.pyx'],
         'headers': [],
         'condition': WITH_PPL
         }

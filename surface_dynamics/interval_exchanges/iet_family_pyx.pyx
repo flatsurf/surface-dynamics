@@ -1,42 +1,6 @@
 # distutils: language=c++
 # distutils: extra_compile_args=-std=c++11
 # distutils: libraries=ppl gmp
-r"""
-Linear families of interval exchange transformations
-
-EXAMPLES:
-
-Using the iterator :function:`surface_dynamics.misc.linalg.isotropic_subspaces`,
-one can explore the SAF=0 subspaces of interval exchange transformations::
-
-    sage: from surface_dynamics import iet
-    sage: from surface_dynamics.misc.linalg import isotropic_subspaces
-
-    sage: p = iet.Permutation([1,2,0,3], [2,1,3,0], alphabet=[0,1,2,3])
-    sage: x = polygen(QQ)
-    sage: K.<cbrt3> = NumberField(x^3 - 3, embedding=AA(3)**(1/3))
-    sage: for vectors in isotropic_subspaces(p.intersection_matrix(), 2, bound=1, contains_positive_vector=True):
-    ....:     P = Polyhedron(lines=vectors).intersection(Polyhedron(rays=(ZZ**4).basis()))
-    ....:     assert P.dimension() == 2
-    ....:     F = iet.IETFamily(p, P)
-    ....:     T = F.random_element(K)
-    ....:     assert T.sah_arnoux_fathi_invariant().is_zero()
-
-For each member of such family, one can look for iet with non-trivial dynamics (here none)::
-
-    sage: x = polygen(QQ)
-    sage: K.<cbrt3> = NumberField(x^3 - 3, embedding=AA(3)**(1/3))
-    sage: p = iet.Permutation('a b c d e f', 'f e d c b a')
-    sage: for vectors in isotropic_subspaces(p.intersection_matrix(), 3, bound=1, contains_positive_vector=True):
-    ....:     P = Polyhedron(lines=vectors).intersection(Polyhedron(rays=(ZZ**6).basis()))
-    ....:     assert P.dimension() == 3
-    ....:     F = iet.IETFamily(p, P)
-    ....:     T = F.random_element(K)
-    ....:     assert T.sah_arnoux_fathi_invariant().is_zero()
-    ....:     n_mins, n_saddles, n_unknowns = F.random_element_statistics(K, num_exp=10, num_iterations=4096)
-    ....:     if n_saddles != 10:
-    ....:         print(vectors, n_mins, n_saddles)
-"""
 #*****************************************************************************
 #       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
 #
@@ -171,7 +135,10 @@ cdef inline void rauzy_bot(int * perm, size_t dim):
         perm[j] = perm[j - 1]
     perm[i + 1] = a
 
-cdef class IETFamily:
+# TODO: here we would better store a linear space rather than a positive cone
+# (of course, it will be useful to know about the intersection of this space
+# with the positive cone)
+cdef class IETFamily_pyx:
     r"""
     A linear family of interval exchange transformations
 
@@ -217,6 +184,7 @@ cdef class IETFamily:
     cdef size_t alloc       # ray allocation size
     cdef size_t length      # number of rays
     cdef C_Polyhedron poly  # the polyhedron (that we should get rid of)
+    cdef _free_module
 
     def __cinit__(self):
         self.perm = NULL
@@ -233,6 +201,9 @@ cdef class IETFamily:
         free(self.perm)
         free(self.entries)
         free(self.rows)
+
+    def _new(self):
+        return IETFamily_pyx.__new__(IETFamily_pyx)
 
     def __init__(self, p, C):
         # convert and check input
@@ -271,6 +242,13 @@ cdef class IETFamily:
         self.poly = <C_Polyhedron> C
         self.fill_rays(self.poly.thisptr.minimized_generators())
 
+    def free_module(self):
+        if self._free_module is None:
+            from sage.modules.free_module import FreeModule
+            from sage.rings.rational_field import QQ
+            self._free_module = FreeModule(QQ, self.ambient_dimension())
+        return self._free_module
+
     def ray_coefficient(self, size_t nray, size_t i):
         r"""
         Return the ``i``-th coefficient of the ``nray``-th ray
@@ -300,41 +278,6 @@ cdef class IETFamily:
         cdef Integer z= PY_NEW(Integer)
         mpz_set(z.value, self.rows[nray][i])
         return z
-
-    def rays(self):
-        r"""
-        Return the rays as vectors
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import *
-            sage: p = iet.Permutation('a b c d', 'd c b a')
-            sage: F = iet.IETFamily(p, [(2,3,0,0), (0,1,1,1)]) # optional - pplpy
-            sage: F.rays() # optional - pplpy
-            [(0, 1, 1, 1), (2, 3, 0, 0)]
-        """
-        from sage.modules.free_module import FreeModule
-        from sage.rings.rational_field import QQ
-        F = FreeModule(QQ, self.dim)
-        return [F([self.ray_coefficient(i, j) for j in range(self.dim)]) for i in range(self.length)]
-
-    def __repr__(self):
-        r"""
-        TESTS::
-
-            sage: from surface_dynamics import *
-            sage: p = iet.Permutation('a b c d', 'd c b a')
-            sage: F = iet.IETFamily(p, [(2,3,0,0), (0,1,1,1)]) # optional - pplpy
-            sage: repr(F)  # indirect doctest # optional - pplpy
-            'top 0 1 2 3\nbot 3 2 1 0\n0 1 1 1\n2 3 0 0'
-        """
-        cdef size_t i, j
-        s = []
-        s.append('top ' + ' '.join(str(self.perm[i]) for i in range(self.dim)))
-        s.append('bot ' + ' '.join(str(self.perm[self.dim+i]) for i in range(self.dim)))
-        for i in range(self.length):
-            s.append(' '.join(str(self.ray_coefficient(i, j)) for j in range(self.dim)))
-        return '\n'.join(s)
 
     def _debug_info(self):
         import sys
@@ -397,12 +340,22 @@ cdef class IETFamily:
         del gsi_ptr
         qsort(self.rows, self.length, sizeof(mpz_t *), & compare)
 
+    def dimension(self):
+        return self.poly.affine_dimension()
+
+    def ambient_dimension(self):
+        return self.poly.space_dimension()
+
+    def n_rays(self):
+        return self.length
+
     def permutation(self):
-        r"""
-        Return the permutation as a list of integers
-        """
-        cdef size_t i
-        return [[self.perm[i] for i in range(self.dim)], [self.perm[self.dim+i] for i in range(self.dim)]]
+        top = [self.perm[i] for i in range(self.dim)]
+        bot = [self.perm[self.dim+i] for i in range(self.dim)]
+        return [top, bot]
+
+    def polytope(self):
+        return self.poly
 
     def __hash__(self):
         r"""
@@ -433,7 +386,7 @@ cdef class IETFamily:
 
         return x
 
-    def __richcmp__(IETFamily self, IETFamily other, int op):
+    def __richcmp__(IETFamily_pyx self, IETFamily_pyx other, int op):
         r"""
         TESTS::
 
@@ -486,38 +439,50 @@ cdef class IETFamily:
 
         return op == Py_EQ
 
-    # this is completely useless and checks many times the same thing
-    # we should just look at left/right Rauzy induction
     def has_connection(self):
+        from warnings import warn
+        warn('has_connection is deprecated; use has_zero_connection instead')
+        return self.has_zero_connection()
+
+    def has_zero_connection(self, bint certificate=False):
         r"""
-        Check whether this family has a connection.
+        Check whether this family has a connection of length zero.
 
         EXAMPLES::
 
             sage: from surface_dynamics import *
             sage: p = iet.Permutation('A B C D E', 'E D C B A')
             sage: C0 = Polyhedron(rays=(ZZ**5).basis())
-            sage: iet.IETFamily(p, C0).has_connection() # optional - pplpy
+            sage: iet.IETFamily(p, C0).has_zero_connection() # optional - pplpy
             False
 
             sage: C = Polyhedron(rays=[(1,2,3,2,3),(1,1,0,0,2)])
-            sage: iet.IETFamily(p, C).has_connection() # optional - pplpy
+            sage: iet.IETFamily(p, C).has_zero_connection() # optional - pplpy
             True
 
             sage: C = Polyhedron(rays=[(1,1,1,1,4),(2,0,1,2,5)])
-            sage: iet.IETFamily(p, C).has_connection() # optional - pplpy
+            sage: iet.IETFamily(p, C).has_zero_connection() # optional - pplpy
             True
 
             sage: C = Polyhedron(rays=[(1,0,0,1,0),(1,0,0,0,1),(0,1,0,1,0),(0,1,0,0,1)])
-            sage: iet.IETFamily(p, C).has_connection() # optional - pplpy
+            sage: iet.IETFamily(p, C).has_zero_connection() # optional - pplpy
             True
 
             sage: C = Polyhedron(rays=[(1,2,2,2,2)])
-            sage: iet.IETFamily(p, C).has_connection() # optional - pplpy
+            sage: iet.IETFamily(p, C).has_zero_connection() # optional - pplpy
             False
+
+            sage: FF = iet.IETFamily(iet.Permutation('a b c d', 'd a c b'), [[2,1,0,3],[4,0,1,4]])
+            sage: FF.has_zero_connection()
+            True
+            sage: FF.has_zero_connection(certificate=True)
+            (True, (1, 2))
         """
         cdef bint ans
+        ans_certif = None
 
+        # x runs through the top singularities
+        # y runs through the bottom singularities
         cdef mpz_t * x = <mpz_t *> check_malloc(2 * self.length * sizeof(mpz_t))
         cdef mpz_t * y = x + self.length
         cdef size_t i, j, k
@@ -535,6 +500,8 @@ cdef class IETFamily:
                 j += 1
             if mpz_vec_equal(x, y, self.length):
                 ans = True
+                if certificate:
+                    ans_certif = (j, i)
                 break
             for k in range(self.length):
                 mpz_add(x[k], x[k], self.rows[k][self.perm[i]])
@@ -545,7 +512,7 @@ cdef class IETFamily:
             mpz_clear(x[i])
         sig_free(x)
 
-        return ans
+        return (ans, ans_certif) if certificate else ans
 
     def children(self):
         r"""
@@ -608,7 +575,7 @@ cdef class IETFamily:
         cdef int ibot = self.perm[2*self.dim - 1]
         cdef list ans = []
         cdef size_t d = self.poly.affine_dimension()
-        cdef IETFamily FF
+        cdef IETFamily_pyx FF
 
         cdef C_Polyhedron Ctop = C_Polyhedron(self.poly)
         cdef C_Polyhedron ineq = C_Polyhedron(Variable(itop) >= Variable(ibot))
@@ -616,7 +583,7 @@ cdef class IETFamily:
         Ctop.intersection_assign(ineq)
         if Ctop.affine_dimension() == d:
             Ctop.affine_image(Variable(itop), Variable(itop) - Variable(ibot))
-            FF = IETFamily.__new__(IETFamily)
+            FF = self._new()
             FF.dim = self.dim
             FF.perm = <int *> check_malloc(2 * self.dim * sizeof(int))
             memcpy(FF.perm, self.perm, 2 * sizeof(int) * FF.dim)
@@ -631,7 +598,7 @@ cdef class IETFamily:
         Cbot.intersection_assign(ineq)
         if Cbot.affine_dimension() == d:
             Cbot.affine_image(Variable(ibot), Variable(ibot) - Variable(itop))
-            FF = IETFamily.__new__(IETFamily)
+            FF = self._new()
             FF.dim = self.dim
             FF.perm = <int *> check_malloc(2 * self.dim * sizeof(int))
             memcpy(FF.perm, self.perm, 2 * sizeof(int) * FF.dim)
@@ -641,75 +608,6 @@ cdef class IETFamily:
             ans.append(('b', FF))
 
         return ans
-
-    def tree(self, max_depth=5, verbose=False):
-        r"""
-        The tree should be smarter in several ways:
-
-        - once a saddle connection is found it should check whether it is stable and
-          whether it corresponds to a splitting, a cylinder decomposition, etc
-
-        - implement a C version!
-
-        - understand what the parabolic are doing!
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import *
-            sage: p = iet.Permutation([0,1,2,3,4,5],[5,4,3,2,1,0])
-            sage: rays = [[5, 1, 0, 0, 3, 8], [2, 1, 0, 3, 0, 5], [1, 0, 1, 2, 0, 3], [3, 0, 1, 0, 2, 5]]
-            sage: F = iet.IETFamily(p, rays) # optional - pplpy
-        """
-        s = ''
-        f = self
-        branch = [[(s, f)]]
-        seen = set([f])
-        while True:
-            if verbose:
-                print("branch:")
-                for ss,ff in branch[-1]:
-                    print(ss)
-                    print(ff)
-                    print()
-            while len(branch) < max_depth:
-                branch.append([])
-                for ss, ff in f.children():
-                    if verbose:
-                        print("looking children", ss)
-                        print("cone", ff)
-                    # check for saddles among the children
-                    if ff.has_connection():
-                        yield 'saddle', s+ss, ff
-
-                    # check for auto-simlarity
-                    elif ff in seen:
-                        yield 'autosim', s+ss, ff
-
-                    else:
-                        branch[-1].append((s+ss, ff))
-
-                if not branch[-1]:
-                    branch.pop(-1)
-                    break
-                else:
-                    s, f = branch[-1][-1]
-                    assert f not in seen
-                    seen.add(f)
-
-            # backtrack
-            while branch and len(branch[-1]) == 1:
-                s, f = branch.pop()[0]
-                if f not in seen:
-                    raise RuntimeError("s = {}\nf =\n{}".format(s, f))
-                seen.remove(f)
-
-            if not branch:
-                return
-
-            s, f = branch[-1].pop(-1)
-            seen.remove(f)
-            s, f = branch[-1][-1]
-            seen.add(f)
 
     def random_element(self, ring, *args, **kwds):
         r"""
