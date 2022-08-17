@@ -1,11 +1,11 @@
 r"""
-Partial permutation on `\{0, 1, ..., n-1\}` as lists.
+Permutations and partial permutations on `\{0, 1, ..., n-1\}`.
 
-Permutations are implemented as lists or arrays. When
-the image is undefined, the number -1 is used.
+Permutation are implemented as lists of integers (where -1 represents
+an element which is unset).
 """
 #*****************************************************************************
-#       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
+#       Copyright (C) 2019-2022 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
@@ -27,6 +27,7 @@ except ImportError:
 else:
     from sage.misc.prandom import shuffle, randint
     from sage.arith.functions import lcm
+
 
 def argmin(l):
     r"""
@@ -65,6 +66,7 @@ def permutation_to_perm(p):
         [2, 0, 1]
     """
     return list(map(lambda x: x-1, p.domain()))
+
 
 def perm_to_permutation(l):
     r"""
@@ -135,10 +137,6 @@ def perm_init(data, n=None, partial=False):
 
     raise TypeError("The input must be list, tuple or string")
 
-def init_perm(l):
-    from warnings import warn
-    warn('[surface_dynamics] init_perm is deprecated use perm_init instead', Warning, 3)
-    return perm_init(l)
 
 def equalize_perms(l):
     """
@@ -220,6 +218,7 @@ def perm_check(l, n=None):
         im_seen[l[i]] = True
     return ra_seen == im_seen
 
+
 def perm_is_one(l, n=None):
     r"""
     Test whether ``l`` is the identity on its domain.
@@ -249,6 +248,73 @@ def perm_is_one(l, n=None):
     for i in range(n):
         if l[i] != -1 and l[i] != i:
             return False
+    return True
+
+def perm_is_regular(p, k=None, n=None):
+    r"""
+    Return whether the cycle decomposition of ``p`` is only made of cycles
+    of identical lengths.
+
+    INPUT:
+
+    - ``p`` -- permutation
+
+    - ``k`` -- optional integer
+
+    - ``n`` -- optional integer
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.permutation import perm_is_regular
+        sage: perm_is_regular([1, 2, 0], 3)
+        True
+        sage: perm_is_regular([1, 2, 0])
+        True
+        sage: perm_is_regular([1, 2, 0, -1, 5, 6, 4], 3)
+        True
+        sage: perm_is_regular([1, 2, 0, -1, 5, 6, 4])
+        True
+        sage: perm_is_regular([], 3)
+        True
+        sage: perm_is_regular([])
+        True
+        sage: perm_is_regular([-1, -1], 5)
+        True
+        sage: perm_is_regular([-1, -1])
+        True
+
+        sage: from surface_dynamics.misc.permutation import perm_cycle_type
+        sage: import itertools
+        sage: for p in itertools.permutations(range(6)):
+        ....:     assert perm_is_regular(p, 1) == (perm_cycle_type(p) == [1] * 6)
+        ....:     assert perm_is_regular(p, 2) == (perm_cycle_type(p) == [2] * 3)
+        ....:     assert perm_is_regular(p, 3) == (perm_cycle_type(p) == [3] * 2)
+        ....:     assert perm_is_regular(p, 6) == (perm_cycle_type(p) == [6] * 1)
+        ....:     assert perm_is_regular(p) == (perm_cycle_type(p) in [[1] * 6, [2] * 3, [3] * 2, [6] * 1])
+    """
+    if n is None:
+        n = len(p)
+    seen = [False] * n
+    for i in range(n):
+        if p[i] == -1 or seen[i]:
+            continue
+        if k is None:
+            k = 0
+            j = i
+            while not seen[j]:
+                seen[j] = True
+                j = p[j]
+                k += 1
+        else:
+            seen[i] = True
+            j = i
+            for _ in range(k - 1):
+                j = p[j]
+                if seen[j]:
+                    return False
+                seen[j] = True
+            if p[j] != i:
+                return False
     return True
 
 #####################################################################
@@ -382,9 +448,6 @@ def perm_cycles(p, singletons=False, n=None):
 
     return res
 
-def perm_cycle_tuples(*args, **kwds):
-    print("WARNING: perm_cycle_tuples is deprecated, use perm_cycles")
-    return perm_cycles(*args, **kwds)
 
 def perm_num_cycles(p, n=None):
     r"""
@@ -403,6 +466,8 @@ def perm_num_cycles(p, n=None):
         3
         sage: perm_num_cycles([0,1,2,3])
         4
+        sage: perm_num_cycles([-1,4,2,-1,1])
+        2
     """
     if n is None:
         n = len(p)
@@ -417,6 +482,7 @@ def perm_num_cycles(p, n=None):
             seen[j] = True
             j = p[j]
     return ans
+
 
 def perm_cycle_type(p, n=None):
     r"""
@@ -436,6 +502,8 @@ def perm_cycle_type(p, n=None):
         [2, 1, 1]
         sage: perm_cycle_type([0,1,2,3])
         [1, 1, 1, 1]
+        sage: perm_cycle_type([-1,4,2,-1,1])
+        [2, 1]
     """
     if n is None:
         n = len(p)
@@ -454,6 +522,7 @@ def perm_cycle_type(p, n=None):
     c.sort(reverse=True)
     return c
 
+
 def perm_dense_cycles(p, n=None):
     r"""
     EXAMPLES::
@@ -468,6 +537,9 @@ def perm_dense_cycles(p, n=None):
 
         sage: perm_dense_cycles([2,1,0])
         ([0, 1, 0], [2, 1])
+
+        sage: perm_dense_cycles([-1,1,-1,4,3])
+        ([-1, 0, -1, 1, 1], [1, 2])
     """
     if n is None:
         n = len(p)
@@ -475,7 +547,7 @@ def perm_dense_cycles(p, n=None):
     res = [-1] * n
     k = 0
     for i in range(n):
-        if res[i] != -1:
+        if p[i] == -1 or res[i] != -1:
             continue
         d = 0
         while res[i] == -1:
@@ -508,6 +580,7 @@ def perm_dense_cycles_and_angles(p, n=None):
         deg.append(d)
     return lab, ang, deg
 
+
 def perm_cycle_string(p, singletons=False, n=None):
     r"""
     Returns a string representing the cycle decomposition of `p`
@@ -528,9 +601,10 @@ def perm_cycle_string(p, singletons=False, n=None):
     else:
         return ''.join(map(lambda x: '('+','.join(map(str, x))+')', c))
 
-def _canonical_reg_perm(n, k):
+
+def _canonical_reg_perm(domain, k):
     r"""
-    Return a standard product of disjoint k-cycles on {0, 1, ..., n-1}
+    Return a standard product of disjoint k-cycles on domain
 
     TESTS::
 
@@ -539,20 +613,31 @@ def _canonical_reg_perm(n, k):
         [1, 0, 3, 2, 5, 4]
         sage: _canonical_reg_perm(6, 3)
         [1, 2, 0, 4, 5, 3]
+        sage: _canonical_reg_perm([0, 7, 3, 6, 1, 8], 3)
+        [7, 8, -1, 0, -1, -1, 1, 3, 6]
     """
-    if not isinstance(n, numbers.Integral) or not isinstance(k, numbers.Integral):
+    if isinstance(domain, numbers.Integral):
+        N = n = domain
+        domain = range(n)
+    else:
+        n = len(domain)
+        N = max(domain) + 1 if domain else 0
+    if not isinstance(k, numbers.Integral):
         raise ValueError
-    if n <= 0 or k <= 0 or n % k:
-        raise ValueError
+    if not isinstance(k, numbers.Integral) or n < 0 or k <= 0:
+        raise ValueError('input n={} must be non-negative and k={} must be positive'.format(n, k))
+    if n % k:
+        raise ValueError('input k={} must divide n={}'.format(k, n))
 
-    p = []
-    for i in range(0,n,k):
-        p.extend(range(i+1, i+k))
-        p.append(i)
+    p = [-1] * N
+    for i in range(0, n, k):
+        for j in range(i, i+k-1):
+            p[domain[j]] = domain[j+1]
+        p[domain[i+k-1]] = domain[i]
     return p
 
 
-def constellation_init(vertices, edges, faces, n=None, domain=None, check=True):
+def constellation_init(vertices, edges, faces, n=None, check=True):
     r"""
     Each of ``vertices``, ``edges`` or ``faces can be ``None``, an
     integer or an object to initialize a (partial) permutation.
@@ -563,7 +648,7 @@ def constellation_init(vertices, edges, faces, n=None, domain=None, check=True):
 
     - ``n`` - (optional) number of darts
 
-    - ``check`` - boolean default ``True``)
+    - ``check`` - boolean default ``True``
 
     TESTS::
 
@@ -571,7 +656,7 @@ def constellation_init(vertices, edges, faces, n=None, domain=None, check=True):
 
         sage: constellation_init([0,1], [1,0], [1,0])
         [[0, 1], [1, 0], [1, 0]]
-        sage: constellation_init([0r,1r],[1r,0r], [1r,0r])
+        sage: constellation_init([0r,1r], [1r,0r], [1r,0r])
         [[0, 1], [1, 0], [1, 0]]
 
         sage: constellation_init([2,1,0], [1,2,0], None)
@@ -596,6 +681,16 @@ def constellation_init(vertices, edges, faces, n=None, domain=None, check=True):
 
         sage: constellation_init(None, '(0,1)(2,3)(4,5)', '(0,2,4)(1)(3,5)')
         [[5, 0, 1, 4, 3, 2], [1, 0, 3, 2, 5, 4], [2, 1, 4, 5, 0, 3]]
+        sage: constellation_init([-1,-1,2,3], None, [-1,-1,3,2])
+        [[-1, -1, 2, 3], [-1, -1, 3, 2], [-1, -1, 3, 2]]
+        sage: constellation_init([-1,-1,2,3], 2, [-1,-1,3,2])
+        [[-1, -1, 2, 3], [-1, -1, 3, 2], [-1, -1, 3, 2]]
+        sage: constellation_init(None, 2, [-1,-1,3,2])
+        [[-1, -1, 2, 3], [-1, -1, 3, 2], [-1, -1, 3, 2]]
+        sage: constellation_init([-1,-1,2,3], 2, None)
+        [[-1, -1, 2, 3], [-1, -1, 3, 2], [-1, -1, 3, 2]]
+        sage: constellation_init([1, 4, -1, -1, 5, 0], None, None)
+        [[1, 4, -1, -1, 5, 0], [1, 0, -1, -1, 5, 4], [0, 5, -1, -1, 4, 1]]
     """
     nones = [p is None for p in [vertices, edges, faces]]
     if sum(nones) > 1:
@@ -636,9 +731,14 @@ def constellation_init(vertices, edges, faces, n=None, domain=None, check=True):
         if n is None:
             n = len(perms[0])
 
-    for i in range(3):
-        if nums[i]:
-            P[i] = _canonical_reg_perm(n, P[i])
+    if any(nums):
+        if perms:
+            domain = [j for j in range(n) if perms[0][j] != -1]
+        else:
+            domain = n
+        for i in range(3):
+            if nums[i]:
+                P[i] = _canonical_reg_perm(domain, P[i])
 
     for i in range(3):
         if nones[i]:
@@ -692,6 +792,7 @@ def perm_invert(l, n=None):
             res[l[i]] = i
     return res
 
+
 def perm_invert_inplace(p, n=None):
     r"""
     Inverse in place the permutation p
@@ -707,7 +808,8 @@ def perm_invert_inplace(p, n=None):
             seen[i] = 1
             i, p[j] = p[j], i
 
-def perm_compose(p1, p2):
+
+def perm_compose(p1, p2, n=None):
     r"""
     Returns the product ``p1 p2``.
 
@@ -724,8 +826,11 @@ def perm_compose(p1, p2):
         sage: perm_compose(p1, p2)
         [-1, 3, -1, 1, -1, 5]
     """
-    r = [-1] * len(p1)
-    for i in range(len(p1)):
+    if n is None:
+        n = len(p1)
+
+    r = [-1] * n
+    for i in range(n):
         if p1[i] != -1 and p1[i] < len(p2):
             r[i] = p2[p1[i]]
     return r
@@ -756,6 +861,7 @@ def perm_compose_i(p1, p2, n=None):
             res[p1[p2[i]]] = i
 
     return res
+
 
 def perm_commutator(p1, p2, n=None):
     r"""
@@ -794,7 +900,7 @@ def perm_commutator(p1, p2, n=None):
             res[p1[p2[i]]] = p2[p1[i]]
     return res
 
-# can we do that inplace?
+
 def perm_conjugate(p1, p2, n=None):
     r"""
     Conjugate ``p1`` by ``p2``.
@@ -822,23 +928,28 @@ def perm_conjugate(p1, p2, n=None):
         res[p2[i]] = p2[p1[i]]
     return res
 
+
 def perm_conjugate_inplace(p1, p2, n=None):
     r"""
-    we want
+    Conjugation inplace.
 
-    p1[p2[i]] <- p2[p1[i]]
+    EXAMPLES::
 
-    save tmp = p1[p2[0]]
-    set  p1[p2[0]] = p2[p1[0]]
-
+        sage: from surface_dynamics.misc.permutation import perm_conjugate, perm_conjugate_inplace
+        sage: p1 = [2, 0, 3, 5, 1, 7, 4, 6]
+        sage: p2 = [6, 1, 0, 4, 2, 3, 5, 7]
+        sage: perm_conjugate(p1, p2)
+        [4, 6, 1, 7, 3, 2, 0, 5]
+        sage: perm_conjugate_inplace(p1, p2)
+        sage: print(p1)
+        [4, 6, 1, 7, 3, 2, 0, 5]
     """
     if n is None:
         n = len(p1)
-    unseen = [True] * n
+    perm_on_list_inplace(p2, p1, n)
     for i in range(n):
-        if not unseen[i]:
-            continue
-        unseen[i] = True
+        p1[i] = p2[p1[i]]
+
 
 def perm_on_list_inplace(p, a, n=None, swap=None):
     r"""
@@ -880,7 +991,7 @@ def perm_on_list_inplace(p, a, n=None, swap=None):
         n = len(p)
     seen = [False] * n
     for i in range(n):
-        if seen[i]:
+        if p[i] == -1 or seen[i]:
             continue
         seen[i] = True
         j = p[i]
@@ -893,6 +1004,22 @@ def perm_on_list_inplace(p, a, n=None, swap=None):
                 a[j] = tmp
             seen[j] = True
             j = p[j]
+
+def perm_is_on_list_stabilizer(p, a, n=None, eq=None):
+    r"""
+    Return whether ther permutation ``p`` stabilizes the array ``a``.
+    """
+    if n is None:
+        n = len(p)
+    for i in range(n):
+        if p[i] == -1:
+            continue
+        if eq:
+            if not eq(a[i], a[p[i]]):
+                return False
+        elif a[i] != a[p[i]]:
+            return False
+    return True
 
 ################################################################
 # Various permutation constructors (including randomized ones) #
@@ -912,6 +1039,7 @@ def perm_one(n):
     """
     return list(range(n))
 
+
 def perm_random(n):
     r"""
     Return a random permutation.
@@ -925,6 +1053,7 @@ def perm_random(n):
     r = list(range(n))
     shuffle(r)
     return r
+
 
 def perm_random_centralizer(p):
     r"""
@@ -964,6 +1093,7 @@ def perm_random_centralizer(p):
         i = j
 
     return ans
+
 
 def perm_random_conjugacy_class(c):
     r"""
@@ -1113,6 +1243,20 @@ def canonical_perm_i(part, i=0):
     return res
 
 
+def perm_hash(p, n=None):
+    r"""
+    Return a hash of the permutation ``p``.
+    """
+    if n is None:
+        n = len(p)
+    ans = n
+    for i in range(n):
+        if p[i] == -1:
+            continue
+        ans = (ans ^ p[i]) * 1000003
+    return ans
+
+
 def perm_switch(p1, p2, i, j):
     """
     Exchanges the values at positions ``i`` and ``j`` in two permutations
@@ -1181,6 +1325,7 @@ def perms_transitive_components(p):
 
     return [tuple(i for i in range(n) if seen[i] == j) for j in range(cc_num)]
 
+
 def perms_are_transitive(p):
     """
     Test whether the group generated by the permutations in ``p`` is transitive.
@@ -1228,6 +1373,7 @@ def perms_are_transitive(p):
 
     return all(j is True for j in cc0)
 
+
 def perms_orbits(p, n=None):
     r"""
     EXAMPLES::
@@ -1273,6 +1419,7 @@ def perms_orbits(p, n=None):
                     todo.append(j)
         orbits.append(orbit)
     return orbits
+
 
 def perms_relabel(p, m):
     """
@@ -1442,12 +1589,22 @@ class PermutationGroupOrbit:
         if S is None:
             S = list(range(n))
 
-        self._n = n              # underlying set is {0, 1, ..., n-1}
-        self._gens = gens        # group generators
-        self._S = S              # the set we are interested in
-        self._s = 0              # index in the set S
+        self._n = n              # underlying set size; ground set is {0, 1, ..., n-1}
+        self._gens = gens        # permutation group generators
+        self._S = S              # the set we iterate over up to the group action
+        self._s = 0              # current index in the set S
         self._seen = [False] * n # the elements that we already visited (dense version)
         self._elts = []          # the elements that we already visited (sparse version)
+
+    def __eq__(self, other):
+        if type(self) is not type(other):
+            raise TypeError
+        return self.libgap_group() == other.libgap_group()
+
+    def __ne__(self, other):
+        if type(self) is not type(other):
+            raise TypeError
+        return self.libgap_group() != other.libgap_group()
 
     def __iter__(self):
         return self
@@ -1493,7 +1650,7 @@ class PermutationGroupOrbit:
 
     def reset_iterator(self, S=None):
         r"""
-        Reset the self we iterate over with.
+        Reset the set we iterate over with this group.
 
         EXAMPLES::
 
@@ -1646,6 +1803,7 @@ def uint_base64_str(n, l=None):
             s = CHARS[0] * (l - len(s)) + s
     return s
 
+
 def uint_from_base64_str(s):
     r"""
     EXAMPLES::
@@ -1675,6 +1833,7 @@ def uint_from_base64_str(s):
         d *= 64
     return n
 
+
 def perm_base64_str(p, n=None):
     r"""
     Make a canonical ASCII string out of ``p``.
@@ -1700,6 +1859,7 @@ def perm_base64_str(p, n=None):
         return ''
     l = int(log(n, 64)) + 1 # number of digits used for each entry
     return ''.join(uint_base64_str(p[i], l) for i in range(n))
+
 
 def perm_from_base64_str(s, n):
     r"""
