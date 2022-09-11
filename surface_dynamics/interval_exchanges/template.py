@@ -2505,19 +2505,19 @@ class PermutationLI(Permutation):
                 [(0,j) for j in range(len(a[0]))],
                 [(1,j) for j in range(len(a[1]))]]
 
-            for i in (0,1):
-              for j in range(len(twin[i])) :
-                  if twin[i][j] == (i,j) :
-                    if a[i][j] in a[i][j+1:] :
-                    # two up or two down
-                        j2 = (a[i][j+1:]).index(a[i][j]) + j + 1
-                        twin[i][j] = (i,j2)
-                        twin[i][j2] = (i,j)
-                    else :
-                        # one up, one down (here i=0)
-                        j2 = a[1].index(a[i][j])
-                        twin[0][j] = (1,j2)
-                        twin[1][j2] = (0,j)
+            for i in (0, 1):
+                for j in range(len(twin[i])) :
+                    if twin[i][j] == (i,j) :
+                        if a[i][j] in a[i][j+1:] :
+                            # two up or two down
+                            j2 = (a[i][j+1:]).index(a[i][j]) + j + 1
+                            twin[i][j] = (i,j2)
+                            twin[i][j2] = (i,j)
+                        else:
+                            # one up, one down (here i=0)
+                            j2 = a[1].index(a[i][j])
+                            twin[0][j] = (1,j2)
+                            twin[1][j2] = (0,j)
 
             self._twin = twin
 
@@ -3506,7 +3506,7 @@ class PermutationLI(Permutation):
 
         p = self.erase_marked_points().to_cylindric()
         if cylindric_canonical(p) in D.get(stratum):
-           return stratum.irregular_component()
+            return stratum.irregular_component()
         return stratum.regular_component()
 
     def has_rauzy_move(self, winner, side='right'):

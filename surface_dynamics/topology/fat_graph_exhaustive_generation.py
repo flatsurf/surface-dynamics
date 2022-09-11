@@ -555,15 +555,13 @@ class StackCallback:
         nf = 1
         g = 0
 
-        if self._vmin <= nv < self._vmax and \
-           self._emin <= ne < self._emax and \
-           self._fmin <= nf < self._fmax and \
-           self._gmin <= g < self._gmax and \
-           self._vertex_min_degree == 0 and \
-           (self._filter is None or self._filter(cm, aut)):
-               self._callback(cm, None)
+        if (self._vmin <= nv < self._vmax and self._emin <= ne < self._emax and
+            self._fmin <= nf < self._fmax and self._gmin <= g < self._gmax and
+            self._vertex_min_degree == 0 and (self._filter is None or
+                                              self._filter(cm, aut))):
+            self._callback(cm, None)
 
-        cm._realloc(2*self._emax - 2)
+        cm._realloc(2 * self._emax - 2)
         if self._gmax > 1:
             augment1(cm, None, self._gmax - 1, self)
         if self._gmin == 0 and self._fmax > 2:
