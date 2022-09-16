@@ -229,7 +229,7 @@ class IETFamily(IETFamily_pyx):
 
     def is_boshernitzan(self, itop=None, ibot=None, certificate=False, solver="PPL"):
         r"""
-        Return whether this slice satisfies Boshernitzan condition.
+        Return whether this slice satisfies Boshernitzan conditions.
 
         EXAMPLES::
 
@@ -301,7 +301,7 @@ class IETFamily(IETFamily_pyx):
 
         if itop is None or ibot is None:
             if itop is not None or ibot is not None:
-                raise ValueError('itop and ibot must be simultaneously zero')
+                raise ValueError('itop and ibot must be simultaneously None')
             itops = range(1, len(p))
             ibots = range(1, len(p))
         else:
