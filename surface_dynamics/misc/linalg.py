@@ -419,6 +419,23 @@ def has_positive_linear_combination(vectors, d, solver="PPL"):
             return False
     return True
 
+def has_nonnegative_relation(vectors, phi, d, solver="PPL"):
+    r"""
+    Test whether there exists (a1, ..., an) >= 0 such that
+
+    a1 v1 + a2 v2 + ... + an vk = phi
+    """
+    M = MixedIntegerLinearProgram(solver=solver)
+    x = M.new_variable()
+    values = [phi.dot_product(v) if len(v) == d else phi.dot_product(v[:d]) for v in vectors]
+    for i in range(d):
+        M.add_constraint(M.sum(x[j] * v[i] for j, v in enumerate(vectors)) >= 1)
+        try:
+            M.solve(objective_only=True)
+        except MIPSolverException:
+            return False
+    return True
+
 def symbolic_matrix_power(M, n):
     r"""
     Return the symbolic power ``M^n`` of the unipotent matrix ``M``.
