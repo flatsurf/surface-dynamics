@@ -37,6 +37,10 @@ jobs:
             sagelib: "9.6"
           - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
             sagelib: "9.6"
+          - optionals: "sage,pplpy"
+            sagelib: "9.7"
+          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+            sagelib: "9.7"
     steps:
       - uses: actions/checkout@v2
         with: { submodules: recursive }
