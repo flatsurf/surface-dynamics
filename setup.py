@@ -96,6 +96,15 @@ for name, data in extensions_data.items():
         source_files.extend(sources)
         source_files.extend(headers)
 
+# Work around changes in SageMath 9.7, see https://trac.sagemath.org/wiki/ReleaseTours/sage-9.7#Packagessagesage.rings...arenownamespaces
+try:
+    from sage.misc.package_dir import cython_namespace_package_support
+except (ImportError, ModuleNotFoundError):
+    from contextlib import nullcontext as cython_namespace_package_support
+
+with cython_namespace_package_support():
+    extensions = cythonize(extensions)
+
 setup(name='surface-dynamics',
       version=version,
       description="Dynamics on surfaces",
@@ -121,17 +130,16 @@ setup(name='surface-dynamics',
           'surface_dynamics/databases': ['cylinder_diagrams/cyl_diags*', 'generalized_permutation_twins/twins*'],
           'surface_dynamics/flat_surfaces/origamis': ['origamis.db'],
           },
-    ext_modules=cythonize(extensions),
-    classifiers=[
-      'Development Status :: 4 - Beta',
-      'Intended Audience :: Science/Research',
-      'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
-      'Operating System :: OS Independent',
-      'Programming Language :: C',
-      'Programming Language :: C++',
-      'Programming Language :: Python',
-      'Programming Language :: Cython',
-      'Topic :: Scientific/Engineering :: Mathematics',
-    ],
-    keywords='surfaces, dynamics, geometry, flat surfaces, Abelian differentials, quadratic differentials, Riemann surfaces'
-)
+      ext_modules=extensions,
+      classifiers=[
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
+        'Operating System :: OS Independent',
+        'Programming Language :: C',
+        'Programming Language :: C++',
+        'Programming Language :: Python',
+        'Programming Language :: Cython',
+        'Topic :: Scientific/Engineering :: Mathematics',
+      ],
+      keywords='surfaces, dynamics, geometry, flat surfaces, Abelian differentials, quadratic differentials, Riemann surfaces')
