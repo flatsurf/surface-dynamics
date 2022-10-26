@@ -824,7 +824,7 @@ class RibbonGraph(SageObject):
             sage: T,o = R.spanning_tree()
             sage: T
             Digraph on 2 vertices
-            sage: T.edges()
+            sage: T.edges(sort=True)
             [(0, 1, (3, 4))]
             sage: o
             [(1, 2), (5, 6)]
