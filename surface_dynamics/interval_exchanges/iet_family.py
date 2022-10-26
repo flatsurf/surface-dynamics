@@ -61,7 +61,7 @@ class IETFamily(IETFamily_pyx):
             sage: p = iet.Permutation('a b c d', 'd c b a')
             sage: F = iet.IETFamily(p, [(2,3,0,0), (0,1,1,1)]) # optional - pplpy
             sage: repr(F)  # indirect doctest # optional - pplpy
-            'top 0 1 2 3\nbot 3 2 1 0\n0 1 1 1\n2 3 0 0'
+            'Linear iet family of dimension 2 in RR^4\ntop a b c d\nbot d c b a\n0 1 1 1\n2 3 0 0'
         """
         s = []
 
@@ -70,7 +70,7 @@ class IETFamily(IETFamily_pyx):
         s.append('top ' + ' '.join(map(str, perm[0])))
         s.append('bot ' + ' '.join(map(str, perm[1])))
         for r in self.rays():
-            s.append(str(r))
+            s.append(' '.join(map(str,r)))
         return '\n'.join(s)
 
     def _new(self):
@@ -88,9 +88,6 @@ class IETFamily(IETFamily_pyx):
             sage: p = iet.Permutation('a b c d', 'd c b a')
             sage: F = iet.IETFamily(p, Polyhedron(rays=(ZZ**4).basis())) # optional - pplpy
             sage: F.permutation() # optional - pplpy
-            0 1 2 3
-            3 2 1 0
-            sage: F.permutation(alphabet='abcd') # optional - pplpy
             a b c d
             d c b a
         """

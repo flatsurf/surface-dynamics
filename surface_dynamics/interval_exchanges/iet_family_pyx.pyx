@@ -155,16 +155,18 @@ cdef class IETFamily_pyx:
         sage: p = iet.Permutation('a b c d', 'd c b a')
         sage: F = iet.IETFamily(p, (ZZ**4).basis())    # optional - pplpy
         sage: F  # optional - pplpy
-        top 0 1 2 3
-        bot 3 2 1 0
+        Linear iet family of dimension 4 in RR^4
+        top a b c d
+        bot d c b a
         0 0 0 1
         0 0 1 0
         0 1 0 0
         1 0 0 0
 
         sage: iet.IETFamily(p, [(2,3,0,0), (0,1,1,1)]) # optional - pplpy
-        top 0 1 2 3
-        bot 3 2 1 0
+        Linear iet family of dimension 2 in RR^4
+        top a b c d
+        bot d c b a
         0 1 1 1
         2 3 0 0
 
@@ -529,8 +531,9 @@ cdef class IETFamily_pyx:
             sage: top[0] # optional - pplpy
             't'
             sage: top[1] # optional - pplpy
-            top 0 1 2 3
-            bot 3 0 2 1
+            Linear iet family of dimension 4 in RR^4
+            top a b c d
+            bot d a c b
             0 0 0 1
             0 0 1 0
             0 1 0 0
@@ -538,8 +541,9 @@ cdef class IETFamily_pyx:
             sage: bot[0] # optional - pplpy
             'b'
             sage: bot[1] # optional - pplpy
-            top 0 3 1 2
-            bot 3 2 1 0
+            Linear iet family of dimension 4 in RR^4
+            top a d b c
+            bot d c b a
             0 0 0 1
             0 0 1 0
             0 1 0 0
@@ -553,8 +557,9 @@ cdef class IETFamily_pyx:
             sage: c[0][0] # optional - pplpy
             't'
             sage: c[0][1] # optional - pplpy
-            top 0 1 2 3 4 5
-            bot 4 1 5 3 2 0
+            Linear iet family of dimension 2 in RR^6
+            top a b c d e f
+            bot e b f d c a
             0 1 0 1 0 0
             1 1 1 1 1 1
 
@@ -565,8 +570,9 @@ cdef class IETFamily_pyx:
             sage: c[0][0] # optional - pplpy
             'b'
             sage: c[0][1] # optional - pplpy
-            top 0 1 2 3 5 4
-            bot 4 1 5 2 0 3
+            Linear iet family of dimension 3 in RR^6
+            top a b c d f e
+            bot e b f c a d
             0 0 0 1 0 0
             1 0 0 0 0 0
             1 1 1 0 1 1
@@ -621,6 +627,7 @@ cdef class IETFamily_pyx:
             sage: rays = [[0, 0, 0, 1, 1, 0], [3, 1, 0, 1, 0, 2], [5, 0, 1, 2, 0, 3]]
             sage: F = iet.IETFamily(q, rays) # optional - pplpy
             sage: F # optional - pplpy
+            Linear iet family of dimension 3 in RR^6
             top 0 1 2 3 4 5
             bot 5 3 2 1 0 4
             0 0 0 1 1 0
@@ -706,8 +713,9 @@ cdef class IETFamily_pyx:
             (0, 0, 0, 0, 0, 0)
             sage: F = iet.IETFamily(T)  # optional - pplpy
             sage: F  # optional - pplpy
-            top 0 1 2 3 4 5 6 7 8
-            bot 8 7 6 5 4 3 2 1 0
+            Linear iet family of dimension 4 in RR^9
+            top a b c d e f g h i
+            bot i h g f e d c b a
             71 67 70 107 0 0 19 2 0
             95 63 21 44 35 0 0 0 43
             105 94 88 147 0 0 0 15 19
