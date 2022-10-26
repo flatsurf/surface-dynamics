@@ -25,6 +25,22 @@ jobs:
             sagelib: "9.3"
           - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
             sagelib: "9.3"
+          - optionals: "sage,pplpy"
+            sagelib: "9.4"
+          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+            sagelib: "9.4"
+          - optionals: "sage,pplpy"
+            sagelib: "9.5"
+          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+            sagelib: "9.5"
+          - optionals: "sage,pplpy"
+            sagelib: "9.6"
+          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+            sagelib: "9.6"
+          - optionals: "sage,pplpy"
+            sagelib: "9.7"
+          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+            sagelib: "9.7"
     steps:
       - uses: actions/checkout@v2
         with: { submodules: recursive }
@@ -41,6 +57,9 @@ jobs:
             (test "$optional" == '' || (echo "${{ matrix.optionals }}" | grep -E '\b'"$optional"'\b') > /dev/null) && echo "$REPLY" || true
           done < environment.yml > environment.test.yml
 
+          echo "Installing the following test environment"
+          cat environment.test.yml
+
           mamba env update --quiet -n test -f environment.test.yml
 
           conda list
@@ -53,7 +72,7 @@ jobs:
       - name: Run SageMath doctests
         shell: bash -l {0}
         run: |
-          sage -tp --force-lib --long --optional=${{ matrix.optionals }} surface_dynamics doc
+          PYTHONPATH=`pwd`/.github/workflows/disable-pytest sage -tp --force-lib --long --optional=${{ matrix.optionals }} surface_dynamics doc
       - name: Run pytest
         shell: bash -l {0}
         working-directory: tests

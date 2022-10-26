@@ -1502,10 +1502,12 @@ class OrigamiDatabase(SQLDatabase):
             sage: from surface_dynamics import *
 
             sage: import os
-            sage: db_name = os.path.join(SAGE_TMP, 'my_db.db')
-            sage: D = OrigamiDatabase(db_name, read_only=False)
-            sage: D.build(AbelianStratum(4).odd_component(), 8) # optional - gap_packages
-            sage: D.info()                                      # optional - gap_packages
+            sage: import tempfile
+            sage: with tempfile.TemporaryDirectory() as tmpdir:
+            ....:     db_name = os.path.join(tmpdir, 'my_db.db')
+            ....:     D = OrigamiDatabase(db_name, read_only=False)
+            ....:     D.build(AbelianStratum(4).odd_component(), 8) # optional - gap_packages
+            ....:     D.info()                                      # optional - gap_packages
             genus 2
             =======
             <BLANKLINE>
@@ -1696,14 +1698,16 @@ class OrigamiDatabase(SQLDatabase):
             sage: from surface_dynamics import *
 
             sage: import os
-            sage: db1_name = os.path.join(SAGE_TMP, 'the_first_one.db')
-            sage: db2_name = os.path.join(SAGE_TMP, 'the_second_one.db')
-            sage: D1 = OrigamiDatabase(db1_name, read_only=False)
-            sage: D2 = OrigamiDatabase(db2_name, read_only=False)
-            sage: D1.build(AbelianStratum(1,1).unique_component(), 7)  # optional - gap_packages
-            sage: D2.build(AbelianStratum(2).unique_component(), 5)    # optional - gap_packages
-            sage: D2.update(D1)                                        # optional - gap_packages
-            sage: D2.info()                                            # optional - gap_packages
+            sage: import tempfile
+            sage: with tempfile.TemporaryDirectory() as tmpdir:
+            ....:     db1_name = os.path.join(tmpdir, 'the_first_one.db')
+            ....:     db2_name = os.path.join(tmpdir, 'the_second_one.db')
+            ....:     D1 = OrigamiDatabase(db1_name, read_only=False)
+            ....:     D2 = OrigamiDatabase(db2_name, read_only=False)
+            ....:     D1.build(AbelianStratum(1,1).unique_component(), 7)  # optional - gap_packages
+            ....:     D2.build(AbelianStratum(2).unique_component(), 5)    # optional - gap_packages
+            ....:     D2.update(D1)                                        # optional - gap_packages
+            ....:     D2.info()                                            # optional - gap_packages
             genus 2
             =======
              H_2(2)^hyp  :   2 T. curves (up to  4 squares)
