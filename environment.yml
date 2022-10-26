@@ -4,7 +4,6 @@
 # conda env create -f environment.yml
 name: surface-dynamics-build
 channels:
-  - flatsurf
   - conda-forge
   - defaults
 dependencies:
@@ -27,9 +26,7 @@ dependencies:
   - pyeantic >=1.0.0,<2  # optional: pyeantic
   - pyintervalxt >=3.1.0,<4  # optional: pyintervalxt
   - gmpxxyy >=1.0.1,<2  # optional: gmpxxyy
-  # sphinx 4 produces a warning currently that looks like a bug in sphinx:
-  # <unknown>:1:py:obj reference target not found: surface_dynamics.flat_surfaces.abelian_strata.c
-  - sphinx >=3.0.0,<4 # optional: doc
+  - sphinx >=4.2.0,<6  # optional: doc
   - pip
   - pip:
     - linkchecker  # optional: doc

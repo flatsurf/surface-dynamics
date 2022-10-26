@@ -813,7 +813,7 @@ class RibbonGraph(SageObject):
             sage: T,o = R.spanning_tree()
             sage: T
             Digraph on 2 vertices
-            sage: T.edges()
+            sage: T.edges(sort=True)
             [(0, 1, (3, 4))]
             sage: o
             [(1, 2)]
@@ -824,7 +824,7 @@ class RibbonGraph(SageObject):
             sage: T,o = R.spanning_tree()
             sage: T
             Digraph on 2 vertices
-            sage: T.edges()
+            sage: T.edges(sort=True)
             [(0, 1, (3, 4))]
             sage: o
             [(1, 2), (5, 6)]
@@ -916,7 +916,7 @@ class RibbonGraph(SageObject):
             spanning_tree,_ = self.spanning_tree()
 
         darts_to_kill = set([])
-        for v0,v1,e in spanning_tree.edges():
+        for v0,v1,e in spanning_tree.edges(sort=True):
             darts_to_kill.add(e[0])
             darts_to_kill.add(e[1])
 

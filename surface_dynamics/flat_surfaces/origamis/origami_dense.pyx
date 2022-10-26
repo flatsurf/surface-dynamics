@@ -1980,9 +1980,9 @@ cdef class Origami_dense_pyx:
             sage: o = Origami('(1,2)', '(1,3)')
             sage: G = o.as_graph(); G
             Looped multi-digraph on 3 vertices
-            sage: G.vertices()
+            sage: G.vertices(sort=True)
             [0, 1, 2]
-            sage: G.edges()
+            sage: G.edges(sort=True)
             [(0, 1, 'r'), (0, 2, 'u'), (1, 0, 'r'), (1, 1, 'u'), (2, 0, 'u'), (2, 2, 'r')]
         """
         from sage.graphs.digraph import DiGraph
