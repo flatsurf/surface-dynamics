@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Generic topological recursion &mdash; surface-dynamics 0.4.7 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <title>Generic topological recursion &mdash; surface-dynamics 0.4.7 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -44,7 +49,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../interval_exchanges/index.html">Interval exchange transformations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Topological recursion</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Generic topological recursion</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Generic topological recursion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion"><code class="docutils literal notranslate"><span class="pre">TopologicalRecursion</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.A"><code class="docutils literal notranslate"><span class="pre">TopologicalRecursion.A()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.B"><code class="docutils literal notranslate"><span class="pre">TopologicalRecursion.B()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.C"><code class="docutils literal notranslate"><span class="pre">TopologicalRecursion.C()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.D"><code class="docutils literal notranslate"><span class="pre">TopologicalRecursion.D()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.F"><code class="docutils literal notranslate"><span class="pre">TopologicalRecursion.F()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.polynomial"><code class="docutils literal notranslate"><span class="pre">TopologicalRecursion.polynomial()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.write"><code class="docutils literal notranslate"><span class="pre">TopologicalRecursion.write()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#surface_dynamics.topological_recursion.topological_recursion.compositions"><code class="docutils literal notranslate"><span class="pre">compositions()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="kontsevich.html">Kontsevich topological recursion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="masur_veech.html">Masur-Veech topological recursion</a></li>
 </ul>
@@ -80,8 +98,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-surface_dynamics.topological_recursion.topological_recursion">
-<span id="generic-topological-recursion"></span><h1>Generic topological recursion<a class="headerlink" href="#module-surface_dynamics.topological_recursion.topological_recursion" title="Permalink to this headline"></a></h1>
+  <section id="module-surface_dynamics.topological_recursion.topological_recursion">
+<span id="generic-topological-recursion"></span><h1>Generic topological recursion<a class="headerlink" href="#module-surface_dynamics.topological_recursion.topological_recursion" title="Permalink to this heading"></a></h1>
 <p>Topological recursion</p>
 <p>This module implements topological recursion. In particular it makes
 available the computation of various integral of cohomology classes
@@ -108,8 +126,8 @@ arXiv:1712.02528</p></li>
 <li><p>simplification of the recursion via the generalized string and dilaton</p></li>
 </ul>
 <dl class="py class">
-<dt id="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">surface_dynamics.topological_recursion.topological_recursion.</span></code><code class="sig-name descname"><span class="pre">TopologicalRecursion</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache_all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_ring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#TopologicalRecursion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.topological_recursion.topological_recursion.</span></span><span class="sig-name descname"><span class="pre">TopologicalRecursion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache_all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_ring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#TopologicalRecursion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A generic topological recursion.</p>
 <p>For concrete examples see:</p>
@@ -118,28 +136,28 @@ arXiv:1712.02528</p></li>
 <li><p><a class="reference internal" href="masur_veech.html#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR" title="surface_dynamics.topological_recursion.masur_veech.MasurVeechTR"><code class="xref py py-class docutils literal notranslate"><span class="pre">MasurVeechTR</span></code></a></p></li>
 </ul>
 <dl class="py method">
-<dt id="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.A">
-<code class="sig-name descname"><span class="pre">A</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#TopologicalRecursion.A"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.A" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.A">
+<span class="sig-name descname"><span class="pre">A</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#TopologicalRecursion.A"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.A" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.B">
-<code class="sig-name descname"><span class="pre">B</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#TopologicalRecursion.B"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.B" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.B">
+<span class="sig-name descname"><span class="pre">B</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#TopologicalRecursion.B"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.B" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.C">
-<code class="sig-name descname"><span class="pre">C</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#TopologicalRecursion.C"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.C" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.C">
+<span class="sig-name descname"><span class="pre">C</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#TopologicalRecursion.C"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.C" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.D">
-<code class="sig-name descname"><span class="pre">D</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#TopologicalRecursion.D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.D" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.D">
+<span class="sig-name descname"><span class="pre">D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#TopologicalRecursion.D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.D" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.F">
-<code class="sig-name descname"><span class="pre">F</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#TopologicalRecursion.F"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.F" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.F">
+<span class="sig-name descname"><span class="pre">F</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#TopologicalRecursion.F"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.F" title="Permalink to this definition"></a></dt>
 <dd><p>Return the value of the partition function F_{g,n}(I) where I = (i_0, i_1, …, i_{n-1}) is
 a tuple of n non-negative integers whose sum is &lt;= 3g-3+n.</p>
 <p>We assume here that the topological recursion given by A, B, C and D produces a partition
@@ -147,25 +165,25 @@ function symmetric in the variables i_0, i_1, …, i_{n-1}.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.polynomial">
-<code class="sig-name descname"><span class="pre">polynomial</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#TopologicalRecursion.polynomial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.polynomial" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.polynomial">
+<span class="sig-name descname"><span class="pre">polynomial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#TopologicalRecursion.polynomial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.polynomial" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.write">
-<code class="sig-name descname"><span class="pre">write</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#TopologicalRecursion.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.write" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#TopologicalRecursion.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.write" title="Permalink to this definition"></a></dt>
 <dd><p>Print normalized values of the polynomials F_{g,n}</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt id="surface_dynamics.topological_recursion.topological_recursion.compositions">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.topological_recursion.topological_recursion.</span></code><code class="sig-name descname"><span class="pre">compositions</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#compositions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.compositions" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.topological_recursion.compositions">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.topological_recursion.topological_recursion.</span></span><span class="sig-name descname"><span class="pre">compositions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/topological_recursion.html#compositions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.topological_recursion.compositions" title="Permalink to this definition"></a></dt>
 <dd><p>Return compositions of sum at most 3g-3+n and length n</p>
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>

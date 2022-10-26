@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Constellations &mdash; surface-dynamics 0.4.7 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <title>Constellations &mdash; surface-dynamics 0.4.7 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,7 +50,57 @@
 <li class="toctree-l1"><a class="reference internal" href="../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../topological_recursion/index.html">Topological recursion</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Miscellaneous</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Constellations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Constellations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation"><code class="docutils literal notranslate"><span class="pre">Constellation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class"><code class="docutils literal notranslate"><span class="pre">Constellation_class</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.braid_group_action"><code class="docutils literal notranslate"><span class="pre">Constellation_class.braid_group_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.braid_group_orbit"><code class="docutils literal notranslate"><span class="pre">Constellation_class.braid_group_orbit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.connected_components"><code class="docutils literal notranslate"><span class="pre">Constellation_class.connected_components()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.copy"><code class="docutils literal notranslate"><span class="pre">Constellation_class.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.degree"><code class="docutils literal notranslate"><span class="pre">Constellation_class.degree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.euler_characteristic"><code class="docutils literal notranslate"><span class="pre">Constellation_class.euler_characteristic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.g"><code class="docutils literal notranslate"><span class="pre">Constellation_class.g()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.g_cycle_string"><code class="docutils literal notranslate"><span class="pre">Constellation_class.g_cycle_string()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.g_cycle_tuples"><code class="docutils literal notranslate"><span class="pre">Constellation_class.g_cycle_tuples()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.g_next"><code class="docutils literal notranslate"><span class="pre">Constellation_class.g_next()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.g_orbit"><code class="docutils literal notranslate"><span class="pre">Constellation_class.g_orbit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.g_prev"><code class="docutils literal notranslate"><span class="pre">Constellation_class.g_prev()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.genus"><code class="docutils literal notranslate"><span class="pre">Constellation_class.genus()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.is_connected"><code class="docutils literal notranslate"><span class="pre">Constellation_class.is_connected()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.is_isomorphic"><code class="docutils literal notranslate"><span class="pre">Constellation_class.is_isomorphic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.is_mutable"><code class="docutils literal notranslate"><span class="pre">Constellation_class.is_mutable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.length"><code class="docutils literal notranslate"><span class="pre">Constellation_class.length()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.mutable_copy"><code class="docutils literal notranslate"><span class="pre">Constellation_class.mutable_copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.passport"><code class="docutils literal notranslate"><span class="pre">Constellation_class.passport()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.profile"><code class="docutils literal notranslate"><span class="pre">Constellation_class.profile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.relabel"><code class="docutils literal notranslate"><span class="pre">Constellation_class.relabel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.set_immutable"><code class="docutils literal notranslate"><span class="pre">Constellation_class.set_immutable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class.switch"><code class="docutils literal notranslate"><span class="pre">Constellation_class.switch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellations"><code class="docutils literal notranslate"><span class="pre">Constellations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellations_all"><code class="docutils literal notranslate"><span class="pre">Constellations_all</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellations_all.Element"><code class="docutils literal notranslate"><span class="pre">Constellations_all.Element</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellations_all.an_element"><code class="docutils literal notranslate"><span class="pre">Constellations_all.an_element()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellations_ld"><code class="docutils literal notranslate"><span class="pre">Constellations_ld</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellations_ld.an_element"><code class="docutils literal notranslate"><span class="pre">Constellations_ld.an_element()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellations_ld.braid_group_action"><code class="docutils literal notranslate"><span class="pre">Constellations_ld.braid_group_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellations_ld.braid_group_orbits"><code class="docutils literal notranslate"><span class="pre">Constellations_ld.braid_group_orbits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellations_ld.first"><code class="docutils literal notranslate"><span class="pre">Constellations_ld.first()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellations_ld.last"><code class="docutils literal notranslate"><span class="pre">Constellations_ld.last()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellations_ld.random_element"><code class="docutils literal notranslate"><span class="pre">Constellations_ld.random_element()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellations_p"><code class="docutils literal notranslate"><span class="pre">Constellations_p</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellations_p.braid_group_action"><code class="docutils literal notranslate"><span class="pre">Constellations_p.braid_group_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellations_p.braid_group_orbits"><code class="docutils literal notranslate"><span class="pre">Constellations_p.braid_group_orbits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.misc.constellation.Constellations_p.isomorphism_representatives"><code class="docutils literal notranslate"><span class="pre">Constellations_p.isomorphism_representatives()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="group_representation.html">Finite group representation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plane_tree.html">Plane trees</a></li>
 </ul>
@@ -80,8 +135,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-surface_dynamics.misc.constellation">
-<span id="constellations"></span><h1>Constellations<a class="headerlink" href="#module-surface_dynamics.misc.constellation" title="Permalink to this headline"></a></h1>
+  <section id="module-surface_dynamics.misc.constellation">
+<span id="constellations"></span><h1>Constellations<a class="headerlink" href="#module-surface_dynamics.misc.constellation" title="Permalink to this heading"></a></h1>
 <p>Constellations</p>
 <p>A constellation is a tuple <cite>(g_0, g_1, dots, g_k)</cite> of permutations
 such that the product <cite>g_0 g_1 … g_k</cite> is the identity. One often
@@ -109,8 +164,8 @@ algorithmic and practical reasons.</p>
 </pre></div>
 </div>
 <dl class="py function">
-<dt id="surface_dynamics.misc.constellation.Constellation">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.constellation.</span></code><code class="sig-name descname"><span class="pre">Constellation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.constellation.</span></span><span class="sig-name descname"><span class="pre">Constellation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation" title="Permalink to this definition"></a></dt>
 <dd><p>INPUT:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">g</span></code> – a list of permutations</p></li>
@@ -151,15 +206,15 @@ list g must contains no <code class="docutils literal notranslate"><span class="
 </dd></dl>
 
 <dl class="py class">
-<dt id="surface_dynamics.misc.constellation.Constellation_class">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.constellation.</span></code><code class="sig-name descname"><span class="pre">Constellation_class</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sage.structure.element.Element</span></code></p>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.constellation.</span></span><span class="sig-name descname"><span class="pre">Constellation_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Element</span></code></p>
 <p>Constellation</p>
 <p>A constellation or a tuple of permutations <cite>(g_0,g_1,…,g_k)</cite>
 such that the product <cite>g_0 g_1 … g_k</cite> is the identity.</p>
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.braid_group_action">
-<code class="sig-name descname"><span class="pre">braid_group_action</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.braid_group_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.braid_group_action" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.braid_group_action">
+<span class="sig-name descname"><span class="pre">braid_group_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.braid_group_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.braid_group_action" title="Permalink to this definition"></a></dt>
 <dd><p>Acts on self as the braid group generator that exchanges
 position <cite>i</cite> and <cite>i+1</cite></p>
 <p>INPUT:</p>
@@ -210,8 +265,8 @@ position <cite>i</cite> and <cite>i+1</cite></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.braid_group_orbit">
-<code class="sig-name descname"><span class="pre">braid_group_orbit</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.braid_group_orbit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.braid_group_orbit" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.braid_group_orbit">
+<span class="sig-name descname"><span class="pre">braid_group_orbit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.braid_group_orbit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.braid_group_orbit" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the graph of the action of the braid group.</p>
 <p>The action is considered up to isomorphism of constellation.</p>
 <p>EXAMPLES:</p>
@@ -232,8 +287,8 @@ position <cite>i</cite> and <cite>i+1</cite></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.connected_components">
-<code class="sig-name descname"><span class="pre">connected_components</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.connected_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.connected_components" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.connected_components">
+<span class="sig-name descname"><span class="pre">connected_components</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.connected_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.connected_components" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the connected components ?</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellation</span>
@@ -258,8 +313,8 @@ position <cite>i</cite> and <cite>i+1</cite></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.copy">
-<code class="sig-name descname"><span class="pre">copy</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.copy" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.copy" title="Permalink to this definition"></a></dt>
 <dd><p>TESTS:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Constellation</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="kc">None</span><span class="p">])</span>
@@ -277,8 +332,8 @@ position <cite>i</cite> and <cite>i+1</cite></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.degree">
-<code class="sig-name descname"><span class="pre">degree</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.degree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.degree" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.degree">
+<span class="sig-name descname"><span class="pre">degree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.degree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.degree" title="Permalink to this definition"></a></dt>
 <dd><p>Return the degree of the constellation</p>
 <p>The degree of a constellation is the number <cite>n</cite> that
 corresponds to the symmetric group <cite>S(n)</cite> in which the
@@ -297,8 +352,8 @@ permutations of the constellation are defined.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.euler_characteristic">
-<code class="sig-name descname"><span class="pre">euler_characteristic</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.euler_characteristic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.euler_characteristic" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.euler_characteristic">
+<span class="sig-name descname"><span class="pre">euler_characteristic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.euler_characteristic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.euler_characteristic" title="Permalink to this definition"></a></dt>
 <dd><p>Return the Euler characteristic of the surface</p>
 <p>ALGORITHM:</p>
 <p>Hurwitz formula</p>
@@ -313,8 +368,8 @@ permutations of the constellation are defined.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.g">
-<code class="sig-name descname"><span class="pre">g</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.g"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.g" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.g">
+<span class="sig-name descname"><span class="pre">g</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.g"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.g" title="Permalink to this definition"></a></dt>
 <dd><p>Return the permutation i of the constellation as a list</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellation</span>
@@ -331,8 +386,8 @@ permutations of the constellation are defined.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.g_cycle_string">
-<code class="sig-name descname"><span class="pre">g_cycle_string</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">singletons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.g_cycle_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.g_cycle_string" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.g_cycle_string">
+<span class="sig-name descname"><span class="pre">g_cycle_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">singletons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.g_cycle_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.g_cycle_string" title="Permalink to this definition"></a></dt>
 <dd><p>Return the permutations of a constellation, as cycles</p>
 <p>If <cite>i</cite> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, return all of them</p>
 <p>Otherwise, return just the permutation <cite>g_i</cite> as a cycle</p>
@@ -349,8 +404,8 @@ permutations of the constellation are defined.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.g_cycle_tuples">
-<code class="sig-name descname"><span class="pre">g_cycle_tuples</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">singletons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.g_cycle_tuples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.g_cycle_tuples" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.g_cycle_tuples">
+<span class="sig-name descname"><span class="pre">g_cycle_tuples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">singletons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.g_cycle_tuples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.g_cycle_tuples" title="Permalink to this definition"></a></dt>
 <dd><p>Return the tuples associated to the cycles of the permutations of <code class="docutils literal notranslate"><span class="pre">self</span></code></p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellation</span>
@@ -365,8 +420,8 @@ permutations of the constellation are defined.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.g_next">
-<code class="sig-name descname"><span class="pre">g_next</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.g_next"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.g_next" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.g_next">
+<span class="sig-name descname"><span class="pre">g_next</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.g_next"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.g_next" title="Permalink to this definition"></a></dt>
 <dd><p>Return the image of <cite>j</cite> for the permutation <cite>g_i</cite> in constant time</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellation</span>
@@ -381,8 +436,8 @@ permutations of the constellation are defined.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.g_orbit">
-<code class="sig-name descname"><span class="pre">g_orbit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.g_orbit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.g_orbit" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.g_orbit">
+<span class="sig-name descname"><span class="pre">g_orbit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.g_orbit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.g_orbit" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the orbit of <cite>j</cite> under <cite>g_i</cite></p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellation</span>
@@ -397,8 +452,8 @@ permutations of the constellation are defined.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.g_prev">
-<code class="sig-name descname"><span class="pre">g_prev</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.g_prev"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.g_prev" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.g_prev">
+<span class="sig-name descname"><span class="pre">g_prev</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.g_prev"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.g_prev" title="Permalink to this definition"></a></dt>
 <dd><p>Return the image of <cite>j</cite> for the permutation <cite>g_i</cite> in constant time</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellation</span>
@@ -413,8 +468,8 @@ permutations of the constellation are defined.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.genus">
-<code class="sig-name descname"><span class="pre">genus</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.genus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.genus" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.genus">
+<span class="sig-name descname"><span class="pre">genus</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.genus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.genus" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the genus of the surface</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellation</span>
@@ -426,8 +481,8 @@ permutations of the constellation are defined.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.is_connected">
-<code class="sig-name descname"><span class="pre">is_connected</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.is_connected"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.is_connected" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.is_connected">
+<span class="sig-name descname"><span class="pre">is_connected</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.is_connected"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.is_connected" title="Permalink to this definition"></a></dt>
 <dd><p>Test of connectedness</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellation</span>
@@ -443,8 +498,8 @@ permutations of the constellation are defined.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.is_isomorphic">
-<code class="sig-name descname"><span class="pre">is_isomorphic</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.is_isomorphic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.is_isomorphic" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.is_isomorphic">
+<span class="sig-name descname"><span class="pre">is_isomorphic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.is_isomorphic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.is_isomorphic" title="Permalink to this definition"></a></dt>
 <dd><p>Test of isomorphism</p>
 <p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if the constellations are isomorphic (i.e. common conjugacy)
 and returns the permutation that conjugate the two permutations if
@@ -468,8 +523,8 @@ return_map is <code class="docutils literal notranslate"><span class="pre">True<
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.is_mutable">
-<code class="sig-name descname"><span class="pre">is_mutable</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.is_mutable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.is_mutable" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.is_mutable">
+<span class="sig-name descname"><span class="pre">is_mutable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.is_mutable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.is_mutable" title="Permalink to this definition"></a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">False</span></code> as <code class="docutils literal notranslate"><span class="pre">self</span></code> is immutable</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellation</span>
@@ -482,8 +537,8 @@ return_map is <code class="docutils literal notranslate"><span class="pre">True<
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.length">
-<code class="sig-name descname"><span class="pre">length</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.length" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.length">
+<span class="sig-name descname"><span class="pre">length</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.length" title="Permalink to this definition"></a></dt>
 <dd><p>Number of permutations</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellation</span>
@@ -499,8 +554,8 @@ return_map is <code class="docutils literal notranslate"><span class="pre">True<
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.mutable_copy">
-<code class="sig-name descname"><span class="pre">mutable_copy</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.mutable_copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.mutable_copy" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.mutable_copy">
+<span class="sig-name descname"><span class="pre">mutable_copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.mutable_copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.mutable_copy" title="Permalink to this definition"></a></dt>
 <dd><p>Return a mutable copy of <code class="docutils literal notranslate"><span class="pre">self</span></code></p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellation</span>
@@ -514,8 +569,8 @@ return_map is <code class="docutils literal notranslate"><span class="pre">True<
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.passport">
-<code class="sig-name descname"><span class="pre">passport</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.passport" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.passport">
+<span class="sig-name descname"><span class="pre">passport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.passport" title="Permalink to this definition"></a></dt>
 <dd><p>Return the profile of <code class="docutils literal notranslate"><span class="pre">self</span></code></p>
 <p>The profile of a constellation is the tuple of partitions
 associated to the conjugacy classes of the permutations of the
@@ -531,8 +586,8 @@ constellation.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.profile">
-<code class="sig-name descname"><span class="pre">profile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.profile" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.profile">
+<span class="sig-name descname"><span class="pre">profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.profile" title="Permalink to this definition"></a></dt>
 <dd><p>Return the profile of <code class="docutils literal notranslate"><span class="pre">self</span></code></p>
 <p>The profile of a constellation is the tuple of partitions
 associated to the conjugacy classes of the permutations of the
@@ -548,8 +603,8 @@ constellation.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.relabel">
-<code class="sig-name descname"><span class="pre">relabel</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">perm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.relabel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.relabel" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.relabel">
+<span class="sig-name descname"><span class="pre">relabel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">perm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.relabel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.relabel" title="Permalink to this definition"></a></dt>
 <dd><p>Relabel <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">perm</span></code> is provided then relabel with respect to <code class="docutils literal notranslate"><span class="pre">perm</span></code>. Otherwise
 use canonical labels. In that case, if <code class="docutils literal notranslate"><span class="pre">return_map</span></code> is provided, the
@@ -600,8 +655,8 @@ isomorphic to the initial one:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.set_immutable">
-<code class="sig-name descname"><span class="pre">set_immutable</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.set_immutable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.set_immutable" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.set_immutable">
+<span class="sig-name descname"><span class="pre">set_immutable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.set_immutable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.set_immutable" title="Permalink to this definition"></a></dt>
 <dd><p>Does nothing, as <code class="docutils literal notranslate"><span class="pre">self</span></code> is already immutable</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellation</span>
@@ -615,8 +670,8 @@ isomorphic to the initial one:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellation_class.switch">
-<code class="sig-name descname"><span class="pre">switch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.switch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.switch" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellation_class.switch">
+<span class="sig-name descname"><span class="pre">switch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellation_class.switch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellation_class.switch" title="Permalink to this definition"></a></dt>
 <dd><p>Switch the vertices and edges at <cite>i</cite> and <cite>i+1</cite></p>
 <p>The modification is local in the sense that it modifies <cite>g_i</cite>
 and <cite>g_{i+1}</cite> but does not modify the product <cite>g_i g_{i+1}</cite>.</p>
@@ -649,8 +704,8 @@ and <cite>g_{i+1}</cite> but does not modify the product <cite>g_i g_{i+1}</cite
 </dd></dl>
 
 <dl class="py function">
-<dt id="surface_dynamics.misc.constellation.Constellations">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.constellation.</span></code><code class="sig-name descname"><span class="pre">Constellations</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellations">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.constellation.</span></span><span class="sig-name descname"><span class="pre">Constellations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations" title="Permalink to this definition"></a></dt>
 <dd><p>Build a set of constellations.</p>
 <p>INPUT:</p>
 <ul class="simple">
@@ -676,18 +731,18 @@ and <cite>g_{i+1}</cite> but does not modify the product <cite>g_i g_{i+1}</cite
 </dd></dl>
 
 <dl class="py class">
-<dt id="surface_dynamics.misc.constellation.Constellations_all">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.constellation.</span></code><code class="sig-name descname"><span class="pre">Constellations_all</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_all" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sage.structure.unique_representation.UniqueRepresentation</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sage.structure.parent.Parent</span></code></p>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellations_all">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.constellation.</span></span><span class="sig-name descname"><span class="pre">Constellations_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_all" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">UniqueRepresentation</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Parent</span></code></p>
 <dl class="py attribute">
-<dt id="surface_dynamics.misc.constellation.Constellations_all.Element">
-<code class="sig-name descname"><span class="pre">Element</span></code><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_all.Element" title="Permalink to this definition"></a></dt>
-<dd><p>alias of <a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class" title="surface_dynamics.misc.constellation.Constellation_class"><code class="xref py py-class docutils literal notranslate"><span class="pre">surface_dynamics.misc.constellation.Constellation_class</span></code></a></p>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellations_all.Element">
+<span class="sig-name descname"><span class="pre">Element</span></span><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_all.Element" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <a class="reference internal" href="#surface_dynamics.misc.constellation.Constellation_class" title="surface_dynamics.misc.constellation.Constellation_class"><code class="xref py py-class docutils literal notranslate"><span class="pre">Constellation_class</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellations_all.an_element">
-<code class="sig-name descname"><span class="pre">an_element</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_all.an_element"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_all.an_element" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellations_all.an_element">
+<span class="sig-name descname"><span class="pre">an_element</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_all.an_element"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_all.an_element" title="Permalink to this definition"></a></dt>
 <dd><p>Return a constellation.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellations</span>
@@ -703,9 +758,9 @@ and <cite>g_{i+1}</cite> but does not modify the product <cite>g_i g_{i+1}</cite
 </dd></dl>
 
 <dl class="py class">
-<dt id="surface_dynamics.misc.constellation.Constellations_ld">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.constellation.</span></code><code class="sig-name descname"><span class="pre">Constellations_ld</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_ld"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_ld" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sage.structure.unique_representation.UniqueRepresentation</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sage.structure.parent.Parent</span></code></p>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellations_ld">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.constellation.</span></span><span class="sig-name descname"><span class="pre">Constellations_ld</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_ld"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_ld" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">UniqueRepresentation</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Parent</span></code></p>
 <p>Constellations of given length and degree.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellations</span>
@@ -723,8 +778,8 @@ and <cite>g_{i+1}</cite> but does not modify the product <cite>g_i g_{i+1}</cite
 </pre></div>
 </div>
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellations_ld.an_element">
-<code class="sig-name descname"><span class="pre">an_element</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_ld.an_element"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_ld.an_element" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellations_ld.an_element">
+<span class="sig-name descname"><span class="pre">an_element</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_ld.an_element"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_ld.an_element" title="Permalink to this definition"></a></dt>
 <dd><p>Return a constellation in <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellations</span>
@@ -747,8 +802,8 @@ and <cite>g_{i+1}</cite> but does not modify the product <cite>g_i g_{i+1}</cite
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellations_ld.braid_group_action">
-<code class="sig-name descname"><span class="pre">braid_group_action</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_ld.braid_group_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_ld.braid_group_action" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellations_ld.braid_group_action">
+<span class="sig-name descname"><span class="pre">braid_group_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_ld.braid_group_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_ld.braid_group_action" title="Permalink to this definition"></a></dt>
 <dd><p>List of graphs that corresponds to the braid group action on <code class="docutils literal notranslate"><span class="pre">self</span></code> up
 to isomorphism.</p>
 <p>OUTPUT:</p>
@@ -768,8 +823,8 @@ to isomorphism.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellations_ld.braid_group_orbits">
-<code class="sig-name descname"><span class="pre">braid_group_orbits</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_ld.braid_group_orbits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_ld.braid_group_orbits" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellations_ld.braid_group_orbits">
+<span class="sig-name descname"><span class="pre">braid_group_orbits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_ld.braid_group_orbits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_ld.braid_group_orbits" title="Permalink to this definition"></a></dt>
 <dd><p>Orbits under the action of braid group.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellations</span>
@@ -789,8 +844,8 @@ to isomorphism.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellations_ld.first">
-<code class="sig-name descname"><span class="pre">first</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_ld.first"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_ld.first" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellations_ld.first">
+<span class="sig-name descname"><span class="pre">first</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_ld.first"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_ld.first" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the first element in lexicographic order</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellations</span>
@@ -807,8 +862,8 @@ to isomorphism.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellations_ld.last">
-<code class="sig-name descname"><span class="pre">last</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_ld.last"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_ld.last" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellations_ld.last">
+<span class="sig-name descname"><span class="pre">last</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_ld.last"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_ld.last" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the last element in lexicographic order</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellations</span>
@@ -825,8 +880,8 @@ to isomorphism.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellations_ld.random_element">
-<code class="sig-name descname"><span class="pre">random_element</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mutable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_ld.random_element"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_ld.random_element" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellations_ld.random_element">
+<span class="sig-name descname"><span class="pre">random_element</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mutable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_ld.random_element"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_ld.random_element" title="Permalink to this definition"></a></dt>
 <dd><p>a random element</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellations</span>
@@ -847,9 +902,9 @@ to isomorphism.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="surface_dynamics.misc.constellation.Constellations_p">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.constellation.</span></code><code class="sig-name descname"><span class="pre">Constellations_p</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_p"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_p" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sage.structure.unique_representation.UniqueRepresentation</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sage.structure.parent.Parent</span></code></p>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellations_p">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.constellation.</span></span><span class="sig-name descname"><span class="pre">Constellations_p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_p"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_p" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">UniqueRepresentation</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Parent</span></code></p>
 <p>Constellations with fixed profile.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellations</span>
@@ -896,8 +951,8 @@ symmetric group (Frobenius formula):</p>
 </pre></div>
 </div>
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellations_p.braid_group_action">
-<code class="sig-name descname"><span class="pre">braid_group_action</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_p.braid_group_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_p.braid_group_action" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellations_p.braid_group_action">
+<span class="sig-name descname"><span class="pre">braid_group_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_p.braid_group_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_p.braid_group_action" title="Permalink to this definition"></a></dt>
 <dd><p>List of graphs that corresponds to the braid group action on <code class="docutils literal notranslate"><span class="pre">self</span></code> up
 to isomorphism.</p>
 <p>OUTPUT:</p>
@@ -917,8 +972,8 @@ to isomorphism.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellations_p.braid_group_orbits">
-<code class="sig-name descname"><span class="pre">braid_group_orbits</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_p.braid_group_orbits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_p.braid_group_orbits" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellations_p.braid_group_orbits">
+<span class="sig-name descname"><span class="pre">braid_group_orbits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_p.braid_group_orbits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_p.braid_group_orbits" title="Permalink to this definition"></a></dt>
 <dd><p>Orbits under the action of braid group.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellations</span>
@@ -938,8 +993,8 @@ to isomorphism.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.misc.constellation.Constellations_p.isomorphism_representatives">
-<code class="sig-name descname"><span class="pre">isomorphism_representatives</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_p.isomorphism_representatives"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_p.isomorphism_representatives" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.misc.constellation.Constellations_p.isomorphism_representatives">
+<span class="sig-name descname"><span class="pre">isomorphism_representatives</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/constellation.html#Constellations_p.isomorphism_representatives"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.constellation.Constellations_p.isomorphism_representatives" title="Permalink to this definition"></a></dt>
 <dd><p>Return a set of isomorphism representative of <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.constellation</span> <span class="kn">import</span> <span class="n">Constellations</span>
@@ -966,7 +1021,7 @@ to isomorphism.</p>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>

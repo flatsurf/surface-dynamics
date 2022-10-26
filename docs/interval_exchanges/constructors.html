@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Interval exchange constructors &mdash; surface-dynamics 0.4.7 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <title>Interval exchange constructors &mdash; surface-dynamics 0.4.7 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -43,7 +48,18 @@
 <li class="toctree-l1"><a class="reference internal" href="../origamis.html">Origamis</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Interval exchange transformations</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="index.html#permutations">Permutations</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Interval exchange constructors</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Interval exchange constructors</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.interval_exchanges.constructors.FlipSequence"><code class="docutils literal notranslate"><span class="pre">FlipSequence()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.interval_exchanges.constructors.GeneralizedPermutation"><code class="docutils literal notranslate"><span class="pre">GeneralizedPermutation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.interval_exchanges.constructors.IET"><code class="docutils literal notranslate"><span class="pre">IET()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.interval_exchanges.constructors.IETFamily"><code class="docutils literal notranslate"><span class="pre">IETFamily()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformation"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformationFamily"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformationFamily()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.interval_exchanges.constructors.Permutation"><code class="docutils literal notranslate"><span class="pre">Permutation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.interval_exchanges.constructors.Permutations_iterator"><code class="docutils literal notranslate"><span class="pre">Permutations_iterator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.interval_exchanges.constructors.RauzyDiagram"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="template.html">Permutation template</a></li>
 <li class="toctree-l3"><a class="reference internal" href="labelled.html">Labelled permutations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reduced.html">Reduced permutations</a></li>
@@ -87,8 +103,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-surface_dynamics.interval_exchanges.constructors">
-<span id="interval-exchange-constructors"></span><h1>Interval exchange constructors<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.constructors" title="Permalink to this headline"></a></h1>
+  <section id="module-surface_dynamics.interval_exchanges.constructors">
+<span id="interval-exchange-constructors"></span><h1>Interval exchange constructors<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.constructors" title="Permalink to this heading"></a></h1>
 <p>Interval exchange transformations</p>
 <p>This library is designed for the usage and manipulation of interval
 exchange transformations and linear involutions. It defines specialized
@@ -228,8 +244,8 @@ of the corresponding matrix:</p>
 <li><p>Vincent Delecroix (2009-09-29): initial version</p></li>
 </ul>
 <dl class="py function">
-<dt id="surface_dynamics.interval_exchanges.constructors.FlipSequence">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">FlipSequence</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#FlipSequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.FlipSequence" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.constructors.FlipSequence">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></span><span class="sig-name descname"><span class="pre">FlipSequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#FlipSequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.FlipSequence" title="Permalink to this definition"></a></dt>
 <dd><p>Build a flip sequence corresponding to a path in a Rauzy diagram.</p>
 <p>A flip sequence is built from an initial permutation (built from <a class="reference internal" href="#surface_dynamics.interval_exchanges.constructors.Permutation" title="surface_dynamics.interval_exchanges.constructors.Permutation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Permutation()</span></code></a> or
 <a class="reference internal" href="#surface_dynamics.interval_exchanges.constructors.GeneralizedPermutation" title="surface_dynamics.interval_exchanges.constructors.GeneralizedPermutation"><code class="xref py py-func docutils literal notranslate"><span class="pre">GeneralizedPermutation()</span></code></a>) and a sequence of Rauzy inductions that could be of the
@@ -256,8 +272,8 @@ bottom right, top left and bottom left induction respectively</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="surface_dynamics.interval_exchanges.constructors.GeneralizedPermutation">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">GeneralizedPermutation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduced</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flips</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphabet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#GeneralizedPermutation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.GeneralizedPermutation" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.constructors.GeneralizedPermutation">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></span><span class="sig-name descname"><span class="pre">GeneralizedPermutation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduced</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flips</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphabet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#GeneralizedPermutation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.GeneralizedPermutation" title="Permalink to this definition"></a></dt>
 <dd><p>Returns a permutation of an interval exchange transformation.</p>
 <p>Those permutations are the combinatoric part of linear involutions and were
 introduced by Danthony-Nogueira <a class="reference internal" href="../references.html#dannog90" id="id1"><span>[DanNog90]</span></a> (the flipped version is also
@@ -319,8 +335,8 @@ sage: type(iet.GeneralizedPermutation(&#39;a b b&#39;, &#39;c c a&#39;, reduced=
 </dd></dl>
 
 <dl class="py function">
-<dt id="surface_dynamics.interval_exchanges.constructors.IET">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">IET</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">permutation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lengths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.IET" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.constructors.IET">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></span><span class="sig-name descname"><span class="pre">IET</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">permutation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lengths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.IET" title="Permalink to this definition"></a></dt>
 <dd><p>Constructs an Interval exchange transformation.</p>
 <p>An interval exchange transformation (or iet) is a map from an
 interval to itself. It is defined on the interval except at a finite
@@ -378,8 +394,8 @@ singularities).</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="surface_dynamics.interval_exchanges.constructors.IETFamily">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">IETFamily</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.IETFamily" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.constructors.IETFamily">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></span><span class="sig-name descname"><span class="pre">IETFamily</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.IETFamily" title="Permalink to this definition"></a></dt>
 <dd><p>Return a linear family of interval exchange transformations</p>
 <p>INPUT: either an interval exchange transformation or a pair consisting of a
 permutation and a cone</p>
@@ -393,8 +409,8 @@ permutation and a cone</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformation">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">IntervalExchangeTransformation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">permutation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lengths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#IntervalExchangeTransformation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformation" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformation">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></span><span class="sig-name descname"><span class="pre">IntervalExchangeTransformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">permutation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lengths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#IntervalExchangeTransformation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformation" title="Permalink to this definition"></a></dt>
 <dd><p>Constructs an Interval exchange transformation.</p>
 <p>An interval exchange transformation (or iet) is a map from an
 interval to itself. It is defined on the interval except at a finite
@@ -452,8 +468,8 @@ singularities).</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformationFamily">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">IntervalExchangeTransformationFamily</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#IntervalExchangeTransformationFamily"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformationFamily" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformationFamily">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></span><span class="sig-name descname"><span class="pre">IntervalExchangeTransformationFamily</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#IntervalExchangeTransformationFamily"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformationFamily" title="Permalink to this definition"></a></dt>
 <dd><p>Return a linear family of interval exchange transformations</p>
 <p>INPUT: either an interval exchange transformation or a pair consisting of a
 permutation and a cone</p>
@@ -467,8 +483,8 @@ permutation and a cone</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="surface_dynamics.interval_exchanges.constructors.Permutation">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">Permutation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduced</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flips</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphabet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#Permutation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.Permutation" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.constructors.Permutation">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></span><span class="sig-name descname"><span class="pre">Permutation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduced</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flips</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphabet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#Permutation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.Permutation" title="Permalink to this definition"></a></dt>
 <dd><p>Returns a permutation of an interval exchange transformation.</p>
 <p>Those permutations are the combinatoric part of an interval exchange
 transformation (IET). The combinatorial study of those objects starts with
@@ -586,8 +602,8 @@ True
 </dd></dl>
 
 <dl class="py function">
-<dt id="surface_dynamics.interval_exchanges.constructors.Permutations_iterator">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">Permutations_iterator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nintervals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">irreducible</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduced</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphabet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#Permutations_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.Permutations_iterator" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.constructors.Permutations_iterator">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></span><span class="sig-name descname"><span class="pre">Permutations_iterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nintervals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">irreducible</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduced</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphabet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#Permutations_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.Permutations_iterator" title="Permalink to this definition"></a></dt>
 <dd><p>Returns an iterator over permutations.</p>
 <p>This iterator allows you to iterate over permutations with given
 constraints. If you want to iterate over permutations coming from a given
@@ -628,8 +644,8 @@ generate Rauzy diagrams from connected components.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="surface_dynamics.interval_exchanges.constructors.RauzyDiagram">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></code><code class="sig-name descname"><span class="pre">RauzyDiagram</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduced</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flips</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphabet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_induction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_induction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_right_inversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_bottom_inversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symmetric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#RauzyDiagram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.RauzyDiagram" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.constructors.RauzyDiagram">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.constructors.</span></span><span class="sig-name descname"><span class="pre">RauzyDiagram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduced</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flips</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphabet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_induction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_induction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_right_inversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_bottom_inversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symmetric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/constructors.html#RauzyDiagram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.constructors.RauzyDiagram" title="Permalink to this definition"></a></dt>
 <dd><p>Return an object coding a Rauzy diagram.</p>
 <p>The Rauzy diagram is an oriented graph with labelled edges. The set of
 vertices corresponds to the permutations obtained by different operations
@@ -732,7 +748,7 @@ comparing the orbit of <cite>0</cite> to the fixed point of the orbit substituti
 </div>
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>

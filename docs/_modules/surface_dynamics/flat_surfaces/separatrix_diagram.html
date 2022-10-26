@@ -3,15 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>surface_dynamics.flat_surfaces.separatrix_diagram &mdash; surface-dynamics 0.4.7 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <title>surface_dynamics.flat_surfaces.separatrix_diagram &mdash; surface-dynamics 0.4.7 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -398,9 +402,9 @@
 <span class="sd">            sage: S = SeparatrixDiagram(&#39;(0,1)(2,3,4)&#39;,&#39;(0,3,2)(1,4)&#39;)</span>
 <span class="sd">            sage: G = S.to_directed_graph(); G</span>
 <span class="sd">            Looped multi-digraph on 5 vertices</span>
-<span class="sd">            sage: G.vertices()</span>
+<span class="sd">            sage: G.vertices(sort=True)</span>
 <span class="sd">            [0, 1, 2, 3, 4]</span>
-<span class="sd">            sage: G.edges()</span>
+<span class="sd">            sage: G.edges(sort=True)</span>
 <span class="sd">            [(0, 1, &#39;b&#39;), (0, 3, &#39;t&#39;), (1, 0, &#39;b&#39;), (1, 4, &#39;t&#39;), (2, 0, &#39;t&#39;), (2, 3, &#39;b&#39;), (3, 2, &#39;t&#39;), (3, 4, &#39;b&#39;), (4, 1, &#39;t&#39;), (4, 2, &#39;b&#39;)]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">G</span> <span class="o">=</span> <span class="n">DiGraph</span><span class="p">(</span><span class="n">multiedges</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">loops</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -2365,7 +2369,7 @@
 <span class="sd">            (0,1,5)-(2,5) (2)-(0,1,3) (3,4)-(4)</span>
 <span class="sd">            sage: G = c.to_directed_graph(); G</span>
 <span class="sd">            Looped multi-digraph on 6 vertices</span>
-<span class="sd">            sage: G.edges()</span>
+<span class="sd">            sage: G.edges(sort=True)</span>
 <span class="sd">            [(0, 1, &#39;b&#39;), (0, 1, &#39;t&#39;), (0, 2, &#39;c&#39;), (0, 5, &#39;c&#39;), (1, 2, &#39;c&#39;), (1, 3, &#39;t&#39;), (1, 5, &#39;b&#39;), (1, 5, &#39;c&#39;), (2, 0, &#39;c&#39;), (2, 1, &#39;c&#39;), (2, 2, &#39;b&#39;), (2, 3, &#39;c&#39;), (2, 5, &#39;t&#39;), (3, 0, &#39;t&#39;), (3, 4, &#39;b&#39;), (3, 4, &#39;c&#39;), (4, 3, &#39;b&#39;), (4, 4, &#39;c&#39;), (4, 4, &#39;t&#39;), (5, 0, &#39;b&#39;), (5, 2, &#39;c&#39;), (5, 2, &#39;t&#39;), (5, 5, &#39;c&#39;)]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">G</span> <span class="o">=</span> <span class="n">SeparatrixDiagram</span><span class="o">.</span><span class="n">to_directed_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>

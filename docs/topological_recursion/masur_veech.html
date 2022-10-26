@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Masur-Veech topological recursion &mdash; surface-dynamics 0.4.7 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <title>Masur-Veech topological recursion &mdash; surface-dynamics 0.4.7 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -46,7 +51,16 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Topological recursion</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="topological_recursion.html">Generic topological recursion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kontsevich.html">Kontsevich topological recursion</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Masur-Veech topological recursion</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Masur-Veech topological recursion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR"><code class="docutils literal notranslate"><span class="pre">MasurVeechTR</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.A"><code class="docutils literal notranslate"><span class="pre">MasurVeechTR.A()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.B"><code class="docutils literal notranslate"><span class="pre">MasurVeechTR.B()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.C"><code class="docutils literal notranslate"><span class="pre">MasurVeechTR.C()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.D"><code class="docutils literal notranslate"><span class="pre">MasurVeechTR.D()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../misc/index.html">Miscellaneous</a></li>
@@ -80,8 +94,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-surface_dynamics.topological_recursion.masur_veech">
-<span id="masur-veech-topological-recursion"></span><h1>Masur-Veech topological recursion<a class="headerlink" href="#module-surface_dynamics.topological_recursion.masur_veech" title="Permalink to this headline"></a></h1>
+  <section id="module-surface_dynamics.topological_recursion.masur_veech">
+<span id="masur-veech-topological-recursion"></span><h1>Masur-Veech topological recursion<a class="headerlink" href="#module-surface_dynamics.topological_recursion.masur_veech" title="Permalink to this heading"></a></h1>
 <p>Topological recursion for Masur-Veech volumes.</p>
 <p>This is the topological recursion as developed in <a class="reference internal" href="../references.html#andborchadelgiaclewwhe" id="id1"><span>[AndBorChaDelGiacLewWhe]</span></a>.</p>
 <p>EXAMPLES:</p>
@@ -102,9 +116,9 @@
 </pre></div>
 </div>
 <dl class="py class">
-<dt id="surface_dynamics.topological_recursion.masur_veech.MasurVeechTR">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">surface_dynamics.topological_recursion.masur_veech.</span></code><code class="sig-name descname"><span class="pre">MasurVeechTR</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/masur_veech.html#MasurVeechTR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion" title="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion"><code class="xref py py-class docutils literal notranslate"><span class="pre">surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion</span></code></a></p>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.masur_veech.MasurVeechTR">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.topological_recursion.masur_veech.</span></span><span class="sig-name descname"><span class="pre">MasurVeechTR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/masur_veech.html#MasurVeechTR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion" title="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion"><code class="xref py py-class docutils literal notranslate"><span class="pre">TopologicalRecursion</span></code></a></p>
 <p>Topological recursion for Masur-Veech volumes (Anderssen et al.)</p>
 <p>EXAMPLES:</p>
 <p>Below is the distribution of cylinders in genus zero and <cite>n</cite> equal 4, 5, 6, 7:</p>
@@ -120,18 +134,18 @@
 </pre></div>
 </div>
 <dl class="py method">
-<dt id="surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.A">
-<code class="sig-name descname"><span class="pre">A</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/masur_veech.html#MasurVeechTR.A"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.A" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.A">
+<span class="sig-name descname"><span class="pre">A</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/masur_veech.html#MasurVeechTR.A"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.A" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.B">
-<code class="sig-name descname"><span class="pre">B</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/masur_veech.html#MasurVeechTR.B"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.B" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.B">
+<span class="sig-name descname"><span class="pre">B</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/masur_veech.html#MasurVeechTR.B"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.B" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.C">
-<code class="sig-name descname"><span class="pre">C</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/masur_veech.html#MasurVeechTR.C"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.C" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.C">
+<span class="sig-name descname"><span class="pre">C</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/masur_veech.html#MasurVeechTR.C"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.C" title="Permalink to this definition"></a></dt>
 <dd><p>Iterate through the non-zero <code class="docutils literal notranslate"><span class="pre">(j,</span> <span class="pre">k,</span> <span class="pre">C(i,</span> <span class="pre">j,</span> <span class="pre">k))</span></code> given the <code class="docutils literal notranslate"><span class="pre">i</span></code>.</p>
 <p>INPUT:</p>
 <ul class="simple">
@@ -151,13 +165,13 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.D">
-<code class="sig-name descname"><span class="pre">D</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/masur_veech.html#MasurVeechTR.D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.D" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.D">
+<span class="sig-name descname"><span class="pre">D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/masur_veech.html#MasurVeechTR.D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.D" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>

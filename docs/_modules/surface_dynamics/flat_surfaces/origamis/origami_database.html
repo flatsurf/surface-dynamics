@@ -3,15 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>surface_dynamics.flat_surfaces.origamis.origami_database &mdash; surface-dynamics 0.4.7 documentation</title><link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <title>surface_dynamics.flat_surfaces.origamis.origami_database &mdash; surface-dynamics 0.4.7 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -1577,10 +1581,12 @@
 <span class="sd">            sage: from surface_dynamics import *</span>
 
 <span class="sd">            sage: import os</span>
-<span class="sd">            sage: db_name = os.path.join(SAGE_TMP, &#39;my_db.db&#39;)</span>
-<span class="sd">            sage: D = OrigamiDatabase(db_name, read_only=False)</span>
-<span class="sd">            sage: D.build(AbelianStratum(4).odd_component(), 8) # optional - gap_packages</span>
-<span class="sd">            sage: D.info()                                      # optional - gap_packages</span>
+<span class="sd">            sage: import tempfile</span>
+<span class="sd">            sage: with tempfile.TemporaryDirectory() as tmpdir:</span>
+<span class="sd">            ....:     db_name = os.path.join(tmpdir, &#39;my_db.db&#39;)</span>
+<span class="sd">            ....:     D = OrigamiDatabase(db_name, read_only=False)</span>
+<span class="sd">            ....:     D.build(AbelianStratum(4).odd_component(), 8) # optional - gap_packages</span>
+<span class="sd">            ....:     D.info()                                      # optional - gap_packages</span>
 <span class="sd">            genus 2</span>
 <span class="sd">            =======</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
@@ -1771,14 +1777,16 @@
 <span class="sd">            sage: from surface_dynamics import *</span>
 
 <span class="sd">            sage: import os</span>
-<span class="sd">            sage: db1_name = os.path.join(SAGE_TMP, &#39;the_first_one.db&#39;)</span>
-<span class="sd">            sage: db2_name = os.path.join(SAGE_TMP, &#39;the_second_one.db&#39;)</span>
-<span class="sd">            sage: D1 = OrigamiDatabase(db1_name, read_only=False)</span>
-<span class="sd">            sage: D2 = OrigamiDatabase(db2_name, read_only=False)</span>
-<span class="sd">            sage: D1.build(AbelianStratum(1,1).unique_component(), 7)  # optional - gap_packages</span>
-<span class="sd">            sage: D2.build(AbelianStratum(2).unique_component(), 5)    # optional - gap_packages</span>
-<span class="sd">            sage: D2.update(D1)                                        # optional - gap_packages</span>
-<span class="sd">            sage: D2.info()                                            # optional - gap_packages</span>
+<span class="sd">            sage: import tempfile</span>
+<span class="sd">            sage: with tempfile.TemporaryDirectory() as tmpdir:</span>
+<span class="sd">            ....:     db1_name = os.path.join(tmpdir, &#39;the_first_one.db&#39;)</span>
+<span class="sd">            ....:     db2_name = os.path.join(tmpdir, &#39;the_second_one.db&#39;)</span>
+<span class="sd">            ....:     D1 = OrigamiDatabase(db1_name, read_only=False)</span>
+<span class="sd">            ....:     D2 = OrigamiDatabase(db2_name, read_only=False)</span>
+<span class="sd">            ....:     D1.build(AbelianStratum(1,1).unique_component(), 7)  # optional - gap_packages</span>
+<span class="sd">            ....:     D2.build(AbelianStratum(2).unique_component(), 5)    # optional - gap_packages</span>
+<span class="sd">            ....:     D2.update(D1)                                        # optional - gap_packages</span>
+<span class="sd">            ....:     D2.info()                                            # optional - gap_packages</span>
 <span class="sd">            genus 2</span>
 <span class="sd">            =======</span>
 <span class="sd">             H_2(2)^hyp  :   2 T. curves (up to  4 squares)</span>

@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kontsevich topological recursion &mdash; surface-dynamics 0.4.7 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <title>Kontsevich topological recursion &mdash; surface-dynamics 0.4.7 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,7 +50,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Topological recursion</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="topological_recursion.html">Generic topological recursion</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Kontsevich topological recursion</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Kontsevich topological recursion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#surface_dynamics.topological_recursion.kontsevich.KontsevichTR"><code class="docutils literal notranslate"><span class="pre">KontsevichTR</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.A"><code class="docutils literal notranslate"><span class="pre">KontsevichTR.A()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.B"><code class="docutils literal notranslate"><span class="pre">KontsevichTR.B()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.C"><code class="docutils literal notranslate"><span class="pre">KontsevichTR.C()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.D"><code class="docutils literal notranslate"><span class="pre">KontsevichTR.D()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#surface_dynamics.topological_recursion.kontsevich.psi_correlator"><code class="docutils literal notranslate"><span class="pre">psi_correlator()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="masur_veech.html">Masur-Veech topological recursion</a></li>
 </ul>
 </li>
@@ -80,8 +95,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-surface_dynamics.topological_recursion.kontsevich">
-<span id="kontsevich-topological-recursion"></span><h1>Kontsevich topological recursion<a class="headerlink" href="#module-surface_dynamics.topological_recursion.kontsevich" title="Permalink to this headline"></a></h1>
+  <section id="module-surface_dynamics.topological_recursion.kontsevich">
+<span id="kontsevich-topological-recursion"></span><h1>Kontsevich topological recursion<a class="headerlink" href="#module-surface_dynamics.topological_recursion.kontsevich" title="Permalink to this heading"></a></h1>
 <p>Kontsevich topological recursion that computes intersection of psi classes.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">KontsevichTR</span>
@@ -99,9 +114,9 @@
 </pre></div>
 </div>
 <dl class="py class">
-<dt id="surface_dynamics.topological_recursion.kontsevich.KontsevichTR">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">surface_dynamics.topological_recursion.kontsevich.</span></code><code class="sig-name descname"><span class="pre">KontsevichTR</span></code><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/kontsevich.html#KontsevichTR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.kontsevich.KontsevichTR" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sage.structure.unique_representation.UniqueRepresentation</span></code>, <a class="reference internal" href="topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion" title="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion"><code class="xref py py-class docutils literal notranslate"><span class="pre">surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion</span></code></a></p>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.kontsevich.KontsevichTR">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.topological_recursion.kontsevich.</span></span><span class="sig-name descname"><span class="pre">KontsevichTR</span></span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/kontsevich.html#KontsevichTR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.kontsevich.KontsevichTR" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">UniqueRepresentation</span></code>, <a class="reference internal" href="topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion" title="surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion"><code class="xref py py-class docutils literal notranslate"><span class="pre">TopologicalRecursion</span></code></a></p>
 <p>Topological recursion for intersection of psi classes (Witten’s conjecture)</p>
 <p><cite>int_{Mgn} exp(L_i^2/2 psi_i)</cite></p>
 <p>EXAMPLES:</p>
@@ -136,34 +151,34 @@
 </pre></div>
 </div>
 <dl class="py method">
-<dt id="surface_dynamics.topological_recursion.kontsevich.KontsevichTR.A">
-<code class="sig-name descname"><span class="pre">A</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/kontsevich.html#KontsevichTR.A"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.A" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.kontsevich.KontsevichTR.A">
+<span class="sig-name descname"><span class="pre">A</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/kontsevich.html#KontsevichTR.A"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.A" title="Permalink to this definition"></a></dt>
 <dd><p>A-data for Kontsevich recursion</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.topological_recursion.kontsevich.KontsevichTR.B">
-<code class="sig-name descname"><span class="pre">B</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/kontsevich.html#KontsevichTR.B"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.B" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.kontsevich.KontsevichTR.B">
+<span class="sig-name descname"><span class="pre">B</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/kontsevich.html#KontsevichTR.B"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.B" title="Permalink to this definition"></a></dt>
 <dd><p>B-data for Kontsevich topological recursion</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.topological_recursion.kontsevich.KontsevichTR.C">
-<code class="sig-name descname"><span class="pre">C</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/kontsevich.html#KontsevichTR.C"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.C" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.kontsevich.KontsevichTR.C">
+<span class="sig-name descname"><span class="pre">C</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/kontsevich.html#KontsevichTR.C"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.C" title="Permalink to this definition"></a></dt>
 <dd><p>C-data for Kontsevich topological recursion</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="surface_dynamics.topological_recursion.kontsevich.KontsevichTR.D">
-<code class="sig-name descname"><span class="pre">D</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/kontsevich.html#KontsevichTR.D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.D" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.kontsevich.KontsevichTR.D">
+<span class="sig-name descname"><span class="pre">D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/kontsevich.html#KontsevichTR.D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.D" title="Permalink to this definition"></a></dt>
 <dd><p>D-data for Kontsevich topological recursion</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt id="surface_dynamics.topological_recursion.kontsevich.psi_correlator">
-<code class="sig-prename descclassname"><span class="pre">surface_dynamics.topological_recursion.kontsevich.</span></code><code class="sig-name descname"><span class="pre">psi_correlator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/kontsevich.html#psi_correlator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.kontsevich.psi_correlator" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="surface_dynamics.topological_recursion.kontsevich.psi_correlator">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.topological_recursion.kontsevich.</span></span><span class="sig-name descname"><span class="pre">psi_correlator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/topological_recursion/kontsevich.html#psi_correlator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topological_recursion.kontsevich.psi_correlator" title="Permalink to this definition"></a></dt>
 <dd><p>Return the integral of psi classes</p>
 <p>EXAMPLES:</p>
 <p>Examples in genus 0:</p>
@@ -208,7 +223,7 @@
 </div>
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>
