@@ -3127,7 +3127,7 @@ element. Moreover function(None,None) must be an identity element
 for initialization.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">composition</span></code> - the composition function for the function. * if None (default: None)</p></li>
 </ul>
-<p>TEST:</p>
+<p>TESTS:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">)</span>
@@ -3237,7 +3237,7 @@ of the same type and the same length as the one used for the creation.</p>
 obtained with successive rauzy moves. This function just use the
 functions __getitem__ and has_rauzy_move and rauzy_move which must
 be defined for child and their corresponding permutation types.</p>
-<p>TEST:</p>
+<p>TESTS:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">RauzyDiagram</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span><span class="s1">&#39;c b a&#39;</span><span class="p">)</span>   <span class="c1">#indirect doctest</span>
@@ -3270,7 +3270,7 @@ be defined for child and their corresponding permutation types.</p>
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.template.RauzyDiagram.edge_to_loser">
 <span class="sig-name descname"><span class="pre">edge_to_loser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/template.html#RauzyDiagram.edge_to_loser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.template.RauzyDiagram.edge_to_loser" title="Permalink to this definition"></a></dt>
 <dd><p>Return the corresponding loser</p>
-<p>TEST:</p>
+<p>TESTS:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">RauzyDiagram</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">)</span>
