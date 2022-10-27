@@ -5597,7 +5597,7 @@ class RauzyDiagram(SageObject):
             r"""
             Constructor of the path.
 
-            TEST::
+            TESTS::
 
                 sage: from surface_dynamics import *
 
@@ -5715,7 +5715,7 @@ class RauzyDiagram(SageObject):
             r"""
             Tests equality
 
-            TEST::
+            TESTS::
 
                 sage: from surface_dynamics import *
 
@@ -5740,7 +5740,7 @@ class RauzyDiagram(SageObject):
             r"""
             Tests inequality
 
-            TEST::
+            TESTS::
 
                 sage: from surface_dynamics import *
 
@@ -6198,7 +6198,7 @@ class RauzyDiagram(SageObject):
 
             - ``composition`` - the composition function for the function. * if None (default: None)
 
-            TEST::
+            TESTS::
 
                 sage: from surface_dynamics import *
 
@@ -6371,7 +6371,7 @@ class RauzyDiagram(SageObject):
         r"""
         Tests difference.
 
-        TEST::
+        TESTS::
 
             sage: from surface_dynamics import *
 
@@ -6827,7 +6827,7 @@ class RauzyDiagram(SageObject):
         r"""
         Return the corresponding loser
 
-        TEST::
+        TESTS::
 
             sage: from surface_dynamics import *
 
@@ -6999,7 +6999,7 @@ class RauzyDiagram(SageObject):
         r"""
         Returns a representation of self
 
-        TEST::
+        TESTS::
 
             sage: from surface_dynamics import *
 
@@ -7104,7 +7104,7 @@ class RauzyDiagram(SageObject):
         functions __getitem__ and has_rauzy_move and rauzy_move which must
         be defined for child and their corresponding permutation types.
 
-        TEST::
+        TESTS::
 
             sage: from surface_dynamics import *
 
