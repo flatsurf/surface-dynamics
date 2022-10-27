@@ -498,7 +498,7 @@ class StratumComponent(SageObject):
 
     def __init__(self, stratum):
         r"""
-        TEST::
+        TESTS::
 
             sage: from surface_dynamics import *
 

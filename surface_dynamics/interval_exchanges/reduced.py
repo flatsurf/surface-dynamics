@@ -223,7 +223,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
         r"""
         Returns the relabelization obtained from this move.
 
-        EXAMPLE::
+        EXAMPLES::
 
             sage: from surface_dynamics import *
 

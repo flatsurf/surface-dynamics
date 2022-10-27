@@ -342,7 +342,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
         r"""
         String representation.
 
-        TEST::
+        TESTS::
 
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
             sage: C = CylinderDiagrams(tmp_dir(), read_only=False)

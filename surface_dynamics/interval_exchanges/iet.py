@@ -135,7 +135,7 @@ class IntervalExchangeTransformation:
 
         - ``lengths`` - the list of lengths
 
-        TEST::
+        TESTS::
 
             sage: from surface_dynamics import *
 
@@ -1523,7 +1523,7 @@ class IntervalExchangeTransformation:
         - ``(a,b,c)`` - a triple of letter such that the towers are obtained by
           applying the substitution `a \mapsto bc`.
 
-        TEST::
+        TESTS::
 
             sage: from surface_dynamics import *
 
@@ -1670,7 +1670,7 @@ class IntervalExchangeTransformation:
 
         - ``m`` -- number of Rauzy made on the same side
 
-        TEST::
+        TESTS::
 
             sage: from surface_dynamics import *
 

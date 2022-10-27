@@ -1187,7 +1187,7 @@ class FlippedLabelledPermutationIET(FlippedPermutationIET, LabelledPermutationIE
 
         permutation -- the associated reduced permutation
 
-        EXAMPLE::
+        EXAMPLES::
 
             sage: from surface_dynamics import *
 
@@ -1530,7 +1530,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
             boolean -- True if the path is full and False else
 
-            EXAMPLE::
+            EXAMPLES::
 
                 sage: from surface_dynamics import *
 

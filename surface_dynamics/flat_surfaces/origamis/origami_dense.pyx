@@ -2448,7 +2448,7 @@ cdef class Origami_dense_pyx:
         An origami is primitive if the action of the monodromy group has no non
         trivial block.
 
-        EXAMPLE::
+        EXAMPLES::
 
             sage: from surface_dynamics.all import Origami
 
