@@ -454,7 +454,7 @@ class IntervalExchangeTransformation:
             raise TypeError("unable to convert x (='%s') into a real number"  %(str(x)))
 
         if total <= 0:
-           raise ValueError("the total length must be positive, got {}".format(total))
+            raise ValueError("the total length must be positive, got {}".format(total))
 
         if inplace:
             res = self

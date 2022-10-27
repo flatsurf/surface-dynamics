@@ -192,10 +192,10 @@ class QuadraticStratum(Stratum):
 
         if len(l) == 1 and not isinstance(l[0], numbers.Integral):
             l = l[0]
-        elif len(l) == 3 and isinstance(l[0], tuple) and \
-             isinstance(l[1], numbers.Integral) and \
-             isinstance(l[2], numbers.Integral):
-                 l = l[0] + (-1,) * l[1] + (0,) * l[2]
+        elif (len(l) == 3 and isinstance(l[0], tuple) and
+              isinstance(l[1], numbers.Integral) and
+              isinstance(l[2], numbers.Integral)):
+            l = l[0] + (-1,) * l[1] + (0,) * l[2]
 
         if not l:
             raise ValueError("the list must be nonempty")

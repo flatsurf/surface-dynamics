@@ -540,12 +540,12 @@ class PermutationCover(object):
                 else:
                     flat_orbit.append(x)
             p = p_id
-            for lab,sign in flat_orbit:
+            for lab, sign in flat_orbit:
                 q = self.covering_data(lab)
                 if sign == -1: q = q.inverse()
                 p = p*q
             for c in p.cycle_type():
-               s.append(len(orbit)*c)
+                s.append(len(orbit)*c)
 
         return Partition(sorted(s,reverse=True))
 

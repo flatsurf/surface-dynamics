@@ -438,14 +438,14 @@ class SQLQuery(SageObject):
                 + 'dictionary or a string and tuple')
 
         if 'query_dict' in kwds:
-              query_dict = kwds['query_dict']
+            query_dict = kwds['query_dict']
         else:
-              self.__query_string__ = kwds['query_string']
-              if 'param_tuple' in kwds:
-                  self.__param_tuple__ = tuple((str(x) for x in kwds['param_tuple']))
-              else:
-                  self.__param_tuple__ = tuple()
-              return
+            self.__query_string__ = kwds['query_string']
+            if 'param_tuple' in kwds:
+                self.__param_tuple__ = tuple(str(x) for x in kwds['param_tuple'])
+            else:
+                self.__param_tuple__ = tuple()
+            return
 
         if query_dict:
             skel = database.__skeleton__
