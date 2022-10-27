@@ -619,12 +619,12 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">flat_orbit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
             <span class="n">p</span> <span class="o">=</span> <span class="n">p_id</span>
-            <span class="k">for</span> <span class="n">lab</span><span class="p">,</span><span class="n">sign</span> <span class="ow">in</span> <span class="n">flat_orbit</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">lab</span><span class="p">,</span> <span class="n">sign</span> <span class="ow">in</span> <span class="n">flat_orbit</span><span class="p">:</span>
                 <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">covering_data</span><span class="p">(</span><span class="n">lab</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">sign</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">inverse</span><span class="p">()</span>
                 <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">*</span><span class="n">q</span>
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">cycle_type</span><span class="p">():</span>
-               <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">orbit</span><span class="p">)</span><span class="o">*</span><span class="n">c</span><span class="p">)</span>
+                <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">orbit</span><span class="p">)</span><span class="o">*</span><span class="n">c</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">Partition</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span></div>
 
