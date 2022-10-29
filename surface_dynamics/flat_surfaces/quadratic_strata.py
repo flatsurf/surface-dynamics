@@ -2260,8 +2260,8 @@ class QuadraticStrata_gd(QuadraticStrata_class):
 
         - ``dimension`` - an integer - the dimension of strata
 
-        - ``min_nb_poles``, ``max_nb_poles - integers - minimum and maximum number of
-          poles
+        - ``min_nb_poles``, ``max_nb_poles`` - integers - minimum
+          and maximum number of poles
 
         - ``fake_zeros`` - boolean - whether fake zeros are allowed
 

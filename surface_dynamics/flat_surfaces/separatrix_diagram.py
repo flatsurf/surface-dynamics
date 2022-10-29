@@ -2011,7 +2011,7 @@ class CylinderDiagram(SeparatrixDiagram):
     A cylinder is represented by a couple (i,j) where i is the min in bot and j
     is the min in top. The data _top_to_cyl and _bot_to_cyl corresponds to the
     association of a separatrix to the corresponding 2-tuple. The twist
-    coordinate correspond to the shift betwenn those two indices.
+    coordinate correspond to the shift between those two indices.
     """
     def __init__(self, data, check=True):
         r"""
