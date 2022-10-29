@@ -260,16 +260,17 @@ def construct_skeleton(database):
                 skeleton[table[0]][name]['unique'] = bool(col[2])
     return skeleton
 
+
 def _create_print_table(cur, cols, **kwds):
-    """
+    r"""
     Create a nice printable table from the cursor given with the given
     column titles.
 
     INPUT:
 
-    - ``cur`` - cursor
+    - ``cur`` -- cursor
 
-    - ``cols`` - titles of the column in the same order as in the request
+    - ``cols`` -- titles of the column in the same order as in the request
 
     - ``max_field_size`` -- how wide each field can be
 
@@ -279,7 +280,7 @@ def _create_print_table(cur, cols, **kwds):
 
           {'column_name':(lambda x: format_function(x))}
 
-      or, if ``id_cols`` is not None:
+      or, if ``id_cols`` is not None::
 
           {'column_name':(lambda x,y: format_function(x,y))}
 

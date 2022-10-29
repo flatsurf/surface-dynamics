@@ -2,11 +2,11 @@
 r"""
 Permutation cover
 
-This module deals with combinatorial data for covering of connected components of
-strata of Abelian and quadratic differentials. The main feature is to be able to
-compute Lyapunov exponents.
+This module deals with combinatorial data for covering of connected
+components of strata of Abelian and quadratic differentials. The main
+feature is to be able to compute Lyapunov exponents.
 
-.. todo::
+.. TODO::
 
     It should be possible to compute the KZ action directly on isotypical
     components. That would dramatically reduce the dimension of the space!
@@ -20,7 +20,6 @@ compute Lyapunov exponents.
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
 # *************************************************************************
-
 from __future__ import print_function, absolute_import
 
 import numpy as np
