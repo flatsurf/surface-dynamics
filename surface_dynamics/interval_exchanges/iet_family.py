@@ -3,7 +3,7 @@ Linear families of interval exchange transformations
 
 EXAMPLES:
 
-Using the iterator :function:`surface_dynamics.misc.linalg.isotropic_subspaces`,
+Using the iterator :func:`~surface_dynamics.misc.linalg.isotropic_subspaces`,
 one can explore the SAF=0 subspaces of interval exchange transformations::
 
     sage: from surface_dynamics import iet
