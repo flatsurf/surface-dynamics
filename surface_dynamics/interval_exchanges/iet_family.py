@@ -18,11 +18,13 @@ A family is built from a permutation and a cone of admissible lengths::
     1 1 1 1 1 0 0 1
 
 To have an overview of what a typical iet in your family looks like (ie minimal
-or not) you can use :meth:`IETFamily.random_element_statistics`::
+or not) you can use
+:meth:`~surface_dynamics.interval_exchanges.iet_family_pyx.IETFamily_pyx.random_element_statistics`::
 
     sage: (n1, n2, n3) = F.random_element_statistics(NumberField(x^3 - 2, 'a', embedding=AA(2)**(1/3)))
-    sage: n1 > 95
-    True
+    sage: (n1, n2, n3)  # random
+    (100, 0, 0)
+    sage: assert n1 > 90 and n2 < 5 and n3 < 5, (n1, n2, n3)
 
 The output in the above call is a triple of numbers ``(num_minimal_iets,
 num_iets_with_saddle_connections, num_iets_with_unknown_behaviour)`` on a
@@ -33,11 +35,11 @@ certify it directly::
     sage: F.is_boshernitzan()
     False
 
-The method :meth:`~IETFamily.tree` applies Rauzy induction to get rid of candidate
-saddle connections. For the family ``F`` it succeeds after a single iteration (which
-is a top Rauzy induction)::
+The method :meth:`~IETFamily.rauzy_induction` applies Rauzy induction to get
+rid of candidate saddle connections. For the family ``F`` it succeeds after a
+single iteration (which is a top Rauzy induction)::
 
-    sage: list(F.tree(2))
+    sage: list(F.rauzy_induction(2))
     [(Linear iet family of dimension 2 in RR^8
       top a b c d e f g h
       bot d c f e h a g b
@@ -46,9 +48,9 @@ is a top Rauzy induction)::
       'boshernitzan',
       't')]
 
-We now illustrate a more advanced features. Using the iterator
-:func:`~surface_dynamics.misc.linalg.isotropic_subspaces`, one can explore the
-linear subspaces with vanishin Sah-Arnoux-Fathi invariant::
+We now illustrate a more advanced feature. Using the iterator
+:func:`~surface_dynamics.misc.linalg.isotropic_subspaces`. One can explore the
+linear subspaces with vanishing Sah-Arnoux-Fathi invariant as follows::
 
     sage: from surface_dynamics.misc.linalg import isotropic_subspaces
 
@@ -195,7 +197,7 @@ class IETFamily(IETFamily_pyx):
 
         .. SEEALSO::
 
-            :meth:`is_boshernitzan` tests the absence of saddle connections
+            :meth:`IETFamily.is_boshernitzan` tests the absence of saddle connections
             (aka Keane property i.d.o.c. condition) in the family.
         """
         from sage.numerical.mip import MixedIntegerLinearProgram, MIPSolverException
@@ -297,10 +299,11 @@ class IETFamily(IETFamily_pyx):
 
         .. SEEALSO::
 
-            :meth:`has_zero_connection` test whether there is a connection of zero
-            length (ie a bottom singularity that coincides with a top one)
+            :meth:`~surface_dynamics.interval_exchanges.iet_family_pyx.IETFamily_pyx.has_zero_connection`
+            test whether there is a connection of zero length (ie a bottom
+            singularity that coincides with a top one)
 
-            :meth:`is_boshernitzan_periodic` test for absence of periodic
+            :meth:`IETFamily.is_periodic_boshernitzan` test for absence of periodic
             trajectories (which is a weaker than absence of saddle connections)
 
         EXAMPLES::
@@ -413,7 +416,7 @@ class IETFamily(IETFamily_pyx):
 
         return True
 
-    def tree(self, max_depth=5, verbose=False):
+    def rauzy_induction(self, max_depth=5, verbose=False):
         r"""
         Iterate through the new families obtained by performing Rauzy
         induction.
@@ -425,12 +428,14 @@ class IETFamily(IETFamily_pyx):
         components). Each step of the Rauzy induction might split the family
         into two familes giving rise to a tree of possibilities. The search is
         cut when
+
         - either reaching a decidable state (ie family satisfying Boshernitzan
           condition or with the presence of a zero connection).
         - when the depth reaches ``max_depth`` (default to ``5``)
 
         OUTPUT: Each element of the output is a triple ``(family, state,
         induction_path)`` where
+
         - ``family`` is the family obtained after performing Rauzy induction
         - ``state`` is a string indicating what kind of family was obtained. It
           is either ``"unknown"``, ``"autosim"`` (when ``family`` was already
@@ -453,7 +458,7 @@ class IETFamily(IETFamily_pyx):
             sage: p = iet.Permutation([0,1,2,3,4,5],[5,4,3,2,1,0])
             sage: rays = [[5, 1, 0, 0, 3, 8], [2, 1, 0, 3, 0, 5], [1, 0, 1, 2, 0, 3], [3, 0, 1, 0, 2, 5]]
             sage: F = iet.IETFamily(p, rays)
-            sage: for family, state, path in F.tree(10):
+            sage: for family, state, path in F.rauzy_induction(10):
             ....:     print(state, path)
             unknown tttbbttbb
             unknown tttbtbttb
@@ -475,15 +480,14 @@ class IETFamily(IETFamily_pyx):
             ....:         [2, 0, 2, 0, 1, 1, 1, 1],
             ....:         [2, 2, 0, 0, 0, 2, 2, 1]]
             sage: F = iet.IETFamily(p, rays)
-            sage: [state for family, state, path in F.tree(3)]
+            sage: [state for family, state, path in F.rauzy_induction(3)]
             ['boshernitzan', 'saddle']
             sage: x = polygen(QQ)
             sage: K = NumberField(x^3 - 2, 'a', embedding=AA(2)**(1/3))
             sage: n1, n2, n3 = F.random_element_statistics(K)
             sage: (n1, n2, n3)  # random
             (19, 81, 0)
-            sage: n1 > 0 and n2 > 0 and n3 == 0
-            True
+            sage: assert n1 > 0 and n2 > 0 and n3 == 0, (n1, n2, n3)
         """
         saf_zero = self.has_zero_saf()
         s = ''
