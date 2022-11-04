@@ -24,7 +24,7 @@ or not) you can use
     sage: (n1, n2, n3) = F.random_element_statistics(NumberField(x^3 - 2, 'a', embedding=AA(2)**(1/3)))
     sage: (n1, n2, n3)  # random
     (100, 0, 0)
-    sage: assert n1 > 90 and n2 < 5 and n3 < 5, (n1, n2, n3)
+    sage: assert n1 > 90 and n2 < 5 and n3 < 5, (n1, n2, n3)  # optional -- pyintervalxt
 
 The output in the above call is a triple of numbers ``(num_minimal_iets,
 num_iets_with_saddle_connections, num_iets_with_unknown_behaviour)`` on a
@@ -487,7 +487,7 @@ class IETFamily(IETFamily_pyx):
             sage: n1, n2, n3 = F.random_element_statistics(K)
             sage: (n1, n2, n3)  # random
             (19, 81, 0)
-            sage: assert n1 > 0 and n2 > 0 and n3 == 0, (n1, n2, n3)
+            sage: assert n1 > 0 and n2 > 0 and n3 == 0, (n1, n2, n3)  # optional -- pyintervalxt
         """
         saf_zero = self.has_zero_saf()
         s = ''
