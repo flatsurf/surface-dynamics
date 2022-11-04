@@ -199,6 +199,20 @@ class IETFamily(IETFamily_pyx):
 
             :meth:`IETFamily.is_boshernitzan` tests the absence of saddle connections
             (aka Keane property i.d.o.c. condition) in the family.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import iet
+
+            sage: p = iet.Permutation("0 1 2 3 4 5 6 7", "5 4 3 2 7 6 1 0")
+            sage: gens = [[0, 0, 1, 0, 0, 0, 1, 0],
+            ....:         [0, 1, 0, 1, 0, 1, 1, 0],
+            ....:         [1, 1, 1, 0, 1, 0, 1, 1]]
+            sage: F = iet.IETFamily(p, gens)
+            sage: F.is_periodic_boshernitzan()
+            True
+            sage: F.is_boshernitzan()
+            False
         """
         from sage.numerical.mip import MixedIntegerLinearProgram, MIPSolverException
 
