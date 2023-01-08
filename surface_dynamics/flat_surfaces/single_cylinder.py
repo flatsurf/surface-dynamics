@@ -1463,7 +1463,7 @@ def only_even_2(odd_zeros):
             odd_zeros.remove(1)
             one_count = odd_zeros.count(1)
             return cylinder_concatenation(perm,even_ones_odds(odd_zeros,one_count))
-    elif odd_zeros.count(1) == 2 and len(odd_zeros) == 4 :
+    elif odd_zeros.count(1) == 2 and len(odd_zeros) == 4:
         perm = GeneralizedPermutation([0,1,2,3,4,5,6,7],[2,6,4,1,7,5,3,0])
         return cylinder_concatenation(perm,no_ones_odds(odd_zeros[:2]))
     else:

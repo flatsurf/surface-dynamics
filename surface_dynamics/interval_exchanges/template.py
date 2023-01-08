@@ -5243,7 +5243,9 @@ class OrientablePermutationLI(PermutationLI):
             return QuadraticStratum([x-2 for x in self.profile()])
         raise ValueError("stratum is well defined only for irreducible permutations")
 
+
 FlippedPermutation = Permutation
+
 
 class FlippedPermutationIET(PermutationIET):
     r"""

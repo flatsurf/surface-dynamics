@@ -794,10 +794,10 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
             True
         """
         winner = interval_conversion(winner)
-        loser = self._labels[1-winner][-1]
+        loser = self._labels[1 - winner][-1]
 
         # the same letter at the right-end (False)
-        if self._labels[0][-1] == self._labels[1][-1] :
+        if self._labels[0][-1] == self._labels[1][-1]:
             return False
 
         # the winner (or loser) letter is repeated on the other interval (True)

@@ -54,6 +54,7 @@ from surface_dynamics.misc.permutation import *
 
 ZZ_0 = Integer(0)
 
+
 # constructors
 
 def Constellations(*data, **options):
@@ -109,6 +110,7 @@ def Constellations(*data, **options):
     else:
         raise NotImplementedError("one cannot give just degree or just length")
 
+
 def Constellation(g=None, mutable=False, connected=True, check=True):
     r"""
     Constellation
@@ -154,6 +156,7 @@ def Constellation(g=None, mutable=False, connected=True, check=True):
         g2 (0,1,2)
     """
     return Constellations(connected=connected)(g,check=check,mutable=mutable)
+
 
 # classes
 
@@ -876,7 +879,6 @@ class Constellation_class(Element):
                 return self._normal_form
             except AttributeError:
                 pass
-
 
         # compute canonical labels
         if not self.is_connected():

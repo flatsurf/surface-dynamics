@@ -8,6 +8,7 @@ from sage.rings.number_field.number_field_base import is_NumberField
 from . import constructors as iet
 from .iet import IntervalExchangeTransformation
 
+
 def iet_to_pyintervalxt(T):
     r"""
     Return the pyintervalxt version of the interval exchange transformation ``T``.
@@ -109,6 +110,7 @@ def lengths_to_sage(lengths):
             return [K_sage(K(x)) for x in lengths]
 
     raise NotImplementedError('unknown length type {}'.format(type(lengths[0])))
+
 
 def iet_from_pyintervalxt(T, alphabet=None):
     r"""

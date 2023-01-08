@@ -3247,7 +3247,6 @@ class CylinderDiagram(SeparatrixDiagram):
                 m[i,b] += -1
         return m
 
-
     #
     # Abelian differentials / coordinates
     #
@@ -4163,7 +4162,7 @@ class QuadraticCylinderDiagram(SageObject):
             edges = [None] * N
             seen = [None] * n
             p = []
-            for i ,bt in enumerate(data):
+            for i, bt in enumerate(data):
                 # constructing p (= face matching)
                 p.append(2*i+1)
                 p.append(2*i)

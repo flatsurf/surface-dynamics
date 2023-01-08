@@ -36,6 +36,7 @@ from sage.rings.integer_ring import ZZ
 from sage.rings.rational_field import QQ
 from sage.matrix.constructor import matrix
 
+
 class AdditiveMultivariateGeneratingSeries(AbstractMSum):
     r"""
     EXAMPLES::
@@ -263,6 +264,7 @@ class AdditiveMultivariateGeneratingSeries(AbstractMSum):
                 new_data[new_den] = new_num
 
         return P.element_class(P, new_data)
+
 
 class AdditiveMultivariateGeneratingSeriesRing(AbstractMSumRing):
     Element = AdditiveMultivariateGeneratingSeries

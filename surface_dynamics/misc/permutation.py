@@ -1601,13 +1601,15 @@ class PermutationGroupOrbit:
                     elts.append(v)
             k += 1
 
+
 #################################3
 # Serialization
 
 # the first 64 characters are used for integer encoding
 # the last one is used for "undefined" (corresponds to -1 in arrays)
 CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-.'
-CHARS_INV = {j:i for i,j in enumerate(CHARS)}
+CHARS_INV = {j: i for i, j in enumerate(CHARS)}
+
 
 def uint_base64_str(n, l=None):
     r"""

@@ -997,7 +997,6 @@ class PermutationCover(object):
 
         return projections, dimensions
 
-
     def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=10,
                                   nb_iterations=65536, output_file=None,
                                   return_speed=False, isotypic_decomposition=False,

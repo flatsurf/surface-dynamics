@@ -48,6 +48,7 @@ import numbers
 from sage.misc.cachefunc import cached_method
 from sage.rings.rational_field import QQ
 
+
 # custom latte count
 def latte_generating_series(L, M=None):
     r"""
@@ -73,6 +74,7 @@ def latte_generating_series(L, M=None):
         raise ValueError('your Sage version is too old ({}) to use this function'.format(version))
     ans = count(L.cdd_Hrepresentation(), cdd=True, multivariate_generating_function=True, raw_output=True)
     return parse_latte_generating_series(M, ans)
+
 
 def parse_latte_generating_series(M, s):
     r"""
@@ -117,7 +119,6 @@ def parse_latte_generating_series(M, s):
         m += M.term(R(num), list(m_den.items()))
 
     return m
-
 
 
 class MultiplicativeMultivariateGeneratingSeries(AbstractMSum):
@@ -574,6 +575,7 @@ class MultiplicativeMultivariateGeneratingSeries(AbstractMSum):
     def as_symbolic(self):
         from sage.symbolic.ring import SR
         return SR(str(self))
+
 
 # TODO: this should actually be an algebra over QQ[x0, x1, ..., xn]
 # TODO: we should have two versions, as an algebra over the polynomial
