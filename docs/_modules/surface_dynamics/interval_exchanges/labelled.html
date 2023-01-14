@@ -65,9 +65,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>surface_dynamics.interval_exchanges.labelled</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">surface_dynamics.interval_exchanges.labelled</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -195,7 +195,7 @@
 
 
 <div class="viewcode-block" id="LabelledPermutation"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation">[docs]</a><span class="k">class</span> <span class="nc">LabelledPermutation</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    General template for labelled objects.</span>
 
 <span class="sd">    .. WARNING::</span>
@@ -203,7 +203,7 @@
 <span class="sd">       Internal class! Do not use directly!</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
 <span class="sd">            sage: from surface_dynamics import *</span>
@@ -229,7 +229,7 @@
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="o">.</span><span class="n">unrank</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
 
 <div class="viewcode-block" id="LabelledPermutation.list"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of two lists corresponding to the intervals.</span>
 
 <span class="sd">        INPUT:</span>
@@ -307,7 +307,7 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">a0</span><span class="p">,</span><span class="n">a1</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="LabelledPermutation.relabel"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation.relabel">[docs]</a>    <span class="k">def</span> <span class="nf">relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Relabel this permutation according to ``p``.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -326,7 +326,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]]</span></div>
 
 <div class="viewcode-block" id="LabelledPermutation.rauzy_move_matrix"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation.rauzy_move_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_move_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the Rauzy move matrix.</span>
 
 <span class="sd">        This matrix corresponds to the action of a Rauzy move on the vector of</span>
@@ -379,7 +379,7 @@
         <span class="k">return</span> <span class="n">m</span></div>
 
 <div class="viewcode-block" id="LabelledPermutation.rauzy_move_winner"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation.rauzy_move_winner">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_move_winner</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">winner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">side</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the winner of a Rauzy move.</span>
 
 <span class="sd">        INPUT:</span>
@@ -427,7 +427,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">winner</span><span class="p">][</span><span class="n">side</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="LabelledPermutation.rauzy_move_loser"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation.rauzy_move_loser">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_move_loser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">winner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">side</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the loser of a Rauzy move</span>
 
 <span class="sd">        INPUT:</span>
@@ -466,7 +466,7 @@
     <span class="n">nintervals</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">irreducible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">alphabet</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns an iterator over labelled permutations.</span>
 
 <span class="sd">    INPUT:</span>
@@ -574,7 +574,7 @@
             <span class="n">LabelledPermutationsIET_iterator</span><span class="p">(</span><span class="n">nintervals</span><span class="p">,</span><span class="kc">False</span><span class="p">,</span><span class="n">alphabet</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="LabelledPermutationIET"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET">[docs]</a><span class="k">class</span> <span class="nc">LabelledPermutationIET</span><span class="p">(</span><span class="n">LabelledPermutation</span><span class="p">,</span> <span class="n">OrientablePermutationIET</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Labelled permutation for iet</span>
 
 <span class="sd">    EXAMPLES::</span>
@@ -613,7 +613,7 @@
 <span class="sd">        True</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="LabelledPermutationIET.reduced"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET.reduced">[docs]</a>    <span class="k">def</span> <span class="nf">reduced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the associated reduced abelian permutation.</span>
 
 <span class="sd">        OUTPUT:</span>
@@ -635,7 +635,7 @@
         <span class="k">return</span> <span class="n">ReducedPermutationIET</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="p">(),</span> <span class="n">alphabet</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LabelledPermutationIET.rauzy_move_interval_substitution"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET.rauzy_move_interval_substitution">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_move_interval_substitution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">winner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">side</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the interval substitution associated.</span>
 
 <span class="sd">        INPUT:</span>
@@ -681,7 +681,7 @@
         <span class="k">return</span> <span class="n">WordMorphism</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LabelledPermutationIET.rauzy_move_orbit_substitution"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET.rauzy_move_orbit_substitution">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_move_orbit_substitution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">winner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">side</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the action of the rauzy_move on the orbit.</span>
 
 <span class="sd">        INPUT:</span>
@@ -734,7 +734,7 @@
         <span class="k">return</span> <span class="n">WordMorphism</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LabelledPermutationIET.rauzy_diagram"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET.rauzy_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the associated Rauzy diagram.</span>
 
 <span class="sd">        For more information try help(iet.RauzyDiagram).</span>
@@ -755,7 +755,7 @@
 <div class="viewcode-block" id="LabelledPermutationIET.lyapunov_exponents_approx"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET.lyapunov_exponents_approx">[docs]</a>    <span class="k">def</span> <span class="nf">lyapunov_exponents_approx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_vectors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nb_experiments</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                                   <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">65536</span><span class="p">,</span> <span class="n">return_speed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                                   <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return approximate Lyapunov exponents of the KZ-cocycle.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -775,7 +775,7 @@
                     <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="LabelledPermutationLI"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI">[docs]</a><span class="k">class</span> <span class="nc">LabelledPermutationLI</span><span class="p">(</span><span class="n">LabelledPermutation</span><span class="p">,</span> <span class="n">OrientablePermutationLI</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Labelled quadratic (or generalized) permutation</span>
 
 <span class="sd">    EXAMPLES::</span>
@@ -823,7 +823,7 @@
 <span class="sd">        True</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="LabelledPermutationLI.has_right_rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.has_right_rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">has_right_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test of Rauzy movability with a specified winner)</span>
 
 <span class="sd">        A quadratic (or generalized) permutation is rauzy_movable type</span>
@@ -892,7 +892,7 @@
         <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="LabelledPermutationLI.right_rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.right_rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">right_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform a Rauzy move on the right (the standard one).</span>
 
 <span class="sd">        INPUT:</span>
@@ -964,7 +964,7 @@
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="LabelledPermutationLI.left_rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.left_rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">left_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform a Rauzy move on the left.</span>
 
 <span class="sd">        INPUT:</span>
@@ -1038,7 +1038,7 @@
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="LabelledPermutationLI.reduced"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.reduced">[docs]</a>    <span class="k">def</span> <span class="nf">reduced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the associated reduced quadratic permutations.</span>
 
 <span class="sd">        OUTPUT:</span>
@@ -1062,7 +1062,7 @@
         <span class="k">return</span> <span class="n">ReducedPermutationLI</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="p">(),</span><span class="n">alphabet</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LabelledPermutationLI.rauzy_diagram"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.rauzy_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the associated RauzyDiagram.</span>
 
 <span class="sd">        OUTPUT:</span>
@@ -1085,7 +1085,7 @@
 <div class="viewcode-block" id="LabelledPermutationLI.lyapunov_exponents_H_plus"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.lyapunov_exponents_H_plus">[docs]</a>    <span class="k">def</span> <span class="nf">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_vectors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nb_experiments</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                                   <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">65536</span><span class="p">,</span> <span class="n">return_speed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                                   <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute the H^+ Lyapunov exponents of the stratum associated to this</span>
 <span class="sd">        permutation.</span>
 
@@ -1147,7 +1147,7 @@
 <div class="viewcode-block" id="LabelledPermutationLI.lyapunov_exponents_H_minus"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.lyapunov_exponents_H_minus">[docs]</a>    <span class="k">def</span> <span class="nf">lyapunov_exponents_H_minus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_vectors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nb_experiments</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                                   <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">65536</span><span class="p">,</span> <span class="n">return_speed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                                   <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute the H^+ Lyapunov exponents of the stratum associated to this</span>
 <span class="sd">        permutation.</span>
 
@@ -1225,7 +1225,7 @@
 
 
 <div class="viewcode-block" id="FlippedLabelledPermutationIET"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationIET">[docs]</a><span class="k">class</span> <span class="nc">FlippedLabelledPermutationIET</span><span class="p">(</span><span class="n">FlippedPermutationIET</span><span class="p">,</span> <span class="n">LabelledPermutationIET</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Flipped labelled permutation from iet.</span>
 
 <span class="sd">    EXAMPLES::</span>
@@ -1259,7 +1259,7 @@
 <span class="sd">        sage: d = iet.RauzyDiagram(&#39;a b c d&#39;,&#39;d a b c&#39;,flips=&#39;a&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="FlippedLabelledPermutationIET.reduced"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationIET.reduced">[docs]</a>    <span class="k">def</span> <span class="nf">reduced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The associated reduced permutation.</span>
 
 <span class="sd">        OUTPUT:</span>
@@ -1284,7 +1284,7 @@
             <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FlippedLabelledPermutationIET.rauzy_diagram"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationIET.rauzy_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the Rauzy diagram associated to this permutation.</span>
 
 <span class="sd">        For more information, try help(iet.RauzyDiagram)</span>
@@ -1304,7 +1304,7 @@
         <span class="k">return</span> <span class="n">FlippedLabelledRauzyDiagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="FlippedLabelledPermutationLI"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationLI">[docs]</a><span class="k">class</span> <span class="nc">FlippedLabelledPermutationLI</span><span class="p">(</span><span class="n">FlippedPermutationLI</span><span class="p">,</span> <span class="n">LabelledPermutationLI</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Flipped labelled quadratic (or generalized) permutation.</span>
 
 <span class="sd">    EXAMPLES::</span>
@@ -1325,7 +1325,7 @@
 <span class="sd">        True</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="FlippedLabelledPermutationLI.reduced"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationLI.reduced">[docs]</a>    <span class="k">def</span> <span class="nf">reduced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The associated reduced permutation.</span>
 
 <span class="sd">        OUTPUT:</span>
@@ -1350,7 +1350,7 @@
             <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FlippedLabelledPermutationLI.right_rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationLI.right_rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">right_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform a Rauzy move on the right (the standard one).</span>
 
 <span class="sd">        INPUT:</span>
@@ -1412,7 +1412,7 @@
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="FlippedLabelledPermutationLI.left_rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationLI.left_rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">left_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform a Rauzy move on the left.</span>
 
 <span class="sd">        INPUT:</span>
@@ -1463,7 +1463,7 @@
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="FlippedLabelledPermutationLI.rauzy_diagram"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationLI.rauzy_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the associated Rauzy diagram.</span>
 
 <span class="sd">        For more information, try help(RauzyDiagram)</span>
@@ -1482,17 +1482,17 @@
         <span class="k">return</span> <span class="n">FlippedLabelledRauzyDiagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="LabelledRauzyDiagram"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram">[docs]</a><span class="k">class</span> <span class="nc">LabelledRauzyDiagram</span><span class="p">(</span><span class="n">RauzyDiagram</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Template for Rauzy diagrams of labelled permutations.</span>
 
 <span class="sd">        ...DO NOT USE...</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="LabelledRauzyDiagram.Path"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.Path">[docs]</a>    <span class="k">class</span> <span class="nc">Path</span><span class="p">(</span><span class="n">RauzyDiagram</span><span class="o">.</span><span class="n">Path</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Path in Labelled Rauzy diagram.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="LabelledRauzyDiagram.Path.matrix"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.Path.matrix">[docs]</a>        <span class="k">def</span> <span class="nf">matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Returns the matrix associated to a path.</span>
 
 <span class="sd">            The matrix associated to a Rauzy induction, is the linear</span>
@@ -1539,7 +1539,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">composition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">edge_to_matrix</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LabelledRauzyDiagram.Path.interval_substitution"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.Path.interval_substitution">[docs]</a>        <span class="k">def</span> <span class="nf">interval_substitution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Returns the substitution of intervals obtained.</span>
 
 <span class="sd">            OUTPUT:</span>
@@ -1568,7 +1568,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_composition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">edge_to_interval_substitution</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LabelledRauzyDiagram.Path.orbit_substitution"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.Path.orbit_substitution">[docs]</a>        <span class="k">def</span> <span class="nf">orbit_substitution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Returns the substitution on the orbit of the left extremity.</span>
 
 <span class="sd">            OUTPUT:</span>
@@ -1600,7 +1600,7 @@
         <span class="n">dual_substitution</span> <span class="o">=</span> <span class="n">interval_substitution</span>  <span class="c1"># standard name</span>
 
 <div class="viewcode-block" id="LabelledRauzyDiagram.Path.is_full"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.Path.is_full">[docs]</a>        <span class="k">def</span> <span class="nf">is_full</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Tests the fullness.</span>
 
 <span class="sd">            A path is full if all intervals win at least one time.</span>
@@ -1629,7 +1629,7 @@
             <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">letters</span><span class="p">())</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">winners</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="LabelledRauzyDiagram.Path.self_similar_iet"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.Path.self_similar_iet">[docs]</a>        <span class="k">def</span> <span class="nf">self_similar_iet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Return the self-similar interval exchange transformation associated to this path</span>
 
 <span class="sd">            INPUT:</span>
@@ -1683,7 +1683,7 @@
             <span class="k">return</span> <span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">(),</span> <span class="n">lengths</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="LabelledRauzyDiagram.edge_to_interval_substitution"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.edge_to_interval_substitution">[docs]</a>    <span class="k">def</span> <span class="nf">edge_to_interval_substitution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edge_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the interval substitution associated to an edge</span>
 
 <span class="sd">        OUTPUT:</span>
@@ -1715,7 +1715,7 @@
         <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">function_name</span><span class="p">)(</span><span class="o">*</span><span class="n">arguments</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LabelledRauzyDiagram.edge_to_orbit_substitution"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.edge_to_orbit_substitution">[docs]</a>    <span class="k">def</span> <span class="nf">edge_to_orbit_substitution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edge_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the interval substitution associated to an edge</span>
 
 <span class="sd">        OUTPUT:</span>
@@ -1759,7 +1759,7 @@
         <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">function_name</span><span class="p">)(</span><span class="o">*</span><span class="n">arguments</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LabelledRauzyDiagram.full_loop_iterator"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.full_loop_iterator">[docs]</a>    <span class="k">def</span> <span class="nf">full_loop_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns an iterator over all full path starting at start.</span>
 
 <span class="sd">        INPUT:</span>
@@ -1796,7 +1796,7 @@
         <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">copy</span><span class="p">,</span><span class="n">ifull</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LabelledRauzyDiagram.full_nloop_iterator"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.full_nloop_iterator">[docs]</a>    <span class="k">def</span> <span class="nf">full_nloop_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns an iterator over all full loops of given length.</span>
 
 <span class="sd">        INPUT:</span>
@@ -1833,7 +1833,7 @@
         <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">ifull</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_permutation_to_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Translation of a labelled permutation to a vertex</span>
 
 <span class="sd">        INPUT:</span>
@@ -1854,7 +1854,7 @@
         <span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
 
     <span class="k">def</span> <span class="nf">_set_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets self._element with data</span>
 
 <span class="sd">        TESTS::</span>
@@ -1872,11 +1872,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_twin</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">])]</span></div>
 
 <div class="viewcode-block" id="FlippedLabelledRauzyDiagram"><a class="viewcode-back" href="../../../interval_exchanges/labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledRauzyDiagram">[docs]</a><span class="k">class</span> <span class="nc">FlippedLabelledRauzyDiagram</span><span class="p">(</span><span class="n">FlippedRauzyDiagram</span><span class="p">,</span> <span class="n">LabelledRauzyDiagram</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Rauzy diagram of flipped labelled permutations</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">_permutation_to_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns what must be stored from p.</span>
 
 <span class="sd">        INPUT:</span>
@@ -1897,7 +1897,7 @@
                 <span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_flips</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_flips</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
 
     <span class="k">def</span> <span class="nf">_set_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns what the vertex i as a permutation.</span>
 
 <span class="sd">        TESTS::</span>

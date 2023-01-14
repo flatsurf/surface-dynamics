@@ -65,9 +65,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>surface_dynamics.topology.fat_graph</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">surface_dynamics.topology.fat_graph</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -124,7 +124,7 @@
 
 
 <div class="viewcode-block" id="list_extrems"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.list_extrems">[docs]</a><span class="k">def</span> <span class="nf">list_extrems</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    EXAMPLES::</span>
 
 <span class="sd">        sage: from surface_dynamics.topology.fat_graph import list_extrems</span>
@@ -148,7 +148,7 @@
 <span class="c1"># For Abelian strata we should use constellations (= bipartite stuff)</span>
 
 <div class="viewcode-block" id="FatGraph"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph">[docs]</a><span class="k">class</span> <span class="nc">FatGraph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    EXAMPLES:</span>
 
 <span class="sd">    The once punctured torus::</span>
@@ -228,7 +228,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_num_dart</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span><span class="p">))</span>
 
 <div class="viewcode-block" id="FatGraph.copy"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics import FatGraph</span>
@@ -251,7 +251,7 @@
 
 <div class="viewcode-block" id="FatGraph.from_unicellular_word"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.from_unicellular_word">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">from_unicellular_word</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build a fat graph from a word on the letters {0, ..., n-1} where</span>
 <span class="sd">        each letter appears exactly twice.</span>
 
@@ -282,7 +282,7 @@
 
 <div class="viewcode-block" id="FatGraph.from_string"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.from_string">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build a fat graph from a serialized string.</span>
 
 <span class="sd">        See also :meth:`to_string`.</span>
@@ -307,7 +307,7 @@
         <span class="k">return</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">ep</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FatGraph.to_string"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.to_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Serialization to string.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -394,7 +394,7 @@
             <span class="k">raise</span> <span class="n">error</span><span class="p">(</span><span class="s2">&quot;inconsistent face labels/degrees, got </span><span class="si">%s</span><span class="s2"> instead of fd = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ffd</span><span class="p">,</span> <span class="n">fd</span><span class="p">[:</span><span class="n">nf</span><span class="p">]))</span>
 
 <div class="viewcode-block" id="FatGraph.is_face_bipartite"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.is_face_bipartite">[docs]</a>    <span class="k">def</span> <span class="nf">is_face_bipartite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">certificate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test whether the faces admit a bi-coloring.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -458,7 +458,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">colors</span><span class="p">)</span> <span class="k">if</span> <span class="n">certificate</span> <span class="k">else</span> <span class="kc">True</span></div>
 
     <span class="k">def</span> <span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
@@ -494,7 +494,7 @@
                                                <span class="n">perm_cycle_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
@@ -548,7 +548,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fp</span></div>
 
 <div class="viewcode-block" id="FatGraph.vertex_profile"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.vertex_profile">[docs]</a>    <span class="k">def</span> <span class="nf">vertex_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics import FatGraph</span>
@@ -564,7 +564,7 @@
         <span class="k">return</span> <span class="n">perm_cycle_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ep</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FatGraph.face_profile"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.face_profile">[docs]</a>    <span class="k">def</span> <span class="nf">face_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics import FatGraph</span>
@@ -592,7 +592,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span></div>
 
 <div class="viewcode-block" id="FatGraph.vertices"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.vertices">[docs]</a>    <span class="k">def</span> <span class="nf">vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
@@ -627,7 +627,7 @@
         <span class="k">return</span> <span class="n">list_extrems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="FatGraph.edges"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.edges">[docs]</a>    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
@@ -644,7 +644,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">//</span> <span class="mi">2</span></div>
 
 <div class="viewcode-block" id="FatGraph.faces"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.faces">[docs]</a>    <span class="k">def</span> <span class="nf">faces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
@@ -661,7 +661,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">_nf</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="FatGraph.genus"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.genus">[docs]</a>    <span class="k">def</span> <span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
@@ -675,7 +675,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span></div>
 
 <div class="viewcode-block" id="FatGraph.euler_characteristic"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.euler_characteristic">[docs]</a>    <span class="k">def</span> <span class="nf">euler_characteristic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
@@ -689,7 +689,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span></div>
 
 <div class="viewcode-block" id="FatGraph.dual"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.dual">[docs]</a>    <span class="k">def</span> <span class="nf">dual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the dual fat graph.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -716,7 +716,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_vd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vd</span></div>
 
 <div class="viewcode-block" id="FatGraph.polytope"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.polytope">[docs]</a>    <span class="k">def</span> <span class="nf">polytope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the polytope of edge lengths where the input ``b`` specifies the</span>
 <span class="sd">        length of faces.</span>
 
@@ -782,7 +782,7 @@
         <span class="k">return</span> <span class="n">Polyhedron</span><span class="p">(</span><span class="n">ieqs</span><span class="o">=</span><span class="n">ieqs</span><span class="p">,</span> <span class="n">eqns</span><span class="o">=</span><span class="n">eqns</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FatGraph.integral_points"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.integral_points">[docs]</a>    <span class="k">def</span> <span class="nf">integral_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the edge lengths solution to the face lengths constraint ``b``.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -841,7 +841,7 @@
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;reallocation needed&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_set_genus0_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
@@ -875,7 +875,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_vd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 
     <span class="k">def</span> <span class="nf">_set_genus0_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
@@ -909,7 +909,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 
     <span class="k">def</span> <span class="nf">_set_genus1_square</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
@@ -943,7 +943,7 @@
         <span class="n">vd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
 
 <div class="viewcode-block" id="FatGraph.split_face"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.split_face">[docs]</a>    <span class="k">def</span> <span class="nf">split_face</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Insert an edge between the darts ``i`` and ``j`` to split the face.</span>
 
 <span class="sd">        One of the face will contains i, fp[i], ...,  (the x-face) and the</span>
@@ -1101,7 +1101,7 @@
             <span class="n">vd</span><span class="p">[</span><span class="n">vl</span><span class="p">[</span><span class="n">y</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span></div>
 
 <div class="viewcode-block" id="FatGraph.remove_edge"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.remove_edge">[docs]</a>    <span class="k">def</span> <span class="nf">remove_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove an edge.</span>
 
 <span class="sd">        If the edge has the same face on both sides, then the genus drops by 1.</span>
@@ -1231,7 +1231,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="o">-=</span> <span class="mi">1</span></div>
 
 <div class="viewcode-block" id="FatGraph.split_vertex"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.split_vertex">[docs]</a>    <span class="k">def</span> <span class="nf">split_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Insert a new edge to split the vertex located at the darts i and j.</span>
 
 <span class="sd">        This operation keeps the genus constant. The inverse operation is implemented</span>
@@ -1350,7 +1350,7 @@
             <span class="n">fd</span><span class="p">[</span><span class="n">fl</span><span class="p">[</span><span class="n">y</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span></div>
 
 <div class="viewcode-block" id="FatGraph.contract_edge"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.contract_edge">[docs]</a>    <span class="k">def</span> <span class="nf">contract_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Contract an edge between two distinct zeros.</span>
 
 <span class="sd">        Inverse operation of :meth:`split_vertex` except that here we allow</span>
@@ -1476,7 +1476,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span> <span class="o">-=</span> <span class="mi">1</span></div>
 
 <div class="viewcode-block" id="FatGraph.trisect_face"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.trisect_face">[docs]</a>    <span class="k">def</span> <span class="nf">trisect_face</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Insert a bridge</span>
 
 <span class="sd">        INPUT:</span>
@@ -1753,7 +1753,7 @@
     <span class="c1">#   - augment3: vertex split</span>
 
     <span class="k">def</span> <span class="nf">_good_starts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i0</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
@@ -1891,7 +1891,7 @@
         <span class="k">return</span> <span class="n">ans</span>
 
     <span class="k">def</span> <span class="nf">_canonical_labelling_from</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i0</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Edges gets relabelled (2i, 2i+1).</span>
 
 <span class="sd">        OUTPUT: a triple ``(fc, fd, rel)`` where</span>
@@ -1980,7 +1980,7 @@
 
     <span class="c1"># TODO: this is a waste! We should implement the proper partial relabeling</span>
     <span class="k">def</span> <span class="nf">_canonical_labelling_from_if_better</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">best</span><span class="p">,</span> <span class="n">i0</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        INPUT:</span>
 
 <span class="sd">        - ``best`` - a triple ``(fc, fd, rel)`` as given from _canonical_labeling_from</span>
@@ -2105,7 +2105,7 @@
             <span class="k">return</span> <span class="n">is_fc_better</span><span class="p">,</span> <span class="n">cur</span>
 
     <span class="k">def</span> <span class="nf">_is_canonical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i0</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a pair ``(answer, automorphisms)`` where answer is a boolean</span>
 <span class="sd">        that says whether this map is in canonical form and ``automorphisms`` form</span>
 <span class="sd">        a generating set of the group of automorphisms.</span>
@@ -2163,7 +2163,7 @@
         <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">P</span>
 
 <div class="viewcode-block" id="FatGraph.automorphism_group"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.automorphism_group">[docs]</a>    <span class="k">def</span> <span class="nf">automorphism_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
@@ -2224,7 +2224,7 @@
         <span class="k">return</span> <span class="n">P</span></div>
 
 <div class="viewcode-block" id="FatGraph.relabel"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.relabel">[docs]</a>    <span class="k">def</span> <span class="nf">relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Relabel according to the permutation ``p``</span>
 
 <span class="sd">        EXAMPLES::</span>

@@ -65,9 +65,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>surface_dynamics.topological_recursion.masur_veech</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">surface_dynamics.topological_recursion.masur_veech</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -128,7 +128,7 @@
 
 
 <div class="viewcode-block" id="MasurVeechTR"><a class="viewcode-back" href="../../../topological_recursion/masur_veech.html#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR">[docs]</a><span class="k">class</span> <span class="nc">MasurVeechTR</span><span class="p">(</span><span class="n">TopologicalRecursion</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Topological recursion for Masur-Veech volumes (Anderssen et al.)</span>
 
 <span class="sd">    EXAMPLES:</span>
@@ -146,7 +146,7 @@
 <span class="sd">        1/9*t^4 + 8/27*t^3 + 256/675*t^2 + 16/75*t</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge_weight</span><span class="o">=</span><span class="n">ZZ_1</span><span class="p">,</span> <span class="n">vertex_weight</span><span class="o">=</span><span class="n">ZZ_1</span><span class="p">,</span> <span class="n">cache_all</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        INPUT:</span>
 
 <span class="sd">        - ``edge_weight`` - a edge weight to be put on each cylinder</span>
@@ -179,7 +179,7 @@
                 <span class="k">yield</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">ZZ</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="MasurVeechTR.C"><a class="viewcode-back" href="../../../topological_recursion/masur_veech.html#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.C">[docs]</a>    <span class="k">def</span> <span class="nf">C</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">jmax</span><span class="p">,</span> <span class="n">kmax</span><span class="p">,</span> <span class="n">smax</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterate through the non-zero ``(j, k, C(i, j, k))`` given the ``i``.</span>
 
 <span class="sd">        INPUT:</span>

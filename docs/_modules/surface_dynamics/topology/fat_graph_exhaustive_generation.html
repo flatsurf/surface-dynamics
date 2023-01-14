@@ -65,9 +65,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>surface_dynamics.topology.fat_graph_exhaustive_generation</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">surface_dynamics.topology.fat_graph_exhaustive_generation</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -137,7 +137,7 @@
 
 <span class="c1"># augment1: trisection</span>
 <div class="viewcode-block" id="augment1"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.augment1">[docs]</a><span class="k">def</span> <span class="nf">augment1</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Given a unicellular map ``cm`` with a single vertex and automorphism group</span>
 <span class="sd">    ``aut_grp``, iterate through all its canonical extensions that are</span>
 <span class="sd">    uniface-univertex maps of greater genus.</span>
@@ -186,7 +186,7 @@
 <span class="c1"># augment2: face split</span>
 <span class="c1"># (essentially the same as augment3)</span>
 <div class="viewcode-block" id="augment2"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.augment2">[docs]</a><span class="k">def</span> <span class="nf">augment2</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Given a map ``cm`` with a single vertex and automorphism group ``aut_grp``</span>
 <span class="sd">    iterate through all its canonical extensions that are obtained by splitting</span>
 <span class="sd">    one of its faces (by adding a single edge).</span>
@@ -254,7 +254,7 @@
 
 <span class="c1"># augment3: vertex split</span>
 <div class="viewcode-block" id="augment3"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.augment3">[docs]</a><span class="k">def</span> <span class="nf">augment3</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">min_degree</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Given a map ``cm``, its automorphism group ``aut_grp`` and a minimum</span>
 <span class="sd">    degree ``min_degree``, iterate through all the canonical extensions of</span>
 <span class="sd">    ``cm`` that are obtained by splitting ``depth`` times a vertices into</span>
@@ -405,7 +405,7 @@
 <span class="s2">&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="FatGraphsTrace"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace">[docs]</a><span class="k">class</span> <span class="nc">FatGraphsTrace</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to trace the execution of the fat graphs generation.</span>
 
 <span class="sd">    It is mostly used for debugging/profiling/illustration purposes.</span>
@@ -655,7 +655,7 @@
 <span class="c1">##############</span>
 
 <div class="viewcode-block" id="FatGraphs"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs">[docs]</a><span class="k">class</span> <span class="nc">FatGraphs</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Isomorphism classes of fat graphs with topological constraints.</span>
 
 <span class="sd">    EXAMPLES::</span>
@@ -800,7 +800,7 @@
 <span class="sd">         FatGraph(&#39;(0,4,3)(1,2,5)&#39;, &#39;(0,2)(1,3)(4,5)&#39;, &#39;(0,1,4,2,3,5)&#39;)]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ne</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">g_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">g_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ne_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ne_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv_max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">       INPUT:</span>
 
 <span class="sd">        - ``g``, ``g_min``, ``g_max`` - the genus</span>
@@ -850,7 +850,7 @@
         <span class="k">return</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span>
 
     <span class="k">def</span> <span class="nf">_adjust_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
 <span class="sd">            sage: from surface_dynamics import FatGraphs</span>
@@ -921,7 +921,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span> <span class="o">+</span> <span class="n">half</span><span class="p">)</span><span class="o">.</span><span class="n">ceil</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics import FatGraphs</span>
@@ -962,7 +962,7 @@
         <span class="k">return</span> <span class="s2">&quot;FatGraphs(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">genus</span><span class="p">,</span> <span class="n">faces</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">vertices</span><span class="p">]</span> <span class="o">+</span> <span class="n">constraints</span><span class="p">))</span>
 
 <div class="viewcode-block" id="FatGraphs.map_reduce"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.map_reduce">[docs]</a>    <span class="k">def</span> <span class="nf">map_reduce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics import FatGraphs</span>
@@ -1012,7 +1012,7 @@
         <span class="k">return</span> <span class="n">N</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="FatGraphs.list"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics import FatGraphs</span>
@@ -1037,7 +1037,7 @@
 <span class="c1">###################</span>
 
 <div class="viewcode-block" id="FatGraphs_g_nf_nv"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs_g_nf_nv">[docs]</a><span class="k">def</span> <span class="nf">FatGraphs_g_nf_nv</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">g_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">g_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv_max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    TESTS::</span>
 
 <span class="sd">        sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs_g_nf_nv</span>

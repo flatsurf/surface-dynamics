@@ -65,9 +65,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>surface_dynamics.databases.flat_surfaces</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">surface_dynamics.databases.flat_surfaces</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -110,7 +110,7 @@
 <span class="n">db_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">db_path</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
 <div class="viewcode-block" id="line_count"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.line_count">[docs]</a><span class="k">def</span> <span class="nf">line_count</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the number of lines in the file whose name is filename.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">sage.rings.integer</span> <span class="kn">import</span> <span class="n">Integer</span>
@@ -128,14 +128,14 @@
     <span class="k">return</span> <span class="n">Integer</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GenericRepertoryDatabase"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase">[docs]</a><span class="k">class</span> <span class="nc">GenericRepertoryDatabase</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Database that consists of a list of files in a repertory.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">default_name</span> <span class="o">=</span> <span class="s2">&quot;generic_db&quot;</span>
     <span class="n">default_path</span> <span class="o">=</span> <span class="n">sage</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">SAGE_TMP</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        INPUT:</span>
 
 <span class="sd">        - ``path`` - string (default is SAGE_TMP) - path to the database. If the</span>
@@ -166,7 +166,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">read_only</span> <span class="o">=</span> <span class="n">read_only</span>
 
     <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
 <span class="sd">            sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams</span>
@@ -188,7 +188,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">and</span> <span class="n">other</span><span class="o">.</span><span class="n">path</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span>
 
     <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
 <span class="sd">            sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams</span>
@@ -211,7 +211,7 @@
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
 
 <div class="viewcode-block" id="GenericRepertoryDatabase.clean"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clean the database.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -238,7 +238,7 @@
             <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span><span class="n">filename</span><span class="p">))</span></div></div>
 
 <div class="viewcode-block" id="IrregularComponentTwins"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins">[docs]</a><span class="k">class</span> <span class="nc">IrregularComponentTwins</span><span class="p">(</span><span class="n">GenericRepertoryDatabase</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Twin data of generalized permutation of irregular components of strata of</span>
 <span class="sd">    Abelian differentials.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -246,7 +246,7 @@
     <span class="n">default_path</span> <span class="o">=</span> <span class="n">db_path</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        String representation</span>
 
 <span class="sd">        TESTS::</span>
@@ -259,7 +259,7 @@
         <span class="k">return</span> <span class="s2">&quot;Database of twins of irregular components at </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span>
 
 <div class="viewcode-block" id="IrregularComponentTwins.filename"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.filename">[docs]</a>    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the name of the file for the given component.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -284,7 +284,7 @@
                 <span class="s1">&#39;-irr&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="IrregularComponentTwins.has_stratum"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.has_stratum">[docs]</a>    <span class="k">def</span> <span class="nf">has_stratum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test whether the component is in the database.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -299,7 +299,7 @@
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">stratum</span><span class="p">)))</span></div>
 
 <div class="viewcode-block" id="IrregularComponentTwins.update"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the database with the irregular component of the given stratum.</span>
 
 <span class="sd">        The database should not be in read only mode.</span>
@@ -321,7 +321,7 @@
                 <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="IrregularComponentTwins.list_strata"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.list_strata">[docs]</a>    <span class="k">def</span> <span class="nf">list_strata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the list of components for which the list of twins is stored.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -344,7 +344,7 @@
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">QuadraticStratum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span><span class="n">g</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)))</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="IrregularComponentTwins.get"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the list of twins for the stratum of quadratic differentials ``stratum``.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -370,7 +370,7 @@
         <span class="k">return</span> <span class="n">res</span></div>
 
 <div class="viewcode-block" id="IrregularComponentTwins.count"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of twins for that stratum.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -388,7 +388,7 @@
         <span class="k">return</span> <span class="n">line_count</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">stratum</span><span class="p">)))</span></div></div>
 
 <div class="viewcode-block" id="CylinderDiagrams"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams">[docs]</a><span class="k">class</span> <span class="nc">CylinderDiagrams</span><span class="p">(</span><span class="n">GenericRepertoryDatabase</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Database of cylinder diagrams.</span>
 
 <span class="sd">    The database consists of several files with the following name convention:</span>
@@ -418,7 +418,7 @@
     <span class="n">default_path</span> <span class="o">=</span> <span class="n">db_path</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        String representation.</span>
 
 <span class="sd">        TESTS::</span>
@@ -431,7 +431,7 @@
         <span class="k">return</span> <span class="s2">&quot;Database of cylinder diagrams at </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span>
 
 <div class="viewcode-block" id="CylinderDiagrams.filename"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.filename">[docs]</a>    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">ncyls</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the name of the file for the given component ``comp`` and the</span>
 <span class="sd">        given of number of cylinders ``ncyls``.</span>
 
@@ -451,7 +451,7 @@
                 <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ncyls</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="CylinderDiagrams.has_component"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_component">[docs]</a>    <span class="k">def</span> <span class="nf">has_component</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test whether the database has the component ``comp``.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -489,7 +489,7 @@
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">comp</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span></div>
 
 <div class="viewcode-block" id="CylinderDiagrams.has_stratum"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_stratum">[docs]</a>    <span class="k">def</span> <span class="nf">has_stratum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test whether the database contains the data for a given stratum.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -527,7 +527,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_component</span><span class="p">(</span><span class="n">stratum</span><span class="o">.</span><span class="n">one_component</span><span class="p">())</span></div>
 
     <span class="k">def</span> <span class="nf">_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterator over the list of files.</span>
 
 <span class="sd">        TESTS::</span>
@@ -547,7 +547,7 @@
                 <span class="k">yield</span> <span class="n">f</span>
 
 <div class="viewcode-block" id="CylinderDiagrams.list_strata"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.list_strata">[docs]</a>    <span class="k">def</span> <span class="nf">list_strata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        List available strata in that database.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -579,7 +579,7 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">AbelianStratum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)))</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span></div>
 
 <div class="viewcode-block" id="CylinderDiagrams.get_iterator"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.get_iterator">[docs]</a>    <span class="k">def</span> <span class="nf">get_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">ncyls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns an iterator over the list of cylinder diagrams for the component</span>
 <span class="sd">        ``comp`` read from the database.</span>
 
@@ -636,7 +636,7 @@
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_check_symmetries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
 <span class="sd">            sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams</span>
@@ -667,7 +667,7 @@
                     <span class="n">filename</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">c1</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_remove_symmetries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Use this at your own risk! It modifies the file of the database</span>
 <span class="sd">        inplace!!!</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -707,7 +707,7 @@
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 <div class="viewcode-block" id="CylinderDiagrams.update"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute once for all the given cylinder diagrams of the given</span>
 <span class="sd">        ``stratum``.</span>
 
@@ -761,7 +761,7 @@
                 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="CylinderDiagrams.count"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">ncyls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of cylinder diagrams for a stratum or a component of</span>
 <span class="sd">        stratum with given number of cylinders.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

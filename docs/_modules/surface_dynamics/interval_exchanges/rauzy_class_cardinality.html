@@ -65,9 +65,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>surface_dynamics.interval_exchanges.rauzy_class_cardinality</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">surface_dynamics.interval_exchanges.rauzy_class_cardinality</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -123,7 +123,7 @@
 <span class="c1">#########################</span>
 
 <div class="viewcode-block" id="marking_iterator"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.marking_iterator">[docs]</a><span class="k">def</span> <span class="nf">marking_iterator</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">left</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">standard</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the marked profile associated to a partition</span>
 
 <span class="sd">    EXAMPLES::</span>
@@ -161,7 +161,7 @@
                 <span class="k">yield</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">m_l</span><span class="p">,</span><span class="n">m_r</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="split"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.split">[docs]</a><span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Splits the i-th term of p into two parts of size k and n-k-1</span>
 
 <span class="sd">    There is a symmetry split(p, k, i) = split(p, p[i]-k-1, i)</span>
@@ -195,7 +195,7 @@
     <span class="k">return</span> <span class="n">Partition</span><span class="p">(</span><span class="n">l</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="collapse"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.collapse">[docs]</a><span class="k">def</span> <span class="nf">collapse</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Collapses the i-th term and the j-th term of a permutation</span>
 
 <span class="sd">    INPUT:</span>
@@ -233,7 +233,7 @@
     <span class="k">return</span> <span class="n">Partition</span><span class="p">(</span><span class="n">l</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="check_std_marking"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.check_std_marking">[docs]</a><span class="k">def</span> <span class="nf">check_std_marking</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">marking</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Tiny internal function that checks the validity of ``marking`` on the</span>
 <span class="sd">    partition ``p``.</span>
 
@@ -269,7 +269,7 @@
     <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">marking</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="check_marking"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.check_marking">[docs]</a><span class="k">def</span> <span class="nf">check_marking</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">marking</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Tiny internal function that checks that ``marking`` is compatible with ``p``.</span>
 
 <span class="sd">    OUTPUT:</span>
@@ -320,7 +320,7 @@
     <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">marking</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="bidecompositions"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.bidecompositions">[docs]</a><span class="k">def</span> <span class="nf">bidecompositions</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterator through the pair of partitions ``(q1,q2)`` such that the union of</span>
 <span class="sd">    the parts of ``q1`` and ``q2`` equal ``p``.</span>
 
@@ -353,7 +353,7 @@
 
 <span class="nd">@cached_function</span>
 <span class="k">def</span> <span class="nf">_c_rec</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Recurrence function that is called by :func:`c`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="k">return</span> <span class="n">factorial</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
@@ -363,7 +363,7 @@
          <span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">_c_rec</span><span class="p">(</span><span class="n">collapse</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">))))</span>
 
 <div class="viewcode-block" id="c"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.c">[docs]</a><span class="k">def</span> <span class="nf">c</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Number of labeled standard permutations with given profile</span>
 
 <span class="sd">    There is an explicit formula for this number</span>
@@ -426,7 +426,7 @@
 
 
 <div class="viewcode-block" id="gamma_std"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.gamma_std">[docs]</a><span class="k">def</span> <span class="nf">gamma_std</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">marking</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the number of standard permutations of given profile</span>
 
 <span class="sd">    INPUT:</span>
@@ -537,7 +537,7 @@
 <span class="c1"># spin difference</span>
 
 <div class="viewcode-block" id="d"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.d">[docs]</a><span class="k">def</span> <span class="nf">d</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Difference between the number of odd spin parity and even spin parity</span>
 <span class="sd">    standard labeled permutations with given profile</span>
 
@@ -571,7 +571,7 @@
 
 
 <div class="viewcode-block" id="delta_std"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.delta_std">[docs]</a><span class="k">def</span> <span class="nf">delta_std</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">marking</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the difference odd-even in the given stratum</span>
 
 <span class="sd">    INPUT:</span>
@@ -661,7 +661,7 @@
 
 <span class="nd">@cached_function</span>
 <span class="k">def</span> <span class="nf">_gamma_irr_rec</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">marking</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Internal recursive function called by :func:`gamma_irr`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -736,7 +736,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;marking must be a 3-tuple of the form (1,m,a) or (2,m1,m2)&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="gamma_irr"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.gamma_irr">[docs]</a><span class="k">def</span> <span class="nf">gamma_irr</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">marking</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Number of permutations for the given profile and marking</span>
 
 <span class="sd">    INPUT:</span>
@@ -807,7 +807,7 @@
 
 <span class="nd">@cached_function</span>
 <span class="k">def</span> <span class="nf">_delta_irr_rec</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">marking</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Internal recursive function called by :func:`delta_irr`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -876,7 +876,7 @@
         <span class="k">return</span> <span class="n">N</span>
 
 <div class="viewcode-block" id="delta_irr"><a class="viewcode-back" href="../../../interval_exchanges/rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.delta_irr">[docs]</a><span class="k">def</span> <span class="nf">delta_irr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">marking</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Spin difference for the given profile and marking</span>
 
 <span class="sd">    EXAMPLES::</span>

@@ -65,9 +65,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>surface_dynamics.interval_exchanges.template</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">surface_dynamics.interval_exchanges.template</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -201,7 +201,7 @@
         <span class="k">return</span> <span class="p">[(</span><span class="n">eptop</span><span class="p">,</span> <span class="n">fptop</span><span class="p">),</span> <span class="p">(</span><span class="n">epbot</span><span class="p">,</span> <span class="n">fpbot</span><span class="p">)]</span></div>
 
 <div class="viewcode-block" id="cylindric_canonical"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.cylindric_canonical">[docs]</a><span class="k">def</span> <span class="nf">cylindric_canonical</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    TESTS::</span>
 
 <span class="sd">        sage: from surface_dynamics import QuadraticStratum</span>
@@ -232,7 +232,7 @@
     <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="n">fg</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="interval_conversion"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.interval_conversion">[docs]</a><span class="k">def</span> <span class="nf">interval_conversion</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Converts the argument in 0 or 1.</span>
 
 <span class="sd">    INPUT:</span>
@@ -292,7 +292,7 @@
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; is not an admissible type&quot;</span> <span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">interval</span><span class="p">)))</span></div>
 
 <div class="viewcode-block" id="side_conversion"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.side_conversion">[docs]</a><span class="k">def</span> <span class="nf">side_conversion</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Converts the argument in 0 or -1.</span>
 
 <span class="sd">    INPUT:</span>
@@ -354,7 +354,7 @@
 <span class="c1">#</span>
 
 <div class="viewcode-block" id="labelize_flip"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.labelize_flip">[docs]</a><span class="k">def</span> <span class="nf">labelize_flip</span><span class="p">(</span><span class="n">couple</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a string from a 2-uple couple of the form (name, flip).</span>
 
 <span class="sd">    TESTS::</span>
@@ -374,7 +374,7 @@
 
 <div class="viewcode-block" id="Permutation"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.Permutation">[docs]</a><span class="nd">@total_ordering</span>
 <span class="k">class</span> <span class="nc">Permutation</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Template for all permutations.</span>
 
 <span class="sd">    .. warning::</span>
@@ -405,7 +405,7 @@
     <span class="n">_flips</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        INPUT:</span>
 
 <span class="sd">        - ``intervals`` - the intervals as a list of two lists</span>
@@ -521,7 +521,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_init_flips</span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span> <span class="n">flips</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_init_flips</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">intervals</span><span class="p">,</span><span class="n">flips</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the flip list</span>
 
 <span class="sd">        TESTS::</span>
@@ -551,7 +551,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">_flips</span><span class="p">[</span><span class="n">interval</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
     <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">other</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tests equality</span>
 
 <span class="sd">        TESTS::</span>
@@ -777,7 +777,7 @@
                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labels</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_alphabet</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Defines a natural lexicographic order.</span>
 
 <span class="sd">        TESTS::</span>
@@ -901,7 +901,7 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
 <span class="sd">            sage: from surface_dynamics import *</span>
@@ -926,7 +926,7 @@
                         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;self._flips wrong i=</span><span class="si">{}</span><span class="s2"> p=</span><span class="si">{}</span><span class="s2"> j=</span><span class="si">{}</span><span class="s2"> q=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">q</span><span class="p">))</span>
 
 <div class="viewcode-block" id="Permutation.letters"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.Permutation.letters">[docs]</a>    <span class="k">def</span> <span class="nf">letters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the list of letters of the alphabet used for representation.</span>
 
 <span class="sd">        The letters used are not necessarily the whole alphabet (for example if</span>
@@ -979,7 +979,7 @@
             <span class="k">return</span> <span class="p">[</span><span class="n">unrank</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))]</span></div>
 
     <span class="k">def</span> <span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Representation method of self.</span>
 
 <span class="sd">        Apply the function str to _repr_type(_repr_options) if _repr_type is</span>
@@ -1019,7 +1019,7 @@
                 <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
 <span class="sd">            sage: from surface_dynamics import *</span>
@@ -1052,7 +1052,7 @@
         <span class="k">return</span> <span class="n">h</span>
 
 <div class="viewcode-block" id="Permutation.str"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.Permutation.str">[docs]</a>    <span class="k">def</span> <span class="nf">str</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A string representation of the generalized permutation.</span>
 
 <span class="sd">        INPUT:</span>
@@ -1166,7 +1166,7 @@
         <span class="k">return</span> <span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l0</span><span class="p">),</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l1</span><span class="p">)])</span></div>
 
 <div class="viewcode-block" id="Permutation.flips"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.Permutation.flips">[docs]</a>    <span class="k">def</span> <span class="nf">flips</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the list of flips.</span>
 
 <span class="sd">        If the permutation is not a flipped permutations then ``None`` is returned.</span>
@@ -1201,7 +1201,7 @@
         <span class="k">return</span> <span class="n">letters</span></div>
 
     <span class="k">def</span> <span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a copy of self.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -1257,7 +1257,7 @@
     <span class="n">_repr_options</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,)</span>
 
     <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
 <span class="sd">            sage: from surface_dynamics import *</span>
@@ -1284,7 +1284,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">//</span> <span class="mi">2</span>
 
 <div class="viewcode-block" id="Permutation.length_top"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.Permutation.length_top">[docs]</a>    <span class="k">def</span> <span class="nf">length_top</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of intervals in the top segment.</span>
 
 <span class="sd">        OUTPUT:</span>
@@ -1317,7 +1317,7 @@
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="Permutation.length_bottom"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.Permutation.length_bottom">[docs]</a>    <span class="k">def</span> <span class="nf">length_bottom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of intervals in the bottom segment.</span>
 
 <span class="sd">        OUTPUT:</span>
@@ -1344,7 +1344,7 @@
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="Permutation.length"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.Permutation.length">[docs]</a>    <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the 2-uple of lengths.</span>
 
 <span class="sd">        p.length() is identical to (p.length_top(), p.length_bottom())</span>
@@ -1384,7 +1384,7 @@
             <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="n">interval</span><span class="p">])</span></div>
 
     <span class="k">def</span> <span class="nf">_set_alphabet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alphabet</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the alphabet of self.</span>
 
 <span class="sd">        TESTS:</span>
@@ -1444,7 +1444,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span> <span class="o">=</span> <span class="n">alphabet</span>
 
 <div class="viewcode-block" id="Permutation.alphabet"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.Permutation.alphabet">[docs]</a>    <span class="k">def</span> <span class="nf">alphabet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Manages the alphabet of self.</span>
 
 <span class="sd">        If there is no argument, the method returns the alphabet used. If the</span>
@@ -1484,7 +1484,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_set_alphabet</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Permutation.left_right_inverse"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.Permutation.left_right_inverse">[docs]</a>    <span class="k">def</span> <span class="nf">left_right_inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the left-right inverse.</span>
 
 <span class="sd">        The left-right inverse of a permutation, is the permutation obtained by</span>
@@ -1555,7 +1555,7 @@
     <span class="n">vertical_inverse</span> <span class="o">=</span> <span class="n">left_right_inverse</span>
 
 <div class="viewcode-block" id="Permutation.top_bottom_inverse"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.Permutation.top_bottom_inverse">[docs]</a>    <span class="k">def</span> <span class="nf">top_bottom_inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the top-bottom inverse.</span>
 
 <span class="sd">        You can use also use the shorter .tb_inverse().</span>
@@ -1616,7 +1616,7 @@
     <span class="n">horizontal_inverse</span> <span class="o">=</span> <span class="n">top_bottom_inverse</span>
 
 <div class="viewcode-block" id="Permutation.symmetric"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.Permutation.symmetric">[docs]</a>    <span class="k">def</span> <span class="nf">symmetric</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the symmetric permutation.</span>
 
 <span class="sd">        The symmetric permutation is the composition of the top-bottom</span>
@@ -1685,7 +1685,7 @@
         <span class="k">return</span> <span class="n">res</span></div>
 
     <span class="k">def</span> <span class="nf">_canonical_signs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return label positions and orientation in some compatible way.</span>
 
 <span class="sd">        OUTPUT:</span>
@@ -1770,7 +1770,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">label_to_twins</span><span class="p">,</span> <span class="p">[</span><span class="n">sign_top</span><span class="p">,</span> <span class="n">sign_bot</span><span class="p">])</span>
 
 <div class="viewcode-block" id="Permutation.interval_diagram"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.Permutation.interval_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">interval_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">glue_ends</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sign</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the interval diagram of self.</span>
 
 <span class="sd">        The result is in random order.</span>
@@ -1975,7 +1975,7 @@
         <span class="k">return</span> <span class="n">singularities</span></div>
 
     <span class="k">def</span> <span class="nf">_remove_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove the letter in the interval ``i`` and position ``pos`` (and its</span>
 <span class="sd">        twin).</span>
 
@@ -2072,7 +2072,7 @@
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">ppos</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">_identify_intervals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">side</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Identify the two intervals on the right (if ``side=-1``) or on the left</span>
 <span class="sd">        (if ``side=0``).</span>
 
@@ -2145,7 +2145,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_remove_interval</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pos0</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Permutation.cover"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.Permutation.cover">[docs]</a>    <span class="k">def</span> <span class="nf">cover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perms</span><span class="p">,</span> <span class="n">as_tuple</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a covering of this permutation.</span>
 
 <span class="sd">        INPUT:</span>
@@ -2202,7 +2202,7 @@
         <span class="k">return</span> <span class="n">PermutationCover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">perms</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Permutation.regular_cover"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.Permutation.regular_cover">[docs]</a>    <span class="k">def</span> <span class="nf">regular_cover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">elts</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a regular (or normal) cover of this permutation.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -2237,7 +2237,7 @@
 
 <div class="viewcode-block" id="PermutationIET"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationIET">[docs]</a><span class="k">class</span> <span class="nc">PermutationIET</span><span class="p">(</span><span class="n">Permutation</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">_init_twin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes the twin list.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -2262,7 +2262,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
 
 <div class="viewcode-block" id="PermutationIET.twin"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationIET.twin">[docs]</a>    <span class="k">def</span> <span class="nf">twin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the twin of the interval in the interval ``i`` at position</span>
 <span class="sd">        ``pos``.</span>
 
@@ -2283,7 +2283,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">pos</span><span class="p">])</span></div>
 
     <span class="k">def</span> <span class="nf">_set_twin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span>
         <span class="k">assert</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">1</span>
@@ -2293,7 +2293,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">q</span>
 
 <div class="viewcode-block" id="PermutationIET.twin_list"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationIET.twin_list">[docs]</a>    <span class="k">def</span> <span class="nf">twin_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the twin list of self.</span>
 
 <span class="sd">        The twin list is the involution without fixed point associated to that</span>
@@ -2324,7 +2324,7 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">twin0</span><span class="p">,</span><span class="n">twin1</span><span class="p">]</span></div>
 
     <span class="k">def</span> <span class="nf">_init_alphabet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">a</span><span class="p">)</span> <span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes the alphabet from intervals.</span>
 
 <span class="sd">        INPUT:</span>
@@ -2346,7 +2346,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span> <span class="o">=</span> <span class="n">build_alphabet</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">_inversed_twin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Inverses the twin of the permutation.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -2368,7 +2368,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
 
     <span class="k">def</span> <span class="nf">_reversed_twin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reverses the twin of the permutation.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -2394,7 +2394,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span> <span class="o">=</span> <span class="n">tmp</span>
 
     <span class="k">def</span> <span class="nf">_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">interval_to</span><span class="p">,</span> <span class="n">position_to</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Moves the element at (interval,position) to (interval, position_to)</span>
 
 <span class="sd">        INPUT:</span>
@@ -2486,7 +2486,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="n">interval</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">position</span><span class="p">))</span>
 
 <div class="viewcode-block" id="PermutationIET.has_rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationIET.has_rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">has_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test if a Rauzy move can be performed on this permutation.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -2523,7 +2523,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="n">winner</span><span class="p">][</span><span class="n">side</span><span class="p">]</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">!=</span> <span class="n">side</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PermutationIET.is_irreducible"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationIET.is_irreducible">[docs]</a>    <span class="k">def</span> <span class="nf">is_irreducible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">return_decomposition</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test irreducibility.</span>
 
 <span class="sd">        A permutation p = (p0,p1) is reducible if:</span>
@@ -2565,7 +2565,7 @@
 
 <div class="viewcode-block" id="PermutationLI"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationLI">[docs]</a><span class="k">class</span> <span class="nc">PermutationLI</span><span class="p">(</span><span class="n">Permutation</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">_init_twin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes the _twin attribute</span>
 
 <span class="sd">        TESTS::</span>
@@ -2601,7 +2601,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span> <span class="o">=</span> <span class="n">twin</span>
 
     <span class="k">def</span> <span class="nf">_init_alphabet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="p">)</span> <span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialization procedure of the alphabet of self from intervals list</span>
 
 <span class="sd">        TESTS::</span>
@@ -2625,7 +2625,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span> <span class="o">=</span> <span class="n">build_alphabet</span><span class="p">(</span><span class="n">tmp_alphabet</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_inversed_twin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Inverses the twin of the permutation.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -2654,7 +2654,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="n">interval</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">_reversed_twin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reverses the twin of the permutation.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -2684,7 +2684,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span> <span class="o">=</span> <span class="n">tmp</span>
 
     <span class="k">def</span> <span class="nf">_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">interval_to</span><span class="p">,</span> <span class="n">position_to</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        _move the element at (interval,position) to (interval_to, position_to)</span>
 
 <span class="sd">        INPUT:</span>
@@ -2812,7 +2812,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">q</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PermutationLI.twin"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationLI.twin">[docs]</a>    <span class="k">def</span> <span class="nf">twin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the twin of the letter in interval ``i`` at position ``pos``</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -2832,7 +2832,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">pos</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="PermutationLI.twin_list"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationLI.twin_list">[docs]</a>    <span class="k">def</span> <span class="nf">twin_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the twin list of self.</span>
 
 <span class="sd">        The twin list is the involution without fixed point which defines it. As the</span>
@@ -2874,7 +2874,7 @@
         <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">][:],</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">][:]]</span></div>
 
 <div class="viewcode-block" id="PermutationLI.is_irreducible"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationLI.is_irreducible">[docs]</a>    <span class="k">def</span> <span class="nf">is_irreducible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">return_decomposition</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test of reducibility</span>
 
 <span class="sd">        A quadratic (or generalized) permutation is *reducible* if there exists</span>
@@ -3028,7 +3028,7 @@
 
 
 <div class="viewcode-block" id="PermutationLI.to_cylindric"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationLI.to_cylindric">[docs]</a>    <span class="k">def</span> <span class="nf">to_cylindric</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a cylindric permutation in the same extended Rauzy class</span>
 
 <span class="sd">        A generalized permutation is *cylindric* if the first letter in the top</span>
@@ -3096,7 +3096,7 @@
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;no cylindric permutation in the extended Rauzy class&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PermutationLI.is_cylindric"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationLI.is_cylindric">[docs]</a>    <span class="k">def</span> <span class="nf">is_cylindric</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test if the permutation is cylindric</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -3113,7 +3113,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PermutationLI.profile"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationLI.profile">[docs]</a>    <span class="k">def</span> <span class="nf">profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the ``profile`` of self.</span>
 
 <span class="sd">        The *profile* of a generalized permutation is the list `(d_1, \ldots,</span>
@@ -3149,7 +3149,7 @@
         <span class="k">return</span> <span class="n">Partition</span><span class="p">(</span><span class="nb">sorted</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">s</span><span class="p">),</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="PermutationLI.genus"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationLI.genus">[docs]</a>    <span class="k">def</span> <span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the genus of any suspension of self.</span>
 
 <span class="sd">        The genus `g` can be deduced from the profile (see :meth:`profile`)</span>
@@ -3169,7 +3169,7 @@
         <span class="k">return</span> <span class="n">Integer</span><span class="p">((</span><span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="o">//</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PermutationLI.marking"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationLI.marking">[docs]</a>    <span class="k">def</span> <span class="nf">marking</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the marking induced by the two sides of the interval</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -3187,7 +3187,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">marked_profile</span><span class="p">()</span><span class="o">.</span><span class="n">marking</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="PermutationLI.marked_profile"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationLI.marked_profile">[docs]</a>    <span class="k">def</span> <span class="nf">marked_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the marked profile of self.</span>
 
 <span class="sd">        The *marked profile* of a generalized permutation is an integer</span>
@@ -3304,7 +3304,7 @@
             <span class="k">return</span> <span class="n">MarkedPartition</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">m_l</span><span class="p">,</span><span class="n">m_r</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="PermutationLI.erase_marked_points"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationLI.erase_marked_points">[docs]</a>    <span class="k">def</span> <span class="nf">erase_marked_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a permutation without marked points.</span>
 
 <span class="sd">        This method is not implemented for generalized permutations.</span>
@@ -3333,7 +3333,7 @@
             <span class="k">return</span> <span class="bp">self</span></div>
 
 <div class="viewcode-block" id="PermutationLI.is_hyperelliptic"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationLI.is_hyperelliptic">[docs]</a>    <span class="k">def</span> <span class="nf">is_hyperelliptic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test if this permutation is in an hyperelliptic connected component.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -3480,7 +3480,7 @@
             <span class="k">return</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="PermutationLI.stratum_component"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationLI.stratum_component">[docs]</a>    <span class="k">def</span> <span class="nf">stratum_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the connected component of stratum in which self belongs to.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -3589,7 +3589,7 @@
         <span class="k">return</span> <span class="n">stratum</span><span class="o">.</span><span class="n">regular_component</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="PermutationLI.has_rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationLI.has_rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">has_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test of Rauzy movability (with an eventual specified choice of winner)</span>
 
 <span class="sd">        A quadratic (or generalized) permutation is rauzy_movable type</span>
@@ -3688,7 +3688,7 @@
             <span class="k">return</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="PermutationLI.orientation_cover"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationLI.orientation_cover">[docs]</a>    <span class="k">def</span> <span class="nf">orientation_cover</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the orientation cover of this permutation.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -3718,7 +3718,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cover</span><span class="p">(</span><span class="n">permut_cover</span><span class="p">,</span> <span class="n">as_tuple</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET">[docs]</a><span class="k">class</span> <span class="nc">OrientablePermutationIET</span><span class="p">(</span><span class="n">PermutationIET</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Template for permutation of Interval Exchange Transformation.</span>
 
 <span class="sd">    .. warning::</span>
@@ -3731,7 +3731,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="OrientablePermutationIET.is_identity"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.is_identity">[docs]</a>    <span class="k">def</span> <span class="nf">is_identity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if self is the identity.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -3751,7 +3751,7 @@
 
     <span class="c1">#TODO: change the name</span>
 <div class="viewcode-block" id="OrientablePermutationIET.decompose"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.decompose">[docs]</a>    <span class="k">def</span> <span class="nf">decompose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the decomposition as a concatenation of irreducible permutations.</span>
 
 <span class="sd">        OUTPUT:</span>
@@ -3792,7 +3792,7 @@
         <span class="k">return</span> <span class="n">l</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.intersection_matrix"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.intersection_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">intersection_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ring</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the intersection matrix.</span>
 
 <span class="sd">        This `d*d` antisymmetric matrix is given by the rule :</span>
@@ -3859,7 +3859,7 @@
         <span class="k">return</span> <span class="n">m</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.attached_out_degree"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.attached_out_degree">[docs]</a>    <span class="k">def</span> <span class="nf">attached_out_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the degree of the singularity at the left of the interval.</span>
 
 <span class="sd">        OUTPUT:</span>
@@ -3884,7 +3884,7 @@
                 <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.attached_in_degree"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.attached_in_degree">[docs]</a>    <span class="k">def</span> <span class="nf">attached_in_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the degree of the singularity at the right of the interval.</span>
 
 <span class="sd">        OUTPUT:</span>
@@ -3909,7 +3909,7 @@
                 <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.profile"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.profile">[docs]</a>    <span class="k">def</span> <span class="nf">profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the profile of the permutation</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -3926,7 +3926,7 @@
         <span class="k">return</span> <span class="n">Partition</span><span class="p">(</span><span class="nb">sorted</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">s</span><span class="p">),</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.marking"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.marking">[docs]</a>    <span class="k">def</span> <span class="nf">marking</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the marking induced by the two sides of the interval</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -3943,7 +3943,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">marked_profile</span><span class="p">()</span><span class="o">.</span><span class="n">marking</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.marked_profile"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.marked_profile">[docs]</a>    <span class="k">def</span> <span class="nf">marked_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the marked profile of the permutation</span>
 
 <span class="sd">        The marked profile of a permutation corresponds to the integer partition</span>
@@ -4030,7 +4030,7 @@
             <span class="k">return</span> <span class="n">MarkedPartition</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">m_l</span><span class="p">,</span><span class="n">m_r</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.stratum"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.stratum">[docs]</a>    <span class="k">def</span> <span class="nf">stratum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the strata in which any suspension of this permutation lives.</span>
 
 <span class="sd">        OUTPUT:</span>
@@ -4084,7 +4084,7 @@
         <span class="k">return</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="n">singularities</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.genus"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.genus">[docs]</a>    <span class="k">def</span> <span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the genus corresponding to any suspension of self.</span>
 
 <span class="sd">        The genus can be deduced from the profile (see :meth:`profile`)</span>
@@ -4107,7 +4107,7 @@
         <span class="k">return</span> <span class="n">Integer</span><span class="p">((</span><span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">))</span><span class="o">//</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.arf_invariant"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.arf_invariant">[docs]</a>    <span class="k">def</span> <span class="nf">arf_invariant</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the Arf invariant of the permutation.</span>
 
 <span class="sd">        To a permutation `\pi` is associated a quadratic form on the field with</span>
@@ -4195,7 +4195,7 @@
         <span class="k">return</span> <span class="n">s</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.stratum_component"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.stratum_component">[docs]</a>    <span class="k">def</span> <span class="nf">stratum_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a connected components of a stratum.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -4281,7 +4281,7 @@
                 <span class="k">return</span> <span class="n">OddASC</span><span class="p">(</span><span class="n">stratum</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.order_of_rauzy_action"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.order_of_rauzy_action">[docs]</a>    <span class="k">def</span> <span class="nf">order_of_rauzy_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the order of the action of a Rauzy move.</span>
 
 <span class="sd">        INPUT:</span>
@@ -4317,7 +4317,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="n">winner</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the permutation after a Rauzy move.</span>
 
 <span class="sd">        INPUT:</span>
@@ -4417,7 +4417,7 @@
         <span class="k">return</span> <span class="n">res</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.backward_rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.backward_rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">backward_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the permutation before a Rauzy move.</span>
 
 <span class="sd">        INPUT:</span>
@@ -4539,7 +4539,7 @@
         <span class="k">return</span> <span class="n">res</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.erase_marked_points"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.erase_marked_points">[docs]</a>    <span class="k">def</span> <span class="nf">erase_marked_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a permutation equivalent to self but without marked points.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -4648,7 +4648,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">((</span><span class="n">top</span><span class="p">,</span><span class="n">bot</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.is_hyperelliptic"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.is_hyperelliptic">[docs]</a>    <span class="k">def</span> <span class="nf">is_hyperelliptic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if the permutation is in the class of the symmetric</span>
 <span class="sd">        permutations (with eventual marked points).</span>
 
@@ -4672,7 +4672,7 @@
         <span class="k">return</span> <span class="n">cylindric</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.to_cylindric"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.to_cylindric">[docs]</a>    <span class="k">def</span> <span class="nf">to_cylindric</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a cylindric permutation in the same Rauzy class.</span>
 
 <span class="sd">        A permutation is *cylindric* if the first letter in the top interval is</span>
@@ -4720,7 +4720,7 @@
         <span class="k">return</span> <span class="n">tmp</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.is_cylindric"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.is_cylindric">[docs]</a>    <span class="k">def</span> <span class="nf">is_cylindric</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if the permutation is cylindric</span>
 
 <span class="sd">        A permutation `\pi` is cylindric if `\pi(1) = n` or `\pi(n) = 1`. The</span>
@@ -4743,7 +4743,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.to_standard"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.to_standard">[docs]</a>    <span class="k">def</span> <span class="nf">to_standard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a standard permutation in the same Rauzy class.</span>
 
 <span class="sd">        TESTS::</span>
@@ -4778,7 +4778,7 @@
         <span class="k">return</span> <span class="n">tmp</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.is_standard"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.is_standard">[docs]</a>    <span class="k">def</span> <span class="nf">is_standard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test if the permutation is standard</span>
 
 <span class="sd">        A permutation `\pi` is standard if &#39;\pi(n) = 1` and `\pi(1) = n`.</span>
@@ -4797,7 +4797,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.to_permutation"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.to_permutation">[docs]</a>    <span class="k">def</span> <span class="nf">to_permutation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the permutation as an element of the symmetric group.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -4819,7 +4819,7 @@
         <span class="k">return</span> <span class="n">Permutation</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.suspension_cone"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.suspension_cone">[docs]</a>    <span class="k">def</span> <span class="nf">suspension_cone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the cone of suspension data.</span>
 
 <span class="sd">        A suspension data `\tau` for a permutation `(\pi_{top}, \pi_{bot})`</span>
@@ -4912,7 +4912,7 @@
         <span class="k">return</span> <span class="n">Polyhedron</span><span class="p">(</span><span class="n">ieqs</span><span class="o">=</span><span class="n">ieqs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.heights_cone"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.heights_cone">[docs]</a>    <span class="k">def</span> <span class="nf">heights_cone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the cone of heights data.</span>
 
 <span class="sd">        .. SEEALSO::</span>
@@ -4941,7 +4941,7 @@
         <span class="k">return</span> <span class="n">Polyhedron</span><span class="p">(</span><span class="n">rays</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="n">I</span><span class="o">*</span><span class="n">c</span><span class="o">.</span><span class="n">vector</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">C</span><span class="o">.</span><span class="n">rays</span><span class="p">()])</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.invariant_density_rauzy"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.invariant_density_rauzy">[docs]</a>    <span class="k">def</span> <span class="nf">invariant_density_rauzy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the invariant density for the Rauzy induction.</span>
 
 <span class="sd">        Goes via the zippered rectangle construction of [Vee1982]_.</span>
@@ -4986,7 +4986,7 @@
         <span class="k">return</span> <span class="n">ans</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationIET.to_origami"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.to_origami">[docs]</a>    <span class="k">def</span> <span class="nf">to_origami</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the origami associated to a cylindric permutation.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -5107,7 +5107,7 @@
         <span class="k">return</span> <span class="n">base_ring</span><span class="p">,</span> <span class="n">triangles</span><span class="p">,</span> <span class="n">tops</span><span class="p">,</span> <span class="n">bots</span><span class="p">,</span> <span class="n">mids</span>
 
 <div class="viewcode-block" id="OrientablePermutationIET.masur_polygon"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.masur_polygon">[docs]</a>    <span class="k">def</span> <span class="nf">masur_polygon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">heights</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the Masur polygon for the given ``lengths`` and ``heights``</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -5165,7 +5165,7 @@
         <span class="k">return</span> <span class="n">TranslationSurface</span><span class="p">(</span><span class="n">S</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="OrientablePermutationLI"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationLI">[docs]</a><span class="k">class</span> <span class="nc">OrientablePermutationLI</span><span class="p">(</span><span class="n">PermutationLI</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Template for quadratic permutation.</span>
 
 <span class="sd">    .. warning::</span>
@@ -5178,7 +5178,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="OrientablePermutationLI.rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationLI.rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the permutation after a Rauzy move.</span>
 
 <span class="sd">        TESTS::</span>
@@ -5240,7 +5240,7 @@
         <span class="k">return</span> <span class="n">res</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationLI.backward_rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationLI.backward_rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">backward_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the permutation before the Rauzy move.</span>
 
 <span class="sd">        TESTS::</span>
@@ -5306,7 +5306,7 @@
         <span class="k">return</span> <span class="n">res</span></div>
 
 <div class="viewcode-block" id="OrientablePermutationLI.stratum"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationLI.stratum">[docs]</a>    <span class="k">def</span> <span class="nf">stratum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the stratum associated to self</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -5325,7 +5325,7 @@
 <span class="n">FlippedPermutation</span> <span class="o">=</span> <span class="n">Permutation</span>
 
 <div class="viewcode-block" id="FlippedPermutationIET"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.FlippedPermutationIET">[docs]</a><span class="k">class</span> <span class="nc">FlippedPermutationIET</span><span class="p">(</span><span class="n">PermutationIET</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Template for flipped Abelian permutations.</span>
 
 <span class="sd">    .. warning::</span>
@@ -5333,7 +5333,7 @@
 <span class="sd">        Internal class! Do not use directly!</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="FlippedPermutationIET.rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.FlippedPermutationIET.rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the permutation after a Rauzy move.</span>
 
 <span class="sd">        TESTS::</span>
@@ -5407,7 +5407,7 @@
         <span class="k">return</span> <span class="n">res</span></div>
 
 <div class="viewcode-block" id="FlippedPermutationIET.backward_rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.FlippedPermutationIET.backward_rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">backward_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the permutation before a Rauzy move.</span>
 
 <span class="sd">        TESTS::</span>
@@ -5477,7 +5477,7 @@
 
 
 <div class="viewcode-block" id="FlippedPermutationLI"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.FlippedPermutationLI">[docs]</a><span class="k">class</span> <span class="nc">FlippedPermutationLI</span><span class="p">(</span><span class="n">PermutationLI</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Template for flipped quadratic permutations.</span>
 
 <span class="sd">    .. warning::</span>
@@ -5490,7 +5490,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="FlippedPermutationLI.rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.FlippedPermutationLI.rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rauzy move</span>
 
 <span class="sd">        TESTS::</span>
@@ -5557,7 +5557,7 @@
         <span class="k">return</span> <span class="n">res</span></div>
 
 <div class="viewcode-block" id="FlippedPermutationLI.backward_rauzy_move"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.FlippedPermutationLI.backward_rauzy_move">[docs]</a>    <span class="k">def</span> <span class="nf">backward_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rauzy move</span>
 
 <span class="sd">        TESTS::</span>
@@ -5647,7 +5647,7 @@
         <span class="k">return</span> <span class="n">res</span></div></div>
 
 <div class="viewcode-block" id="RauzyDiagram"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram">[docs]</a><span class="k">class</span> <span class="nc">RauzyDiagram</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Template for Rauzy diagrams.</span>
 
 <span class="sd">    .. warning:</span>
@@ -5663,7 +5663,7 @@
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">NestedClassMetaclass</span>
 
 <div class="viewcode-block" id="RauzyDiagram.Path"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.Path">[docs]</a>    <span class="k">class</span> <span class="nc">Path</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Path in Rauzy diagram.</span>
 
 <span class="sd">            A path in a Rauzy diagram corresponds to a subsimplex of the simplex of</span>
@@ -5673,7 +5673,7 @@
 <span class="sd">            and equivalence topologic class of IET.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Constructor of the path.</span>
 
 <span class="sd">            TESTS::</span>
@@ -5721,7 +5721,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_end</span> <span class="o">=</span> <span class="n">cur_vertex</span>
 
         <span class="k">def</span> <span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Returns a representation of the path.</span>
 
 <span class="sd">            TESTS::</span>
@@ -5740,7 +5740,7 @@
             <span class="k">return</span> <span class="s2">&quot;Path of length </span><span class="si">%d</span><span class="s2"> in a Rauzy diagram&quot;</span> <span class="o">%</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
 <div class="viewcode-block" id="RauzyDiagram.Path.start"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.Path.start">[docs]</a>        <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Returns the first vertex of the path.</span>
 
 <span class="sd">            EXAMPLES::</span>
@@ -5756,7 +5756,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_vertex_to_permutation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_start</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.Path.end"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.Path.end">[docs]</a>        <span class="k">def</span> <span class="nf">end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Returns the last vertex of the path.</span>
 
 <span class="sd">            EXAMPLES::</span>
@@ -5775,7 +5775,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_vertex_to_permutation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_end</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.Path.edge_types"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.Path.edge_types">[docs]</a>        <span class="k">def</span> <span class="nf">edge_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Returns the edge types of the path.</span>
 
 <span class="sd">            EXAMPLES::</span>
@@ -5791,7 +5791,7 @@
             <span class="k">return</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edge_types</span><span class="p">)</span></div>
 
         <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Tests equality</span>
 
 <span class="sd">            TESTS::</span>
@@ -5816,7 +5816,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_edge_types</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_edge_types</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">other</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Tests inequality</span>
 
 <span class="sd">            TESTS::</span>
@@ -5837,7 +5837,7 @@
             <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
 
         <span class="k">def</span> <span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Returns a copy of the path.</span>
 
 <span class="sd">            TESTS::</span>
@@ -5857,7 +5857,7 @@
             <span class="k">return</span> <span class="n">res</span>
 
 <div class="viewcode-block" id="RauzyDiagram.Path.pop"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.Path.pop">[docs]</a>        <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Pops the queue of the path</span>
 
 <span class="sd">            OUTPUT:</span>
@@ -5896,7 +5896,7 @@
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">(),</span><span class="n">e</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.Path.append"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.Path.append">[docs]</a>        <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge_type</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Append an edge to the path.</span>
 
 <span class="sd">            EXAMPLES::</span>
@@ -5926,7 +5926,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_succ</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_end</span><span class="p">][</span><span class="n">edge_type</span><span class="p">]</span></div>
 
         <span class="k">def</span> <span class="nf">_fast_append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge_type</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Append an edge to the path without verification.</span>
 
 <span class="sd">            EXAMPLES::</span>
@@ -5957,7 +5957,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_succ</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_end</span><span class="p">][</span><span class="n">edge_type</span><span class="p">]</span>
 
 <div class="viewcode-block" id="RauzyDiagram.Path.extend"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.Path.extend">[docs]</a>        <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Extends self with another path.</span>
 
 <span class="sd">            EXAMPLES::</span>
@@ -5986,7 +5986,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_end</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">_end</span></div>
 
         <span class="k">def</span> <span class="nf">_fast_extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Extension with no verification.</span>
 
 <span class="sd">            EXAMPLES::</span>
@@ -6008,7 +6008,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_end</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">_end</span>
 
         <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Returns the length of the path.</span>
 
 <span class="sd">            TESTS::</span>
@@ -6027,7 +6027,7 @@
             <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edge_types</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            TESTS::</span>
 
 <span class="sd">                sage: from surface_dynamics import *</span>
@@ -6060,7 +6060,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_vertex_to_permutation</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Concatenation of paths.</span>
 
 <span class="sd">            EXAMPLES::</span>
@@ -6084,7 +6084,7 @@
             <span class="k">return</span> <span class="n">res</span>
 
         <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Multiple of a loop.</span>
 
 <span class="sd">            EXAMPLES::</span>
@@ -6114,7 +6114,7 @@
             <span class="k">return</span> <span class="n">res</span>
 
 <div class="viewcode-block" id="RauzyDiagram.Path.is_loop"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.Path.is_loop">[docs]</a>        <span class="k">def</span> <span class="nf">is_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Tests whether the path is a loop (start point = end point).</span>
 
 <span class="sd">            EXAMPLES::</span>
@@ -6131,7 +6131,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_end</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.Path.winners"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.Path.winners">[docs]</a>        <span class="k">def</span> <span class="nf">winners</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Returns the winner list associated to the edge of the path.</span>
 
 <span class="sd">            EXAMPLES::</span>
@@ -6152,7 +6152,7 @@
                 <span class="nb">list</span><span class="o">.</span><span class="fm">__add__</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.Path.losers"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.Path.losers">[docs]</a>        <span class="k">def</span> <span class="nf">losers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Returns a list of the loosers on the path.</span>
 
 <span class="sd">            EXAMPLES::</span>
@@ -6173,7 +6173,7 @@
                 <span class="nb">list</span><span class="o">.</span><span class="fm">__add__</span><span class="p">)</span></div>
 
         <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Iterator over the permutations of the path.</span>
 
 <span class="sd">            EXAMPLES::</span>
@@ -6221,7 +6221,7 @@
             <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
 
 <div class="viewcode-block" id="RauzyDiagram.Path.composition"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.Path.composition">[docs]</a>        <span class="k">def</span> <span class="nf">composition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">composition</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Compose an edges function on a path</span>
 
 <span class="sd">            INPUT:</span>
@@ -6266,7 +6266,7 @@
             <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.Path.right_composition"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.Path.right_composition">[docs]</a>        <span class="k">def</span> <span class="nf">right_composition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">composition</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="p">:</span>
-            <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Compose an edges function on a path</span>
 
 <span class="sd">            INPUT:</span>
@@ -6312,7 +6312,7 @@
         <span class="n">left_right_inversion</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">top_bottom_inversion</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">symmetric</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        self._succ contains successors</span>
 <span class="sd">        self._pred contains predecessors</span>
 
@@ -6410,7 +6410,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tests equality.</span>
 
 <span class="sd">        TESTS::</span>
@@ -6447,7 +6447,7 @@
                <span class="nb">next</span><span class="p">(</span><span class="n">iterkeys</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_succ</span><span class="p">))</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">_succ</span>
 
     <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tests difference.</span>
 
 <span class="sd">        TESTS::</span>
@@ -6469,7 +6469,7 @@
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
 
 <div class="viewcode-block" id="RauzyDiagram.vertices"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.vertices">[docs]</a>    <span class="k">def</span> <span class="nf">vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of the vertices.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -6486,7 +6486,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_succ</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.vertex_iterator"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.vertex_iterator">[docs]</a>    <span class="k">def</span> <span class="nf">vertex_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns an iterator over the vertices</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -6511,7 +6511,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_succ</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.edges"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.edges">[docs]</a>    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">labels</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of the edges.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -6525,7 +6525,7 @@
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edge_iterator</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.edge_iterator"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.edge_iterator">[docs]</a>    <span class="k">def</span> <span class="nf">edge_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns an iterator over the edges of the graph.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -6548,7 +6548,7 @@
                          <span class="n">i</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.edge_types_index"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.edge_types_index">[docs]</a>    <span class="k">def</span> <span class="nf">edge_types_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Try to convert the data as an edge type.</span>
 
 <span class="sd">        INPUT:</span>
@@ -6756,7 +6756,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;this edge type does not exist: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.edge_types"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.edge_types">[docs]</a>    <span class="k">def</span> <span class="nf">edge_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Print information about edges.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -6789,7 +6789,7 @@
             <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="n">edge_type</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.alphabet"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.alphabet">[docs]</a>    <span class="k">def</span> <span class="nf">alphabet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
 <span class="sd">            sage: from surface_dynamics import *</span>
@@ -6807,7 +6807,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_set_alphabet</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.letters"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.letters">[docs]</a>    <span class="k">def</span> <span class="nf">letters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the letters used by the RauzyDiagram.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -6828,7 +6828,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">letters</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">_vertex_to_permutation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the (vertex) data to a permutation.</span>
 
 <span class="sd">        TESTS:</span>
@@ -6842,7 +6842,7 @@
             <span class="k">return</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="p">)</span>
 
 <div class="viewcode-block" id="RauzyDiagram.edge_to_matrix"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.edge_to_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">edge_to_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edge_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the corresponding matrix</span>
 
 <span class="sd">        INPUT:</span>
@@ -6879,7 +6879,7 @@
         <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">function_name</span><span class="p">)(</span><span class="o">*</span><span class="n">arguments</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.edge_to_winner"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.edge_to_winner">[docs]</a>    <span class="k">def</span> <span class="nf">edge_to_winner</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edge_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the corresponding winner</span>
 
 <span class="sd">        TESTS::</span>
@@ -6903,7 +6903,7 @@
         <span class="k">return</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">function_name</span><span class="p">)(</span><span class="o">*</span><span class="n">arguments</span><span class="p">)]</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.edge_to_loser"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.edge_to_loser">[docs]</a>    <span class="k">def</span> <span class="nf">edge_to_loser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edge_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the corresponding loser</span>
 
 <span class="sd">        TESTS::</span>
@@ -6927,7 +6927,7 @@
         <span class="k">return</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">function_name</span><span class="p">)(</span><span class="o">*</span><span class="n">arguments</span><span class="p">)]</span></div>
 
     <span class="k">def</span> <span class="nf">_all_npath_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns an iterator over all extension of fixed length of p.</span>
 
 <span class="sd">        INPUT:</span>
@@ -6984,7 +6984,7 @@
                     <span class="n">g</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_all_path_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns an iterator over all path extension of p.</span>
 
 <span class="sd">        TESTS::</span>
@@ -7027,7 +7027,7 @@
                     <span class="n">g</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterator over the permutations of the Rauzy diagram.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -7048,7 +7048,7 @@
             <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_to_permutation</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Containance test.</span>
 
 <span class="sd">        TESTS::</span>
@@ -7075,7 +7075,7 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a representation of self</span>
 
 <span class="sd">        TESTS::</span>
@@ -7095,7 +7095,7 @@
             <span class="k">return</span> <span class="s2">&quot;Rauzy diagram with </span><span class="si">%d</span><span class="s2"> permutations&quot;</span> <span class="o">%</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_succ</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">p</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the neighbors of p.</span>
 
 <span class="sd">        Just use the function vertex_to_permutation that must be defined</span>
@@ -7129,7 +7129,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_succ</span><span class="p">[</span><span class="n">perm</span><span class="p">]))</span>
 
     <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deprecated use cardinality.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -7143,7 +7143,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cardinality</span><span class="p">()</span>
 
 <div class="viewcode-block" id="RauzyDiagram.cardinality"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.cardinality">[docs]</a>    <span class="k">def</span> <span class="nf">cardinality</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of permutations in this Rauzy diagram.</span>
 
 <span class="sd">        OUTPUT:</span>
@@ -7167,7 +7167,7 @@
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_succ</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.complete"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.complete">[docs]</a>    <span class="k">def</span> <span class="nf">complete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Completion of the Rauzy diagram.</span>
 
 <span class="sd">        Add to the Rauzy diagram all permutations that are obtained by</span>
@@ -7227,7 +7227,7 @@
                     <span class="n">pred</span><span class="p">[</span><span class="n">q</span><span class="p">][</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.path"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.path">[docs]</a>    <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a path over this Rauzy diagram.</span>
 
 <span class="sd">        INPUT:</span>
@@ -7251,7 +7251,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">data</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RauzyDiagram.graph"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.graph">[docs]</a>    <span class="k">def</span> <span class="nf">graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the Rauzy diagram as a Graph object</span>
 
 <span class="sd">        The graph returned is more precisely a DiGraph (directed graph) with</span>
@@ -7284,7 +7284,7 @@
         <span class="k">return</span> <span class="n">G</span></div></div>
 
 <div class="viewcode-block" id="FlippedRauzyDiagram"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.FlippedRauzyDiagram">[docs]</a><span class="k">class</span> <span class="nc">FlippedRauzyDiagram</span><span class="p">(</span><span class="n">RauzyDiagram</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Template for flipped Rauzy diagrams.</span>
 
 <span class="sd">    .. warning:</span>
@@ -7297,7 +7297,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="FlippedRauzyDiagram.complete"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.FlippedRauzyDiagram.complete">[docs]</a>    <span class="k">def</span> <span class="nf">complete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">reducible</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Completion of the Rauzy diagram</span>
 
 <span class="sd">        Add all successors of p for defined operations in edge_types. Could be</span>

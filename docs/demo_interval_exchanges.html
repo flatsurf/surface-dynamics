@@ -78,8 +78,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Interval exchange transformations</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Interval exchange transformations</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/demo_interval_exchanges.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -184,11 +184,18 @@ The image <span class="math notranslate nohighlight">\(\mathcal{R}(t)\)</span> o
 <span class="n">Graphics</span> <span class="nb">object</span> <span class="n">consisting</span> <span class="n">of</span> <span class="mi">33</span> <span class="n">graphics</span> <span class="n">primitives</span>
 </pre></div>
 </div>
+<p>For the next demo, we need a bit of setup to silence an error in automated
+testing. You don’t need to run these commands unless you are using a very old
+version of SageMath:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">numpy</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float</span> <span class="o">=</span> <span class="nb">float</span>
+</pre></div>
+</div>
 <p>From a flip sequence given combinatorially you can build the associated self-similar
 interval exchange transformation:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">R</span> <span class="o">=</span> <span class="n">perm</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">G</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">graph</span><span class="p">()</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">P</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color_by_label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edge_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vertex_size</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span> <span class="c1"># random (numpy warning in conda)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">P</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color_by_label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edge_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vertex_size</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">P</span>
 <span class="n">Graphics</span> <span class="nb">object</span> <span class="n">consisting</span> <span class="n">of</span> <span class="mi">42</span> <span class="n">graphics</span> <span class="n">primitives</span>
 </pre></div>

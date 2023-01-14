@@ -65,9 +65,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>surface_dynamics.interval_exchanges.reduced</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">surface_dynamics.interval_exchanges.reduced</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -151,7 +151,7 @@
 
 
 <div class="viewcode-block" id="ReducedPermutation"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutation">[docs]</a><span class="k">class</span> <span class="nc">ReducedPermutation</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Template for reduced objects.</span>
 
 <span class="sd">    .. warning::</span>
@@ -159,7 +159,7 @@
 <span class="sd">        Internal class! Do not use directly!</span>
 <span class="sd">   &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
 <span class="sd">            sage: from surface_dynamics import *</span>
@@ -181,7 +181,7 @@
     <span class="n">nintervals</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">irreducible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">alphabet</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns an iterator over reduced permutations</span>
 
 <span class="sd">    INPUT:</span>
@@ -226,7 +226,7 @@
         <span class="n">ReducedPermutationsIET_iterator</span><span class="p">(</span><span class="n">nintervals</span><span class="p">,</span><span class="kc">False</span><span class="p">,</span><span class="n">alphabet</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="ReducedPermutationIET"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationIET">[docs]</a><span class="k">class</span> <span class="nc">ReducedPermutationIET</span><span class="p">(</span><span class="n">ReducedPermutation</span><span class="p">,</span> <span class="n">OrientablePermutationIET</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reduced permutation from iet</span>
 
 <span class="sd">    Permutation from iet without numerotation of intervals. For initialization,</span>
@@ -280,7 +280,7 @@
 <span class="sd">        6</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="ReducedPermutationIET.list"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationIET.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of two list that represents the permutation.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -299,7 +299,7 @@
             <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="o">.</span><span class="n">unrank</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">]))]</span></div>
 
 <div class="viewcode-block" id="ReducedPermutationIET.rauzy_move_relabel"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationIET.rauzy_move_relabel">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_move_relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the relabelization obtained from this move.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -342,7 +342,7 @@
         <span class="k">return</span> <span class="n">WordMorphism</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ReducedPermutationIET.rauzy_diagram"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationIET.rauzy_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a Rauzy diagram associated to this permutation</span>
 
 <span class="sd">        INPUT:</span>
@@ -373,7 +373,7 @@
         <span class="k">return</span> <span class="n">ReducedRauzyDiagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">options</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ReducedPermutationIET.rauzy_class_cardinality"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationIET.rauzy_class_cardinality">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_class_cardinality</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Cardinality of Rauzy diagram</span>
 
 <span class="sd">        As proved in [Del13]_, there exists a closed formula for the cardinality</span>
@@ -519,7 +519,7 @@
             <span class="k">return</span> <span class="p">(</span><span class="n">gamma_irr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">mp</span><span class="o">.</span><span class="n">left</span><span class="p">())</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">delta_irr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">mp</span><span class="o">.</span><span class="n">left</span><span class="p">()))</span> <span class="o">//</span> <span class="mi">2</span></div></div>
 
 <div class="viewcode-block" id="ReducedPermutationLI"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationLI">[docs]</a><span class="k">class</span> <span class="nc">ReducedPermutationLI</span><span class="p">(</span><span class="n">ReducedPermutation</span><span class="p">,</span> <span class="n">OrientablePermutationLI</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reduced quadratic (or generalized) permutation.</span>
 
 <span class="sd">    EXAMPLES::</span>
@@ -565,7 +565,7 @@
 <span class="sd">        4</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="ReducedPermutationLI.list"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationLI.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The permutations as a list of two lists.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -588,7 +588,7 @@
         <span class="k">return</span> <span class="n">l</span></div>
 
 <div class="viewcode-block" id="ReducedPermutationLI.rauzy_diagram"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationLI.rauzy_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the associated Rauzy diagram.</span>
 
 <span class="sd">        The Rauzy diagram of a permutation corresponds to all permutations</span>
@@ -610,7 +610,7 @@
         <span class="k">return</span> <span class="n">ReducedRauzyDiagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="labelize_flip"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.labelize_flip">[docs]</a><span class="k">def</span> <span class="nf">labelize_flip</span><span class="p">(</span><span class="n">couple</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a string from a 2-uple couple of the form (name, flip).</span>
 
 <span class="sd">    TESTS::</span>
@@ -629,7 +629,7 @@
 <div class="viewcode-block" id="FlippedReducedPermutationIET"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationIET">[docs]</a><span class="k">class</span> <span class="nc">FlippedReducedPermutationIET</span><span class="p">(</span>
     <span class="n">FlippedReducedPermutation</span><span class="p">,</span>
     <span class="n">FlippedPermutationIET</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Flipped Reduced Permutation from iet</span>
 
 <span class="sd">    EXAMPLES::</span>
@@ -667,7 +667,7 @@
 <span class="sd">        ********</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="FlippedReducedPermutationIET.list"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationIET.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list representation of self.</span>
 
 <span class="sd">        INPUT:</span>
@@ -707,7 +707,7 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">a0</span><span class="p">,</span><span class="n">a1</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="FlippedReducedPermutationIET.rauzy_diagram"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationIET.rauzy_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the associated Rauzy diagram.</span>
 
 <span class="sd">        EXAMPLES::</span>
@@ -724,7 +724,7 @@
 <div class="viewcode-block" id="FlippedReducedPermutationLI"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationLI">[docs]</a><span class="k">class</span> <span class="nc">FlippedReducedPermutationLI</span><span class="p">(</span>
     <span class="n">FlippedReducedPermutation</span><span class="p">,</span>
     <span class="n">FlippedPermutationLI</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Flipped Reduced Permutation from li</span>
 
 <span class="sd">    EXAMPLES:</span>
@@ -736,7 +736,7 @@
 <span class="sd">        sage: p = iet.GeneralizedPermutation(&#39;a a b&#39;, &#39;b c c&#39;, reduced=True, flips=&#39;a&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="FlippedReducedPermutationLI.list"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationLI.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list representation of self.</span>
 
 <span class="sd">        INPUT:</span>
@@ -788,7 +788,7 @@
         <span class="k">return</span> <span class="n">l</span></div>
 
 <div class="viewcode-block" id="FlippedReducedPermutationLI.rauzy_diagram"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationLI.rauzy_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">rauzy_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the associated Rauzy diagram.</span>
 
 <span class="sd">        For more explanation and a list of arguments try help(iet.RauzyDiagram)</span>
@@ -805,11 +805,11 @@
         <span class="k">return</span> <span class="n">FlippedReducedRauzyDiagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="ReducedRauzyDiagram"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedRauzyDiagram">[docs]</a><span class="k">class</span> <span class="nc">ReducedRauzyDiagram</span><span class="p">(</span><span class="n">RauzyDiagram</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Rauzy diagram of reduced permutations</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">_permutation_to_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The necessary data to store the permutation.</span>
 
 <span class="sd">        TESTS::</span>
@@ -824,7 +824,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">_twin</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
 
     <span class="k">def</span> <span class="nf">_set_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets self._element with data.</span>
 
 <span class="sd">        TESTS::</span>
@@ -839,7 +839,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_twin</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span></div>
 
 <div class="viewcode-block" id="FlippedReducedRauzyDiagram"><a class="viewcode-back" href="../../../interval_exchanges/reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedRauzyDiagram">[docs]</a><span class="k">class</span> <span class="nc">FlippedReducedRauzyDiagram</span><span class="p">(</span><span class="n">FlippedRauzyDiagram</span><span class="p">,</span> <span class="n">ReducedRauzyDiagram</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Rauzy diagram of flipped reduced permutations.</span>
 
 <span class="sd">    TESTS::</span>

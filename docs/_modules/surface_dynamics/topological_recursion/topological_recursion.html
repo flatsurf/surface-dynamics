@@ -65,9 +65,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>surface_dynamics.topological_recursion.topological_recursion</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">surface_dynamics.topological_recursion.topological_recursion</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -134,7 +134,7 @@
 
 
 <div class="viewcode-block" id="compositions"><a class="viewcode-back" href="../../../topological_recursion/topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.compositions">[docs]</a><span class="k">def</span> <span class="nf">compositions</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return compositions of sum at most 3g-3+n and length n</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">g</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
@@ -143,7 +143,7 @@
 
 
 <div class="viewcode-block" id="TopologicalRecursion"><a class="viewcode-back" href="../../../topological_recursion/topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion">[docs]</a><span class="k">class</span> <span class="nc">TopologicalRecursion</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A generic topological recursion.</span>
 
 <span class="sd">    For concrete examples see:</span>
@@ -174,7 +174,7 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 <div class="viewcode-block" id="TopologicalRecursion.F"><a class="viewcode-back" href="../../../topological_recursion/topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.F">[docs]</a>    <span class="k">def</span> <span class="nf">F</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">I</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the value of the partition function F_{g,n}(I) where I = (i_0, i_1, ..., i_{n-1}) is</span>
 <span class="sd">        a tuple of n non-negative integers whose sum is &lt;= 3g-3+n.</span>
 
@@ -319,7 +319,7 @@
         <span class="k">return</span> <span class="n">p</span></div>
 
 <div class="viewcode-block" id="TopologicalRecursion.write"><a class="viewcode-back" href="../../../topological_recursion/topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Print normalized values of the polynomials F_{g,n}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">g</span> <span class="o">=</span> <span class="n">ZZ</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
