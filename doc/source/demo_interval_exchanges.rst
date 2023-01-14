@@ -97,12 +97,19 @@ The image :math:`\mathcal{R}(t)` of an iet :math:`t` is an induced map.::
     sage: G
     Graphics object consisting of 33 graphics primitives
 
+For the next demo, we need a bit of setup to silence an error in automated
+testing. You don't need to run these commands unless you are using a very old
+version of SageMath::
+
+    sage: import numpy
+    sage: numpy.float = float
+
 From a flip sequence given combinatorially you can build the associated self-similar
 interval exchange transformation::
 
     sage: R = perm.rauzy_diagram()
     sage: G = R.graph()
-    sage: P = G.plot(color_by_label=True, edge_labels=True, vertex_size=800) # random (numpy warning in conda)
+    sage: P = G.plot(color_by_label=True, edge_labels=True, vertex_size=800)
     sage: P
     Graphics object consisting of 42 graphics primitives
 
