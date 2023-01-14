@@ -19,15 +19,24 @@ jobs:
             sagelib: "8.9"
           - optionals: "sage,pplpy"
             sagelib: "9.1"
-          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+          # Test SageMath 9.1 with all compiled optional dependencies that were
+          # packaged in conda-forge at the time (the others cannot be installed
+          # because of FLINT incompatibilities)
+          - optionals: "sage,pplpy,gmpxxyy,sage_flatsurf"
             sagelib: "9.1"
           - optionals: "sage,pplpy,mzv"
             sagelib: "9.2"
-          - optionals: "sage,pplpy,mzv,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+          # Test SageMath 9.2 with all compiled optional dependencies that were
+          # packaged in conda-forge at the time (the others cannot be installed
+          # because of FLINT incompatibilities)
+          - optionals: "sage,pplpy,mzv,gmpxxyy,sage_flatsurf"
             sagelib: "9.2"
           - optionals: "sage,pplpy"
             sagelib: "9.3"
-          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+          # Test SageMath 9.3 with all compiled optional dependencies that were
+          # packaged in conda-forge at the time (the others cannot be installed
+          # because of FLINT incompatibilities)
+          - optionals: "sage,pplpy,gmpxxyy,sage_flatsurf"
             sagelib: "9.3"
           - optionals: "sage,pplpy"
             sagelib: "9.4"
