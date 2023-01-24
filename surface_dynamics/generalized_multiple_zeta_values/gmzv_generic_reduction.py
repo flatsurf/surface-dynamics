@@ -164,13 +164,12 @@ def stuffle_to_lin_comb(v, rp, cp, stuffle):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.generalized_multiple_zeta_values import GeneralizedMultipleZetaFunction, linear_forms
+        sage: from surface_dynamics.generalized_multiple_zeta_values.generalized_multiple_zeta_values import GeneralizedMultipleZetaFunction, linear_forms
         sage: from surface_dynamics.generalized_multiple_zeta_values.gmzv_generic_reduction import stuffle_to_lin_comb
         sage: va, vb, vc, vd, ve, vf, vg = linear_forms(3)
-        sage: GeneralizedMultipleZetaFunction([vd, va, vb])
+        sage: G = GeneralizedMultipleZetaFunction([vd, va, vb])
         sage: S = SymmetricGroup(3)
         sage: p = S.one()
-        sage: stuffle_to_lin_comb
     """
     vtmp = v.copy()
     _, _ = vtmp.canonicalize()
@@ -690,34 +689,6 @@ def print_stuffle3():
 
 
 
-def try_relation(n, den_tuple):
-    r"""
-    Assuming that ``den_tuple`` has full rank, make it so that it has only ``n`` columns.
-
-    EXAMPLES::
-
-        sage: from surface_dynamics.misc.generalized_multiple_zeta_values import try_relation
-        sage: V = FreeModule(ZZ, 2)
-        sage: va = V((1,0)); va.set_immutable()
-        sage: vb = V((0,1)); vb.set_immutable()
-        sage: vc = V((1,1)); vc.set_immutable()
-
-        sage: den_tuple = ((va,2),(vb,2),(vc,2))
-        sage: for r in try_relation(2, den_tuple):
-        ....:     print(r)
-    """
-    # assume it is full rank
-    if len(den_tuple) <= n:
-        return
-    M = matrix([v for v,p in den_tuple])
-    for relation in sorted(M.left_kernel().basis(), key=lambda x: sum(bool(cc) for cc in x)):
-        if sum(x < 0 for x in relation) > sum(x > 0 for x in relation):
-            relation = -relation
-        for i in range(len(den_tuple)):
-            if relation[i] < 0:
-                yield kill_relation(n, den_tuple, i, relation)
-
-
 def try_algebraic_forward(S):
     L = list(S.algebraic(True))
     if not L:
@@ -775,7 +746,7 @@ class Solvers:
             sage: S = gmzv_solvers.multistuffle_first(3, 3)
             sage: l = GeneralizedMultipleZetaFunction([[1,0,0], [0,1,0], [0,0,1]])
             sage: l.set_immutable()
-            sage: assert S.eval(l, (2,2,2)) == Multizeta(2)**3
+            sage: assert S.eval(l, (2,2,2)) == Multizeta(2)**3 # optional - mzv
         """
         S = GMZVSolver(d, r)
         S.update_multizetas()

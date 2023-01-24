@@ -18,6 +18,8 @@ This module is about the sums
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
+
+from sage.rings.integer_ring import ZZ
 from sage.rings.rational_field import QQ
 from sage.arith.misc import binomial
 from sage.modular.multiple_zeta import Multizetas
@@ -53,7 +55,7 @@ def is_Z3_convergent(a, b, c, d, e, f, g):
 
     TESTS::
 
-        sage: from surface_dynamics.misc.generalized_multiple_zeta_values import is_Z3_convergent
+        sage: from surface_dynamics.generalized_multiple_zeta_values import is_Z3_convergent
 
     Convergent examples::
 

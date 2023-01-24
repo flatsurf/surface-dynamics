@@ -405,10 +405,9 @@ def convergent_multizeta(t):
     if VERBOSE:
         print("convergent_multizeta({})".format(t))
     n = len(t)
-    if not DIVERGENT_MZV:
-        for i in range(1,n+1):
-            if sum(t[-i:]) <= i:
-                raise DivergentZetaError("divergent multizeta value {}".format(t))
+    for i in range(1,n+1):
+        if sum(t[-i:]) <= i:
+            raise DivergentZetaError("divergent multizeta value {}".format(t))
     if all(x > 0 for x in t):
         M = Multizetas(QQ)
         W = M.basis().keys()
@@ -629,7 +628,7 @@ def kill_relation(n, den_tuple, i, relation):
         sage: vb = V((0,1)); vb.set_immutable()
         sage: vc = V((1,1)); vc.set_immutable()
 
-        sage: den_tuple = ((va,2),(vb,3),(vc,4))
+        sage: den_tuple = ((va,2), (vb,3), (vc,4))
         sage: kill_relation(2, den_tuple, 2, [1,1,0])
         [(1, (((0, 1), 3), ((1, 1), 6))),
          (2, (((0, 1), 2), ((1, 1), 7))),
@@ -639,7 +638,8 @@ def kill_relation(n, den_tuple, i, relation):
     """
     assert len(relation) == len(den_tuple)
     assert 0 <= i < len(den_tuple)
-    assert sum(relation[j] * den_tuple[j][0] for j in range(len(den_tuple))) == den_tuple[i][0]
+    s = sum(relation[j] * den_tuple[j][0] for j in range(len(den_tuple)))
+    assert s == den_tuple[i][0], (s, den_tuple[i][0])
     D = {den_tuple: QQ.one()}
     todo = [den_tuple]
     while todo:
@@ -660,6 +660,37 @@ def kill_relation(n, den_tuple, i, relation):
                 D[new_den_tuple] = coeff
 
     return [(coeff, new_den_tuple) for new_den_tuple, coeff in D.items()]
+
+
+def try_relation(n, den_tuple):
+    r"""
+    Assuming that ``den_tuple`` has full rank, make it so that it has only ``n`` columns.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.generalized_multiple_zeta_values.generalized_multiple_zeta_values import try_relation
+        sage: V = FreeModule(ZZ, 2)
+        sage: va = V((1,0)); va.set_immutable()
+        sage: vb = V((0,1)); vb.set_immutable()
+        sage: vc = V((1,1)); vc.set_immutable()
+
+        sage: den_tuple = ((va,2), (vb,2), (vc,2))
+        sage: for r in try_relation(2, den_tuple):
+        ....:     print(r)
+        [(1, (((0, 1), 2), ((1, 1), 4))), (1, (((1, 0), 2), ((1, 1), 4))), (2, (((0, 1), 1), ((1, 1), 5))), (2, (((1, 0), 1), ((1, 1), 5)))]
+    """
+    # assume it is full rank
+    if len(den_tuple) <= n:
+        return
+    M = matrix([v for v,p in den_tuple])
+    for relation in sorted(M.left_kernel().basis(), key=lambda x: sum(bool(cc) for cc in x)):
+        if sum(x < 0 for x in relation) > sum(x > 0 for x in relation):
+            relation = -relation
+        for i in range(len(den_tuple)):
+            if relation[i] < 0:
+                relation /= -relation[i]
+                relation[i] = 0
+                yield kill_relation(n, den_tuple, i, relation)
 
 
 def has_term_sum_of_smaller_terms(n, den_tuple):
@@ -850,7 +881,7 @@ class GeneralizedMultipleZetaFunction:
         sage: f = GeneralizedMultipleZetaFunction([va, vb, vc, vg])
         sage: f
         GeneralizedMultipleZetaFunction('(0)(1)(2)(0+1+2)')
-        sage: f((1, 1, 1, 1))
+        sage: f((1, 1, 1, 1)) # optional - mzv
         6*ζ(1,1,2)
     """
     def __init__(self, *args, as_rows=False, reduced=None):
@@ -910,13 +941,15 @@ class GeneralizedMultipleZetaFunction:
         EXAMPLES::
 
             sage: from surface_dynamics.generalized_multiple_zeta_values import GeneralizedMultipleZetaFunction, convergent_multizeta
-            sage: GeneralizedMultipleZetaFunction([[1,0,0],[1,1,1],[1,0,1]])((2,4,3))
+            sage: f = GeneralizedMultipleZetaFunction([[1,0,0],[1,1,1],[1,0,1]])
+            sage: f((2,4,3)) # optional - mzv
             ζ(2,3,4)
-            sage: GeneralizedMultipleZetaFunction([[1,0,0],[1,1,1]])((2,4)) == convergent_multizeta((2,0,4))
+            sage: f = GeneralizedMultipleZetaFunction([[1,0,0],[1,1,1]])
+            sage: f((2,4)) == convergent_multizeta((2,0,4)) # optional - mzv
             True
 
             sage: G = GeneralizedMultipleZetaFunction([[1,1,1,1],[1,1,1,0],[1,1,0,0]])
-            sage: G((2,2,2))
+            sage: G((2,2,2)) # optional - mzv
             ζ(1,2,2) - ζ(2,2,2)
         """
         M = Multizetas(QQ)

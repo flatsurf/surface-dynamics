@@ -17,6 +17,7 @@ This module is about the sums
 #*****************************************************************************
 
 
+from sage.rings.integer_ring import ZZ
 from sage.rings.rational_field import QQ
 from sage.arith.misc import binomial
 from sage.modular.multiple_zeta import Multizetas
