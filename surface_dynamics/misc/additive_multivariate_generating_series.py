@@ -58,7 +58,7 @@ class AdditiveMultivariateGeneratingSeries(AbstractMSum):
             sage: f.integral_sum_as_mzv() # optional - mzv
             36*ζ(1,1,4) + 24*ζ(1,2,3) + 12*ζ(1,3,2) + 12*ζ(2,1,3) + 6*ζ(2,2,2)
         """
-        from .generalized_multiple_zeta_values import handle_term
+        from surface_dynamics.generalized_multiple_zeta_values.generaralized_multiple_zeta_values import handle_term
         n = self.parent().free_module().rank()
         return sum(QQ(num) * handle_term(n, den._tuple) for den, num in self._data.items())
 

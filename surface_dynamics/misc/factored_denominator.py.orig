@@ -77,7 +77,8 @@ def vector_to_monomial_string(u, var_names):
 
     return '*'.join(s) if s else '1'
 
-
+<<<<<<< HEAD
+=======
 def vector_to_monomial_latex(u, var_names):
     s = []
     for i,j in enumerate(u):
@@ -93,7 +94,7 @@ def vector_to_monomial_latex(u, var_names):
                 s.append('%s^{%d}' % (var, j))
 
         return ' '.join(s) if s else '1'
-
+>>>>>>> cd714fd (more latexization)
 
 def vector_to_linear_form_string(u, var_names):
     r"""

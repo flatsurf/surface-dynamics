@@ -279,3 +279,6 @@ def test_zeta_relations3():
                 print("non-convergent relation: {} {}".format(ee,r))
             else:
                 assert z1.is_zero() and z2.is_zero(), (z1, z2, ee, r)
+
+def test_strategies_d3_r3():
+    S1 = SolveStrategy(3,3)

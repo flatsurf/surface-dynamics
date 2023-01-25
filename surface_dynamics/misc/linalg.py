@@ -2,7 +2,7 @@ r"""
 Some linear algebra routines
 """
 #*****************************************************************************
-#       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
+#       Copyright (C) 2019-2023 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
@@ -13,7 +13,9 @@ Some linear algebra routines
 from sage.arith.all import gcd, lcm
 from sage.arith.misc import binomial
 from sage.rings.all import ZZ, QQ
+from sage.matrix.constructor import matrix
 from sage.geometry.polyhedron.constructor import Polyhedron
+
 
 def relation_space(v):
     r"""
@@ -233,3 +235,143 @@ def symbolic_matrix_power(M, n):
         P *= N
         p += 1
     return result
+
+
+def disjoint_vectors(vectors, min_size=2, max_size=None):
+    r"""
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.linalg import disjoint_vectors
+        sage: V = FreeModule(ZZ, 4)
+        sage: v0 = V((1,0,0,0))
+        sage: v1 = V((1,1,0,0))
+        sage: v2 = V((0,0,1,0))
+        sage: v3 = V((0,1,1,1))
+        sage: v4 = V((0,1,0,1))
+        sage: for subset, s in disjoint_vectors((v0,v1,v2,v3,v4)):
+        ....:     print(subset, s)
+        [0, 2] (1, 0, 1, 0)
+        [0, 2, 4] (1, 1, 1, 1)
+        [0, 3] (1, 1, 1, 1)
+        [0, 4] (1, 1, 0, 1)
+        [1, 2] (1, 1, 1, 0)
+        [2, 4] (0, 1, 1, 1)
+        sage: for subset, s in disjoint_vectors((v0,v1,v2,v3,v4), min_size=2, max_size=2):
+        ....:     print(subset, s)
+        [0, 2] (1, 0, 1, 0)
+        [0, 3] (1, 1, 1, 1)
+        [0, 4] (1, 1, 0, 1)
+        [1, 2] (1, 1, 1, 0)
+        [2, 4] (0, 1, 1, 1)
+    """
+    if max_size is None:
+        max_size = len(vectors)
+    F = vectors[0].parent()
+    n = len(vectors)
+    d = F.dimension()
+    stack = []
+    i = 0
+    c = F.zero()  # current sum
+    while True:
+        while i < len(vectors) and len(stack) < max_size:
+            cc = c + vectors[i]
+            if all(x < 2 for x in cc):
+                stack.append(i)
+                c = cc
+                if len(stack) >= min_size:
+                    c.set_immutable()
+                    yield stack, c
+            i += 1
+        if not stack:
+            return
+        i = stack.pop()
+        c -= vectors[i]
+        i += 1
+
+
+def linearly_independent_vectors(vectors, min_size=0, max_size=None):
+    r"""
+    Iterate through the subsets of ``vectors`` made of linearly independent vectors.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.misc.linalg import linearly_independent_vectors
+        sage: V = FreeModule(ZZ, 4)
+        sage: vecs = [V((1, 0, 0, 0)), V((1, 1, 0, 0)), V((0, 0, 1, 0)), V((0, 1, 1, 1)), V((0, 1, 0, 1))]
+        sage: for subset, s in linearly_independent_vectors(vecs):
+        ....:     print(subset, s.rows())
+        [0] [(1, 0, 0, 0)]
+        [0, 1] [(1, 0, 0, 0), (1, 1, 0, 0)]
+        [0, 1, 2] [(1, 0, 0, 0), (1, 1, 0, 0), (0, 0, 1, 0)]
+        [0, 1, 2, 3] [(1, 0, 0, 0), (1, 1, 0, 0), (0, 0, 1, 0), (0, 1, 1, 1)]
+        [0, 1, 2, 4] [(1, 0, 0, 0), (1, 1, 0, 0), (0, 0, 1, 0), (0, 1, 0, 1)]
+        [0, 1, 3] [(1, 0, 0, 0), (1, 1, 0, 0), (0, 1, 1, 1)]
+        [0, 1, 3, 4] [(1, 0, 0, 0), (1, 1, 0, 0), (0, 1, 1, 1), (0, 1, 0, 1)]
+        [0, 1, 4] [(1, 0, 0, 0), (1, 1, 0, 0), (0, 1, 0, 1)]
+        [0, 2] [(1, 0, 0, 0), (0, 0, 1, 0)]
+        [0, 2, 3] [(1, 0, 0, 0), (0, 0, 1, 0), (0, 1, 1, 1)]
+        [0, 2, 4] [(1, 0, 0, 0), (0, 0, 1, 0), (0, 1, 0, 1)]
+        [0, 3] [(1, 0, 0, 0), (0, 1, 1, 1)]
+        [0, 3, 4] [(1, 0, 0, 0), (0, 1, 1, 1), (0, 1, 0, 1)]
+        [0, 4] [(1, 0, 0, 0), (0, 1, 0, 1)]
+        [1] [(1, 1, 0, 0)]
+        [1, 2] [(1, 1, 0, 0), (0, 0, 1, 0)]
+        [1, 2, 3] [(1, 1, 0, 0), (0, 0, 1, 0), (0, 1, 1, 1)]
+        [1, 2, 4] [(1, 1, 0, 0), (0, 0, 1, 0), (0, 1, 0, 1)]
+        [1, 3] [(1, 1, 0, 0), (0, 1, 1, 1)]
+        [1, 3, 4] [(1, 1, 0, 0), (0, 1, 1, 1), (0, 1, 0, 1)]
+        [1, 4] [(1, 1, 0, 0), (0, 1, 0, 1)]
+        [2] [(0, 0, 1, 0)]
+        [2, 3] [(0, 0, 1, 0), (0, 1, 1, 1)]
+        [2, 4] [(0, 0, 1, 0), (0, 1, 0, 1)]
+        [3] [(0, 1, 1, 1)]
+        [3, 4] [(0, 1, 1, 1), (0, 1, 0, 1)]
+        [4] [(0, 1, 0, 1)]
+
+        sage: for subset, s in linearly_independent_vectors(vecs, min_size=2, max_size=2):
+        ....:     print(subset)
+        [0, 1]
+        [0, 2]
+        [0, 3]
+        [0, 4]
+        [1, 2]
+        [1, 3]
+        [1, 4]
+        [2, 3]
+        [2, 4]
+        [3, 4]
+        sage: for subset, s in linearly_independent_vectors(vecs, min_size=3, max_size=3):
+        ....:     print(subset)
+        [0, 1, 2]
+        [0, 1, 3]
+        [0, 1, 4]
+        [0, 2, 3]
+        [0, 2, 4]
+        [0, 3, 4]
+        [1, 2, 3]
+        [1, 2, 4]
+        [1, 3, 4]
+    """
+    F = vectors[0].parent()
+    n = len(vectors)
+    d = F.dimension()
+    if max_size is None:
+        max_size = d
+    stack = []
+    i = 0
+    M = matrix(ZZ, max_size, d) # current matrix
+    while True:
+        while len(stack) < max_size and i < len(vectors):
+            M[len(stack)] = vectors[i]
+            if M.rank() == len(stack) + 1:
+                stack.append(i)
+                if len(stack) >= min_size:
+                    yield stack, M[:len(stack)]
+            else:
+                M[len(stack)] = F.zero()
+            i += 1
+        if not stack:
+            return
+        i = stack.pop()
+        M[len(stack)] = F.zero()
+        i += 1
