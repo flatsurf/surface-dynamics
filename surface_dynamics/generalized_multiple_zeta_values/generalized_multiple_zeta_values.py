@@ -26,7 +26,6 @@ The ordering of the pairs ``(v, p)`` is irrelevant.
 
 import itertools
 from collections import defaultdict
-import cypari2
 
 from sage.misc.cachefunc import cached_method, cached_function
 from sage.all import ZZ, QQ, matrix, bernoulli_polynomial, prod, FreeModule
@@ -37,6 +36,8 @@ from sage.combinat.permutation import Permutations
 
 from surface_dynamics.misc.linalg import linearly_independent_vectors
 from .options import VERBOSE, DIVERGENT_MZV
+
+import cypari2.handle_error
 
 try:
     from sage.modular.multiple_zeta import Multizetas

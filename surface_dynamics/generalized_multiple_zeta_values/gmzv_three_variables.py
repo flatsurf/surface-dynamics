@@ -22,7 +22,14 @@ This module is about the sums
 from sage.rings.integer_ring import ZZ
 from sage.rings.rational_field import QQ
 from sage.arith.misc import binomial
-from sage.modular.multiple_zeta import Multizetas
+
+import cypari2.handle_error
+
+try:
+    from sage.modular.multiple_zeta import Multizetas
+except (ImportError, cypari2.handle_error.PariError):
+    def Multizetas(*args, **kwds):
+        raise ValueError('your sage version does not support multiple zeta values')
 
 from .options import VERBOSE, DIVERGENT_MZV
 
