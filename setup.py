@@ -123,6 +123,7 @@ setup(name='surface-dynamics',
                 'surface_dynamics/topological_recursion',
                 'surface_dynamics/flat_surfaces',
                 'surface_dynamics/databases',
+                'surface_dynamics/generalized_multiple_zeta_values',
                 'surface_dynamics/flat_surfaces/origamis',
                 'surface_dynamics/interval_exchanges'],
       package_data={
