@@ -760,8 +760,8 @@ cdef class IETFamily:
             701 910 0 823 0 308 0 119 51
             sage: minimals, saddles, unknowns = F.random_element_statistics(K, num_exp=20, num_iterations=200, intervalxt=False) # optional - pplpy
             sage: assert minimals == 0 and saddles < 3 and unknowns > 17, (minimals, saddles, unknowns) # optional - pplpy
-            sage: minimals, saddles, unknowns = F.random_element_statistics(K, num_exp=20, num_iterations=200, intervalxt=True) # optional - pplpy gmpxxyy pyeantic pyintervalxt
-            sage: assert minimals == 0 and saddles < 3 and unknowns > 17, (minimals, saddles, unknowns) # optional - pplpy gmpxxyy pyeantic pyintervalxt
+            sage: minimals, saddles, unknowns = F.random_element_statistics(K, num_exp=20, num_iterations=200, intervalxt=True)  # optional: pplpy  # optional: gmpxxyy  # optional: pyeantic  # optional: pyintervalxt
+            sage: assert minimals == 0 and saddles < 3 and unknowns > 17, (minimals, saddles, unknowns)  # optional: pplpy  # optional: gmpxxyy  # optional: pyeantic  # optional: pyintervalxt
         """
         if intervalxt is None:
             try:
