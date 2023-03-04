@@ -24,7 +24,7 @@ def iet_to_pyintervalxt(T):
         sage: T = iet.IntervalExchangeTransformation(p, [12, 5, 9])
         sage: T.base_ring()
         Integer Ring
-        sage: iet_to_pyintervalxt(T) # optional - gmpxxyy, pyintervalxt
+        sage: iet_to_pyintervalxt(T)  # optional: gmpxxyy  # optional: pyintervalxt
         [a: 12] [b: 5] [c: 9] / [c] [b] [a]
 
     Over rationals::
@@ -32,7 +32,7 @@ def iet_to_pyintervalxt(T):
         sage: T = iet.IntervalExchangeTransformation(p, [12/5, 2/7, 1/21])
         sage: T.base_ring()
         Rational Field
-        sage: iet_to_pyintervalxt(T) # optional - gmpxxyy, pyintervalxt
+        sage: iet_to_pyintervalxt(T)  # optional: gmpxxyy  # optional: pyintervalxt
         [a: 12/5] [b: 2/7] [c: 1/21] / [c] [b] [a]
 
     Over number fields::
@@ -40,7 +40,7 @@ def iet_to_pyintervalxt(T):
         sage: x = polygen(QQ)
         sage: K.<sqrt2> = NumberField(x^2 - 2, embedding=AA(2).sqrt())
         sage: T = iet.IntervalExchangeTransformation(p, [1, sqrt2, sqrt2-1])
-        sage: iet_to_pyintervalxt(T) # optional - pyeantic, pyintervalxt
+        sage: iet_to_pyintervalxt(T)  # optional: pyeantic  # optional: pyintervalxt
         [a: 1] [b: (sqrt2 ~ 1.4142136)] [c: (sqrt2-1 ~ 0.41421356)] / [c] [b] [a]
     """
     try:
@@ -118,41 +118,41 @@ def iet_from_pyintervalxt(T, alphabet=None):
 
     EXAMPLES::
 
-        sage: import pyintervalxt # optional - gmpxxyy, pyintervalxt
+        sage: import pyintervalxt  # optional: gmpxxyy  # optional: pyintervalxt
         sage: from surface_dynamics.interval_exchanges.conversion import iet_from_pyintervalxt
         sage: perm = (int(1), int(0))
-        sage: T = pyintervalxt.IntervalExchangeTransformation((int(18), int(3)), perm) # optional - gmpxxyy, pyintervalxt
-        sage: iet_from_pyintervalxt(T) # optional - gmpxxyy, pyintervalxt
+        sage: T = pyintervalxt.IntervalExchangeTransformation((int(18), int(3)), perm)  # optional: gmpxxyy  # optional: pyintervalxt
+        sage: iet_from_pyintervalxt(T)  # optional: gmpxxyy  # optional: pyintervalxt
         Interval exchange transformation of [0, 21[ with permutation
         a b
         b a
 
-        sage: from cppyy.gbl import mpz_class # optional - gmpxxyy, pyintervalxt
-        sage: l1 = mpz_class(12384758375127328356724597182479485) # optional - gmpxxyy, pyintervalxt
-        sage: l2 = mpz_class(571349847513463874558781940004928374) # optional - gmpxxyy, pyintervalxt
-        sage: T = pyintervalxt.IntervalExchangeTransformation((l1, l2), perm) # optional - gmpxxyy, pyintervalxt
-        sage: iet_from_pyintervalxt(T) # optional - gmpxxyy, pyintervalxt
+        sage: from cppyy.gbl import mpz_class  # optional: gmpxxyy  # optional: pyintervalxt
+        sage: l1 = mpz_class(12384758375127328356724597182479485)  # optional: gmpxxyy  # optional: pyintervalxt
+        sage: l2 = mpz_class(571349847513463874558781940004928374)  # optional: gmpxxyy  # optional: pyintervalxt
+        sage: T = pyintervalxt.IntervalExchangeTransformation((l1, l2), perm)  # optional: gmpxxyy  # optional: pyintervalxt
+        sage: iet_from_pyintervalxt(T)  # optional: gmpxxyy  # optional: pyintervalxt
         Interval exchange transformation of [0, 583734605888591187546058532203790336[ with permutation
         a b
         b a
 
-        sage: from cppyy.gbl import mpq_class # optional - gmpxxyy, pyintervalxt
-        sage: l1 = mpq_class(1, 123847585) # optional - gmpxxyy, pyintervalxt
-        sage: l2 = mpq_class(4928374, 3) # optional - gmpxxyy, pyintervalxt
-        sage: T = pyintervalxt.IntervalExchangeTransformation((l1, l2), perm) # optional - gmpxxyy, pyintervalxt
-        sage: iet_from_pyintervalxt(T) # optional - gmpxxyy, pyintervalxt
+        sage: from cppyy.gbl import mpq_class  # optional: gmpxxyy  # optional: pyintervalxt
+        sage: l1 = mpq_class(1, 123847585)  # optional: gmpxxyy  # optional: pyintervalxt
+        sage: l2 = mpq_class(4928374, 3)  # optional: gmpxxyy  # optional: pyintervalxt
+        sage: T = pyintervalxt.IntervalExchangeTransformation((l1, l2), perm)  # optional: gmpxxyy  # optional: pyintervalxt
+        sage: iet_from_pyintervalxt(T)  # optional: gmpxxyy  # optional: pyintervalxt
         Interval exchange transformation of [0, 610367217876793/371542755[ with permutation
         a b
         b a
 
-        sage: from pyeantic.real_embedded_number_field import RealEmbeddedNumberField # optional - pyeantic, pyintervalxt
+        sage: from pyeantic.real_embedded_number_field import RealEmbeddedNumberField  # optional: pyeantic  # optional: pyintervalxt
         sage: x = polygen(QQ)
         sage: K.<sqrt2> = NumberField(x^2 - 2, embedding=AA(2).sqrt())
-        sage: L = RealEmbeddedNumberField(K) # optional - pyeantic, pyintervalxt
-        sage: l1 = L(sqrt2).renf_elem # optional - pyeantic, pyintervalxt
-        sage: l2 = L(4*sqrt2 - 3).renf_elem # optional - pyeantic, pyintervalxt
-        sage: T = pyintervalxt.IntervalExchangeTransformation((l1, l2), perm) # optional - pyeantic, pyintervalxt
-        sage: iet_from_pyintervalxt(T) # optional - pyeantic, pyintervalxt
+        sage: L = RealEmbeddedNumberField(K)  # optional: pyeantic  # optional: pyintervalxt
+        sage: l1 = L(sqrt2).renf_elem  # optional: pyeantic  # optional: pyintervalxt
+        sage: l2 = L(4*sqrt2 - 3).renf_elem  # optional: pyeantic  # optional: pyintervalxt
+        sage: T = pyintervalxt.IntervalExchangeTransformation((l1, l2), perm)  # optional: pyeantic  # optional: pyintervalxt
+        sage: iet_from_pyintervalxt(T)  # optional: pyeantic  # optional: pyintervalxt
         Interval exchange transformation of [0, 5*sqrt2 - 3[ with permutation
         a b
         b a
