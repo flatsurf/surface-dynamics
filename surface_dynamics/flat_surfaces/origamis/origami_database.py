@@ -1086,10 +1086,10 @@ def build_local_data(o):
 
         sage: o = Origami('(1,2)','(1,3)')
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
-        sage: data = odb.build_local_data(o) # optional - gap_packages
-        sage: data['stratum']                # optional - gap_packages
+        sage: data = odb.build_local_data(o)  # optional: gap_packages
+        sage: data['stratum']                 # optional: gap_packages
         H_2(2)
-        sage: data['nb_squares']             # optional - gap_packages
+        sage: data['nb_squares']              # optional: gap_packages
         3
     """
     from sage.functions.other import factorial
@@ -1506,8 +1506,8 @@ class OrigamiDatabase(SQLDatabase):
             sage: with tempfile.TemporaryDirectory() as tmpdir:
             ....:     db_name = os.path.join(tmpdir, 'my_db.db')
             ....:     D = OrigamiDatabase(db_name, read_only=False)
-            ....:     D.build(AbelianStratum(4).odd_component(), 8) # optional - gap_packages
-            ....:     D.info()                                      # optional - gap_packages
+            ....:     D.build(AbelianStratum(4).odd_component(), 8)  # optional: gap_packages
+            ....:     D.info()                                       # optional: gap_packages
             genus 2
             =======
             <BLANKLINE>
@@ -1704,10 +1704,10 @@ class OrigamiDatabase(SQLDatabase):
             ....:     db2_name = os.path.join(tmpdir, 'the_second_one.db')
             ....:     D1 = OrigamiDatabase(db1_name, read_only=False)
             ....:     D2 = OrigamiDatabase(db2_name, read_only=False)
-            ....:     D1.build(AbelianStratum(1,1).unique_component(), 7)  # optional - gap_packages
-            ....:     D2.build(AbelianStratum(2).unique_component(), 5)    # optional - gap_packages
-            ....:     D2.update(D1)                                        # optional - gap_packages
-            ....:     D2.info()                                            # optional - gap_packages
+            ....:     D1.build(AbelianStratum(1,1).unique_component(), 7)  # optional: gap_packages
+            ....:     D2.build(AbelianStratum(2).unique_component(), 5)    # optional: gap_packages
+            ....:     D2.update(D1)                                        # optional: gap_packages
+            ....:     D2.info()                                            # optional: gap_packages
             genus 2
             =======
              H_2(2)^hyp  :   2 T. curves (up to  4 squares)

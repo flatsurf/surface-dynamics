@@ -152,8 +152,8 @@ cdef class IETFamily:
         sage: from surface_dynamics import *
 
         sage: p = iet.Permutation('a b c d', 'd c b a')
-        sage: F = iet.IETFamily(p, (ZZ**4).basis())    # optional - pplpy
-        sage: F  # optional - pplpy
+        sage: F = iet.IETFamily(p, (ZZ**4).basis())    # optional: pplpy
+        sage: F  # optional: pplpy
         top 0 1 2 3
         bot 3 2 1 0
         0 0 0 1
@@ -161,17 +161,17 @@ cdef class IETFamily:
         0 1 0 0
         1 0 0 0
 
-        sage: iet.IETFamily(p, [(2,3,0,0), (0,1,1,1)]) # optional - pplpy
+        sage: iet.IETFamily(p, [(2,3,0,0), (0,1,1,1)])  # optional: pplpy
         top 0 1 2 3
         bot 3 2 1 0
         0 1 1 1
         2 3 0 0
 
-        sage: iet.IETFamily(p, [(1,0,0,0), (1,-1,1,1)]) # optional - pplpy
+        sage: iet.IETFamily(p, [(1,0,0,0), (1,-1,1,1)])  # optional: pplpy
         Traceback (most recent call last):
         ...
         ValueError: C must be a subcone of the non-negative cone
-        sage: iet.IETFamily(p, Polyhedron(vertices=[(0,0,0,0), (1,0,0,0),(0,1,0,0),(1,1,1,1)])) # optional - pplpy
+        sage: iet.IETFamily(p, Polyhedron(vertices=[(0,0,0,0), (1,0,0,0),(0,1,0,0),(1,1,1,1)]))  # optional: pplpy
         Traceback (most recent call last):
         ...
         ValueError: should have only zero as vertices
@@ -232,16 +232,16 @@ cdef class IETFamily:
 
             sage: from surface_dynamics import *
             sage: p = iet.Permutation('a b c d', 'd c b a')
-            sage: F = iet.IETFamily(p, [(2,3,0,0), (0,1,1,1)]) # optional - pplpy
-            sage: F.ray_coefficient(0, 2) # optional - pplpy
+            sage: F = iet.IETFamily(p, [(2,3,0,0), (0,1,1,1)])  # optional: pplpy
+            sage: F.ray_coefficient(0, 2)  # optional: pplpy
             1
-            sage: F.ray_coefficient(1, 0) # optional - pplpy
+            sage: F.ray_coefficient(1, 0)  # optional: pplpy
             2
-            sage: F.ray_coefficient(3, 0) # optional - pplpy
+            sage: F.ray_coefficient(3, 0)  # optional: pplpy
             Traceback (most recent call last):
             ...
             IndexError: row index out of range
-            sage: F.ray_coefficient(1, 5) # optional - pplpy
+            sage: F.ray_coefficient(1, 5)  # optional: pplpy
             Traceback (most recent call last):
             ...
             IndexError: column index out of range
@@ -262,8 +262,8 @@ cdef class IETFamily:
 
             sage: from surface_dynamics import *
             sage: p = iet.Permutation('a b c d', 'd c b a')
-            sage: F = iet.IETFamily(p, [(2,3,0,0), (0,1,1,1)]) # optional - pplpy
-            sage: F.rays() # optional - pplpy
+            sage: F = iet.IETFamily(p, [(2,3,0,0), (0,1,1,1)])  # optional: pplpy
+            sage: F.rays()  # optional: pplpy
             [(0, 1, 1, 1), (2, 3, 0, 0)]
         """
         from sage.modules.free_module import FreeModule
@@ -277,8 +277,8 @@ cdef class IETFamily:
 
             sage: from surface_dynamics import *
             sage: p = iet.Permutation('a b c d', 'd c b a')
-            sage: F = iet.IETFamily(p, [(2,3,0,0), (0,1,1,1)]) # optional - pplpy
-            sage: repr(F)  # indirect doctest # optional - pplpy
+            sage: F = iet.IETFamily(p, [(2,3,0,0), (0,1,1,1)])  # optional: pplpy
+            sage: repr(F)  # indirect doctest  # optional: pplpy
             'top 0 1 2 3\nbot 3 2 1 0\n0 1 1 1\n2 3 0 0'
         """
         cdef size_t i, j
@@ -363,8 +363,8 @@ cdef class IETFamily:
 
             sage: from surface_dynamics import *
             sage: p = iet.Permutation('a b c d', 'd c b a')
-            sage: F = iet.IETFamily(p, Polyhedron(rays=(ZZ**4).basis())) # optional - pplpy
-            sage: hash(F) # optional - pplpy
+            sage: F = iet.IETFamily(p, Polyhedron(rays=(ZZ**4).basis()))  # optional: pplpy
+            sage: hash(F)  # optional: pplpy
             4696861030007372737
         """
         cdef Py_hash_t x, y, mult
@@ -398,29 +398,29 @@ cdef class IETFamily:
             sage: rays2 = [[1,0,0,0],[1,0,1,0],[1,1,0,0],[0,0,1,1]]
             sage: rays3 = [[1,0,1,0],[1,1,0,0],[0,0,1,1]]
 
-            sage: iet.IETFamily(p1, rays1) == iet.IETFamily(p1, rays1) # optional - pplpy
+            sage: iet.IETFamily(p1, rays1) == iet.IETFamily(p1, rays1)  # optional: pplpy
             True
-            sage: iet.IETFamily(p1, rays1) != iet.IETFamily(p1, rays1) # optional - pplpy
+            sage: iet.IETFamily(p1, rays1) != iet.IETFamily(p1, rays1)  # optional: pplpy
             False
 
-            sage: iet.IETFamily(p1, rays1) == iet.IETFamily(p2, rays1) # optional - pplpy
+            sage: iet.IETFamily(p1, rays1) == iet.IETFamily(p2, rays1)  # optional: pplpy
             False
-            sage: iet.IETFamily(p1, rays1) != iet.IETFamily(p2, rays1) # optional - pplpy
+            sage: iet.IETFamily(p1, rays1) != iet.IETFamily(p2, rays1)  # optional: pplpy
             True
 
-            sage: iet.IETFamily(p1, rays1) == iet.IETFamily(p2, rays1) # optional - pplpy
+            sage: iet.IETFamily(p1, rays1) == iet.IETFamily(p2, rays1)  # optional: pplpy
             False
-            sage: iet.IETFamily(p1, rays1) != iet.IETFamily(p2, rays1) # optional - pplpy
+            sage: iet.IETFamily(p1, rays1) != iet.IETFamily(p2, rays1)  # optional: pplpy
             True
 
-            sage: iet.IETFamily(p1, rays1) == iet.IETFamily(p1, rays3) # optional - pplpy
+            sage: iet.IETFamily(p1, rays1) == iet.IETFamily(p1, rays3)  # optional: pplpy
             False
-            sage: iet.IETFamily(p1, rays1) != iet.IETFamily(p1, rays3) # optional - pplpy
+            sage: iet.IETFamily(p1, rays1) != iet.IETFamily(p1, rays3)  # optional: pplpy
             True
 
-            sage: iet.IETFamily(p1, rays1) == iet.IETFamily(p2, rays3) # optional - pplpy
+            sage: iet.IETFamily(p1, rays1) == iet.IETFamily(p2, rays3)  # optional: pplpy
             False
-            sage: iet.IETFamily(p1, rays1) != iet.IETFamily(p2, rays3) # optional - pplpy
+            sage: iet.IETFamily(p1, rays1) != iet.IETFamily(p2, rays3)  # optional: pplpy
             True
         """
         if op != Py_EQ and op != Py_NE:
@@ -450,23 +450,23 @@ cdef class IETFamily:
             sage: from surface_dynamics import *
             sage: p = iet.Permutation('A B C D E', 'E D C B A')
             sage: C0 = Polyhedron(rays=(ZZ**5).basis())
-            sage: iet.IETFamily(p, C0).has_connection() # optional - pplpy
+            sage: iet.IETFamily(p, C0).has_connection()  # optional: pplpy
             False
 
             sage: C = Polyhedron(rays=[(1,2,3,2,3),(1,1,0,0,2)])
-            sage: iet.IETFamily(p, C).has_connection() # optional - pplpy
+            sage: iet.IETFamily(p, C).has_connection()  # optional: pplpy
             True
 
             sage: C = Polyhedron(rays=[(1,1,1,1,4),(2,0,1,2,5)])
-            sage: iet.IETFamily(p, C).has_connection() # optional - pplpy
+            sage: iet.IETFamily(p, C).has_connection()  # optional: pplpy
             True
 
             sage: C = Polyhedron(rays=[(1,0,0,1,0),(1,0,0,0,1),(0,1,0,1,0),(0,1,0,0,1)])
-            sage: iet.IETFamily(p, C).has_connection() # optional - pplpy
+            sage: iet.IETFamily(p, C).has_connection()  # optional: pplpy
             True
 
             sage: C = Polyhedron(rays=[(1,2,2,2,2)])
-            sage: iet.IETFamily(p, C).has_connection() # optional - pplpy
+            sage: iet.IETFamily(p, C).has_connection()  # optional: pplpy
             False
         """
         cdef bint ans
@@ -510,20 +510,20 @@ cdef class IETFamily:
             sage: from surface_dynamics import *
 
             sage: p = iet.Permutation('a b c d', 'd c b a')
-            sage: F = iet.IETFamily(p, Polyhedron(rays=(ZZ**4).basis())) # optional - pplpy
-            sage: top, bot = F.children() # optional - pplpy
-            sage: top[0] # optional - pplpy
+            sage: F = iet.IETFamily(p, Polyhedron(rays=(ZZ**4).basis()))  # optional: pplpy
+            sage: top, bot = F.children()  # optional: pplpy
+            sage: top[0]  # optional: pplpy
             't'
-            sage: top[1] # optional - pplpy
+            sage: top[1]  # optional: pplpy
             top 0 1 2 3
             bot 3 0 2 1
             0 0 0 1
             0 0 1 0
             0 1 0 0
             1 0 0 0
-            sage: bot[0] # optional - pplpy
+            sage: bot[0]  # optional: pplpy
             'b'
-            sage: bot[1] # optional - pplpy
+            sage: bot[1]  # optional: pplpy
             top 0 3 1 2
             bot 3 2 1 0
             0 0 0 1
@@ -532,25 +532,25 @@ cdef class IETFamily:
             1 0 0 0
 
             sage: p = iet.Permutation('a b c d e f', 'e b f c a d')
-            sage: F = iet.IETFamily(p, Polyhedron(rays=[(1,1,1,1,1,2),(0,1,0,1,0,1)])) # optional - pplpy
-            sage: c = F.children() # optional - pplpy
-            sage: len(c) # optional - pplpy
+            sage: F = iet.IETFamily(p, Polyhedron(rays=[(1,1,1,1,1,2),(0,1,0,1,0,1)]))  # optional: pplpy
+            sage: c = F.children()  # optional: pplpy
+            sage: len(c)  # optional: pplpy
             1
-            sage: c[0][0] # optional - pplpy
+            sage: c[0][0]  # optional: pplpy
             't'
-            sage: c[0][1] # optional - pplpy
+            sage: c[0][1]  # optional: pplpy
             top 0 1 2 3 4 5
             bot 4 1 5 3 2 0
             0 1 0 1 0 0
             1 1 1 1 1 1
 
-            sage: F = iet.IETFamily(p, Polyhedron(rays=[(0,0,0,1,0,0),(1,0,0,0,0,0),(1,1,1,1,1,1)])) # optional - pplpy
-            sage: c = F.children() # optional - pplpy
-            sage: len(c) # optional - pplpy
+            sage: F = iet.IETFamily(p, Polyhedron(rays=[(0,0,0,1,0,0),(1,0,0,0,0,0),(1,1,1,1,1,1)]))  # optional: pplpy
+            sage: c = F.children()  # optional: pplpy
+            sage: len(c)  # optional: pplpy
             1
-            sage: c[0][0] # optional - pplpy
+            sage: c[0][0]  # optional: pplpy
             'b'
-            sage: c[0][1] # optional - pplpy
+            sage: c[0][1]  # optional: pplpy
             top 0 1 2 3 5 4
             bot 4 1 5 2 0 3
             0 0 0 1 0 0
@@ -611,7 +611,7 @@ cdef class IETFamily:
             sage: from surface_dynamics import *
             sage: p = iet.Permutation([0,1,2,3,4,5],[5,4,3,2,1,0])
             sage: rays = [[5, 1, 0, 0, 3, 8], [2, 1, 0, 3, 0, 5], [1, 0, 1, 2, 0, 3], [3, 0, 1, 0, 2, 5]]
-            sage: F = iet.IETFamily(p, rays) # optional - pplpy
+            sage: F = iet.IETFamily(p, rays)  # optional: pplpy
         """
         s = ''
         f = self
@@ -674,8 +674,8 @@ cdef class IETFamily:
             sage: from surface_dynamics.misc.linalg import deformation_space
             sage: q = iet.Permutation([0,1,2,3,4,5],[5,3,2,1,0,4])
             sage: rays = [[0, 0, 0, 1, 1, 0], [3, 1, 0, 1, 0, 2], [5, 0, 1, 2, 0, 3]]
-            sage: F = iet.IETFamily(q, rays) # optional - pplpy
-            sage: F # optional - pplpy
+            sage: F = iet.IETFamily(q, rays)  # optional: pplpy
+            sage: F  # optional: pplpy
             top 0 1 2 3 4 5
             bot 5 3 2 1 0 4
             0 0 0 1 1 0
@@ -683,9 +683,9 @@ cdef class IETFamily:
             5 0 1 2 0 3
             sage: x = polygen(ZZ)
             sage: K.<a> = NumberField(x^10 - 3, embedding=AA(3)**(1/10))
-            sage: T = F.random_element(K) # optional - pplpy
-            sage: V = deformation_space(T.lengths()) # optional - pplpy
-            sage: (QQ**6).subspace(F.rays()) == V # optional - pplpy
+            sage: T = F.random_element(K)  # optional: pplpy
+            sage: V = deformation_space(T.lengths())  # optional: pplpy
+            sage: (QQ**6).subspace(F.rays()) == V  # optional: pplpy
             True
         """
         from .constructors import Permutation, IET
@@ -730,12 +730,12 @@ cdef class IETFamily:
             sage: from surface_dynamics import *
             sage: q = iet.Permutation([0,1,2,3,4,5],[5,3,2,1,0,4])
             sage: rays = [[0, 0, 0, 1, 1, 0], [3, 1, 0, 1, 0, 2], [5, 0, 1, 2, 0, 3]]
-            sage: F = iet.IETFamily(q, rays)  # optional - pplpy
+            sage: F = iet.IETFamily(q, rays)  # optional: pplpy
             sage: x = polygen(QQ)
             sage: K.<cbrt3> = NumberField(x^3 - 3, embedding=AA(3)**(1/3))
-            sage: F.random_element_statistics(K, intervalxt=False) # optional - pplpy
+            sage: F.random_element_statistics(K, intervalxt=False)  # optional: pplpy
             (0, 100, 0)
-            sage: F.random_element_statistics(K, intervalxt=True) # optional pplpy gmpxxyy pyeantic pyintervalxt
+            sage: F.random_element_statistics(K, intervalxt=True)  # optional: pplpy  # optional: gmpxxyy  # optional: pyeantic  # optional: pyintervalxt
             ...(0, 100, 0)
 
         A conjectural counterexample to Dynnikov-Skripshenko conjecture::
@@ -746,8 +746,8 @@ cdef class IETFamily:
             sage: T = R.path(p, *path).self_similar_iet()
             sage: T.sah_arnoux_fathi_invariant()
             (0, 0, 0, 0, 0, 0)
-            sage: F = iet.IETFamily(T)  # optional - pplpy
-            sage: F  # optional - pplpy
+            sage: F = iet.IETFamily(T)  # optional: pplpy
+            sage: F  # optional: pplpy
             top 0 1 2 3 4 5 6 7 8
             bot 8 7 6 5 4 3 2 1 0
             71 67 70 107 0 0 19 2 0
@@ -758,8 +758,8 @@ cdef class IETFamily:
             524 703 0 628 0 245 51 68 0
             619 462 0 229 238 63 0 0 272
             701 910 0 823 0 308 0 119 51
-            sage: minimals, saddles, unknowns = F.random_element_statistics(K, num_exp=20, num_iterations=200, intervalxt=False) # optional - pplpy
-            sage: assert minimals == 0 and saddles < 3 and unknowns > 17, (minimals, saddles, unknowns) # optional - pplpy
+            sage: minimals, saddles, unknowns = F.random_element_statistics(K, num_exp=20, num_iterations=200, intervalxt=False)  # optional: pplpy
+            sage: assert minimals == 0 and saddles < 3 and unknowns > 17, (minimals, saddles, unknowns)  # optional: pplpy
             sage: minimals, saddles, unknowns = F.random_element_statistics(K, num_exp=20, num_iterations=200, intervalxt=True)  # optional: pplpy  # optional: gmpxxyy  # optional: pyeantic  # optional: pyintervalxt
             sage: assert minimals == 0 and saddles < 3 and unknowns > 17, (minimals, saddles, unknowns)  # optional: pplpy  # optional: gmpxxyy  # optional: pyeantic  # optional: pyintervalxt
         """

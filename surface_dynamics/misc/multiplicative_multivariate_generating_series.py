@@ -62,7 +62,7 @@ def latte_generating_series(L, M=None):
         ....:         [0, 0, 1, 0, 0, 0, 0]]
         sage: eqns = [[0, 0, 1, -1, 1, 0, -1], [0, 0, 1, -1, 1, -1, 0]]
         sage: L = Polyhedron(ieqs=ieqs, eqns=eqns)
-        sage: latte_generating_series(L)   # optional - latte_int
+        sage: latte_generating_series(L)   # optional: latte_int
         (1)/((1 - x2^-1*x4*x5)*(1 - x2*x3)*(1 - x1*x2)*(1 - x0)) + (1)/((1 - x3*x4*x5)*(1 - x2*x4^-1*x5^-1)*(1 - x1*x4*x5)*(1 - x0))
     """
     if M is None:
