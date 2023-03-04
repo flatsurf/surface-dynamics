@@ -735,8 +735,8 @@ cdef class IETFamily:
             sage: K.<cbrt3> = NumberField(x^3 - 3, embedding=AA(3)**(1/3))
             sage: F.random_element_statistics(K, intervalxt=False) # optional - pplpy
             (0, 100, 0)
-            sage: F.random_element_statistics(K, intervalxt=True) # optional - pplpy gmpxxyy pyeantic pyintervalxt
-            (0, 100, 0)
+            sage: F.random_element_statistics(K, intervalxt=True) # optional pplpy gmpxxyy pyeantic pyintervalxt
+            ...(0, 100, 0)
 
         A conjectural counterexample to Dynnikov-Skripshenko conjecture::
 

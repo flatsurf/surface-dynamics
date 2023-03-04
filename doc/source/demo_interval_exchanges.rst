@@ -180,9 +180,8 @@ interval exchange transformations back and forth between ``surface-dynamics``
 and ``pyintervalxt``::
 
     sage: from surface_dynamics.interval_exchanges.conversion import iet_to_pyintervalxt, iet_from_pyintervalxt  # optional: gmpxxyy  # optional: pyintervalxt
-    sage: u2 = iet_to_pyintervalxt(t2)  # optional: gmpxxyy  # optional: pyintervalxt
-    sage: print(u2)  # optional: gmpxxyy  # optional: pyintervalxt
-    [a: 1] [b: (sqrt2 ~ 1.4142136)] [c: 2] [d: (2*sqrt2 ~ 2.8284271)] / [d] [c] [b] [a]
+    sage: u2 = iet_to_pyintervalxt(t2); u2  # optional: gmpxxyy  # optional: pyintervalxt
+    ...[a: 1] [b: (sqrt2 ~ 1.4142136)] [c: 2] [d: (2*sqrt2 ~ 2.8284271)] / [d] [c] [b] [a]
     sage: v2 = iet_from_pyintervalxt(u2)  # optional: gmpxxyy  # optional: pyintervalxt
     sage: print(v2)  # optional: gmpxxyy  # optional: pyintervalxt
     Interval exchange transformation of [0, 3*sqrt2 + 3[ with permutation

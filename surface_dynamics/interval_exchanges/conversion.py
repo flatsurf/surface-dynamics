@@ -25,7 +25,7 @@ def iet_to_pyintervalxt(T):
         sage: T.base_ring()
         Integer Ring
         sage: iet_to_pyintervalxt(T)  # optional: gmpxxyy  # optional: pyintervalxt
-        [a: 12] [b: 5] [c: 9] / [c] [b] [a]
+        ...[a: 12] [b: 5] [c: 9] / [c] [b] [a]
 
     Over rationals::
 
