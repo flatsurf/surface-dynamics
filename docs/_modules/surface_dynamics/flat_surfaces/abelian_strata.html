@@ -26,11 +26,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> surface-dynamics
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            surface-dynamics
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -65,7 +69,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">surface_dynamics.flat_surfaces.abelian_strata</li>
       <li class="wy-breadcrumbs-aside">
@@ -686,12 +690,11 @@
         <span class="k">if</span> <span class="n">NonHypASC</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span><span class="p">:</span> <span class="k">return</span> <span class="n">NonHypASC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No non hyperelliptic component in this stratum&quot;</span><span class="p">)</span></div>
 
-
     <span class="c1">#</span>
     <span class="c1"># Quadratic cover</span>
     <span class="c1">#</span>
 
-<div class="viewcode-block" id="AbelianStratum.orientation_quotients"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.abelian_strata.AbelianStratum.orientation_quotients">[docs]</a>    <span class="k">def</span> <span class="nf">orientation_quotients</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fake_zeros</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="AbelianStratum.orientation_quotients"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.abelian_strata.AbelianStratum.orientation_quotients">[docs]</a>    <span class="k">def</span> <span class="nf">orientation_quotients</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fake_zeros</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the list of quadratic strata such that their orientation cover</span>
 <span class="sd">        are contained in this stratum.</span>
@@ -2713,7 +2716,6 @@
         <span class="n">profile</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span><span class="o">.</span><span class="n">zeros</span><span class="p">()))</span>
         <span class="n">hyp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
 
-
         <span class="k">if</span> <span class="n">left_degree</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">left_degree</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">Integer</span><span class="p">)),</span> <span class="s2">&quot;if not None, left_degree should be an integer&quot;</span>
             <span class="n">left_degree</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">left_degree</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
@@ -2734,7 +2736,6 @@
 
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;no formula known for cardinality of  extended labeled Rauzy classes&quot;</span><span class="p">)</span>
-
 
         <span class="k">return</span> <span class="n">n</span> <span class="o">-</span> <span class="n">n_hyp</span></div>
 
@@ -3177,11 +3178,13 @@
 
 <span class="n">EvenASC</span> <span class="o">=</span> <span class="n">EvenAbelianStratumComponent</span>
 
+
 <div class="viewcode-block" id="OddAbelianStratumComponent"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.abelian_strata.OddAbelianStratumComponent">[docs]</a><span class="k">class</span> <span class="nc">OddAbelianStratumComponent</span><span class="p">(</span><span class="n">ASC</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Connected component of an Abelian stratum with odd spin parity.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;odd&#39;</span>
+
 <div class="viewcode-block" id="OddAbelianStratumComponent.spin"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.abelian_strata.OddAbelianStratumComponent.spin">[docs]</a>    <span class="k">def</span> <span class="nf">spin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns 1 which is, by definition, the spin parity of this stratum component.</span>
@@ -3554,9 +3557,9 @@
         <span class="n">two_count</span> <span class="o">=</span> <span class="n">real_zeros</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">two_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">perm</span> <span class="o">=</span> <span class="n">cylinder_concatenation</span><span class="p">(</span><span class="n">fk_zeros_perm</span><span class="p">,</span><span class="n">no_two_odd</span><span class="p">(</span><span class="n">real_zeros</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="n">two_count</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">:</span>
+        <span class="k">elif</span> <span class="n">two_count</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">perm</span> <span class="o">=</span> <span class="n">cylinder_concatenation</span><span class="p">(</span><span class="n">fk_zeros_perm</span><span class="p">,</span><span class="n">one_two_odd</span><span class="p">(</span><span class="n">real_zeros</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="n">two_count</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">two_count</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">two_count</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">two_count</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">perm</span> <span class="o">=</span> <span class="n">cylinder_concatenation</span><span class="p">(</span><span class="n">fk_zeros_perm</span><span class="p">,</span><span class="n">even_twos_odd</span><span class="p">(</span><span class="n">real_zeros</span><span class="p">,</span><span class="n">two_count</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">perm</span> <span class="o">=</span> <span class="n">cylinder_concatenation</span><span class="p">(</span><span class="n">fk_zeros_perm</span><span class="p">,</span><span class="n">odd_twos_odd</span><span class="p">(</span><span class="n">real_zeros</span><span class="p">,</span><span class="n">two_count</span><span class="p">))</span>

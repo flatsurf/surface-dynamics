@@ -26,11 +26,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> surface-dynamics
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            surface-dynamics
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -65,7 +69,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">surface_dynamics.interval_exchanges.template</li>
       <li class="wy-breadcrumbs-aside">
@@ -5115,10 +5119,10 @@
 <span class="sd">            sage: from surface_dynamics import iet</span>
 
 <span class="sd">            sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;)</span>
-<span class="sd">            sage: S = p.masur_polygon([1,4,2], [2,0,-1])  # optional - sage_flatsurf</span>
-<span class="sd">            sage: S                                       # optional - sage_flatsurf</span>
+<span class="sd">            sage: S = p.masur_polygon([1,4,2], [2,0,-1])  # optional: sage_flatsurf</span>
+<span class="sd">            sage: S                                       # optional: sage_flatsurf</span>
 <span class="sd">            TranslationSurface built from 4 polygons</span>
-<span class="sd">            sage: S.stratum()                             # optional - sage_flatsurf</span>
+<span class="sd">            sage: S.stratum()                             # optional: sage_flatsurf</span>
 <span class="sd">            H_1(0^2)</span>
 
 <span class="sd">        Generic construction using suspension cone::</span>
@@ -5135,15 +5139,15 @@
 <span class="sd">            sage: H</span>
 <span class="sd">            (a + 2, -2, 2, -2*a + 2, 3*a, -a - 4, 0, -a + 1, -2*a - 1)</span>
 <span class="sd">            sage: L = [1+a**2, 2*a**2-1, 1, 1, 1+a, a**2, a-1, a-1, 2]</span>
-<span class="sd">            sage: S = p.masur_polygon(L, H)   # optional - sage_flatsurf</span>
-<span class="sd">            sage: S                           # optional - sage_flatsurf</span>
+<span class="sd">            sage: S = p.masur_polygon(L, H)   # optional: sage_flatsurf</span>
+<span class="sd">            sage: S                           # optional: sage_flatsurf</span>
 <span class="sd">            TranslationSurface built from 16 polygons</span>
-<span class="sd">            sage: TestSuite(S).run()          # optional - sage_flatsurf</span>
+<span class="sd">            sage: TestSuite(S).run()          # optional: sage_flatsurf</span>
 
 <span class="sd">        TESTS::</span>
 
 <span class="sd">            sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;)</span>
-<span class="sd">            sage: for L in [[1,4,2],[2,4,1],[5,1,1],[1,5,1],[1,1,5]]:  # optional - sage_flatsurf</span>
+<span class="sd">            sage: for L in [[1,4,2],[2,4,1],[5,1,1],[1,5,1],[1,1,5]]:  # optional: sage_flatsurf</span>
 <span class="sd">            ....:     S = p.masur_polygon(L, [2,0,-1])</span>
 <span class="sd">            ....:     TestSuite(S).run()</span>
 <span class="sd">            ....:     assert S.stratum() == p.stratum()</span>
@@ -5322,7 +5326,9 @@
             <span class="k">return</span> <span class="n">QuadraticStratum</span><span class="p">([</span><span class="n">x</span><span class="o">-</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">()])</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;stratum is well defined only for irreducible permutations&quot;</span><span class="p">)</span></div></div>
 
+
 <span class="n">FlippedPermutation</span> <span class="o">=</span> <span class="n">Permutation</span>
+
 
 <div class="viewcode-block" id="FlippedPermutationIET"><a class="viewcode-back" href="../../../interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.FlippedPermutationIET">[docs]</a><span class="k">class</span> <span class="nc">FlippedPermutationIET</span><span class="p">(</span><span class="n">PermutationIET</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>

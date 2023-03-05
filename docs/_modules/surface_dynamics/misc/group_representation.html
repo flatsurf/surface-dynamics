@@ -26,11 +26,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> surface-dynamics
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            surface-dynamics
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -65,7 +69,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">surface_dynamics.misc.group_representation</li>
       <li class="wy-breadcrumbs-aside">
@@ -219,6 +223,7 @@
     <span class="kn">from</span> <span class="nn">sage.matrix.constructor</span> <span class="kn">import</span> <span class="n">matrix</span>
     <span class="k">return</span> <span class="n">matrix</span><span class="p">(</span><span class="n">ZZ</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span></div>
 
+
 <div class="viewcode-block" id="regular_conjugacy_class_matrix"><a class="viewcode-back" href="../../../misc/group_representation.html#surface_dynamics.misc.group_representation.regular_conjugacy_class_matrix">[docs]</a><span class="k">def</span> <span class="nf">regular_conjugacy_class_matrix</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span> <span class="n">G</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the matrix of the conjugacy class ``cl`` associated to the regular</span>
@@ -237,6 +242,7 @@
 
     <span class="kn">from</span> <span class="nn">sage.matrix.constructor</span> <span class="kn">import</span> <span class="n">matrix</span>
     <span class="k">return</span> <span class="n">matrix</span><span class="p">(</span><span class="n">ZZ</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="isotypic_projection_matrix"><a class="viewcode-back" href="../../../misc/group_representation.html#surface_dynamics.misc.group_representation.isotypic_projection_matrix">[docs]</a><span class="k">def</span> <span class="nf">isotypic_projection_matrix</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">chi</span><span class="p">,</span> <span class="n">deg</span><span class="p">,</span> <span class="n">conj_mats</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">floating_point</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>

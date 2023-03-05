@@ -26,11 +26,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> surface-dynamics
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            surface-dynamics
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -65,7 +69,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">surface_dynamics.interval_exchanges.cover</li>
       <li class="wy-breadcrumbs-aside">
@@ -1076,7 +1080,6 @@
 
         <span class="k">return</span> <span class="n">projections</span><span class="p">,</span> <span class="n">dimensions</span></div>
 
-
 <div class="viewcode-block" id="PermutationCover.lyapunov_exponents_H_plus"><a class="viewcode-back" href="../../../interval_exchanges/cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.lyapunov_exponents_H_plus">[docs]</a>    <span class="k">def</span> <span class="nf">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_vectors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nb_experiments</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                                   <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">65536</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                                   <span class="n">return_speed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">isotypic_decomposition</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -1129,11 +1132,11 @@
 <span class="sd">            sage: from surface_dynamics import *</span>
 
 <span class="sd">            sage: q = QuadraticStratum([1,1,-1,-1]).one_component()</span>
-<span class="sd">            sage: q.lyapunov_exponents_H_plus(nb_iterations=2**19) # abs tol 0.05</span>
+<span class="sd">            sage: q.lyapunov_exponents_H_plus(nb_iterations=2**19)  # abs tol 0.1</span>
 <span class="sd">            [0.666666]</span>
 <span class="sd">            sage: p = q.permutation_representative(reduced=False).orientation_cover()</span>
 <span class="sd">            sage: c = p.lyapunov_exponents_H_plus(isotypic_decomposition=True, nb_iterations=2**19)[0]</span>
-<span class="sd">            sage: c[0] # abs tol 0.05</span>
+<span class="sd">            sage: c[0]  # abs tol 0.1</span>
 <span class="sd">            1.000000</span>
 
 <span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;e a a&#39;, &#39;b b c c d d e&#39;)</span>
@@ -1144,7 +1147,7 @@
 <span class="sd">            sage: c = p.cover([&#39;()&#39;, &#39;(1,2)&#39;, &#39;()&#39;, &#39;(1,2)&#39;, &#39;(1,2)&#39;])</span>
 <span class="sd">            sage: c.stratum(fake_zeros=True)</span>
 <span class="sd">            Q_1(1^2, 0^4, -1^2)</span>
-<span class="sd">            sage: c.lyapunov_exponents_H_plus(nb_iterations=2**19) # abs tol 0.05</span>
+<span class="sd">            sage: c.lyapunov_exponents_H_plus(nb_iterations=2**19)  # abs tol 0.1</span>
 <span class="sd">            [0.666666]</span>
 
 <span class="sd">        Some cyclic covers (see [EskKonZor11]_ for the formulas)::</span>
@@ -1160,7 +1163,8 @@
 <span class="sd">            ....:     return p.regular_cover(G, [x**c, x**a, x**b])</span>
 
 <span class="sd">            sage: c = cyclic_cover(7,1,1,2)</span>
-<span class="sd">            sage: c.lyapunov_exponents_H_plus(isotypic_decomposition=True, nb_iterations=2**19) # abs tol 0.05</span>
+<span class="sd">            sage: lexp = c.lyapunov_exponents_H_plus(isotypic_decomposition=True, nb_iterations=2**19)</span>
+<span class="sd">            sage: lexp  # abs tol 0.1</span>
 <span class="sd">            [[],</span>
 <span class="sd">             [0.2857, 0.2857],</span>
 <span class="sd">             [0.5714, 0.5714],</span>
@@ -1170,15 +1174,15 @@
 <span class="sd">            sage: lexp = c.lyapunov_exponents_H_plus(isotypic_decomposition=True, return_char=True, nb_iterations=2**19)</span>
 <span class="sd">            sage: lexp[0]</span>
 <span class="sd">            ([], (1, 1, 1, 1, 1, 1, 1))</span>
-<span class="sd">            sage: lexp[1][0] # abs tol 0.05</span>
+<span class="sd">            sage: lexp[1][0]  # abs tol 0.1</span>
 <span class="sd">            [0.2857, 0.2857]</span>
 <span class="sd">            sage: lexp[1][1]</span>
 <span class="sd">            (2, E(7) + E(7)^6, ..., E(7) + E(7)^6)</span>
-<span class="sd">            sage: lexp[2][0] # abs tol 0.05</span>
+<span class="sd">            sage: lexp[2][0]  # abs tol 0.1</span>
 <span class="sd">            [0.2857, 0.2857]</span>
 <span class="sd">            sage: lexp[2][1]</span>
 <span class="sd">            (2, E(7)^2 + E(7)^5, ...,  E(7)^2 + E(7)^5)</span>
-<span class="sd">            sage: lexp[3][0] # abs tol 0.05</span>
+<span class="sd">            sage: lexp[3][0]  # abs tol 0.1</span>
 <span class="sd">            [0.5714, 0.5714]</span>
 <span class="sd">            sage: lexp[3][1]</span>
 <span class="sd">            (2, E(7)^3 + E(7)^4, ..., E(7)^3 + E(7)^4)</span>
@@ -1305,11 +1309,11 @@
 <span class="sd">            sage: from surface_dynamics import iet</span>
 
 <span class="sd">            sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;).cover([&#39;(1,2)&#39;,&#39;(1,3)&#39;,&#39;(1,4)&#39;])</span>
-<span class="sd">            sage: S = p.masur_polygon([1,4,2], [2,0,-1]) # optional - sage_flatsurf</span>
-<span class="sd">            sage: TestSuite(S).run()                     # optional - sage_flatsurf</span>
-<span class="sd">            sage: S.stratum()                            # optional - sage_flatsurf</span>
+<span class="sd">            sage: S = p.masur_polygon([1,4,2], [2,0,-1])  # optional: sage_flatsurf</span>
+<span class="sd">            sage: TestSuite(S).run()                      # optional: sage_flatsurf</span>
+<span class="sd">            sage: S.stratum()                             # optional: sage_flatsurf</span>
 <span class="sd">            H_4(3^2)</span>
-<span class="sd">            sage: p.stratum()                            # optional - sage_flatsurf</span>
+<span class="sd">            sage: p.stratum()                             # optional: sage_flatsurf</span>
 <span class="sd">            H_4(3^2)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">base_ring</span><span class="p">,</span> <span class="n">triangles</span><span class="p">,</span> <span class="n">tops</span><span class="p">,</span> <span class="n">bots</span><span class="p">,</span> <span class="n">mids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base</span><span class="o">.</span><span class="n">_masur_polygon_helper</span><span class="p">(</span><span class="n">lengths</span><span class="p">,</span> <span class="n">heights</span><span class="p">)</span>

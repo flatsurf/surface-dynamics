@@ -26,11 +26,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> surface-dynamics
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            surface-dynamics
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -65,7 +69,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">surface_dynamics.misc.constellation</li>
       <li class="wy-breadcrumbs-aside">
@@ -133,6 +137,7 @@
 
 <span class="n">ZZ_0</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
+
 <span class="c1"># constructors</span>
 
 <div class="viewcode-block" id="Constellations"><a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellations">[docs]</a><span class="k">def</span> <span class="nf">Constellations</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
@@ -188,6 +193,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;one cannot give just degree or just length&quot;</span><span class="p">)</span></div>
 
+
 <div class="viewcode-block" id="Constellation"><a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation">[docs]</a><span class="k">def</span> <span class="nf">Constellation</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Constellation</span>
@@ -233,6 +239,7 @@
 <span class="sd">        g2 (0,1,2)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">Constellations</span><span class="p">(</span><span class="n">connected</span><span class="o">=</span><span class="n">connected</span><span class="p">)(</span><span class="n">g</span><span class="p">,</span><span class="n">check</span><span class="o">=</span><span class="n">check</span><span class="p">,</span><span class="n">mutable</span><span class="o">=</span><span class="n">mutable</span><span class="p">)</span></div>
+
 
 <span class="c1"># classes</span>
 
@@ -955,7 +962,6 @@
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normal_form</span>
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                 <span class="k">pass</span>
-
 
         <span class="c1"># compute canonical labels</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_connected</span><span class="p">():</span>

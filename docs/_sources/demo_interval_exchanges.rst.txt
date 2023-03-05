@@ -158,10 +158,10 @@ Suspension
 surfaces (and more generally similarity surfaces). One can build Masur polygons via::
 
     sage: height = [1, 0, 0, -1]
-    sage: S = perm.masur_polygon(length2, height) # optional - sage_flatsurf
-    sage: S # optional - sage_flatsurf
+    sage: S = perm.masur_polygon(length2, height)  # optional: sage_flatsurf
+    sage: S  # optional: sage_flatsurf
     TranslationSurface built from 6 polygons
-    sage: S.stratum() # optional - sage_flatsurf
+    sage: S.stratum()  # optional: sage_flatsurf
     H_2(2)
 
 Could you construct a self-similar translation surface from the flip sequence ``f``? (in other words
@@ -179,19 +179,18 @@ transformations. If ``intervalxt`` is part of your installation you can convert
 interval exchange transformations back and forth between ``surface-dynamics``
 and ``pyintervalxt``::
 
-    sage: from surface_dynamics.interval_exchanges.conversion import iet_to_pyintervalxt, iet_from_pyintervalxt # optional - gmpxxyy, pyintervalxt
-    sage: u2 = iet_to_pyintervalxt(t2) # optional - gmpxxyy, pyintervalxt
-    sage: print(u2) # optional - gmpxxyy, pyintervalxt
-    [a: 1] [b: (sqrt2 ~ 1.4142136)] [c: 2] [d: (2*sqrt2 ~ 2.8284271)] / [d] [c] [b] [a]
-    sage: v2 = iet_from_pyintervalxt(u2) # optional - gmpxxyy, pyintervalxt
-    sage: print(v2) # optional - gmpxxyy, pyintervalxt
+    sage: from surface_dynamics.interval_exchanges.conversion import iet_to_pyintervalxt, iet_from_pyintervalxt  # optional: gmpxxyy  # optional: pyintervalxt
+    sage: u2 = iet_to_pyintervalxt(t2); u2  # optional: gmpxxyy  # optional: pyintervalxt
+    ...[a: 1] [b: (sqrt2 ~ 1.4142136)] [c: 2] [d: (2*sqrt2 ~ 2.8284271)] / [d] [c] [b] [a]
+    sage: v2 = iet_from_pyintervalxt(u2)  # optional: gmpxxyy  # optional: pyintervalxt
+    sage: print(v2)  # optional: gmpxxyy  # optional: pyintervalxt
     Interval exchange transformation of [0, 3*sqrt2 + 3[ with permutation
     a b c d
     d c b a
 
 One feature of ``intervalxt`` is that it can certify that an iet has no periodic trajectory::
 
-    sage: u2.boshernitzanNoPeriodicTrajectory() # optional - gmpxxyy, pyintervalxt
+    sage: u2.boshernitzanNoPeriodicTrajectory()  # optional: gmpxxyy  # optional: pyintervalxt
     True
 
 Other features

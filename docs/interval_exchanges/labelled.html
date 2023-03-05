@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Labelled permutations &mdash; surface-dynamics 0.4.7 documentation</title>
@@ -29,11 +29,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> surface-dynamics
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            surface-dynamics
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -90,7 +94,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Interval exchange transformations</a></li>
       <li class="breadcrumb-item active">Labelled permutations</li>
       <li class="wy-breadcrumbs-aside">
@@ -626,7 +630,7 @@ as the inverse transformation on the length vector.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">lyapunov_exponents_approx</span><span class="p">()</span>  <span class="c1"># abs tol .08</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">lyapunov_exponents_approx</span><span class="p">()</span>  <span class="c1"># abs tol .1</span>
 <span class="p">[</span><span class="mf">1.000</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -914,21 +918,32 @@ standard output.</p></li>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">QuadraticStratum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">permutation_representative</span><span class="p">(</span><span class="n">reduced</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">lyapunov_exponents_H_minus</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="p">)</span> <span class="c1"># abs tol .08</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">lyapunov_exponents_H_minus</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span>  <span class="c1"># random</span>
 <span class="p">[</span><span class="mf">1.000</span><span class="p">,</span> <span class="mf">0.333</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">lexp</span><span class="p">)</span>
+<span class="mi">2</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">lexp</span><span class="p">)</span>  <span class="c1"># abs tol .1</span>
+<span class="mf">1.333</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">Q_reg</span> <span class="o">=</span> <span class="n">QuadraticStratum</span><span class="p">([</span><span class="mi">12</span><span class="p">])</span><span class="o">.</span><span class="n">regular_component</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p_reg</span> <span class="o">=</span> <span class="n">Q_reg</span><span class="o">.</span><span class="n">permutation_representative</span><span class="p">(</span><span class="n">reduced</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">p_reg</span><span class="o">.</span><span class="n">lyapunov_exponents_H_minus</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">19</span><span class="p">)</span> <span class="c1"># abs tol .08</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span> <span class="o">=</span> <span class="n">p_reg</span><span class="o">.</span><span class="n">lyapunov_exponents_H_minus</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">19</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span>  <span class="c1"># random</span>
 <span class="p">[</span><span class="mf">1.000</span><span class="p">,</span> <span class="mf">0.309</span><span class="p">,</span> <span class="mf">0.119</span><span class="p">]</span>
-<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>  <span class="c1"># abs tol .08</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">lexp</span><span class="p">)</span>
+<span class="mi">3</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">lexp</span><span class="p">)</span>  <span class="c1"># abs tol .1</span>
 <span class="mf">1.428</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">Q_irr</span> <span class="o">=</span> <span class="n">QuadraticStratum</span><span class="p">([</span><span class="mi">12</span><span class="p">])</span><span class="o">.</span><span class="n">irregular_component</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p_irr</span> <span class="o">=</span> <span class="n">Q_irr</span><span class="o">.</span><span class="n">permutation_representative</span><span class="p">(</span><span class="n">reduced</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">p_irr</span><span class="o">.</span><span class="n">lyapunov_exponents_H_minus</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">19</span><span class="p">)</span> <span class="c1"># abs tol .08</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span> <span class="o">=</span> <span class="n">p_irr</span><span class="o">.</span><span class="n">lyapunov_exponents_H_minus</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">19</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span>  <span class="c1"># random</span>
 <span class="p">[</span><span class="mf">1.000</span><span class="p">,</span> <span class="mf">0.444</span><span class="p">,</span> <span class="mf">0.128</span><span class="p">]</span>
-<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="c1"># abs tol .08</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">lexp</span><span class="p">)</span>
+<span class="mi">3</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">lexp</span><span class="p">)</span>  <span class="c1"># abs tol .1</span>
 <span class="mf">1.5725</span>
 </pre></div>
 </div>
@@ -969,21 +984,27 @@ standard output.</p></li>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">QuadraticStratum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">permutation_representative</span><span class="p">(</span><span class="n">reduced</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="p">)</span> <span class="c1"># abs tol .08</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="p">)</span>  <span class="c1"># abs tol .1</span>
 <span class="p">[</span><span class="mf">0.6666</span><span class="p">]</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">Q_reg</span> <span class="o">=</span> <span class="n">QuadraticStratum</span><span class="p">([</span><span class="mi">12</span><span class="p">])</span><span class="o">.</span><span class="n">regular_component</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p_reg</span> <span class="o">=</span> <span class="n">Q_reg</span><span class="o">.</span><span class="n">permutation_representative</span><span class="p">(</span><span class="n">reduced</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">p_reg</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="p">)</span> <span class="c1"># abs tol .08</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span> <span class="o">=</span> <span class="n">p_reg</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span>  <span class="c1"># random</span>
 <span class="p">[</span><span class="mf">0.662</span><span class="p">,</span> <span class="mf">0.448</span><span class="p">,</span> <span class="mf">0.230</span><span class="p">,</span> <span class="mf">0.087</span><span class="p">]</span>
-<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>  <span class="c1"># abs tol .08</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">lexp</span><span class="p">)</span>
+<span class="mi">4</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">lexp</span><span class="p">)</span>  <span class="c1"># abs tol .1</span>
 <span class="mf">1.428</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">Q_irr</span> <span class="o">=</span> <span class="n">QuadraticStratum</span><span class="p">([</span><span class="mi">12</span><span class="p">])</span><span class="o">.</span><span class="n">irregular_component</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p_irr</span> <span class="o">=</span> <span class="n">Q_irr</span><span class="o">.</span><span class="n">permutation_representative</span><span class="p">(</span><span class="n">reduced</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">p_irr</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="p">)</span> <span class="c1"># abs tol .08</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span> <span class="o">=</span> <span class="n">p_irr</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span>  <span class="c1"># random</span>
 <span class="p">[</span><span class="mf">0.747</span><span class="p">,</span> <span class="mf">0.491</span><span class="p">,</span> <span class="mf">0.245</span><span class="p">,</span> <span class="mf">0.090</span><span class="p">]</span>
-<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="c1"># abs tol .08</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">lexp</span><span class="p">)</span>
+<span class="mi">4</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">lexp</span><span class="p">)</span>  <span class="c1"># abs tol .1</span>
 <span class="mf">1.572</span>
 </pre></div>
 </div>

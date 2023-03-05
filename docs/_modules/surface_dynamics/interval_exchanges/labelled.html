@@ -26,11 +26,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> surface-dynamics
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            surface-dynamics
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -65,7 +69,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">surface_dynamics.interval_exchanges.labelled</li>
       <li class="wy-breadcrumbs-aside">
@@ -763,7 +767,7 @@
 <span class="sd">            sage: from surface_dynamics import *</span>
 
 <span class="sd">            sage: p = iet.Permutation([1,2,3],[3,2,1])</span>
-<span class="sd">            sage: p.lyapunov_exponents_approx()  # abs tol .08</span>
+<span class="sd">            sage: p.lyapunov_exponents_approx()  # abs tol .1</span>
 <span class="sd">            [1.000]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flips</span><span class="p">:</span>
@@ -873,10 +877,10 @@
 <span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">winner</span> <span class="o">=</span> <span class="n">interval_conversion</span><span class="p">(</span><span class="n">winner</span><span class="p">)</span>
-        <span class="n">loser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">loser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">winner</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
         <span class="c1"># the same letter at the right-end (False)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
             <span class="k">return</span> <span class="kc">False</span>
 
         <span class="c1"># the winner (or loser) letter is repeated on the other interval (True)</span>
@@ -1119,21 +1123,27 @@
 <span class="sd">            sage: from surface_dynamics import *</span>
 <span class="sd">            sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()</span>
 <span class="sd">            sage: p = Q.permutation_representative(reduced=False)</span>
-<span class="sd">            sage: p.lyapunov_exponents_H_plus(nb_iterations=2**20) # abs tol .08</span>
+<span class="sd">            sage: p.lyapunov_exponents_H_plus(nb_iterations=2**20)  # abs tol .1</span>
 <span class="sd">            [0.6666]</span>
 
 <span class="sd">            sage: Q_reg = QuadraticStratum([12]).regular_component()</span>
 <span class="sd">            sage: p_reg = Q_reg.permutation_representative(reduced=False)</span>
-<span class="sd">            sage: p_reg.lyapunov_exponents_H_plus(nb_iterations=2**20) # abs tol .08</span>
+<span class="sd">            sage: lexp = p_reg.lyapunov_exponents_H_plus(nb_iterations=2**20)</span>
+<span class="sd">            sage: lexp  # random</span>
 <span class="sd">            [0.662, 0.448, 0.230, 0.087]</span>
-<span class="sd">            sage: sum(_)  # abs tol .08</span>
+<span class="sd">            sage: len(lexp)</span>
+<span class="sd">            4</span>
+<span class="sd">            sage: sum(lexp)  # abs tol .1</span>
 <span class="sd">            1.428</span>
 
 <span class="sd">            sage: Q_irr = QuadraticStratum([12]).irregular_component()</span>
 <span class="sd">            sage: p_irr = Q_irr.permutation_representative(reduced=False)</span>
-<span class="sd">            sage: p_irr.lyapunov_exponents_H_plus(nb_iterations=2**20) # abs tol .08</span>
+<span class="sd">            sage: lexp = p_irr.lyapunov_exponents_H_plus(nb_iterations=2**20)</span>
+<span class="sd">            sage: lexp  # random</span>
 <span class="sd">            [0.747, 0.491, 0.245, 0.090]</span>
-<span class="sd">            sage: sum(_) # abs tol .08</span>
+<span class="sd">            sage: len(lexp)</span>
+<span class="sd">            4</span>
+<span class="sd">            sage: sum(lexp)  # abs tol .1</span>
 <span class="sd">            1.572</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flips</span><span class="p">:</span>
@@ -1181,21 +1191,32 @@
 <span class="sd">            sage: from surface_dynamics import *</span>
 <span class="sd">            sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()</span>
 <span class="sd">            sage: p = Q.permutation_representative(reduced=False)</span>
-<span class="sd">            sage: p.lyapunov_exponents_H_minus(nb_iterations=2**20) # abs tol .08</span>
+<span class="sd">            sage: lexp = p.lyapunov_exponents_H_minus(nb_iterations=2**20)</span>
+<span class="sd">            sage: lexp  # random</span>
 <span class="sd">            [1.000, 0.333]</span>
+<span class="sd">            sage: len(lexp)</span>
+<span class="sd">            2</span>
+<span class="sd">            sage: sum(lexp)  # abs tol .1</span>
+<span class="sd">            1.333</span>
 
 <span class="sd">            sage: Q_reg = QuadraticStratum([12]).regular_component()</span>
 <span class="sd">            sage: p_reg = Q_reg.permutation_representative(reduced=False)</span>
-<span class="sd">            sage: p_reg.lyapunov_exponents_H_minus(nb_iterations=2**19) # abs tol .08</span>
+<span class="sd">            sage: lexp = p_reg.lyapunov_exponents_H_minus(nb_iterations=2**19)</span>
+<span class="sd">            sage: lexp  # random</span>
 <span class="sd">            [1.000, 0.309, 0.119]</span>
-<span class="sd">            sage: sum(_)  # abs tol .08</span>
+<span class="sd">            sage: len(lexp)</span>
+<span class="sd">            3</span>
+<span class="sd">            sage: sum(lexp)  # abs tol .1</span>
 <span class="sd">            1.428</span>
 
 <span class="sd">            sage: Q_irr = QuadraticStratum([12]).irregular_component()</span>
 <span class="sd">            sage: p_irr = Q_irr.permutation_representative(reduced=False)</span>
-<span class="sd">            sage: p_irr.lyapunov_exponents_H_minus(nb_iterations=2**19) # abs tol .08</span>
+<span class="sd">            sage: lexp = p_irr.lyapunov_exponents_H_minus(nb_iterations=2**19)</span>
+<span class="sd">            sage: lexp  # random</span>
 <span class="sd">            [1.000, 0.444, 0.128]</span>
-<span class="sd">            sage: sum(_) # abs tol .08</span>
+<span class="sd">            sage: len(lexp)</span>
+<span class="sd">            3</span>
+<span class="sd">            sage: sum(lexp)  # abs tol .1</span>
 <span class="sd">            1.5725</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flips</span><span class="p">:</span>

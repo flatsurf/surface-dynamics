@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Interval exchange transformations &mdash; surface-dynamics 0.4.7 documentation</title>
@@ -30,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> surface-dynamics
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            surface-dynamics
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -78,7 +82,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Interval exchange transformations</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/demo_interval_exchanges.rst.txt" rel="nofollow"> View page source</a>
@@ -90,13 +94,13 @@
            <div itemprop="articleBody">
              
   <section id="interval-exchange-transformations">
-<h1><a class="toc-backref" href="#id1">Interval exchange transformations</a><a class="headerlink" href="#interval-exchange-transformations" title="Permalink to this heading"></a></h1>
-<div class="contents topic" id="contents">
+<h1><a class="toc-backref" href="#id1" role="doc-backlink">Interval exchange transformations</a><a class="headerlink" href="#interval-exchange-transformations" title="Permalink to this heading"></a></h1>
+<nav class="contents" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#interval-exchange-transformations" id="id1">Interval exchange transformations</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
 <p>This file is a good entry point to learn how to use interval exchange
@@ -241,10 +245,10 @@ exchange transformation associated to the flip sequence <code class="docutils li
 <p><a class="reference external" href="https://flatsurf.github.io/sage-flatsurf/">sage-flatsurf</a> is a Python library for translation
 surfaces (and more generally similarity surfaces). One can build Masur polygons via:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">height</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">S</span> <span class="o">=</span> <span class="n">perm</span><span class="o">.</span><span class="n">masur_polygon</span><span class="p">(</span><span class="n">length2</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span> <span class="c1"># optional - sage_flatsurf</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">S</span> <span class="c1"># optional - sage_flatsurf</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span> <span class="o">=</span> <span class="n">perm</span><span class="o">.</span><span class="n">masur_polygon</span><span class="p">(</span><span class="n">length2</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>  <span class="c1"># optional: sage_flatsurf</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span>  <span class="c1"># optional: sage_flatsurf</span>
 <span class="n">TranslationSurface</span> <span class="n">built</span> <span class="kn">from</span> <span class="mi">6</span> <span class="n">polygons</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span> <span class="c1"># optional - sage_flatsurf</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>  <span class="c1"># optional: sage_flatsurf</span>
 <span class="n">H_2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -262,19 +266,18 @@ that implements optimized routines to deal with interval exchange
 transformations. If <code class="docutils literal notranslate"><span class="pre">intervalxt</span></code> is part of your installation you can convert
 interval exchange transformations back and forth between <code class="docutils literal notranslate"><span class="pre">surface-dynamics</span></code>
 and <code class="docutils literal notranslate"><span class="pre">pyintervalxt</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.conversion</span> <span class="kn">import</span> <span class="n">iet_to_pyintervalxt</span><span class="p">,</span> <span class="n">iet_from_pyintervalxt</span> <span class="c1"># optional - gmpxxyy, pyintervalxt</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">u2</span> <span class="o">=</span> <span class="n">iet_to_pyintervalxt</span><span class="p">(</span><span class="n">t2</span><span class="p">)</span> <span class="c1"># optional - gmpxxyy, pyintervalxt</span>
-<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">u2</span><span class="p">)</span> <span class="c1"># optional - gmpxxyy, pyintervalxt</span>
-<span class="p">[</span><span class="n">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span> <span class="p">[</span><span class="n">b</span><span class="p">:</span> <span class="p">(</span><span class="n">sqrt2</span> <span class="o">~</span> <span class="mf">1.4142136</span><span class="p">)]</span> <span class="p">[</span><span class="n">c</span><span class="p">:</span> <span class="mi">2</span><span class="p">]</span> <span class="p">[</span><span class="n">d</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sqrt2</span> <span class="o">~</span> <span class="mf">2.8284271</span><span class="p">)]</span> <span class="o">/</span> <span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">iet_from_pyintervalxt</span><span class="p">(</span><span class="n">u2</span><span class="p">)</span> <span class="c1"># optional - gmpxxyy, pyintervalxt</span>
-<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span> <span class="c1"># optional - gmpxxyy, pyintervalxt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.conversion</span> <span class="kn">import</span> <span class="n">iet_to_pyintervalxt</span><span class="p">,</span> <span class="n">iet_from_pyintervalxt</span>  <span class="c1"># optional: gmpxxyy  # optional: pyintervalxt</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">u2</span> <span class="o">=</span> <span class="n">iet_to_pyintervalxt</span><span class="p">(</span><span class="n">t2</span><span class="p">);</span> <span class="n">u2</span>  <span class="c1"># optional: gmpxxyy  # optional: pyintervalxt</span>
+<span class="o">...</span><span class="p">[</span><span class="n">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span> <span class="p">[</span><span class="n">b</span><span class="p">:</span> <span class="p">(</span><span class="n">sqrt2</span> <span class="o">~</span> <span class="mf">1.4142136</span><span class="p">)]</span> <span class="p">[</span><span class="n">c</span><span class="p">:</span> <span class="mi">2</span><span class="p">]</span> <span class="p">[</span><span class="n">d</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sqrt2</span> <span class="o">~</span> <span class="mf">2.8284271</span><span class="p">)]</span> <span class="o">/</span> <span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">iet_from_pyintervalxt</span><span class="p">(</span><span class="n">u2</span><span class="p">)</span>  <span class="c1"># optional: gmpxxyy  # optional: pyintervalxt</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span>  <span class="c1"># optional: gmpxxyy  # optional: pyintervalxt</span>
 <span class="n">Interval</span> <span class="n">exchange</span> <span class="n">transformation</span> <span class="n">of</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">sqrt2</span> <span class="o">+</span> <span class="mi">3</span><span class="p">[</span> <span class="k">with</span> <span class="n">permutation</span>
 <span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="n">d</span>
 <span class="n">d</span> <span class="n">c</span> <span class="n">b</span> <span class="n">a</span>
 </pre></div>
 </div>
 <p>One feature of <code class="docutils literal notranslate"><span class="pre">intervalxt</span></code> is that it can certify that an iet has no periodic trajectory:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">u2</span><span class="o">.</span><span class="n">boshernitzanNoPeriodicTrajectory</span><span class="p">()</span> <span class="c1"># optional - gmpxxyy, pyintervalxt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">u2</span><span class="o">.</span><span class="n">boshernitzanNoPeriodicTrajectory</span><span class="p">()</span>  <span class="c1"># optional: gmpxxyy  # optional: pyintervalxt</span>
 <span class="kc">True</span>
 </pre></div>
 </div>

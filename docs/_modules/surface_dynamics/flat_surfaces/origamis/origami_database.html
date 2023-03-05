@@ -26,11 +26,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../../index.html" class="icon icon-home"> surface-dynamics
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            surface-dynamics
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -65,7 +69,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">surface_dynamics.flat_surfaces.origamis.origami_database</li>
       <li class="wy-breadcrumbs-aside">
@@ -1165,10 +1169,10 @@
 
 <span class="sd">        sage: o = Origami(&#39;(1,2)&#39;,&#39;(1,3)&#39;)</span>
 <span class="sd">        sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb</span>
-<span class="sd">        sage: data = odb.build_local_data(o) # optional - gap_packages</span>
-<span class="sd">        sage: data[&#39;stratum&#39;]                # optional - gap_packages</span>
+<span class="sd">        sage: data = odb.build_local_data(o)  # optional: gap_packages</span>
+<span class="sd">        sage: data[&#39;stratum&#39;]                 # optional: gap_packages</span>
 <span class="sd">        H_2(2)</span>
-<span class="sd">        sage: data[&#39;nb_squares&#39;]             # optional - gap_packages</span>
+<span class="sd">        sage: data[&#39;nb_squares&#39;]              # optional: gap_packages</span>
 <span class="sd">        3</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">sage.functions.other</span> <span class="kn">import</span> <span class="n">factorial</span>
@@ -1585,8 +1589,8 @@
 <span class="sd">            sage: with tempfile.TemporaryDirectory() as tmpdir:</span>
 <span class="sd">            ....:     db_name = os.path.join(tmpdir, &#39;my_db.db&#39;)</span>
 <span class="sd">            ....:     D = OrigamiDatabase(db_name, read_only=False)</span>
-<span class="sd">            ....:     D.build(AbelianStratum(4).odd_component(), 8) # optional - gap_packages</span>
-<span class="sd">            ....:     D.info()                                      # optional - gap_packages</span>
+<span class="sd">            ....:     D.build(AbelianStratum(4).odd_component(), 8)  # optional: gap_packages</span>
+<span class="sd">            ....:     D.info()                                       # optional: gap_packages</span>
 <span class="sd">            genus 2</span>
 <span class="sd">            =======</span>
 <span class="sd">            &lt;BLANKLINE&gt;</span>
@@ -1783,10 +1787,10 @@
 <span class="sd">            ....:     db2_name = os.path.join(tmpdir, &#39;the_second_one.db&#39;)</span>
 <span class="sd">            ....:     D1 = OrigamiDatabase(db1_name, read_only=False)</span>
 <span class="sd">            ....:     D2 = OrigamiDatabase(db2_name, read_only=False)</span>
-<span class="sd">            ....:     D1.build(AbelianStratum(1,1).unique_component(), 7)  # optional - gap_packages</span>
-<span class="sd">            ....:     D2.build(AbelianStratum(2).unique_component(), 5)    # optional - gap_packages</span>
-<span class="sd">            ....:     D2.update(D1)                                        # optional - gap_packages</span>
-<span class="sd">            ....:     D2.info()                                            # optional - gap_packages</span>
+<span class="sd">            ....:     D1.build(AbelianStratum(1,1).unique_component(), 7)  # optional: gap_packages</span>
+<span class="sd">            ....:     D2.build(AbelianStratum(2).unique_component(), 5)    # optional: gap_packages</span>
+<span class="sd">            ....:     D2.update(D1)                                        # optional: gap_packages</span>
+<span class="sd">            ....:     D2.info()                                            # optional: gap_packages</span>
 <span class="sd">            genus 2</span>
 <span class="sd">            =======</span>
 <span class="sd">             H_2(2)^hyp  :   2 T. curves (up to  4 squares)</span>
