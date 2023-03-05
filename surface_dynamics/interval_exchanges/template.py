@@ -7286,4 +7286,3 @@ class FlippedRauzyDiagram(RauzyDiagram):
 
                         succ[p][t] = q
                         pred[q][t] = p
-

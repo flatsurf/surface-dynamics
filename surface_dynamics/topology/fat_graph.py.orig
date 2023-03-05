@@ -1673,7 +1673,7 @@ class FatGraph:
             else:
                 best = None
 
-            # 3. run accross the edges
+            # 3. run across the edges
             for i in range(self._n):
                 if i == i0:
                     continue

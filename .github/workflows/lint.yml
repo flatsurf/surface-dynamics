@@ -1,0 +1,25 @@
+name: Lint
+on:
+  push: { branches: [ "master" ] }
+  pull_request: { branches: [ "master" ] }
+
+jobs:
+  codespell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        shell: bash -l {0}
+        run: |
+          sudo apt-get install -y codespell
+          sudo apt-get install -y pycodestyle
+      - name: Run codespell
+        shell: bash -l {0}
+        run: codespell -L bu,ot,ans,nd,informations,mor,compiletime surface_dynamics
+      - name: Run pycodestyle
+        shell: bash -l {0}
+        # We currently only check for some warnings. We should enable & fix more of them.
+        run: pycodestyle --select=W2,W3 surface_dynamics/
+
+env:
+  MAKEFLAGS: -j2

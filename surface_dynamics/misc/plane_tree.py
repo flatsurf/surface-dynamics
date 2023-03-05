@@ -679,4 +679,3 @@ def admissible_plane_tree_iterator(a,verbose=False):
             if t[-1] == 1: # new branch
                 d.append(1)
                 s.append(len(t)-1)
-

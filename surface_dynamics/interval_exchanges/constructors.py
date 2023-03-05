@@ -758,7 +758,7 @@ def IntervalExchangeTransformation(permutation=None, lengths=None):
     connected component of the complement of the singularities. Moreover it is a
     bijection on its image (or it is injective).
 
-    An interval exchange transformation is encoded by two datas. A permutation
+    An interval exchange transformation is encoded by two data. A permutation
     (that corresponds to the way we echange the intervals) and a vector of
     positive reals (that corresponds to the lengths of the complement of the
     singularities).

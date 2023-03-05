@@ -732,4 +732,3 @@ class IETFlipSequence(SageObject):
         return a, IntervalExchangeTransformation(self._start, lengths)
 
     self_similar_iet = self_similar_interval_exchange_transformation
-

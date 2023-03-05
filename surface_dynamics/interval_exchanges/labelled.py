@@ -1850,4 +1850,3 @@ class FlippedLabelledRauzyDiagram(FlippedRauzyDiagram, LabelledRauzyDiagram):
         self._element._labels = [list(data[0]), list(data[1])]
         self._element._twin = [list(data[2]), list(data[3])]
         self._element._flips = [list(data[4]), list(data[5])]
-
