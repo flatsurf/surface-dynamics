@@ -15,7 +15,7 @@ jobs:
           sudo apt-get install -y pycodestyle
       - name: Run codespell
         shell: bash -l {0}
-        run: codespell -L bu,ot,ans,nd,informations,mor,compiletime surface_dynamics
+        run: codespell -L ba,bu,ot,ans,nd,informations,mor,compiletime surface_dynamics
       - name: Run pycodestyle
         shell: bash -l {0}
         # We currently only check for some warnings. We should enable & fix more of them.
