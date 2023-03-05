@@ -222,9 +222,10 @@ def minimal_strata_hyp(g, rational=False):
         668525/10499279483305984
     """
     if rational:
-        return (-1)**(g+1) * 4 * factorial(2*g) / ( (2*g-1)*2*g*(2*g+1) * 2**(4*g-2) * bernoulli(2*g) * factorial(g-1)**2 )
+        return (-1)**(g+1) * 4 * factorial(2*g) / ((2*g-1)*2*g*(2*g+1) * 2**(4*g-2) * bernoulli(2*g) * factorial(g-1)**2)
     else:
-        return 2*pi**(2*g) / ( (2*g-1)*2*g*(2*g+1) * 2**(2*g-2) * factorial(g-1)**2 )
+        return 2*pi**(2*g) / ((2*g-1)*2*g*(2*g+1) * 2**(2*g-2) * factorial(g-1)**2)
+
 
 def minimal_strata_spin_diff(gmax, rational=False):
     r"""
@@ -249,7 +250,7 @@ def minimal_strata_spin_diff(gmax, rational=False):
     B = (2 * (u/2)._sinh_series(n).shift(-1)).inverse_series_trunc(n)
     # Pz and a in section 6.3 of [CMSZ20]
     Pz = (sum(-bernoulli(2*j) * u**(2*j) / (2*j) / 2**j for j in range(1, n // 2)))._exp_series(n)
-    a = ((u*Pz.inverse_series_trunc(n)).revert_series(n).shift(-1) ).inverse_series_trunc(n)
+    a = ((u*Pz.inverse_series_trunc(n)).revert_series(n).shift(-1)).inverse_series_trunc(n)
     # theorem 6.11 in [CMSZ20], normalized volume v(2g-2)=(2g-1)*Vol(2g-2), note the missing factor 2
     if rational:
         return [2* (-2) * a[2*g] * 2 * g / (2*g - 1) / bernoulli(2*g) for g in range(1, gmax)]

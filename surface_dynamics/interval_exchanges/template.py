@@ -5036,10 +5036,10 @@ class OrientablePermutationIET(PermutationIET):
             sage: from surface_dynamics import iet
 
             sage: p = iet.Permutation('a b c', 'c b a')
-            sage: S = p.masur_polygon([1,4,2], [2,0,-1])  # optional - sage_flatsurf
-            sage: S                                       # optional - sage_flatsurf
+            sage: S = p.masur_polygon([1,4,2], [2,0,-1])  # optional: sage_flatsurf
+            sage: S                                       # optional: sage_flatsurf
             TranslationSurface built from 4 polygons
-            sage: S.stratum()                             # optional - sage_flatsurf
+            sage: S.stratum()                             # optional: sage_flatsurf
             H_1(0^2)
 
         Generic construction using suspension cone::
@@ -5056,15 +5056,15 @@ class OrientablePermutationIET(PermutationIET):
             sage: H
             (a + 2, -2, 2, -2*a + 2, 3*a, -a - 4, 0, -a + 1, -2*a - 1)
             sage: L = [1+a**2, 2*a**2-1, 1, 1, 1+a, a**2, a-1, a-1, 2]
-            sage: S = p.masur_polygon(L, H)   # optional - sage_flatsurf
-            sage: S                           # optional - sage_flatsurf
+            sage: S = p.masur_polygon(L, H)   # optional: sage_flatsurf
+            sage: S                           # optional: sage_flatsurf
             TranslationSurface built from 16 polygons
-            sage: TestSuite(S).run()          # optional - sage_flatsurf
+            sage: TestSuite(S).run()          # optional: sage_flatsurf
 
         TESTS::
 
             sage: p = iet.Permutation('a b c', 'c b a')
-            sage: for L in [[1,4,2],[2,4,1],[5,1,1],[1,5,1],[1,1,5]]:  # optional - sage_flatsurf
+            sage: for L in [[1,4,2],[2,4,1],[5,1,1],[1,5,1],[1,1,5]]:  # optional: sage_flatsurf
             ....:     S = p.masur_polygon(L, [2,0,-1])
             ....:     TestSuite(S).run()
             ....:     assert S.stratum() == p.stratum()
@@ -5243,7 +5243,9 @@ class OrientablePermutationLI(PermutationLI):
             return QuadraticStratum([x-2 for x in self.profile()])
         raise ValueError("stratum is well defined only for irreducible permutations")
 
+
 FlippedPermutation = Permutation
+
 
 class FlippedPermutationIET(PermutationIET):
     r"""

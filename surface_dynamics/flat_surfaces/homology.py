@@ -381,7 +381,6 @@ class RibbonGraph(SageObject):
 
         return C
 
-
     # TODO: perform the expansion as quasi-polynomial
     # TODO: see how the recursion formula translates on this generating series
     def length_rational_fraction(self, var='b'):
@@ -411,7 +410,6 @@ class RibbonGraph(SageObject):
             F *= b1*b2 / (1 - b1*b2)
 
         return F
-
 
     def add_extra_darts(self, n):
         r"""

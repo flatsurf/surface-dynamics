@@ -62,6 +62,7 @@ def list_extrems(l, n):
             vdmin = l[i]
     return (vdmin, vdmax)
 
+
 #####################
 # Fat graph #
 #####################

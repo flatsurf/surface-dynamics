@@ -242,7 +242,6 @@ class QuadraticStratum(Stratum):
             raise ValueError("the sum of the zeros should sum up to an integer congruent to 0 mod 4")
         genus //= 4
 
-
         # Lanneau classification of connected components
 
         #TODO: check genus 2 components
@@ -1127,7 +1126,6 @@ class GenusOneQuadraticStratumComponent(QSC):
         f = self._stratum.nb_fake_zeros()
         z = self._stratum.zeros(fake_zeros=False, poles=False)
 
-
         l0 = [0,1]
         for k in range(1,p):
             l0.extend([2*k, 2*k+1, 2*k+1])
@@ -1222,8 +1220,8 @@ class GenusTwoHyperellipticQuadraticStratumComponent(QSC):
         return p
 
 
-
 GTHQSC = GenusTwoHyperellipticQuadraticStratumComponent
+
 
 class GenusTwoNonhyperellipticQuadraticStratumComponent(QSC):
     r"""

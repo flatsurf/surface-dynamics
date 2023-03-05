@@ -63,6 +63,7 @@ from sage.rings.all import ZZ, QQ
 from .template import side_conversion, interval_conversion
 from .labelled import LabelledPermutationIET
 
+
 def wedge(u, v):
     r"""
     Return the wedge of the vectors ``u`` and ``v``
@@ -71,6 +72,7 @@ def wedge(u, v):
     R = u.base_ring()
     assert len(u) == len(v) and v.base_ring() == R
     return free_module_element(R, d*(d-1)//2, [(u[i]*v[j] - u[j]*v[i]) for i in range(d-1) for j in range(i+1,d)])
+
 
 class IntervalExchangeTransformation:
     r"""

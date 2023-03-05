@@ -545,7 +545,9 @@ def labelize_flip(couple):
     if couple[1] == -1: return '-' + str(couple[0])
     return ' ' + str(couple[0])
 
+
 FlippedReducedPermutation = ReducedPermutation
+
 
 class FlippedReducedPermutationIET(
     FlippedReducedPermutation,

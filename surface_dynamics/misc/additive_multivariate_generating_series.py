@@ -36,6 +36,7 @@ from sage.rings.integer_ring import ZZ
 from sage.rings.rational_field import QQ
 from sage.matrix.constructor import matrix
 
+
 class AdditiveMultivariateGeneratingSeries(AbstractMSum):
     r"""
     EXAMPLES::
@@ -55,7 +56,7 @@ class AdditiveMultivariateGeneratingSeries(AbstractMSum):
 
             sage: A = AdditiveMultivariateGeneratingSeriesRing('x', 3)
             sage: f = A.term(1, [((1,0,0),2), ((0,1,0),2), ((0,0,1),2)])
-            sage: f.integral_sum_as_mzv() # optional - mzv
+            sage: f.integral_sum_as_mzv()  # optional: mzv
             36*ζ(1,1,4) + 24*ζ(1,2,3) + 12*ζ(1,3,2) + 12*ζ(2,1,3) + 6*ζ(2,2,2)
         """
         from .generalized_multiple_zeta_values import handle_term
@@ -263,6 +264,7 @@ class AdditiveMultivariateGeneratingSeries(AbstractMSum):
                 new_data[new_den] = new_num
 
         return P.element_class(P, new_data)
+
 
 class AdditiveMultivariateGeneratingSeriesRing(AbstractMSumRing):
     Element = AdditiveMultivariateGeneratingSeries
