@@ -868,4 +868,3 @@ def delta_irr(profile, marking=None):
     return _delta_irr_rec(p, marking)
 
 spin_difference_for_irreducible_permutations = delta_irr
-

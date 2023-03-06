@@ -446,10 +446,10 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
                 raise ValueError("does know how to do only with slr")
 
             ooo = reps_o[e1]
-            ot, oo_renum = oo.standard_form(True)
-            os, ooo_renum = ooo.standard_form(True)
+            oo_standard_form, oo_renum = oo.standard_form(True)
+            ooo_standard_form, ooo_renum = ooo.standard_form(True)
 
-            assert(ot == os)
+            assert(oo_standard_form == ooo_standard_form)
 
             m_ren = (oo_renum * ~ooo_renum).matrix().transpose()
             m_s = matrix(2*n)

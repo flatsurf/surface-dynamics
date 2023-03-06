@@ -283,4 +283,3 @@ Old code that might moved or be removed.
 #        else:
 #            return self._derivatives[degree+1].column_space()
 #
-

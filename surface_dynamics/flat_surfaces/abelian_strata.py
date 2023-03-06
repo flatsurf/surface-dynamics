@@ -4051,4 +4051,3 @@ class AbelianStrata_all(AbelianStrata):
         for d in count(2):
             for stratum in AbelianStrata(dimension=d, fake_zeros=self._fake_zeros):
                 yield stratum
-

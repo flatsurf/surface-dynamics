@@ -524,19 +524,19 @@ class FactoredDenominator(object):
         if type(self) != type(other):
             raise TypeError
 
-        sd = self._dict
-        od = other._dict
-        nd = sd.copy()
-        for i, j in od.items():
-            jj = sd.get(i, -1)
+        self_dict = self._dict
+        other_dict = other._dict
+        new_dict = self_dict.copy()
+        for i, j in other_dict.items():
+            jj = self_dict.get(i, -1)
             if j > jj:
                 raise ArithmeticError
             elif j == jj:
-                del nd[i]
+                del new_dict[i]
             else:
-                nd[i] -= j
+                new_dict[i] -= j
 
-        return FactoredDenominator(nd, None)
+        return FactoredDenominator(new_dict, None)
 
     __div__ = __truediv__
 

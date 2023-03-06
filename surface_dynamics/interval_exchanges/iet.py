@@ -2013,7 +2013,3 @@ class IntervalExchangeTransformation:
             sage: t.show() # not tested (problem with matplotlib font cache)
         """
         self.plot_two_intervals().show(axes=False)
-
-
-
-

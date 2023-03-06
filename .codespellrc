@@ -1,0 +1,3 @@
+[codespell]
+skip = doc/source/references.rst
+ignore-words-list = rever,ans
