@@ -8,7 +8,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  codespell:
+  lint:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
