@@ -64,8 +64,9 @@ class IETFlipSequence(SageObject):
     power notations as in the following example::
 
         sage: p = iet.Permutation([['a','b','c','d'],['d','c','b','a']])
-        sage: iet.FlipSequence(p, 't^5b^3tbt^3b')
-        FlipSequence('a b c d' + '\n' + 'd c b a', 'tttttbbbtbtttb')
+        sage: fs = iet.FlipSequence(p, 't^5b^3tbt^3b')
+        sage: fs == iet.FlipSequence(p, 'tttttbbbtbtttb')
+        True
 
     The minimal dilatations in H(2g-2)^hyp from Boissy-Lanneau::
 
