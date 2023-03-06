@@ -147,8 +147,9 @@
 <span class="sd">    power notations as in the following example::</span>
 
 <span class="sd">        sage: p = iet.Permutation([[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;],[&#39;d&#39;,&#39;c&#39;,&#39;b&#39;,&#39;a&#39;]])</span>
-<span class="sd">        sage: iet.FlipSequence(p, &#39;t^5b^3tbt^3b&#39;)</span>
-<span class="sd">        FlipSequence(&#39;a b c d\nd c b a&#39;, &#39;tttttbbbtbtttb&#39;)</span>
+<span class="sd">        sage: fs = iet.FlipSequence(p, &#39;t^5b^3tbt^3b&#39;)</span>
+<span class="sd">        sage: fs == iet.FlipSequence(p, &#39;tttttbbbtbtttb&#39;)</span>
+<span class="sd">        True</span>
 
 <span class="sd">    The minimal dilatations in H(2g-2)^hyp from Boissy-Lanneau::</span>
 
@@ -815,7 +816,6 @@
         <span class="k">return</span> <span class="n">a</span><span class="p">,</span> <span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_start</span><span class="p">,</span> <span class="n">lengths</span><span class="p">)</span></div>
 
     <span class="n">self_similar_iet</span> <span class="o">=</span> <span class="n">self_similar_interval_exchange_transformation</span></div>
-
 </pre></div>
 
            </div>

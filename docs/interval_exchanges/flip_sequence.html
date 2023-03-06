@@ -132,8 +132,9 @@
 <p>If large powers appear in the path it might be more convenient to use
 power notations as in the following example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">([[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">],[</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">]])</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;t^5b^3tbt^3b&#39;</span><span class="p">)</span>
-<span class="n">FlipSequence</span><span class="p">(</span><span class="s1">&#39;a b c d</span><span class="se">\n</span><span class="s1">d c b a&#39;</span><span class="p">,</span> <span class="s1">&#39;tttttbbbtbtttb&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">fs</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;t^5b^3tbt^3b&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">fs</span> <span class="o">==</span> <span class="n">iet</span><span class="o">.</span><span class="n">FlipSequence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;tttttbbbtbtttb&#39;</span><span class="p">)</span>
+<span class="kc">True</span>
 </pre></div>
 </div>
 <p>The minimal dilatations in H(2g-2)^hyp from Boissy-Lanneau:</p>

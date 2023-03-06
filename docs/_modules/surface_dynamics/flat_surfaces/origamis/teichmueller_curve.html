@@ -529,10 +529,10 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;does know how to do only with slr&quot;</span><span class="p">)</span>
 
             <span class="n">ooo</span> <span class="o">=</span> <span class="n">reps_o</span><span class="p">[</span><span class="n">e1</span><span class="p">]</span>
-            <span class="n">ot</span><span class="p">,</span> <span class="n">oo_renum</span> <span class="o">=</span> <span class="n">oo</span><span class="o">.</span><span class="n">standard_form</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">os</span><span class="p">,</span> <span class="n">ooo_renum</span> <span class="o">=</span> <span class="n">ooo</span><span class="o">.</span><span class="n">standard_form</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">oo_standard_form</span><span class="p">,</span> <span class="n">oo_renum</span> <span class="o">=</span> <span class="n">oo</span><span class="o">.</span><span class="n">standard_form</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">ooo_standard_form</span><span class="p">,</span> <span class="n">ooo_renum</span> <span class="o">=</span> <span class="n">ooo</span><span class="o">.</span><span class="n">standard_form</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
-            <span class="k">assert</span><span class="p">(</span><span class="n">ot</span> <span class="o">==</span> <span class="n">os</span><span class="p">)</span>
+            <span class="k">assert</span><span class="p">(</span><span class="n">oo_standard_form</span> <span class="o">==</span> <span class="n">ooo_standard_form</span><span class="p">)</span>
 
             <span class="n">m_ren</span> <span class="o">=</span> <span class="p">(</span><span class="n">oo_renum</span> <span class="o">*</span> <span class="o">~</span><span class="n">ooo_renum</span><span class="p">)</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
             <span class="n">m_s</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">)</span>
