@@ -611,7 +611,7 @@ cdef class Origami_dense_pyx:
         cdef int i, h = 0, b_r = 12, b_u = 37
 
         for i in range(self._n):
-            h += self._r[i]*br + self._u[i]*b_u
+            h += self._r[i]*b_r + self._u[i]*b_u
             b_r *= 503
             b_u *= 251
 
