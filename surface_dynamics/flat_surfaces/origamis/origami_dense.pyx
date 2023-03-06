@@ -608,12 +608,12 @@ cdef class Origami_dense_pyx:
             sage: len(h) == len(set(h))
             True
         """
-        cdef int i, h = 0, br = 12, bu = 37
+        cdef int i, h = 0, b_r = 12, b_u = 37
 
         for i in range(self._n):
-            h += self._r[i]*br + self._u[i]*bu
-            br *= 503
-            bu *= 251
+            h += self._r[i]*br + self._u[i]*b_u
+            b_r *= 503
+            b_u *= 251
 
         return h
 
@@ -3422,7 +3422,7 @@ cdef class Origami_dense_pyx:
             sage: G.nu3()
             0
 
-        As well as some arithmetic informations::
+        As well as some arithmetic information::
 
             sage: G.is_congruence()
             True

@@ -6,7 +6,7 @@ Origamis are cover of the torus over one point. The group `SL(2,\ZZ)` act on the
 database of these SL(2,Z)-orbits. To do concrete computations with origamis see
 ?.
 
-The database of origamis contain informations about `SL(2,\ZZ)` orbits of the
+The database of origamis contain information about `SL(2,\ZZ)` orbits of the
 origamis that are *arithmetic Teichmueller curves*.
 
 EXAMPLES::
@@ -49,7 +49,7 @@ display the result on the screen in a table, one can use
     r=1234 5678  u=1537 2846
     r=123456 789abc  u=17593b 284c6a
 
-We can display much more informations by modifying the displayed columns::
+We can display much more information by modifying the displayed columns::
 
     sage: q.cols('nb_squares', 'stratum', 'component', 'regular', 'quasi_regular')
     sage: q.show()
@@ -1494,7 +1494,7 @@ class OrigamiDatabase(SQLDatabase):
         - ``force_computation`` - force computation of data which may be yet in
           the database.
 
-        - ``verbose`` - boolean - if ``True``, print useful interactive informations
+        - ``verbose`` - boolean - if ``True``, print useful interactive information
           during the process.
 
         EXAMPLES::
@@ -1765,7 +1765,7 @@ class OrigamiDatabase(SQLDatabase):
         - ``nb_experiments``, ``nb_iterations`` - integers - option for the
           computation of Lyapunov exponents.
 
-        - ``verbose`` - boolean - if True displays nice informations in real
+        - ``verbose`` - boolean - if True displays nice information in real
           time.
         """
         assert not self.__read_only__, "the database should not be in read only mode"

@@ -65,7 +65,7 @@ class IETFlipSequence(SageObject):
 
         sage: p = iet.Permutation([['a','b','c','d'],['d','c','b','a']])
         sage: iet.FlipSequence(p, 't^5b^3tbt^3b')
-        FlipSequence('a b c d\nd c b a', 'tttttbbbtbtttb')
+        FlipSequence('a b c d' + '\n' + 'd c b a', 'tttttbbbtbtttb')
 
     The minimal dilatations in H(2g-2)^hyp from Boissy-Lanneau::
 
