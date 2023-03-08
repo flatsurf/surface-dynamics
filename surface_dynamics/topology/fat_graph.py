@@ -2585,4 +2585,3 @@ class FatGraph(object):
         perm_conjugate_inplace(self._fp, r, n)
         perm_on_list_inplace(r, self._vl, n)
         perm_on_list_inplace(r, self._fl, n)
-
