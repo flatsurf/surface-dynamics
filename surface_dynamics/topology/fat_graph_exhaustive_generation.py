@@ -297,11 +297,12 @@ class CountAndWeightedCount:
 
 # callback to list elements
 class ListCallback:
-    def __init__(self):
+    def __init__(self, mutable=False):
         self._list = []
+        self._mutable = mutable
 
     def __call__(self, cm, aut):
-        self._list.append(cm.copy())
+        self._list.append(cm.copy(self._mutable))
 
     def list(self):
         return self._list
@@ -513,7 +514,7 @@ class StackCallback:
                nv >= self._vmin and \
                ne >= self._emin and \
                nf >= self._fmin and \
-               (self._vertex_min_degree <= 1 or all(d >= self._vertex_min_degree for d in cm.vertex_profile())) and \
+               (self._vertex_min_degree <= 1 or all(d >= self._vertex_min_degree for d in cm.vertex_degrees())) and \
                (self._filter is None or self._filter(cm, aut)):
                 self._callback(cm, aut)
 
@@ -549,7 +550,7 @@ class StackCallback:
 
     def run(self):
         # trivial map (g = 0, nv = 1, nf = 1)
-        cm = FatGraph('()', '()', '()')
+        cm = FatGraph('()', '()', mutable=True)
         nv = 1
         ne = 0
         nf = 1
@@ -598,7 +599,7 @@ class FatGraphs:
         sage: poly = R.zero()
         sage: def update(cm, aut):
         ....:     global poly
-        ....:     p = [cm.face_profile()]
+        ....:     p = [cm.face_degrees()]
         ....:     aut_card = 1 if aut is None else aut.group_cardinality()
         ....:     poly += 2*cm.num_edges() // aut_card * t**cm.num_edges()
         sage: F.map_reduce(update)
@@ -647,7 +648,7 @@ class FatGraphs:
 
         sage: for k in range(2,5):
         ....:    F = FatGraphs(g=1, nf=2, nv=2, vertex_min_degree=1)
-        ....:    c1 = F.cardinality_and_weighted_cardinality(lambda cm,_: cm.vertex_degree_min() >= k)
+        ....:    c1 = F.cardinality_and_weighted_cardinality(lambda cm,_: cm.vertex_min_degree() >= k)
         ....:    G = FatGraphs(g=1, nf=2, nv=2, vertex_min_degree=k)
         ....:    c2 = G.cardinality_and_weighted_cardinality()
         ....:    assert c1 == c2
@@ -658,7 +659,7 @@ class FatGraphs:
 
         sage: for k in range(2,6):
         ....:    F = FatGraphs(g=0, nf=5, nv=2, vertex_min_degree=1)
-        ....:    c1 = F.cardinality_and_weighted_cardinality(lambda cm,_: cm.vertex_degree_min() >= k)
+        ....:    c1 = F.cardinality_and_weighted_cardinality(lambda cm,_: cm.vertex_min_degree() >= k)
         ....:    G = FatGraphs(g=0, nf=5, nv=2, vertex_min_degree=k)
         ....:    c2 = G.cardinality_and_weighted_cardinality()
         ....:    assert c1 == c2
@@ -693,32 +694,32 @@ class FatGraphs:
 
         sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs
         sage: FatGraphs(g=0, nf=1, nv=1).list()
-        [FatGraph('()', '()', '()')]
+        [FatGraph('()', '()')]
         sage: FatGraphs(g=1, nf=1, nv=1).list()
-        [FatGraph('(0,1,2,3)', '(0,2)(1,3)', '(0,1,2,3)')]
+        [FatGraph('(0,2,1,3)', '(0,2,1,3)')]
         sage: FatGraphs(g=0, nf=2, nv=1).list()
-        [FatGraph('(0,1)', '(0,1)', '(0)(1)')]
+        [FatGraph('(0,1)', '(0)(1)')]
         sage: FatGraphs(g=0, nf=1, nv=2).list()
-        [FatGraph('(0)(1)', '(0,1)', '(0,1)')]
+        [FatGraph('(0)(1)', '(0,1)')]
         sage: FatGraphs(g=0, ne=1).list()
-        [FatGraph('(0,1)', '(0,1)', '(0)(1)'), FatGraph('(0)(1)', '(0,1)', '(0,1)')]
+        [FatGraph('(0,1)', '(0)(1)'), FatGraph('(0)(1)', '(0,1)')]
 
         sage: F3 = FatGraphs(g=0, nf_max=4, vertex_min_degree=3)
-        sage: for fg in F3.list(): assert all(d >= 3 for d in fg.vertex_profile()), fg
+        sage: for fg in F3.list(): assert all(d >= 3 for d in fg.vertex_degrees()), fg
         sage: F3.cardinality_and_weighted_cardinality()
         (3, 7/6)
         sage: F4 = FatGraphs(g=0, nf_max=4, vertex_min_degree=4)
-        sage: for fg in F4.list(): assert all(d >= 4 for d in fg.vertex_profile()), fg
+        sage: for fg in F4.list(): assert all(d >= 4 for d in fg.vertex_degrees()), fg
         sage: F4.cardinality_and_weighted_cardinality()
         (1, 1/2)
 
         sage: FatGraphs(g=1, ne=3).list()
-        [FatGraph('(0,5,4,1,2,3)', '(0,2)(1,3)(4,5)', '(0,1,2,3,4)(5)'),
-         FatGraph('(0,5,1,2,4,3)', '(0,2)(1,3)(4,5)', '(0,1,4)(2,3,5)'),
-         FatGraph('(0,5,1,2,3,4)', '(0,2)(1,3)(4,5)', '(0,1,2,4)(3,5)'),
-         FatGraph('(0,4,1,2,3)(5)', '(0,2)(1,3)(4,5)', '(0,1,2,3,4,5)'),
-         FatGraph('(0,4,2,3)(1,5)', '(0,2)(1,3)(4,5)', '(0,4,1,2,3,5)'),
-         FatGraph('(0,4,3)(1,2,5)', '(0,2)(1,3)(4,5)', '(0,1,4,2,3,5)')]
+        [FatGraph('(0,5,4,2,1,3)', '(0,2,1,3,4)(5)'),
+         FatGraph('(0,5,2,1,4,3)', '(0,2,4)(1,3,5)'),
+         FatGraph('(0,5,2,1,3,4)', '(0,2,1,4)(3,5)'),
+         FatGraph('(0,4,2,1,3)(5)', '(0,2,1,3,4,5)'),
+         FatGraph('(0,4,1,3)(2,5)', '(0,4,2,1,3,5)'),
+         FatGraph('(0,4,3)(1,5,2)', '(0,2,4,1,3,5)')]
     """
     def __init__(self, g=None, nf=None, ne=None, nv=None, vertex_min_degree=0, g_min=None, g_max=None, nf_min=None, nf_max=None, ne_min=None, ne_max=None, nv_min=None, nv_max=None):
         r"""
@@ -789,16 +790,16 @@ class FatGraphs:
             (0, 0)
 
             sage: FatGraphs(ne=0).list()
-            [FatGraph('()', '()', '()')]
+            [FatGraph('()', '()')]
             sage: FatGraphs(ne=1).list()
-            [FatGraph('(0,1)', '(0,1)', '(0)(1)'),
-             FatGraph('(0)(1)', '(0,1)', '(0,1)')]
+            [FatGraph('(0,1)', '(0)(1)'),
+             FatGraph('(0)(1)', '(0,1)')]
             sage: FatGraphs(ne=2).list()
-            [FatGraph('(0,1,2,3)', '(0,2)(1,3)', '(0,1,2,3)'),
-             FatGraph('(0,2,1)(3)', '(0,1)(2,3)', '(0,2,3)(1)'),
-             FatGraph('(0,2)(1,3)', '(0,1)(2,3)', '(0,3)(1,2)'),
-             FatGraph('(0,3,2,1)', '(0,1)(2,3)', '(0,2)(1)(3)'),
-             FatGraph('(0,2)(1)(3)', '(0,1)(2,3)', '(0,1,2,3)')]
+            [FatGraph('(0,2,1,3)', '(0,2,1,3)'),
+             FatGraph('(0,2,1)(3)', '(0,2,3)(1)'),
+             FatGraph('(0,2)(1,3)', '(0,3)(1,2)'),
+             FatGraph('(0,3,2,1)', '(0,2)(1)(3)'),
+             FatGraph('(0,2)(1)(3)', '(0,1,2,3)')]
         """
         # variable order: v, e, f, g
         from sage.geometry.polyhedron.constructor import Polyhedron
@@ -888,30 +889,30 @@ class FatGraphs:
 
             sage: from surface_dynamics import FatGraphs
             sage: FatGraphs(g=1, nf=2, nv=2).map_reduce(lambda x,y: print(x))
-            FatGraph('(0,6,5,4,1,2,3)(7)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,3,4,6,7)(5)')
-            FatGraph('(0,6,1,2,3)(4,7,5)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,3,6,4,7)(5)')
-            FatGraph('(0,5,4,1,6,2,3)(7)', '(0,2)(1,3)(4,5)(6,7)', '(0,6,7,1,2,3,4)(5)')
-            FatGraph('(0,7,2,3)(1,6,5,4)', '(0,2)(1,3)(4,5)(6,7)', '(0,7,1,2,3,4,6)(5)')
-            FatGraph('(0,5,4,1,2,6,3)(7)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,6,7,2,3,4)(5)')
-            FatGraph('(0,7,3)(1,2,6,5,4)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,7,2,3,4,6)(5)')
-            FatGraph('(0,5,4,1,2,3,6)(7)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,6,7,3,4)(5)')
-            FatGraph('(0,7)(1,2,3,6,5,4)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,7,3,4,6)(5)')
-            FatGraph('(0,5,4,6,1,2,3)(7)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,3,6,7,4)(5)')
-            FatGraph('(0,5,4,6,2,3)(1,7)', '(0,2)(1,3)(4,5)(6,7)', '(0,6,1,2,3,7,4)(5)')
-            FatGraph('(0,5,6,4,1,2,3)(7)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,3,4)(5,6,7)')
-            FatGraph('(0,5,6,1,2,3)(4,7)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,3,6,4)(5,7)')
-            FatGraph('(0,5,6,2,3)(1,7,4)', '(0,2)(1,3)(4,5)(6,7)', '(0,6,1,2,3,4)(5,7)')
-            FatGraph('(0,5,6,3)(1,2,7,4)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,6,2,3,4)(5,7)')
-            FatGraph('(0,6,5,1,2,4,3)(7)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,4,6,7)(2,3,5)')
-            FatGraph('(0,6,1,2,4,3)(5,7)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,4,7)(2,3,6,5)')
-            FatGraph('(0,6,4,3)(1,2,7,5)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,4,7)(2,3,5,6)')
-            FatGraph('(0,6,5,1,2,3,4)(7)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,4,6,7)(3,5)')
-            FatGraph('(0,5,1,6,2,3,4)(7)', '(0,2)(1,3)(4,5)(6,7)', '(0,6,7,1,2,4)(3,5)')
-            FatGraph('(0,5,1,6,3,4)(2,7)', '(0,2)(1,3)(4,5)(6,7)', '(0,7,1,6,2,4)(3,5)')
-            FatGraph('(0,5,1,2,3,6,4)(7)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,4)(3,5,6,7)')
-            FatGraph('(0,5,1,2,3,6)(4,7)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,6,4)(3,5,7)')
-            FatGraph('(0,7,4)(1,2,3,6,5)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,4,6)(3,5,7)')
-            FatGraph('(0,5,7,4)(1,2,3,6)', '(0,2)(1,3)(4,5)(6,7)', '(0,1,2,4)(3,6,5,7)')
+            FatGraph('(0,6,5,4,2,1,3)(7)', '(0,2,1,3,4,6,7)(5)')
+            FatGraph('(0,6,2,1,3)(4,7,5)', '(0,2,1,3,6,4,7)(5)')
+            FatGraph('(0,5,4,2,1,6,3)(7)', '(0,2,6,7,1,3,4)(5)')
+            FatGraph('(0,7,3)(1,6,5,4,2)', '(0,2,7,1,3,4,6)(5)')
+            FatGraph('(0,5,4,2,6,1,3)(7)', '(0,6,7,2,1,3,4)(5)')
+            FatGraph('(0,7,1,3)(2,6,5,4)', '(0,7,2,1,3,4,6)(5)')
+            FatGraph('(0,5,4,2,1,3,6)(7)', '(0,2,1,6,7,3,4)(5)')
+            FatGraph('(0,7)(1,3,6,5,4,2)', '(0,2,1,7,3,4,6)(5)')
+            FatGraph('(0,5,4,6,2,1,3)(7)', '(0,2,1,3,6,7,4)(5)')
+            FatGraph('(0,5,4,6,1,3)(2,7)', '(0,6,2,1,3,7,4)(5)')
+            FatGraph('(0,5,6,4,2,1,3)(7)', '(0,2,1,3,4)(5,6,7)')
+            FatGraph('(0,5,6,2,1,3)(4,7)', '(0,2,1,3,6,4)(5,7)')
+            FatGraph('(0,5,6,1,3)(2,7,4)', '(0,6,2,1,3,4)(5,7)')
+            FatGraph('(0,5,6,3)(1,7,4,2)', '(0,2,6,1,3,4)(5,7)')
+            FatGraph('(0,6,5,2,1,4,3)(7)', '(0,2,4,6,7)(1,3,5)')
+            FatGraph('(0,6,2,1,4,3)(5,7)', '(0,2,4,7)(1,3,6,5)')
+            FatGraph('(0,6,4,3)(1,7,5,2)', '(0,2,4,7)(1,3,5,6)')
+            FatGraph('(0,6,5,2,1,3,4)(7)', '(0,2,1,4,6,7)(3,5)')
+            FatGraph('(0,5,2,6,1,3,4)(7)', '(0,6,7,2,1,4)(3,5)')
+            FatGraph('(0,5,2,6,3,4)(1,7)', '(0,7,2,6,1,4)(3,5)')
+            FatGraph('(0,5,2,1,3,6,4)(7)', '(0,2,1,4)(3,5,6,7)')
+            FatGraph('(0,5,2,1,3,6)(4,7)', '(0,2,1,6,4)(3,5,7)')
+            FatGraph('(0,7,4)(1,3,6,5,2)', '(0,2,1,4,6)(3,5,7)')
+            FatGraph('(0,5,7,4)(1,3,6,2)', '(0,2,1,4)(3,6,5,7)')
         """
         StackCallback(
                 self._gmin, self._gmax,
@@ -967,7 +968,7 @@ def FatGraphs_g_nf_nv(g=None, nf=None, nv=None, vertex_min_degree=1, g_min=None,
         ...
         DeprecationWarning: FatGraphs_g_nf_nv is deprecated. Use FatGraphs
         sage: F.list()
-        [FatGraph('(0,1,2,3)', '(0,2)(1,3)', '(0,1,2,3)')]
+        [FatGraph('(0,2,1,3)', '(0,2,1,3)')]
     """
     from warnings import warn
     warn('FatGraphs_g_nf_nv is deprecated. Use FatGraphs', DeprecationWarning)
