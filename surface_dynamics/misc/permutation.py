@@ -1007,7 +1007,7 @@ def perm_on_list_inplace(p, a, n=None, swap=None):
 
 def perm_is_on_list_stabilizer(p, a, n=None, eq=None):
     r"""
-    Return whether ther permutation ``p`` stabilizes the array ``a``.
+    Return whether the permutation ``p`` stabilizes the array ``a``.
     """
     if n is None:
         n = len(p)
