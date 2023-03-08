@@ -608,12 +608,12 @@ cdef class Origami_dense_pyx:
             sage: len(h) == len(set(h))
             True
         """
-        cdef int i, h = 0, br = 12, bu = 37
+        cdef int i, h = 0, b_r = 12, b_u = 37
 
         for i in range(self._n):
-            h += self._r[i]*br + self._u[i]*bu
-            br *= 503
-            bu *= 251
+            h += self._r[i]*b_r + self._u[i]*b_u
+            b_r *= 503
+            b_u *= 251
 
         return h
 
@@ -1818,14 +1818,19 @@ cdef class Origami_dense_pyx:
 
             sage: o = Origami('(1,2)(3,4)(5,6)', '(2,3)(4,5)')
             sage: lexp = o.lyapunov_exponents_approx(nb_iterations=2**21)
-            sage: lexp # abs tol .05
+            sage: lexp  # random
             [0.6666, 0.3333]
+            sage: len(lexp)
+            2
 
             sage: o = Origami('(1,2)(3,4)(5,6)(7,8)(9,10)', '(2,3)(4,5)(6,7)(8,9)')
             sage: s = SymmetricGroup(10)('(1,10)(2,9)(3,8)(4,7)(5,6)')
-            sage: o.lyapunov_exponents_approx(involution=s, nb_iterations=2**21)  # abs tol .05
+            sage: lexp = o.lyapunov_exponents_approx(involution=s, nb_iterations=2**21)
+            sage: lexp  # random
             ([0.6000, 0.2000],
              [0.8000, 0.4000])
+            sage: print(len(lexp[0]), len(lexp[1]))
+            2 2
         """
         #TODO: use the seed to init.
 
@@ -2448,7 +2453,7 @@ cdef class Origami_dense_pyx:
         An origami is primitive if the action of the monodromy group has no non
         trivial block.
 
-        EXAMPLE::
+        EXAMPLES::
 
             sage: from surface_dynamics.all import Origami
 
@@ -3417,7 +3422,7 @@ cdef class Origami_dense_pyx:
             sage: G.nu3()
             0
 
-        As well as some arithmetic informations::
+        As well as some arithmetic information::
 
             sage: G.is_congruence()
             True

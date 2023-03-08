@@ -2505,19 +2505,19 @@ class PermutationLI(Permutation):
                 [(0,j) for j in range(len(a[0]))],
                 [(1,j) for j in range(len(a[1]))]]
 
-            for i in (0,1):
-              for j in range(len(twin[i])) :
-                  if twin[i][j] == (i,j) :
-                    if a[i][j] in a[i][j+1:] :
-                    # two up or two down
-                        j2 = (a[i][j+1:]).index(a[i][j]) + j + 1
-                        twin[i][j] = (i,j2)
-                        twin[i][j2] = (i,j)
-                    else :
-                        # one up, one down (here i=0)
-                        j2 = a[1].index(a[i][j])
-                        twin[0][j] = (1,j2)
-                        twin[1][j2] = (0,j)
+            for i in (0, 1):
+                for j in range(len(twin[i])) :
+                    if twin[i][j] == (i,j) :
+                        if a[i][j] in a[i][j+1:] :
+                            # two up or two down
+                            j2 = (a[i][j+1:]).index(a[i][j]) + j + 1
+                            twin[i][j] = (i,j2)
+                            twin[i][j2] = (i,j)
+                        else:
+                            # one up, one down (here i=0)
+                            j2 = a[1].index(a[i][j])
+                            twin[0][j] = (1,j2)
+                            twin[1][j2] = (0,j)
 
             self._twin = twin
 
@@ -3506,7 +3506,7 @@ class PermutationLI(Permutation):
 
         p = self.erase_marked_points().to_cylindric()
         if cylindric_canonical(p) in D.get(stratum):
-           return stratum.irregular_component()
+            return stratum.irregular_component()
         return stratum.regular_component()
 
     def has_rauzy_move(self, winner, side='right'):
@@ -5036,10 +5036,10 @@ class OrientablePermutationIET(PermutationIET):
             sage: from surface_dynamics import iet
 
             sage: p = iet.Permutation('a b c', 'c b a')
-            sage: S = p.masur_polygon([1,4,2], [2,0,-1])  # optional - sage_flatsurf
-            sage: S                                       # optional - sage_flatsurf
+            sage: S = p.masur_polygon([1,4,2], [2,0,-1])  # optional: sage_flatsurf
+            sage: S                                       # optional: sage_flatsurf
             TranslationSurface built from 4 polygons
-            sage: S.stratum()                             # optional - sage_flatsurf
+            sage: S.stratum()                             # optional: sage_flatsurf
             H_1(0^2)
 
         Generic construction using suspension cone::
@@ -5056,15 +5056,15 @@ class OrientablePermutationIET(PermutationIET):
             sage: H
             (a + 2, -2, 2, -2*a + 2, 3*a, -a - 4, 0, -a + 1, -2*a - 1)
             sage: L = [1+a**2, 2*a**2-1, 1, 1, 1+a, a**2, a-1, a-1, 2]
-            sage: S = p.masur_polygon(L, H)   # optional - sage_flatsurf
-            sage: S                           # optional - sage_flatsurf
+            sage: S = p.masur_polygon(L, H)   # optional: sage_flatsurf
+            sage: S                           # optional: sage_flatsurf
             TranslationSurface built from 16 polygons
-            sage: TestSuite(S).run()          # optional - sage_flatsurf
+            sage: TestSuite(S).run()          # optional: sage_flatsurf
 
         TESTS::
 
             sage: p = iet.Permutation('a b c', 'c b a')
-            sage: for L in [[1,4,2],[2,4,1],[5,1,1],[1,5,1],[1,1,5]]:  # optional - sage_flatsurf
+            sage: for L in [[1,4,2],[2,4,1],[5,1,1],[1,5,1],[1,1,5]]:  # optional: sage_flatsurf
             ....:     S = p.masur_polygon(L, [2,0,-1])
             ....:     TestSuite(S).run()
             ....:     assert S.stratum() == p.stratum()
@@ -5243,7 +5243,9 @@ class OrientablePermutationLI(PermutationLI):
             return QuadraticStratum([x-2 for x in self.profile()])
         raise ValueError("stratum is well defined only for irreducible permutations")
 
+
 FlippedPermutation = Permutation
+
 
 class FlippedPermutationIET(PermutationIET):
     r"""
@@ -5597,7 +5599,7 @@ class RauzyDiagram(SageObject):
             r"""
             Constructor of the path.
 
-            TEST::
+            TESTS::
 
                 sage: from surface_dynamics import *
 
@@ -5715,7 +5717,7 @@ class RauzyDiagram(SageObject):
             r"""
             Tests equality
 
-            TEST::
+            TESTS::
 
                 sage: from surface_dynamics import *
 
@@ -5740,7 +5742,7 @@ class RauzyDiagram(SageObject):
             r"""
             Tests inequality
 
-            TEST::
+            TESTS::
 
                 sage: from surface_dynamics import *
 
@@ -6198,7 +6200,7 @@ class RauzyDiagram(SageObject):
 
             - ``composition`` - the composition function for the function. * if None (default: None)
 
-            TEST::
+            TESTS::
 
                 sage: from surface_dynamics import *
 
@@ -6371,7 +6373,7 @@ class RauzyDiagram(SageObject):
         r"""
         Tests difference.
 
-        TEST::
+        TESTS::
 
             sage: from surface_dynamics import *
 
@@ -6827,7 +6829,7 @@ class RauzyDiagram(SageObject):
         r"""
         Return the corresponding loser
 
-        TEST::
+        TESTS::
 
             sage: from surface_dynamics import *
 
@@ -6999,7 +7001,7 @@ class RauzyDiagram(SageObject):
         r"""
         Returns a representation of self
 
-        TEST::
+        TESTS::
 
             sage: from surface_dynamics import *
 
@@ -7104,7 +7106,7 @@ class RauzyDiagram(SageObject):
         functions __getitem__ and has_rauzy_move and rauzy_move which must
         be defined for child and their corresponding permutation types.
 
-        TEST::
+        TESTS::
 
             sage: from surface_dynamics import *
 
@@ -7284,4 +7286,3 @@ class FlippedRauzyDiagram(RauzyDiagram):
 
                         succ[p][t] = q
                         pred[q][t] = p
-

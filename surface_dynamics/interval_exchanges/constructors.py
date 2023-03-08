@@ -758,7 +758,7 @@ def IntervalExchangeTransformation(permutation=None, lengths=None):
     connected component of the complement of the singularities. Moreover it is a
     bijection on its image (or it is injective).
 
-    An interval exchange transformation is encoded by two datas. A permutation
+    An interval exchange transformation is encoded by two data. A permutation
     (that corresponds to the way we echange the intervals) and a vector of
     positive reals (that corresponds to the lengths of the complement of the
     singularities).
@@ -857,7 +857,7 @@ def IntervalExchangeTransformationFamily(*args):
         sage: from surface_dynamics import *
         sage: p = iet.Permutation([0,1,2,3,4,5],[5,4,3,2,1,0])
         sage: rays = [[5, 1, 0, 0, 3, 8], [2, 1, 0, 3, 0, 5], [1, 0, 1, 2, 0, 3], [3, 0, 1, 0, 2, 5]]
-        sage: F = iet.IETFamily(p, rays)    # optional - pplpy
+        sage: F = iet.IETFamily(p, rays)    # optional: pplpy
     """
     try:
         from .iet_family import IETFamily

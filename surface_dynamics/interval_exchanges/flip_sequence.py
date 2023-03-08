@@ -35,6 +35,7 @@ from surface_dynamics.misc.permutation import (perm_init, perm_check,
         perm_compose, perm_one, perm_cycle_string, perm_orbit,
         perm_on_list_inplace, perm_invert, perm_is_one)
 
+
 class IETFlipSequence(SageObject):
     r"""
     A flip sequence of interval exchange transformations.
@@ -63,8 +64,9 @@ class IETFlipSequence(SageObject):
     power notations as in the following example::
 
         sage: p = iet.Permutation([['a','b','c','d'],['d','c','b','a']])
-        sage: iet.FlipSequence(p, 't^5b^3tbt^3b')
-        FlipSequence('a b c d\nd c b a', 'tttttbbbtbtttb')
+        sage: fs = iet.FlipSequence(p, 't^5b^3tbt^3b')
+        sage: fs == iet.FlipSequence(p, 'tttttbbbtbtttb')
+        True
 
     The minimal dilatations in H(2g-2)^hyp from Boissy-Lanneau::
 
@@ -731,4 +733,3 @@ class IETFlipSequence(SageObject):
         return a, IntervalExchangeTransformation(self._start, lengths)
 
     self_similar_iet = self_similar_interval_exchange_transformation
-

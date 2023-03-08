@@ -192,10 +192,10 @@ class QuadraticStratum(Stratum):
 
         if len(l) == 1 and not isinstance(l[0], numbers.Integral):
             l = l[0]
-        elif len(l) == 3 and isinstance(l[0], tuple) and \
-             isinstance(l[1], numbers.Integral) and \
-             isinstance(l[2], numbers.Integral):
-                 l = l[0] + (-1,) * l[1] + (0,) * l[2]
+        elif (len(l) == 3 and isinstance(l[0], tuple) and
+              isinstance(l[1], numbers.Integral) and
+              isinstance(l[2], numbers.Integral)):
+            l = l[0] + (-1,) * l[1] + (0,) * l[2]
 
         if not l:
             raise ValueError("the list must be nonempty")
@@ -241,7 +241,6 @@ class QuadraticStratum(Stratum):
         if genus%4:
             raise ValueError("the sum of the zeros should sum up to an integer congruent to 0 mod 4")
         genus //= 4
-
 
         # Lanneau classification of connected components
 
@@ -1127,7 +1126,6 @@ class GenusOneQuadraticStratumComponent(QSC):
         f = self._stratum.nb_fake_zeros()
         z = self._stratum.zeros(fake_zeros=False, poles=False)
 
-
         l0 = [0,1]
         for k in range(1,p):
             l0.extend([2*k, 2*k+1, 2*k+1])
@@ -1222,8 +1220,8 @@ class GenusTwoHyperellipticQuadraticStratumComponent(QSC):
         return p
 
 
-
 GTHQSC = GenusTwoHyperellipticQuadraticStratumComponent
+
 
 class GenusTwoNonhyperellipticQuadraticStratumComponent(QSC):
     r"""
@@ -2260,8 +2258,8 @@ class QuadraticStrata_gd(QuadraticStrata_class):
 
         - ``dimension`` - an integer - the dimension of strata
 
-        - ``min_nb_poles``, ``max_nb_poles - integers - minimum and maximum number of
-          poles
+        - ``min_nb_poles``, ``max_nb_poles`` - integers - minimum
+          and maximum number of poles
 
         - ``fake_zeros`` - boolean - whether fake zeros are allowed
 

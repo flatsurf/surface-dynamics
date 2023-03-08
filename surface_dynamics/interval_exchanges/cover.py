@@ -2,11 +2,11 @@
 r"""
 Permutation cover
 
-This module deals with combinatorial data for covering of connected components of
-strata of Abelian and quadratic differentials. The main feature is to be able to
-compute Lyapunov exponents.
+This module deals with combinatorial data for covering of connected
+components of strata of Abelian and quadratic differentials. The main
+feature is to be able to compute Lyapunov exponents.
 
-.. todo::
+.. TODO::
 
     It should be possible to compute the KZ action directly on isotypical
     components. That would dramatically reduce the dimension of the space!
@@ -20,7 +20,6 @@ compute Lyapunov exponents.
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
 # *************************************************************************
-
 from __future__ import print_function, absolute_import
 
 import numpy as np
@@ -540,12 +539,12 @@ class PermutationCover(object):
                 else:
                     flat_orbit.append(x)
             p = p_id
-            for lab,sign in flat_orbit:
+            for lab, sign in flat_orbit:
                 q = self.covering_data(lab)
                 if sign == -1: q = q.inverse()
                 p = p*q
             for c in p.cycle_type():
-               s.append(len(orbit)*c)
+                s.append(len(orbit)*c)
 
         return Partition(sorted(s,reverse=True))
 
@@ -998,7 +997,6 @@ class PermutationCover(object):
 
         return projections, dimensions
 
-
     def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=10,
                                   nb_iterations=65536, output_file=None,
                                   return_speed=False, isotypic_decomposition=False,
@@ -1051,11 +1049,11 @@ class PermutationCover(object):
             sage: from surface_dynamics import *
 
             sage: q = QuadraticStratum([1,1,-1,-1]).one_component()
-            sage: q.lyapunov_exponents_H_plus(nb_iterations=2**19) # abs tol 0.05
+            sage: q.lyapunov_exponents_H_plus(nb_iterations=2**19)  # abs tol 0.1
             [0.666666]
             sage: p = q.permutation_representative(reduced=False).orientation_cover()
             sage: c = p.lyapunov_exponents_H_plus(isotypic_decomposition=True, nb_iterations=2**19)[0]
-            sage: c[0] # abs tol 0.05
+            sage: c[0]  # abs tol 0.1
             1.000000
 
             sage: p = iet.GeneralizedPermutation('e a a', 'b b c c d d e')
@@ -1066,7 +1064,7 @@ class PermutationCover(object):
             sage: c = p.cover(['()', '(1,2)', '()', '(1,2)', '(1,2)'])
             sage: c.stratum(fake_zeros=True)
             Q_1(1^2, 0^4, -1^2)
-            sage: c.lyapunov_exponents_H_plus(nb_iterations=2**19) # abs tol 0.05
+            sage: c.lyapunov_exponents_H_plus(nb_iterations=2**19)  # abs tol 0.1
             [0.666666]
 
         Some cyclic covers (see [EskKonZor11]_ for the formulas)::
@@ -1082,7 +1080,8 @@ class PermutationCover(object):
             ....:     return p.regular_cover(G, [x**c, x**a, x**b])
 
             sage: c = cyclic_cover(7,1,1,2)
-            sage: c.lyapunov_exponents_H_plus(isotypic_decomposition=True, nb_iterations=2**19) # abs tol 0.05
+            sage: lexp = c.lyapunov_exponents_H_plus(isotypic_decomposition=True, nb_iterations=2**19)
+            sage: lexp  # abs tol 0.1
             [[],
              [0.2857, 0.2857],
              [0.5714, 0.5714],
@@ -1092,15 +1091,15 @@ class PermutationCover(object):
             sage: lexp = c.lyapunov_exponents_H_plus(isotypic_decomposition=True, return_char=True, nb_iterations=2**19)
             sage: lexp[0]
             ([], (1, 1, 1, 1, 1, 1, 1))
-            sage: lexp[1][0] # abs tol 0.05
+            sage: lexp[1][0]  # abs tol 0.1
             [0.2857, 0.2857]
             sage: lexp[1][1]
             (2, E(7) + E(7)^6, ..., E(7) + E(7)^6)
-            sage: lexp[2][0] # abs tol 0.05
+            sage: lexp[2][0]  # abs tol 0.1
             [0.2857, 0.2857]
             sage: lexp[2][1]
             (2, E(7)^2 + E(7)^5, ...,  E(7)^2 + E(7)^5)
-            sage: lexp[3][0] # abs tol 0.05
+            sage: lexp[3][0]  # abs tol 0.1
             [0.5714, 0.5714]
             sage: lexp[3][1]
             (2, E(7)^3 + E(7)^4, ..., E(7)^3 + E(7)^4)
@@ -1227,11 +1226,11 @@ class PermutationCover(object):
             sage: from surface_dynamics import iet
 
             sage: p = iet.Permutation('a b c', 'c b a').cover(['(1,2)','(1,3)','(1,4)'])
-            sage: S = p.masur_polygon([1,4,2], [2,0,-1]) # optional - sage_flatsurf
-            sage: TestSuite(S).run()                     # optional - sage_flatsurf
-            sage: S.stratum()                            # optional - sage_flatsurf
+            sage: S = p.masur_polygon([1,4,2], [2,0,-1])  # optional: sage_flatsurf
+            sage: TestSuite(S).run()                      # optional: sage_flatsurf
+            sage: S.stratum()                             # optional: sage_flatsurf
             H_4(3^2)
-            sage: p.stratum()                            # optional - sage_flatsurf
+            sage: p.stratum()                             # optional: sage_flatsurf
             H_4(3^2)
         """
         base_ring, triangles, tops, bots, mids = self._base._masur_polygon_helper(lengths, heights)

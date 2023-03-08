@@ -140,6 +140,7 @@ def conjugacy_class_matrix(cl, d):
     from sage.matrix.constructor import matrix
     return matrix(ZZ, res)
 
+
 def regular_conjugacy_class_matrix(cl, G):
     r"""
     Return the matrix of the conjugacy class ``cl`` associated to the regular
@@ -158,6 +159,7 @@ def regular_conjugacy_class_matrix(cl, G):
 
     from sage.matrix.constructor import matrix
     return matrix(ZZ, res)
+
 
 def isotypic_projection_matrix(G, d, chi, deg, conj_mats=None, floating_point=False):
     r"""

@@ -607,12 +607,11 @@ class AbelianStratum(Stratum):
         if NonHypASC in self._cc: return NonHypASC(self)
         raise ValueError("No non hyperelliptic component in this stratum")
 
-
     #
     # Quadratic cover
     #
 
-    def orientation_quotients(self,fake_zeros=False):
+    def orientation_quotients(self, fake_zeros=False):
         r"""
         Return the list of quadratic strata such that their orientation cover
         are contained in this stratum.
@@ -2679,7 +2678,6 @@ class NonHypAbelianStratumComponent(ASC):
         profile = list(map(lambda x: x+1,self.stratum().zeros()))
         hyp = self.stratum().hyperelliptic_component()
 
-
         if left_degree is not None:
             assert isinstance(left_degree, (int,Integer)), "if not None, left_degree should be an integer"
             left_degree = int(left_degree) + 1
@@ -2700,7 +2698,6 @@ class NonHypAbelianStratumComponent(ASC):
 
         else:
             raise NotImplementedError("no formula known for cardinality of  extended labeled Rauzy classes")
-
 
         return n - n_hyp
 
@@ -3142,11 +3139,13 @@ class EvenAbelianStratumComponent(ASC):
 
 EvenASC = EvenAbelianStratumComponent
 
+
 class OddAbelianStratumComponent(ASC):
     r"""
     Connected component of an Abelian stratum with odd spin parity.
     """
     _name = 'odd'
+
     def spin(self):
         r"""
         Returns 1 which is, by definition, the spin parity of this stratum component.
@@ -3518,9 +3517,9 @@ class OddAbelianStratumComponent(ASC):
         two_count = real_zeros.count(2)
         if two_count == 0:
             perm = cylinder_concatenation(fk_zeros_perm,no_two_odd(real_zeros))
-        elif two_count == 1 :
+        elif two_count == 1:
             perm = cylinder_concatenation(fk_zeros_perm,one_two_odd(real_zeros))
-        elif two_count >= 2 and two_count%2 == 0:
+        elif two_count >= 2 and two_count % 2 == 0:
             perm = cylinder_concatenation(fk_zeros_perm,even_twos_odd(real_zeros,two_count))
         else:
             perm = cylinder_concatenation(fk_zeros_perm,odd_twos_odd(real_zeros,two_count))
@@ -4095,4 +4094,3 @@ class AbelianStrata_all(AbelianStrata):
         for d in count(2):
             for stratum in AbelianStrata(dimension=d, fake_zeros=self._fake_zeros):
                 yield stratum
-

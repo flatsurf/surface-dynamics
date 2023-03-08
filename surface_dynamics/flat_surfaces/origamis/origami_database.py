@@ -6,7 +6,7 @@ Origamis are cover of the torus over one point. The group `SL(2,\ZZ)` act on the
 database of these SL(2,Z)-orbits. To do concrete computations with origamis see
 ?.
 
-The database of origamis contain informations about `SL(2,\ZZ)` orbits of the
+The database of origamis contain information about `SL(2,\ZZ)` orbits of the
 origamis that are *arithmetic Teichmueller curves*.
 
 EXAMPLES::
@@ -49,7 +49,7 @@ display the result on the screen in a table, one can use
     r=1234 5678  u=1537 2846
     r=123456 789abc  u=17593b 284c6a
 
-We can display much more informations by modifying the displayed columns::
+We can display much more information by modifying the displayed columns::
 
     sage: q.cols('nb_squares', 'stratum', 'component', 'regular', 'quasi_regular')
     sage: q.show()
@@ -1086,10 +1086,10 @@ def build_local_data(o):
 
         sage: o = Origami('(1,2)','(1,3)')
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
-        sage: data = odb.build_local_data(o) # optional - gap_packages
-        sage: data['stratum']                # optional - gap_packages
+        sage: data = odb.build_local_data(o)  # optional: gap_packages
+        sage: data['stratum']                 # optional: gap_packages
         H_2(2)
-        sage: data['nb_squares']             # optional - gap_packages
+        sage: data['nb_squares']              # optional: gap_packages
         3
     """
     from sage.functions.other import factorial
@@ -1494,7 +1494,7 @@ class OrigamiDatabase(SQLDatabase):
         - ``force_computation`` - force computation of data which may be yet in
           the database.
 
-        - ``verbose`` - boolean - if ``True``, print useful interactive informations
+        - ``verbose`` - boolean - if ``True``, print useful interactive information
           during the process.
 
         EXAMPLES::
@@ -1506,8 +1506,8 @@ class OrigamiDatabase(SQLDatabase):
             sage: with tempfile.TemporaryDirectory() as tmpdir:
             ....:     db_name = os.path.join(tmpdir, 'my_db.db')
             ....:     D = OrigamiDatabase(db_name, read_only=False)
-            ....:     D.build(AbelianStratum(4).odd_component(), 8) # optional - gap_packages
-            ....:     D.info()                                      # optional - gap_packages
+            ....:     D.build(AbelianStratum(4).odd_component(), 8)  # optional: gap_packages
+            ....:     D.info()                                       # optional: gap_packages
             genus 2
             =======
             <BLANKLINE>
@@ -1704,10 +1704,10 @@ class OrigamiDatabase(SQLDatabase):
             ....:     db2_name = os.path.join(tmpdir, 'the_second_one.db')
             ....:     D1 = OrigamiDatabase(db1_name, read_only=False)
             ....:     D2 = OrigamiDatabase(db2_name, read_only=False)
-            ....:     D1.build(AbelianStratum(1,1).unique_component(), 7)  # optional - gap_packages
-            ....:     D2.build(AbelianStratum(2).unique_component(), 5)    # optional - gap_packages
-            ....:     D2.update(D1)                                        # optional - gap_packages
-            ....:     D2.info()                                            # optional - gap_packages
+            ....:     D1.build(AbelianStratum(1,1).unique_component(), 7)  # optional: gap_packages
+            ....:     D2.build(AbelianStratum(2).unique_component(), 5)    # optional: gap_packages
+            ....:     D2.update(D1)                                        # optional: gap_packages
+            ....:     D2.info()                                            # optional: gap_packages
             genus 2
             =======
              H_2(2)^hyp  :   2 T. curves (up to  4 squares)
@@ -1765,7 +1765,7 @@ class OrigamiDatabase(SQLDatabase):
         - ``nb_experiments``, ``nb_iterations`` - integers - option for the
           computation of Lyapunov exponents.
 
-        - ``verbose`` - boolean - if True displays nice informations in real
+        - ``verbose`` - boolean - if True displays nice information in real
           time.
         """
         assert not self.__read_only__, "the database should not be in read only mode"

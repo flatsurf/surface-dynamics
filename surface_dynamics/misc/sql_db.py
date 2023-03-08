@@ -260,16 +260,17 @@ def construct_skeleton(database):
                 skeleton[table[0]][name]['unique'] = bool(col[2])
     return skeleton
 
+
 def _create_print_table(cur, cols, **kwds):
-    """
+    r"""
     Create a nice printable table from the cursor given with the given
     column titles.
 
     INPUT:
 
-    - ``cur`` - cursor
+    - ``cur`` -- cursor
 
-    - ``cols`` - titles of the column in the same order as in the request
+    - ``cols`` -- titles of the column in the same order as in the request
 
     - ``max_field_size`` -- how wide each field can be
 
@@ -279,7 +280,7 @@ def _create_print_table(cur, cols, **kwds):
 
           {'column_name':(lambda x: format_function(x))}
 
-      or, if ``id_cols`` is not None:
+      or, if ``id_cols`` is not None::
 
           {'column_name':(lambda x,y: format_function(x,y))}
 
@@ -438,14 +439,14 @@ class SQLQuery(SageObject):
                 + 'dictionary or a string and tuple')
 
         if 'query_dict' in kwds:
-              query_dict = kwds['query_dict']
+            query_dict = kwds['query_dict']
         else:
-              self.__query_string__ = kwds['query_string']
-              if 'param_tuple' in kwds:
-                  self.__param_tuple__ = tuple((str(x) for x in kwds['param_tuple']))
-              else:
-                  self.__param_tuple__ = tuple()
-              return
+            self.__query_string__ = kwds['query_string']
+            if 'param_tuple' in kwds:
+                self.__param_tuple__ = tuple(str(x) for x in kwds['param_tuple'])
+            else:
+                self.__param_tuple__ = tuple()
+            return
 
         if query_dict:
             skel = database.__skeleton__

@@ -48,6 +48,7 @@ import numbers
 from sage.misc.cachefunc import cached_method
 from sage.rings.rational_field import QQ
 
+
 # custom latte count
 def latte_generating_series(L, M=None):
     r"""
@@ -61,7 +62,7 @@ def latte_generating_series(L, M=None):
         ....:         [0, 0, 1, 0, 0, 0, 0]]
         sage: eqns = [[0, 0, 1, -1, 1, 0, -1], [0, 0, 1, -1, 1, -1, 0]]
         sage: L = Polyhedron(ieqs=ieqs, eqns=eqns)
-        sage: latte_generating_series(L)   # optional - latte_int
+        sage: latte_generating_series(L)   # optional: latte_int
         (1)/((1 - x2^-1*x4*x5)*(1 - x2*x3)*(1 - x1*x2)*(1 - x0)) + (1)/((1 - x3*x4*x5)*(1 - x2*x4^-1*x5^-1)*(1 - x1*x4*x5)*(1 - x0))
     """
     if M is None:
@@ -73,6 +74,7 @@ def latte_generating_series(L, M=None):
         raise ValueError('your Sage version is too old ({}) to use this function'.format(version))
     ans = count(L.cdd_Hrepresentation(), cdd=True, multivariate_generating_function=True, raw_output=True)
     return parse_latte_generating_series(M, ans)
+
 
 def parse_latte_generating_series(M, s):
     r"""
@@ -117,7 +119,6 @@ def parse_latte_generating_series(M, s):
         m += M.term(R(num), list(m_den.items()))
 
     return m
-
 
 
 class MultiplicativeMultivariateGeneratingSeries(AbstractMSum):
@@ -574,6 +575,7 @@ class MultiplicativeMultivariateGeneratingSeries(AbstractMSum):
     def as_symbolic(self):
         from sage.symbolic.ring import SR
         return SR(str(self))
+
 
 # TODO: this should actually be an algebra over QQ[x0, x1, ..., xn]
 # TODO: we should have two versions, as an algebra over the polynomial

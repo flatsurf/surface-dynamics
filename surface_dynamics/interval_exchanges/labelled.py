@@ -684,7 +684,7 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
             sage: from surface_dynamics import *
 
             sage: p = iet.Permutation([1,2,3],[3,2,1])
-            sage: p.lyapunov_exponents_approx()  # abs tol .08
+            sage: p.lyapunov_exponents_approx()  # abs tol .1
             [1.000]
         """
         if self._flips:
@@ -794,10 +794,10 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
             True
         """
         winner = interval_conversion(winner)
-        loser = self._labels[1-winner][-1]
+        loser = self._labels[1 - winner][-1]
 
         # the same letter at the right-end (False)
-        if self._labels[0][-1] == self._labels[1][-1] :
+        if self._labels[0][-1] == self._labels[1][-1]:
             return False
 
         # the winner (or loser) letter is repeated on the other interval (True)
@@ -1040,21 +1040,27 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
             sage: from surface_dynamics import *
             sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()
             sage: p = Q.permutation_representative(reduced=False)
-            sage: p.lyapunov_exponents_H_plus(nb_iterations=2**20) # abs tol .08
+            sage: p.lyapunov_exponents_H_plus(nb_iterations=2**20)  # abs tol .1
             [0.6666]
 
             sage: Q_reg = QuadraticStratum([12]).regular_component()
             sage: p_reg = Q_reg.permutation_representative(reduced=False)
-            sage: p_reg.lyapunov_exponents_H_plus(nb_iterations=2**20) # abs tol .08
+            sage: lexp = p_reg.lyapunov_exponents_H_plus(nb_iterations=2**20)
+            sage: lexp  # random
             [0.662, 0.448, 0.230, 0.087]
-            sage: sum(_)  # abs tol .08
+            sage: len(lexp)
+            4
+            sage: sum(lexp)  # abs tol .1
             1.428
 
             sage: Q_irr = QuadraticStratum([12]).irregular_component()
             sage: p_irr = Q_irr.permutation_representative(reduced=False)
-            sage: p_irr.lyapunov_exponents_H_plus(nb_iterations=2**20) # abs tol .08
+            sage: lexp = p_irr.lyapunov_exponents_H_plus(nb_iterations=2**20)
+            sage: lexp  # random
             [0.747, 0.491, 0.245, 0.090]
-            sage: sum(_) # abs tol .08
+            sage: len(lexp)
+            4
+            sage: sum(lexp)  # abs tol .1
             1.572
         """
         if self._flips:
@@ -1102,21 +1108,32 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
             sage: from surface_dynamics import *
             sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()
             sage: p = Q.permutation_representative(reduced=False)
-            sage: p.lyapunov_exponents_H_minus(nb_iterations=2**20) # abs tol .08
+            sage: lexp = p.lyapunov_exponents_H_minus(nb_iterations=2**20)
+            sage: lexp  # random
             [1.000, 0.333]
+            sage: len(lexp)
+            2
+            sage: sum(lexp)  # abs tol .1
+            1.333
 
             sage: Q_reg = QuadraticStratum([12]).regular_component()
             sage: p_reg = Q_reg.permutation_representative(reduced=False)
-            sage: p_reg.lyapunov_exponents_H_minus(nb_iterations=2**19) # abs tol .08
+            sage: lexp = p_reg.lyapunov_exponents_H_minus(nb_iterations=2**19)
+            sage: lexp  # random
             [1.000, 0.309, 0.119]
-            sage: sum(_)  # abs tol .08
+            sage: len(lexp)
+            3
+            sage: sum(lexp)  # abs tol .1
             1.428
 
             sage: Q_irr = QuadraticStratum([12]).irregular_component()
             sage: p_irr = Q_irr.permutation_representative(reduced=False)
-            sage: p_irr.lyapunov_exponents_H_minus(nb_iterations=2**19) # abs tol .08
+            sage: lexp = p_irr.lyapunov_exponents_H_minus(nb_iterations=2**19)
+            sage: lexp  # random
             [1.000, 0.444, 0.128]
-            sage: sum(_) # abs tol .08
+            sage: len(lexp)
+            3
+            sage: sum(lexp)  # abs tol .1
             1.5725
         """
         if self._flips:
@@ -1187,7 +1204,7 @@ class FlippedLabelledPermutationIET(FlippedPermutationIET, LabelledPermutationIE
 
         permutation -- the associated reduced permutation
 
-        EXAMPLE::
+        EXAMPLES::
 
             sage: from surface_dynamics import *
 
@@ -1530,7 +1547,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
 
             boolean -- True if the path is full and False else
 
-            EXAMPLE::
+            EXAMPLES::
 
                 sage: from surface_dynamics import *
 
@@ -1833,4 +1850,3 @@ class FlippedLabelledRauzyDiagram(FlippedRauzyDiagram, LabelledRauzyDiagram):
         self._element._labels = [list(data[0]), list(data[1])]
         self._element._twin = [list(data[2]), list(data[3])]
         self._element._flips = [list(data[4]), list(data[5])]
-

@@ -608,7 +608,6 @@ def _gamma_irr_rec(p, marking):
                               gamma_std(Partition(l2),(1,m2+2,m2-a2)))
         return N
 
-
     elif marking[0] == 2:
         m1 = marking[1]
         m2 = marking[2]
@@ -869,4 +868,3 @@ def delta_irr(profile, marking=None):
     return _delta_irr_rec(p, marking)
 
 spin_difference_for_irreducible_permutations = delta_irr
-

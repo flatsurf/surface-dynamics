@@ -27,6 +27,3 @@ def mean_and_std_dev(l):
     else:
         d = sum((x-m)**2 for x in l) / (len(l)-1)
     return m,sqrt(d)
-
-
-

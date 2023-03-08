@@ -80,11 +80,11 @@ def iscc_card(arg):
         sage: from surface_dynamics import *
         sage: from surface_dynamics.misc.iscc import iscc_card
         sage: cd = CylinderDiagram('(0,1)-(0,2) (2)-(1)')
-        sage: iscc_card(cd)  # optional - barvinok
+        sage: iscc_card(cd)  # optional: barvinok
         '[w0, w1] -> { 1 : 0 <= w1 <= w0 }'
 
         sage: r = RibbonGraph(faces='(0,2,4,6,7)(8,9,5,3,1)', edges='(0,1)(2,3)(4,5)(6,7)(8,9)')
-        sage: iscc_card(r)   # optional - barvinok
+        sage: iscc_card(r)   # optional: barvinok
         '[b0, b1] -> { (((1 - 1/8 * b0) + 17/12 * b1 + 5/8 * b1^2 + 1/12 * b1^3) + 1/4 * floor((2b0)/4)) : (b0 + b1) mod 2 = 0 and 0 <= b1 <= -2 + b0; ((1 + 31/24 * b0 + 5/8 * b0^2 + 1/12 * b0^3) + 1/4 * floor((2b0)/4)) : (b0 + b1) mod 2 = 0 and b0 >= 0 and b1 >= b0 }'
     """
     from surface_dynamics.flat_surfaces.separatrix_diagram import CylinderDiagram

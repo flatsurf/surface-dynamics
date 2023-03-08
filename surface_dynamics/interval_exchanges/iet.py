@@ -63,6 +63,7 @@ from sage.rings.all import ZZ, QQ
 from .template import side_conversion, interval_conversion
 from .labelled import LabelledPermutationIET
 
+
 def wedge(u, v):
     r"""
     Return the wedge of the vectors ``u`` and ``v``
@@ -71,6 +72,7 @@ def wedge(u, v):
     R = u.base_ring()
     assert len(u) == len(v) and v.base_ring() == R
     return free_module_element(R, d*(d-1)//2, [(u[i]*v[j] - u[j]*v[i]) for i in range(d-1) for j in range(i+1,d)])
+
 
 class IntervalExchangeTransformation:
     r"""
@@ -135,7 +137,7 @@ class IntervalExchangeTransformation:
 
         - ``lengths`` - the list of lengths
 
-        TEST::
+        TESTS::
 
             sage: from surface_dynamics import *
 
@@ -454,7 +456,7 @@ class IntervalExchangeTransformation:
             raise TypeError("unable to convert x (='%s') into a real number"  %(str(x)))
 
         if total <= 0:
-           raise ValueError("the total length must be positive, got {}".format(total))
+            raise ValueError("the total length must be positive, got {}".format(total))
 
         if inplace:
             res = self
@@ -1523,7 +1525,7 @@ class IntervalExchangeTransformation:
         - ``(a,b,c)`` - a triple of letter such that the towers are obtained by
           applying the substitution `a \mapsto bc`.
 
-        TEST::
+        TESTS::
 
             sage: from surface_dynamics import *
 
@@ -1670,7 +1672,7 @@ class IntervalExchangeTransformation:
 
         - ``m`` -- number of Rauzy made on the same side
 
-        TEST::
+        TESTS::
 
             sage: from surface_dynamics import *
 
@@ -2011,7 +2013,3 @@ class IntervalExchangeTransformation:
             sage: t.show() # not tested (problem with matplotlib font cache)
         """
         self.plot_two_intervals().show(axes=False)
-
-
-
-
