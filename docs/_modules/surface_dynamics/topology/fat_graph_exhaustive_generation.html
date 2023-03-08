@@ -380,11 +380,12 @@
 
 <span class="c1"># callback to list elements</span>
 <div class="viewcode-block" id="ListCallback"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.ListCallback">[docs]</a><span class="k">class</span> <span class="nc">ListCallback</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mutable</span> <span class="o">=</span> <span class="n">mutable</span>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aut</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mutable</span><span class="p">))</span>
 
 <div class="viewcode-block" id="ListCallback.list"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.ListCallback.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span></div></div>
@@ -596,7 +597,7 @@
                <span class="n">nv</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmin</span> <span class="ow">and</span> \
                <span class="n">ne</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emin</span> <span class="ow">and</span> \
                <span class="n">nf</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span> <span class="ow">and</span> \
-               <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="nb">all</span><span class="p">(</span><span class="n">d</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">cm</span><span class="o">.</span><span class="n">vertex_profile</span><span class="p">()))</span> <span class="ow">and</span> \
+               <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="nb">all</span><span class="p">(</span><span class="n">d</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">cm</span><span class="o">.</span><span class="n">vertex_degrees</span><span class="p">()))</span> <span class="ow">and</span> \
                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filter</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut</span><span class="p">)):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_callback</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut</span><span class="p">)</span>
 
@@ -632,7 +633,7 @@
 
 <div class="viewcode-block" id="StackCallback.run"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.StackCallback.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># trivial map (g = 0, nv = 1, nf = 1)</span>
-        <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">)</span>
+        <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">nv</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">ne</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">nf</span> <span class="o">=</span> <span class="mi">1</span>
@@ -681,7 +682,7 @@
 <span class="sd">        sage: poly = R.zero()</span>
 <span class="sd">        sage: def update(cm, aut):</span>
 <span class="sd">        ....:     global poly</span>
-<span class="sd">        ....:     p = [cm.face_profile()]</span>
+<span class="sd">        ....:     p = [cm.face_degrees()]</span>
 <span class="sd">        ....:     aut_card = 1 if aut is None else aut.group_cardinality()</span>
 <span class="sd">        ....:     poly += 2*cm.num_edges() // aut_card * t**cm.num_edges()</span>
 <span class="sd">        sage: F.map_reduce(update)</span>
@@ -730,7 +731,7 @@
 
 <span class="sd">        sage: for k in range(2,5):</span>
 <span class="sd">        ....:    F = FatGraphs(g=1, nf=2, nv=2, vertex_min_degree=1)</span>
-<span class="sd">        ....:    c1 = F.cardinality_and_weighted_cardinality(lambda cm,_: cm.vertex_degree_min() &gt;= k)</span>
+<span class="sd">        ....:    c1 = F.cardinality_and_weighted_cardinality(lambda cm,_: cm.vertex_min_degree() &gt;= k)</span>
 <span class="sd">        ....:    G = FatGraphs(g=1, nf=2, nv=2, vertex_min_degree=k)</span>
 <span class="sd">        ....:    c2 = G.cardinality_and_weighted_cardinality()</span>
 <span class="sd">        ....:    assert c1 == c2</span>
@@ -741,7 +742,7 @@
 
 <span class="sd">        sage: for k in range(2,6):</span>
 <span class="sd">        ....:    F = FatGraphs(g=0, nf=5, nv=2, vertex_min_degree=1)</span>
-<span class="sd">        ....:    c1 = F.cardinality_and_weighted_cardinality(lambda cm,_: cm.vertex_degree_min() &gt;= k)</span>
+<span class="sd">        ....:    c1 = F.cardinality_and_weighted_cardinality(lambda cm,_: cm.vertex_min_degree() &gt;= k)</span>
 <span class="sd">        ....:    G = FatGraphs(g=0, nf=5, nv=2, vertex_min_degree=k)</span>
 <span class="sd">        ....:    c2 = G.cardinality_and_weighted_cardinality()</span>
 <span class="sd">        ....:    assert c1 == c2</span>
@@ -776,32 +777,32 @@
 
 <span class="sd">        sage: from surface_dynamics.topology.fat_graph_exhaustive_generation import FatGraphs</span>
 <span class="sd">        sage: FatGraphs(g=0, nf=1, nv=1).list()</span>
-<span class="sd">        [FatGraph(&#39;()&#39;, &#39;()&#39;, &#39;()&#39;)]</span>
+<span class="sd">        [FatGraph(&#39;()&#39;, &#39;()&#39;)]</span>
 <span class="sd">        sage: FatGraphs(g=1, nf=1, nv=1).list()</span>
-<span class="sd">        [FatGraph(&#39;(0,1,2,3)&#39;, &#39;(0,2)(1,3)&#39;, &#39;(0,1,2,3)&#39;)]</span>
+<span class="sd">        [FatGraph(&#39;(0,2,1,3)&#39;, &#39;(0,2,1,3)&#39;)]</span>
 <span class="sd">        sage: FatGraphs(g=0, nf=2, nv=1).list()</span>
-<span class="sd">        [FatGraph(&#39;(0,1)&#39;, &#39;(0,1)&#39;, &#39;(0)(1)&#39;)]</span>
+<span class="sd">        [FatGraph(&#39;(0,1)&#39;, &#39;(0)(1)&#39;)]</span>
 <span class="sd">        sage: FatGraphs(g=0, nf=1, nv=2).list()</span>
-<span class="sd">        [FatGraph(&#39;(0)(1)&#39;, &#39;(0,1)&#39;, &#39;(0,1)&#39;)]</span>
+<span class="sd">        [FatGraph(&#39;(0)(1)&#39;, &#39;(0,1)&#39;)]</span>
 <span class="sd">        sage: FatGraphs(g=0, ne=1).list()</span>
-<span class="sd">        [FatGraph(&#39;(0,1)&#39;, &#39;(0,1)&#39;, &#39;(0)(1)&#39;), FatGraph(&#39;(0)(1)&#39;, &#39;(0,1)&#39;, &#39;(0,1)&#39;)]</span>
+<span class="sd">        [FatGraph(&#39;(0,1)&#39;, &#39;(0)(1)&#39;), FatGraph(&#39;(0)(1)&#39;, &#39;(0,1)&#39;)]</span>
 
 <span class="sd">        sage: F3 = FatGraphs(g=0, nf_max=4, vertex_min_degree=3)</span>
-<span class="sd">        sage: for fg in F3.list(): assert all(d &gt;= 3 for d in fg.vertex_profile()), fg</span>
+<span class="sd">        sage: for fg in F3.list(): assert all(d &gt;= 3 for d in fg.vertex_degrees()), fg</span>
 <span class="sd">        sage: F3.cardinality_and_weighted_cardinality()</span>
 <span class="sd">        (3, 7/6)</span>
 <span class="sd">        sage: F4 = FatGraphs(g=0, nf_max=4, vertex_min_degree=4)</span>
-<span class="sd">        sage: for fg in F4.list(): assert all(d &gt;= 4 for d in fg.vertex_profile()), fg</span>
+<span class="sd">        sage: for fg in F4.list(): assert all(d &gt;= 4 for d in fg.vertex_degrees()), fg</span>
 <span class="sd">        sage: F4.cardinality_and_weighted_cardinality()</span>
 <span class="sd">        (1, 1/2)</span>
 
 <span class="sd">        sage: FatGraphs(g=1, ne=3).list()</span>
-<span class="sd">        [FatGraph(&#39;(0,5,4,1,2,3)&#39;, &#39;(0,2)(1,3)(4,5)&#39;, &#39;(0,1,2,3,4)(5)&#39;),</span>
-<span class="sd">         FatGraph(&#39;(0,5,1,2,4,3)&#39;, &#39;(0,2)(1,3)(4,5)&#39;, &#39;(0,1,4)(2,3,5)&#39;),</span>
-<span class="sd">         FatGraph(&#39;(0,5,1,2,3,4)&#39;, &#39;(0,2)(1,3)(4,5)&#39;, &#39;(0,1,2,4)(3,5)&#39;),</span>
-<span class="sd">         FatGraph(&#39;(0,4,1,2,3)(5)&#39;, &#39;(0,2)(1,3)(4,5)&#39;, &#39;(0,1,2,3,4,5)&#39;),</span>
-<span class="sd">         FatGraph(&#39;(0,4,2,3)(1,5)&#39;, &#39;(0,2)(1,3)(4,5)&#39;, &#39;(0,4,1,2,3,5)&#39;),</span>
-<span class="sd">         FatGraph(&#39;(0,4,3)(1,2,5)&#39;, &#39;(0,2)(1,3)(4,5)&#39;, &#39;(0,1,4,2,3,5)&#39;)]</span>
+<span class="sd">        [FatGraph(&#39;(0,5,4,2,1,3)&#39;, &#39;(0,2,1,3,4)(5)&#39;),</span>
+<span class="sd">         FatGraph(&#39;(0,5,2,1,4,3)&#39;, &#39;(0,2,4)(1,3,5)&#39;),</span>
+<span class="sd">         FatGraph(&#39;(0,5,2,1,3,4)&#39;, &#39;(0,2,1,4)(3,5)&#39;),</span>
+<span class="sd">         FatGraph(&#39;(0,4,2,1,3)(5)&#39;, &#39;(0,2,1,3,4,5)&#39;),</span>
+<span class="sd">         FatGraph(&#39;(0,4,1,3)(2,5)&#39;, &#39;(0,4,2,1,3,5)&#39;),</span>
+<span class="sd">         FatGraph(&#39;(0,4,3)(1,5,2)&#39;, &#39;(0,2,4,1,3,5)&#39;)]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ne</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">g_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">g_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ne_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ne_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv_max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -872,16 +873,16 @@
 <span class="sd">            (0, 0)</span>
 
 <span class="sd">            sage: FatGraphs(ne=0).list()</span>
-<span class="sd">            [FatGraph(&#39;()&#39;, &#39;()&#39;, &#39;()&#39;)]</span>
+<span class="sd">            [FatGraph(&#39;()&#39;, &#39;()&#39;)]</span>
 <span class="sd">            sage: FatGraphs(ne=1).list()</span>
-<span class="sd">            [FatGraph(&#39;(0,1)&#39;, &#39;(0,1)&#39;, &#39;(0)(1)&#39;),</span>
-<span class="sd">             FatGraph(&#39;(0)(1)&#39;, &#39;(0,1)&#39;, &#39;(0,1)&#39;)]</span>
+<span class="sd">            [FatGraph(&#39;(0,1)&#39;, &#39;(0)(1)&#39;),</span>
+<span class="sd">             FatGraph(&#39;(0)(1)&#39;, &#39;(0,1)&#39;)]</span>
 <span class="sd">            sage: FatGraphs(ne=2).list()</span>
-<span class="sd">            [FatGraph(&#39;(0,1,2,3)&#39;, &#39;(0,2)(1,3)&#39;, &#39;(0,1,2,3)&#39;),</span>
-<span class="sd">             FatGraph(&#39;(0,2,1)(3)&#39;, &#39;(0,1)(2,3)&#39;, &#39;(0,2,3)(1)&#39;),</span>
-<span class="sd">             FatGraph(&#39;(0,2)(1,3)&#39;, &#39;(0,1)(2,3)&#39;, &#39;(0,3)(1,2)&#39;),</span>
-<span class="sd">             FatGraph(&#39;(0,3,2,1)&#39;, &#39;(0,1)(2,3)&#39;, &#39;(0,2)(1)(3)&#39;),</span>
-<span class="sd">             FatGraph(&#39;(0,2)(1)(3)&#39;, &#39;(0,1)(2,3)&#39;, &#39;(0,1,2,3)&#39;)]</span>
+<span class="sd">            [FatGraph(&#39;(0,2,1,3)&#39;, &#39;(0,2,1,3)&#39;),</span>
+<span class="sd">             FatGraph(&#39;(0,2,1)(3)&#39;, &#39;(0,2,3)(1)&#39;),</span>
+<span class="sd">             FatGraph(&#39;(0,2)(1,3)&#39;, &#39;(0,3)(1,2)&#39;),</span>
+<span class="sd">             FatGraph(&#39;(0,3,2,1)&#39;, &#39;(0,2)(1)(3)&#39;),</span>
+<span class="sd">             FatGraph(&#39;(0,2)(1)(3)&#39;, &#39;(0,1,2,3)&#39;)]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># variable order: v, e, f, g</span>
         <span class="kn">from</span> <span class="nn">sage.geometry.polyhedron.constructor</span> <span class="kn">import</span> <span class="n">Polyhedron</span>
@@ -971,30 +972,30 @@
 
 <span class="sd">            sage: from surface_dynamics import FatGraphs</span>
 <span class="sd">            sage: FatGraphs(g=1, nf=2, nv=2).map_reduce(lambda x,y: print(x))</span>
-<span class="sd">            FatGraph(&#39;(0,6,5,4,1,2,3)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,3,4,6,7)(5)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,6,1,2,3)(4,7,5)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,3,6,4,7)(5)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,5,4,1,6,2,3)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,6,7,1,2,3,4)(5)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,7,2,3)(1,6,5,4)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,7,1,2,3,4,6)(5)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,5,4,1,2,6,3)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,6,7,2,3,4)(5)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,7,3)(1,2,6,5,4)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,7,2,3,4,6)(5)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,5,4,1,2,3,6)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,6,7,3,4)(5)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,7)(1,2,3,6,5,4)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,7,3,4,6)(5)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,5,4,6,1,2,3)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,3,6,7,4)(5)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,5,4,6,2,3)(1,7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,6,1,2,3,7,4)(5)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,5,6,4,1,2,3)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,3,4)(5,6,7)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,5,6,1,2,3)(4,7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,3,6,4)(5,7)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,5,6,2,3)(1,7,4)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,6,1,2,3,4)(5,7)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,5,6,3)(1,2,7,4)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,6,2,3,4)(5,7)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,6,5,1,2,4,3)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,4,6,7)(2,3,5)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,6,1,2,4,3)(5,7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,4,7)(2,3,6,5)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,6,4,3)(1,2,7,5)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,4,7)(2,3,5,6)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,6,5,1,2,3,4)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,4,6,7)(3,5)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,5,1,6,2,3,4)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,6,7,1,2,4)(3,5)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,5,1,6,3,4)(2,7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,7,1,6,2,4)(3,5)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,5,1,2,3,6,4)(7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,4)(3,5,6,7)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,5,1,2,3,6)(4,7)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,6,4)(3,5,7)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,7,4)(1,2,3,6,5)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,4,6)(3,5,7)&#39;)</span>
-<span class="sd">            FatGraph(&#39;(0,5,7,4)(1,2,3,6)&#39;, &#39;(0,2)(1,3)(4,5)(6,7)&#39;, &#39;(0,1,2,4)(3,6,5,7)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,6,5,4,2,1,3)(7)&#39;, &#39;(0,2,1,3,4,6,7)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,6,2,1,3)(4,7,5)&#39;, &#39;(0,2,1,3,6,4,7)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,4,2,1,6,3)(7)&#39;, &#39;(0,2,6,7,1,3,4)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,7,3)(1,6,5,4,2)&#39;, &#39;(0,2,7,1,3,4,6)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,4,2,6,1,3)(7)&#39;, &#39;(0,6,7,2,1,3,4)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,7,1,3)(2,6,5,4)&#39;, &#39;(0,7,2,1,3,4,6)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,4,2,1,3,6)(7)&#39;, &#39;(0,2,1,6,7,3,4)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,7)(1,3,6,5,4,2)&#39;, &#39;(0,2,1,7,3,4,6)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,4,6,2,1,3)(7)&#39;, &#39;(0,2,1,3,6,7,4)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,4,6,1,3)(2,7)&#39;, &#39;(0,6,2,1,3,7,4)(5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,6,4,2,1,3)(7)&#39;, &#39;(0,2,1,3,4)(5,6,7)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,6,2,1,3)(4,7)&#39;, &#39;(0,2,1,3,6,4)(5,7)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,6,1,3)(2,7,4)&#39;, &#39;(0,6,2,1,3,4)(5,7)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,6,3)(1,7,4,2)&#39;, &#39;(0,2,6,1,3,4)(5,7)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,6,5,2,1,4,3)(7)&#39;, &#39;(0,2,4,6,7)(1,3,5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,6,2,1,4,3)(5,7)&#39;, &#39;(0,2,4,7)(1,3,6,5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,6,4,3)(1,7,5,2)&#39;, &#39;(0,2,4,7)(1,3,5,6)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,6,5,2,1,3,4)(7)&#39;, &#39;(0,2,1,4,6,7)(3,5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,2,6,1,3,4)(7)&#39;, &#39;(0,6,7,2,1,4)(3,5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,2,6,3,4)(1,7)&#39;, &#39;(0,7,2,6,1,4)(3,5)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,2,1,3,6,4)(7)&#39;, &#39;(0,2,1,4)(3,5,6,7)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,2,1,3,6)(4,7)&#39;, &#39;(0,2,1,6,4)(3,5,7)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,7,4)(1,3,6,5,2)&#39;, &#39;(0,2,1,4,6)(3,5,7)&#39;)</span>
+<span class="sd">            FatGraph(&#39;(0,5,7,4)(1,3,6,2)&#39;, &#39;(0,2,1,4)(3,6,5,7)&#39;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">StackCallback</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span><span class="p">,</span>
@@ -1050,7 +1051,7 @@
 <span class="sd">        ...</span>
 <span class="sd">        DeprecationWarning: FatGraphs_g_nf_nv is deprecated. Use FatGraphs</span>
 <span class="sd">        sage: F.list()</span>
-<span class="sd">        [FatGraph(&#39;(0,1,2,3)&#39;, &#39;(0,2)(1,3)&#39;, &#39;(0,1,2,3)&#39;)]</span>
+<span class="sd">        [FatGraph(&#39;(0,2,1,3)&#39;, &#39;(0,2,1,3)&#39;)]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
     <span class="n">warn</span><span class="p">(</span><span class="s1">&#39;FatGraphs_g_nf_nv is deprecated. Use FatGraphs&#39;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
