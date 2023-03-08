@@ -440,7 +440,7 @@ class IETFamily(IETFamily_pyx):
         part of the families and make the search for dynamical behaviour more
         accurate (eg saddle connections, periodic components, minimalit
         components). Each step of the Rauzy induction might split the family
-        into two familes giving rise to a tree of possibilities. The search is
+        into two families giving rise to a tree of possibilities. The search is
         cut when
 
         - either reaching a decidable state (ie family satisfying Boshernitzan

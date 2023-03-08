@@ -697,7 +697,7 @@ cdef class IETFamily_pyx:
         - ``intervalxt`` -- whether to use pyintervalxt for iteration (much faster for
           large number of induction steps)
 
-        - extra argument are transfered to the method :meth:`random_element`
+        - extra argument are transferred to the method :meth:`random_element`
 
         EXAMPLES::
 
