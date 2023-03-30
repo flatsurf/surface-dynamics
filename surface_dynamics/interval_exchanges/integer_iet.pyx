@@ -13,6 +13,7 @@ from __future__ import print_function
 from cysignals.memory cimport check_malloc, sig_free
 from libc.string cimport memcpy
 
+
 def _test_iterator1(int n, int k):
     r"""
     TESTS::
@@ -57,6 +58,7 @@ def _test_iterator1(int n, int k):
 
     sig_free(x)
 
+
 def _test_iterator2(int n, int kfree, int ktop, int kbot):
     r"""
     TESTS::
@@ -99,6 +101,7 @@ def _test_iterator2(int n, int kfree, int ktop, int kbot):
 
     int_li_vector_clear(v)
 
+
 def perm_to_twin(p):
     r"""
     Return the twin associated to the permutation ``p``.
@@ -122,12 +125,12 @@ def perm_to_twin(p):
         ValueError: p must have even length
     """
     n = len(p)
-    if n%2 == 1:
+    if n % 2 == 1:
         raise ValueError("p must have even length")
-    n = n//2
+    n = n // 2
     seen = [None] * len(p)
     t = [None] * len(p)
-    for i,j in enumerate(p):
+    for i, j in enumerate(p):
         j = int(j)
         if j < 0 or j >= n:
             raise ValueError("p must contain integer only between 0 and {}".format(n-1))
@@ -142,6 +145,7 @@ def perm_to_twin(p):
             seen[j] = i
 
     return t
+
 
 cdef set_int_iet(int_iet_t t, top, bot, lengths):
     "Initialize and set t with the data from top, bot, lengths"
@@ -165,11 +169,10 @@ cdef set_int_iet(int_iet_t t, top, bot, lengths):
     if sum(lengths[i] for i in top) != sum(lengths[i] for i in bot):
         raise ValueError('different lengths for top and bot')
 
-
     # fill C data
-    labels = <int *> check_malloc(2*n*sizeof(int));
-    twin = <int *> check_malloc(2*n*sizeof(int));
-    clengths = <uint64_t *> check_malloc(n*sizeof(uint64_t));
+    labels = <int *> check_malloc(2*n*sizeof(int))
+    twin = <int *> check_malloc(2*n*sizeof(int))
+    clengths = <uint64_t *> check_malloc(n*sizeof(uint64_t))
 
     for i in range(2*n):
         labels[i] = p[i]
@@ -187,6 +190,7 @@ cdef set_int_iet(int_iet_t t, top, bot, lengths):
     if int_iet_check(t):
         int_iet_clear(t)
         raise RuntimeError("invalid iet")
+
 
 # we want an iterator over lengths
 
@@ -228,6 +232,7 @@ def _relabel(top, bot):
             j += 1
     nbot = j - ntop - nfree
     return p[:k], p[k:], nfree, ntop, nbot
+
 
 cdef void get_stat(statistics, bint flat, int_iet_t t, uint64_t * widths, uint64_t * heights, int kind):
     r"""
@@ -274,6 +279,7 @@ cdef void get_stat(statistics, bint flat, int_iet_t t, uint64_t * widths, uint64
             (<dict> statistics)[key] = 1
         else:
             (<dict> statistics)[key] += 1
+
 
 def interval_exchange_statistics(top, bot, uint64_t L, int kind=0, bint flat=False):
     r"""
@@ -378,7 +384,6 @@ def interval_exchange_statistics(top, bot, uint64_t L, int kind=0, bint flat=Fal
     cdef int * twin
     cdef uint64_t * widths
     cdef uint64_t * heights
-    cdef uint64_t s
     cdef int k = len(top)
     cdef int n = (len(top)+len(bot))/2
     cdef int i
@@ -420,6 +425,7 @@ def interval_exchange_statistics(top, bot, uint64_t L, int kind=0, bint flat=Fal
     int_li_vector_clear(v)
 
     return statistics
+
 
 def interval_exchange_statistics_sample(top, bot, uint64_t L, uint64_t sample_size, int kind=0, bint flat=False):
     r"""
@@ -507,7 +513,6 @@ def interval_exchange_statistics_sample(top, bot, uint64_t L, uint64_t sample_si
     cdef int * twin
     cdef uint64_t * widths
     cdef uint64_t * heights
-    cdef uint64_t s
     cdef int k = len(top)
     cdef int n = (len(top)+len(bot))/2
     cdef int i
@@ -519,7 +524,7 @@ def interval_exchange_statistics_sample(top, bot, uint64_t L, uint64_t sample_si
     else:
         statistics = {}
 
-    top, bot, kfree, ktop, kbot = _relabel(top, bot)
+    top, bot, _, _, _ = _relabel(top, bot)
 
     p = top + bot
     python_twin = perm_to_twin(p)
@@ -557,7 +562,7 @@ def cylinder_statistics(top, bot, uint64_t L, int kind=0, bint flat=False):
     - ``top`` -- (list) composition of the top of the cylinder
 
     - ``bot`` -- (list) composition of the bottom of the cylinder
-    
+
     - ``L`` -- (positive integer) the length we are considering
 
     - ``kind`` (integer) -- choose the statistics to gather
@@ -627,7 +632,7 @@ def cylinder_statistics(top, bot, uint64_t L, int kind=0, bint flat=False):
     cdef int k1 = len(top)
     cdef int k2 = k1 + 1
     cdef int n = (len(top)+len(bot))/2
-    cdef int i,j
+    cdef int i
     cdef uint64_t twist
     cdef uint64_t * widths
     cdef uint64_t * heights
@@ -695,6 +700,7 @@ def cylinder_statistics(top, bot, uint64_t L, int kind=0, bint flat=False):
 
     return statistics
 
+
 def cylinder_number(top, bot, lengths):
     r"""
     Return the number of cylinders and of a given interval exchange
@@ -723,6 +729,7 @@ def cylinder_number(top, bot, lengths):
     cdef int res = int_iet_num_cylinders(NULL, NULL, t)
     int_iet_clear(t)
     return res
+
 
 def cylinder_widths_and_heights(top, bot, lengths):
     r"""
@@ -757,6 +764,7 @@ def cylinder_widths_and_heights(top, bot, lengths):
     sig_free(heights)
     output.sort()
     return output
+
 
 def cylinder_widths(top, bot, lengths):
     r"""

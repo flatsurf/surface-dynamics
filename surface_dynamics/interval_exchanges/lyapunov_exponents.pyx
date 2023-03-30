@@ -54,11 +54,12 @@ cdef extern from "lyapunov_exponents.h":
     void lyapunov_exponents_isotypic(quad_cover *qcc, double *theta, size_t nb_induction, size_t nb_char, size_t *dimensions, double *proj)
     void top_lyapunov_exponents_H_plus(quad_cover *qcc, double *theta, size_t nb_iterations)
 
+
 def lyapunov_exponents_H_plus_cover(
-    gp, k, twin, sigma,
-    nb_experiments, nb_iterations,
-    dimensions,
-    np.ndarray[np.float64_t, ndim=3] projections, lengths, verbose):
+        gp, k, twin, sigma,
+        nb_experiments, nb_iterations,
+        dimensions,
+        np.ndarray[np.float64_t, ndim=3] projections, lengths, verbose):
     r"""
     Compute the Lyapunov exponents of the H^+ part of the KZ-cocycle for covering locii.
 
@@ -130,7 +131,6 @@ def lyapunov_exponents_H_plus_cover(
         if not all(len(l) == degree and set(l) == sd for l in sigma):
             raise ValueError("sigma should be a list of lists of length d that are permutations of {0, 1, ..., d}")
 
-
     p = <int *> malloc(2*n * sizeof(int))
     t = <int *> malloc(2*n * sizeof(int))
 
@@ -157,7 +157,7 @@ def lyapunov_exponents_H_plus_cover(
     qcc = <quad_cover *> new_quad_cover(gp_c, s, degree, nb_vectors)
 
     if lengths is None:
-       set_random_lengths_quad_cover(qcc)
+        set_random_lengths_quad_cover(qcc)
     else:
         l = <long double *> malloc(n * sizeof(long double))
         for i from 0 <= i < n:
@@ -190,7 +190,7 @@ def lyapunov_exponents_H_plus_cover(
             proj = <double *> malloc((n * degree)**2 * nc * sizeof(double))
             flat_projections = projections.flatten()
             for i from 0 <= i < (n * degree)**2 * nc:
-                 proj[i] = flat_projections[i]
+                proj[i] = flat_projections[i]
 
             i = 0
             while i < nb_experiments:

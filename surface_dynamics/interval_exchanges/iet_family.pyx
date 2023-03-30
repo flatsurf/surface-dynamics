@@ -43,17 +43,16 @@ cdef extern from "gmp.h":
 # Cython imports
 ########################
 
-from libc.stdlib cimport malloc, calloc, realloc, free, qsort
+from libc.stdlib cimport realloc, free, qsort
 from libc.string cimport memcpy
 
 from cpython.object cimport Py_EQ, Py_NE
 from cython.operator cimport dereference as deref
 
-from cysignals.memory cimport sig_malloc, sig_calloc, sig_realloc, sig_free, check_malloc, check_calloc, check_realloc
+from cysignals.memory cimport sig_free, check_malloc
 
-from ppl.ppl_decl cimport PPL_Variable, PPL_Generator, PPL_Generator_System, PPL_gs_iterator
+from ppl.ppl_decl cimport PPL_Variable, PPL_Generator_System, PPL_gs_iterator
 from ppl.linear_algebra cimport Variable
-from ppl.generator cimport Generator_System
 from ppl.polyhedron cimport C_Polyhedron
 
 from sage.ext.stdsage cimport PY_NEW
@@ -90,7 +89,8 @@ cdef inline int mpz_vec_any_smaller(mpz_t * x, mpz_t * y, size_t length):
 cdef inline int mpz_vec_equal(mpz_t * x, mpz_t * y, size_t length):
     cdef size_t k
     for k in range(length):
-        if mpz_cmp(x[k], y[k]): return 0
+        if mpz_cmp(x[k], y[k]):
+            return 0
     return 1
 
 cdef Py_hash_t mpz_pythonhash(mpz_srcptr z):
@@ -108,7 +108,8 @@ cdef Py_hash_t mpz_pythonhash(mpz_srcptr z):
         h0 = h1
         h1 += mpz_getlimbn(z, i)
         # Add 1 on overflow
-        if h1 < h0: h1 += 1
+        if h1 < h0:
+            h1 += 1
 
     cdef Py_hash_t h = h1
     if mpz_sgn(z) < 0:
@@ -303,7 +304,6 @@ cdef class IETFamily:
         for i in range(self.alloc):
             sys.stdout.write('rows[%d]  %lu\n' %(i, <size_t> (self.rows[i] - self.entries)))
             sys.stdout.flush()
-
 
     cdef void fit_length(self, size_t length):
         r"""
@@ -776,7 +776,6 @@ cdef class IETFamily:
         num_minimals = 0
         num_saddles = 0
         num_unknowns = 0
-        bads = []
 
         if intervalxt:
             from pyintervalxt import intervalxt
