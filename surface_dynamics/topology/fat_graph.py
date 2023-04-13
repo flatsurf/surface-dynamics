@@ -99,17 +99,8 @@ class FatGraph(object):
         sage: F3 = FatGraph(vp=vp)
         sage: F0 == F1 and F0 == F2 and F0 == F3
         True
-
-    It is also possible to use graphs with inactive darts which are represented by ``-1``::
-
-        sage: F = FatGraph([1, 4, -1, -1, 5, 0])
-        sage: F
-        FatGraph('(0,1,4,5)', '(0)(1,5)(4)')
-        sage: list(F.active_darts())
-        [0, 1, 4, 5]
     """
     __slots__ = ['_n',       # number of darts (non-negative integer)
-                 '_n_active', # number of active darts (non-negative integer <= _n)
                  '_mutable', # mutability flag
                  # permutations
                  '_vp',  # vertex permutation (array of length _n)
@@ -138,8 +129,6 @@ class FatGraph(object):
         self._nv = len(self._vd)  # number of vertices
         self._fl, self._fd = perm_dense_cycles(fp, self._n)
         self._nf = len(self._fd)  # number of faces
-
-        self._n_active = sum(i != -1 for i in self._vp)  # number of active darts
 
         self._mutable = bool(mutable)
 
@@ -224,45 +213,34 @@ class FatGraph(object):
         fd = self._fd
 
         n = self._n
-        n_active = self._n_active
         nf = self._nf
         nv = self._nv
 
-        if not n_active:
-            if any(j != -1 for j in vp) or any(j != -1 for j in fp):
-                raise ValueError('active vertices in empty FatGraph')
-            return
-
-        v_active = [i for i, j in enumerate(vp) if j != -1]
-        f_active = [i for i, j in enumerate(fp) if j != -1]
-        if v_active != f_active or len(v_active) != n_active:
-            raise ValueError("inconsistent active darts: active for vertices %s, active for edges %s, count %d" % (v_active, f_active, n_active))
+        if any(vp[i] == -1 or fp[i] == -1 for i in range(self._n)):
+            raise ValueError('inactive dart not allowed')
 
         if not perm_check(vp, n):
             raise ValueError("invalid vertex permutation: %s" % vp)
         if not perm_check(fp, n):
             raise ValueError("invalid face permutation: %s" % fp)
 
-        if perm_num_cycles(vp, n) != self._nv:
+        if n and (perm_num_cycles(vp, n) != self._nv):
             raise error("wrong number of vertices")
-        if perm_num_cycles(fp, n) != self._nf:
+        if n and (perm_num_cycles(fp, n) != self._nf):
             raise error("wrong number of faces")
 
         if len(vl) < n or len(fl) < n or len(vd) < nv or len(fd) < nf:
             raise error("inconsistent lengths")
 
-        if any(x < 0 or x > n for x in vd[:nv]) or sum(vd[:nv]) != n_active:
+        if any(x < 0 or x > n for x in vd[:nv]):
             raise error("invalid vertex degrees")
-        if any(x < 0 or x > n for x in fd[:nf]) or sum(fd[:nf]) != n_active:
+        if any(x < 0 or x > n for x in fd[:nf]):
             raise error("invalid face degrees")
 
         ffd = [0] * nf
         vvd = [0] * nv
 
         for i in range(n):
-            if vp[i] == -1:
-                # inactive dart
-                continue
             if fp[vp[i] ^ 1] != i:
                 raise error("fp[ep[vp[%d]]] = %d" % (i, fp[vp[i] ^ 1]))
             if fl[i] < 0 or fl[i] >= nf:
@@ -289,8 +267,6 @@ class FatGraph(object):
         i = int(i)
         if i >= self._n:
             raise ValueError('dart i=%d out of range' % i)
-        if self._vp[i] == -1:
-            raise ValueError('inactive dart i=%d' % i)
         return i
 
     def __hash__(self):
@@ -324,50 +300,21 @@ class FatGraph(object):
             Traceback (most recent call last):
             ...
             ValueError: dart i=4 out of range
-
-            sage: F = FatGraph([1, 4, -1, -1, 5, 0])
-            sage: F.edge_flip(4)
-            5
-            sage: F.edge_flip(2)
-            Traceback (most recent call last):
-            ...
-            ValueError: inactive dart i=2
         """
         i = self._check_dart(i)
         return int(i) ^ 1
 
-    def active_darts(self):
+    def darts(self):
         r"""
-        Iterator through the list of active darts.
+        Iterator through the list of darts.
 
         EXAMPLES::
 
             sage: from surface_dynamics import FatGraph
-            sage: list(FatGraph('(0,3,5)(1,4,2)').active_darts())
+            sage: list(FatGraph('(0,3,5)(1,4,2)').darts())
             [0, 1, 2, 3, 4, 5]
-            sage: list(FatGraph([1, 4, -1, -1, 5, 0]).active_darts())
-            [0, 1, 4, 5]
         """
-        if self._n == self._n_active:
-            return range(self._n)
-        else:
-            return (i for i in range(self._n) if self._vp[i] != -1)
-
-    def inactive_darts(self):
-        r"""
-        Iterator through the list of inactive darts.
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import FatGraph
-            sage: list(FatGraph('(0,3,5)(1,4,2)').inactive_darts())
-            []
-            sage: list(FatGraph([1, 4, -1, -1, 5, 0]).inactive_darts())
-            [2, 3]
-        """
-        if self._n == self._n_active:
-            return
-        yield from (i for i, j in enumerate(self._vp) if j == -1)
+        return range(self._n)
 
     def copy(self, mutable=None):
         """
@@ -383,9 +330,6 @@ class FatGraph(object):
             sage: F = FatGraph.from_unicellular_word([0,1,0,2,3,4,1,4,3,2])
             sage: G = F.copy()
             sage: G._check()
-
-            sage: F = FatGraph([1, 4, -1, -1, 5, 0])
-            sage: F.copy()._check()
         """
         if mutable is None:
             mutable = self._mutable
@@ -396,7 +340,6 @@ class FatGraph(object):
             return self
         F = FatGraph.__new__(FatGraph)
         F._n = self._n
-        F._n_active = self._n_active
         F._vp = self._vp[:]
         F._fp = self._fp[:]
         F._nf = self._nf
@@ -455,12 +398,6 @@ class FatGraph(object):
             Subgroup ...
             sage: G2.is_isomorphic(PSL(2,7))
             True
-
-        Some example with inactive darts::
-
-            sage: F = FatGraph([1, 4, -1, -1, 5, 0])
-            sage: F.monodromy_group()
-            Subgroup generated by [(1,5), (0,1,4,5)] of (Symmetric group of order 4! as a permutation group)
         """
         S = self._symmetric_group()
         v = S([i for i in self._vp if i != -1])
@@ -492,14 +429,6 @@ class FatGraph(object):
             sage: F = FatGraphs(g=1, nf=3, nv=3, vertex_min_degree=3)
             sage: F.cardinality_and_weighted_cardinality(filter=lambda x,a: x.is_face_bipartite())
             (3, 5/3)
-
-        This also works with inactive darts::
-
-            sage: F = FatGraph([-1, -1, 3, 6, -1, -1, 7, 2])
-            sage: F.is_face_bipartite()
-            True
-            sage: F.is_face_bipartite(certificate=True)
-            (True, [1, 0, 1])
         """
         # trivial cases
         if self._nf == 0:
@@ -513,7 +442,7 @@ class FatGraph(object):
         nf = self._nf
         colors = [-1] * nf
         seen = [False] * n
-        root = next(iter(self.active_darts()))
+        root = 0
         to_test = perm_orbit(fp, root)
         colors[self._fl[root]] = 1
         while to_test:
@@ -582,8 +511,6 @@ class FatGraph(object):
             sage: from surface_dynamics.topology.fat_graph import FatGraph
             sage: FatGraph('(0,4,2)(1,5,3)').vertex_permutation()
             [4, 5, 0, 1, 2, 3]
-            sage: FatGraph([1, 5, -1, -1, 0, 4]).vertex_permutation()
-            [1, 5, -1, -1, 0, 4]
         """
         return self._vp[:self._n] if copy else self._vp
 
@@ -596,8 +523,6 @@ class FatGraph(object):
             sage: from surface_dynamics.topology.fat_graph import FatGraph
             sage: FatGraph('(0,4,2)(1,5,3)').face_permutation()
             [3, 2, 5, 4, 1, 0]
-            sage: FatGraph([1, 5, -1, -1, 0, 4]).face_permutation()
-            [0, 4, -1, -1, 1, 5]
         """
         return self._fp[:self._n] if copy else self._fp
 
@@ -608,20 +533,18 @@ class FatGraph(object):
         EXAMPLES::
 
             sage: from surface_dynamics import FatGraph
-            sage: FatGraph('()', '()').vertex_degrees()
-            [0]
             sage: FatGraph('(0,3)(1,2,5)(4)').vertex_degrees()
             [2, 3, 1]
+            sage: FatGraph('()', '()').vertex_degrees()
+            [0]
         """
-        if not self._n_active:
-            return [0]
-        return self._vd[:self._nv]
+        return [0] if not self._n else self._vd[:self._nv]
 
     def vertex_min_degree(self):
-        return min(self._vd[i] for i in range(self._nv))
+        return 0 if not self._n else min(self._vd[i] for i in range(self._nv))
 
     def vertex_max_degree(self):
-        return max(self._vd[i] for i in range(self._nv))
+        return 0 if not self._n else max(self._vd[i] for i in range(self._nv))
 
     def face_degrees(self):
         r"""
@@ -631,15 +554,13 @@ class FatGraph(object):
             sage: FatGraph('()', '()').face_degrees()
             [0]
         """
-        if not self._n_active:
-            return [0]
-        return self._fd[:self._nf]
+        return [0] if not self._n else self._fd[:self._nf]
 
     def face_min_degree(self):
-        return min(self._fd[i] for i in range(self._nv))
+        return 0 if not self._nf else min(self._fd[i] for i in range(self._nf))
 
     def face_max_degree(self):
-        return max(self._fd[i] for i in range(self._nv))
+        return 0 if not self._nf else max(self._fd[i] for i in range(self._nf))
 
     def profile(self):
         r"""
@@ -650,8 +571,8 @@ class FatGraph(object):
             sage: from surface_dynamics.topology.fat_graph import FatGraph
             sage: FatGraph('(0,4,2,5,1,3)', '(0,5)(1,3,4,2)').profile()
             ([6], [2, 4])
-            sage: FatGraph([-1, -1, 6, 3, -1, -1, 7, 2]).profile()
-            ([3, 1], [3, 1])
+            sage: FatGraph('()', '()').profile()
+            ([0], [0])
         """
         return (self.vertex_degrees(), self.face_degrees())
 
@@ -664,10 +585,10 @@ class FatGraph(object):
             sage: from surface_dynamics.topology.fat_graph import FatGraph
             sage: FatGraph('(0,4,2,5,1,3)', '(0,5)(1,3,4,2)').num_vertices()
             1
-            sage: FatGraph([-1, -1, 6, 3, -1, -1, 7, 2]).num_vertices()
-            2
+            sage: FatGraph('()', '()').num_vertices()
+            1
         """
-        return self._nv
+        return 1 if not self._n else self._nv
 
     def num_edges(self):
         r"""
@@ -678,10 +599,10 @@ class FatGraph(object):
             sage: from surface_dynamics.topology.fat_graph import FatGraph
             sage: FatGraph('(0,4,2,5,1,3)', '(0,5)(1,3,4,2)').num_edges()
             3
-            sage: FatGraph([-1, -1, 6, 3, -1, -1, 7, 2]).num_edges()
-            2
+            sage: FatGraph('()', '()').num_edges()
+            0
         """
-        return self._n_active // 2
+        return self._n // 2
 
     def num_faces(self):
         r"""
@@ -692,10 +613,10 @@ class FatGraph(object):
             sage: from surface_dynamics.topology.fat_graph import FatGraph
             sage: FatGraph('(0,4,2,5,1,3)', '(0,5)(1,3,4,2)').num_faces()
             2
-            sage: FatGraph([-1, -1, 6, 3, -1, -1, 7, 2]).num_faces()
-            2
+            sage: FatGraph('()', '()').num_faces()
+            1
         """
-        return self._nf
+        return 1 if not self._n else self._nf
 
     def vertices(self):
         r"""
@@ -706,8 +627,6 @@ class FatGraph(object):
             sage: from surface_dynamics.topology.fat_graph import FatGraph
             sage: FatGraph('(0,4,2,5,1,3)', '(0,5)(1,3,4,2)').vertices()
             [[0, 4, 2, 5, 1, 3]]
-            sage: FatGraph([-1, -1, 6, 3, -1, -1, 7, 2]).vertices()
-            [[2, 6, 7], [3]]
         """
         return perm_cycles(self._vp, True, self._n)
 
@@ -720,8 +639,6 @@ class FatGraph(object):
             sage: from surface_dynamics.topology.fat_graph import FatGraph
             sage: FatGraph('(0,4,2,5,1,3)', '(0,5)(1,3,4,2)').edges()
             [[0, 1], [2, 3], [4, 5]]
-            sage: FatGraph([-1, -1, 6, 3, -1, -1, 7, 2]).edges()
-            [[2, 3], [6, 7]]
         """
         return [[i, i ^ 1] for i in range(0, self._n, 2) if self._vp[i] != -1]
 
@@ -734,8 +651,6 @@ class FatGraph(object):
             sage: from surface_dynamics.topology.fat_graph import FatGraph
             sage: FatGraph('(0,4,2,5,1,3)', '(0,5)(1,3,4,2)').faces()
             [[0, 5], [1, 3, 4, 2]]
-            sage: FatGraph([-1, -1, 6, 3, -1, -1, 7, 2]).faces()
-            [[2, 3, 7], [6]]
         """
         return perm_cycles(self._fp, True, self._n)
 
@@ -782,11 +697,7 @@ class FatGraph(object):
             sage: from surface_dynamics.topology.fat_graph import FatGraph
             sage: FatGraph('(0,4,1)(2,3,5)').is_cubic()
             True
-            sage: FatGraph([-1, -1, 3, 4, 2, 7, 5, 6]).is_cubic()
-            True
             sage: FatGraph('(0,4,1)(2)(3)(5)').is_cubic()
-            False
-            sage: FatGraph([-1, -1, 3, 4, 2, 5, 7, 6]).is_cubic()
             False
         """
         return self.is_vertex_regular(3)
@@ -800,11 +711,7 @@ class FatGraph(object):
             sage: from surface_dynamics.topology.fat_graph import FatGraph
             sage: FatGraph(fp='(0,4,1)(2,3,5)').is_triangulation()
             True
-            sage: FatGraph(fp=[-1, -1, 3, 4, 2, 7, 5, 6]).is_triangulation()
-            True
             sage: FatGraph(fp='(0,4,1)(2)(3)(5)').is_triangulation()
-            False
-            sage: FatGraph(fp=[-1, -1, 3, 4, 2, 5, 7, 6]).is_triangulation()
             False
         """
         return self.is_face_regular(3)
@@ -1005,7 +912,7 @@ class FatGraph(object):
             FatGraph('()', '()')
         """
         self._check_alloc(2, 1, 2)
-        self._n = self._n_active = 2
+        self._n = 2
         self._nf = 2
         self._nv = 1
         # set face
@@ -1038,7 +945,7 @@ class FatGraph(object):
         if not self._mutable:
             raise ValueError('immutable graph; use a copy instead')
         self._check_alloc(2, 2, 1)
-        self._n = self._n_active = 2
+        self._n = 2
         self._nf = 1
         self._nv = 2
         # set vertex
@@ -1072,7 +979,7 @@ class FatGraph(object):
         if not self._mutable:
             raise ValueError('immutable graph; use a copy instead')
         self._check_alloc(4, 1, 1)
-        self._n = self._n_active = 4
+        self._n = 4
         self._nv = self._nf = 1
         vp = self._vp
         fp = self._fp
@@ -1183,7 +1090,6 @@ class FatGraph(object):
         jj = vp[j] ^ 1  # = fp^-1(j)
 
         self._n += 2
-        self._n_active += 2
         self._nf += 1
 
         if i == j:
@@ -1367,7 +1273,6 @@ class FatGraph(object):
             k = fp[k]
 
         self._n -= 2
-        self._n_active -= 2
         self._nf -= 1
         self._vp[self._n] = self._vp[self._n + 1] = -1
         self._fp[self._n] = self._fp[self._n + 1] = -1
@@ -1430,7 +1335,6 @@ class FatGraph(object):
         ii = vp[i]
         jj = vp[j]
         self._n += 2
-        self._n_active += 2
         self._nv += 1
 
         if i == j:
@@ -1611,7 +1515,6 @@ class FatGraph(object):
             k = vp[k]
 
         self._n -= 2
-        self._n_active -= 2
         self._nv -= 1
 
     def trisect_face(self, i, j, k):
@@ -1782,6 +1685,21 @@ class FatGraph(object):
             fp[yy] = j
 
     def remove_face_trisection(self, x):
+        r"""
+        Remove the face trisection at ``x``.
+
+        TESTS::
+
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
+
+            sage: vp = '(0,2,1,3)'
+            sage: fp = '(0,2,1,3)'
+            sage: for i, j, k in [(0, 2, 1), (0, 0, 3), (0, 3, 3), (0, 3, 0), (0, 0, 0)]:
+            ....:     cm = FatGraph(vp, fp, 8, mutable=True)
+            ....:     cm.trisect_face(i, j, k)
+            ....:     cm.remove_face_trisection(4)
+            ....:     assert cm == FatGraph(vp, fp)
+        """
         fp = self._fp
         fl = self._fl
         fd = self._fd
@@ -1796,6 +1714,9 @@ class FatGraph(object):
 
         if fl[x] != fl[y] or fl[x] != fl[xx] or fl[x] != fl[yy]:
             raise ValueError("not a trisection")
+
+        if (x, y, xx, yy) != (self._n - 4, self._n - 3, self._n - 2, self._n - 1):
+            raise NotImplementedError('x={} y={} xx={} yy={}'.format(x, y, xx, yy))
 
         # face: (x xx i A y k B yy j C) -> (i A j C k B)
         #    -> (i A jj) (j C kk) (k B ii)
@@ -1867,7 +1788,6 @@ class FatGraph(object):
             fp[ii] = i
 
         self._n -= 4
-        self._n_active -= 4
         fd[fl[i]] -= 4
         vd[vl[i]] -= 1
         vd[vl[j]] -= 2
@@ -2008,7 +1928,7 @@ class FatGraph(object):
             sage: for cm in CM:
             ....:     gs = set(cm._good_starts())
             ....:     assert gs
-            ....:     for i in cm.active_darts():
+            ....:     for i in cm.darts():
             ....:         ggs = cm._good_starts(i)
             ....:         if i in gs:
             ....:             ggs = cm._good_starts(i)
