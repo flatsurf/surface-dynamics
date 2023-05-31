@@ -105,6 +105,7 @@ from surface_dynamics.misc.linalg import cone_triangulate
 
 from sage.misc.decorators import rename_keyword
 
+from sage.all import matrix
 
 #
 # Abelian and quadratic Separatrix Diagram
@@ -3930,6 +3931,32 @@ class CylinderDiagram(SeparatrixDiagram):
         # yield the one without twist
         return Origami_dense_pyx(tuple(lx), tuple(ly))
 
+    def to_cylinder_graph(self):
+        """
+        Turn a cylinder diagram to a weighted DiGraph
+
+        Every cylinder is a vertex of the graph. For each horizontal saddle
+        connection `s`, there is a directed edge from the cylinder under `s` to
+        the cylinder above `s`. The weight of each edge counts the number of 
+        distinct saddle connections that joins one cylinders to the other.
+        """
+        # Using `cylinders`, create a list of edges.
+        # The i-th element of saddle_data is [under, above], where `under` is
+        # the cylinder under saddle i and `above` is the saddle above it
+        saddle_data = [[None, None] for _ in range(self.degree())]
+        for i, (bot, top) in enumerate(self.cylinders()):
+            for saddle in bot:
+                saddle_data[saddle][1] = i
+            for saddle in top:
+                saddle_data[saddle][0] = i
+        
+        # Turns the list of edges into an adjacency matrix. The reason we're
+        # doing this is that we want a weighted graph.
+        adjacency_matrix = matrix(len(self.cylinders()))
+        for pre, suc in saddle_data:
+            adjacency_matrix[pre, suc] += 1
+
+        return DiGraph(adjacency_matrix, loops=True, weighted = True)
 
     #TODO
 #    def chain_complex_dual(self, ring=None):
