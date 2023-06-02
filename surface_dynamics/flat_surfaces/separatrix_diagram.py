@@ -1404,7 +1404,7 @@ class SeparatrixDiagram(SageObject):
             doctest:warning
             ...
             DeprecationWarning: use the option 'up_to_symmetry' instead of 'up_to_isomorphism'
-            See http://trac.sagemath.org/666 for details.
+            ...
         """
         cbot = self.bot_cycle_tuples()
         ctop0 = self.top_cycle_tuples()
@@ -1505,7 +1505,7 @@ class SeparatrixDiagram(SageObject):
             doctest:warning
             ...
             DeprecationWarning: use the option 'up_to_symmetry' instead of 'up_to_isomorphism'
-            See http://trac.sagemath.org/666 for details.
+            ...
         """
         return list(self.cylinder_diagram_iterator(
             connected=connected,
