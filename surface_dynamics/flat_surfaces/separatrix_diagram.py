@@ -86,6 +86,7 @@ from six import iteritems
 
 from functools import total_ordering
 
+import collections
 import numbers
 
 from sage.structure.sage_object import SageObject
@@ -3931,32 +3932,43 @@ class CylinderDiagram(SeparatrixDiagram):
         # yield the one without twist
         return Origami_dense_pyx(tuple(lx), tuple(ly))
 
-    def to_cylinder_graph(self):
+    def cylinder_graph(self):
         """
-        Turn a cylinder diagram to a weighted DiGraph
+        Return the cylinder graph.
 
-        Every cylinder is a vertex of the graph. For each horizontal saddle
-        connection `s`, there is a directed edge from the cylinder under `s` to
-        the cylinder above `s`. The weight of each edge counts the number of 
-        distinct saddle connections that joins one cylinders to the other.
+        The cylinder graph is the graph whose vertex set are the cylinders
+        and for each saddle connection there is a directed edge from the
+        adjacent cylinders. The multiplicities are encoded in the labels.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import CylinderDiagram
+
+            sage: c = CylinderDiagram('(0,1,5)-(2,5) (2)-(0,1,3) (3,4)-(4)')
+            sage: c.cylinder_graph()
+            Looped digraph on 3 vertices
+            sage: c.cylinder_graph().edges(sort=True)
+            [(0, 0, 1), (0, 1, 1), (1, 0, 2), (1, 2, 1), (2, 2, 1)]
+
+            sage: c = CylinderDiagram('(0,1,3,5)-(2,5,3) (2,4)-(0,4,1)')
+            sage: c.cylinder_graph().edges(sort=True)
+            [(0, 0, 2), (0, 1, 1), (1, 0, 2), (1, 1, 1)]
         """
-        # Using `cylinders`, create a list of edges.
-        # The i-th element of saddle_data is [under, above], where `under` is
-        # the cylinder under saddle i and `above` is the saddle above it
-        saddle_data = [[None, None] for _ in range(self.degree())]
+        bot_to_cyl = [None] * self.degree()
+        top_to_cyl = [None] * self.degree()
         for i, (bot, top) in enumerate(self.cylinders()):
             for saddle in bot:
-                saddle_data[saddle][1] = i
+                bot_to_cyl[saddle] = i
             for saddle in top:
-                saddle_data[saddle][0] = i
-        
-        # Turns the list of edges into an adjacency matrix. The reason we're
-        # doing this is that we want a weighted graph.
-        adjacency_matrix = matrix(len(self.cylinders()))
-        for pre, suc in saddle_data:
-            adjacency_matrix[pre, suc] += 1
+                top_to_cyl[saddle] = i
 
-        return DiGraph(adjacency_matrix, loops=True, weighted = True)
+        edges = collections.defaultdict(int)
+        for u, v in zip(top_to_cyl, bot_to_cyl):
+            edges[u, v] += 1
+
+        G = DiGraph(self.ncyls(), loops=True, multiedges=False, weighted=True)
+        G.add_edges([(u, v, m) for ((u, v), m) in edges.items()])
+        return G
 
     #TODO
 #    def chain_complex_dual(self, ring=None):
