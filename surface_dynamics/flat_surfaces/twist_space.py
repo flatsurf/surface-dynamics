@@ -32,7 +32,7 @@ class TwistSpace:
         TwistSpace('(0,1)-(0,5) (2)-(4) (3,4)-(1) (5)-(2,3)')
         sage: tw.homologous_cylinders()
         [[2, 3]]
-        sage: tw.absolute_dimension()
+        sage: tw.cylinder_dimension()
         3
 
     In this example, we get that the last two cylinders (3,4)-(1) and (5)-(2,3)
@@ -129,7 +129,7 @@ class TwistSpace:
                 output.append(homology_class)
         return output
 
-    def absolute_dimension(self):
+    def cylinder_dimension(self):
         r"""
         Return the dimension of the span of core curves.
 
@@ -140,6 +140,7 @@ class TwistSpace:
             sage: from surface_dynamics import AbelianStratum
             sage: from surface_dynamics.flat_surfaces.twist_space import TwistSpace
             sage: for cd in AbelianStratum(1,1,1,1).cylinder_diagrams():
-            ....:     assert TwistSpace(cd).absolute_dimension() == cd.homological_dimension_of_cylinders()
+            ....:     assert TwistSpace(cd).cylinder_dimension() == cd.homological_dimension_of_cylinders()
         """
-        return span(self._core_curves).dimension()
+        from sage.matrix.constructor import matrix
+        return matrix(self._core_curves).rank()
