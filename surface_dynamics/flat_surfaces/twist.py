@@ -1,6 +1,18 @@
+# encoding=utf-8
+r"""
+Homology of cylinder decomposition.
+"""
+#*****************************************************************************
+#       Copyright (C) 2023 Christopher Zhang <christophertzhang@gmail.com>
+#
+#  Distributed under the terms of the GNU General Public License (GPL)
+#  as published by the Free Software Foundation; either version 2 of
+#  the License, or (at your option) any later version.
+#                  https://www.gnu.org/licenses/
+#*****************************************************************************
+
 from collections import defaultdict
 from sage.all import QQ, matrix, vector, span
-
 
 class Twist:
     """
