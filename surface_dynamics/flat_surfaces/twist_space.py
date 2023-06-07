@@ -133,7 +133,7 @@ class TwistSpace:
         r"""
         Return the dimension of the span of core curves.
 
-        See also :meth:`~surface_dynamics.separatrix_diagram.CylinderDiagram.homological_dimension_of_cylinders`.
+        See also :meth:`~surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.homological_dimension_of_cylinders`.
 
         EXAMPLES::
 
