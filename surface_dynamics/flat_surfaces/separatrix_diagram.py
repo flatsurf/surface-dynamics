@@ -1211,6 +1211,31 @@ class SeparatrixDiagram(SageObject):
         """
         return Integer(self.ncyls() - SeparatrixDiagram.to_directed_graph(self).connected_components_number() + 1)
 
+    def homologous_cylinders(self):
+        r"""
+        Return the list of homologous cylinders.
+
+        OUTPUT: a list of lists. Each sublist is an equivalence class of > 1
+        homologous cylinders.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import CylinderDiagram
+            sage: c = CylinderDiagram('(0,7,1,2)-(3,6,4,5) (3,6,4,5)-(0,7,1,2)')
+            sage: c.homologous_cylinders()
+            [[0, 1]]
+
+            sage: c = CylinderDiagram('(0,1)-(2,3) (2)-(0) (3)-(1)')
+            sage: c.homologous_cylinders()
+            []
+
+            sage: c = CylinderDiagram('(0,2,1)-(9) (3,6,4,5)-(7,10,8) (7,9,8)-(3,6,4,5) (10)-(0,2,1)')
+            sage: c.homologous_cylinders()
+            [[0, 3], [1, 2]]
+        """
+        from .twist_space import TwistSpace
+        return TwistSpace(self).homologous_cylinders()
+
     #
     # Vertices of the separatrix diagram
     #
