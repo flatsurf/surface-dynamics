@@ -106,8 +106,6 @@ from surface_dynamics.misc.linalg import cone_triangulate
 
 from sage.misc.decorators import rename_keyword
 
-from sage.all import matrix
-
 #
 # Abelian and quadratic Separatrix Diagram
 #
