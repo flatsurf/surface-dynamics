@@ -58,23 +58,12 @@ class TwistSpace:
                 relations[i, s] -= 1
         rref = relations.rref()
         pivots = relations.pivots()
+        self._projection = identity_matrix(QQ, degree, degree)
         if pivots:
-            kill_relation_matrix = identity_matrix(QQ, degree, degree)
             for j, eq in zip(pivots, rref):
-                kill_relation_matrix[j] -= eq
-            projection_matrix = matrix(QQ, degree, degree - len(pivots))
-            for i in range(pivots[0]):
-                projection_matrix[i, i] = 1
-            shift = 1
-            for j in range(len(pivots) - 1):
-                for i in range(pivots[j] + 1, pivots[j + 1]):
-                    projection_matrix[i, i - shift] = 1
-                shift += 1
-            for i in range(pivots[-1] + 1, degree):
-                projection_matrix[i, i - shift] = 1
-            self._projection = kill_relation_matrix * projection_matrix
-        else:
-            self._projection = identity_matrix(QQ, degree, degree)
+                self._projection[j] -= eq
+            self._projection = self._projection.delete_columns(pivots)
+        self._projection.set_immutable()
 
     def __repr__(self):
         return f"TwistSpace('{self._cylinder_diagram}')"
