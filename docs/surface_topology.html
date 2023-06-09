@@ -57,6 +57,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.canonical_label"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.canonical_label()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylcoord_to_origami"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.cylcoord_to_origami()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylcoord_to_origami_iterator"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.cylcoord_to_origami_iterator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylinder_graph"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.cylinder_graph()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylinders"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.cylinders()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.dual_graph"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.dual_graph()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.horizontal_symmetry"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.horizontal_symmetry()</span></code></a></li>
@@ -115,6 +116,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.euler_characteristic"><code class="docutils literal notranslate"><span class="pre">SeparatrixDiagram.euler_characteristic()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.genus"><code class="docutils literal notranslate"><span class="pre">SeparatrixDiagram.genus()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.homological_dimension_of_cylinders"><code class="docutils literal notranslate"><span class="pre">SeparatrixDiagram.homological_dimension_of_cylinders()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.homologous_cylinders"><code class="docutils literal notranslate"><span class="pre">SeparatrixDiagram.homologous_cylinders()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.horizontal_symmetry"><code class="docutils literal notranslate"><span class="pre">SeparatrixDiagram.horizontal_symmetry()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.incoming_edges_perm"><code class="docutils literal notranslate"><span class="pre">SeparatrixDiagram.incoming_edges_perm()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.inverse"><code class="docutils literal notranslate"><span class="pre">SeparatrixDiagram.inverse()</span></code></a></li>
@@ -149,6 +151,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.simplex_count"><code class="docutils literal notranslate"><span class="pre">simplex_count()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.string_to_cycle"><code class="docutils literal notranslate"><span class="pre">string_to_cycle()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#surface_dynamics.flat_surfaces.separatrix_diagram.two_non_connected_perms_canonical_labels"><code class="docutils literal notranslate"><span class="pre">two_non_connected_perms_canonical_labels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#surface_dynamics.flat_surfaces.twist_space.TwistSpace"><code class="docutils literal notranslate"><span class="pre">TwistSpace</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.twist_space.TwistSpace.cylinder_core_curves"><code class="docutils literal notranslate"><span class="pre">TwistSpace.cylinder_core_curves()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.twist_space.TwistSpace.cylinder_dimension"><code class="docutils literal notranslate"><span class="pre">TwistSpace.cylinder_dimension()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.flat_surfaces.twist_space.TwistSpace.homologous_cylinders"><code class="docutils literal notranslate"><span class="pre">TwistSpace.homologous_cylinders()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-surface_dynamics.flat_surfaces.homology">Homology</a><ul>
@@ -607,6 +615,29 @@ is raised:</p>
 <p>The number of origamis generated is just the product of the widths:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">cyl</span><span class="o">.</span><span class="n">cylcoord_to_origami_iterator</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
 <span class="mi">8</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylinder_graph">
+<span class="sig-name descname"><span class="pre">cylinder_graph</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/flat_surfaces/separatrix_diagram.html#CylinderDiagram.cylinder_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylinder_graph" title="Permalink to this definition"></a></dt>
+<dd><p>Return the cylinder graph.</p>
+<p>The cylinder graph is the graph whose vertex set are the cylinders
+and for each saddle connection there is a directed edge from the
+adjacent cylinders. The multiplicities are encoded in the labels.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">CylinderDiagram</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,1,5)-(2,5) (2)-(0,1,3) (3,4)-(4)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">cylinder_graph</span><span class="p">()</span>
+<span class="n">Looped</span> <span class="n">digraph</span> <span class="n">on</span> <span class="mi">3</span> <span class="n">vertices</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">cylinder_graph</span><span class="p">()</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,1,3,5)-(2,5,3) (2,4)-(0,4,1)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">cylinder_graph</span><span class="p">()</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1883,7 +1914,7 @@ and vertical symmetries.</p></li>
 <span class="n">doctest</span><span class="p">:</span><span class="n">warning</span>
 <span class="o">...</span>
 <span class="ne">DeprecationWarning</span><span class="p">:</span> <span class="n">use</span> <span class="n">the</span> <span class="n">option</span> <span class="s1">&#39;up_to_symmetry&#39;</span> <span class="n">instead</span> <span class="n">of</span> <span class="s1">&#39;up_to_isomorphism&#39;</span>
-<span class="n">See</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">trac</span><span class="o">.</span><span class="n">sagemath</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="mi">666</span> <span class="k">for</span> <span class="n">details</span><span class="o">.</span>
+<span class="o">...</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1940,7 +1971,7 @@ diagram generation as the separatrix diagram admit no automorphism:</p>
 <span class="n">doctest</span><span class="p">:</span><span class="n">warning</span>
 <span class="o">...</span>
 <span class="ne">DeprecationWarning</span><span class="p">:</span> <span class="n">use</span> <span class="n">the</span> <span class="n">option</span> <span class="s1">&#39;up_to_symmetry&#39;</span> <span class="n">instead</span> <span class="n">of</span> <span class="s1">&#39;up_to_isomorphism&#39;</span>
-<span class="n">See</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">trac</span><span class="o">.</span><span class="n">sagemath</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="mi">666</span> <span class="k">for</span> <span class="n">details</span><span class="o">.</span>
+<span class="o">...</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2041,6 +2072,29 @@ curves of horizontal cylinders.</p>
 <span class="n">H_2</span><span class="p">(</span><span class="mi">1</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">homological_dimension_of_cylinders</span><span class="p">()</span>
 <span class="mi">2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.homologous_cylinders">
+<span class="sig-name descname"><span class="pre">homologous_cylinders</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/flat_surfaces/separatrix_diagram.html#SeparatrixDiagram.homologous_cylinders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.homologous_cylinders" title="Permalink to this definition"></a></dt>
+<dd><p>Return the list of homologous cylinders.</p>
+<p>OUTPUT: a list of lists. Each sublist is an equivalence class of &gt; 1
+homologous cylinders.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">CylinderDiagram</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,7,1,2)-(3,6,4,5) (3,6,4,5)-(0,7,1,2)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">homologous_cylinders</span><span class="p">()</span>
+<span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,1)-(2,3) (2)-(0) (3)-(1)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">homologous_cylinders</span><span class="p">()</span>
+<span class="p">[]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,2,1)-(9) (3,6,4,5)-(7,10,8) (7,9,8)-(3,6,4,5) (10)-(0,2,1)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">homologous_cylinders</span><span class="p">()</span>
+<span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2764,6 +2818,85 @@ separatrix_diagram_fast_iterator instead.</p>
 <span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<span class="target" id="module-surface_dynamics.flat_surfaces.twist_space"></span><p>Homology of cylinder decomposition.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.twist_space.TwistSpace">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.flat_surfaces.twist_space.</span></span><span class="sig-name descname"><span class="pre">TwistSpace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/flat_surfaces/twist_space.html#TwistSpace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.flat_surfaces.twist_space.TwistSpace" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Subspace of relative homology generated by horizontal saddle connections.</p>
+<p>This subspace contains the core curves of cylinders. The subspace spanned by the
+latter is an isotropic subspace of absolute homology.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">CylinderDiagram</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.twist_space</span> <span class="kn">import</span> <span class="n">TwistSpace</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0,1)-(0,5) (2)-(4) (3,4)-(1) (5)-(2,3)&quot;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">tw</span> <span class="o">=</span> <span class="n">TwistSpace</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">tw</span>
+<span class="n">TwistSpace</span><span class="p">(</span><span class="s1">&#39;(0,1)-(0,5) (2)-(4) (3,4)-(1) (5)-(2,3)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">tw</span><span class="o">.</span><span class="n">homologous_cylinders</span><span class="p">()</span>
+<span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">tw</span><span class="o">.</span><span class="n">cylinder_dimension</span><span class="p">()</span>
+<span class="mi">3</span>
+</pre></div>
+</div>
+<p>In this example, we get that the last two cylinders (3,4)-(1) and (5)-(2,3)
+are homologous.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.twist_space.TwistSpace.cylinder_core_curves">
+<span class="sig-name descname"><span class="pre">cylinder_core_curves</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/flat_surfaces/twist_space.html#TwistSpace.cylinder_core_curves"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.flat_surfaces.twist_space.TwistSpace.cylinder_core_curves" title="Permalink to this definition"></a></dt>
+<dd><p>Iterate through the core curves of cylinders as homology elements.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.separatrix_diagram</span> <span class="kn">import</span> <span class="n">CylinderDiagram</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.twist_space</span> <span class="kn">import</span> <span class="n">TwistSpace</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,7,1,2)-(3,6,4,5) (3,6,4,5)-(0,7,1,2)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">tw</span> <span class="o">=</span> <span class="n">TwistSpace</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">tw</span><span class="o">.</span><span class="n">cylinder_core_curves</span><span class="p">())</span>
+<span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,7,3,4)-(0,5,3,6) (1,5,2,6)-(1,7,2,4)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">tw</span> <span class="o">=</span> <span class="n">TwistSpace</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">tw</span><span class="o">.</span><span class="n">cylinder_core_curves</span><span class="p">())</span>
+<span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.twist_space.TwistSpace.cylinder_dimension">
+<span class="sig-name descname"><span class="pre">cylinder_dimension</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/flat_surfaces/twist_space.html#TwistSpace.cylinder_dimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.flat_surfaces.twist_space.TwistSpace.cylinder_dimension" title="Permalink to this definition"></a></dt>
+<dd><p>Return the dimension of the span of core curves.</p>
+<p>See also the method <code class="docutils literal notranslate"><span class="pre">homological_dimension_of_cylinders</span></code> for <code class="docutils literal notranslate"><span class="pre">CylinderDiagram</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.twist_space</span> <span class="kn">import</span> <span class="n">TwistSpace</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">cd</span> <span class="ow">in</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">cylinder_diagrams</span><span class="p">():</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">assert</span> <span class="n">TwistSpace</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span><span class="o">.</span><span class="n">cylinder_dimension</span><span class="p">()</span> <span class="o">==</span> <span class="n">cd</span><span class="o">.</span><span class="n">homological_dimension_of_cylinders</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.twist_space.TwistSpace.homologous_cylinders">
+<span class="sig-name descname"><span class="pre">homologous_cylinders</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/flat_surfaces/twist_space.html#TwistSpace.homologous_cylinders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.flat_surfaces.twist_space.TwistSpace.homologous_cylinders" title="Permalink to this definition"></a></dt>
+<dd><p>Return the list of homologous cylinders.</p>
+<p>OUTPUT: a list of lists. Each sublist is an equivalence class of &gt; 1
+homologous cylinders.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.twist_space</span> <span class="kn">import</span> <span class="n">TwistSpace</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">cd</span> <span class="ow">in</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">cylinder_diagrams</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">hom_cyls</span> <span class="o">=</span> <span class="n">TwistSpace</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span><span class="o">.</span><span class="n">homologous_cylinders</span><span class="p">()</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">if</span> <span class="n">hom_cyls</span><span class="p">:</span>
+<span class="o">....</span><span class="p">:</span>         <span class="nb">print</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>         <span class="nb">print</span><span class="p">(</span><span class="n">hom_cyls</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 </section>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>surface_dynamics.flat_surfaces.twist_space &mdash; surface-dynamics 0.4.7 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            surface-dynamics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../demo_interval_exchanges.html">Interval exchange transformations</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../origamis.html">Origamis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interval_exchanges/index.html">Interval exchange transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../topological_recursion/index.html">Topological recursion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../misc/index.html">Miscellaneous</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">surface-dynamics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">surface_dynamics.flat_surfaces.twist_space</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for surface_dynamics.flat_surfaces.twist_space</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding=utf-8</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Homology of cylinder decomposition.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1">#*****************************************************************************</span>
+<span class="c1">#       Copyright (C) 2023 Christopher Zhang &lt;christophertzhang@gmail.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1">#  Distributed under the terms of the GNU General Public License (GPL)</span>
+<span class="c1">#  as published by the Free Software Foundation; either version 2 of</span>
+<span class="c1">#  the License, or (at your option) any later version.</span>
+<span class="c1">#                  https://www.gnu.org/licenses/</span>
+<span class="c1">#*****************************************************************************</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">from</span> <span class="nn">sage.rings.rational_field</span> <span class="kn">import</span> <span class="n">QQ</span>
+<span class="kn">from</span> <span class="nn">sage.matrix.special</span> <span class="kn">import</span> <span class="n">identity_matrix</span>
+<span class="kn">from</span> <span class="nn">sage.matrix.constructor</span> <span class="kn">import</span> <span class="n">matrix</span>
+<span class="kn">from</span> <span class="nn">sage.modules.free_module_element</span> <span class="kn">import</span> <span class="n">vector</span>
+
+
+<div class="viewcode-block" id="TwistSpace"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.twist_space.TwistSpace">[docs]</a><span class="k">class</span> <span class="nc">TwistSpace</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subspace of relative homology generated by horizontal saddle connections.</span>
+
+<span class="sd">    This subspace contains the core curves of cylinders. The subspace spanned by the</span>
+<span class="sd">    latter is an isotropic subspace of absolute homology.</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: from surface_dynamics import CylinderDiagram</span>
+<span class="sd">        sage: from surface_dynamics.flat_surfaces.twist_space import TwistSpace</span>
+<span class="sd">        sage: cd = CylinderDiagram(&quot;(0,1)-(0,5) (2)-(4) (3,4)-(1) (5)-(2,3)&quot;)</span>
+<span class="sd">        sage: tw = TwistSpace(cd)</span>
+<span class="sd">        sage: tw</span>
+<span class="sd">        TwistSpace(&#39;(0,1)-(0,5) (2)-(4) (3,4)-(1) (5)-(2,3)&#39;)</span>
+<span class="sd">        sage: tw.homologous_cylinders()</span>
+<span class="sd">        [[2, 3]]</span>
+<span class="sd">        sage: tw.cylinder_dimension()</span>
+<span class="sd">        3</span>
+
+<span class="sd">    In this example, we get that the last two cylinders (3,4)-(1) and (5)-(2,3)</span>
+<span class="sd">    are homologous.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cd</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cylinder_diagram</span> <span class="o">=</span> <span class="n">cd</span>
+        <span class="n">degree</span> <span class="o">=</span> <span class="n">cd</span><span class="o">.</span><span class="n">degree</span><span class="p">()</span>
+        <span class="n">ncyls</span> <span class="o">=</span> <span class="n">cd</span><span class="o">.</span><span class="n">ncyls</span><span class="p">()</span>
+
+        <span class="c1"># write down the projection from the vector space generated by</span>
+        <span class="c1"># saddle connections to homology (in the canonical basis</span>
+        <span class="c1"># given by the row reduced echelon form)</span>
+        <span class="n">relations</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="n">ncyls</span><span class="p">,</span> <span class="n">degree</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">bot</span><span class="p">,</span> <span class="n">top</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cd</span><span class="o">.</span><span class="n">cylinders</span><span class="p">()):</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">bot</span><span class="p">:</span>
+                <span class="n">relations</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">top</span><span class="p">:</span>
+                <span class="n">relations</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">rref</span> <span class="o">=</span> <span class="n">relations</span><span class="o">.</span><span class="n">rref</span><span class="p">()</span>
+        <span class="n">pivots</span> <span class="o">=</span> <span class="n">relations</span><span class="o">.</span><span class="n">pivots</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_projection</span> <span class="o">=</span> <span class="n">identity_matrix</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="n">degree</span><span class="p">,</span> <span class="n">degree</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pivots</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">eq</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pivots</span><span class="p">,</span> <span class="n">rref</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_projection</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-=</span> <span class="n">eq</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_projection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_projection</span><span class="o">.</span><span class="n">delete_columns</span><span class="p">(</span><span class="n">pivots</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_projection</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;TwistSpace(&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_cylinder_diagram</span><span class="si">}</span><span class="s2">&#39;)&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the projection of a vector expressed on saddle connections.</span>
+
+<span class="sd">        The result is expressed in the canonical basis of homology given by</span>
+<span class="sd">        the row reduced echelon form.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics.flat_surfaces.separatrix_diagram import CylinderDiagram</span>
+<span class="sd">            sage: from surface_dynamics.flat_surfaces.twist_space import TwistSpace</span>
+<span class="sd">            sage: c = CylinderDiagram(&#39;(0,3,1,2)-(5,7) (4,5)-(4,6) (6,7)-(0,3,1,2)&#39;)</span>
+<span class="sd">            sage: tw = TwistSpace(c)</span>
+<span class="sd">            sage: for e in (QQ^8).basis():</span>
+<span class="sd">            ....:     print(tw(e))</span>
+<span class="sd">            (-1, -1, -1, 0, 1, 1)</span>
+<span class="sd">            (1, 0, 0, 0, 0, 0)</span>
+<span class="sd">            (0, 1, 0, 0, 0, 0)</span>
+<span class="sd">            (0, 0, 1, 0, 0, 0)</span>
+<span class="sd">            (0, 0, 0, 1, 0, 0)</span>
+<span class="sd">            (0, 0, 0, 0, 1, 0)</span>
+<span class="sd">            (0, 0, 0, 0, 1, 0)</span>
+<span class="sd">            (0, 0, 0, 0, 0, 1)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">vector</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cylinder_diagram</span><span class="o">.</span><span class="n">degree</span><span class="p">(),</span> <span class="n">v</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_projection</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">output</span>
+
+<div class="viewcode-block" id="TwistSpace.cylinder_core_curves"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.twist_space.TwistSpace.cylinder_core_curves">[docs]</a>    <span class="k">def</span> <span class="nf">cylinder_core_curves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterate through the core curves of cylinders as homology elements.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics.flat_surfaces.separatrix_diagram import CylinderDiagram</span>
+<span class="sd">            sage: from surface_dynamics.flat_surfaces.twist_space import TwistSpace</span>
+<span class="sd">            sage: cd = CylinderDiagram(&#39;(0,7,1,2)-(3,6,4,5) (3,6,4,5)-(0,7,1,2)&#39;)</span>
+<span class="sd">            sage: tw = TwistSpace(cd)</span>
+<span class="sd">            sage: list(tw.cylinder_core_curves())</span>
+<span class="sd">            [(0, 0, 1, 1, 1, 1, 0), (0, 0, 1, 1, 1, 1, 0)]</span>
+
+<span class="sd">            sage: cd = CylinderDiagram(&#39;(0,7,3,4)-(0,5,3,6) (1,5,2,6)-(1,7,2,4)&#39;)</span>
+<span class="sd">            sage: tw = TwistSpace(cd)</span>
+<span class="sd">            sage: list(tw.cylinder_core_curves())</span>
+<span class="sd">            [(1, 0, 0, 1, 1, 1, 0), (0, 1, 1, 0, 1, 1, 0)]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cylinder_diagram</span>
+        <span class="k">for</span> <span class="n">bot</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">cd</span><span class="o">.</span><span class="n">cylinders</span><span class="p">():</span>
+            <span class="n">vec</span> <span class="o">=</span> <span class="n">vector</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">cd</span><span class="o">.</span><span class="n">degree</span><span class="p">())</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">bot</span><span class="p">:</span>
+                <span class="n">vec</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">vec</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
+            <span class="n">vec</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+            <span class="k">yield</span> <span class="n">vec</span></div>
+
+<div class="viewcode-block" id="TwistSpace.homologous_cylinders"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.twist_space.TwistSpace.homologous_cylinders">[docs]</a>    <span class="k">def</span> <span class="nf">homologous_cylinders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the list of homologous cylinders.</span>
+
+<span class="sd">        OUTPUT: a list of lists. Each sublist is an equivalence class of &gt; 1</span>
+<span class="sd">        homologous cylinders.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import AbelianStratum</span>
+<span class="sd">            sage: from surface_dynamics.flat_surfaces.twist_space import TwistSpace</span>
+<span class="sd">            sage: for cd in AbelianStratum(1,1,1,1).cylinder_diagrams(2):</span>
+<span class="sd">            ....:     hom_cyls = TwistSpace(cd).homologous_cylinders()</span>
+<span class="sd">            ....:     if hom_cyls:</span>
+<span class="sd">            ....:         print(cd)</span>
+<span class="sd">            ....:         print(hom_cyls)</span>
+<span class="sd">            (0,7,1,2)-(3,6,4,5) (3,6,4,5)-(0,7,1,2)</span>
+<span class="sd">            [[0, 1]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Build the dictionary &quot;homology vector&quot; -&gt; list of cylinder diagrams</span>
+        <span class="n">homologous_cylinders_partition</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">vec</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cylinder_core_curves</span><span class="p">()):</span>
+            <span class="n">homologous_cylinders_partition</span><span class="p">[</span><span class="n">vec</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="c1"># Filter the classes with more than one cylinder</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">homology_class</span> <span class="ow">in</span> <span class="n">homologous_cylinders_partition</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">homology_class</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">homology_class</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span></div>
+
+<div class="viewcode-block" id="TwistSpace.cylinder_dimension"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.twist_space.TwistSpace.cylinder_dimension">[docs]</a>    <span class="k">def</span> <span class="nf">cylinder_dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the dimension of the span of core curves.</span>
+
+<span class="sd">        See also the method ``homological_dimension_of_cylinders`` for ``CylinderDiagram``.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import AbelianStratum</span>
+<span class="sd">            sage: from surface_dynamics.flat_surfaces.twist_space import TwistSpace</span>
+<span class="sd">            sage: for cd in AbelianStratum(1,1,1,1).cylinder_diagrams():</span>
+<span class="sd">            ....:     assert TwistSpace(cd).cylinder_dimension() == cd.homological_dimension_of_cylinders()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">matrix</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cylinder_core_curves</span><span class="p">()))</span><span class="o">.</span><span class="n">rank</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, the surface-dynamics authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

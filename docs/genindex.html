@@ -387,14 +387,14 @@
 </li>
       <li><a href="surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.contract_edge">contract_edge() (surface_dynamics.topology.fat_graph.FatGraph method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.copy">copy() (surface_dynamics.misc.constellation.Constellation_class method)</a>
 
       <ul>
         <li><a href="surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.copy">(surface_dynamics.topology.fat_graph.FatGraph method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.count">count() (surface_dynamics.databases.flat_surfaces.CylinderDiagrams method)</a>
 
       <ul>
@@ -431,6 +431,8 @@
 </li>
       <li><a href="surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.cylcoord_to_pillowcase_cover">cylcoord_to_pillowcase_cover() (surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram method)</a>
 </li>
+      <li><a href="surface_topology.html#surface_dynamics.flat_surfaces.twist_space.TwistSpace.cylinder_core_curves">cylinder_core_curves() (surface_dynamics.flat_surfaces.twist_space.TwistSpace method)</a>
+</li>
       <li><a href="origamis.html#surface_dynamics.flat_surfaces.origamis.origami_dense.Origami_dense_pyx.cylinder_decomposition">cylinder_decomposition() (surface_dynamics.flat_surfaces.origamis.origami_dense.Origami_dense_pyx method)</a>
 </li>
       <li><a href="origamis.html#surface_dynamics.flat_surfaces.origamis.origami_dense.Origami_dense_pyx.cylinder_diagram">cylinder_diagram() (surface_dynamics.flat_surfaces.origamis.origami_dense.Origami_dense_pyx method)</a>
@@ -463,6 +465,10 @@
         <li><a href="strata.html#surface_dynamics.flat_surfaces.abelian_strata.AbelianStratumComponent.cylinder_diagrams_number">(surface_dynamics.flat_surfaces.abelian_strata.AbelianStratumComponent method)</a>
 </li>
       </ul></li>
+      <li><a href="surface_topology.html#surface_dynamics.flat_surfaces.twist_space.TwistSpace.cylinder_dimension">cylinder_dimension() (surface_dynamics.flat_surfaces.twist_space.TwistSpace method)</a>
+</li>
+      <li><a href="surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylinder_graph">cylinder_graph() (surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram method)</a>
+</li>
       <li><a href="interval_exchanges/integer_iet.html#surface_dynamics.interval_exchanges.integer_iet.cylinder_number">cylinder_number() (in module surface_dynamics.interval_exchanges.integer_iet)</a>
 </li>
       <li><a href="interval_exchanges/integer_iet.html#surface_dynamics.interval_exchanges.integer_iet.cylinder_statistics">cylinder_statistics() (in module surface_dynamics.interval_exchanges.integer_iet)</a>
@@ -895,16 +901,22 @@
       </ul></li>
       <li><a href="surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.has_trivial_holonomy">has_trivial_holonomy() (surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.heights_cone">heights_cone() (surface_dynamics.interval_exchanges.template.OrientablePermutationIET method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.help">help() (surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase method)</a>
 </li>
       <li><a href="surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.holonomy_representation">holonomy_representation() (surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles method)</a>
 </li>
       <li><a href="surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.homological_dimension_of_cylinders">homological_dimension_of_cylinders() (surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram method)</a>
 </li>
+      <li><a href="surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.homologous_cylinders">homologous_cylinders() (surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram method)</a>
+
+      <ul>
+        <li><a href="surface_topology.html#surface_dynamics.flat_surfaces.twist_space.TwistSpace.homologous_cylinders">(surface_dynamics.flat_surfaces.twist_space.TwistSpace method)</a>
+</li>
+      </ul></li>
       <li><a href="origamis.html#surface_dynamics.flat_surfaces.origamis.origami_dense.Origami_dense_pyx.horizontal_cycle_representatives">horizontal_cycle_representatives() (surface_dynamics.flat_surfaces.origamis.origami_dense.Origami_dense_pyx method)</a>
 </li>
       <li><a href="interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.Permutation.horizontal_inverse">horizontal_inverse() (surface_dynamics.interval_exchanges.template.Permutation method)</a>
@@ -1378,6 +1390,8 @@
         <li><a href="surface_topology.html#module-surface_dynamics.flat_surfaces.separatrix_diagram">surface_dynamics.flat_surfaces.separatrix_diagram</a>
 </li>
         <li><a href="strata.html#module-surface_dynamics.flat_surfaces.strata">surface_dynamics.flat_surfaces.strata</a>
+</li>
+        <li><a href="surface_topology.html#module-surface_dynamics.flat_surfaces.twist_space">surface_dynamics.flat_surfaces.twist_space</a>
 </li>
         <li><a href="interval_exchanges/constructors.html#module-surface_dynamics.interval_exchanges.constructors">surface_dynamics.interval_exchanges.constructors</a>
 </li>
@@ -2259,6 +2273,13 @@
 </li>
       </ul></li>
       <li>
+    surface_dynamics.flat_surfaces.twist_space
+
+      <ul>
+        <li><a href="surface_topology.html#module-surface_dynamics.flat_surfaces.twist_space">module</a>
+</li>
+      </ul></li>
+      <li>
     surface_dynamics.interval_exchanges.constructors
 
       <ul>
@@ -2444,10 +2465,10 @@
 </li>
       <li><a href="interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.to_standard">to_standard() (surface_dynamics.interval_exchanges.template.OrientablePermutationIET method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="origamis.html#surface_dynamics.flat_surfaces.origamis.origami_dense.Origami_dense_pyx.to_standard_form">to_standard_form() (surface_dynamics.flat_surfaces.origamis.origami_dense.Origami_dense_pyx method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.to_string">to_string() (surface_dynamics.topology.fat_graph.FatGraph method)</a>
 </li>
       <li><a href="surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.top">top() (surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram method)</a>
@@ -2490,6 +2511,8 @@
         <li><a href="interval_exchanges/template.html#surface_dynamics.interval_exchanges.template.PermutationLI.twin_list">(surface_dynamics.interval_exchanges.template.PermutationLI method)</a>
 </li>
       </ul></li>
+      <li><a href="surface_topology.html#surface_dynamics.flat_surfaces.twist_space.TwistSpace">TwistSpace (class in surface_dynamics.flat_surfaces.twist_space)</a>
+</li>
       <li><a href="surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.two_non_connected_perms_canonical_labels">two_non_connected_perms_canonical_labels() (in module surface_dynamics.flat_surfaces.separatrix_diagram)</a>
 </li>
   </ul></td>
