@@ -86,6 +86,7 @@ from six import iteritems
 
 from functools import total_ordering
 
+import collections
 import numbers
 
 from sage.structure.sage_object import SageObject
@@ -104,7 +105,6 @@ from surface_dynamics.misc.permutation import (perm_check, equalize_perms, perm_
 from surface_dynamics.misc.linalg import cone_triangulate
 
 from sage.misc.decorators import rename_keyword
-
 
 #
 # Abelian and quadratic Separatrix Diagram
@@ -1209,6 +1209,31 @@ class SeparatrixDiagram(SageObject):
         """
         return Integer(self.ncyls() - SeparatrixDiagram.to_directed_graph(self).connected_components_number() + 1)
 
+    def homologous_cylinders(self):
+        r"""
+        Return the list of homologous cylinders.
+
+        OUTPUT: a list of lists. Each sublist is an equivalence class of > 1
+        homologous cylinders.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import CylinderDiagram
+            sage: c = CylinderDiagram('(0,7,1,2)-(3,6,4,5) (3,6,4,5)-(0,7,1,2)')
+            sage: c.homologous_cylinders()
+            [[0, 1]]
+
+            sage: c = CylinderDiagram('(0,1)-(2,3) (2)-(0) (3)-(1)')
+            sage: c.homologous_cylinders()
+            []
+
+            sage: c = CylinderDiagram('(0,2,1)-(9) (3,6,4,5)-(7,10,8) (7,9,8)-(3,6,4,5) (10)-(0,2,1)')
+            sage: c.homologous_cylinders()
+            [[0, 3], [1, 2]]
+        """
+        from .twist_space import TwistSpace
+        return TwistSpace(self).homologous_cylinders()
+
     #
     # Vertices of the separatrix diagram
     #
@@ -1402,7 +1427,7 @@ class SeparatrixDiagram(SageObject):
             doctest:warning
             ...
             DeprecationWarning: use the option 'up_to_symmetry' instead of 'up_to_isomorphism'
-            See http://trac.sagemath.org/666 for details.
+            ...
         """
         cbot = self.bot_cycle_tuples()
         ctop0 = self.top_cycle_tuples()
@@ -1503,7 +1528,7 @@ class SeparatrixDiagram(SageObject):
             doctest:warning
             ...
             DeprecationWarning: use the option 'up_to_symmetry' instead of 'up_to_isomorphism'
-            See http://trac.sagemath.org/666 for details.
+            ...
         """
         return list(self.cylinder_diagram_iterator(
             connected=connected,
@@ -3930,6 +3955,43 @@ class CylinderDiagram(SeparatrixDiagram):
         # yield the one without twist
         return Origami_dense_pyx(tuple(lx), tuple(ly))
 
+    def cylinder_graph(self):
+        """
+        Return the cylinder graph.
+
+        The cylinder graph is the graph whose vertex set are the cylinders
+        and for each saddle connection there is a directed edge from the
+        adjacent cylinders. The multiplicities are encoded in the labels.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import CylinderDiagram
+
+            sage: c = CylinderDiagram('(0,1,5)-(2,5) (2)-(0,1,3) (3,4)-(4)')
+            sage: c.cylinder_graph()
+            Looped digraph on 3 vertices
+            sage: c.cylinder_graph().edges(sort=True)
+            [(0, 0, 1), (0, 1, 1), (1, 0, 2), (1, 2, 1), (2, 2, 1)]
+
+            sage: c = CylinderDiagram('(0,1,3,5)-(2,5,3) (2,4)-(0,4,1)')
+            sage: c.cylinder_graph().edges(sort=True)
+            [(0, 0, 2), (0, 1, 1), (1, 0, 2), (1, 1, 1)]
+        """
+        bot_to_cyl = [None] * self.degree()
+        top_to_cyl = [None] * self.degree()
+        for i, (bot, top) in enumerate(self.cylinders()):
+            for saddle in bot:
+                bot_to_cyl[saddle] = i
+            for saddle in top:
+                top_to_cyl[saddle] = i
+
+        edges = collections.defaultdict(int)
+        for u, v in zip(top_to_cyl, bot_to_cyl):
+            edges[u, v] += 1
+
+        G = DiGraph(self.ncyls(), loops=True, multiedges=False, weighted=True)
+        G.add_edges([(u, v, m) for ((u, v), m) in edges.items()])
+        return G
 
     #TODO
 #    def chain_complex_dual(self, ring=None):
