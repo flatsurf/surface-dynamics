@@ -3602,9 +3602,8 @@ class CylinderDiagram(SeparatrixDiagram):
             H_2(1^2)
             4
         """
-        for w,h in self.widths_and_heights_iterator(n):
-            for o in self.cylcoord_to_origami_iterator(w, h):
-                yield o
+        for w, h in self.widths_and_heights_iterator(n):
+            yield from self.cylcoord_to_origami_iterator(w, h)
 
     def origamis(self,n=None):
         r"""
