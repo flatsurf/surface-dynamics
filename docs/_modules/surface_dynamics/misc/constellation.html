@@ -1222,11 +1222,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
-                <span class="n">l</span> <span class="o">=</span> <span class="n">n</span><span class="o">-</span><span class="n">d</span>
-                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">Constellations</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">connected</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_connected</span><span class="p">):</span>
-                    <span class="k">yield</span> <span class="n">c</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+                <span class="n">l</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="n">d</span>
+                <span class="k">yield from</span> <span class="n">Constellations</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_connected</span><span class="p">)</span>
             <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span></div>
+
 
 <div class="viewcode-block" id="Constellations_ld"><a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellations_ld">[docs]</a><span class="k">class</span> <span class="nc">Constellations_ld</span><span class="p">(</span><span class="n">UniqueRepresentation</span><span class="p">,</span> <span class="n">Parent</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>

@@ -875,15 +875,13 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">force_computation</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">():</span>
-                <span class="k">for</span> <span class="n">cd</span> <span class="ow">in</span> <span class="n">cc</span><span class="o">.</span><span class="n">cylinder_diagram_iterator</span><span class="p">(</span><span class="n">ncyls</span><span class="p">,</span> <span class="n">up_to_symmetry</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-                    <span class="k">yield</span> <span class="n">cd</span>
+                <span class="k">yield from</span> <span class="n">cc</span><span class="o">.</span><span class="n">cylinder_diagram_iterator</span><span class="p">(</span><span class="n">ncyls</span><span class="p">,</span> <span class="n">up_to_symmetry</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">sd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">separatrix_diagram_iterator</span><span class="p">(</span><span class="n">ncyls</span><span class="p">):</span>
                 <span class="n">iterator</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">cylinder_diagram_iterator</span><span class="p">(</span><span class="n">up_to_symmetry</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">up_to_symmetry</span><span class="p">:</span>
                     <span class="n">iterator</span> <span class="o">=</span> <span class="n">_cylinder_diagrams_with_symmetric</span><span class="p">(</span><span class="n">iterator</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">cd</span> <span class="ow">in</span> <span class="n">iterator</span><span class="p">:</span>
-                    <span class="k">yield</span> <span class="n">cd</span></div>
+                <span class="k">yield from</span> <span class="n">iterator</span></div>
 
 <div class="viewcode-block" id="AbelianStratum.cylinder_diagrams"><a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.abelian_strata.AbelianStratum.cylinder_diagrams">[docs]</a>    <span class="k">def</span> <span class="nf">cylinder_diagrams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ncyls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">up_to_symmetry</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force_computation</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -4132,8 +4130,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">count</span>
         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">count</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">stratum</span> <span class="ow">in</span> <span class="n">AbelianStrata</span><span class="p">(</span><span class="n">dimension</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">fake_zeros</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_fake_zeros</span><span class="p">):</span>
-                <span class="k">yield</span> <span class="n">stratum</span></div>
+            <span class="k">yield from</span> <span class="n">AbelianStrata</span><span class="p">(</span><span class="n">dimension</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">fake_zeros</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_fake_zeros</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
