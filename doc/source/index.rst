@@ -40,7 +40,8 @@ Walk through
 .. toctree::
     :maxdepth: 1
 
-    demo_interval_exchanges
+    examples/interval_exchanges
+    examples/square_tiled_surfaces
 
 Module documentation
 --------------------

@@ -1,3 +1,7 @@
+
+from surface_dynamics.version import version
+import sage_docbuild.conf
+
 # -- Project information -----------------------------------------------------
 
 project = 'surface-dynamics'
@@ -5,7 +9,7 @@ copyright = '2021, the surface-dynamics authors'
 author = 'the surface-dynamics authors'
 
 # The full version, including alpha/beta/rc tags
-release = '0.4.7'
+release = version
 
 # -- General configuration ---------------------------------------------------
 
@@ -16,7 +20,13 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
     'sphinx.ext.extlinks',
-    'sphinx_rtd_theme',
+    'myst_nb'
+]
+
+# Extensions when rendering .ipynb/.md notebooks
+myst_enable_extensions = [
+    "dollarmath",
+    "amsmath",
 ]
 
 autodoc_default_options = {
@@ -33,22 +43,35 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
+# Allow linking to external projects, e.g., SageMath
+intersphinx_mapping = {"sage": ("https://doc.sagemath.org/html/en/reference", None)}
 
-# -- Options for HTML output -------------------------------------------------
+# -- Options for HTML output ----------------------------------------------
 
-# The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-#
-html_theme = 'sphinx_rtd_theme'
+# Imitate the look of the SageMath documentation.
+html_theme = sage_docbuild.conf.html_theme
+html_theme_options = sage_docbuild.conf.html_theme_options
+pygments_style = sage_docbuild.conf.pygments_style
+pygments_dark_style = sage_docbuild.conf.pygments_dark_style
+html_css_files = sage_docbuild.conf.html_css_files
+
+if html_css_files != ["custom-furo.css"]:
+    raise NotImplementedError(
+        "CSS customization has changed in SageMath. The configuration of surface-dynamics documentation build needs to be updated."
+    )
+
+html_css_files = ["https://doc.sagemath.org/html/en/reference/_static/custom-furo.css"]
+
+html_theme_options["light_logo"] = html_theme_options["dark_logo"] = "logo.svg"
+html_static_path = ["static"]
+
+# Output file base name for HTML help builder.
+htmlhelp_basename = "sage-surfacedynamicsdoc"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = []
-
-intersphinx_mapping = {
-    'sage': 'https://doc.sagemath.org/html/en/reference/objects.inv',
-}
+html_static_path = ["static"]
 
 # Shortcuts for external links
 from sage.misc.sagedoc import extlinks
