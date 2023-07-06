@@ -42,6 +42,7 @@ Walk through
 
     examples/interval_exchanges
     examples/square_tiled_surfaces
+    examples/rank2_genus3_classification
 
 Module documentation
 --------------------
