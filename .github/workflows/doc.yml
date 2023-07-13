@@ -19,6 +19,7 @@ jobs:
         shell: bash -l {0}
         run: |
           mamba env update --quiet -n test -f environment.yml
+          mamba env update --quiet -n test -f doc/environment.yml
           conda list
       - name: install surface-dynamics
         shell: bash -l {0}
