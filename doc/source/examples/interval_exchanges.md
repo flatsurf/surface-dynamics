@@ -165,16 +165,20 @@ interval exchange transformations back and forth between ``surface-dynamics``
 and ``pyintervalxt``
 
 ```{code-cell}
-from surface_dynamics.interval_exchanges.conversion import iet_to_pyintervalxt, iet_from_pyintervalxt  # optional: gmpxxyy  # optional: pyintervalxt
-u2 = iet_to_pyintervalxt(t2); u2  # optional: gmpxxyy  # optional: pyintervalxt
-v2 = iet_from_pyintervalxt(u2)  # optional: gmpxxyy  # optional: pyintervalxt
-print(v2)  # optional: gmpxxyy  # optional: pyintervalxt
+from sage.features import PythonModule
+if PythonModule("pyintervalxt").is_present():
+    from surface_dynamics.interval_exchanges.conversion import iet_to_pyintervalxt, iet_from_pyintervalxt
+    u2 = iet_to_pyintervalxt(t2)
+    print(u2)
+    v2 = iet_from_pyintervalxt(u2)
+    print(v2)
 ```
 
 One feature of ``intervalxt`` is that it can certify that an iet has no periodic trajectory
 
 ```{code-cell}
-u2.boshernitzanNoPeriodicTrajectory()  # optional: gmpxxyy  # optional: pyintervalxt
+if PythonModule("pyintervalxt").is_present():
+    u2.boshernitzanNoPeriodicTrajectory()
 ```
 
 ## Other features
