@@ -146,10 +146,10 @@ print(t4.normalize() == t5.normalize())
 surfaces (and more generally similarity surfaces). One can build Masur polygons via
 
 ```{code-cell}
-# height = [1, 0, 0, -1]
-# S = perm.masur_polygon(length2, height)
-# S
-# S.stratum()
+height = [1, 0, 0, -1]
+S = perm.masur_polygon(length2, height)
+S
+S.stratum()
 ```
 
 Could you construct a self-similar translation surface from the flip sequence ``f``? (in other words
