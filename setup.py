@@ -104,6 +104,7 @@ setup(name='surface-dynamics',
       version=version,
       description="Dynamics on surfaces",
       long_description=long_description,
+      long_description_content_type="text/markdown",
       author='Vincent Delecroix',
       author_email='vincent.delecroix@u-bordeaux.fr',
       project_urls={
