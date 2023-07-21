@@ -28,7 +28,6 @@ jobs:
       - name: build documentation
         shell: bash -l {0}
         run: |
-          sage doc/source/debug.sage
           sphinx-build -b html -n doc/source html/surface-dynamics --color -a -E -W
           touch html/surface-dynamics/.nojekyll
       - name: detect broken links
