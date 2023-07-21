@@ -67,7 +67,7 @@ if html_css_files != ["custom-furo.css"]:
 html_css_files = ["https://doc.sagemath.org/html/en/reference/_static/custom-furo.css"]
 
 # There is no surface-dynamics logo yet.
-# html_theme_options["light_logo"] = html_theme_options["dark_logo"] = "logo.svg"
+html_theme_options["light_logo"] = html_theme_options["dark_logo"] = "logo.svg"
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = "sage-surfacedynamicsdoc"
@@ -75,7 +75,7 @@ htmlhelp_basename = "sage-surfacedynamicsdoc"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = []
+html_static_path = ["static"]
 
 # Shortcuts for external links
 from sage.misc.sagedoc import extlinks
