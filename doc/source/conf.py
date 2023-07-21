@@ -44,6 +44,12 @@ exclude_patterns = []
 # Allow linking to external projects, e.g., SageMath
 intersphinx_mapping = {"sage": ("https://doc.sagemath.org/html/en/reference", None)}
 
+# Show tracebacks on mystnb execution errors.
+execution_show_tb = True
+
+# Raise an exception on any failed executing in notebook.
+execution_raise_on_error = True
+
 # -- Options for HTML output ----------------------------------------------
 
 # Imitate the look of the SageMath documentation.
