@@ -45,10 +45,10 @@ exclude_patterns = []
 intersphinx_mapping = {"sage": ("https://doc.sagemath.org/html/en/reference", None)}
 
 # Show tracebacks on mystnb execution errors.
-execution_show_tb = True
+nb_execution_show_tb = True
 
 # Raise an exception on any failed executing in notebook.
-execution_raise_on_error = True
+nb_execution_raise_on_error = True
 
 # -- Options for HTML output ----------------------------------------------
 
