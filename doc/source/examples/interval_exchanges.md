@@ -38,7 +38,7 @@ t = iet.IntervalExchangeTransformation(perm, length)
 print(t)
 ```
 
-It can be visualized with::
+It can be visualized with:
 
 ```{code-cell}
 G = t.plot_function()
@@ -85,7 +85,7 @@ print(t2)
 ## Rauzy induction and self-similar iet
 
 Rauzy induction is a map from the space of interval exchange transformations to itself.
-The image $\mathcal{R}(t)$ of an iet $t$ is an induced map.::
+The image $\mathcal{R}(t)$ of an iet $t$ is an induced map.
 
 ```{code-cell}
 t3 = t2.rauzy_move()
