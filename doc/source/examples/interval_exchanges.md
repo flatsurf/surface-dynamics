@@ -168,7 +168,7 @@ and ``pyintervalxt``
 from surface_dynamics.interval_exchanges.conversion import iet_to_pyintervalxt, iet_from_pyintervalxt
 u2 = iet_to_pyintervalxt(t2); u2
 v2 = iet_from_pyintervalxt(u2)
-print(v2)
+# print(v2)
 ```
 
 One feature of ``intervalxt`` is that it can certify that an iet has no periodic trajectory
