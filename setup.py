@@ -28,14 +28,9 @@ with open("surface_dynamics/version.py") as f:
     suffix = "'"
     assert version.startswith(prefix) and version.endswith(suffix)
     version = version[len(prefix):len(version)-len(suffix)]
-try:
-    with open("README.rst", encoding='utf-8') as f:
-        long_description = f.read()
-except TypeError:
-    # NOTE: encoding is not a keyword in Python 2
-    with open("README.rst") as f:
-        long_description = f.read().decode('utf-8')
 
+with open("README.md") as f:
+    long_description = f.read()
 
 try:
     import ppl
