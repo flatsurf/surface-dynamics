@@ -11,6 +11,7 @@ dependencies:
   - jupytext
   - myst-nb
   - furo
+  - pip
   - pip:
     - linkchecker
     - sphinx_rtd_theme
