@@ -66,7 +66,8 @@ if html_css_files != ["custom-furo.css"]:
 
 html_css_files = ["https://doc.sagemath.org/html/en/reference/_static/custom-furo.css"]
 
-html_theme_options["light_logo"] = html_theme_options["dark_logo"] = "logo.svg"
+# There is no surface-dynamics logo yet.
+# html_theme_options["light_logo"] = html_theme_options["dark_logo"] = "logo.svg"
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = "sage-surfacedynamicsdoc"
