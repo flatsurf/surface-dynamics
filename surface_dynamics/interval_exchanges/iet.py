@@ -1962,7 +1962,7 @@ class IntervalExchangeTransformation:
         T,_,towers = self.rauzy_move(iterations=iterations,data=True)
         pi = T.permutation()
         A = pi.alphabet()
-        lengths = map(float, T.lengths())
+        lengths = [float(length) for length in T.lengths()]
 
         if colors is None:
             from sage.plot.colors import rainbow
