@@ -146,10 +146,10 @@ print(t4.normalize() == t5.normalize())
 surfaces (and more generally similarity surfaces). One can build Masur polygons via
 
 ```{code-cell}
-height = [1, 0, 0, -1]
-S = perm.masur_polygon(length2, height)  # optional: sage_flatsurf
-S  # optional: sage_flatsurf
-S.stratum()  # optional: sage_flatsurf
+# height = [1, 0, 0, -1]
+# S = perm.masur_polygon(length2, height)
+# S
+# S.stratum()
 ```
 
 Could you construct a self-similar translation surface from the flip sequence ``f``? (in other words
@@ -165,16 +165,16 @@ interval exchange transformations back and forth between ``surface-dynamics``
 and ``pyintervalxt``
 
 ```{code-cell}
-from surface_dynamics.interval_exchanges.conversion import iet_to_pyintervalxt, iet_from_pyintervalxt  # optional: gmpxxyy  # optional: pyintervalxt
-u2 = iet_to_pyintervalxt(t2); u2  # optional: gmpxxyy  # optional: pyintervalxt
-v2 = iet_from_pyintervalxt(u2)  # optional: gmpxxyy  # optional: pyintervalxt
-print(v2)  # optional: gmpxxyy  # optional: pyintervalxt
+# from surface_dynamics.interval_exchanges.conversion import iet_to_pyintervalxt, iet_from_pyintervalxt
+# u2 = iet_to_pyintervalxt(t2); u2
+# v2 = iet_from_pyintervalxt(u2)
+# print(v2)
 ```
 
 One feature of ``intervalxt`` is that it can certify that an iet has no periodic trajectory
 
 ```{code-cell}
-u2.boshernitzanNoPeriodicTrajectory()  # optional: gmpxxyy  # optional: pyintervalxt
+# u2.boshernitzanNoPeriodicTrajectory()
 ```
 
 ## Other features
