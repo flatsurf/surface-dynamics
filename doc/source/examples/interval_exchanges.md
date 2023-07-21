@@ -166,15 +166,16 @@ and ``pyintervalxt``
 
 ```{code-cell}
 from surface_dynamics.interval_exchanges.conversion import iet_to_pyintervalxt, iet_from_pyintervalxt
-u2 = iet_to_pyintervalxt(t2); u2
+u2 = iet_to_pyintervalxt(t2)
+print(u2)
 v2 = iet_from_pyintervalxt(u2)
-# print(v2)
+print(v2)
 ```
 
 One feature of ``intervalxt`` is that it can certify that an iet has no periodic trajectory
 
 ```{code-cell}
-# u2.boshernitzanNoPeriodicTrajectory()
+u2.boshernitzanNoPeriodicTrajectory()
 ```
 
 ## Other features
