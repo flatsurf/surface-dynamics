@@ -165,7 +165,7 @@ interval exchange transformations back and forth between ``surface-dynamics``
 and ``pyintervalxt``
 
 ```{code-cell}
-# from surface_dynamics.interval_exchanges.conversion import iet_to_pyintervalxt, iet_from_pyintervalxt
+from surface_dynamics.interval_exchanges.conversion import iet_to_pyintervalxt, iet_from_pyintervalxt
 # u2 = iet_to_pyintervalxt(t2); u2
 # v2 = iet_from_pyintervalxt(u2)
 # print(v2)
