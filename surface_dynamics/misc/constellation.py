@@ -1139,11 +1139,11 @@ class Constellations_all(UniqueRepresentation, Parent):
         """
         n = 2
         while True:
-            for d in range(1,n):
-                l = n-d
-                for c in Constellations(l,d,connected=self._connected):
-                    yield c
+            for d in range(1, n):
+                l = n - d
+                yield from Constellations(l, d, connected=self._connected)
             n += 1
+
 
 class Constellations_ld(UniqueRepresentation, Parent):
     r"""
