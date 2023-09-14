@@ -23,7 +23,7 @@ from surface_dynamics.misc.permutation import (perm_compose, perm_conjugate, per
                                                perm_from_base64_str, perm_base64_str,
                                                perm_check, perm_cycle_string, perm_hash,
                                                perm_cycles, perm_cycle_type, perm_invert,
-                                               perm_is_regular, perm_is_on_list_stabilizer, PermutationGroupOrbit)
+                                               perm_is_regular, perm_is_on_list_stabilizer, PermutationGroupOrbit, perms_are_transitive, perms_transitive_components)
 
 
 ###########################
@@ -283,6 +283,85 @@ class FatGraph(object):
         self._fl.extend([-1] * (max_num_dart - self._n))
         self._vd.extend([-1] * (max_num_dart - self._nv))
         self._fd.extend([-1] * (max_num_dart - self._nf))
+
+    def is_connected(self):
+        r"""
+        Return whether the graph is connected.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
+            sage: FatGraph(vp='(0,2)(1,3)').is_connected()
+            True
+            sage: FatGraph(vp='(0,1)(2,3)').is_connected()
+            False
+        """
+        return perms_are_transitive([self._vp, self._fp], self._n)
+
+    def connected_components(self):
+        r"""
+        Return the list of connected components.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
+            sage: FatGraph(vp='(0,2)(1,3)').connected_components()
+            [FatGraph('(0,2)(1,3)', '(0,3)(1,2)')]
+            sage: FatGraph(vp='(0,1)(2,3)').connected_components()
+            [FatGraph('(0,1)', '(0)(1)'), FatGraph('(0,1)', '(0)(1)')]
+        """
+        ccs = perms_transitive_components([self._vp, self._fp], self._n)
+        if len(ccs) == 1 and not self._mutable:
+            return [self]
+
+        # build a FatGraph for each connected component
+        connected_graphs = []
+        for cc in ccs:
+            relabel = {j: i for i, j in enumerate(cc)}
+            vp = [-1] * len(cc)
+            fp = [-1] * len(cc)
+            for j in cc:
+                vp[relabel[j]] = relabel[self._vp[j]]
+                fp[relabel[j]] = relabel[self._fp[j]]
+            connected_graphs.append(FatGraph(vp, fp))
+
+        return connected_graphs
+
+    def disjoint_union(self, *args, mutable=False):
+        r"""
+        Return the union of ``self`` with the graphs provided as arguments.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
+            sage: fg0 = FatGraph('(0,4,2,5)(1,6)(3,7)')
+            sage: fg1 = FatGraph('(0,3,5)(1,2,4)')
+            sage: fg2 = FatGraph('(0,1)')
+            sage: fg = fg0.disjoint_union(fg1, fg2)
+            sage: fg
+            FatGraph('(0,4,2,5)(1,6)(3,7)(8,11,13)(9,10,12)(14,15)', '(0,6,3,4,2,7,1,5)(8,12,11,9,13,10)(14)(15)')
+            sage: fg.connected_components()
+            [FatGraph('(0,4,2,5)(1,6)(3,7)', '(0,6,3,4,2,7,1,5)'),
+             FatGraph('(0,3,5)(1,2,4)', '(0,4,3,1,5,2)'),
+             FatGraph('(0,1)', '(0)(1)')]
+        """
+        if not args:
+            if not self._mutable and not mutable:
+                return self
+            else:
+                return self.copy(mutable=mutable)
+
+        shifts = [self._n]
+        for fg in args:
+            shifts.append(shifts[-1] + fg._n)
+        n = shifts[-1]
+        vp = list(self._vp[:self._n]) + [-1] * (n - self._n)
+        fp = list(self._fp[:self._n]) + [-1] * (n - self._n)
+        for fg, shift in zip(args, shifts):
+            for i in range(fg._n):
+                vp[shift + i] = shift + fg._vp[i]
+                fp[shift + i] = shift + fg._fp[i]
+        return FatGraph(vp, fp)
 
     def edge_flip(self, i):
         r"""
@@ -718,16 +797,36 @@ class FatGraph(object):
 
     def genus(self):
         r"""
+        Return the genus of this graph.
+
+        If the graph is not connected, then the answer is the sum of the
+        genera of the components.
+
         EXAMPLES::
 
             sage: from surface_dynamics.topology.fat_graph import FatGraph
-            sage: vp = '(0,4,2,5,1,3)'
-            sage: fp = '(0,5)(1,3,4,2)'
-            sage: cm = FatGraph(vp, fp)
-            sage: cm.genus()
+            sage: vp0 = '(0,4,2,5,1,3)'
+            sage: fp0 = '(0,5)(1,3,4,2)'
+            sage: cm0 = FatGraph(vp0, fp0)
+            sage: cm0.genus()
             1
+
+            sage: vp1 = '(0,6,5,7,2,1,3,4)'
+            sage: fp1 = '(0,2,1,4,6,5,3,7)'
+            sage: cm1 = FatGraph(vp1, fp1)
+            sage: cm1.genus()
+            2
+
+        Non-connected examples::
+
+            sage: cm0.disjoint_union(cm0, cm1).genus()
+            4
+            sage: cm1.disjoint_union(cm0).genus()
+            3
         """
-        return (2 - self._nf + self._n // 2 - self._nv) // 2
+        nc = len(self.connected_components())
+        chi = self._nf - self._n // 2 + self._nv
+        return nc - chi // 2
 
     def euler_characteristic(self):
         r"""
@@ -744,6 +843,11 @@ class FatGraph(object):
             sage: fp = '(0,5)(1,3,4,2)'
             sage: cm = FatGraph(vp, fp)
             sage: cm.euler_characteristic()
+            0
+
+        A non-connected example (Euler characteristic is additive)::
+
+            sage: cm.disjoint_union(cm, cm, cm).euler_characteristic()
             0
         """
         return self._nf - self._n // 2 + self._nv
@@ -1906,6 +2010,7 @@ class FatGraph(object):
     # canonical labels and automorphisms #
     ######################################
 
+    # NOTE: this is broken for non-connected surfaces!
     def _good_starts(self, i0=-1, fix_vertices=False, fix_faces=False):
         r"""
         Return a set of half edges invariant under the (yet unknown)
@@ -2290,6 +2395,7 @@ class FatGraph(object):
         else:
             return is_fc_better, cur
 
+    # NOTE: this is broken for non-connected surfaces!
     def _is_canonical(self, i0):
         r"""
         Return a pair ``(answer, automorphisms)`` where answer is a boolean
@@ -2459,6 +2565,9 @@ class FatGraph(object):
 
         if fix_edges:
             raise NotImplementedError
+
+        if not self.is_connected():
+            raise NotImplementedError('not implemented for non-connected graphs')
 
         roots = self._good_starts(fix_vertices=fix_vertices, fix_faces=fix_faces)
         P = PermutationGroupOrbit(self._n, [], roots)
