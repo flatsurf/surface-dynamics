@@ -1509,6 +1509,50 @@ class SeparatrixDiagram(SageObject):
             connected=connected,
             up_to_symmetry=up_to_symmetry))
 
+    def saddle_connections_graph(self, mutable=False):
+        r"""
+        Return the fat graph (or ribbon graph) made by the saddle connections.
+
+        The return graph is a
+        :class:`~surface_dynamics.topology.fat_graph.FatGraph`. The saddle
+        connection labelled `i` on this diagram gets labels `2i` and `2i+1` in
+        the graph (there one label per half-edge in the fat graph). The even
+        labels correspond to half-edges in the bottom of cylinders while the
+        odd ones correspond to the top.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import AbelianStratum
+            sage: H11 = AbelianStratum(1,1).unique_component()
+            sage: for cd in H11.cylinder_diagrams():
+            ....:     fg = cd.saddle_connections_graph()
+            ....:     print(cd.ncyls(), [comp.genus() for comp in fg.connected_components()])
+            1 [1]
+            2 [0]
+            2 [0]
+            3 [0, 0]
+
+        TESTS::
+
+            sage: from surface_dynamics import AbelianStrata
+            sage: for g in (2, 3):
+            ....:     for H in AbelianStrata(genus=g):
+            ....:         for C in H.components():
+            ....:             for cd in C.cylinder_diagrams():
+            ....:                 fg = cd.saddle_connections_graph()
+            ....:                 assert fg.num_faces() == 2 * cd.ncyls()
+            ....:                 assert fg.euler_characteristic() == cd.euler_characteristic() + 2 * cd.ncyls()
+            ....:                 assert len(fg.connected_components()) == 1 + cd.ncyls() - cd.homological_dimension_of_cylinders()
+        """
+        n = len(self._bot)
+        fp = [-1] * (2 * n)
+        for i in range(n):
+            fp[2 * i] = 2 * self._bot[i]
+            fp[2 * i + 1] = 2 * self._top[i] + 1
+
+        from surface_dynamics.topology.fat_graph import FatGraph
+        return FatGraph(fp=fp, mutable=mutable)
+
 
 def cyclic_direction(x,y,z):
     r"""
