@@ -160,7 +160,7 @@ surfaces (and more generally similarity surfaces). One can build Masur polygons 
     sage: height = [1, 0, 0, -1]
     sage: S = perm.masur_polygon(length2, height)  # optional: sage_flatsurf
     sage: S  # optional: sage_flatsurf
-    TranslationSurface built from 6 polygons
+    Translation Surface in H_2(2) built from 6 triangles
     sage: S.stratum()  # optional: sage_flatsurf
     H_2(2)
 
