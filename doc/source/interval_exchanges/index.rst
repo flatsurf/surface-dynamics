@@ -23,4 +23,5 @@ Interval exchange transformations
    iet
    integer_iet
    iet_family
+   iet_family_pyx
    flip_sequence
