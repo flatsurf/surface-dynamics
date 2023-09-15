@@ -1,6 +1,8 @@
-================
-Surface dynamics
-================
+<p align="center">
+    <img alt="logo" src="https://user-images.githubusercontent.com/373765/255104540-451305f4-42e4-4c16-aee1-b38a0e6d41ad.svg">
+</p>
+
+<h1><p align="center">Surface dynamics</p></h1>
 
 The ``surface-dynamics`` package for SageMath adds functionality related to
 interval exchange transformations, translation surfaces, mapping classes
@@ -13,8 +15,7 @@ heavily on:
 * PPL (Parma Polyhedra Library) and LattE (Lattice point Enumeration)
   for polytope computations
 
-Prerequisites
--------------
+## Prerequisites
 
 Installing ``surface-dynamics`` requires a working Sage installation (with
 Cython and gcc). Installing the optional SageMath packages ``gap_packages``,
@@ -23,8 +24,7 @@ in ``surface-dynamics``. The optional package ``database_gap`` is also
 recommended if using SageMath < 8.6 (in SageMath 8.6 it was merged partly
 into the ``gap`` and partly into the ``gap_packages`` packages).
 
-Installation
-------------
+## Installation
 
 The module is distributed on PyPI and is easily installed through the
 Python package manager ``pip``. If you downloaded a binary from the SageMath
@@ -45,8 +45,7 @@ two commands::
 
 If you use Arch Linux, you need to install from source (see next section).
 
-Install and use source version
-------------------------------
+## Install and use source version
 
 This section provides detailed instructions on how to download, modify
 and install the development version of ``surface-dynamics``. In all commands,
@@ -104,14 +103,12 @@ modify or create Python files (i.e. ``.py`` files).
 If you wish to install your custom version of ``surface-dynamics``
 just use ``PIP`` as indicated before.
 
-Documentation
--------------
+## Documentation
 
 * short tutorial: http://www.labri.fr/perso/vdelecro/flatsurf.html
 * complete module documentation: https://flatsurf.github.io/surface-dynamics/
 
-Check
------
+## Check
 
 After installing ``surface-dynamics``, check that it works by launching Sage
 and typing the following commands. You should get the same
@@ -164,8 +161,7 @@ output as below. ::
     sage: Q12_reg.lyapunov_exponents_H_minus(nb_iterations=2**20)  # abs tol 0.05
     [1.0000, 0.3087, 0.1192]
 
-Installing development version - source code
---------------------------------------------
+## Installing development version - source code
 
 The development webpage is
 
@@ -176,15 +172,13 @@ development version with the command::
 
     $ sage -pip install git+https://github.com/flatsurf/surface-dynamics [--user]
 
-Contact
--------
+## Contact
 
 Your comments and help are welcome: vincent.delecroix@labri.fr
 
 For problems with macOS: samuel.lelievre@gmail.com
 
-Authors
--------
+## Authors
 
 * Vincent Delecroix: maintainer
 * Samuel Lelièvre: origami and permutation representatives for quadratic strata
@@ -194,15 +188,12 @@ Authors
 * Ivan Yakovlev: Masur-Veech volumes of connected components of minimal strata
   of Abelian differentials
 
-How to cite this project
-------------------------
+## How to cite this project
 
 If you have used this project for please cite us
-as described `on our zenodo site <https://zenodo.org/badge/latestdoi/347440823>`_.
+as described [on our zenodo site](https://zenodo.org/badge/latestdoi/347440823).
 
-Versions
---------
+## Versions
 
 The first release of ``surface-dynamics`` as a sagemath spkg happened on the
-30th of july 2015. Versions are now track on `zenodo
-<https://zenodo.org/badge/latestdoi/347440823>`_.
+30th of july 2015. Versions are now track on [zenodo](https://zenodo.org/badge/latestdoi/347440823).
