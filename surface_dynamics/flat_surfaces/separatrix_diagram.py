@@ -1534,6 +1534,50 @@ class SeparatrixDiagram(SageObject):
             connected=connected,
             up_to_symmetry=up_to_symmetry))
 
+    def saddle_connections_graph(self, mutable=False):
+        r"""
+        Return the fat graph (or ribbon graph) made by the saddle connections.
+
+        The return graph is a
+        :class:`~surface_dynamics.topology.fat_graph.FatGraph`. The saddle
+        connection labelled `i` on this diagram gets labels `2i` and `2i+1` in
+        the graph (there one label per half-edge in the fat graph). The even
+        labels correspond to half-edges in the bottom of cylinders while the
+        odd ones correspond to the top.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import AbelianStratum
+            sage: H11 = AbelianStratum(1,1).unique_component()
+            sage: for cd in H11.cylinder_diagrams():
+            ....:     fg = cd.saddle_connections_graph()
+            ....:     print(cd.ncyls(), [comp.genus() for comp in fg.connected_components()])
+            1 [1]
+            2 [0]
+            2 [0]
+            3 [0, 0]
+
+        TESTS::
+
+            sage: from surface_dynamics import AbelianStrata
+            sage: for g in (2, 3):
+            ....:     for H in AbelianStrata(genus=g):
+            ....:         for C in H.components():
+            ....:             for cd in C.cylinder_diagrams():
+            ....:                 fg = cd.saddle_connections_graph()
+            ....:                 assert fg.num_faces() == 2 * cd.ncyls()
+            ....:                 assert fg.euler_characteristic() == cd.euler_characteristic() + 2 * cd.ncyls()
+            ....:                 assert len(fg.connected_components()) == 1 + cd.ncyls() - cd.homological_dimension_of_cylinders()
+        """
+        n = len(self._bot)
+        fp = [-1] * (2 * n)
+        for i in range(n):
+            fp[2 * i] = 2 * self._bot[i]
+            fp[2 * i + 1] = 2 * self._top[i] + 1
+
+        from surface_dynamics.topology.fat_graph import FatGraph
+        return FatGraph(fp=fp, mutable=mutable)
+
 
 def cyclic_direction(x,y,z):
     r"""
@@ -2663,55 +2707,55 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: from surface_dynamics import *
 
             sage: c0, c1 = AbelianStratum(2).cylinder_diagrams()
-            sage: v0 = c0.volume_contribution()  # optional: latte_int  # optional: mzv
-            sage: v0                             # optional: latte_int  # optional: mzv
+            sage: v0 = c0.volume_contribution()  # optional: latte_int
+            sage: v0                             # optional: latte_int
             (1/3)/((w)^4)
-            sage: v0.integral_sum_as_mzv()       # optional: latte_int  # optional: mzv
+            sage: v0.integral_sum_as_mzv()       # optional: latte_int
             1/3*ζ(4)
-            sage: v1 = c1.volume_contribution()  # optional: latte_int  # optional: mzv
-            sage: v1                             # optional: latte_int  # optional: mzv
+            sage: v1 = c1.volume_contribution()  # optional: latte_int
+            sage: v1                             # optional: latte_int
             (2/3)/((w1)*(w0 + w1)^3) + (1/3)/((w1)^2*(w0 + w1)^2)
-            sage: v1.integral_sum_as_mzv()       # optional: latte_int  # optional: mzv
+            sage: v1.integral_sum_as_mzv()       # optional: latte_int
             2/3*ζ(1,3) + 1/3*ζ(2,2)
 
-            sage: for c in AbelianStratum(1,1).cylinder_diagrams():  # optional: latte_int  # optional: mzv
+            sage: for c in AbelianStratum(1,1).cylinder_diagrams():  # optional: latte_int
             ....:     print(c, c.volume_contribution().integral_sum_as_mzv())
             (0,3,1,2)-(0,3,1,2) 1/6*ζ(5)
             (0)-(1) (1,2,3)-(0,2,3) 1/3*ζ(2,3) + 1/3*ζ(3,2)
             (0,3)-(1,3) (1,2)-(0,2) ζ(1,4) + 1/3*ζ(2,3)
             (0,1)-(2,3) (2)-(1) (3)-(0) 1/3*ζ(1,3) + 1/3*ζ(2,2) - 1/3*ζ(2,3) - 1/3*ζ(3,2) + 1/3*ζ(4) - 1/3*ζ(5)
 
-            sage: sum(c.volume_contribution() for c in AbelianStratum(2,1,1).cylinder_diagrams(1)).integral_sum_as_mzv()  # optional: latte_int  # optional: mzv
+            sage: sum(c.volume_contribution() for c in AbelianStratum(2,1,1).cylinder_diagrams(1)).integral_sum_as_mzv()  # optional: latte_int
             7/180*ζ(8)
 
         Detailed contribution of 2 cylinder diagrams::
 
             sage: cyls = AbelianStratum(2,1,1).cylinder_diagrams(2)
-            sage: sum(cyls[k].volume_contribution() for k in [2,7,8,21,22]).integral_sum_as_mzv()  # optional: latte_int  # optional: mzv
+            sage: sum(cyls[k].volume_contribution() for k in [2,7,8,21,22]).integral_sum_as_mzv()  # optional: latte_int
             13/630*ζ(5,3) + 13/252*ζ(6,2)
-            sage: sum(cyls[k].volume_contribution() for k in [0,11,19,20]).integral_sum_as_mzv()  # optional: latte_int  # optional: mzv
+            sage: sum(cyls[k].volume_contribution() for k in [0,11,19,20]).integral_sum_as_mzv()  # optional: latte_int
             1/21*ζ(4,4) + 4/63*ζ(5,3)
-            sage: sum(cyls[k].volume_contribution() for k in [3,10]).integral_sum_as_mzv()  # optional: latte_int  # optional: mzv
+            sage: sum(cyls[k].volume_contribution() for k in [3,10]).integral_sum_as_mzv()  # optional: latte_int
             2/35*ζ(3,5) + 3/70*ζ(4,4)
-            sage: sum(cyls[k].volume_contribution() for k in [13,23,24]).integral_sum_as_mzv()  # optional: latte_int  # optional: mzv
+            sage: sum(cyls[k].volume_contribution() for k in [13,23,24]).integral_sum_as_mzv()  # optional: latte_int
             2/21*ζ(2,6) + 4/105*ζ(3,5)
-            sage: sum(cyls[k].volume_contribution() for k in [9]).integral_sum_as_mzv()  # optional: latte_int  # optional: mzv
+            sage: sum(cyls[k].volume_contribution() for k in [9]).integral_sum_as_mzv()  # optional: latte_int
             1/21*ζ(1,7) + 1/126*ζ(2,6)
-            sage: sum(cyls[k].volume_contribution() for k in [5]).integral_sum_as_mzv()  # optional: latte_int  # optional: mzv
+            sage: sum(cyls[k].volume_contribution() for k in [5]).integral_sum_as_mzv()  # optional: latte_int
             2/105*ζ(3,5) + 1/70*ζ(4,4)
-            sage: sum(cyls[k].volume_contribution() for k in [6,26]).integral_sum_as_mzv()  # optional: latte_int  # optional: mzv
+            sage: sum(cyls[k].volume_contribution() for k in [6,26]).integral_sum_as_mzv()  # optional: latte_int
             1/7*ζ(1,7) + 1/14*ζ(2,6) + 1/21*ζ(3,5) + 1/28*ζ(4,4) + 2/105*ζ(5,3)
-            sage: sum(cyls[k].volume_contribution() for k in [1,14]).integral_sum_as_mzv()  # optional: latte_int  # optional: mzv
+            sage: sum(cyls[k].volume_contribution() for k in [1,14]).integral_sum_as_mzv()  # optional: latte_int
             2/7*ζ(1,7) + 1/7*ζ(2,6) + 2/21*ζ(3,5) + 3/70*ζ(4,4)
-            sage: sum(cyls[k].volume_contribution() for k in [17,27]).integral_sum_as_mzv()  # optional: latte_int  # optional: mzv
+            sage: sum(cyls[k].volume_contribution() for k in [17,27]).integral_sum_as_mzv()  # optional: latte_int
             2/7*ζ(1,7) + 1/7*ζ(2,6) + 4/105*ζ(3,5)
-            sage: sum(cyls[k].volume_contribution() for k in [4,25]).integral_sum_as_mzv()  # optional: latte_int  # optional: mzv
+            sage: sum(cyls[k].volume_contribution() for k in [4,25]).integral_sum_as_mzv()  # optional: latte_int
             1/7*ζ(1,7) + 1/42*ζ(2,6)
-            sage: sum(cyls[k].volume_contribution() for k in [12,28]).integral_sum_as_mzv()  # optional: latte_int  # optional: mzv
+            sage: sum(cyls[k].volume_contribution() for k in [12,28]).integral_sum_as_mzv()  # optional: latte_int
             4/21*ζ(1,7) + 2/21*ζ(2,6) + 8/315*ζ(3,5)
-            sage: sum(cyls[k].volume_contribution() for k in [15,16]).integral_sum_as_mzv()  # optional: latte_int  # optional: mzv
+            sage: sum(cyls[k].volume_contribution() for k in [15,16]).integral_sum_as_mzv()  # optional: latte_int
             4/21*ζ(1,7) + 2/21*ζ(2,6) + 8/315*ζ(3,5)
-            sage: sum(cyls[k].volume_contribution() for k in [18]).integral_sum_as_mzv()  # optional: latte_int  # optional: mzv
+            sage: sum(cyls[k].volume_contribution() for k in [18]).integral_sum_as_mzv()  # optional: latte_int
             1/36*ζ(7) - 1/36*ζ(8)
         """
         from surface_dynamics.misc.additive_multivariate_generating_series import AdditiveMultivariateGeneratingSeriesRing
