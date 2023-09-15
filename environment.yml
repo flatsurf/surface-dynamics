@@ -5,7 +5,6 @@
 name: surface-dynamics-build
 channels:
   - conda-forge
-  - defaults
 dependencies:
   - c-compiler
   - cxx-compiler
@@ -26,8 +25,3 @@ dependencies:
   - pyeantic >=1.0.0,<2  # optional: pyeantic
   - pyintervalxt >=3.1.0,<4  # optional: pyintervalxt
   - gmpxxyy >=1.0.1,<2  # optional: gmpxxyy
-  - sphinx >=4.2.0,<6  # optional: doc
-  - pip
-  - pip:
-    - linkchecker  # optional: doc
-    - sphinx_rtd_theme  # optional: doc

@@ -25,10 +25,10 @@ import sage.misc.misc
 
 from sage.env import SAGE_SHARE
 
-from . import __path__ as db_path
-if len(db_path) != 1:
+from . import __path__ as SURFACE_DYNAMICS_DB_PATH
+if len(SURFACE_DYNAMICS_DB_PATH) != 1:
     raise RuntimeError("problem with setting paths")
-db_path = os.path.abspath(db_path[0])
+SURFACE_DYNAMICS_DB_PATH = os.path.abspath(SURFACE_DYNAMICS_DB_PATH[0])
 
 def line_count(filename):
     r"""
@@ -53,37 +53,33 @@ class GenericRepertoryDatabase:
     Database that consists of a list of files in a repertory.
     """
     default_name = "generic_db"
-    default_path = sage.misc.misc.SAGE_TMP
 
-    def __init__(self, path=None, name=None, read_only=True):
+    def __init__(self, path=None, read_only=True):
         r"""
         INPUT:
 
         - ``path`` - string (default is SAGE_TMP) - path to the database. If the
           repertory does not exists, it is created.
 
-        -  ``name`` - string (default is 'generic_db') - name of the repertory
-           that will contain files of the database.
-
         - ``read_only`` - boolean
         """
         if path is None:
-            path = self.default_path
-
-        if name is None:
-            name = self.default_name
-
-        full_path = os.path.join(path,name)
-
-        if not os.path.isdir(full_path):
+            try:
+                path = self.default_path
+            except AttributeError:
+                import tempfile
+                path = tempfile.TemporaryDirectory()
+        elif not isinstance(path, str):
+            raise TypeError('path must be a string')
+        elif not os.path.isdir(path):
             if read_only:
                 raise ValueError("you must set read_only to `False` if the database does not already exist")
             try:
-                os.makedirs(full_path)
+                os.makedirs(path)
             except OSError:
-                raise ValueError("not able to create the database at {}".format(full_path))
+                raise ValueError("not able to create the database at {}".format(path))
 
-        self.path = os.path.abspath(full_path)
+        self.path = path
         self.read_only = read_only
 
     def __eq__(self, other):
@@ -91,14 +87,13 @@ class GenericRepertoryDatabase:
         TESTS::
 
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
-            sage: import os
+            sage: import tempfile
 
-            sage: rep1 = os.path.join(tmp_dir())
-            sage: rep2 = os.path.join(tmp_dir())
-
-            sage: C1 = CylinderDiagrams(rep1,read_only=False)
-            sage: C2 = CylinderDiagrams(rep1,read_only=False)
-            sage: C3 = CylinderDiagrams(rep2,read_only=False)
+            sage: tmp_dir1 = tempfile.TemporaryDirectory()
+            sage: tmp_dir2 = tempfile.TemporaryDirectory()
+            sage: C1 = CylinderDiagrams(tmp_dir1.name, read_only=False)
+            sage: C2 = CylinderDiagrams(tmp_dir1.name, read_only=False)
+            sage: C3 = CylinderDiagrams(tmp_dir2.name, read_only=False)
             sage: C1 == C1
             True
             sage: C1 == C2
@@ -106,22 +101,20 @@ class GenericRepertoryDatabase:
             sage: C1 == C3
             False
         """
-        return self.__class__ is other.__class__ and other.path == self.path
+        return type(self) is type(other) and other.path == self.path
 
     def __ne__(self, other):
         r"""
         TESTS::
 
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
-            sage: import os
+            sage: import tempfile
 
-            sage: rep1 = os.path.join(tmp_dir())
-            sage: rep2 = os.path.join(tmp_dir())
-
-
-            sage: C1 = CylinderDiagrams(rep1,read_only=False)
-            sage: C2 = CylinderDiagrams(rep1,read_only=False)
-            sage: C3 = CylinderDiagrams(rep2,read_only=False)
+            sage: tmp_dir1 = tempfile.TemporaryDirectory()
+            sage: tmp_dir2 = tempfile.TemporaryDirectory()
+            sage: C1 = CylinderDiagrams(tmp_dir1.name, read_only=False)
+            sage: C2 = CylinderDiagrams(tmp_dir1.name, read_only=False)
+            sage: C3 = CylinderDiagrams(tmp_dir2.name, read_only=False)
             sage: C1 != C1
             False
             sage: C1 != C2
@@ -129,7 +122,7 @@ class GenericRepertoryDatabase:
             sage: C1 != C3
             True
         """
-        return not self.__eq__(other)
+        return not self == other
 
     def clean(self):
         r"""
@@ -139,8 +132,10 @@ class GenericRepertoryDatabase:
 
             sage: from surface_dynamics import *
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
+            sage: import tempfile
 
-            sage: C = CylinderDiagrams(tmp_dir(), "cylinder_diagrams", read_only=False)
+            sage: tmp_dir = tempfile.TemporaryDirectory()
+            sage: C = CylinderDiagrams(tmp_dir.name, read_only=False)
             sage: C.update(AbelianStratum(4))
             sage: import os
             sage: sorted(os.listdir(C.path))
@@ -163,8 +158,7 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
     Twin data of generalized permutation of irregular components of strata of
     Abelian differentials.
     """
-    default_name = "generalized_permutation_twins"
-    default_path = db_path
+    default_path = os.path.join(SURFACE_DYNAMICS_DB_PATH, "generalized_permutation_twins")
 
     def __repr__(self):
         r"""
@@ -177,7 +171,7 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
             sage: D.__repr__()
             'Database of twins of irregular components at ...'
         """
-        return "Database of twins of irregular components at %s"%self.path
+        return "Database of twins of irregular components at %s" % self.path
 
     def filename(self, stratum):
         r"""
@@ -321,6 +315,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
         sage: from surface_dynamics import *
         sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
         sage: import os
+
         sage: C = CylinderDiagrams()
         sage: a = AbelianStratum(3,1,1,1).unique_component()
         sage: C.filename(a, 2)
@@ -335,8 +330,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
         sage: l[0].stratum()
         H_4(3, 1^3)
     """
-    default_name = "cylinder_diagrams"
-    default_path = db_path
+    default_path = os.path.join(SURFACE_DYNAMICS_DB_PATH, "cylinder_diagrams")
 
     def __repr__(self):
         r"""
@@ -345,7 +339,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
         TESTS::
 
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
-            sage: C = CylinderDiagrams(tmp_dir(), read_only=False)
+            sage: C = CylinderDiagrams(read_only=False)
             sage: C    # indirect doctest
             Database of cylinder diagrams at ...
         """
@@ -378,11 +372,11 @@ class CylinderDiagrams(GenericRepertoryDatabase):
         EXAMPLES::
 
             sage: from surface_dynamics import *
-
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
-            sage: import os
+            sage: import tempfile
 
-            sage: C = CylinderDiagrams(tmp_dir(), read_only=False)
+            sage: tmp_dir = tempfile.TemporaryDirectory()
+            sage: C = CylinderDiagrams(tmp_dir.name, read_only=False)
             sage: C.clean()
 
             sage: a1 = AbelianStratum(4).odd_component()

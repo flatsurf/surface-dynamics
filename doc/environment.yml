@@ -1,0 +1,17 @@
+# This file lists the minimal dependencies needed to build the documentation
+# for surface-dynamics. Create a conda environment with these dependencies
+# preinstalled with:
+# conda env create -n surface-dynamics-docbuild -f ../environment.yml
+# conda env update -n surface-dynamics-docbuild -f environment.yml
+name: surface-dynamics-docbuild
+channels:
+  - conda-forge
+dependencies:
+  - sphinx
+  - jupytext
+  - myst-nb
+  - furo
+  - pip
+  - pip:
+    - linkchecker
+    - sphinx_rtd_theme

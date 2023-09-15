@@ -19,16 +19,12 @@ jobs:
         shell: bash -l {0}
         run: |
           mamba env update --quiet -n test -f environment.yml
+          mamba env update --quiet -n test -f doc/environment.yml
           conda list
       - name: install surface-dynamics
         shell: bash -l {0}
         run: |
           pip install --no-index .
-      - name: fix permissions
-        shell: bash -l {0}
-        run: |
-          # Strangely, the linkchecker modules are installed writable and linkchecker then refuses to load them.
-          chmod -R a-w `python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"`
       - name: build documentation
         shell: bash -l {0}
         run: |

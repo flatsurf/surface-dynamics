@@ -28,14 +28,9 @@ with open("surface_dynamics/version.py") as f:
     suffix = "'"
     assert version.startswith(prefix) and version.endswith(suffix)
     version = version[len(prefix):len(version)-len(suffix)]
-try:
-    with open("README.rst", encoding='utf-8') as f:
-        long_description = f.read()
-except TypeError:
-    # NOTE: encoding is not a keyword in Python 2
-    with open("README.rst") as f:
-        long_description = f.read().decode('utf-8')
 
+with open("README.md") as f:
+    long_description = f.read()
 
 try:
     import ppl
@@ -109,6 +104,7 @@ setup(name='surface-dynamics',
       version=version,
       description="Dynamics on surfaces",
       long_description=long_description,
+      long_description_content_type="text/markdown",
       author='Vincent Delecroix',
       author_email='vincent.delecroix@u-bordeaux.fr',
       project_urls={
