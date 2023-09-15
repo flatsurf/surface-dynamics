@@ -67,12 +67,12 @@ def handle_term(n, den_tuple):
 
         sage: from surface_dynamics.misc.generalized_multiple_zeta_values import handle_term, is_convergent
 
-        sage: M = Multizetas(QQ)  # optional: mzv
+        sage: M = Multizetas(QQ)
 
         sage: V1 = FreeModule(ZZ, 1)
         sage: v = V1((1,)); v.set_immutable()
         sage: dt = ((v,3),)
-        sage: assert is_convergent(1, dt) and handle_term(1, dt) == M((3,))  # optional: mzv
+        sage: assert is_convergent(1, dt) and handle_term(1, dt) == M((3,))
 
 
         sage: V2 = FreeModule(ZZ, 2)
@@ -80,11 +80,11 @@ def handle_term(n, den_tuple):
         sage: vb = V2((0,1)); vb.set_immutable()
         sage: vc = V2((1,1)); vc.set_immutable()
         sage: dt = ((va,2), (vc,3))
-        sage: assert is_convergent(2, dt) and handle_term(2, dt) == M((2,3))  # optional: mzv
+        sage: assert is_convergent(2, dt) and handle_term(2, dt) == M((2,3))
         sage: dt1 = ((va,2),(vb,3))
         sage: dt2 = ((va,3),(vb,2))
-        sage: assert is_convergent(2,dt1) and is_convergent(2,dt2)  # optional: mzv
-        sage: assert handle_term(2, ((va,2), (vb,3))) == handle_term(2, ((va,3), (vb,2))) == M((2,)) * M((3,))  # optional: mzv
+        sage: assert is_convergent(2,dt1) and is_convergent(2,dt2)
+        sage: assert handle_term(2, ((va,2), (vb,3))) == handle_term(2, ((va,3), (vb,2))) == M((2,)) * M((3,))
 
         sage: V3 = FreeModule(ZZ, 3)
         sage: va = V3((1,0,0)); va.set_immutable()
@@ -94,12 +94,12 @@ def handle_term(n, den_tuple):
         sage: ve = V3((1,0,1)); ve.set_immutable()
         sage: vf = V3((0,1,1)); vf.set_immutable()
         sage: vg = V3((1,1,1)); vg.set_immutable()
-        sage: assert handle_term(3, ((va,2), (vd,3), (vg,4))) == M((2,3,4))  # optional: mzv
+        sage: assert handle_term(3, ((va,2), (vd,3), (vg,4))) == M((2,3,4))
         sage: assert handle_term(3, ((va,2), (vb,3), (vc,4))) == handle_term(3, ((va,3), (vb,2), (vc,4)))  # optional mzv
-        sage: assert handle_term(3, ((va,2), (vb,3), (vc,4))) == M((2,)) * M((3,)) * M((4,))  # optional: mzv
-        sage: assert handle_term(3, ((va,1), (vc,2), (vd,3))) == handle_term(3, ((va,1), (vb,2), (ve,3)))  # optional: mzv
-        sage: assert handle_term(3, ((va,1), (vc,2), (vd,3))) == handle_term(3, ((va,2), (vb,1), (vf,3)))  # optional: mzv
-        sage: assert handle_term(3, ((va,1), (vc,2), (vd,3))) ==  M((2,)) * M((1,3))  # optional: mzv
+        sage: assert handle_term(3, ((va,2), (vb,3), (vc,4))) == M((2,)) * M((3,)) * M((4,))
+        sage: assert handle_term(3, ((va,1), (vc,2), (vd,3))) == handle_term(3, ((va,1), (vb,2), (ve,3)))
+        sage: assert handle_term(3, ((va,1), (vc,2), (vd,3))) == handle_term(3, ((va,2), (vb,1), (vf,3)))
+        sage: assert handle_term(3, ((va,1), (vc,2), (vd,3))) ==  M((2,)) * M((1,3))
     """
     if n == 1:
         M = Multizetas(QQ)
@@ -263,7 +263,7 @@ def is_convergent(n, den):
         sage: vg = V((1,1,1)); vg.set_immutable()
         sage: gens = [va,vb,vc,vd,ve,vf,vg]
         sage: N = 0
-        sage: for p in itertools.product([0,1,2], repeat=7):  # optional: mzv
+        sage: for p in itertools.product([0,1,2], repeat=7):
         ....:     if sum(map(bool,p)) == 3 and is_convergent(3, list(zip(gens,p))):
         ....:         print(p)
         ....:         N += 1
@@ -284,7 +284,7 @@ def is_convergent(n, den):
         (2, 2, 0, 0, 0, 2, 0)
         (2, 2, 0, 0, 2, 0, 0)
         (2, 2, 2, 0, 0, 0, 0)
-        sage: print(N)  # optional: mzv
+        sage: print(N)
         125
     """
     from sage.geometry.polyhedron.constructor import Polyhedron
@@ -309,56 +309,56 @@ def convergent_multizeta(t):
     TESTS::
 
         sage: from surface_dynamics.misc.generalized_multiple_zeta_values import convergent_multizeta
-        sage: assert all(convergent_multizeta(t) == Multizeta(*t) for t in [(2,),(3,),(1,2),(3,2),(1,1,2)])  # optional: mzv
+        sage: assert all(convergent_multizeta(t) == Multizeta(*t) for t in [(2,),(3,),(1,2),(3,2),(1,1,2)])
 
-        sage: convergent_multizeta((0,3))  # optional: mzv
+        sage: convergent_multizeta((0,3))
         ζ(2) - ζ(3)
-        sage: convergent_multizeta((0,2,2))  # optional: mzv
+        sage: convergent_multizeta((0,2,2))
         ζ(1,2) - ζ(2,2)
-        sage: convergent_multizeta((1,0,3))  # optional: mzv
+        sage: convergent_multizeta((1,0,3))
         ζ(1,2) - ζ(1,3) - ζ(2) + ζ(3)
-        sage: convergent_multizeta((0,1,3))  # optional: mzv
+        sage: convergent_multizeta((0,1,3))
         -ζ(1,3) + ζ(2) - ζ(3)
 
-        sage: convergent_multizeta((0, 4))  # optional: mzv
+        sage: convergent_multizeta((0, 4))
         ζ(3) - ζ(4)
-        sage: convergent_multizeta((-1, 5))  # optional: mzv
+        sage: convergent_multizeta((-1, 5))
         1/2*ζ(3) - 1/2*ζ(4)
-        sage: convergent_multizeta((-2, 5))  # optional: mzv
+        sage: convergent_multizeta((-2, 5))
         1/3*ζ(2) - 1/2*ζ(3) + 1/6*ζ(4)
 
-        sage: convergent_multizeta((-1, 3, 4))  # optional: mzv
+        sage: convergent_multizeta((-1, 3, 4))
         1/2*ζ(1,4) - 1/2*ζ(2,4)
-        sage: convergent_multizeta((-1, -1, 8))  # optional: mzv
+        sage: convergent_multizeta((-1, -1, 8))
         1/8*ζ(4) - 5/12*ζ(5) + 3/8*ζ(6) - 1/12*ζ(7)
-        sage: convergent_multizeta((-2,-2,10))  # optional: mzv
+        sage: convergent_multizeta((-2,-2,10))
         1/18*ζ(4) - 4/15*ζ(5) + 31/72*ζ(6) - 1/4*ζ(7) + 1/72*ζ(8) + 1/60*ζ(9)
-        sage: convergent_multizeta((-1, -2, 10))  # optional: mzv
+        sage: convergent_multizeta((-1, -2, 10))
         1/10*ζ(5) - 3/8*ζ(6) + 5/12*ζ(7) - 1/8*ζ(8) - 1/60*ζ(9)
 
-        sage: convergent_multizeta((4,-4,10))  # optional: mzv
+        sage: convergent_multizeta((4,-4,10))
         -1/3*ζ(1,10) + 1/30*ζ(3,10) + 1/5*ζ(4,5) - 1/2*ζ(4,6) + 1/3*ζ(4,7) - 1/30*ζ(4,9) - 1/10*ζ(8) - 2/5*ζ(9) + 1/2*ζ(10)
-        sage: convergent_multizeta((2,-1,8))  # optional: mzv
+        sage: convergent_multizeta((2,-1,8))
         -1/2*ζ(1,8) + 1/2*ζ(2,6) - 1/2*ζ(2,7) - 1/2*ζ(7) + 1/2*ζ(8)
 
-        sage: convergent_multizeta((0,3,2))  # optional: mzv
+        sage: convergent_multizeta((0,3,2))
         ζ(2,2) - ζ(3,2)
 
     Divergent cases::
 
-        sage: convergent_multizeta((0,2))  # optional: mzv
+        sage: convergent_multizeta((0,2))
         Traceback (most recent call last):
         ...
         DivergentZetaError: divergent multizeta value (0, 2)
-        sage: convergent_multizeta((0,0,3))  # optional: mzv
+        sage: convergent_multizeta((0,0,3))
         Traceback (most recent call last):
         ...
         DivergentZetaError: divergent multizeta value (0, 0, 3)
-        sage: convergent_multizeta((1,0,2))  # optional: mzv
+        sage: convergent_multizeta((1,0,2))
         Traceback (most recent call last):
         ...
         DivergentZetaError: divergent multizeta value (1, 0, 2)
-        sage: convergent_multizeta((0,1,2))  # optional: mzv
+        sage: convergent_multizeta((0,1,2))
         Traceback (most recent call last):
         ...
         DivergentZetaError: divergent multizeta value (0, 1, 2)
@@ -407,14 +407,14 @@ def is_multizeta(n, den_tuple):
         sage: from surface_dynamics.misc.generalized_multiple_zeta_values import linear_forms, is_multizeta
         sage: va, vb, vd, vc, ve, vf, vg = linear_forms(3)
 
-        sage: is_multizeta(3, ((vb, 2), (vf, 5), (vg, 2)))  # optional: mzv
+        sage: is_multizeta(3, ((vb, 2), (vf, 5), (vg, 2)))
         ζ(2,5,2)
 
-        sage: is_multizeta(3, [(vg, 5)])  # optional: mzv
+        sage: is_multizeta(3, [(vg, 5)])
         1/2*ζ(3) - 3/2*ζ(4) + ζ(5)
 
-        sage: assert is_multizeta(3, ((va,3), (vb,3), (vc,3))) is None  # optional: mzv
-        sage: assert is_multizeta(3, ((vb,2), (ve,5), (vg,1))) is None  # optional: mzv
+        sage: assert is_multizeta(3, ((va,3), (vb,3), (vc,3))) is None
+        sage: assert is_multizeta(3, ((vb,2), (ve,5), (vg,1))) is None
     """
     assert all(len(v) == n for v,p in den_tuple), (n, den_tuple)
 
@@ -859,22 +859,22 @@ def Z3(a, b, c, d, e, f, g, check_convergence=True):
 
         sage: from surface_dynamics.misc.generalized_multiple_zeta_values import Z3
 
-        sage: M = Multizetas(QQ)  # optional: mzv
+        sage: M = Multizetas(QQ)
 
-        sage: Z3(1,1,1,1,1,1,1)  # optional: mzv
+        sage: Z3(1,1,1,1,1,1,1)
         21/2*ζ(1,1,5) + 9/2*ζ(1,2,4) - 3/2*ζ(1,3,3) - 3/2*ζ(1,4,2) + 9/2*ζ(1,6)
-        sage: Z3(3,0,0,0,0,3,0)  # optional: mzv
+        sage: Z3(3,0,0,0,0,3,0)
         6*ζ(1,4) - 12*ζ(1,5) + 3*ζ(2,3) - 6*ζ(2,4) + ζ(3,2) - 2*ζ(3,3)
 
-        sage: assert Z3(2,3,4,0,0,0,0) == M((2,)) * M((3,)) * M((4,))  # optional: mzv
-        sage: assert Z3(1,0,0,2,0,0,3) == M((1,2,3))  # optional: mzv
+        sage: assert Z3(2,3,4,0,0,0,0) == M((2,)) * M((3,)) * M((4,))
+        sage: assert Z3(1,0,0,2,0,0,3) == M((1,2,3))
 
-        sage: assert Z3(0,0,0,2,0,1,1) == M((4,)) / 2  # optional: mzv
-        sage: assert Z3(1,0,1,1,0,0,1) == 3 * M((1,1,2))  # optional: mzv
+        sage: assert Z3(0,0,0,2,0,1,1) == M((4,)) / 2
+        sage: assert Z3(1,0,1,1,0,0,1) == 3 * M((1,1,2))
 
-        sage: assert Z3(0,0,0,0,0,0,4) == 1/2 * M((2,)) - 3/2 * M((3,)) + M((4,))  # optional: mzv
+        sage: assert Z3(0,0,0,0,0,0,4) == 1/2 * M((2,)) - 3/2 * M((3,)) + M((4,))
 
-        sage: assert Z3(0,0,0,2,0,1,1) == 2 * M((1,1,2)) - M((2,2)) - 3 *M((1,3))  # optional: mzv
+        sage: assert Z3(0,0,0,2,0,1,1) == 2 * M((1,1,2)) - M((2,2)) - 3 *M((1,3))
     """
     M = Multizetas(QQ)
     CHECK_CONVERGENCE = False

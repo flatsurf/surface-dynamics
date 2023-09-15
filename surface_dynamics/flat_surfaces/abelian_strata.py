@@ -792,15 +792,13 @@ class AbelianStratum(Stratum):
 
         if not force_computation:
             for cc in self.components():
-                for cd in cc.cylinder_diagram_iterator(ncyls, up_to_symmetry, False):
-                    yield cd
+                yield from cc.cylinder_diagram_iterator(ncyls, up_to_symmetry, False)
         else:
             for sd in self.separatrix_diagram_iterator(ncyls):
                 iterator = sd.cylinder_diagram_iterator(up_to_symmetry=True)
                 if not up_to_symmetry:
                     iterator = _cylinder_diagrams_with_symmetric(iterator)
-                for cd in iterator:
-                    yield cd
+                yield from iterator
 
     def cylinder_diagrams(self, ncyls=None, up_to_symmetry=True, force_computation=False):
         r"""
@@ -4092,5 +4090,4 @@ class AbelianStrata_all(AbelianStrata):
         """
         from itertools import count
         for d in count(2):
-            for stratum in AbelianStrata(dimension=d, fake_zeros=self._fake_zeros):
-                yield stratum
+            yield from AbelianStrata(dimension=d, fake_zeros=self._fake_zeros)

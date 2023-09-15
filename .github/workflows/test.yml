@@ -14,24 +14,6 @@ jobs:
       matrix:
         include:
           - optionals: "sage,pplpy"
-            sagelib: "8.8"
-          - optionals: "sage,pplpy"
-            sagelib: "8.9"
-          - optionals: "sage,pplpy"
-            sagelib: "9.1"
-          # Test SageMath 9.1 with all compiled optional dependencies that were
-          # packaged in conda-forge at the time (the others cannot be installed
-          # because of FLINT incompatibilities)
-          - optionals: "sage,pplpy,sage_flatsurf"
-            sagelib: "9.1"
-          - optionals: "sage,pplpy,mzv"
-            sagelib: "9.2"
-          # Test SageMath 9.2 with all compiled optional dependencies that were
-          # packaged in conda-forge at the time (the others cannot be installed
-          # because of FLINT incompatibilities)
-          - optionals: "sage,pplpy,mzv,sage_flatsurf"
-            sagelib: "9.2"
-          - optionals: "sage,pplpy"
             sagelib: "9.3"
           # Test SageMath 9.3 with all compiled optional dependencies that were
           # packaged in conda-forge at the time (the others cannot be installed
