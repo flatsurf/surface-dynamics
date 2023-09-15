@@ -56,7 +56,7 @@ class AdditiveMultivariateGeneratingSeries(AbstractMSum):
 
             sage: A = AdditiveMultivariateGeneratingSeriesRing('x', 3)
             sage: f = A.term(1, [((1,0,0),2), ((0,1,0),2), ((0,0,1),2)])
-            sage: f.integral_sum_as_mzv()  # optional: mzv
+            sage: f.integral_sum_as_mzv()
             36*ζ(1,1,4) + 24*ζ(1,2,3) + 12*ζ(1,3,2) + 12*ζ(2,1,3) + 6*ζ(2,2,2)
         """
         from .generalized_multiple_zeta_values import handle_term
