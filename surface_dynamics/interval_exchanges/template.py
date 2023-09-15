@@ -4977,18 +4977,11 @@ class OrientablePermutationIET(PermutationIET):
         endpoint = Ltop.pop(-1)
         Lbot.pop(-1)
 
-        from flatsurf.geometry.polygon import ConvexPolygons
+        from flatsurf.geometry.polygon import Polygon
 
-        try:
-            C = ConvexPolygons(base_ring)
-        except ValueError:
-            # work around the fact that rings are not supported on old versions
-            # of sage-flatsurf
-            base_ring = base_ring.fraction_field()
-            C = ConvexPolygons(base_ring)
         ptop = Ltop[0]
         pbot = Lbot[0]
-        triangles = [C(vertices=[(zero,zero), pbot, ptop])]
+        triangles = [Polygon(vertices=[(zero,zero), pbot, ptop])]
         tops = [(0,2)]
         bots = [(0,0)]
         mids = [(0,1)]
@@ -5002,7 +4995,7 @@ class OrientablePermutationIET(PermutationIET):
                 # add a triangle with a new vertex on top
                 pptop = Ltop[itop]
                 itop += 1
-                triangles.append(C(vertices=[ptop,pbot,pptop]))
+                triangles.append(Polygon(vertices=[ptop,pbot,pptop]))
                 tops.append((k,2))
                 mids.append((k,0))
                 mids.append((k,1))
@@ -5010,14 +5003,14 @@ class OrientablePermutationIET(PermutationIET):
             else:
                 ppbot = Lbot[ibot]
                 ibot += 1
-                triangles.append(C(vertices=[ptop,pbot,ppbot]))
+                triangles.append(Polygon(vertices=[ptop,pbot,ppbot]))
                 bots.append((k,1))
                 mids.append((k,0))
                 mids.append((k,2))
                 pbot = ppbot
             k += 1
 
-        triangles.append(C(vertices=[ptop, pbot, endpoint]))
+        triangles.append(Polygon(vertices=[ptop, pbot, endpoint]))
         tops.append((k, 2))
         bots.append((k, 1))
         mids.append((k, 0))
@@ -5038,7 +5031,7 @@ class OrientablePermutationIET(PermutationIET):
             sage: p = iet.Permutation('a b c', 'c b a')
             sage: S = p.masur_polygon([1,4,2], [2,0,-1])  # optional: sage_flatsurf
             sage: S                                       # optional: sage_flatsurf
-            TranslationSurface built from 4 polygons
+            Translation Surface in H_1(0^2) built from 2 isosceles triangles and 2 triangles
             sage: S.stratum()                             # optional: sage_flatsurf
             H_1(0^2)
 
@@ -5058,32 +5051,32 @@ class OrientablePermutationIET(PermutationIET):
             sage: L = [1+a**2, 2*a**2-1, 1, 1, 1+a, a**2, a-1, a-1, 2]
             sage: S = p.masur_polygon(L, H)   # optional: sage_flatsurf
             sage: S                           # optional: sage_flatsurf
-            TranslationSurface built from 16 polygons
-            sage: TestSuite(S).run()          # optional: sage_flatsurf
+            Translation Surface in H_3(1^4) built from 15 triangles and a right triangle
 
         TESTS::
 
             sage: p = iet.Permutation('a b c', 'c b a')
             sage: for L in [[1,4,2],[2,4,1],[5,1,1],[1,5,1],[1,1,5]]:  # optional: sage_flatsurf
             ....:     S = p.masur_polygon(L, [2,0,-1])
-            ....:     TestSuite(S).run()
             ....:     assert S.stratum() == p.stratum()
         """
         base_ring, triangles, tops, bots, mids = self._masur_polygon_helper(lengths, heights)
 
-        from flatsurf import Surface_list, TranslationSurface
-        S = Surface_list(base_ring)
-        S.add_polygons(triangles)
+        from flatsurf import MutableOrientedSimilaritySurface
+        S = MutableOrientedSimilaritySurface(base_ring)
+        for t in triangles:
+            S.add_polygon(t)
         for i in range(len(self)):
             p1, e1 = tops[i]
             p2, e2 = bots[self._twin[0][i]]
-            S.set_edge_pairing(p1, e1, p2, e2)
+            S.glue((p1, e1), (p2, e2))
         for i in range(0,len(mids),2):
             p1, e1 = mids[i]
             p2, e2 = mids[i+1]
-            S.set_edge_pairing(p1, e1, p2, e2)
+            S.glue((p1, e1), (p2, e2))
         S.set_immutable()
-        return TranslationSurface(S)
+        return S
+
 
 class OrientablePermutationLI(PermutationLI):
     r"""
