@@ -106,7 +106,7 @@
                                                <span class="n">perm_from_base64_str</span><span class="p">,</span> <span class="n">perm_base64_str</span><span class="p">,</span>
                                                <span class="n">perm_check</span><span class="p">,</span> <span class="n">perm_cycle_string</span><span class="p">,</span> <span class="n">perm_hash</span><span class="p">,</span>
                                                <span class="n">perm_cycles</span><span class="p">,</span> <span class="n">perm_cycle_type</span><span class="p">,</span> <span class="n">perm_invert</span><span class="p">,</span>
-                                               <span class="n">perm_is_regular</span><span class="p">,</span> <span class="n">perm_is_on_list_stabilizer</span><span class="p">,</span> <span class="n">PermutationGroupOrbit</span><span class="p">)</span>
+                                               <span class="n">perm_is_regular</span><span class="p">,</span> <span class="n">perm_is_on_list_stabilizer</span><span class="p">,</span> <span class="n">PermutationGroupOrbit</span><span class="p">,</span> <span class="n">perms_are_transitive</span><span class="p">,</span> <span class="n">perms_transitive_components</span><span class="p">)</span>
 
 
 <span class="c1">###########################</span>
@@ -182,17 +182,8 @@
 <span class="sd">        sage: F3 = FatGraph(vp=vp)</span>
 <span class="sd">        sage: F0 == F1 and F0 == F2 and F0 == F3</span>
 <span class="sd">        True</span>
-
-<span class="sd">    It is also possible to use graphs with inactive darts which are represented by ``-1``::</span>
-
-<span class="sd">        sage: F = FatGraph([1, 4, -1, -1, 5, 0])</span>
-<span class="sd">        sage: F</span>
-<span class="sd">        FatGraph(&#39;(0,1,4,5)&#39;, &#39;(0)(1,5)(4)&#39;)</span>
-<span class="sd">        sage: list(F.active_darts())</span>
-<span class="sd">        [0, 1, 4, 5]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_n&#39;</span><span class="p">,</span>       <span class="c1"># number of darts (non-negative integer)</span>
-                 <span class="s1">&#39;_n_active&#39;</span><span class="p">,</span> <span class="c1"># number of active darts (non-negative integer &lt;= _n)</span>
                  <span class="s1">&#39;_mutable&#39;</span><span class="p">,</span> <span class="c1"># mutability flag</span>
                  <span class="c1"># permutations</span>
                  <span class="s1">&#39;_vp&#39;</span><span class="p">,</span>  <span class="c1"># vertex permutation (array of length _n)</span>
@@ -221,8 +212,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vd</span><span class="p">)</span>  <span class="c1"># number of vertices</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fl</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span> <span class="o">=</span> <span class="n">perm_dense_cycles</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">)</span>  <span class="c1"># number of faces</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_n_active</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">)</span>  <span class="c1"># number of active darts</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_mutable</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">mutable</span><span class="p">)</span>
 
@@ -307,45 +296,34 @@
         <span class="n">fd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span>
 
         <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span>
-        <span class="n">n_active</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_active</span>
         <span class="n">nf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span>
         <span class="n">nv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">n_active</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">j</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">vp</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">j</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">fp</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;active vertices in empty FatGraph&#39;</span><span class="p">)</span>
-            <span class="k">return</span>
-
-        <span class="n">v_active</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vp</span><span class="p">)</span> <span class="k">if</span> <span class="n">j</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">f_active</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span> <span class="k">if</span> <span class="n">j</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">v_active</span> <span class="o">!=</span> <span class="n">f_active</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">v_active</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n_active</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;inconsistent active darts: active for vertices </span><span class="si">%s</span><span class="s2">, active for edges </span><span class="si">%s</span><span class="s2">, count </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">v_active</span><span class="p">,</span> <span class="n">f_active</span><span class="p">,</span> <span class="n">n_active</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">vp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">fp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;inactive dart not allowed&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">perm_check</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid vertex permutation: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">vp</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">perm_check</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid face permutation: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">fp</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">perm_num_cycles</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="ow">and</span> <span class="p">(</span><span class="n">perm_num_cycles</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">error</span><span class="p">(</span><span class="s2">&quot;wrong number of vertices&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">perm_num_cycles</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="ow">and</span> <span class="p">(</span><span class="n">perm_num_cycles</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">error</span><span class="p">(</span><span class="s2">&quot;wrong number of faces&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vl</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">fl</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">vd</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">nv</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">nf</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">error</span><span class="p">(</span><span class="s2">&quot;inconsistent lengths&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">n</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">vd</span><span class="p">[:</span><span class="n">nv</span><span class="p">])</span> <span class="ow">or</span> <span class="nb">sum</span><span class="p">(</span><span class="n">vd</span><span class="p">[:</span><span class="n">nv</span><span class="p">])</span> <span class="o">!=</span> <span class="n">n_active</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">n</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">vd</span><span class="p">[:</span><span class="n">nv</span><span class="p">]):</span>
             <span class="k">raise</span> <span class="n">error</span><span class="p">(</span><span class="s2">&quot;invalid vertex degrees&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">n</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">fd</span><span class="p">[:</span><span class="n">nf</span><span class="p">])</span> <span class="ow">or</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fd</span><span class="p">[:</span><span class="n">nf</span><span class="p">])</span> <span class="o">!=</span> <span class="n">n_active</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">n</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">fd</span><span class="p">[:</span><span class="n">nf</span><span class="p">]):</span>
             <span class="k">raise</span> <span class="n">error</span><span class="p">(</span><span class="s2">&quot;invalid face degrees&quot;</span><span class="p">)</span>
 
         <span class="n">ffd</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">nf</span>
         <span class="n">vvd</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">nv</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">vp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-                <span class="c1"># inactive dart</span>
-                <span class="k">continue</span>
             <span class="k">if</span> <span class="n">fp</span><span class="p">[</span><span class="n">vp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">error</span><span class="p">(</span><span class="s2">&quot;fp[ep[vp[</span><span class="si">%d</span><span class="s2">]]] = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">fp</span><span class="p">[</span><span class="n">vp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="mi">1</span><span class="p">]))</span>
             <span class="k">if</span> <span class="n">fl</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">fl</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">nf</span><span class="p">:</span>
@@ -372,8 +350,6 @@
         <span class="n">i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;dart i=</span><span class="si">%d</span><span class="s1"> out of range&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;inactive dart i=</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">i</span>
 
     <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -391,6 +367,85 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_vd</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_num_dart</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_num_dart</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span><span class="p">))</span>
 
+<div class="viewcode-block" id="FatGraph.is_connected"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.is_connected">[docs]</a>    <span class="k">def</span> <span class="nf">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return whether the graph is connected.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
+<span class="sd">            sage: FatGraph(vp=&#39;(0,2)(1,3)&#39;).is_connected()</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: FatGraph(vp=&#39;(0,1)(2,3)&#39;).is_connected()</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">perms_are_transitive</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FatGraph.connected_components"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.connected_components">[docs]</a>    <span class="k">def</span> <span class="nf">connected_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the list of connected components.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
+<span class="sd">            sage: FatGraph(vp=&#39;(0,2)(1,3)&#39;).connected_components()</span>
+<span class="sd">            [FatGraph(&#39;(0,2)(1,3)&#39;, &#39;(0,3)(1,2)&#39;)]</span>
+<span class="sd">            sage: FatGraph(vp=&#39;(0,1)(2,3)&#39;).connected_components()</span>
+<span class="sd">            [FatGraph(&#39;(0,1)&#39;, &#39;(0)(1)&#39;), FatGraph(&#39;(0,1)&#39;, &#39;(0)(1)&#39;)]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ccs</span> <span class="o">=</span> <span class="n">perms_transitive_components</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ccs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutable</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="p">]</span>
+
+        <span class="c1"># build a FatGraph for each connected component</span>
+        <span class="n">connected_graphs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">ccs</span><span class="p">:</span>
+            <span class="n">relabel</span> <span class="o">=</span> <span class="p">{</span><span class="n">j</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cc</span><span class="p">)}</span>
+            <span class="n">vp</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span>
+            <span class="n">fp</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">cc</span><span class="p">:</span>
+                <span class="n">vp</span><span class="p">[</span><span class="n">relabel</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">=</span> <span class="n">relabel</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span>
+                <span class="n">fp</span><span class="p">[</span><span class="n">relabel</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">=</span> <span class="n">relabel</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span>
+            <span class="n">connected_graphs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">fp</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">connected_graphs</span></div>
+
+<div class="viewcode-block" id="FatGraph.disjoint_union"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.disjoint_union">[docs]</a>    <span class="k">def</span> <span class="nf">disjoint_union</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the union of ``self`` with the graphs provided as arguments.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
+<span class="sd">            sage: fg0 = FatGraph(&#39;(0,4,2,5)(1,6)(3,7)&#39;)</span>
+<span class="sd">            sage: fg1 = FatGraph(&#39;(0,3,5)(1,2,4)&#39;)</span>
+<span class="sd">            sage: fg2 = FatGraph(&#39;(0,1)&#39;)</span>
+<span class="sd">            sage: fg = fg0.disjoint_union(fg1, fg2)</span>
+<span class="sd">            sage: fg</span>
+<span class="sd">            FatGraph(&#39;(0,4,2,5)(1,6)(3,7)(8,11,13)(9,10,12)(14,15)&#39;, &#39;(0,6,3,4,2,7,1,5)(8,12,11,9,13,10)(14)(15)&#39;)</span>
+<span class="sd">            sage: fg.connected_components()</span>
+<span class="sd">            [FatGraph(&#39;(0,4,2,5)(1,6)(3,7)&#39;, &#39;(0,6,3,4,2,7,1,5)&#39;),</span>
+<span class="sd">             FatGraph(&#39;(0,3,5)(1,2,4)&#39;, &#39;(0,4,3,1,5,2)&#39;),</span>
+<span class="sd">             FatGraph(&#39;(0,1)&#39;, &#39;(0)(1)&#39;)]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutable</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">mutable</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">mutable</span><span class="o">=</span><span class="n">mutable</span><span class="p">)</span>
+
+        <span class="n">shifts</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">fg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="n">shifts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shifts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">fg</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">shifts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">vp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">])</span> <span class="o">+</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span>
+        <span class="n">fp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">])</span> <span class="o">+</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">fg</span><span class="p">,</span> <span class="n">shift</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">shifts</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">fg</span><span class="o">.</span><span class="n">_n</span><span class="p">):</span>
+                <span class="n">vp</span><span class="p">[</span><span class="n">shift</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">shift</span> <span class="o">+</span> <span class="n">fg</span><span class="o">.</span><span class="n">_vp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">fp</span><span class="p">[</span><span class="n">shift</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">shift</span> <span class="o">+</span> <span class="n">fg</span><span class="o">.</span><span class="n">_fp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="FatGraph.edge_flip"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.edge_flip">[docs]</a>    <span class="k">def</span> <span class="nf">edge_flip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the half-edge that together with ``i`` makes an edge.</span>
@@ -407,50 +462,21 @@
 <span class="sd">            Traceback (most recent call last):</span>
 <span class="sd">            ...</span>
 <span class="sd">            ValueError: dart i=4 out of range</span>
-
-<span class="sd">            sage: F = FatGraph([1, 4, -1, -1, 5, 0])</span>
-<span class="sd">            sage: F.edge_flip(4)</span>
-<span class="sd">            5</span>
-<span class="sd">            sage: F.edge_flip(2)</span>
-<span class="sd">            Traceback (most recent call last):</span>
-<span class="sd">            ...</span>
-<span class="sd">            ValueError: inactive dart i=2</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_dart</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">^</span> <span class="mi">1</span></div>
 
-<div class="viewcode-block" id="FatGraph.active_darts"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.active_darts">[docs]</a>    <span class="k">def</span> <span class="nf">active_darts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="FatGraph.darts"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.darts">[docs]</a>    <span class="k">def</span> <span class="nf">darts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Iterator through the list of active darts.</span>
+<span class="sd">        Iterator through the list of darts.</span>
 
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics import FatGraph</span>
-<span class="sd">            sage: list(FatGraph(&#39;(0,3,5)(1,4,2)&#39;).active_darts())</span>
+<span class="sd">            sage: list(FatGraph(&#39;(0,3,5)(1,4,2)&#39;).darts())</span>
 <span class="sd">            [0, 1, 2, 3, 4, 5]</span>
-<span class="sd">            sage: list(FatGraph([1, 4, -1, -1, 5, 0]).active_darts())</span>
-<span class="sd">            [0, 1, 4, 5]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_active</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="FatGraph.inactive_darts"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.inactive_darts">[docs]</a>    <span class="k">def</span> <span class="nf">inactive_darts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Iterator through the list of inactive darts.</span>
-
-<span class="sd">        EXAMPLES::</span>
-
-<span class="sd">            sage: from surface_dynamics import FatGraph</span>
-<span class="sd">            sage: list(FatGraph(&#39;(0,3,5)(1,4,2)&#39;).inactive_darts())</span>
-<span class="sd">            []</span>
-<span class="sd">            sage: list(FatGraph([1, 4, -1, -1, 5, 0]).inactive_darts())</span>
-<span class="sd">            [2, 3]</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_active</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="k">yield from</span> <span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">)</span> <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FatGraph.copy"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -466,9 +492,6 @@
 <span class="sd">            sage: F = FatGraph.from_unicellular_word([0,1,0,2,3,4,1,4,3,2])</span>
 <span class="sd">            sage: G = F.copy()</span>
 <span class="sd">            sage: G._check()</span>
-
-<span class="sd">            sage: F = FatGraph([1, 4, -1, -1, 5, 0])</span>
-<span class="sd">            sage: F.copy()._check()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">mutable</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">mutable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutable</span>
@@ -479,7 +502,6 @@
             <span class="k">return</span> <span class="bp">self</span>
         <span class="n">F</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">FatGraph</span><span class="p">)</span>
         <span class="n">F</span><span class="o">.</span><span class="n">_n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span>
-        <span class="n">F</span><span class="o">.</span><span class="n">_n_active</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_active</span>
         <span class="n">F</span><span class="o">.</span><span class="n">_vp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">[:]</span>
         <span class="n">F</span><span class="o">.</span><span class="n">_fp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">[:]</span>
         <span class="n">F</span><span class="o">.</span><span class="n">_nf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span>
@@ -538,12 +560,6 @@
 <span class="sd">            Subgroup ...</span>
 <span class="sd">            sage: G2.is_isomorphic(PSL(2,7))</span>
 <span class="sd">            True</span>
-
-<span class="sd">        Some example with inactive darts::</span>
-
-<span class="sd">            sage: F = FatGraph([1, 4, -1, -1, 5, 0])</span>
-<span class="sd">            sage: F.monodromy_group()</span>
-<span class="sd">            Subgroup generated by [(1,5), (0,1,4,5)] of (Symmetric group of order 4! as a permutation group)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symmetric_group</span><span class="p">()</span>
         <span class="n">v</span> <span class="o">=</span> <span class="n">S</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
@@ -575,14 +591,6 @@
 <span class="sd">            sage: F = FatGraphs(g=1, nf=3, nv=3, vertex_min_degree=3)</span>
 <span class="sd">            sage: F.cardinality_and_weighted_cardinality(filter=lambda x,a: x.is_face_bipartite())</span>
 <span class="sd">            (3, 5/3)</span>
-
-<span class="sd">        This also works with inactive darts::</span>
-
-<span class="sd">            sage: F = FatGraph([-1, -1, 3, 6, -1, -1, 7, 2])</span>
-<span class="sd">            sage: F.is_face_bipartite()</span>
-<span class="sd">            True</span>
-<span class="sd">            sage: F.is_face_bipartite(certificate=True)</span>
-<span class="sd">            (True, [1, 0, 1])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># trivial cases</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -596,7 +604,7 @@
         <span class="n">nf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span>
         <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">nf</span>
         <span class="n">seen</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
-        <span class="n">root</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">active_darts</span><span class="p">()))</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">to_test</span> <span class="o">=</span> <span class="n">perm_orbit</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
         <span class="n">colors</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_fl</span><span class="p">[</span><span class="n">root</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">while</span> <span class="n">to_test</span><span class="p">:</span>
@@ -665,8 +673,6 @@
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
 <span class="sd">            sage: FatGraph(&#39;(0,4,2)(1,5,3)&#39;).vertex_permutation()</span>
 <span class="sd">            [4, 5, 0, 1, 2, 3]</span>
-<span class="sd">            sage: FatGraph([1, 5, -1, -1, 0, 4]).vertex_permutation()</span>
-<span class="sd">            [1, 5, -1, -1, 0, 4]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">]</span> <span class="k">if</span> <span class="n">copy</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span></div>
 
@@ -679,8 +685,6 @@
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
 <span class="sd">            sage: FatGraph(&#39;(0,4,2)(1,5,3)&#39;).face_permutation()</span>
 <span class="sd">            [3, 2, 5, 4, 1, 0]</span>
-<span class="sd">            sage: FatGraph([1, 5, -1, -1, 0, 4]).face_permutation()</span>
-<span class="sd">            [0, 4, -1, -1, 1, 5]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">]</span> <span class="k">if</span> <span class="n">copy</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fp</span></div>
 
@@ -691,20 +695,18 @@
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics import FatGraph</span>
-<span class="sd">            sage: FatGraph(&#39;()&#39;, &#39;()&#39;).vertex_degrees()</span>
-<span class="sd">            [0]</span>
 <span class="sd">            sage: FatGraph(&#39;(0,3)(1,2,5)(4)&#39;).vertex_degrees()</span>
 <span class="sd">            [2, 3, 1]</span>
+<span class="sd">            sage: FatGraph(&#39;()&#39;, &#39;()&#39;).vertex_degrees()</span>
+<span class="sd">            [0]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_active</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vd</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">_nv</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vd</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">_nv</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="FatGraph.vertex_min_degree"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.vertex_min_degree">[docs]</a>    <span class="k">def</span> <span class="nf">vertex_min_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nv</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="k">else</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nv</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="FatGraph.vertex_max_degree"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.vertex_max_degree">[docs]</a>    <span class="k">def</span> <span class="nf">vertex_max_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nv</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="k">else</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nv</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="FatGraph.face_degrees"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.face_degrees">[docs]</a>    <span class="k">def</span> <span class="nf">face_degrees</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -714,15 +716,13 @@
 <span class="sd">            sage: FatGraph(&#39;()&#39;, &#39;()&#39;).face_degrees()</span>
 <span class="sd">            [0]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_active</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">_nf</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">_nf</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="FatGraph.face_min_degree"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.face_min_degree">[docs]</a>    <span class="k">def</span> <span class="nf">face_min_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nv</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="k">else</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nf</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="FatGraph.face_max_degree"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.face_max_degree">[docs]</a>    <span class="k">def</span> <span class="nf">face_max_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nv</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="k">else</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nf</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="FatGraph.profile"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.profile">[docs]</a>    <span class="k">def</span> <span class="nf">profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -733,8 +733,8 @@
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
 <span class="sd">            sage: FatGraph(&#39;(0,4,2,5,1,3)&#39;, &#39;(0,5)(1,3,4,2)&#39;).profile()</span>
 <span class="sd">            ([6], [2, 4])</span>
-<span class="sd">            sage: FatGraph([-1, -1, 6, 3, -1, -1, 7, 2]).profile()</span>
-<span class="sd">            ([3, 1], [3, 1])</span>
+<span class="sd">            sage: FatGraph(&#39;()&#39;, &#39;()&#39;).profile()</span>
+<span class="sd">            ([0], [0])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vertex_degrees</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">face_degrees</span><span class="p">())</span></div>
 
@@ -747,10 +747,10 @@
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
 <span class="sd">            sage: FatGraph(&#39;(0,4,2,5,1,3)&#39;, &#39;(0,5)(1,3,4,2)&#39;).num_vertices()</span>
 <span class="sd">            1</span>
-<span class="sd">            sage: FatGraph([-1, -1, 6, 3, -1, -1, 7, 2]).num_vertices()</span>
-<span class="sd">            2</span>
+<span class="sd">            sage: FatGraph(&#39;()&#39;, &#39;()&#39;).num_vertices()</span>
+<span class="sd">            1</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span></div>
+        <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span></div>
 
 <div class="viewcode-block" id="FatGraph.num_edges"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.num_edges">[docs]</a>    <span class="k">def</span> <span class="nf">num_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -761,10 +761,10 @@
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
 <span class="sd">            sage: FatGraph(&#39;(0,4,2,5,1,3)&#39;, &#39;(0,5)(1,3,4,2)&#39;).num_edges()</span>
 <span class="sd">            3</span>
-<span class="sd">            sage: FatGraph([-1, -1, 6, 3, -1, -1, 7, 2]).num_edges()</span>
-<span class="sd">            2</span>
+<span class="sd">            sage: FatGraph(&#39;()&#39;, &#39;()&#39;).num_edges()</span>
+<span class="sd">            0</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_active</span> <span class="o">//</span> <span class="mi">2</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">//</span> <span class="mi">2</span></div>
 
 <div class="viewcode-block" id="FatGraph.num_faces"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.num_faces">[docs]</a>    <span class="k">def</span> <span class="nf">num_faces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -775,10 +775,10 @@
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
 <span class="sd">            sage: FatGraph(&#39;(0,4,2,5,1,3)&#39;, &#39;(0,5)(1,3,4,2)&#39;).num_faces()</span>
 <span class="sd">            2</span>
-<span class="sd">            sage: FatGraph([-1, -1, 6, 3, -1, -1, 7, 2]).num_faces()</span>
-<span class="sd">            2</span>
+<span class="sd">            sage: FatGraph(&#39;()&#39;, &#39;()&#39;).num_faces()</span>
+<span class="sd">            1</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span></div>
+        <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span></div>
 
 <div class="viewcode-block" id="FatGraph.vertices"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.vertices">[docs]</a>    <span class="k">def</span> <span class="nf">vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -789,8 +789,6 @@
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
 <span class="sd">            sage: FatGraph(&#39;(0,4,2,5,1,3)&#39;, &#39;(0,5)(1,3,4,2)&#39;).vertices()</span>
 <span class="sd">            [[0, 4, 2, 5, 1, 3]]</span>
-<span class="sd">            sage: FatGraph([-1, -1, 6, 3, -1, -1, 7, 2]).vertices()</span>
-<span class="sd">            [[2, 6, 7], [3]]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">perm_cycles</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span></div>
 
@@ -803,8 +801,6 @@
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
 <span class="sd">            sage: FatGraph(&#39;(0,4,2,5,1,3)&#39;, &#39;(0,5)(1,3,4,2)&#39;).edges()</span>
 <span class="sd">            [[0, 1], [2, 3], [4, 5]]</span>
-<span class="sd">            sage: FatGraph([-1, -1, 6, 3, -1, -1, 7, 2]).edges()</span>
-<span class="sd">            [[2, 3], [6, 7]]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">^</span> <span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
 
@@ -817,8 +813,6 @@
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
 <span class="sd">            sage: FatGraph(&#39;(0,4,2,5,1,3)&#39;, &#39;(0,5)(1,3,4,2)&#39;).faces()</span>
 <span class="sd">            [[0, 5], [1, 3, 4, 2]]</span>
-<span class="sd">            sage: FatGraph([-1, -1, 6, 3, -1, -1, 7, 2]).faces()</span>
-<span class="sd">            [[2, 3, 7], [6]]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">perm_cycles</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span></div>
 
@@ -865,11 +859,7 @@
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
 <span class="sd">            sage: FatGraph(&#39;(0,4,1)(2,3,5)&#39;).is_cubic()</span>
 <span class="sd">            True</span>
-<span class="sd">            sage: FatGraph([-1, -1, 3, 4, 2, 7, 5, 6]).is_cubic()</span>
-<span class="sd">            True</span>
 <span class="sd">            sage: FatGraph(&#39;(0,4,1)(2)(3)(5)&#39;).is_cubic()</span>
-<span class="sd">            False</span>
-<span class="sd">            sage: FatGraph([-1, -1, 3, 4, 2, 5, 7, 6]).is_cubic()</span>
 <span class="sd">            False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_vertex_regular</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span></div>
@@ -883,27 +873,43 @@
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
 <span class="sd">            sage: FatGraph(fp=&#39;(0,4,1)(2,3,5)&#39;).is_triangulation()</span>
 <span class="sd">            True</span>
-<span class="sd">            sage: FatGraph(fp=[-1, -1, 3, 4, 2, 7, 5, 6]).is_triangulation()</span>
-<span class="sd">            True</span>
 <span class="sd">            sage: FatGraph(fp=&#39;(0,4,1)(2)(3)(5)&#39;).is_triangulation()</span>
-<span class="sd">            False</span>
-<span class="sd">            sage: FatGraph(fp=[-1, -1, 3, 4, 2, 5, 7, 6]).is_triangulation()</span>
 <span class="sd">            False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_face_regular</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FatGraph.genus"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.genus">[docs]</a>    <span class="k">def</span> <span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the genus of this graph.</span>
+
+<span class="sd">        If the graph is not connected, then the answer is the sum of the</span>
+<span class="sd">        genera of the components.</span>
+
 <span class="sd">        EXAMPLES::</span>
 
 <span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
-<span class="sd">            sage: vp = &#39;(0,4,2,5,1,3)&#39;</span>
-<span class="sd">            sage: fp = &#39;(0,5)(1,3,4,2)&#39;</span>
-<span class="sd">            sage: cm = FatGraph(vp, fp)</span>
-<span class="sd">            sage: cm.genus()</span>
+<span class="sd">            sage: vp0 = &#39;(0,4,2,5,1,3)&#39;</span>
+<span class="sd">            sage: fp0 = &#39;(0,5)(1,3,4,2)&#39;</span>
+<span class="sd">            sage: cm0 = FatGraph(vp0, fp0)</span>
+<span class="sd">            sage: cm0.genus()</span>
 <span class="sd">            1</span>
+
+<span class="sd">            sage: vp1 = &#39;(0,6,5,7,2,1,3,4)&#39;</span>
+<span class="sd">            sage: fp1 = &#39;(0,2,1,4,6,5,3,7)&#39;</span>
+<span class="sd">            sage: cm1 = FatGraph(vp1, fp1)</span>
+<span class="sd">            sage: cm1.genus()</span>
+<span class="sd">            2</span>
+
+<span class="sd">        Non-connected examples::</span>
+
+<span class="sd">            sage: cm0.disjoint_union(cm0, cm1).genus()</span>
+<span class="sd">            4</span>
+<span class="sd">            sage: cm1.disjoint_union(cm0).genus()</span>
+<span class="sd">            3</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span></div>
+        <span class="n">nc</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connected_components</span><span class="p">())</span>
+        <span class="n">chi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span>
+        <span class="k">return</span> <span class="n">nc</span> <span class="o">-</span> <span class="n">chi</span> <span class="o">//</span> <span class="mi">2</span></div>
 
 <div class="viewcode-block" id="FatGraph.euler_characteristic"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.euler_characteristic">[docs]</a>    <span class="k">def</span> <span class="nf">euler_characteristic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -920,6 +926,11 @@
 <span class="sd">            sage: fp = &#39;(0,5)(1,3,4,2)&#39;</span>
 <span class="sd">            sage: cm = FatGraph(vp, fp)</span>
 <span class="sd">            sage: cm.euler_characteristic()</span>
+<span class="sd">            0</span>
+
+<span class="sd">        A non-connected example (Euler characteristic is additive)::</span>
+
+<span class="sd">            sage: cm.disjoint_union(cm, cm, cm).euler_characteristic()</span>
 <span class="sd">            0</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span></div>
@@ -1088,7 +1099,7 @@
 <span class="sd">            FatGraph(&#39;()&#39;, &#39;()&#39;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_alloc</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_active</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">=</span> <span class="mi">2</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="o">=</span> <span class="mi">2</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="c1"># set face</span>
@@ -1121,7 +1132,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutable</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;immutable graph; use a copy instead&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_alloc</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_active</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">=</span> <span class="mi">2</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span> <span class="o">=</span> <span class="mi">2</span>
         <span class="c1"># set vertex</span>
@@ -1155,7 +1166,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutable</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;immutable graph; use a copy instead&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_alloc</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_active</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">=</span> <span class="mi">4</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">vp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span>
         <span class="n">fp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fp</span>
@@ -1266,7 +1277,6 @@
         <span class="n">jj</span> <span class="o">=</span> <span class="n">vp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">^</span> <span class="mi">1</span>  <span class="c1"># = fp^-1(j)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">+=</span> <span class="mi">2</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_n_active</span> <span class="o">+=</span> <span class="mi">2</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="o">+=</span> <span class="mi">1</span>
 
         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
@@ -1450,7 +1460,6 @@
             <span class="n">k</span> <span class="o">=</span> <span class="n">fp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">-=</span> <span class="mi">2</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_n_active</span> <span class="o">-=</span> <span class="mi">2</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="o">-=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span></div>
@@ -1513,7 +1522,6 @@
         <span class="n">ii</span> <span class="o">=</span> <span class="n">vp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="n">jj</span> <span class="o">=</span> <span class="n">vp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">+=</span> <span class="mi">2</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_n_active</span> <span class="o">+=</span> <span class="mi">2</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span> <span class="o">+=</span> <span class="mi">1</span>
 
         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
@@ -1694,7 +1702,6 @@
             <span class="n">k</span> <span class="o">=</span> <span class="n">vp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">-=</span> <span class="mi">2</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_n_active</span> <span class="o">-=</span> <span class="mi">2</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nv</span> <span class="o">-=</span> <span class="mi">1</span></div>
 
 <div class="viewcode-block" id="FatGraph.trisect_face"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.trisect_face">[docs]</a>    <span class="k">def</span> <span class="nf">trisect_face</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
@@ -1865,6 +1872,21 @@
             <span class="n">fp</span><span class="p">[</span><span class="n">yy</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span></div>
 
 <div class="viewcode-block" id="FatGraph.remove_face_trisection"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.remove_face_trisection">[docs]</a>    <span class="k">def</span> <span class="nf">remove_face_trisection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove the face trisection at ``x``.</span>
+
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics.topology.fat_graph import FatGraph</span>
+
+<span class="sd">            sage: vp = &#39;(0,2,1,3)&#39;</span>
+<span class="sd">            sage: fp = &#39;(0,2,1,3)&#39;</span>
+<span class="sd">            sage: for i, j, k in [(0, 2, 1), (0, 0, 3), (0, 3, 3), (0, 3, 0), (0, 0, 0)]:</span>
+<span class="sd">            ....:     cm = FatGraph(vp, fp, 8, mutable=True)</span>
+<span class="sd">            ....:     cm.trisect_face(i, j, k)</span>
+<span class="sd">            ....:     cm.remove_face_trisection(4)</span>
+<span class="sd">            ....:     assert cm == FatGraph(vp, fp)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fp</span>
         <span class="n">fl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fl</span>
         <span class="n">fd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span>
@@ -1879,6 +1901,9 @@
 
         <span class="k">if</span> <span class="n">fl</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">!=</span> <span class="n">fl</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="ow">or</span> <span class="n">fl</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">!=</span> <span class="n">fl</span><span class="p">[</span><span class="n">xx</span><span class="p">]</span> <span class="ow">or</span> <span class="n">fl</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">!=</span> <span class="n">fl</span><span class="p">[</span><span class="n">yy</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;not a trisection&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">)</span> <span class="o">!=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">-</span> <span class="mi">4</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">-</span> <span class="mi">3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;x=</span><span class="si">{}</span><span class="s1"> y=</span><span class="si">{}</span><span class="s1"> xx=</span><span class="si">{}</span><span class="s1"> yy=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">))</span>
 
         <span class="c1"># face: (x xx i A y k B yy j C) -&gt; (i A j C k B)</span>
         <span class="c1">#    -&gt; (i A jj) (j C kk) (k B ii)</span>
@@ -1950,7 +1975,6 @@
             <span class="n">fp</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">-=</span> <span class="mi">4</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_n_active</span> <span class="o">-=</span> <span class="mi">4</span>
         <span class="n">fd</span><span class="p">[</span><span class="n">fl</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-=</span> <span class="mi">4</span>
         <span class="n">vd</span><span class="p">[</span><span class="n">vl</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-=</span> <span class="mi">1</span>
         <span class="n">vd</span><span class="p">[</span><span class="n">vl</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">-=</span> <span class="mi">2</span>
@@ -2069,6 +2093,7 @@
     <span class="c1"># canonical labels and automorphisms #</span>
     <span class="c1">######################################</span>
 
+    <span class="c1"># NOTE: this is broken for non-connected surfaces!</span>
     <span class="k">def</span> <span class="nf">_good_starts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i0</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">fix_vertices</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_faces</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a set of half edges invariant under the (yet unknown)</span>
@@ -2091,7 +2116,7 @@
 <span class="sd">            sage: for cm in CM:</span>
 <span class="sd">            ....:     gs = set(cm._good_starts())</span>
 <span class="sd">            ....:     assert gs</span>
-<span class="sd">            ....:     for i in cm.active_darts():</span>
+<span class="sd">            ....:     for i in cm.darts():</span>
 <span class="sd">            ....:         ggs = cm._good_starts(i)</span>
 <span class="sd">            ....:         if i in gs:</span>
 <span class="sd">            ....:             ggs = cm._good_starts(i)</span>
@@ -2453,6 +2478,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">is_fc_better</span><span class="p">,</span> <span class="n">cur</span>
 
+    <span class="c1"># NOTE: this is broken for non-connected surfaces!</span>
     <span class="k">def</span> <span class="nf">_is_canonical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i0</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a pair ``(answer, automorphisms)`` where answer is a boolean</span>
@@ -2622,6 +2648,9 @@
 
         <span class="k">if</span> <span class="n">fix_edges</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_connected</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;not implemented for non-connected graphs&#39;</span><span class="p">)</span>
 
         <span class="n">roots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_good_starts</span><span class="p">(</span><span class="n">fix_vertices</span><span class="o">=</span><span class="n">fix_vertices</span><span class="p">,</span> <span class="n">fix_faces</span><span class="o">=</span><span class="n">fix_faces</span><span class="p">)</span>
         <span class="n">P</span> <span class="o">=</span> <span class="n">PermutationGroupOrbit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">,</span> <span class="p">[],</span> <span class="n">roots</span><span class="p">)</span>
