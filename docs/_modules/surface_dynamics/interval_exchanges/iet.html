@@ -2040,12 +2040,12 @@
 <span class="sd">            sage: T.plot_towers(iterations=5)   # not tested (problem with matplotlib font cache)</span>
 <span class="sd">            Graphics object consisting of 65 graphics primitives</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">px</span><span class="p">,</span><span class="n">py</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+        <span class="n">px</span><span class="p">,</span> <span class="n">py</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
 
         <span class="n">T</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">towers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="n">iterations</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">pi</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">permutation</span><span class="p">()</span>
         <span class="n">A</span> <span class="o">=</span> <span class="n">pi</span><span class="o">.</span><span class="n">alphabet</span><span class="p">()</span>
-        <span class="n">lengths</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">lengths</span><span class="p">())</span>
+        <span class="n">lengths</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">lengths</span><span class="p">()))</span>
 
         <span class="k">if</span> <span class="n">colors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">sage.plot.colors</span> <span class="kn">import</span> <span class="n">rainbow</span>
