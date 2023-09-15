@@ -1,109 +1,246 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Flip sequences" href="flip_sequence.html" /><link rel="prev" title="Integral interval exchanges" href="integer_iet.html" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Interval exchange families &mdash; surface-dynamics 0.4.7 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+    <!-- Generated with Sphinx 5.3.0 and Furo 2023.05.20 -->
+        <title>Interval exchange families - surface-dynamics 0.4.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  --color-brand-primary: #0f0fff;
+  --color-brand-content: #0f0fff;
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Flip sequences" href="flip_sequence.html" />
-    <link rel="prev" title="Integral interval exchanges" href="integer_iet.html" /> 
-</head>
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
 
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            surface-dynamics
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../demo_interval_exchanges.html">Interval exchange transformations</a></li>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">surface-dynamics 0.4.7 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/logo.svg" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/logo.svg" alt="Dark Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">surface-dynamics 0.4.7 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/interval_exchanges.html">Interval exchange transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/square_tiled_surfaces.html">Square-tiled surfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/rank2_genus3_classification.html">Filtering Possible <span class="math notranslate nohighlight">\(\mathcal M\)</span>-Parallel Classes</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../strata.html">Strata of Abelian and quadratic differentials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../surface_topology.html">Surface topology and geometry</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../origamis.html">Origamis</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Interval exchange transformations</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="index.html#permutations">Permutations</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="index.html#id1">Interval exchange transformations</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="iet.html">Interval exchange transformations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="integer_iet.html">Integral interval exchanges</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Interval exchange families</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily"><code class="docutils literal notranslate"><span class="pre">IETFamily</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html">Flip sequences</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Interval exchange transformations</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Interval exchange transformations</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="constructors.html">Interval exchange constructors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="template.html">Permutation template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelled.html">Labelled permutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reduced.html">Reduced permutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html">Rauzy class cardinality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cover.html">Covering construction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iet.html">Interval exchange transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integer_iet.html">Integral interval exchanges</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Interval exchange families</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flip_sequence.html">Flip sequences</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../topological_recursion/index.html">Topological recursion</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../misc/index.html">Miscellaneous</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../topological_recursion/index.html">Topological recursion</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Topological recursion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/topological_recursion.html">Generic topological recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/kontsevich.html">Kontsevich topological recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/masur_veech.html">Masur-Veech topological recursion</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../misc/index.html">Miscellaneous</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Miscellaneous</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../misc/constellation.html">Constellations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/group_representation.html">Finite group representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/plane_tree.html">Plane trees</a></li>
+</ul>
+</li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
 </ul>
 
-        </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">surface-dynamics</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">Interval exchange transformations</a></li>
-      <li class="breadcrumb-item active">Interval exchange families</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/interval_exchanges/iet_family.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="module-surface_dynamics.interval_exchanges.iet_family">
-<span id="interval-exchange-families"></span><h1>Interval exchange families<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.iet_family" title="Permalink to this heading"></a></h1>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="module-surface_dynamics.interval_exchanges.iet_family">
+<span id="interval-exchange-families"></span><h1>Interval exchange families<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.iet_family" title="Permalink to this heading">#</a></h1>
 <p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 1)</p>
 <p>Linear families of interval exchange transformations</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.iet_family.IETFamily">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.iet_family.</span></span><span class="sig-name descname"><span class="pre">IETFamily</span></span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.iet_family.</span></span><span class="sig-name descname"><span class="pre">IETFamily</span></span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 140)</p>
 <p>A linear family of interval exchange transformations</p>
@@ -143,7 +280,7 @@
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.iet_family.IETFamily.children">
-<span class="sig-name descname"><span class="pre">children</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.children" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">children</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.children" title="Permalink to this definition">#</a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 503)</p>
 <p>Compute the children of the pair <code class="docutils literal notranslate"><span class="pre">(p,</span> <span class="pre">C)</span></code> composed of a permutation and a
 slice of a Rauzy simplex.</p>
@@ -203,7 +340,7 @@ slice of a Rauzy simplex.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.iet_family.IETFamily.has_connection">
-<span class="sig-name descname"><span class="pre">has_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.has_connection" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">has_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.has_connection" title="Permalink to this definition">#</a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 444)</p>
 <p>Check whether this family has a connection.</p>
 <p>EXAMPLES:</p>
@@ -234,14 +371,14 @@ slice of a Rauzy simplex.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.iet_family.IETFamily.permutation">
-<span class="sig-name descname"><span class="pre">permutation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.permutation" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">permutation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.permutation" title="Permalink to this definition">#</a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 353)</p>
 <p>Return the permutation as a list of integers</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element">
-<span class="sig-name descname"><span class="pre">random_element</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">random_element</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element" title="Permalink to this definition">#</a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 667)</p>
 <p>Return a random point in the cone</p>
 <p>EXAMPLES:</p>
@@ -268,7 +405,7 @@ slice of a Rauzy simplex.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element_statistics">
-<span class="sig-name descname"><span class="pre">random_element_statistics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element_statistics" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">random_element_statistics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element_statistics" title="Permalink to this definition">#</a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 708)</p>
 <p>Return a triple <code class="docutils literal notranslate"><span class="pre">(num_minimals,</span> <span class="pre">num_saddles,</span> <span class="pre">num_unknowns)</span></code> of number
 of interval exchange transformations found to be respectively minimal, with
@@ -326,7 +463,7 @@ large number of induction steps)</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.iet_family.IETFamily.random_integer_point_statistics">
-<span class="sig-name descname"><span class="pre">random_integer_point_statistics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_integer_point_statistics" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">random_integer_point_statistics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_integer_point_statistics" title="Permalink to this definition">#</a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 813)</p>
 <p>OUTPUT: a dictionary whose keys are integers <code class="docutils literal notranslate"><span class="pre">i</span></code> and values are the
 number of integer points found so that the number of cylinders is
@@ -335,7 +472,7 @@ number of integer points found so that the number of cylinders is
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.iet_family.IETFamily.ray_coefficient">
-<span class="sig-name descname"><span class="pre">ray_coefficient</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.ray_coefficient" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ray_coefficient</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.ray_coefficient" title="Permalink to this definition">#</a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 227)</p>
 <p>Return the <code class="docutils literal notranslate"><span class="pre">i</span></code>-th coefficient of the <code class="docutils literal notranslate"><span class="pre">nray</span></code>-th ray</p>
 <p>EXAMPLES:</p>
@@ -360,7 +497,7 @@ number of integer points found so that the number of cylinders is
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.iet_family.IETFamily.rays">
-<span class="sig-name descname"><span class="pre">rays</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.rays" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rays</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.rays" title="Permalink to this definition">#</a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 257)</p>
 <p>Return the rays as vectors</p>
 <p>EXAMPLES:</p>
@@ -375,7 +512,7 @@ number of integer points found so that the number of cylinders is
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.iet_family.IETFamily.tree">
-<span class="sig-name descname"><span class="pre">tree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.tree" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">tree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.tree" title="Permalink to this definition">#</a></dt>
 <dd><p>File: surface_dynamics/interval_exchanges/iet_family.pyx (starting at line 598)</p>
 <p>The tree should be smarter in several ways:</p>
 <ul class="simple">
@@ -397,35 +534,91 @@ whether it corresponds to a splitting, a cylinder decomposition, etc</p></li>
 
 </section>
 
-
-           </div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="flip_sequence.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Flip sequences</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="integer_iet.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Integral interval exchanges</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2021-2023, the surface-dynamics authors
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="integer_iet.html" class="btn btn-neutral float-left" title="Integral interval exchanges" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="flip_sequence.html" class="btn btn-neutral float-right" title="Flip sequences" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
     </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Interval exchange families</a><ul>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily"><code class="docutils literal notranslate"><span class="pre">IETFamily</span></code></a><ul>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.children"><code class="docutils literal notranslate"><span class="pre">IETFamily.children()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.has_connection"><code class="docutils literal notranslate"><span class="pre">IETFamily.has_connection()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.permutation"><code class="docutils literal notranslate"><span class="pre">IETFamily.permutation()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element"><code class="docutils literal notranslate"><span class="pre">IETFamily.random_element()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element_statistics"><code class="docutils literal notranslate"><span class="pre">IETFamily.random_element_statistics()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_integer_point_statistics"><code class="docutils literal notranslate"><span class="pre">IETFamily.random_integer_point_statistics()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.ray_coefficient"><code class="docutils literal notranslate"><span class="pre">IETFamily.ray_coefficient()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.rays"><code class="docutils literal notranslate"><span class="pre">IETFamily.rays()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.iet_family.IETFamily.tree"><code class="docutils literal notranslate"><span class="pre">IETFamily.tree()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2021, the surface-dynamics authors.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+          </div>
         </div>
       </div>
-    </section>
+      
+      
+    </aside>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    </body>
 </html>

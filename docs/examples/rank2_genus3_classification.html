@@ -1,0 +1,1277 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Strata of Abelian and quadratic differentials" href="../strata.html" /><link rel="prev" title="Square-tiled surfaces" href="square_tiled_surfaces.html" />
+
+    <!-- Generated with Sphinx 5.3.0 and Furo 2023.05.20 -->
+        <title>Filtering Possible \(\mathcal M\)-Parallel Classes - surface-dynamics 0.4.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  --color-brand-primary: #0f0fff;
+  --color-brand-content: #0f0fff;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">surface-dynamics 0.4.7 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/logo.svg" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/logo.svg" alt="Dark Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">surface-dynamics 0.4.7 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="interval_exchanges.html">Interval exchange transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="square_tiled_surfaces.html">Square-tiled surfaces</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Filtering Possible <span class="math notranslate nohighlight">\(\mathcal M\)</span>-Parallel Classes</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../origamis.html">Origamis</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../interval_exchanges/index.html">Interval exchange transformations</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Interval exchange transformations</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/constructors.html">Interval exchange constructors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/template.html">Permutation template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/labelled.html">Labelled permutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/reduced.html">Reduced permutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/rauzy_class_cardinality.html">Rauzy class cardinality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/cover.html">Covering construction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/iet.html">Interval exchange transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/integer_iet.html">Integral interval exchanges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/iet_family.html">Interval exchange families</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/flip_sequence.html">Flip sequences</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../topological_recursion/index.html">Topological recursion</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Topological recursion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/topological_recursion.html">Generic topological recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/kontsevich.html">Kontsevich topological recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/masur_veech.html">Masur-Veech topological recursion</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../misc/index.html">Miscellaneous</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Miscellaneous</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../misc/constellation.html">Constellations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/group_representation.html">Finite group representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/plane_tree.html">Plane trees</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section class="tex2jax_ignore mathjax_ignore" id="filtering-possible-mathcal-m-parallel-classes">
+<h1>Filtering Possible <span class="math notranslate nohighlight">\(\mathcal M\)</span>-Parallel Classes<a class="headerlink" href="#filtering-possible-mathcal-m-parallel-classes" title="Permalink to this heading">#</a></h1>
+<p>The purpose of this notebook is to use Sage to assist in the classification of
+rank 2 invariant subvarieties in strata of translation surfaces in genus 3.
+This classification was already done through other methods by David Aulicino,
+Duc Man Nguyen, and Alex Wright, but the methods described here, which is used
+in my forthcoming PhD thesis, can be readily applied to other strata.</p>
+<p>Assume <span class="math notranslate nohighlight">\(\mathcal M\)</span> is an invariant subvariety in a stratum <span class="math notranslate nohighlight">\(\mathcal H\)</span>. We
+will start with a horizontally periodic translation surface <span class="math notranslate nohighlight">\(M\in \mathcal M\)</span>.
+A database for the possible cylinder diagrams for <span class="math notranslate nohighlight">\(M\)</span> can be found in
+<code class="docutils literal notranslate"><span class="pre">surface-dynamics</span></code>: see
+<a class="reference external" href="https://flatsurf.github.io/surface-dynamics/database.html">here</a>. Here is an
+example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">CylinderDiagram</span>
+
+<span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,2)-(6) (1,4)-(3,5) (3,6)-(2,4) (5)-(0,1)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0,2)-(6) (1,4)-(3,5) (3,6)-(2,4) (5)-(0,1)
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="Drawing of above cylinder diagram" src="../_images/h211-c4-9-1.png" /></p>
+<p>Assume <span class="math notranslate nohighlight">\(M\)</span> has a cylinder diagram with <span class="math notranslate nohighlight">\(n\)</span> cylinders, and label them <span class="math notranslate nohighlight">\(0\)</span> to
+<span class="math notranslate nohighlight">\(n-1\)</span> from left to right. Assume that these cylinders are partitioned into <span class="math notranslate nohighlight">\(m\)</span>
+distinct <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel classes, and we want to know all possible ways to do
+this. The following function uses existing Sage functions to list all possible
+partitions. The point of this notebook is to filter out some of these candidate
+partitions by checking certain conditions. Although we won’t use it here, you
+can set <code class="docutils literal notranslate"><span class="pre">singletons=False</span></code> if you do not want to allow cylinders in an <span class="math notranslate nohighlight">\(\cal
+M\)</span>-parallel class by themselves.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sage.all</span> <span class="kn">import</span> <span class="n">Partitions</span><span class="p">,</span> <span class="n">SetPartitions</span>
+
+<span class="k">def</span> <span class="nf">list_partitions</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">singletons</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of all ways to partition the set [1..n] into m sets.</span>
+
+<span class="sd">    If singletons==False, do not allow singleton sets.</span>
+
+<span class="sd">    Each element of each partition is a frozen set.</span>
+<span class="sd">    Each partition is an instance of</span>
+<span class="sd">    `sage.combinat.set_partition.SetPartitions_setparts_with_category.element_class`.&quot;&quot;&quot;</span>
+
+    <span class="n">partitions</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Partition the integer n into m nonzero integers</span>
+    <span class="n">int_parts</span> <span class="o">=</span> <span class="n">Partitions</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">m</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+
+    <span class="c1"># Checks for singleton sets</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">singletons</span><span class="p">:</span>
+        <span class="n">int_parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">int_parts</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">i</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">])]</span>
+
+    <span class="c1"># Coverts integer partitions into set partitions</span>
+    <span class="k">for</span> <span class="n">each_part</span> <span class="ow">in</span> <span class="n">int_parts</span><span class="p">:</span>
+        <span class="n">partitions</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">SetPartitions</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">each_part</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">partitions</span>
+
+<span class="c1"># Tests</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_partitions</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">singletons</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="o">==</span> <span class="mi">15</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_partitions</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">singletons</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span> <span class="o">==</span> <span class="mi">25</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_partitions</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">singletons</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span> <span class="o">==</span> <span class="mi">15</span>
+
+<span class="n">list_partitions</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># [{{0}, {1, 2, 3}},</span>
+<span class="c1">#  {{0, 1, 2}, {3}},</span>
+<span class="c1">#  {{0, 1, 3}, {2}},</span>
+<span class="c1">#  {{0, 2, 3}, {1}},</span>
+<span class="c1">#  {{0, 1}, {2, 3}},</span>
+<span class="c1">#  {{0, 3}, {1, 2}},</span>
+<span class="c1">#  {{0, 2}, {1, 3}}]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{{0}, {1, 2, 3}},
+ {{0, 1, 2}, {3}},
+ {{0, 1, 3}, {2}},
+ {{0, 2, 3}, {1}},
+ {{0, 1}, {2, 3}},
+ {{0, 3}, {1, 2}},
+ {{0, 2}, {1, 3}}]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="homologous-condition">
+<h2>Homologous Condition<a class="headerlink" href="#homologous-condition" title="Permalink to this heading">#</a></h2>
+<p>The first condition is simply that two homologous cylinders must be in the same
+<span class="math notranslate nohighlight">\(\cal M\)</span>-parallel class. <code class="docutils literal notranslate"><span class="pre">filter_homologous_condition</span></code> removes partitions that
+do not satisfy this condition.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.twist_space</span> <span class="kn">import</span> <span class="n">TwistSpace</span>
+
+<span class="k">def</span> <span class="nf">check_homologous_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">partition</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check that homologous cylinders are in the same M-parallel class</span>
+<span class="sd">    in `partition`.&quot;&quot;&quot;</span>
+    <span class="n">tw</span> <span class="o">=</span> <span class="n">TwistSpace</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
+    <span class="n">classes</span> <span class="o">=</span> <span class="n">tw</span><span class="o">.</span><span class="n">homologous_cylinders</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">homology_class</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
+        <span class="n">homology_class</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="n">homology_class</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">f_set</span> <span class="ow">in</span> <span class="n">partition</span><span class="p">:</span>
+            <span class="n">intersection</span> <span class="o">=</span> <span class="n">f_set</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">homology_class</span><span class="p">)</span>
+
+            <span class="c1"># Every set in the partition must contain the whole homology class</span>
+            <span class="c1"># or none of it.</span>
+            <span class="k">if</span> <span class="n">intersection</span> <span class="o">!=</span> <span class="nb">frozenset</span><span class="p">()</span> <span class="ow">and</span> <span class="n">intersection</span> <span class="o">!=</span> <span class="n">homology_class</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span> <span class="nf">filter_homologous_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;rFilter out the partitions in part_list when</span>
+<span class="sd">    check_homologous_condition=False.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">part</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">part_list</span> <span class="k">if</span> <span class="n">check_homologous_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
+<p>For the cylinder diagram (0,3)-(0,5) (1,2)-(1,4) (4,6)-(3,7) (5,7)-(2,6),
+the last two cylinders (numbered 2 and 3) are homologous. Thus, the remaining partitions
+should be exactly those that put 2 and 3 in the same set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">part_list</span> <span class="o">=</span> <span class="n">list_partitions</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,3)-(0,5) (1,2)-(1,4) (4,6)-(3,7) (5,7)-(2,6)&#39;</span><span class="p">)</span>
+<span class="n">filter_homologous_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">)</span>
+<span class="c1"># [{{0}, {1, 2, 3}}, {{0, 2, 3}, {1}}, {{0, 1}, {2, 3}}]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{{0}, {1, 2, 3}}, {{0, 2, 3}, {1}}, {{0, 1}, {2, 3}}]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tests</span>
+
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,2,1)-(4,5) (3,5)-(0,2,1) (4)-(3)&#39;</span><span class="p">)</span>
+<span class="n">tw</span> <span class="o">=</span> <span class="n">TwistSpace</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">tw</span><span class="o">.</span><span class="n">homologous_cylinders</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">}</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,3)-(0,5) (1,2)-(1,4) (4,6)-(3,7) (5,7)-(2,6)&#39;</span><span class="p">)</span>
+<span class="n">tw</span> <span class="o">=</span> <span class="n">TwistSpace</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">tw</span><span class="o">.</span><span class="n">homologous_cylinders</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0)-(2) (1,2,3)-(4,5) (4)-(3) (5)-(0,1)&#39;</span><span class="p">)</span>
+<span class="n">tw</span> <span class="o">=</span> <span class="n">TwistSpace</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">tw</span><span class="o">.</span><span class="n">homologous_cylinders</span><span class="p">()</span> <span class="o">==</span> <span class="p">[]</span>
+
+<span class="n">part_list</span> <span class="o">=</span> <span class="n">list_partitions</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,2,1)-(4,5) (3,5)-(0,2,1) (4)-(3)&#39;</span><span class="p">)</span>
+<span class="n">good_part</span> <span class="o">=</span> <span class="n">filter_homologous_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">good_part</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="n">part_list</span> <span class="o">=</span> <span class="n">list_partitions</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0)-(2) (1)-(3) (2,4,3)-(5,6) (5)-(4) (6)-(0,1)&#39;</span><span class="p">)</span>
+<span class="n">good_part</span> <span class="o">=</span> <span class="n">filter_homologous_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">good_part</span><span class="p">)</span> <span class="o">==</span> <span class="mi">15</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,1)-(0,6) (2)-(5) (3)-(4) (4,5)-(1) (6)-(2,3)&#39;</span><span class="p">)</span>
+<span class="n">good_part</span> <span class="o">=</span> <span class="n">filter_homologous_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">good_part</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="pants-condition">
+<h2>Pants Condition<a class="headerlink" href="#pants-condition" title="Permalink to this heading">#</a></h2>
+<p>We define a <strong>generalized pants</strong> to be a pair of pants with potentially more
+than two pant legs. This gives an equation in homology between the core curves
+of the cylinders in the pants of the form <span class="math notranslate nohighlight">\(\gamma_1 = \sum_{i=2}^k \gamma_i\)</span>.
+Because of this equation, we have that these cylinders cannot be contained in
+exactly two distinct <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel classes. To see this, recall that the
+core curves of <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel cylinders become colinear when projected to
+the dual of the tangent space of <span class="math notranslate nohighlight">\(M\)</span>.  <code class="docutils literal notranslate"><span class="pre">filter_pants_condition</span></code> filters out
+partitions that do not satisfy this condition.</p>
+<p>In general, a homology relation between core curves of cylinders should give a
+condition of partitions; this case and the previous one are both specific
+examples of this.  It would be nice to have a more general function that finds
+all homology relations, and determines all such conditions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_cylinder_in_partition</span><span class="p">(</span><span class="n">partition</span><span class="p">,</span> <span class="n">cylinder</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find the M-parallel class in `partition` than contains `cylinder`.</span>
+
+<span class="sd">    `partition` is a list of frozen sets.</span>
+<span class="sd">    `cylinder` is an integer</span>
+<span class="sd">    Return the index of the element of `partition` that contains `cylinder`.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">parallel_class</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">partition</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cylinder</span> <span class="ow">in</span> <span class="n">parallel_class</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">i</span>
+
+    <span class="c1"># If cylinder was not found in partition</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">check_pants_condition</span><span class="p">(</span><span class="n">partition</span><span class="p">,</span> <span class="n">pants_list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check the partition satisfies any homology conditions coming from</span>
+<span class="sd">    the pants in pants_list.</span>
+
+<span class="sd">    `partition` is a partition of the horizontal cylinders into M-parallel</span>
+<span class="sd">    classes.</span>
+
+<span class="sd">    `pants_list` is a list of pants, where each pants is a frozenset containing</span>
+<span class="sd">    every cylinder in the pants</span>
+
+<span class="sd">    The homology condition is the following:</span>
+<span class="sd">    the cylinders in the pants cannot be contained in exactly two distinct sets</span>
+<span class="sd">    in `partition`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">pants</span> <span class="ow">in</span> <span class="n">pants_list</span><span class="p">:</span>
+
+        <span class="c1"># A list of the cylinder classes that contain a cylinder of pants</span>
+        <span class="n">cylinder_classes</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">find_cylinder_in_partition</span><span class="p">(</span><span class="n">partition</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span>
+            <span class="n">pants</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">cylinder_classes</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span> <span class="nf">find_generalized_pants</span><span class="p">(</span><span class="n">digraph</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds cases when n cylinders are all only attached to the side</span>
+<span class="sd">    of a single cylinder. This is like a generalized version of a</span>
+<span class="sd">    topological pair of pants allows n pant legs.</span>
+
+<span class="sd">    Input: A cylinder diagram.</span>
+
+<span class="sd">    Output: A set of pants. Each pants is a frozenset consisting of the</span>
+<span class="sd">    cylinders in the pants.</span>
+
+<span class="sd">    Note: For Python 3.7 and higher, frozensets should maintain insertion</span>
+<span class="sd">    order. Thus, the first element of each pants is the waist curve and the</span>
+<span class="sd">    rest are the pant legs. However, we do not use this in our code.&quot;&quot;&quot;</span>
+
+    <span class="n">pants_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">digraph</span><span class="p">:</span>
+        <span class="c1"># If every cylinder above `C` is only adjacent to `C` along its</span>
+        <span class="c1"># bottom, this is a generalized pants.</span>
+        <span class="n">neighbors_out</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">digraph</span><span class="o">.</span><span class="n">neighbors_out</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">digraph</span><span class="o">.</span><span class="n">neighbors_in</span><span class="p">(</span><span class="n">suc</span><span class="p">))</span> <span class="o">==</span> <span class="p">[</span><span class="n">n</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">suc</span> <span class="ow">in</span> <span class="n">neighbors_out</span><span class="p">]):</span>
+
+            <span class="n">pants</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span><span class="n">n</span><span class="p">]</span> <span class="o">+</span> <span class="n">neighbors_out</span><span class="p">)</span>
+            <span class="n">pants_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">pants</span><span class="p">)</span>
+
+        <span class="c1"># If every cylinder below `C` is only adjacent to `C` along its</span>
+        <span class="c1"># top, this is a generalized pants.</span>
+        <span class="n">neighbors_in</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">digraph</span><span class="o">.</span><span class="n">neighbors_in</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">digraph</span><span class="o">.</span><span class="n">neighbors_out</span><span class="p">(</span><span class="n">pre</span><span class="p">))</span> <span class="o">==</span> <span class="p">[</span><span class="n">n</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">pre</span> <span class="ow">in</span> <span class="n">neighbors_in</span><span class="p">]):</span>
+
+            <span class="n">pants</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span><span class="n">n</span><span class="p">]</span> <span class="o">+</span> <span class="n">neighbors_in</span><span class="p">)</span>
+            <span class="n">pants_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">pants</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pants_set</span>
+
+<span class="k">def</span> <span class="nf">filter_pants_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter out the partitions in part_list when check_pants_condition=False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cyl_graph</span> <span class="o">=</span> <span class="n">cd</span><span class="o">.</span><span class="n">cylinder_graph</span><span class="p">()</span>
+    <span class="n">pants_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">find_generalized_pants</span><span class="p">(</span><span class="n">cyl_graph</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">partition</span> <span class="k">for</span> <span class="n">partition</span> <span class="ow">in</span> <span class="n">part_list</span>
+                      <span class="k">if</span> <span class="n">check_pants_condition</span><span class="p">(</span><span class="n">partition</span><span class="p">,</span> <span class="n">pants_list</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="id1">
+<h3>Example<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>For cylinder diagram (0,3)-(5) (1)-(2) (2,5)-(3,4) (4)-(0,1), the first three cylinders {0, 1, 2} form a pair of pants.
+Thus, they must all be in the same <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel class or all be in different ones.
+The only partition with two <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel classes is thus {{0, 1, 2}, {3}}.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0,3)-(5) (1)-(2) (2,5)-(3,4) (4)-(0,1)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The pants of this cylinder diagram are: </span><span class="si">{</span><span class="n">find_generalized_pants</span><span class="p">(</span><span class="n">cd</span><span class="o">.</span><span class="n">cylinder_graph</span><span class="p">())</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="c1"># {frozenset({0, 1, 2})}</span>
+
+<span class="n">partitions</span> <span class="o">=</span> <span class="n">list_partitions</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">filter_pants_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">partitions</span><span class="p">)</span>
+<span class="c1"># [{{0, 1, 2}, {3}}]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The pants of this cylinder diagram are: {frozenset({0, 1, 2})}.
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{{0, 1, 2}, {3}}]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tests</span>
+
+<span class="c1">## check_pants_condition</span>
+<span class="k">assert</span> <span class="n">check_pants_condition</span><span class="p">([{</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="mi">3</span><span class="p">}],</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+<span class="k">assert</span> <span class="ow">not</span> <span class="n">check_pants_condition</span><span class="p">([{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}],</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+<span class="k">assert</span> <span class="n">check_pants_condition</span><span class="p">([{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}],</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+
+
+<span class="c1"># find_generalized_pants</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0)-(2) (1,2,3)-(4,5) (4)-(3) (5)-(0,1)&quot;</span><span class="p">)</span>
+<span class="n">cd_g</span> <span class="o">=</span> <span class="n">cd</span><span class="o">.</span><span class="n">cylinder_graph</span><span class="p">()</span>
+<span class="k">assert</span> <span class="n">find_generalized_pants</span><span class="p">(</span><span class="n">cd_g</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">([</span><span class="nb">frozenset</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])])</span>
+
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0,3)-(5) (1)-(0) (2,5)-(3,4) (4)-(1,2)&quot;</span><span class="p">)</span>
+<span class="n">cd_g</span> <span class="o">=</span> <span class="n">cd</span><span class="o">.</span><span class="n">cylinder_graph</span><span class="p">()</span>
+<span class="k">assert</span> <span class="n">find_generalized_pants</span><span class="p">(</span><span class="n">cd_g</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">()</span>
+
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0,2,1)-(3,4,5) (3)-(1) (4)-(2) (5)-(0)&quot;</span><span class="p">)</span>
+<span class="n">cd_g</span> <span class="o">=</span> <span class="n">cd</span><span class="o">.</span><span class="n">cylinder_graph</span><span class="p">()</span>
+<span class="k">assert</span> <span class="n">find_generalized_pants</span><span class="p">(</span><span class="n">cd_g</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">([</span><span class="nb">frozenset</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])])</span>
+
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0)-(2) (1)-(3) (2,4,3)-(5,6) (5)-(4) (6)-(0,1)&quot;</span><span class="p">)</span>
+<span class="n">cd_g</span> <span class="o">=</span> <span class="n">cd</span><span class="o">.</span><span class="n">cylinder_graph</span><span class="p">()</span>
+<span class="k">assert</span> <span class="n">find_generalized_pants</span><span class="p">(</span><span class="n">cd_g</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">([</span><span class="nb">frozenset</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">}),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">})])</span>
+
+
+<span class="c1"># filter_pants_condition</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0,3)-(0,5) (1,2)-(1,4) (4)-(3) (5)-(2)&quot;</span><span class="p">)</span>
+<span class="n">partitions</span> <span class="o">=</span> <span class="n">list_partitions</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">filter_pants_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">partitions</span><span class="p">))</span> <span class="o">==</span> <span class="mi">7</span>
+
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0,2,1)-(3,4,5) (3)-(1) (4)-(2) (5)-(0)&quot;</span><span class="p">)</span>
+<span class="n">partitions</span> <span class="o">=</span> <span class="n">list_partitions</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">filter_pants_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">partitions</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="standard-twist-condition">
+<h2>Standard Twist Condition<a class="headerlink" href="#standard-twist-condition" title="Permalink to this heading">#</a></h2>
+<p>Now assume that <span class="math notranslate nohighlight">\(\cal M\)</span> is rank 2 and <span class="math notranslate nohighlight">\(M\)</span> has at least 3 <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel
+classes.  Let <span class="math notranslate nohighlight">\(\sigma_1,\sigma_2,\sigma_3\)</span> be the standard twists of these
+classes, and <span class="math notranslate nohighlight">\(p\)</span> be the projection from relative to absolution cohomology.  By
+definition of rank, <span class="math notranslate nohighlight">\(p(\sigma_1), p(\sigma_2), p(\sigma_3)\)</span> are in a 2
+dimensional subspace of cohomology, so there must be a linear relation.  Up to
+relabeling, the equation must be of the form <span class="math notranslate nohighlight">\(a_1p(\sigma_1) = a_2p(\sigma_2) +
+a_3p(\sigma_3)\)</span>, where crucially <span class="math notranslate nohighlight">\(a_1,a_2,a_3&gt;0\)</span>. Often, this equation has no
+solutions, which rules out the partition.  We can use linear programming to
+determine exactly when such an equation has a solution.  If <span class="math notranslate nohighlight">\(\cal M\)</span> has more
+than 3 <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel classes, we have one such equation for any triple
+(although many of these equations will be redundant).
+<code class="docutils literal notranslate"><span class="pre">filter_standard_twist_condition</span></code> checks this condition.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sage.all</span> <span class="kn">import</span> <span class="n">block_matrix</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">MixedIntegerLinearProgram</span>
+<span class="kn">from</span> <span class="nn">sage.numerical.mip</span> <span class="kn">import</span> <span class="n">MIPSolverException</span>
+
+<span class="k">def</span> <span class="nf">class_matrix</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">m_class</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stacks the core curves of the cylinders in an M-parallel class into a</span>
+<span class="sd">    single matrix.&quot;&quot;&quot;</span>
+    <span class="n">core_curves</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">tw</span><span class="o">.</span><span class="n">cylinder_core_curves</span><span class="p">())</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">matrix</span><span class="p">([</span><span class="n">core_curves</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">m_class</span><span class="p">]))</span>
+
+<span class="k">def</span> <span class="nf">ordered_partition</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">partition</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Checks the standard twist condition on a specific ordered set of the</span>
+<span class="sd">    equivalence classes.&quot;&quot;&quot;</span>
+    <span class="n">c0</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">c1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">c2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+    <span class="c1"># Convert the equation into the form Ax - b = 0</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">block_matrix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+                        <span class="p">[</span><span class="n">class_matrix</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">c0</span><span class="p">),</span> <span class="n">class_matrix</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">c1</span><span class="p">),</span> <span class="o">-</span><span class="n">class_matrix</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">c2</span><span class="p">)],</span>
+                        <span class="n">subdivide</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="nb">sum</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="c1"># Find any solution to the linear programming problem</span>
+    <span class="c1"># Ax - b = 0</span>
+    <span class="c1"># x &gt;= 0</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MixedIntegerLinearProgram</span><span class="p">(</span><span class="n">maximization</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">new_variable</span><span class="p">(</span><span class="n">real</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nonnegative</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="n">A</span><span class="o">*</span><span class="n">x</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="n">MIPSolverException</span><span class="p">:</span>
+        <span class="c1"># MIPSolverException means that no solution exists.</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">def</span> <span class="nf">check_standard_twist_condition</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">partition</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;If the partition does not have three equivalence classes, return</span>
+<span class="sd">    true. Otherwise, check that the equation</span>
+<span class="sd">    Σa_iα_i = Σb_jβ_j + Σc_kγ_k</span>
+<span class="sd">    has a solution for a_i,b_j,c_k &gt;= 1.&quot;&quot;&quot;</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">partition</span><span class="p">)</span>
+    <span class="n">partition</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">partition</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+                <span class="n">order1</span> <span class="o">=</span> <span class="p">[</span><span class="n">partition</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">partition</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">partition</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span>
+                <span class="n">order2</span> <span class="o">=</span> <span class="p">[</span><span class="n">partition</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">partition</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">partition</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+                <span class="n">order3</span> <span class="o">=</span> <span class="p">[</span><span class="n">partition</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">partition</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">partition</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">ordered_partition</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">order1</span><span class="p">),</span>
+                            <span class="n">ordered_partition</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">order2</span><span class="p">),</span>
+                            <span class="n">ordered_partition</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">order3</span><span class="p">)]):</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span> <span class="nf">filter_standard_twist_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">):</span>
+    <span class="n">tw</span> <span class="o">=</span> <span class="n">TwistSpace</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">part</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">part_list</span>
+                 <span class="k">if</span> <span class="n">check_standard_twist_condition</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">part</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Since these exists an invariant subvariety of rank 2 containing a
+translation surface <span class="math notranslate nohighlight">\(M\)</span> with cylinder diagram (0,3)-(5) (1)-(0) (2,5)-(3,4)
+(4)-(1,2), whose <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel classes are {{0, 3}, {1}, {2}}, it is a
+sanity check that this partition has not been filtered out.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">part_list</span> <span class="o">=</span> <span class="n">list_partitions</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0,3)-(5) (1)-(0) (2,5)-(3,4) (4)-(1,2)&quot;</span><span class="p">)</span>
+<span class="n">filter_standard_twist_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">)</span>
+<span class="c1"># [{{0, 3}, {1}, {2}}, {{0}, {1, 2}, {3}}]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{{0, 3}, {1}, {2}}, {{0}, {1, 2}, {3}}]
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>The following is a corollary that we can use as a sanity check. If <span class="math notranslate nohighlight">\(M\)</span>
+contains exactly 3 <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel classes, the dual of the equation
+<span class="math notranslate nohighlight">\(a_1p(\sigma_1) = a_2p(\sigma_2) + a_3p(\sigma_3)\)</span> gives an equation in
+homology that contains the core curve of every cylinder of <span class="math notranslate nohighlight">\(M\)</span>. For (0)-(2)
+(1,2,3)-(4,5) (4)-(3) (5)-(0,1), there is only one equation in homology between
+{1,2,3}, so it cannot satisfy this condition with 3 <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel classes.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">part_list</span> <span class="o">=</span> <span class="n">list_partitions</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0)-(2) (1,2,3)-(4,5) (4)-(3) (5)-(0,1)&#39;</span><span class="p">)</span>
+<span class="n">filter_standard_twist_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">)</span>
+<span class="c1"># []</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tests</span>
+
+<span class="n">part_list</span> <span class="o">=</span> <span class="n">list_partitions</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0,2,1)-(3,4,5) (3)-(1) (4)-(2) (5)-(0)&quot;</span><span class="p">)</span>
+<span class="n">good_part</span> <span class="o">=</span> <span class="n">filter_standard_twist_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">)</span>
+<span class="n">good_part</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">(</span><span class="n">part</span><span class="p">)</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">good_part</span><span class="p">]</span>
+<span class="n">possible</span> <span class="o">=</span> <span class="p">{</span><span class="nb">frozenset</span><span class="p">({</span><span class="mi">0</span><span class="p">}),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">}),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">2</span><span class="p">})}</span>
+<span class="k">assert</span> <span class="n">possible</span> <span class="ow">in</span> <span class="n">good_part</span>
+<span class="n">possible</span> <span class="o">=</span> <span class="p">{</span><span class="nb">frozenset</span><span class="p">({</span><span class="mi">0</span><span class="p">}),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">3</span><span class="p">})}</span>
+<span class="k">assert</span> <span class="n">possible</span> <span class="ow">in</span> <span class="n">good_part</span>
+<span class="n">possible</span> <span class="o">=</span> <span class="p">{</span><span class="nb">frozenset</span><span class="p">({</span><span class="mi">0</span><span class="p">}),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">1</span><span class="p">}),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">})}</span>
+<span class="k">assert</span> <span class="n">possible</span> <span class="ow">in</span> <span class="n">good_part</span>
+
+<span class="n">part_list</span> <span class="o">=</span> <span class="n">list_partitions</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0,2)-(6) (1)-(3) (3,6)-(4,5) (4)-(0) (5)-(1,2)&quot;</span><span class="p">)</span>
+<span class="n">good_part</span> <span class="o">=</span> <span class="n">filter_standard_twist_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">)</span>
+<span class="n">good_part</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">(</span><span class="n">part</span><span class="p">)</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">good_part</span><span class="p">]</span>
+<span class="n">possible</span> <span class="o">=</span> <span class="p">{</span><span class="nb">frozenset</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">}),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">}),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">2</span><span class="p">})}</span>
+<span class="k">assert</span> <span class="n">possible</span> <span class="ow">in</span> <span class="n">good_part</span>
+
+<span class="n">part_list</span> <span class="o">=</span> <span class="n">list_partitions</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0,6)-(4,5) (1,2)-(3,6) (3)-(2) (4)-(1) (5)-(0)&quot;</span><span class="p">)</span>
+<span class="n">good_part</span> <span class="o">=</span> <span class="n">filter_standard_twist_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">)</span>
+<span class="n">good_part</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">(</span><span class="n">part</span><span class="p">)</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">good_part</span><span class="p">]</span>
+<span class="n">possible</span> <span class="o">=</span> <span class="p">{</span><span class="nb">frozenset</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">}),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">}),</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">3</span><span class="p">})}</span>
+<span class="k">assert</span> <span class="n">possible</span> <span class="ow">in</span> <span class="n">good_part</span>
+
+<span class="n">part_list</span> <span class="o">=</span> <span class="n">list_partitions</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0,3)-(5) (1)-(2) (2,5)-(3,4) (4)-(0,1)&quot;</span><span class="p">)</span>
+<span class="n">good_part</span> <span class="o">=</span> <span class="n">filter_standard_twist_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">good_part</span> <span class="o">==</span> <span class="p">[]</span>
+
+<span class="n">part_list</span> <span class="o">=</span> <span class="n">list_partitions</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0,1)-(0,5) (2)-(4) (3,4)-(1) (5)-(2,3)&quot;</span><span class="p">)</span>
+<span class="n">good_part</span> <span class="o">=</span> <span class="n">filter_standard_twist_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">good_part</span> <span class="o">==</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="leaf-condition">
+<h2>Leaf Condition<a class="headerlink" href="#leaf-condition" title="Permalink to this heading">#</a></h2>
+<p>The final condition is quite specific but we include it because it is easy to
+code up. It is from <a class="reference external" href="https://arxiv.org/abs/1501.03303">this paper</a> Lemma 2.11.
+Let <span class="math notranslate nohighlight">\(\cal M\)</span> be an invariant subvariety with field of definition <span class="math notranslate nohighlight">\(\mathbb Q\)</span>
+and rank at least 2. Assume <span class="math notranslate nohighlight">\(M\)</span> is horizontally periodic and that the core
+curves of the horizontal cylinders span a subspace of dimension at least 2 in
+the dual of the tangent space. Furthermore, assume there is a simple horizontal
+cylinder <span class="math notranslate nohighlight">\(C\)</span> that is only adjacent to another cylinder <span class="math notranslate nohighlight">\(D\)</span>.  Then, <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(D\)</span>
+cannot be in the same <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel class. <code class="docutils literal notranslate"><span class="pre">filter_leaf_condition</span></code> checks
+this condition.</p>
+<p>Define the <strong>cylinder graph</strong> as the directed graph, where vertices are
+cylinders and the edges are saddle connections.  We call this the leaf
+condition since <span class="math notranslate nohighlight">\(C\)</span> is a leaf in the cylinder graph i.e. its only neighbor is
+<span class="math notranslate nohighlight">\(D\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_simple</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if cylinder number `index` is simple.&quot;&quot;&quot;</span>
+    <span class="n">cylinder</span> <span class="o">=</span> <span class="n">cd</span><span class="o">.</span><span class="n">cylinders</span><span class="p">()[</span><span class="n">index</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cylinder</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">cylinder</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">def</span> <span class="nf">find_leaves</span><span class="p">(</span><span class="n">digraph</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tuples (leaf, neighbor) for all leaves of `digraph`.</span>
+
+<span class="sd">    A leaf is a vertex such that it only has one neighbor, where we</span>
+<span class="sd">    count a vertex as a neighbor if there is either an edge coming from it</span>
+<span class="sd">    or an edge going to it.</span>
+
+<span class="sd">    For a given leaf, `neighbor` is it&#39;s unique neighbor.&quot;&quot;&quot;</span>
+    <span class="n">leaf_neighbers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">digraph</span><span class="p">:</span>
+        <span class="n">neighbors</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">digraph</span><span class="o">.</span><span class="n">neighbors_out</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="o">|</span> \
+                    <span class="nb">set</span><span class="p">(</span><span class="n">digraph</span><span class="o">.</span><span class="n">neighbors_in</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">leaf_neighbers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">neighbors</span><span class="p">))))</span>
+    <span class="k">return</span> <span class="n">leaf_neighbers</span>
+
+<span class="k">def</span> <span class="nf">check_leaf_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">partition</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check for the following condition:</span>
+<span class="sd">    If a cylinder C is only bordering another cylinder D, then C and D cannot</span>
+<span class="sd">    be in the same M-parallel class.</span>
+
+<span class="sd">    Note that there are some assumptions for this condition.</span>
+<span class="sd">    Refer to the paper for these assumptions.&quot;&quot;&quot;</span>
+    <span class="n">cyl_graph</span> <span class="o">=</span> <span class="n">cd</span><span class="o">.</span><span class="n">cylinder_graph</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">leaf</span><span class="p">,</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">find_leaves</span><span class="p">(</span><span class="n">cyl_graph</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_simple</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">leaf</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">find_cylinder_in_partition</span><span class="p">(</span><span class="n">partition</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span> <span class="o">==</span> \
+            <span class="n">find_cylinder_in_partition</span><span class="p">(</span><span class="n">partition</span><span class="p">,</span> <span class="n">neighbor</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span> <span class="nf">filter_leaf_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter out the partitions in part_list when check_leaf_condition=False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">part</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">part_list</span> <span class="k">if</span> <span class="n">check_leaf_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="id2">
+<h3>Example<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>In the cylinder diagram (0,1)-(0,2) (2)-(3) (3,4)-(1,5) (5)-(4), we see that
+cylinder 3 is a leaf adjacent only to cylinder 2. Thus, they cannot be in the
+same set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">part_list</span> <span class="o">=</span> <span class="n">list_partitions</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0,1)-(0,2) (2)-(3) (3,4)-(1,5) (5)-(4)&quot;</span><span class="p">)</span>
+<span class="n">filter_leaf_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">)</span>
+<span class="c1"># [{{0, 1, 2}, {3}}, {{0, 1, 3}, {2}}, {{0, 3}, {1, 2}}, {{0, 2}, {1, 3}}]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{{0, 1, 2}, {3}}, {{0, 1, 3}, {2}}, {{0, 3}, {1, 2}}, {{0, 2}, {1, 3}}]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tests</span>
+
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0)-(1) (1,3,4,2)-(5,6) (5)-(0,4) (6)-(2,3)&quot;</span><span class="p">)</span>
+<span class="n">good_part</span> <span class="o">=</span> <span class="n">filter_leaf_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">good_part</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s2">&quot;(0,3)-(5) (1)-(2) (2,5)-(3,4) (4)-(0,1)&quot;</span><span class="p">)</span>
+<span class="n">good_part</span> <span class="o">=</span> <span class="n">filter_leaf_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">good_part</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="h-3-1">
+<h2>H(3,1)<a class="headerlink" href="#h-3-1" title="Permalink to this heading">#</a></h2>
+<p>We go through every cylinder diagram with <span class="math notranslate nohighlight">\(n\)</span> cylinders in a component of a
+stratum, and we check the partitions with <span class="math notranslate nohighlight">\(m\)</span> <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel classes. <span class="math notranslate nohighlight">\(\cal
+H(3,1)\)</span> has no rank 2 invariant subvarieties, so we would like to filter out as
+many partitions as possible.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+<span class="kn">from</span> <span class="nn">surface_dynamics.databases.flat_surfaces</span> <span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+
+<span class="k">def</span> <span class="nf">filter_partitions</span><span class="p">(</span><span class="n">cyl_diag_list</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;For each cylinder diagram in cyl_diag_list, list all partitions with</span>
+<span class="sd">    num_classes number of classes and filter out the invalid ones.</span>
+
+<span class="sd">    Stores the output in a dict of</span>
+<span class="sd">    (cylinder diagram, list of equivalence classes)&quot;&quot;&quot;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">cd</span> <span class="ow">in</span> <span class="n">cyl_diag_list</span><span class="p">:</span>
+        <span class="n">part</span> <span class="o">=</span> <span class="n">list_partitions</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cd</span><span class="o">.</span><span class="n">cylinders</span><span class="p">()),</span> <span class="n">num_classes</span><span class="p">)</span>
+        <span class="n">part</span> <span class="o">=</span> <span class="n">filter_pants_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part</span><span class="p">)</span>
+        <span class="n">part</span> <span class="o">=</span> <span class="n">filter_homologous_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part</span><span class="p">)</span>
+        <span class="n">part</span> <span class="o">=</span> <span class="n">filter_leaf_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part</span><span class="p">)</span>
+        <span class="n">part</span> <span class="o">=</span> <span class="n">filter_standard_twist_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part</span><span class="p">)</span>
+        <span class="n">output</span><span class="p">[</span><span class="n">cd</span><span class="p">]</span> <span class="o">=</span> <span class="n">part</span>
+    <span class="k">return</span> <span class="n">output</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Among the four 4-cylinder diagrams and 2 <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel classes, we rule out
+two of the four cylinder diagrams. For the remaining ones, we only need to
+consider one partition each.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">H</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">components</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">()</span>
+
+<span class="c1"># Check the partitions with 2 classes</span>
+<span class="n">cyl_diag_list</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">get_iterator</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">valid</span> <span class="o">=</span> <span class="n">filter_partitions</span><span class="p">(</span><span class="n">cyl_diag_list</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">valid</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+<span class="c1"># 1. (0)-(2) (1,2,3)-(4,5) (4)-(3) (5)-(0,1)</span>
+<span class="c1"># []</span>
+<span class="c1"># 2. (0,3)-(5) (1)-(2) (2,5)-(3,4) (4)-(0,1)</span>
+<span class="c1"># [{{0, 1, 2}, {3}}]</span>
+<span class="c1"># 3. (0,1)-(0,2) (2)-(3) (3,4)-(1,5) (5)-(4)</span>
+<span class="c1"># []</span>
+<span class="c1"># 4. (0,1)-(0,4,5) (2,3)-(1) (4)-(2) (5)-(3)</span>
+<span class="c1"># [{{0}, {1, 2, 3}}]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1. (0)-(2) (1,2,3)-(4,5) (4)-(3) (5)-(0,1)
+[]
+2. (0,3)-(5) (1)-(2) (2,5)-(3,4) (4)-(0,1)
+[{{0, 1, 2}, {3}}]
+3. (0,1)-(0,2) (2)-(3) (3,4)-(1,5) (5)-(4)
+[]
+4. (0,1)-(0,4,5) (2,3)-(1) (4)-(2) (5)-(3)
+[{{0}, {1, 2, 3}}]
+</pre></div>
+</div>
+</div>
+</div>
+<p>For 3 <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel classes, we rule out all possibilities.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check the partitions with 3 classes</span>
+<span class="n">cyl_diag_list</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">get_iterator</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">valid</span> <span class="o">=</span> <span class="n">filter_partitions</span><span class="p">(</span><span class="n">cyl_diag_list</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">valid</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+<span class="c1"># 1. (0)-(2) (1,2,3)-(4,5) (4)-(3) (5)-(0,1)</span>
+<span class="c1"># []</span>
+<span class="c1"># 2. (0,3)-(5) (1)-(2) (2,5)-(3,4) (4)-(0,1)</span>
+<span class="c1"># []</span>
+<span class="c1"># 3. (0,1)-(0,2) (2)-(3) (3,4)-(1,5) (5)-(4)</span>
+<span class="c1"># []</span>
+<span class="c1"># 4. (0,1)-(0,4,5) (2,3)-(1) (4)-(2) (5)-(3)</span>
+<span class="c1"># []</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1. (0)-(2) (1,2,3)-(4,5) (4)-(3) (5)-(0,1)
+[]
+2. (0,3)-(5) (1)-(2) (2,5)-(3,4) (4)-(0,1)
+[]
+3. (0,1)-(0,2) (2)-(3) (3,4)-(1,5) (5)-(4)
+[]
+4. (0,1)-(0,4,5) (2,3)-(1) (4)-(2) (5)-(3)
+[]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="printing-output">
+<h2>Printing Output<a class="headerlink" href="#printing-output" title="Permalink to this heading">#</a></h2>
+<p>The following script goes through every component of strata in <code class="docutils literal notranslate"><span class="pre">strata</span></code>, every
+cylinder diagram with at least 4 cylinders, and checks all partitions for at
+least 2 <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel classes. The output is saves to a folder called
+<code class="docutils literal notranslate"><span class="pre">output</span></code>. This output is used in my thesis to classify rank 2 invariant
+subvarieties in some genus 3 strata.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">list_cylinder_classes</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">num_cylinders</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Runs filter_partitions on every cylinder diagram with num_cylinders</span>
+<span class="sd">    number of cylinders in a stratum H.&quot;&quot;&quot;</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cyl_diag_list</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">get_iterator</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">num_cylinders</span><span class="p">)</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="n">filter_partitions</span><span class="p">(</span><span class="n">cyl_diag_list</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_classes</span><span class="si">}</span><span class="s2"> classes&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">valid</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># H = AbelianStratum(3, 1).components()[0]</span>
+<span class="c1"># H = AbelianStratum(2, 2).components()[1]         ## This is H^odd(2,2)</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">components</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="c1"># H = AbelianStratum(1, 1, 1, 1).components()[0]</span>
+
+<span class="c1"># Cylinder diagrams with 4 or more cylinders.</span>
+<span class="k">for</span> <span class="n">num_cylinders</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_cylinders</span><span class="si">}</span><span class="s2"> CYLINDERS</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># Partitions with at least 2 classes.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">num_cylinders</span><span class="p">):</span>
+        <span class="n">list_cylinder_classes</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">num_cylinders</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4 CYLINDERS
+
+2 classes
+1. (0)-(1) (1,3,4,2)-(5,6) (5)-(0,4) (6)-(2,3)
+[{{0}, {1, 2, 3}}]
+2. (0)-(1,2) (1,4,2,3)-(5,6) (5)-(4) (6)-(0,3)
+[]
+3. (0)-(3) (1,3,2,4)-(5,6) (5)-(4) (6)-(0,2,1)
+[]
+4. (0)-(3) (1,4,2,3)-(5,6) (5)-(4) (6)-(0,2,1)
+[]
+5. (0,1)-(0,2,5) (2)-(3) (3,6)-(1,4) (4,5)-(6)
+[{{0}, {1, 2, 3}}]
+6. (0,2)-(5) (1,3)-(6) (4)-(0,1) (5,6)-(2,4,3)
+[{{0, 1, 3}, {2}}]
+7. (0,1)-(0,3) (2,5)-(1,6) (3,6)-(4,5) (4)-(2)
+[{{0}, {1, 2, 3}}, {{0, 1, 2}, {3}}, {{0, 3}, {1, 2}}]
+8. (0,2)-(0,5) (1,3)-(1,6) (4,5)-(3) (6)-(2,4)
+[{{0}, {1, 2, 3}}, {{0, 2, 3}, {1}}, {{0, 1}, {2, 3}}]
+9. (0,2)-(6) (1,4)-(3,5) (3,6)-(2,4) (5)-(0,1)
+[{{0}, {1, 2, 3}}, {{0, 1, 2}, {3}}, {{0, 1, 3}, {2}}, {{0, 2, 3}, {1}}, {{0, 1}, {2, 3}}, {{0, 3}, {1, 2}}, {{0, 2}, {1, 3}}]
+10. (0,1)-(0,2) (2,4)-(6) (3,6)-(1,5,4) (5)-(3)
+[]
+11. (0,1)-(0,3,5,6) (2,4)-(1) (3,6)-(4) (5)-(2)
+[{{0}, {1, 2, 3}}]
+12. (0,1,2)-(0,1,6) (3)-(5) (4,5)-(2) (6)-(3,4)
+[{{0}, {1, 2, 3}}, {{0, 2, 3}, {1}}, {{0, 1}, {2, 3}}]
+13. (0,4,1)-(6) (2)-(3) (3,6)-(4,5) (5)-(0,2,1)
+[{{0, 1, 2}, {3}}]
+14. (0,3,1)-(6) (2)-(4) (4,6)-(0,5,1) (5)-(2,3)
+[{{0, 1, 2}, {3}}]
+15. (0,3,1)-(6) (2)-(3) (4,6)-(0,5,1) (5)-(2,4)
+[{{0}, {1, 2, 3}}, {{0, 1, 2}, {3}}, {{0, 1, 3}, {2}}, {{0, 2, 3}, {1}}, {{0, 1}, {2, 3}}, {{0, 3}, {1, 2}}, {{0, 2}, {1, 3}}]
+16. (0,1,2)-(3,6,4,5) (3,4)-(2) (5)-(0) (6)-(1)
+[]
+17. (0,1,2)-(0,1,6) (3,6)-(4,5) (4)-(3) (5)-(2)
+[]
+18. (0,2,1)-(5,6) (3,4)-(0,2,1) (5)-(4) (6)-(3)
+[]
+19. (0,2,1)-(5,6) (3,6)-(0,4,1) (4)-(2) (5)-(3)
+[{{0, 1, 2}, {3}}, {{0, 1, 3}, {2}}, {{0, 1}, {2, 3}}]
+20. (0,2,1)-(5,6) (3,6)-(0,4,1) (4)-(3) (5)-(2)
+[{{0, 1}, {2, 3}}, {{0, 2}, {1, 3}}]
+21. (0,4,2)-(5,6) (1,3)-(0,1,2) (5)-(4) (6)-(3)
+[]
+22. (0,2,1)-(6) (3,6)-(4,5) (4)-(3) (5)-(0,2,1)
+[]
+23. (0,1,4)-(0,1,6) (2,3)-(2,5) (5)-(4) (6)-(3)
+[{{0}, {1, 2, 3}}, {{0, 2, 3}, {1}}, {{0, 1}, {2, 3}}]
+24. (0,5,2)-(3) (1,3)-(1,6) (4)-(5) (6)-(0,4,2)
+[{{0, 1, 3}, {2}}, {{0, 2, 3}, {1}}, {{0, 3}, {1, 2}}]
+25. (0,1,2)-(0,1,5,6) (3,4)-(2) (5)-(4) (6)-(3)
+[{{0}, {1, 2, 3}}]
+26. (0,1,2)-(0,5,1,6) (3,4)-(2) (5)-(3) (6)-(4)
+[{{0}, {1, 2, 3}}]
+27. (0,2,1)-(6) (3,6)-(0,5,4,1) (4)-(3) (5)-(2)
+[]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3 classes
+1. (0)-(1) (1,3,4,2)-(5,6) (5)-(0,4) (6)-(2,3)
+[]
+2. (0)-(1,2) (1,4,2,3)-(5,6) (5)-(4) (6)-(0,3)
+[]
+3. (0)-(3) (1,3,2,4)-(5,6) (5)-(4) (6)-(0,2,1)
+[]
+4. (0)-(3) (1,4,2,3)-(5,6) (5)-(4) (6)-(0,2,1)
+[]
+5. (0,1)-(0,2,5) (2)-(3) (3,6)-(1,4) (4,5)-(6)
+[]
+6. (0,2)-(5) (1,3)-(6) (4)-(0,1) (5,6)-(2,4,3)
+[]
+7. (0,1)-(0,3) (2,5)-(1,6) (3,6)-(4,5) (4)-(2)
+[]
+8. (0,2)-(0,5) (1,3)-(1,6) (4,5)-(3) (6)-(2,4)
+[]
+9. (0,2)-(6) (1,4)-(3,5) (3,6)-(2,4) (5)-(0,1)
+[{{0}, {1}, {2, 3}}, {{0, 1}, {2}, {3}}]
+10. (0,1)-(0,2) (2,4)-(6) (3,6)-(1,5,4) (5)-(3)
+[]
+11. (0,1)-(0,3,5,6) (2,4)-(1) (3,6)-(4) (5)-(2)
+[]
+12. (0,1,2)-(0,1,6) (3)-(5) (4,5)-(2) (6)-(3,4)
+[]
+13. (0,4,1)-(6) (2)-(3) (3,6)-(4,5) (5)-(0,2,1)
+[]
+14. (0,3,1)-(6) (2)-(4) (4,6)-(0,5,1) (5)-(2,3)
+[]
+15. (0,3,1)-(6) (2)-(3) (4,6)-(0,5,1) (5)-(2,4)
+[{{0, 3}, {1}, {2}}, {{0}, {1, 2}, {3}}]
+16. (0,1,2)-(3,6,4,5) (3,4)-(2) (5)-(0) (6)-(1)
+[{{0}, {1, 3}, {2}}, {{0}, {1}, {2, 3}}, {{0}, {1, 2}, {3}}]
+17. (0,1,2)-(0,1,6) (3,6)-(4,5) (4)-(3) (5)-(2)
+[]
+18. (0,2,1)-(5,6) (3,4)-(0,2,1) (5)-(4) (6)-(3)
+[{{0, 1}, {2}, {3}}]
+19. (0,2,1)-(5,6) (3,6)-(0,4,1) (4)-(2) (5)-(3)
+[]
+20. (0,2,1)-(5,6) (3,6)-(0,4,1) (4)-(3) (5)-(2)
+[{{0}, {1, 3}, {2}}, {{0, 2}, {1}, {3}}]
+21. (0,4,2)-(5,6) (1,3)-(0,1,2) (5)-(4) (6)-(3)
+[]
+22. (0,2,1)-(6) (3,6)-(4,5) (4)-(3) (5)-(0,2,1)
+[{{0, 3}, {1}, {2}}]
+23. (0,1,4)-(0,1,6) (2,3)-(2,5) (5)-(4) (6)-(3)
+[]
+24. (0,5,2)-(3) (1,3)-(1,6) (4)-(5) (6)-(0,4,2)
+[]
+25. (0,1,2)-(0,1,5,6) (3,4)-(2) (5)-(4) (6)-(3)
+[]
+26. (0,1,2)-(0,5,1,6) (3,4)-(2) (5)-(3) (6)-(4)
+[]
+27. (0,2,1)-(6) (3,6)-(0,5,4,1) (4)-(3) (5)-(2)
+[]
+
+
+5 CYLINDERS
+
+2 classes
+1. (0)-(2) (1)-(3) (2,4,3)-(5,6) (5)-(4) (6)-(0,1)
+[]
+2. (0,4)-(6) (1)-(0) (2)-(3) (3,6)-(4,5) (5)-(1,2)
+[]
+3. (0,1)-(0,6) (2)-(5) (3)-(4) (4,5)-(1) (6)-(2,3)
+[{{0}, {1, 2, 3, 4}}]
+4. (0,2)-(6) (1)-(0) (3,6)-(4,5) (4)-(3) (5)-(1,2)
+[]
+5. (0,2)-(6) (1)-(3) (3,6)-(4,5) (4)-(0) (5)-(1,2)
+[]
+6. (0,1)-(0,2) (2)-(3) (3,4)-(5,6) (5)-(4) (6)-(1)
+[]
+7. (0,6)-(4,5) (1,2)-(3,6) (3)-(2) (4)-(1) (5)-(0)
+[]
+8. (0,6)-(4,5) (1,2)-(3,6) (3)-(0) (4)-(2) (5)-(1)
+[{{0, 1, 3, 4}, {2}}]
+
+3 classes
+1. (0)-(2) (1)-(3) (2,4,3)-(5,6) (5)-(4) (6)-(0,1)
+[{{0, 1, 4}, {2}, {3}}]
+2. (0,4)-(6) (1)-(0) (2)-(3) (3,6)-(4,5) (5)-(1,2)
+[{{0, 1}, {2}, {3, 4}}, {{0, 4}, {1, 3}, {2}}]
+3. (0,1)-(0,6) (2)-(5) (3)-(4) (4,5)-(1) (6)-(2,3)
+[]
+4. (0,2)-(6) (1)-(0) (3,6)-(4,5) (4)-(3) (5)-(1,2)
+[]
+5. (0,2)-(6) (1)-(3) (3,6)-(4,5) (4)-(0) (5)-(1,2)
+[{{0}, {1}, {2, 3, 4}}, {{0, 1, 2}, {3}, {4}}, {{0, 3}, {1, 4}, {2}}, {{0, 4}, {1, 3}, {2}}]
+6. (0,1)-(0,2) (2)-(3) (3,4)-(5,6) (5)-(4) (6)-(1)
+[]
+7. (0,6)-(4,5) (1,2)-(3,6) (3)-(2) (4)-(1) (5)-(0)
+[{{0, 1}, {2, 4}, {3}}, {{0, 2}, {1, 4}, {3}}]
+8. (0,6)-(4,5) (1,2)-(3,6) (3)-(0) (4)-(2) (5)-(1)
+[]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4 classes
+1. (0)-(2) (1)-(3) (2,4,3)-(5,6) (5)-(4) (6)-(0,1)
+[]
+2. (0,4)-(6) (1)-(0) (2)-(3) (3,6)-(4,5) (5)-(1,2)
+[]
+3. (0,1)-(0,6) (2)-(5) (3)-(4) (4,5)-(1) (6)-(2,3)
+[]
+4. (0,2)-(6) (1)-(0) (3,6)-(4,5) (4)-(3) (5)-(1,2)
+[]
+5. (0,2)-(6) (1)-(3) (3,6)-(4,5) (4)-(0) (5)-(1,2)
+[]
+6. (0,1)-(0,2) (2)-(3) (3,4)-(5,6) (5)-(4) (6)-(1)
+[]
+7. (0,6)-(4,5) (1,2)-(3,6) (3)-(2) (4)-(1) (5)-(0)
+[]
+8. (0,6)-(4,5) (1,2)-(3,6) (3)-(0) (4)-(2) (5)-(1)
+[]
+
+
+6 CYLINDERS
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../strata.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Strata of Abelian and quadratic differentials</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="square_tiled_surfaces.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Square-tiled surfaces</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2021-2023, the surface-dynamics authors
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Filtering Possible <span class="math notranslate nohighlight">\(\mathcal M\)</span>-Parallel Classes</a><ul>
+<li><a class="reference internal" href="#homologous-condition">Homologous Condition</a><ul>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pants-condition">Pants Condition</a><ul>
+<li><a class="reference internal" href="#id1">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#standard-twist-condition">Standard Twist Condition</a><ul>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#leaf-condition">Leaf Condition</a><ul>
+<li><a class="reference internal" href="#id2">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#h-3-1">H(3,1)</a></li>
+<li><a class="reference internal" href="#printing-output">Printing Output</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

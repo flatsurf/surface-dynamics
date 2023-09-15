@@ -1,115 +1,248 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Interval exchange transformations" href="iet.html" /><link rel="prev" title="Rauzy class cardinality" href="rauzy_class_cardinality.html" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Covering construction &mdash; surface-dynamics 0.4.7 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+    <!-- Generated with Sphinx 5.3.0 and Furo 2023.05.20 -->
+        <title>Covering construction - surface-dynamics 0.4.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  --color-brand-primary: #0f0fff;
+  --color-brand-content: #0f0fff;
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Interval exchange transformations" href="iet.html" />
-    <link rel="prev" title="Rauzy class cardinality" href="rauzy_class_cardinality.html" /> 
-</head>
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
 
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            surface-dynamics
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../demo_interval_exchanges.html">Interval exchange transformations</a></li>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">surface-dynamics 0.4.7 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/logo.svg" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/logo.svg" alt="Dark Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">surface-dynamics 0.4.7 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/interval_exchanges.html">Interval exchange transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/square_tiled_surfaces.html">Square-tiled surfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/rank2_genus3_classification.html">Filtering Possible <span class="math notranslate nohighlight">\(\mathcal M\)</span>-Parallel Classes</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../strata.html">Strata of Abelian and quadratic differentials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../surface_topology.html">Surface topology and geometry</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../origamis.html">Origamis</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Interval exchange transformations</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="index.html#permutations">Permutations</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="constructors.html">Interval exchange constructors</a></li>
-<li class="toctree-l3"><a class="reference internal" href="template.html">Permutation template</a></li>
-<li class="toctree-l3"><a class="reference internal" href="labelled.html">Labelled permutations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reduced.html">Reduced permutations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rauzy_class_cardinality.html">Rauzy class cardinality</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Covering construction</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover"><code class="docutils literal notranslate"><span class="pre">PermutationCover</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.RegularCover"><code class="docutils literal notranslate"><span class="pre">RegularCover</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.to_gap"><code class="docutils literal notranslate"><span class="pre">to_gap()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="index.html#id1">Interval exchange transformations</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Interval exchange transformations</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Interval exchange transformations</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="constructors.html">Interval exchange constructors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="template.html">Permutation template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelled.html">Labelled permutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reduced.html">Reduced permutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html">Rauzy class cardinality</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Covering construction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iet.html">Interval exchange transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integer_iet.html">Integral interval exchanges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iet_family.html">Interval exchange families</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flip_sequence.html">Flip sequences</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../topological_recursion/index.html">Topological recursion</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../misc/index.html">Miscellaneous</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../topological_recursion/index.html">Topological recursion</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Topological recursion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/topological_recursion.html">Generic topological recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/kontsevich.html">Kontsevich topological recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/masur_veech.html">Masur-Veech topological recursion</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../misc/index.html">Miscellaneous</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Miscellaneous</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../misc/constellation.html">Constellations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/group_representation.html">Finite group representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/plane_tree.html">Plane trees</a></li>
+</ul>
+</li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
 </ul>
 
-        </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">surface-dynamics</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">Interval exchange transformations</a></li>
-      <li class="breadcrumb-item active">Covering construction</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/interval_exchanges/cover.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="module-surface_dynamics.interval_exchanges.cover">
-<span id="covering-construction"></span><h1>Covering construction<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.cover" title="Permalink to this heading"></a></h1>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="module-surface_dynamics.interval_exchanges.cover">
+<span id="covering-construction"></span><h1>Covering construction<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.cover" title="Permalink to this heading">#</a></h1>
 <p>Permutation cover</p>
 <p>This module deals with combinatorial data for covering of connected
 components of strata of Abelian and quadratic differentials. The main
 feature is to be able to compute Lyapunov exponents.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.cover.</span></span><span class="sig-name descname"><span class="pre">PermutationCover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">perms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.cover.</span></span><span class="sig-name descname"><span class="pre">PermutationCover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">perms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>An interval exchange permutation together with covering data.</p>
 <p>Let <cite>pi</cite> be the combinatorial data of an interval exchange transformation
@@ -133,7 +266,7 @@ the clockwise orientation and going out of the other one.</p>
 </ul>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.automorphism_group">
-<span class="sig-name descname"><span class="pre">automorphism_group</span></span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.automorphism_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.automorphism_group" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">automorphism_group</span></span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.automorphism_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.automorphism_group" title="Permalink to this definition">#</a></dt>
 <dd><p>File: /usr/share/miniconda3/envs/test/lib/python3.10/site-packages/surface_dynamics/interval_exchanges/cover.py (starting at line 621)</p>
 <p>Return the Deck group of the cover.</p>
 <p>EXAMPLES:</p>
@@ -149,7 +282,7 @@ the clockwise orientation and going out of the other one.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.base">
-<span class="sig-name descname"><span class="pre">base</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.base" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">base</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.base" title="Permalink to this definition">#</a></dt>
 <dd><p>Return the combinatorial data corresponding to the base of this cover</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -167,7 +300,7 @@ the clockwise orientation and going out of the other one.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.covering_data">
-<span class="sig-name descname"><span class="pre">covering_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.covering_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.covering_data" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">covering_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.covering_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.covering_data" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the permutation associated to the given <code class="docutils literal notranslate"><span class="pre">label</span></code>.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -189,7 +322,7 @@ the clockwise orientation and going out of the other one.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.covering_data_tuple">
-<span class="sig-name descname"><span class="pre">covering_data_tuple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.covering_data_tuple"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.covering_data_tuple" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">covering_data_tuple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.covering_data_tuple"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.covering_data_tuple" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the permutation associated to the given <code class="docutils literal notranslate"><span class="pre">label</span></code> as a tuple on
 <cite>{0, 1, ldots, d-1}</cite> where <cite>d</cite> is the degree of the cover.</p>
 <p>EXAMPLES:</p>
@@ -212,12 +345,12 @@ the clockwise orientation and going out of the other one.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.degree">
-<span class="sig-name descname"><span class="pre">degree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.degree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.degree" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">degree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.degree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.degree" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.genus">
-<span class="sig-name descname"><span class="pre">genus</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.genus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.genus" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">genus</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.genus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.genus" title="Permalink to this definition">#</a></dt>
 <dd><p>Genus of the covering translation surface</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -241,7 +374,7 @@ the clockwise orientation and going out of the other one.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.group">
-<span class="sig-name descname"><span class="pre">group</span></span><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.group" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">group</span></span><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.group" title="Permalink to this definition">#</a></dt>
 <dd><p>File: /usr/share/miniconda3/envs/test/lib/python3.10/site-packages/surface_dynamics/interval_exchanges/cover.py (starting at line 621)</p>
 <p>Return the Deck group of the cover.</p>
 <p>EXAMPLES:</p>
@@ -257,7 +390,7 @@ the clockwise orientation and going out of the other one.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.interval_diagram">
-<span class="sig-name descname"><span class="pre">interval_diagram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sign</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.interval_diagram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.interval_diagram" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">interval_diagram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sign</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.interval_diagram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.interval_diagram" title="Permalink to this definition">#</a></dt>
 <dd><p>Return the interval diagram.</p>
 <p>This is the permutation induced on the subintervals of this cover while
 we turn around the singularities. This is mainly used to compute the
@@ -299,7 +432,7 @@ stratum of this permutation.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.is_orientable">
-<span class="sig-name descname"><span class="pre">is_orientable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.is_orientable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.is_orientable" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">is_orientable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.is_orientable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.is_orientable" title="Permalink to this definition">#</a></dt>
 <dd><p>Test whether this permutation cover has an orientable foliation.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -325,7 +458,7 @@ stratum of this permutation.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.isotypic_projection_matrix">
-<span class="sig-name descname"><span class="pre">isotypic_projection_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">floating_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.isotypic_projection_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.isotypic_projection_matrix" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">isotypic_projection_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">floating_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.isotypic_projection_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.isotypic_projection_matrix" title="Permalink to this definition">#</a></dt>
 <dd><p>TESTS:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a b b&#39;</span><span class="p">,</span><span class="s1">&#39;c c a&#39;</span><span class="p">)</span>
@@ -387,7 +520,7 @@ stratum of this permutation.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.isotypic_projectors">
-<span class="sig-name descname"><span class="pre">isotypic_projectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">characters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">floating_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.isotypic_projectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.isotypic_projectors" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">isotypic_projectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">characters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">floating_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.isotypic_projectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.isotypic_projectors" title="Permalink to this definition">#</a></dt>
 <dd><p>Return the list of projectors on isotypical components in the canonical basis
 as well as the half ranks of the projection in absolute homology.</p>
 <p>INPUT:</p>
@@ -451,7 +584,7 @@ until the very last steps of the computation.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.lyapunov_exponents_H_plus">
-<span class="sig-name descname"><span class="pre">lyapunov_exponents_H_plus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nb_vectors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_experiments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">65536</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_speed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isotypic_decomposition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">floating_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.lyapunov_exponents_H_plus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.lyapunov_exponents_H_plus" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">lyapunov_exponents_H_plus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nb_vectors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_experiments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">65536</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_speed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isotypic_decomposition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">floating_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.lyapunov_exponents_H_plus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.lyapunov_exponents_H_plus" title="Permalink to this definition">#</a></dt>
 <dd><p>Compute the H^+ Lyapunov exponents in  the covering locus.</p>
 <p>This method calls a C-library that performs renormalization (i.e. Rauzy
 induction and orthogonalization of vectors under the Kontsevich-Zorich
@@ -560,7 +693,7 @@ punctured torus:</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.masur_polygon">
-<span class="sig-name descname"><span class="pre">masur_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lengths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heights</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.masur_polygon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.masur_polygon" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">masur_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lengths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heights</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.masur_polygon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.masur_polygon" title="Permalink to this definition">#</a></dt>
 <dd><p>Return the Masur polygon for the given <code class="docutils literal notranslate"><span class="pre">lengths</span></code> and <code class="docutils literal notranslate"><span class="pre">heights</span></code>.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
@@ -577,7 +710,7 @@ punctured torus:</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.monodromy">
-<span class="sig-name descname"><span class="pre">monodromy</span></span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.monodromy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.monodromy" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">monodromy</span></span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.monodromy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.monodromy" title="Permalink to this definition">#</a></dt>
 <dd><p>File: /usr/share/miniconda3/envs/test/lib/python3.10/site-packages/surface_dynamics/interval_exchanges/cover.py (starting at line 602)</p>
 <p>Return the monodromy of this covering.</p>
 <p>That it to say the permutation group generated by the action of the
@@ -595,7 +728,7 @@ fundamental group.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.profile">
-<span class="sig-name descname"><span class="pre">profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.profile" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.profile" title="Permalink to this definition">#</a></dt>
 <dd><p>Return the profile of the surface.</p>
 <p>The <em>profile</em> of a translation surface is the list of angles of
 singularities in the surface divided by pi.</p>
@@ -618,7 +751,7 @@ singularities in the surface divided by pi.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.stratum">
-<span class="sig-name descname"><span class="pre">stratum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fake_zeros</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.stratum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.stratum" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">stratum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fake_zeros</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.stratum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.stratum" title="Permalink to this definition">#</a></dt>
 <dd><p>Return the stratum of the covering translation surface.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -665,7 +798,7 @@ singularities in the surface divided by pi.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.RegularCover">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.cover.</span></span><span class="sig-name descname"><span class="pre">RegularCover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.cover.</span></span><span class="sig-name descname"><span class="pre">RegularCover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover" title="surface_dynamics.interval_exchanges.cover.PermutationCover"><code class="xref py py-class docutils literal notranslate"><span class="pre">PermutationCover</span></code></a></p>
 <p>An interval exchange permutation together with a regular covering data.</p>
 <p>EXAMPLES:</p>
@@ -732,12 +865,12 @@ singularities in the surface divided by pi.</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.RegularCover.degree">
-<span class="sig-name descname"><span class="pre">degree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover.degree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover.degree" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">degree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover.degree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover.degree" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.RegularCover.group">
-<span class="sig-name descname"><span class="pre">group</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover.group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover.group" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">group</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover.group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover.group" title="Permalink to this definition">#</a></dt>
 <dd><p>File: /usr/share/miniconda3/envs/test/lib/python3.10/site-packages/surface_dynamics/interval_exchanges/cover.py (starting at line 621)</p>
 <p>Return the Deck group of the cover.</p>
 <p>EXAMPLES:</p>
@@ -753,7 +886,7 @@ singularities in the surface divided by pi.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.RegularCover.is_orientable">
-<span class="sig-name descname"><span class="pre">is_orientable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover.is_orientable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover.is_orientable" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">is_orientable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover.is_orientable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover.is_orientable" title="Permalink to this definition">#</a></dt>
 <dd><p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a b c d&#39;</span><span class="p">,</span> <span class="s1">&#39;b e d c f f e&#39;</span><span class="p">)</span>
@@ -777,7 +910,7 @@ singularities in the surface divided by pi.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.RegularCover.monodromy">
-<span class="sig-name descname"><span class="pre">monodromy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover.monodromy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover.monodromy" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">monodromy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover.monodromy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover.monodromy" title="Permalink to this definition">#</a></dt>
 <dd><p>File: /usr/share/miniconda3/envs/test/lib/python3.10/site-packages/surface_dynamics/interval_exchanges/cover.py (starting at line 602)</p>
 <p>Return the monodromy of this covering.</p>
 <p>That it to say the permutation group generated by the action of the
@@ -795,7 +928,7 @@ fundamental group.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.RegularCover.profile">
-<span class="sig-name descname"><span class="pre">profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover.profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover.profile" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover.profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover.profile" title="Permalink to this definition">#</a></dt>
 <dd><p>TESTS:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.cover</span> <span class="kn">import</span> <span class="n">PermutationCover</span>
@@ -831,40 +964,112 @@ fundamental group.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.to_gap">
-<span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.cover.</span></span><span class="sig-name descname"><span class="pre">to_gap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#to_gap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.to_gap" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.cover.</span></span><span class="sig-name descname"><span class="pre">to_gap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#to_gap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.to_gap" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 </section>
 
-
-           </div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="iet.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Interval exchange transformations</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="rauzy_class_cardinality.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Rauzy class cardinality</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2021-2023, the surface-dynamics authors
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="rauzy_class_cardinality.html" class="btn btn-neutral float-left" title="Rauzy class cardinality" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="iet.html" class="btn btn-neutral float-right" title="Interval exchange transformations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
     </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Covering construction</a><ul>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover"><code class="docutils literal notranslate"><span class="pre">PermutationCover</span></code></a><ul>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.automorphism_group"><code class="docutils literal notranslate"><span class="pre">PermutationCover.automorphism_group</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.base"><code class="docutils literal notranslate"><span class="pre">PermutationCover.base()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.covering_data"><code class="docutils literal notranslate"><span class="pre">PermutationCover.covering_data()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.covering_data_tuple"><code class="docutils literal notranslate"><span class="pre">PermutationCover.covering_data_tuple()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.degree"><code class="docutils literal notranslate"><span class="pre">PermutationCover.degree()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.genus"><code class="docutils literal notranslate"><span class="pre">PermutationCover.genus()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.group"><code class="docutils literal notranslate"><span class="pre">PermutationCover.group</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.interval_diagram"><code class="docutils literal notranslate"><span class="pre">PermutationCover.interval_diagram()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.is_orientable"><code class="docutils literal notranslate"><span class="pre">PermutationCover.is_orientable()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.isotypic_projection_matrix"><code class="docutils literal notranslate"><span class="pre">PermutationCover.isotypic_projection_matrix()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.isotypic_projectors"><code class="docutils literal notranslate"><span class="pre">PermutationCover.isotypic_projectors()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.lyapunov_exponents_H_plus"><code class="docutils literal notranslate"><span class="pre">PermutationCover.lyapunov_exponents_H_plus()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.masur_polygon"><code class="docutils literal notranslate"><span class="pre">PermutationCover.masur_polygon()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.monodromy"><code class="docutils literal notranslate"><span class="pre">PermutationCover.monodromy</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.profile"><code class="docutils literal notranslate"><span class="pre">PermutationCover.profile()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.stratum"><code class="docutils literal notranslate"><span class="pre">PermutationCover.stratum()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.RegularCover"><code class="docutils literal notranslate"><span class="pre">RegularCover</span></code></a><ul>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.RegularCover.degree"><code class="docutils literal notranslate"><span class="pre">RegularCover.degree()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.RegularCover.group"><code class="docutils literal notranslate"><span class="pre">RegularCover.group()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.RegularCover.is_orientable"><code class="docutils literal notranslate"><span class="pre">RegularCover.is_orientable()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.RegularCover.monodromy"><code class="docutils literal notranslate"><span class="pre">RegularCover.monodromy()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.RegularCover.profile"><code class="docutils literal notranslate"><span class="pre">RegularCover.profile()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.to_gap"><code class="docutils literal notranslate"><span class="pre">to_gap()</span></code></a></li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2021, the surface-dynamics authors.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+          </div>
         </div>
       </div>
-    </section>
+      
+      
+    </aside>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    </body>
 </html>
