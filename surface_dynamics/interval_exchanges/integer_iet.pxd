@@ -44,7 +44,7 @@ cdef extern from "int_iet.h":
 
     # iteration through integer vectors of given sum and length
     void int_li_vector_init(li_vector_iterator_t t, uint64_t n, int kfree, int ktop, int kbot)
-    void int_li_vector_clear(li_vector_iterator_t t);
+    void int_li_vector_clear(li_vector_iterator_t t)
     int int_li_vector_prefirst(li_vector_iterator_t t)
     int int_li_vector_first_or_next(li_vector_iterator_t t)
     void int_li_vector_info(li_vector_iterator_t t)
