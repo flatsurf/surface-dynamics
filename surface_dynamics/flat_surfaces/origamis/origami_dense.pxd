@@ -21,7 +21,6 @@ cdef class Origami_dense_pyx:
     cdef set _rl_frontiers
     cdef set _tb_frontiers
 
-
     cdef Origami_dense_pyx _new_c(self,int *rr_and_uu)
 
     cpdef _set_standard_form(self, return_map=*)
