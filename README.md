@@ -105,7 +105,7 @@ just use ``PIP`` as indicated before.
 
 ## Documentation
 
-* short tutorial: http://www.labri.fr/perso/vdelecro/flatsurf.html
+* short tutorial: https://www.labri.fr/perso/vdelecro/flatsurf.html
 * complete module documentation: https://flatsurf.github.io/surface-dynamics/
 
 ## Check

@@ -29,7 +29,7 @@ If you use the sagemath package from Archlinux, run::
 
 Other sources of information:
 
-- short tutorial: http://www.labri.fr/perso/vdelecro/flatsurf.html
+- short tutorial: https://www.labri.fr/perso/vdelecro/flatsurf.html
 
 - development webpage (including source code):
   https://github.com/flatsurf/surface-dynamics
