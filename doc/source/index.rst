@@ -5,7 +5,7 @@ Installation
 ------------
 
 The basic way to install the surface-dynamics package is via the pip
-Python installer that comes with your `SageMath <http://www.sagemath.org/>`_
+Python installer that comes with your `SageMath <https://www.sagemath.org/>`_
 installation.
 
 If you installed Sage from a downloaded binary (including the Cygwin version

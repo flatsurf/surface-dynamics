@@ -6,7 +6,7 @@
 
 The ``surface-dynamics`` package for SageMath adds functionality related to
 interval exchange transformations, translation surfaces, mapping classes
-and more. It is based on `SageMath <http://www.sagemath.org>`_ and relies
+and more. It is based on `SageMath <https://www.sagemath.org>`_ and relies
 heavily on:
 
 * gmp or mpir for arbitrary precision arithmetic
