@@ -66,7 +66,7 @@ from sage.rings.integer cimport Integer
 # Beginning of the code
 ########################
 
-cdef int compare(const void * _left, const void * _right) nogil:
+cdef int compare(const void * _left, const void * _right) noexcept nogil:
     cdef mpz_t * left = (<mpz_t **> _left)[0]
     cdef mpz_t * right = (<mpz_t **> _right)[0]
     cdef int c = mpz_cmp(left[0], right[0])

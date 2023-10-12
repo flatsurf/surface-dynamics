@@ -153,7 +153,7 @@ cdef set_int_iet(int_iet_t t, top, bot, lengths):
     cdef int * twin
     cdef uint64_t * clengths
     cdef int k = len(top)
-    cdef int n = (len(top)+len(bot))/2
+    cdef int n = (len(top) + len(bot)) // 2
     cdef int i,j
 
     # checks and twin construction
@@ -211,7 +211,7 @@ def _relabel(top, bot):
         sage: _relabel([3, 2, 0, 1], [1, 2, 0, 3])
         ([0, 1, 2, 3], [3, 1, 2, 0], 4, 0, 0)
     """
-    n = (len(top) + len(bot)) / 2
+    n = (len(top) + len(bot)) // 2
     k = len(top)
     j = 0
     p = top + bot
@@ -385,7 +385,7 @@ def interval_exchange_statistics(top, bot, uint64_t L, int kind=0, bint flat=Fal
     cdef uint64_t * widths
     cdef uint64_t * heights
     cdef int k = len(top)
-    cdef int n = (len(top)+len(bot))/2
+    cdef int n = (len(top) + len(bot)) // 2
     cdef int i
     cdef int_iet_t t
     cdef li_vector_iterator_t v
@@ -514,7 +514,7 @@ def interval_exchange_statistics_sample(top, bot, uint64_t L, uint64_t sample_si
     cdef uint64_t * widths
     cdef uint64_t * heights
     cdef int k = len(top)
-    cdef int n = (len(top)+len(bot))/2
+    cdef int n = (len(top) + len(bot)) // 2
     cdef int i
     cdef int count
     cdef int_iet_t t
@@ -631,7 +631,7 @@ def cylinder_statistics(top, bot, uint64_t L, int kind=0, bint flat=False):
     cdef uint64_t * clengths
     cdef int k1 = len(top)
     cdef int k2 = k1 + 1
-    cdef int n = (len(top)+len(bot))/2
+    cdef int n = (len(top) + len(bot)) // 2
     cdef int i
     cdef uint64_t twist
     cdef uint64_t * widths
@@ -755,8 +755,8 @@ def cylinder_widths_and_heights(top, bot, lengths):
     cdef uint64_t * widths
     cdef uint64_t * heights
     set_int_iet(t, top, bot, lengths)
-    widths = <uint64_t *> check_malloc((len(bot) + len(top)) / 2 * sizeof(uint64_t))
-    heights = <uint64_t *> check_malloc((len(bot) + len(top)) / 2 * sizeof(uint64_t))
+    widths = <uint64_t *> check_malloc((len(bot) + len(top)) // 2 * sizeof(uint64_t))
+    heights = <uint64_t *> check_malloc((len(bot) + len(top)) // 2 * sizeof(uint64_t))
     cdef int res = int_iet_num_cylinders(widths, heights, t)
     int_iet_clear(t)
     output =  [(widths[i], heights[i]) for i in range(res)]
@@ -824,7 +824,7 @@ def cylinder_widths(top, bot, lengths):
     cdef int_iet_t t
     cdef uint64_t * widths
     set_int_iet(t, top, bot, lengths)
-    widths = <uint64_t *> check_malloc((len(bot) + len(top)) / 2 * sizeof(uint64_t))
+    widths = <uint64_t *> check_malloc((len(bot) + len(top)) // 2 * sizeof(uint64_t))
     cdef int res = int_iet_num_cylinders(widths, NULL, t)
     int_iet_clear(t)
     output =  [widths[i] for i in range(res)]
