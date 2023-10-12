@@ -74,7 +74,7 @@ Old code that might moved or be removed.
 #      not same label, just remove one of the labels
 #
 #    Note: this code was originally used to compute the connected component of an
-#    origami. This is no more ncessary but it might be a good idea to keep for
+#    origami. This is no more necessary but it might be a good idea to keep for
 #    double check
 #    """
 #    if len(ltop) < 2 and len(lbot) < 2:
