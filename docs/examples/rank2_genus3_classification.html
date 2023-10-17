@@ -292,7 +292,7 @@ M\)</span>-parallel class by themselves.</p>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">singletons</span><span class="p">:</span>
         <span class="n">int_parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">int_parts</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">i</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">])]</span>
 
-    <span class="c1"># Coverts integer partitions into set partitions</span>
+    <span class="c1"># Converts integer partitions into set partitions</span>
     <span class="k">for</span> <span class="n">each_part</span> <span class="ow">in</span> <span class="n">int_parts</span><span class="p">:</span>
         <span class="n">partitions</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">SetPartitions</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">each_part</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">partitions</span>
@@ -998,9 +998,8 @@ subvarieties in some genus 3 strata.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4 CYLINDERS
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2 classes
+
+2 classes
 1. (0)-(1) (1,3,4,2)-(5,6) (5)-(0,4) (6)-(2,3)
 [{{0}, {1, 2, 3}}]
 2. (0)-(1,2) (1,4,2,3)-(5,6) (5)-(4) (6)-(0,3)
@@ -1133,9 +1132,8 @@ subvarieties in some genus 3 strata.</p>
 []
 8. (0,6)-(4,5) (1,2)-(3,6) (3)-(0) (4)-(2) (5)-(1)
 [{{0, 1, 3, 4}, {2}}]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3 classes
+
+3 classes
 1. (0)-(2) (1)-(3) (2,4,3)-(5,6) (5)-(4) (6)-(0,1)
 [{{0, 1, 4}, {2}, {3}}]
 2. (0,4)-(6) (1)-(0) (2)-(3) (3,6)-(4,5) (5)-(1,2)
