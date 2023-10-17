@@ -65,7 +65,7 @@ def list_partitions(n, m, singletons=True):
     if not singletons:
         int_parts = [l for l in int_parts if not any([i == 1 for i in l])]
 
-    # Coverts integer partitions into set partitions
+    # Converts integer partitions into set partitions
     for each_part in int_parts:
         partitions.extend(SetPartitions(range(n), each_part))
     return partitions
