@@ -4027,7 +4027,52 @@ class OrientablePermutationIET(PermutationIET):
         p = self.profile()
         return Integer((sum(p)-len(p))//2+1)
 
-    def arf_invariant(self):
+    def fat_graph(self, verticals=False, mutable=False, check=True):
+        r"""
+        Return the unicellular fat graph corresponding to this permutation.
+
+        The bottom edges are numbered 0, 2, 4, ... while the top edges are numbered 1, 3, ...
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import iet
+            sage: p = iet.Permutation('0 1 2 3 4 5 6 7', '6 5 4 3 2 0 7 1')
+            sage: p.fat_graph()
+            FatGraph('(0,5,6,9,10,13,14,1,2,15,3,4,7,8,11,12)', '(0,14,2,15,13,11,9,7,5,3,1,12,10,8,6,4)')
+
+            sage: p = iet.Permutation('0 1 2 3 4 5 6 7', '4 3 6 5 2 0 7 1')
+            sage: p.fat_graph()
+            FatGraph('(0,5,6,9,10,13,14,1,2,15,3,4,11,12,7,8)', '(0,14,2,15,13,11,9,7,5,3,1,8,6,12,10,4)')
+        """
+        if self._labels is not None:
+            top, bot = self._labels
+        else:
+            top = list(range(len(self._twin[0])))
+            bot = self._twin[1]
+        n = len(top)
+        fp = [0] * 2 * n
+        for i in range(n - 1):
+            e = bot[i]
+            f = bot[i + 1]
+            fp[2 * e] = 2 * f
+
+            e = top[i + 1]
+            f = top[i]
+            fp[2 * e + 1] = 2 * f + 1
+
+        fp[2 * top[0] + 1] = 2 * bot[0]
+        fp[2 * bot[-1]] = 2 * top[-1] + 1
+
+
+        from surface_dynamics.topology.fat_graph import FatGraph
+        fat_graph = FatGraph(fp=fp, mutable=mutable, check=check)
+
+        if verticals:
+            return fat_graph, [2 * i for i in bot[1:]] + [2 * i + 1 for i in top[:-1]]
+        else:
+            return fat_graph
+
+    def spin_parity(self):
         r"""
         Returns the Arf invariant of the permutation.
 
@@ -4064,10 +4109,10 @@ class OrientablePermutationIET(PermutationIET):
             sage: b1 = [3,2,4,6,5,7,9,8,1,0]
             sage: b0 = [6,5,4,3,2,7,9,8,1,0]
             sage: p1 = iet.Permutation(a,b1)
-            sage: p1.arf_invariant()
+            sage: p1.spin_parity()
             1
             sage: p0 = iet.Permutation(a,b0)
-            sage: p0.arf_invariant()
+            sage: p0.spin_parity()
             0
 
         Permutations from the odd and even component of H(4,4)::
@@ -4076,44 +4121,32 @@ class OrientablePermutationIET(PermutationIET):
             sage: b1 = [3,2,5,4,6,8,7,10,9,1,0]
             sage: b0 = [5,4,3,2,6,8,7,10,9,1,0]
             sage: p1 = iet.Permutation(a,b1)
-            sage: p1.arf_invariant()
+            sage: p1.spin_parity()
             1
             sage: p0 = iet.Permutation(a,b0)
-            sage: p0.arf_invariant()
+            sage: p0.spin_parity()
             0
+
+        TESTS::
+
+            sage: from surface_dynamics import AbelianStratum
+            sage: for z in [[6], [4, 2], [2, 2, 2]]:
+            ....:     A = AbelianStratum(*z)
+            ....:     p0 = A.even_component().permutation_representative()
+            ....:     p1 = A.odd_component().permutation_representative()
+            ....:     for _ in range(20):
+            ....:         assert p0.spin_parity() == 0
+            ....:         assert p1.spin_parity() == 1
+            ....:         p0 = p0.rauzy_move(randrange(2))
+            ....:         p1 = p1.rauzy_move(randrange(2))
         """
-        if any((z+1)%2 for z in self.profile()):
+        if any((z + 1) % 2 for z in self.profile()):
             return None
+        fg, verticals = self.fat_graph(verticals=True)
+        return fg.spin_parity(verticals)
 
-        from sage.rings.finite_rings.finite_field_constructor import GF
-        GF2 = GF(2)
-
-        M = self.intersection_matrix(GF2)
-        F, C = M.symplectic_form()
-
-        g = F.rank() // 2
-        n = F.ncols()
-
-        s = GF2(0)
-        for i in range(g):
-            a = C.row(i)
-
-            a_indices = [k for k in range(n) if a[k]]
-            t_a = GF2(len(a_indices))
-            for j1 in range(len(a_indices)):
-                for j2 in range(j1+1,len(a_indices)):
-                    t_a += M[a_indices[j1], a_indices[j2]]
-
-            b = C.row(g+i)
-            b_indices = [k for k in range(n) if b[k]]
-            t_b = GF2(len(b_indices))
-            for j1 in range(len(b_indices)):
-                for j2 in range(j1+1,len(b_indices)):
-                    t_b += M[b_indices[j1],b_indices[j2]]
-
-            s += t_a * t_b
-
-        return s
+    # TODO: deprecate
+    arf_invariant = spin_parity
 
     def stratum_component(self):
         r"""

@@ -3423,6 +3423,67 @@ class CylinderDiagram(SeparatrixDiagram):
     # homology
     #
 
+    def fat_graph(self, verticals=False):
+        r"""
+        Return a fat graph which is obtained by adding a transverse edge in each cylinder.
+
+        If ``verticals`` is set to ``True``, also return a list of half-edges that are
+        after a vertical direction. This data can be used to compute the stratum or the
+        spin structure (see examples below).
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import CylinderDiagram
+            sage: cd = CylinderDiagram([((0,1),(0,2)),((2,),(1,))])
+            sage: fg = cd.fat_graph()
+            sage: fg
+            FatGraph('(0,7,3,8,2,1,6,4,9,5)', '(0,2,7,1,5,6)(3,8,4,9)')
+            sage: fg.genus()
+            2
+
+            sage: cd = CylinderDiagram('(0,1)-(0,3,6) (2,4)-(5) (3)-(2) (5,6)-(1,4)')
+            sage: fg, verticals = cd.fat_graph(verticals=True)
+            sage: fg.angles(verticals)  # in multiple of pi
+            [14]
+            sage: fg.spin_parity(verticals)
+            1
+
+        TESTS::
+
+            sage: from surface_dynamics import AbelianStratum
+            sage: for cd in AbelianStratum(2, 2).odd_component().cylinder_diagrams():
+            ....:     fg, verticals = cd.fat_graph(verticals=True)
+            ....:     assert fg.num_faces() == cd.ncyls()
+            ....:     assert fg.angles(verticals) == [6, 6]
+            ....:     assert fg.spin_parity(verticals) == 1
+            sage: for cd in AbelianStratum(6).even_component().cylinder_diagrams():
+            ....:     fg, verticals = cd.fat_graph(verticals=True)
+            ....:     assert fg.num_faces() == cd.ncyls()
+            ....:     assert fg.angles(verticals) == [14]
+            ....:     assert fg.spin_parity(verticals) == 0
+        """
+        # separatrix i in bottom -> 2i
+        # separatrix i in top -> 2i+1
+        n = self.nseps()
+        m = self.ncyls()
+        fp = [-1] * (2 * (n + m))
+        for j, (b, t) in enumerate(self.cylinders()):
+            fp [2 * (n + j)] = 2 * b[0]
+            for i in range(len(b) - 1):
+                fp[2 * b[i]] = 2 * b[i + 1]
+            fp[2 * b[-1]] = 2 * (n + j) + 1
+            fp[2 * (n + j) + 1] = 2 * t[0] + 1
+            for i in range(len(t) - 1):
+                fp[2 * t[i]  + 1] = 2 * t[i + 1] + 1
+            fp[2 * t[-1] + 1] = 2 * (n + j)
+
+        from surface_dynamics.topology.fat_graph import FatGraph
+        fat_graph = FatGraph(fp=fp)
+        if verticals:
+            return fat_graph, list(range(2 * n))
+        else:
+            return fat_graph
+
     def to_ribbon_graph(self):
         r"""
         Return a ribbon graph
@@ -3443,7 +3504,13 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: C = CylinderDiagram([((0,1),(0,2)),((2,),(1,))])
             sage: C.stratum()
             H_2(2)
-            sage: R = C.to_ribbon_graph(); R
+            sage: R = C.to_ribbon_graph()
+            doctest:warning
+            ...
+            DeprecationWarning: RibbonGraphWithAngles is deprecated; use surface_dynamics.fat_graph.FatGraph instead
+            ...
+            DeprecationWarning: RibbonGraph is deprecated; use surface_dynamics.fat_graph.FatGraph instead
+            sage: R
             Ribbon graph with 1 vertex, 5 edges and 2 faces
             sage: l,m = R.cycle_basis(intersection=True)
             sage: m.rank() == 2 * C.genus()
@@ -3500,8 +3567,6 @@ class CylinderDiagram(SeparatrixDiagram):
 
         return RibbonGraphWithHolonomies(edges=edges,faces=faces,holonomies=holonomies)
 
-
-
     def spin_parity(self):
         r"""
         Return the spin parity of any surface that is built from this cylinder
@@ -3509,7 +3574,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import CylinderDiagram
 
             sage: c = CylinderDiagram('(0,1,2,3,4)-(0,1,2,3,4)')
             sage: c.spin_parity()
@@ -3525,9 +3590,8 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: c.spin_parity()
             1
         """
-        if any(z%2 for z in self.stratum().zeros()):
-            return None
-        return self.to_ribbon_graph().spin_parity()
+        fat_graph, verticals = self.fat_graph(verticals=True)
+        return fat_graph.spin_parity(verticals)
 
 #    def circumferences_of_cylinders(self,ring=None):
 #        r"""

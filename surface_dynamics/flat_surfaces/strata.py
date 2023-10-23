@@ -14,9 +14,6 @@ This file gather common code used in
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import print_function, absolute_import, division
-from six.moves import range, map, filter, zip
-
 from functools import total_ordering
 
 from sage.structure.unique_representation import UniqueRepresentation
@@ -477,6 +474,7 @@ class Stratum(UniqueRepresentation, SageObject):
         """
         from .masur_veech_volumes import masur_veech_volume
         return masur_veech_volume(self, rational, method)
+
 
 class StratumComponent(SageObject):
     r"""
