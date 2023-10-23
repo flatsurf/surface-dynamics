@@ -109,10 +109,10 @@ from sage.combinat.words.morphism import WordMorphism
 from sage.matrix.constructor import identity_matrix
 from sage.rings.integer import Integer
 
-from .template import (OrientablePermutationIET, OrientablePermutationLI,
-                       FlippedPermutationIET, FlippedPermutationLI,
-                       RauzyDiagram, FlippedRauzyDiagram,
-                       interval_conversion, side_conversion)
+from .template import (Permutation, OrientablePermutationIET,
+        OrientablePermutationLI, FlippedPermutationIET, FlippedPermutationLI,
+        RauzyDiagram, FlippedRauzyDiagram, interval_conversion,
+        side_conversion)
 
 
 class LabelledPermutation(SageObject):
@@ -533,6 +533,9 @@ class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
         sage: p in d
         True
     """
+    def __init__(self, intervals=None, alphabet=None, reduced=False, flips=None):
+        Permutation.__init__(self, intervals, alphabet, False, flips)
+
     def reduced(self):
         r"""
         Returns the associated reduced abelian permutation.
@@ -743,6 +746,9 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
         sage: p in r
         True
     """
+    def __init__(self, intervals=None, alphabet=None, reduced=False, flips=None):
+        Permutation.__init__(self, intervals, alphabet, False, flips)
+
     def has_right_rauzy_move(self, winner):
         r"""
         Test of Rauzy movability with a specified winner)
@@ -1196,6 +1202,9 @@ class FlippedLabelledPermutationIET(FlippedPermutationIET, LabelledPermutationIE
 
         sage: d = iet.RauzyDiagram('a b c d','d a b c',flips='a')
     """
+    def __init__(self, intervals=None, alphabet=None, reduced=False, flips=None):
+        Permutation.__init__(self, intervals, alphabet, False, flips)
+
     def reduced(self):
         r"""
         The associated reduced permutation.
@@ -1262,6 +1271,9 @@ class FlippedLabelledPermutationLI(FlippedPermutationLI, LabelledPermutationLI):
         sage: p.has_rauzy_move(1)
         True
     """
+    def __init__(self, intervals=None, alphabet=None, reduced=False, flips=None):
+        Permutation.__init__(self, intervals, alphabet, False, flips)
+
     def reduced(self):
         r"""
         The associated reduced permutation.

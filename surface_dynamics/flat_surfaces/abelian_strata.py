@@ -2192,6 +2192,23 @@ class HypAbelianStratumComponent(ASC):
             1
             sage: p.rauzy_diagram()
             Rauzy diagram with 20 permutations
+
+        TESTS::
+
+            sage: from surface_dynamics import AbelianStratum
+            sage: assert AbelianStratum(6).hyperelliptic_component().permutation_representative(reduced=True)._labels is None
+            sage: assert AbelianStratum(6).odd_component().permutation_representative(reduced=True)._labels is None
+            sage: assert AbelianStratum(6).even_component().permutation_representative(reduced=True)._labels is None
+            sage: assert AbelianStratum(3, 3).hyperelliptic_component().permutation_representative(reduced=True)._labels is None
+            sage: assert AbelianStratum(3, 3).non_hyperelliptic_component().permutation_representative(reduced=True)._labels is None
+            sage: assert AbelianStratum(1, 1, 1, 1).unique_component().permutation_representative(reduced=True)._labels is None
+
+            sage: assert AbelianStratum(6).hyperelliptic_component().permutation_representative(reduced=False)._labels is not None
+            sage: assert AbelianStratum(6).odd_component().permutation_representative(reduced=False)._labels is not None
+            sage: assert AbelianStratum(6).even_component().permutation_representative(reduced=False)._labels is not None
+            sage: assert AbelianStratum(3, 3).hyperelliptic_component().permutation_representative(reduced=False)._labels is not None
+            sage: assert AbelianStratum(3, 3).non_hyperelliptic_component().permutation_representative(reduced=False)._labels is not None
+            sage: assert AbelianStratum(1, 1, 1, 1).unique_component().permutation_representative(reduced=False)._labels is not None
         """
         g = self._stratum.genus()
         n = self._stratum.nb_fake_zeros()
@@ -2239,14 +2256,15 @@ class HypAbelianStratumComponent(ASC):
         if reduced:
             from surface_dynamics.interval_exchanges.reduced import ReducedPermutationIET
             p = ReducedPermutationIET([l0, l1])
-
         else:
             from surface_dynamics.interval_exchanges.labelled import LabelledPermutationIET
             p = LabelledPermutationIET([l0, l1])
+
         if alphabet is not None:
             p.alphabet(alphabet)
         elif relabel:
             p.alphabet(range(len(p)))
+
         return p
 
     def rauzy_class_cardinality(self, left_degree=None, reduced=True):

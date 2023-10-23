@@ -64,9 +64,9 @@ from copy import copy
 from sage.combinat.words.alphabet import Alphabet
 from sage.rings.integer import Integer
 
-from .template import OrientablePermutationIET, OrientablePermutationLI   # permutations
-from .template import FlippedPermutationIET, FlippedPermutationLI         # flipped permutations
-from .template import RauzyDiagram, FlippedRauzyDiagram
+from .template import (Permutation, OrientablePermutationIET,
+        OrientablePermutationLI, FlippedPermutationIET, FlippedPermutationLI,
+        RauzyDiagram, FlippedRauzyDiagram)
 
 from .template import interval_conversion, side_conversion
 
@@ -200,6 +200,9 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
         sage: d_red.cardinality()
         6
     """
+    def __init__(self, intervals=None, alphabet=None, reduced=False, flips=None):
+        Permutation.__init__(self, intervals, alphabet, True, flips)
+
     def list(self):
         r"""
         Returns a list of two list that represents the permutation.
@@ -485,6 +488,9 @@ class ReducedPermutationLI(ReducedPermutation, OrientablePermutationLI):
         sage: d_red.cardinality()
         4
     """
+    def __init__(self, intervals=None, alphabet=None, reduced=False, flips=None):
+        Permutation.__init__(self, intervals, alphabet, True, flips)
+
     def list(self):
         r"""
         The permutations as a list of two lists.
@@ -589,6 +595,9 @@ class FlippedReducedPermutationIET(
          c -b  a
         ********
     """
+    def __init__(self, intervals=None, alphabet=None, reduced=False, flips=None):
+        Permutation.__init__(self, intervals, alphabet, True, flips)
+
     def list(self, flips=False):
         r"""
         Returns a list representation of self.
@@ -658,6 +667,9 @@ class FlippedReducedPermutationLI(
 
         sage: p = iet.GeneralizedPermutation('a a b', 'b c c', reduced=True, flips='a')
     """
+    def __init__(self, intervals=None, alphabet=None, reduced=False, flips=None):
+        Permutation.__init__(self, intervals, alphabet, True, flips)
+
     def list(self, flips=False):
         r"""
         Returns a list representation of self.
