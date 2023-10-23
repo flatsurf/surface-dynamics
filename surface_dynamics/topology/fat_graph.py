@@ -106,10 +106,10 @@ class FatGraph(object):
                  '_vp',  # vertex permutation (array of length _n)
                  '_fp',  # face permutation (array of length _n)
                  # TODO: think whether it is useful to keep any of these...
-                 # labels (identify uniquely the vertices)
+                 # labels (identify uniquely vertices and faces)
                  '_vl',  # vertex labels (array of length _n)
                  '_fl',  # face labels (array of length _n)
-                 # numbers
+                 # numbers (= length of _vl and _fl)
                  '_nv',  # number of vertices (non-negative integer)
                  '_nf',  # number of faces (non-negative integer)
                  # degrees
@@ -121,7 +121,7 @@ class FatGraph(object):
         self._vp = vp
         self._fp = fp
         if len(vp) != len(fp):
-            raise ValueError("invalid permutations")
+            raise ValueError("invalid permutations vp={} fp={}".format(vp, fp))
         self._n = len(vp)   # number of darts
         self._nf = 0        # number of faces
 
@@ -171,7 +171,7 @@ class FatGraph(object):
                 # twins get labelled 1, 3, 5, ...
                 fp[previous] = previous = 2*k + 1
             else:
-                raise ValueError('invalid unicellular word')
+                raise ValueError('invalid unicellular word w={}'.format(w))
 
         # consistency check
         assert previous == 2 * w[-1] + 1
@@ -179,7 +179,7 @@ class FatGraph(object):
         return FatGraph(fp=fp)
 
     @staticmethod
-    def from_string(s):
+    def from_string(s, mutable=False):
         r"""
         Build a fat graph from a serialized string.
 
@@ -196,12 +196,12 @@ class FatGraph(object):
             FatGraph('()', '()')
         """
         if not isinstance(s, str) or s.count('_') != 2:
-            raise ValueError("invalid input")
+            raise ValueError("invalid input s={!r}".format(s))
         n, vp, fp = s.split('_')
         n = int(n)
         vp = perm_from_base64_str(vp, n)
         fp = perm_from_base64_str(fp, n)
-        return FatGraph(vp, fp)
+        return FatGraph(vp, fp, mutable=mutable)
 
     def _check(self, error=RuntimeError):
         vp = self._vp
@@ -852,33 +852,464 @@ class FatGraph(object):
         """
         return self._nf - self._n // 2 + self._nv
 
-    # TODO: fix your mind about the meaning of dual!!!
-    def dual(self):
+    def tree_cotree_decomposition(self, vertex_root=0, face_root=0):
         r"""
-        Return the dual fat graph.
+        Return a tree-cotree decomposition of this graph.
+
+        A tree-cotree decomposition of a fat graph is a decomposition of its
+        into three subsets ``(t, d, r)`` where
+        - ``t``: is a tree
+        - ``d``: is a tree of the dual graph
+        - ``r``: are the remaining edges
+
+        Their sizes are respectively the number of vertices minus one, the
+        number of faces minus one and twice the genus.
+
+        The tree and cotree in this function are encoded as lists of half-edges
+        directed toward the root.
 
         EXAMPLES::
 
             sage: from surface_dynamics.topology.fat_graph import FatGraph
-            sage: F = FatGraph(fp='(0)(1)')
+
+        A genus 0, genus 1 and genus 2 examples with 3 vertices and 3 faces::
+
+            sage: fg = FatGraph('(0,6,3,2,1,4)(5)(7)', '(0,2,6,7)(1,4,5)(3)')
+            sage: fg.tree_cotree_decomposition()
+            ((-1, 5, 7), (-1, 1, 3), ())
+            sage: fg.tree_cotree_decomposition(vertex_root=1, face_root=2)
+            ((4, -1, 7), (2, 1, -1), ())
+            sage: fg.tree_cotree_decomposition(vertex_root=1, face_root=0)
+            ((4, -1, 7), (-1, 1, 3), ())
+
+            sage: fg = FatGraph('(0,6,5,2,7,10,3,4)(1,8,11)(9)', '(0,11,7)(1,4,6,2,10,8,9)(3,5)')
+            sage: fg.tree_cotree_decomposition()
+            ((-1, 1, 9), (-1, 10, 5), (2, 6))
+            sage: fg.tree_cotree_decomposition(vertex_root=1, face_root=0)
+            ((0, -1, 9), (-1, 10, 5), (2, 6))
+
+            sage: fg = FatGraph('(0,13,10)(1,6,8,5,3,12,9,14)(2,15,7,4,11)', '(0,14,2,5,7,1,10,4,8,12)(3,11,13)(6,15,9)')
+            sage: fg.tree_cotree_decomposition()
+            ((-1, 1, 11), (-1, 3, 15), (4, 6, 8, 12))
+            sage: fg.tree_cotree_decomposition(vertex_root=0, face_root=2)
+            ((-1, 1, 11), (7, 3, -1), (4, 8, 12, 14))
+
+        TESTS::
+
+            sage: def tree_to_root(fg, tree, v):
+            ....:     seen = [0] * fg._nv
+            ....:     while tree[v] != -1:
+            ....:         if seen[v]:
+            ....:             raise ValueError
+            ....:         seen[v] = 1
+            ....:         assert fg._vl[tree[v]] == v
+            ....:         v = fg._vl[fg.edge_flip(tree[v])]
+            ....:     return True
+            sage: def cotree_to_root(fg, cotree, f):
+            ....:     seen = [0] * fg._nf
+            ....:     while cotree[f] != -1:
+            ....:         if seen[f]:
+            ....:             raise ValueError
+            ....:         seen[f] = 1
+            ....:         assert fg._fl[cotree[f]] == f
+            ....:         f = fg._fl[fg.edge_flip(cotree[f])]
+            ....:     return True
+            sage: fg = FatGraph('(0,6,5,2,7,10,3,4)(1,8,11)(9)', '(0,11,7)(1,4,6,2,10,8,9)(3,5)')
+            sage: tree, cotree, remaining_edges = fg.tree_cotree_decomposition()
+            sage: assert all(tree_to_root(fg, tree, v) for v in range(fg.num_vertices()))
+            sage: assert all(cotree_to_root(fg, cotree, f) for f in range(fg.num_faces()))
+        """
+        vp = self._vp[:self._n]   # copy (that will be modified)
+        fp = self._fp[:self._n]   # copy (that will be modified)
+
+        vertices, vdegs = perm_dense_cycles(vp, self._n)
+        faces, fdegs = perm_dense_cycles(fp, self._n)
+        nv = len(vdegs)
+        nf = len(fdegs)
+        v_reps = [-1] * nv  # half-edge representatives for vertices
+        f_reps = [-1] * nf  # half-edge representatives for faces
+        for i in range(self._n):
+            vi = vertices[i]
+            if v_reps[vi] == -1:
+                v_reps[vi] = i
+            fi = faces[i]
+            if f_reps[fi] == -1:
+                f_reps[fi] = i
+
+        seen_vertices = [0] * nv
+        seen_faces = [0] * nf
+        tree = [-1] * nv  # half-edge to follow toward the root
+        cotree = [-1] * nf  # half-edge to follow toward the root
+        used_darts = [0] * self._n
+
+        todo = [vertex_root]
+        seen_vertices[vertex_root] = 1
+        while todo:
+            v = todo.pop()
+            for j in perm_orbit(vp, v_reps[v]):
+                jj = j ^ 1
+                vv = vertices[jj]
+                if not seen_vertices[vv]:
+                    tree[vv] = jj
+                    seen_vertices[vv] = 1
+                    used_darts[j] = used_darts[jj] = 1
+                    todo.append(vv)
+                    continue
+        assert sum(i != -1 for i in tree) == nv - 1
+
+        todo = [face_root]
+        seen_faces[face_root] = 1
+        while todo:
+            f = todo.pop()
+            for j in perm_orbit(fp, f_reps[f]):
+                if used_darts[j]:
+                    continue
+                jj = j ^ 1
+                ff = faces[jj]
+                if not seen_faces[ff]:
+                    cotree[ff] = jj
+                    seen_faces[ff] = 1
+                    todo.append(ff)
+                    used_darts[j] = used_darts[jj] = 1
+                    continue
+        assert sum(i != -1 for i in cotree) == nf - 1
+
+        return tuple(tree), tuple(cotree), tuple(i for i in range(0, self._n, 2) if not used_darts[i])
+
+    def is_path(self, path, check=True):
+        if check:
+            if not isinstance(path, (tuple, list)):
+                raise TypeError
+            path = [self._check_dart(e) for e in path]
+        for i in range(len(path) - 1):
+            current_end = self._vl[path[i] ^ 1]
+            next_start = self._vl[path[i + 1]]
+            if current_end != next_start:
+                return False
+        return True
+
+    def is_closed_path(self, path, check=True):
+        if check:
+            if not isinstance(path, (tuple, list)):
+                raise TypeError
+            path = [self._check_dart(e) for e in path]
+        for i in range(len(path)):
+            current_end = self._vl[path[i] ^ 1]
+            next_start = self._vl[path[(i + 1) % len(path)]]
+            if current_end != next_start:
+                return False
+        return True
+
+
+    def homology(self, base_ring=None, tree_cotree_decomposition=None):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
+            sage: fg = FatGraph('(0,13,10)(1,6,8,5,3,12,9,14)(2,15,7,4,11)', '(0,14,2,5,7,1,10,4,8,12)(3,11,13)(6,15,9)')
+            sage: H = fg.homology()
+            sage: H.basis()
+            ((-1, 0, 1, 0, 0, 1, 0, 0),
+             (1, 0, 0, 1, 0, -1, 0, 0),
+             (0, 0, 0, 0, 1, 0, 0, 0),
+             (1, 0, 0, 0, 0, 0, 1, 0))
+        """
+        from .homology import FatGraphAbsoluteHomology
+        if base_ring is None:
+            from sage.rings.integer_ring import ZZ
+            base_ring = ZZ
+        if tree_cotree_decomposition is None:
+            tree_cotree_decomposition = self.tree_cotree_decomposition()
+        return FatGraphAbsoluteHomology(self, base_ring, tree_cotree_decomposition)
+
+    def cycle_basis(self, intersection=False, tree_cotree_decomposition=None):
+        r"""
+        Return a basis of cycles of the fundamental group on the graph.
+
+        Each element of the basis is given as a sequence of half-edges. All basis
+        element is a simple path on the underlying graph (ie not passing
+        twice through the same vertex).
+
+        INPUT:
+
+        - ``intersection`` -- optional boolean (default: ``False``) -- if set
+          to ``True`` also return the algebraic intersection pairing on this
+          basis.
+
+        - ``tree_cotree_decomposition`` -- optional tree-cotree decomposition (default:
+          ``None``) - if provided, use the basis obtained from this tree-cotree
+          decomposition
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
+
+        A genus 0, genus 1 and genus 2 examples with 3 vertices and 3 faces::
+
+            sage: fg = FatGraph('(0,6,3,2,1,4)(5)(7)', '(0,2,6,7)(1,4,5)(3)')
+            sage: fg.cycle_basis()
+            []
+            sage: fg.cycle_basis(True)
+            ([], [])
+
+            sage: fg = FatGraph('(0,6,5,2,7,10,3,4)(1,8,11)(9)', '(0,11,7)(1,4,6,2,10,8,9)(3,5)')
+            sage: fg.cycle_basis()
+            [[2], [6]]
+            sage: fg.cycle_basis(True)
+            (
+                        [ 0 -1]
+            [[2], [6]], [ 1  0]
+            )
+
+            sage: fg = FatGraph('(0,13,10)(1,6,8,5,3,12,9,14)(2,15,7,4,11)', '(0,14,2,5,7,1,10,4,8,12)(3,11,13)(6,15,9)')
+            sage: fg.cycle_basis()
+            [[10, 4, 1], [0, 6, 11], [8], [0, 12]]
+            sage: fg.cycle_basis(True)
+            (
+                                                    [ 0  1  1  0]
+                                                    [-1  0  0  0]
+                                                    [-1  0  0  1]
+            [[10, 4, 1], [0, 6, 11], [8], [0, 12]], [ 0  0 -1  0]
+            )
+            sage: fg.cycle_basis(True)[1].det()  # must be 1 or -1
+            1
+        """
+        if tree_cotree_decomposition is None:
+            tree_cotree_decomposition = self.tree_cotree_decomposition()
+
+        tree, cotree, remaining_edges = tree_cotree_decomposition
+        d = len(remaining_edges)
+
+        vp = self._vp
+        vertices, vdegs = perm_dense_cycles(vp, self._n)
+        nv = len(vdegs)
+        basis = []
+        for e in remaining_edges:
+            u = vertices[e]
+            v = vertices[e ^ 1]
+
+            # compute path from u toward the root
+            pu = []
+            while tree[u] != -1:
+                pu.append(tree[u])
+                assert vertices[tree[u]] == u
+                u = vertices[tree[u] ^ 1]
+
+            # compute path from v toward the root
+            pv = []
+            while tree[v] != -1:
+                pv.append(tree[v])
+                assert vertices[tree[v]] == v
+                v = vertices[tree[v] ^ 1]
+
+            # add pu^-1 e pv to our basis
+            while pu and pv and pu[-1] == pv[-1]:
+                pu.pop()
+                pv.pop()
+            path = [i ^ 1 for i in reversed(pu)] + [e] + pv
+            basis.append(path)
+
+        I = None
+        if intersection:
+            # After contraction of the tree/cotree we get a bouquet of circles
+            # made of remaining_edges. We compute the associated ordering on
+            # them.
+            vp = self._vp
+            ordering = [-1] * self._n
+            # ordering encodes for each half-edge
+            # * -1 for remaining half-edge (will be modified to 0, 1, 2, ...)
+            # * -2 for half-edge in tree
+            # * -3 for half-edge in cotree
+            for i in tree:
+                if i != -1:
+                    ordering[i] = ordering[i ^ 1] = -2
+            for i in cotree:
+                if i != - 1:
+                    ordering[i] = ordering[i ^ 1] = -3
+            if d:
+                i = i0 = remaining_edges[0]
+                assert ordering[i] == -1, (ordering, i)
+                ordering[i] = 0
+                r = 1
+                i = vp[i]
+                while i != i0:
+                    if ordering[i] == -2:
+                        # in tree, edges are contracted
+                        i = vp[i ^ 1]
+                        continue
+                    elif ordering[i] == -3:
+                        # in cotree, edges are removed
+                        i = vp[i]
+                        continue
+                    else:
+                        # a remaining edge
+                        assert ordering[i] == -1, ordering
+                        ordering[i] = r
+                        i = vp[i]
+                        r += 1
+
+            from sage.matrix.constructor import matrix
+            I = matrix(ZZ, d)
+            for i in range(1, d):
+                ei = remaining_edges[i]
+                p_in = ordering[ei]
+                p_out = (ordering[ei ^ 1] - p_in) % (2 * d)
+                for j in range(i):
+                    ej = remaining_edges[j]
+                    q_in = (ordering[ej] - p_in) % (2 * d)
+                    q_out = (ordering[ej ^ 1] - p_in) % (2 * d)
+                    if q_in < p_out and p_out < q_out:
+                        I[i,j] = 1
+                        I[j,i] = -1
+                    elif q_out < p_out and p_out < q_in:
+                        I[i,j] = -1
+                        I[j,i] = 1
+
+        return (basis, I) if intersection else basis
+
+    def angles(self, verticals):
+        r"""
+        Return the angles (as multiple of pi).
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import AbelianStratum
+            sage: p = AbelianStratum(5, 1).unique_component().permutation_representative()
+            sage: fg, verticals = p.fat_graph(verticals=True)
+            sage: fg.angles(verticals)
+            [4, 12]
+        """
+        corners = [0] * self._n
+        for e in verticals:
+            corners[e] = 1
+        res = [sum(corners[e] for e in v) for v in self.vertices()]
+        res.sort()
+        return res
+
+    def spin_parity(self, verticals, check=True):
+        r"""
+        Return the spin parity of the given ``verticals``
+
+        The argument ``verticals`` must be a list of half-edges that allows to make sense
+        of the winding number on the graph. More precisely, if the underlying graph is
+        made of saddle connections on a translation or half-translation surface, the
+        verticals are the half-edges whose associated corner contains a vertical germ.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import AbelianStratum
+
+            sage: p = AbelianStratum(4, 2).odd_component().permutation_representative()
+            sage: fg, verticals = p.fat_graph(verticals=True)
+            sage: fg.spin_parity(verticals)
+            1
+
+            sage: p = AbelianStratum(4, 2).even_component().permutation_representative()
+            sage: fg, verticals = p.fat_graph(verticals=True)
+            sage: fg.spin_parity(verticals)
+            0
+        """
+        if check:
+            if any(a == 0 or a % 4 != 2 for a in self.angles(verticals)):
+                raise ValueError('invalid verticals')
+            verticals = [self._check_dart(e) for e in verticals]
+
+        H = self.homology()
+        corners = [0] * self._n
+        for e in verticals:
+            corners[e] = 1
+
+        # the 2pi winding modulo 2
+        # * fat_graph: underlying fat graph
+        # * corners: the position of verticals
+        # * path: the path on the fat graph of which we want to compute the winding
+        def path_winding(fat_graph, corners, path):
+            vp = fat_graph._vp
+            res = 0
+            for i in range(len(path)):
+                e1 = path[i] ^ 1
+                e2 = path[(i + 1) % len(path)]
+
+                # edge reversion
+                res += 1
+
+                # counter-clockwise walk
+                while e1 != e2:
+                    res -= corners[e1]
+                    e1 = vp[e1]
+
+            # NOTE: we want the 2pi winding modulo 2, hence the division by 2
+            assert res % 2 == 0
+            return (res // 2) % 2
+
+        # the actual quadratic form in homology
+        # * winding: the winding number of the cycle basis
+        # * I: the intersection matrix mod 2 (in the cycle basis)
+        # * v: the vector at which we want to evaluate the quadratic form
+        def quadratic_form(winding, I, v):
+            v = v.vector()
+            indices = [i for i, coeff in enumerate(v) if coeff]
+            # sum of connected components
+            t = sum(winding[i] + 1 for i in indices)
+            for j1 in range(len(indices)):
+                for j2 in range(j1 + 1, len(indices)):
+                    t += I[indices[j1], indices[j2]]
+            return t % 2
+
+        cycles, I = H._cycle_basis()
+        B = H.symplectic_basis()
+        g = len(B) // 2
+        winding = tuple(path_winding(self, corners, cycle) for cycle in cycles)
+        return sum(quadratic_form(winding, I, B[i]) * quadratic_form(winding, I, B[i + g]) for i in range(g)) % 2
+
+    def dual(self):
+        r"""
+        Change this fat graph to becomes the dual fat graph.
+
+        Be aware that this operation is not an involution but order 4. Taking
+        twice the dual, we obtain a fat graph in which all edges have been
+        swapped.
+
+        The dual graph is oriented such that the half-edge `e` in the primal
+        intersects the half-edge `e` in the dual with a positive sign (ie
+        we perform a counter-clockwise quarter turn to each edge).
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.topology.fat_graph import FatGraph
+            sage: F = FatGraph(fp='(0)(1)', mutable=True)
             sage: F.dual()
             sage: F
             FatGraph('(0)(1)', '(0,1)')
-            sage: F._check()
+
             sage: s = '20_i31027546b98jchedfag_23146758ab9igdhfejc0'
-            sage: F = FatGraph.from_string(s)
+            sage: F = FatGraph.from_string(s, mutable=True)
+            sage: F
+            FatGraph('(0,18,10,9,11,8,6,5,7,4,2,1,3)(12,19,16,13)(14,17,15)', '(0,2,1,3,4,6,5,7,8,10,9,11,18,12,16,14,17,19)(13)(15)')
             sage: F.dual()
-            sage: F._check()
+            sage: F
+            FatGraph('(0,2,5,7,4,6,9,11,8,10,19,13,17,15,16,18,1,3)(12)(14)', '(0,18,10,9,11,8,6,5,7,4,2,1,3)(12,19,16,13)(14,17,15)')
+
             sage: F.dual()
-            sage: F._check()
+            sage: F.dual()
+            sage: F.dual()
             sage: F == FatGraph.from_string(s)
             True
         """
-        # TODO: invert in place !!!!
-        self._vp, self._fp = perm_invert(self._fp, self._n), perm_invert(self._vp, self._n)
+        if not self._mutable:
+            raise ValueError('immutable graph; use a copy instead')
+
+        fp = self._fp
+        fl = self._fl
+        self._fp = self._vp[:]
+        self._fl = self._vl[:]
+
+        self._vp = [fp[e ^ 1] ^ 1 for e in range(self._n)]
+        self._vl = [fl[e ^ 1] for e in range(self._n)]
+
         self._nv, self._nf = self._nf, self._nv
-        self._vl, self._fl = self._fl, self._vl
-        self._vd, self._fd = self._fd, self._vd
+        self._vd, self._fd = self._fd[:], self._vd[:]
+        self._check()
 
     def edge_lengths_polytope(self, b, min_length=0):
         r"""
@@ -2614,3 +3045,49 @@ class FatGraph(object):
         perm_conjugate_inplace(self._fp, r, n)
         perm_on_list_inplace(r, self._vl, n)
         perm_on_list_inplace(r, self._fl, n)
+
+    def lengths_generating_series(self, variable_name='b', symmetrization=True):
+        r"""
+        Return the generating series of face perimeters for all possible
+        positive integral lengths on the edges.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import FatGraph, FatGraphs
+            sage: fg = FatGraph('(0,5,4)(1,2,3)', '(0,3,1,4)(2)(5)')
+            sage: fg.lengths_generating_series()
+            (b0*b1*b2^4)/((1 - b2^2)*(1 - b1*b2)*(1 - b0*b2)) + (b0*b1^4*b2)/((1 - b1*b2)*(1 - b1^2)*(1 - b0*b1)) + (b0^4*b1*b2)/((1 - b0*b2)*(1 - b0*b1)*(1 - b0^2))
+            sage: fg.lengths_generating_series(variable_name='x', symmetrization=False)
+            (1/2*x0^4*x1*x2)/((1 - x0*x2)*(1 - x0*x1)*(1 - x0^2))
+
+            sage: fgs = FatGraphs(g=0, nf=3, vertex_min_degree=3).list()
+            sage: sum(fg.lengths_generating_series() for fg in fgs).factor()
+            (b0^2*b1^2*b2^2 + b0^2*b1*b2 + b0*b1^2*b2 + b0*b1*b2^2)/((1 - b2^2)*(1 - b1^2)*(1 - b0^2))
+        """
+        from surface_dynamics.misc.multiplicative_multivariate_generating_series import MultiplicativeMultivariateGeneratingSeriesRing
+
+        nf = self.num_faces()
+        M = MultiplicativeMultivariateGeneratingSeriesRing(nf, variable_name)
+        V = M.free_module()
+        P = M.polynomial_ring()
+        x = P.gens()
+
+        den = {}
+        num = P.one()
+        for e in range(self._n // 2):
+            l = [0] * nf
+            f1 = self._fl[2 * e]
+            f2 = self._fl[2 * e + 1]
+            l[f1] += 1
+            l[f2] += 1
+            v = V(l)
+            v.set_immutable()
+            if v in den:
+                den[v] += 1
+            else:
+                den[v] = 1
+            num *= x[f1] * x[f2]
+
+        aut_size = self.automorphism_group().group_cardinality()
+        ans = M.term(num / aut_size, list(den.items()))
+        return ans.symmetrization() if symmetrization else ans
