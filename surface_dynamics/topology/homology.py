@@ -450,5 +450,3 @@ class FatGraphAbsoluteHomology(UniqueRepresentation, Module):
             (0, 0, 0, 1)
         """
         return self.element_class(self, v)
-
-

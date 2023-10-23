@@ -1129,4 +1129,3 @@ class AbstractMSumRing(UniqueRepresentation, Parent):
         """
         num = self._polynomial_ring(arg)
         return self.element_class(self, [([], num)], self.free_module())
-
