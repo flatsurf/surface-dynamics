@@ -1006,3 +1006,23 @@ def angle(v):
             return acos(x / r) / pi
         else:
             return -acos(x / r) / pi
+
+
+class RibbonGraphWithHolonomies(RibbonGraph):
+    r"""
+    A Ribbon graph with holonomies.
+
+    For now
+    """
+    def __init__(self, vertices=None, edges=None, faces=None, holonomies=None):
+        from warnings import warn
+        warn('RibbonGraphWithHolonomies is deprecated; use surface_dynamics.fat_graph.FatGraph instead', DeprecationWarning)
+
+        r = RibbonGraph(vertices,edges,faces)
+        RibbonGraph.__init__(self,r.vertex_perm(),r.edge_perm(),r.face_perm())
+
+        if len(holonomies) != self.num_darts():
+            raise ValueError("there are %d angles and %d darts" %(len(angles),self.num_darts()))
+
+        V = FreeModule(ZZ, 2)
+        self._holonomies = list(map(V, holonomies))
