@@ -78,14 +78,15 @@ def augment1(cm, aut_grp, g, callback):
         aut_grp.reset_iterator()
         R = aut_grp
 
+    do_continue = True
     if cm._n == 0:
         cm._set_genus1_square()
         aaut_grp = cm.automorphism_group()
-        callback('augment1', True, cm, aaut_grp, g - 1)
-        if g > 1:
-            augment1(cm, aaut_grp, g - 1, callback)
+        do_continue = callback('augment1', True, cm, aaut_grp, g - 1)
+        if do_continue and g > 1:
+            do_continue = augment1(cm, aaut_grp, g - 1, callback)
         cm.remove_face_trisection(n)
-        return
+        return do_continue
 
     for i in R:
         j = i
@@ -94,14 +95,17 @@ def augment1(cm, aut_grp, g, callback):
             for sk in range(fd[fl[i]] - sj + (i != j)):
                 cm.trisect_face(i, j, k)
                 test, aaut_grp = cm._is_canonical(n)
-                callback('augment1', test, cm, aaut_grp, g - 1)
-                if test and g > 1:
-                    augment1(cm, aaut_grp, g - 1, callback)
-
+                do_continue = callback('augment1', test, cm, aaut_grp, g - 1)
+                if do_continue and test and g > 1:
+                    do_continue = augment1(cm, aaut_grp, g - 1, callback)
                 cm.remove_face_trisection(n)
+                if not do_continue:
+                    return False
                 k = fp[k]
             j = fp[j]
         i = fp[i]
+
+    return True
 
 
 # augment2: face split
@@ -122,15 +126,16 @@ def augment2(cm, aut_grp, depth, callback):
     fd = cm._fd
     fl = cm._fl
 
+    do_continue = True
     if cm._n == 0:
         # trivial map -> loop (1 vertex, 2 faces)
         cm._set_genus0_loop()
         aaut_grp = cm.automorphism_group()
-        callback('augment2', True, cm, aaut_grp, depth - 1)
-        if depth > 1:
-            augment2(cm, aaut_grp, depth - 1, callback)
+        do_continue = callback('augment2', True, cm, aaut_grp, depth - 1)
+        if do_continue and depth > 1:
+            do_continue = augment2(cm, aaut_grp, depth - 1, callback)
         cm.remove_edge(0)
-        return
+        return do_continue
 
     if aut_grp is None:
         R = range(n)
@@ -166,11 +171,15 @@ def augment2(cm, aut_grp, depth, callback):
         for _ in range(niter):
             cm.split_face(i, j)
             test, aaut_grp = cm._is_canonical(n)
-            callback('augment2', test, cm, aaut_grp, depth - 1)
-            if test and depth > 1:
-                augment2(cm, aaut_grp, depth - 1, callback)
+            do_continue = callback('augment2', test, cm, aaut_grp, depth - 1)
+            if do_continue and test and depth > 1:
+                do_continue = augment2(cm, aaut_grp, depth - 1, callback)
             cm.remove_edge(n)
+            if not do_continue:
+                return False
             j = fp[j]
+
+    return True
 
 
 # augment3: vertex split
@@ -192,15 +201,16 @@ def augment3(cm, aut_grp, depth, min_degree, callback):
     vd = cm._vd
     vl = cm._vl
 
+    do_continue = True
     if cm._n == 0:
         # trivial map -> edge (2 vertices, 1 face)
         cm._set_genus0_edge()
         aaut_grp = cm.automorphism_group()
-        callback('augment3', True, cm, aaut_grp, depth - 1)
-        if depth > 1:
-            augment3(cm, aaut_grp, depth - 1, min_degree, callback)
+        do_continue = callback('augment3', True, cm, aaut_grp, depth - 1)
+        if do_continue and depth > 1:
+            do_continue = augment3(cm, aaut_grp, depth - 1, min_degree, callback)
         cm.contract_edge(0)
-        return
+        return do_continue
 
     if aut_grp is None:
         R = range(n)
@@ -241,11 +251,15 @@ def augment3(cm, aut_grp, depth, min_degree, callback):
             assert vd[vl[i]] >= min_degree_loc
             assert vd[vl[j]] >= min_degree_loc
             test, aaut_grp = cm._is_canonical(n)
-            callback('augment3', test, cm, aaut_grp, depth - 1)
-            if test and depth > 1:
-                augment3(cm, aaut_grp, depth - 1, min_degree, callback)
+            do_continue = callback('augment3', test, cm, aaut_grp, depth - 1)
+            if do_continue and test and depth > 1:
+                do_continue = augment3(cm, aaut_grp, depth - 1, min_degree, callback)
             cm.contract_edge(n)
+            if not do_continue:
+                return False
             j = vp[j]
+
+    return True
 
 # TODO
 # def augment4(cm):
@@ -294,19 +308,21 @@ class CountAndWeightedCount:
     def __call__(self, cm, aut):
         self.count += ZZ(1)
         self.weighted_count += QQ((1, (1 if aut is None else aut.group_cardinality())))
+        return True
 
 # callback to list elements
 class ListCallback:
-    def __init__(self, mutable=False):
+    def __init__(self, mutable=False, max_size=None):
         self._list = []
         self._mutable = mutable
+        self._max_size = max_size
 
     def __call__(self, cm, aut):
         self._list.append(cm.copy(self._mutable))
+        return self._max_size is None or len(self._list) < self._max_size
 
     def list(self):
         return self._list
-
 
 # TODO: make it work again! This is the most precious piece of information
 # to enhance the exhaustive generation...
@@ -389,7 +405,7 @@ class FatGraphsTrace:
             f.close()
 
     def __call__(self, cm, aut):
-        pass
+        return True
 
     def add_vertex(self, s, aut_grp, depth):
         if self._verbosity >= 1:
@@ -516,7 +532,8 @@ class StackCallback:
                nf >= self._fmin and \
                (self._vertex_min_degree <= 1 or all(d >= self._vertex_min_degree for d in cm.vertex_degrees())) and \
                (self._filter is None or self._filter(cm, aut)):
-                self._callback(cm, aut)
+               if not self._callback(cm, aut):
+                   return False
 
             if caller == 'augment1':
                 # augment1 creates fat graphs with a single vertex and a single face.
@@ -526,12 +543,14 @@ class StackCallback:
                     # more faces?
                     nfdepth = min(self._fmax - 2, self._emax - ne - 1)
                     if nfdepth:
-                        augment2(cm, aut, nfdepth, self)
+                        if not augment2(cm, aut, nfdepth, self):
+                            return False
                     # more vertices?
                     if nf >= self._fmin:
                         nvdepth = min(self._vmax - 2, self._emax - ne - 1)
                         if nvdepth:
-                            augment3(cm, aut, nvdepth, max(1, self._vertex_min_degree), self)
+                            if not augment3(cm, aut, nvdepth, max(1, self._vertex_min_degree), self):
+                                return False
 
             elif caller == 'augment2':
                 # augment2 performs face splitting
@@ -540,13 +559,16 @@ class StackCallback:
                     # more vertices?
                     nvdepth = min(self._vmax - 2, self._emax - ne - 1)
                     if nvdepth:
-                        augment3(cm, aut, nvdepth, max(1, self._vertex_min_degree), self)
+                        if not augment3(cm, aut, nvdepth, max(1, self._vertex_min_degree), self):
+                            return False
 
             elif caller == 'augment3':
                 pass
 
             else:
                 raise RuntimeError('unknown caller')
+
+        return True
 
     def run(self):
         # trivial map (g = 0, nv = 1, nf = 1)
@@ -560,17 +582,21 @@ class StackCallback:
             self._fmin <= nf < self._fmax and self._gmin <= g < self._gmax and
             self._vertex_min_degree == 0 and (self._filter is None or
                                               self._filter(cm, aut))):
-            self._callback(cm, None)
+            if not self._callback(cm, None):
+                return
 
         cm._realloc(2 * self._emax - 2)
         if self._gmax > 1:
-            augment1(cm, None, self._gmax - 1, self)
+            if not augment1(cm, None, self._gmax - 1, self):
+                return
         if self._gmin == 0 and self._fmax > 2:
             assert cm._n == 0, cm
-            augment2(cm, None, self._fmax - 2, self)
+            if not augment2(cm, None, self._fmax - 2, self):
+                return
         if self._gmin == 0 and self._fmin == 1 and self._vmax > 2:
             assert cm._n == 0, cm
-            augment3(cm, None, self._vmax - 2, max(1, self._vertex_min_degree), self)
+            if not augment3(cm, None, self._vmax - 2, max(1, self._vertex_min_degree), self):
+                return
 
 ##############
 # Main class #
@@ -602,6 +628,7 @@ class FatGraphs:
         ....:     p = [cm.face_degrees()]
         ....:     aut_card = 1 if aut is None else aut.group_cardinality()
         ....:     poly += 2*cm.num_edges() // aut_card * t**cm.num_edges()
+        ....:     return True
         sage: F.map_reduce(update)
         sage: poly
         208494*t^7 + 24057*t^6 + 2916*t^5 + 378*t^4 + 54*t^3 + 9*t^2 + 2*t
@@ -678,6 +705,7 @@ class FatGraphs:
         ....:       cm.num_faces() < 2 or \
         ....:       cm.num_faces() >= 4:
         ....:           raise ValueError(str(cm))
+        ....:    return True
         sage: F.map_reduce(check)
         sage: for nf in [2,3]:
         ....:     for nv in [2,3]:
@@ -888,7 +916,10 @@ class FatGraphs:
         EXAMPLES::
 
             sage: from surface_dynamics import FatGraphs
-            sage: FatGraphs(g=1, nf=2, nv=2).map_reduce(lambda x,y: print(x))
+            sage: def my_callback(cm, aut):
+            ....:     print(cm)
+            ....:     return True
+            sage: FatGraphs(g=1, nf=2, nv=2).map_reduce(my_callback)
             FatGraph('(0,6,5,4,2,1,3)(7)', '(0,2,1,3,4,6,7)(5)')
             FatGraph('(0,6,2,1,3)(4,7,5)', '(0,2,1,3,6,4,7)(5)')
             FatGraph('(0,5,4,2,1,6,3)(7)', '(0,2,6,7,1,3,4)(5)')
@@ -933,7 +964,7 @@ class FatGraphs:
         self.map_reduce(N, filter)
         return N[1]
 
-    def list(self):
+    def list(self, max_size=None):
         r"""
         EXAMPLES::
 
@@ -949,8 +980,18 @@ class FatGraphs:
             1
             sage: L12[0].num_vertices()
             2
+
+            sage: FatGraphs(g=0, ne=6).list(max_size=3)
+            [FatGraph('(0,10,1)(2,5)(3)(4,7)(6,9)(8,11)', '(0,10,8,6,4,2,3,5,7,9,11)(1)'),
+             FatGraph('(0,11)(1,10,8)(2,5)(3)(4,7)(6,9)', '(0,8,6,4,2,3,5,7,9,10)(1,11)'),
+             FatGraph('(0,9)(1,10,6)(2,5)(3)(4,7)(8,11)', '(0,6,4,2,3,5,7,10,8)(1,9,11)')]
+
+            sage: FatGraphs(g=2, nv=5, nf=7).list(max_size=3)
+            [FatGraph('(0,26,19,18,17,16,15,14,13,12,11,10,9,8,6,5,7,4,2,1,3)(20,23)(21)(22,25)(24,27)', '(0,2,1,3,4,6,5,7,8,10,12,14,16,18,26,24,22,20,21,23,25,27)(9)(11)(13)(15)(17)(19)'),
+             FatGraph('(0,26,17,16,15,14,13,12,11,10,9,8,6,5,7,4,2,1,3)(18,27,24,19)(20,23)(21)(22,25)', '(0,2,1,3,4,6,5,7,8,10,12,14,16,26,18,24,22,20,21,23,25,27)(9)(11)(13)(15)(17)(19)'),
+             FatGraph('(0,26,15,14,13,12,11,10,9,8,6,5,7,4,2,1,3)(16,27,24,19,18,17)(20,23)(21)(22,25)', '(0,2,1,3,4,6,5,7,8,10,12,14,26,16,18,24,22,20,21,23,25,27)(9)(11)(13)(15)(17)(19)')]
         """
-        L = ListCallback()
+        L = ListCallback(mutable=False, max_size=max_size)
         self.map_reduce(L)
         return L.list()
 
