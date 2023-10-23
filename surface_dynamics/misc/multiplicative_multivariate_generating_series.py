@@ -121,6 +121,25 @@ def parse_latte_generating_series(M, s):
     return m
 
 
+def mpoly_permutation_action(poly, perm):
+    r"""
+    TESTS::
+
+        sage: from surface_dynamics.misc.multiplicative_multivariate_generating_series import mpoly_permutation_action
+        sage: R.<x0, x1, x2, x3> = QQ[]
+        sage: mpoly_permutation_action(x0 + 2 * x1^2 + x2 * x3, [1, 2, 3, 0])
+        2*x2^2 + x0*x3 + x1
+    """
+    new_dict = {}
+    for exp, coeff in poly.dict().items():
+        new_exp = [0] * len(exp)
+        for i, x in zip(exp.nonzero_positions(), exp.nonzero_values()):
+            new_exp[perm[i]] = x
+        new_dict[tuple(new_exp)] = coeff
+
+    return poly.parent()(new_dict)
+
+
 class MultiplicativeMultivariateGeneratingSeries(AbstractMSum):
     def _den_str(self, den):
         var_names = self.parent().polynomial_ring().variable_names()
@@ -553,7 +572,7 @@ class MultiplicativeMultivariateGeneratingSeries(AbstractMSum):
         P = L.polynomial_ring()
         N = P(N)
         gt = False
-        for mon,mult in list(D._dict.items()):
+        for mon, mult in list(D._dict.items()):
             pmon = P.one() - P.monomial(*mon)
             q,r = N.quo_rem(pmon)
             while mult and not r:
@@ -575,6 +594,56 @@ class MultiplicativeMultivariateGeneratingSeries(AbstractMSum):
     def as_symbolic(self):
         from sage.symbolic.ring import SR
         return SR(str(self))
+
+    def permutation_action(self, p):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.multiplicative_multivariate_generating_series import MultiplicativeMultivariateGeneratingSeriesRing
+            sage: M = MultiplicativeMultivariateGeneratingSeriesRing('x', 3)
+            sage: x = M.polynomial_ring().gens()
+
+            sage: f = M.term(x[1], [([1,0,0],1)])
+            sage: f
+            (x1)/((1 - x0))
+            sage: f.permutation_action([2, 0, 1])
+            (x0)/((1 - x2))
+
+            sage: f = M.term(1, [([1,3,0],1), ([1,0,-1],1)]) + M.term(1, [([1,1,0],1), ([1,0,-1],2)])
+            sage: f
+            (1)/((1 - x0*x2^-1)*(1 - x0*x1^3)) + (1)/((1 - x0*x2^-1)^2*(1 - x0*x1))
+            sage: f.permutation_action([2, 1, 0])
+            (1)/((1 - x0^-1*x2)*(1 - x1^3*x2)) + (1)/((1 - x0^-1*x2)^2*(1 - x1*x2))
+        """
+        M = self.parent()
+        ans = M.zero()
+        for den, num in self._data.items():
+            new_num = mpoly_permutation_action(num, p)
+            new_den = den.permutation_action(p, M.free_module())
+            ans += M.term(new_num, new_den)
+        return ans
+
+    def symmetrization(self):
+        r"""
+        Return the symmetrization
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.multiplicative_multivariate_generating_series import MultiplicativeMultivariateGeneratingSeriesRing
+            sage: M = MultiplicativeMultivariateGeneratingSeriesRing('x', 3)
+
+            sage: f = M.term(1, [([1,0,0],1)])
+            sage: f.symmetrization()
+            (2)/((1 - x2)) + (2)/((1 - x1)) + (2)/((1 - x0))
+        """
+        import itertools
+
+        M = self.parent()
+        V = M.free_module()
+        ans = M.zero()
+        for p in itertools.permutations(range(M.ngens())):
+            ans += self.permutation_action(p)
+        return ans
 
 
 # TODO: this should actually be an algebra over QQ[x0, x1, ..., xn]
