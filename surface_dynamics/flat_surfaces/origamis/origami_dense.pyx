@@ -2146,7 +2146,7 @@ cdef class Origami_dense_pyx:
             ....:         o1 = o1.horizontal_twist(cylinder=randrange(o1.nb_squares()))
         """
         fg, verticals = self.fat_graph(verticals=True)
-        return fg.arf_invariant(verticals)
+        return fg.spin_parity(verticals)
 
     def stratum_component(self, fake_zeros=False, verbose=False):
         r"""
@@ -3394,15 +3394,24 @@ cdef class Origami_dense_pyx:
 
             sage: o = Origami('(1,2,3,4)(5,6)', '(1,5)(2,6)')
             sage: o.absolute_period_generators()
-            [(2, 0), (2, 0), (0, 1), (0, 1)]
+            [(2, 0), (0, 1), (0, 1), (2, 0)]
         """
-        cyl, lengths, heights, twists = self.cylinder_diagram(data=True)
-        r = cyl.to_ribbon_graph_with_holonomies(lengths, heights, twists)
+        fg = self.fat_graph()
         periods = []
-        for c in r.cycle_basis():
-            s = sum(r._holonomies[e[0]] for e in c)
-            if s:
-                periods.append(s)
+        for c in fg.cycle_basis():
+            s = [0, 0]
+            for e in c:
+                # NOTE: the edge labelling tells us about the holonomy
+                if e % 4 == 0:
+                    s[0] += 1
+                elif e % 4 == 1:
+                    s[0] -= 1
+                elif e % 4 == 2:
+                    s[1] += 1
+                else:
+                    s[1] -= 1
+            if s[0] or s[1]:
+                periods.append(tuple(s))
         return periods
 
     def stratum(self, fake_zeros=False):
