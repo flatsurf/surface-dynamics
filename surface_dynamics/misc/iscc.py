@@ -1,5 +1,5 @@
 # ****************************************************************************
-#       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
+#       Copyright (C) 2019-2023 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
@@ -9,6 +9,33 @@
 from sage.cpython.string import bytes_to_str, str_to_bytes
 
 
+def iscc_fg_string(fg):
+    r"""
+    EXAMPLES::
+
+        sage: from surface_dynamics import FatGraph
+        sage: from surface_dynamics.misc.iscc import iscc_fg_string
+        sage: r = FatGraph(fp='(0,2,4,6,7)(8,9,5,3,1)')
+        sage: iscc_fg_string(r)
+        '[b0, b1] -> { [l0, l1, l2, l3, l4] : l0 >= 0 and l1 >= 0 and l2 >= 0 and l3 >= 0 and l4 >= 0 and b0 = l0 + l1 + l2 + l3 + l3 and b1 = l0 + l4 + l4 + l2 + l1 }'
+    """
+    boundary_vars = ', '.join('b%d'%i for i in range(fg.num_faces()))
+    lengths_vars = ', '.join('l%d'%i for i in range(fg.num_edges()))
+
+    ieqs = ' and '.join('l%d >= 0' % i for i in range(fg.num_edges()))
+
+    eqns = []
+    for i, face in enumerate(fg.faces()):
+        eqns.append('b%d = %s' % (i, ' + '.join('l%d' % (j // 2) for j in face)))
+    eqns = ' and '.join(eqns)
+
+    return "[{boundary_vars}] -> {{ [{lengths_vars}] : {ieqs} and {eqns} }}".format(
+               boundary_vars=boundary_vars,
+               lengths_vars=lengths_vars,
+               ieqs=ieqs,
+               eqns=eqns)
+
+
 def iscc_rg_string(r):
     r"""
     EXAMPLES::
@@ -16,6 +43,9 @@ def iscc_rg_string(r):
         sage: from surface_dynamics import *
         sage: from surface_dynamics.misc.iscc import iscc_rg_string
         sage: r = RibbonGraph(faces='(0,2,4,6,7)(8,9,5,3,1)', edges='(0,1)(2,3)(4,5)(6,7)(8,9)')
+        doctest:warning
+        ...
+        DeprecationWarning: RibbonGraph is deprecated; use surface_dynamics.fat_graph.FatGraph instead
         sage: iscc_rg_string(r)
         '[b0, b1] -> { [l0, l1, l2, l3, l4, l5, l6, l7, l8, l9] : l0 >= 0 and l1 >= 0 and l2 >= 0 and l3 >= 0 and l4 >= 0 and l5 >= 0 and l6 >= 0 and l7 >= 0 and l8 >= 0 and l9 >= 0 and l0 = l1 and l2 = l3 and l4 = l5 and l6 = l7 and l8 = l9 and b0 = l0 + l2 + l4 + l6 + l7 and b1 = l1 + l8 + l9 + l5 + l3 }'
     """
@@ -94,6 +124,8 @@ def iscc_card(arg):
         poly = iscc_cd_string(arg)
     elif isinstance(arg, RibbonGraph):
         poly = iscc_rg_string(arg)
+    elif isinstance(arg, FatGraph):
+        poly = iscc_fg_string(arg)
 
     from subprocess import Popen, PIPE
 
