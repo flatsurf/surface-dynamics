@@ -1189,12 +1189,14 @@ class FatGraph(object):
 
     def spin_parity(self, verticals, check=True):
         r"""
-        Return the spin parity of the given ``verticals``
+        Return the spin parity of the winding given by ``verticals``.
 
         The argument ``verticals`` must be a list of half-edges that allows to make sense
         of the winding number on the graph. More precisely, if the underlying graph is
         made of saddle connections on a translation or half-translation surface, the
         verticals are the half-edges whose associated corner contains a vertical germ.
+
+        The spin structure for surfaces is well explained in [Joh80]_.
 
         EXAMPLES::
 
