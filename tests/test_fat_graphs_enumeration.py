@@ -25,6 +25,7 @@ class CarrellChapuyCount:
     def __call__(self, cm, aut):
         # NOTE: in order to count rooted maps, we multiply by 2 ne / |Aut|
         self.counter += 2 * self.ne // (1 if aut is None else aut.group_cardinality()) * self.x ** cm.num_faces()
+        return True
 
 @cached_function
 def carrell_chapuy_polynomial(g, n):
