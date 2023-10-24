@@ -99,7 +99,7 @@ from sage.graphs.digraph import DiGraph
 
 from surface_dynamics.misc.permutation import (perm_check, equalize_perms, perm_init,
         perm_cycles, perm_cycle_type, perm_compose_i,
-        perm_invert, perms_canonical_labels,
+        perm_invert, perms_canonical_labels, perm_orbit,
         perms_transitive_components, canonical_perm, canonical_perm_i,
         argmin)
 from surface_dynamics.misc.linalg import cone_triangulate
@@ -1551,7 +1551,7 @@ class SeparatrixDiagram(SageObject):
             sage: H11 = AbelianStratum(1,1).unique_component()
             sage: for cd in H11.cylinder_diagrams():
             ....:     fg = cd.saddle_connections_graph()
-            ....:     print(cd.ncyls(), [comp.genus() for comp in fg.connected_components()])
+            ....:     print(cd.ncyls(), [comp.genus() for comp, _ in fg.connected_components()])
             1 [1]
             2 [0]
             2 [0]
@@ -4253,6 +4253,7 @@ def move_backward(i, v, g01, g23):
 
     return i,v
 
+
 def simplex_count(rays):
     r"""
     EXAMPLES::
@@ -4275,97 +4276,96 @@ def simplex_count(rays):
     d = len(rays[0])
     return Polyhedron([[0]*d] + list(rays)).integral_points_count() - len(rays)
 
+
 class QuadraticCylinderDiagram(SageObject):
     r"""
-    Cylinder diagram for quadratic differentials
+    Cylinder diagram for quadratic differentials.
 
-    Cylinder diagrams are encoded as a Ribbon graph together with a pairing of
-    faces (in particular the number of faces must be even).
+    A cylinder diagram is encoded as a fat graph together with a perfect
+    matching of its faces. The faces of the fat graph are the cylinder
+    boundaries and two faces that are matched correspond to the two sides of a
+    cylinder.
 
     EXAMPLES::
 
         sage: from surface_dynamics import *
 
-    If you start with strings, the cylinders are preserved but the names of
-    saddle connections are changed::
+    Note that cylinders could be reordered::
 
         sage: QuadraticCylinderDiagram('(4,4,5)-(6,6,1) (2,3,2,0)-(1,0,5,3)')
-        (0,0,1)-(2,2,3) (4,5,4,6)-(3,6,1,5)
+        (0,2,3,2)-(0,5,3,1) (1,6,6)-(4,4,5)
     """
     def __init__(self, arg1, arg2=None):
         r"""
         INPUT: there are two input formats
 
-        - with a unique argument
+        - with a unique string argument
 
-        - with two arguments
-
-        - ``g`` -- a ribbon graph
-
-        - ``pairing`` -- the pairing of faces of g (= permutation)
+        - with two arguments made of a fat graph and a pairing
         """
         from .homology import RibbonGraph
+        from surface_dynamics.topology.fat_graph import FatGraph
 
         if arg2 is None:
             if isinstance(arg1, str):
-                data = [(string_to_cycle(b),string_to_cycle(t)) for b,t in (w.split('-') for w in arg1.split(' '))]
+                data = [(string_to_cycle(b), string_to_cycle(t)) for b, t in (w.split('-') for w in arg1.split(' '))]
             else:
                 data = arg1
             N = 0
-            for i,pair in enumerate(data):
+            for i, pair in enumerate(data):
                 if not isinstance(pair, (tuple, list)) or len(pair) != 2:
                     raise TypeError('input must be a list of pairs')
                 data[i] = [[int(x) for x in pair[0]], [int(x) for x in pair[1]]]
                 N += len(pair[0]) + len(pair[1])
 
-            if N%2:
+            if N % 2:
                 raise ValueError('each symbol must appear exactly twice')
-            n = N//2
-            for b,t in data:
+            n = N // 2
+            for b, t in data:
                 if any(i < 0 or i >= n for i in b) or \
                    any(i < 0 or i >= n for i in t):
                         raise ValueError('symbol out of range')
 
+            # shift half-edges
             k = 0
-            faces = []
-            edges = [None] * N
-            seen = [None] * n
-            p = []
-            for i, bt in enumerate(data):
-                # constructing p (= face matching)
-                p.append(2*i+1)
-                p.append(2*i)
-
-                # constructing edges and faces
-                for f in bt:
-                    faces.append(tuple(range(k, k+len(f))))
-
-                    for j in range(len(f)):
-                        e = f[j]
-                        if seen[e] is not None:
-                            if seen[e] == -1:
-                                raise ValueError('number %d appears more than twice' % e)
-                            kk = seen[e]
-                            edges[kk] = k + j
-                            edges[k + j] = kk
-                            seen[e] = -1
+            seen = [0] * n
+            for bt in data:
+                for cyc in bt:
+                    for i, e in enumerate(cyc):
+                        if seen[e] > 1:
+                            raise RuntimeError
+                        elif not seen[e]:
+                            cyc[i] = 2 * e
+                            seen[e] = 1
+                            k += 1
                         else:
-                            seen[e] = k + j
+                            cyc[i] = 2 * e + 1
+                            seen[e] = 2
 
-                    k += len(f)
+            # constructing p (= face matching)
+            fp = perm_init([bot for bot, _ in data] + [top for _, top in data])
 
-            g = RibbonGraph(edges=edges, faces=faces, connected=False)
+            g = FatGraph(fp=fp)
+            assert g.num_faces() == 2 * len(data)
+            p = [None] * g.num_faces()
+            for bt in data:
+                bot_face = g._fl[bt[0][0]]
+                top_face = g._fl[bt[1][0]]
+                p[bot_face] = top_face
+                p[top_face] = bot_face
+            assert all(x is not None for x in p), p
 
         else:
             g = arg1
             p = arg2
-            if not isinstance(g, RibbonGraph):
+            if isinstance(g, RibbonGraph):
+                g = g._fat_graph
+            if not isinstance(g, FatGraph):
                 raise ValueError
-
             p = perm_init(p)
 
-        self._g = g
-        self._p = p
+        self._g = g  # fat graph
+        self._p = p  # perfect matching on faces of g
 
         self._check()
 
@@ -4383,32 +4383,98 @@ class QuadraticCylinderDiagram(SageObject):
         f = self._g.num_faces()
         if f % 2:
             raise ValueError('the number of faces of the fatgraph must be even')
-        if len(self._p) != f:
-            raise ValueError('the pairing has wrong length')
-        for i,j in enumerate(self._p):
+        if not perm_check(self._p, f):
+            raise ValueError('invalid pairing')
+        for i, j in enumerate(self._p):
             if i == j or self._p[j] != i:
                 raise ValueError('the pairing is not an involution')
 
-        from sage.graphs.graph import Graph
-        G = Graph(loops=True, multiedges=True)
-        for i in range(self._g._total_darts):
-            if self._g._active_darts[i]:
-                G.add_edge(i,self._g._vertices[i])
-                G.add_edge(i,self._g._edges[i])
-                G.add_edge(i,self._g._faces[i])
-        for i,j in enumerate(self._p):
-            k1 = self._g._face_cycles[i][0]
-            k2 = self._g._face_cycles[j][0]
-            G.add_edge(k1, k2)
-
-        if not G.is_connected():
+        if not self.stable_graph()[1].is_connected():
             raise ValueError("the graph is not connected")
+
+    def is_abelian(self):
+        r"""
+        Return whether this diagram corresponds to Abelian differentials.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import QuadraticCylinderDiagram
+            sage: QuadraticCylinderDiagram('(0,1,4)-(2,3,4) (2,3)-(0,1)').is_abelian()
+            True
+            sage: QuadraticCylinderDiagram('(0,1)-(2,3,4) (2,3)-(0,1,4)').is_abelian()
+            False
+        """
+        faces = self._g.faces()
+        faces.sort(key = lambda f: self._g._fl[f[0]])
+        face_colors = [-1] * self._g._nf
+        face_colors[0] = 0
+        todo = [0]
+        while todo:
+            i = todo.pop()
+            coli = face_colors[i]
+            assert coli != -1
+            adjacent_faces = [self._g._fl[e ^ 1] for e in faces[i]] + [self._p[i]]
+            for j in adjacent_faces:
+                colj = face_colors[j]
+                if colj == -1:
+                    face_colors[j] = coli ^ 1
+                    todo.append(j)
+                elif colj != coli ^ 1:
+                    return False
+        assert all(x != -1 for x in face_colors)
+        return True
+
+    def stable_graph(self):
+        r"""
+        Return the stable graph associated to this cylinder diagram.
+
+        This is this the graph whose vertices are the connected components of
+        the underlying fat graph and there is an edge for each cylinder.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import QuadraticCylinderDiagram
+            sage: qcd = QuadraticCylinderDiagram('(0,0)-(3) (1,1)-(4) (2,2)-(3,4)')
+            sage: qcd.stable_graph()
+            ([0, 0, 0, 0], Looped graph on 4 vertices)
+        """
+        from collections import defaultdict
+        from sage.graphs.graph import Graph
+        ccs = self._g.connected_components()
+        face_label_to_cc = [-1] * self._g._nf
+        for i, (h, embedding) in enumerate(ccs):
+            for f in h.faces():
+                face_label = self._g._fl[embedding[f[0]]]
+                face_label_to_cc[face_label] = i
+        assert not any(x == -1 for x in face_label_to_cc)
+
+        genera = [h.genus() for h, _ in ccs]
+        edges = {}  # (u, v) -> multiplicity
+        for i in range(len(self._p)):
+            j = self._p[i]
+            if j < i:
+                continue
+            cci = face_label_to_cc[i]
+            ccj = face_label_to_cc[j]
+            if ccj < cci:
+                edge = (ccj, cci)
+            else:
+                edge = (cci, ccj)
+            if edge in edges:
+                edges[edge] += 1
+            else:
+                edges[edge] = 1
+        sg = Graph(len(ccs), loops=True, multiedges=False)
+        for (u, v), mult in edges.items():
+            sg.add_edge(u, v, mult)
+
+        return (genera, sg)
 
     def num_darts(self):
         r"""
         Number of darts
         """
-        return self._g.num_darts()
+        return 2 * self._g.num_edges()
 
     def num_edges(self):
         r"""
@@ -4422,13 +4488,13 @@ class QuadraticCylinderDiagram(SageObject):
         r"""
         The set of edges.
         """
-        return self._g.edges()
+        return [[2 * e, 2 * e + 1] for e in range(self._g.num_edges())]
 
     def num_cylinders(self):
         r"""
         Number of cylinders.
         """
-        return len(self._p) // 2
+        return self._g.num_faces() // 2
 
     ncyls = num_cylinders
 
@@ -4442,20 +4508,26 @@ class QuadraticCylinderDiagram(SageObject):
 
             sage: QuadraticCylinderDiagram('(0,0)-(1,1)').stratum()
             Q_0(-1^4)
-
+            sage: QuadraticCylinderDiagram('(0)-(0)').stratum()
+            H_1(0)
             sage: QuadraticCylinderDiagram('(0,0)-(1,1,2,2,3,3)').stratum()
             Q_0(1, -1^5)
-
+            sage: QuadraticCylinderDiagram('(0,2)-(1,2) (0)-(1)').stratum()
+            H_2(2)
             sage: QuadraticCylinderDiagram('(0,2,3,2)-(1,0,1,3)').stratum()
             Q_2(2^2)
-
             sage: QuadraticCylinderDiagram('(0,1)-(2,3) (0)-(4,4) (1)-(5,5) (2)-(6,6) (3)-(7,7)').stratum()
             Q_0(2^2, -1^8)
         """
-        from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
-        return QuadraticStratum([len(t)-2 for t in self._g._vertex_cycles])
+        from surface_dynamics.misc.permutation import perm_cycle_type
+        if self.is_abelian():
+            from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum
+            return AbelianStratum([(l - 2) // 2 for l in perm_cycle_type(self._g._vp)])
+        else:
+            from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
+            return QuadraticStratum([l - 2 for l in perm_cycle_type(self._g._vp)])
 
-    def cylinders(self, dart=False):
+    def cylinders(self, half_edges=False):
         r"""
         Cylinders of self
 
@@ -4464,10 +4536,10 @@ class QuadraticCylinderDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import FatGraph
             sage: from surface_dynamics.flat_surfaces.separatrix_diagram import QuadraticCylinderDiagram
-            sage: rg = RibbonGraph(edges='(0,1)(2,3)(4,5)(6,7)', faces='(0,1)(2,4,5)(3)(6,7)', connected=False)
-            sage: q = QuadraticCylinderDiagram(rg, '(0,1)(2,3)')
+            sage: fg = FatGraph(fp='(0,1)(2,4,5)(3)(6,7)')
+            sage: q = QuadraticCylinderDiagram(fg, '(0,1)(2,3)')
             sage: q.cylinders()
             [((0, 0), (1, 2, 2)), ((1,), (3, 3))]
             sage: q.cylinders(True)
@@ -4475,17 +4547,19 @@ class QuadraticCylinderDiagram(SageObject):
         """
         ans = []
         g = self._g
-        for i,j in enumerate(self._p):
+        faces = self._g.faces()
+        faces.sort(key = lambda f: self._g._fl[f[0]])
+        for i, j in enumerate(self._p):
             if i > j:
                 continue
-            bot = g._face_cycles[i]
-            top = g._face_cycles[j]
-            if dart:
+            bot = faces[i]
+            top = faces[j]
+            if half_edges:
                 bot = tuple(bot)
                 top = tuple(top)
             else:
-                bot = tuple(g._dart_to_edge_index[x] for x in bot)
-                top = tuple(g._dart_to_edge_index[x] for x in top)
+                bot = tuple(x // 2 for x in bot)
+                top = tuple(x // 2 for x in top)
             ans.append((bot,top))
 
         return ans

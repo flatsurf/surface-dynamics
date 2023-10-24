@@ -809,21 +809,21 @@ class QuadraticStratumComponent(StratumComponent):
             sage: Q = QuadraticStratum({1:1,-1:5})
             sage: c = Q.unique_component().one_cylinder_diagram()
             sage: c
-            (0,0,1,1,2,2)-(3,3)
+            (0,0)-(1,1,3,3,2,2)
             sage: c.stratum() == Q
             True
 
             sage: Q = QuadraticStratum(5,-1)
             sage: c = Q.unique_component().one_cylinder_diagram()
             sage: c
-            (0,1,1,2)-(3,0,3,2)
+            (0,1,0,2)-(1,3,3,2)
             sage: c.stratum() == Q
             True
 
             sage: QuadraticStratum({-1:4}).unique_component().one_cylinder_diagram()
             (0,0)-(1,1)
             sage: QuadraticStratum({-1:4,0:1}).unique_component().one_cylinder_diagram()
-            (0,0)-(1,1,2,2)
+            (0,0,1,1)-(2,2)
         """
         from surface_dynamics.flat_surfaces.separatrix_diagram import QuadraticCylinderDiagram
         p = self.permutation_representative(reduced=True).to_cylindric()
