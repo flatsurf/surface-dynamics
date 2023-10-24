@@ -6,7 +6,7 @@
 
 The ``surface-dynamics`` package for SageMath adds functionality related to
 interval exchange transformations, translation surfaces, mapping classes
-and more. It is based on `SageMath <http://www.sagemath.org>`_ and relies
+and more. It is based on `SageMath <https://www.sagemath.org>`_ and relies
 heavily on:
 
 * gmp or mpir for arbitrary precision arithmetic
@@ -105,7 +105,7 @@ just use ``PIP`` as indicated before.
 
 ## Documentation
 
-* short tutorial: http://www.labri.fr/perso/vdelecro/flatsurf.html
+* short tutorial: https://www.labri.fr/perso/vdelecro/flatsurf.html
 * complete module documentation: https://flatsurf.github.io/surface-dynamics/
 
 ## Check

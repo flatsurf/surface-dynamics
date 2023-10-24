@@ -133,7 +133,7 @@ quad_cover *
 new_quad_cover(generalized_permutation * gp, size_t ** sigma, size_t degree,
                size_t nb_vectors)
 /*   Create a quad_cover of given degree over a translation surface, with the given generalized_permutation for the interval exchange, */
-/*   moreover sigma is an array of permutations that gives the action of the fondamental group of the surface on the cover (we give the action */
+/*   moreover sigma is an array of permutations that gives the action of the fundamental group of the surface on the cover (we give the action */
 /*   for the canonical generating family of the group on the translation surface. */
 /*   Finally, we set nb_vectors vectors, with degree*nb_intervals coordinates, to follow the monodromy afterward. */
 {
