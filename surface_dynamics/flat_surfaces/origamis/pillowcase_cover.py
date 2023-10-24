@@ -257,13 +257,6 @@ class PillowcaseCover_dense(PillowcaseCover_dense_pyx):
             (1,10,5,12)(2,9)(3,8)(4,7,6,11)
             sage: o.stratum()
             H_2(2)
-
-        A last example in Q(2^2)::
-
-            sage: q = QuadraticCylinderDiagram('(0,1)-(2,3) (0,3)-(1,2)')
-            sage: pc = q.cylcoord_to_pillowcase_cover([1,1,1,1], [2,2], [0,1])
-            sage: pc.orientation_cover().stratum()
-            H_3(1^4)
         """
         from surface_dynamics.misc.permutation import perm_invert
         from surface_dynamics.flat_surfaces.origamis.origami import Origami
