@@ -300,19 +300,20 @@ class FatGraph(object):
 
     def connected_components(self):
         r"""
-        Return the list of connected components.
+        Return the list of connected components as pairs ``(fat_graph, embedding)``.
 
         EXAMPLES::
 
             sage: from surface_dynamics.topology.fat_graph import FatGraph
             sage: FatGraph(vp='(0,2)(1,3)').connected_components()
-            [FatGraph('(0,2)(1,3)', '(0,3)(1,2)')]
+            [(FatGraph('(0,2)(1,3)', '(0,3)(1,2)'), (0, 1, 2, 3))]
             sage: FatGraph(vp='(0,1)(2,3)').connected_components()
-            [FatGraph('(0,1)', '(0)(1)'), FatGraph('(0,1)', '(0)(1)')]
+            [(FatGraph('(0,1)', '(0)(1)'), (0, 1)),
+             (FatGraph('(0,1)', '(0)(1)'), (2, 3))]
         """
         ccs = perms_transitive_components([self._vp, self._fp], self._n)
         if len(ccs) == 1 and not self._mutable:
-            return [self]
+            return [(self, ccs[0])]
 
         # build a FatGraph for each connected component
         connected_graphs = []
@@ -323,7 +324,7 @@ class FatGraph(object):
             for j in cc:
                 vp[relabel[j]] = relabel[self._vp[j]]
                 fp[relabel[j]] = relabel[self._fp[j]]
-            connected_graphs.append(FatGraph(vp, fp))
+            connected_graphs.append((FatGraph(vp, fp), cc))
 
         return connected_graphs
 
@@ -341,9 +342,9 @@ class FatGraph(object):
             sage: fg
             FatGraph('(0,4,2,5)(1,6)(3,7)(8,11,13)(9,10,12)(14,15)', '(0,6,3,4,2,7,1,5)(8,12,11,9,13,10)(14)(15)')
             sage: fg.connected_components()
-            [FatGraph('(0,4,2,5)(1,6)(3,7)', '(0,6,3,4,2,7,1,5)'),
-             FatGraph('(0,3,5)(1,2,4)', '(0,4,3,1,5,2)'),
-             FatGraph('(0,1)', '(0)(1)')]
+            [(FatGraph('(0,4,2,5)(1,6)(3,7)', '(0,6,3,4,2,7,1,5)'), (0, 1, 2, 3, 4, 5, 6, 7)),
+             (FatGraph('(0,3,5)(1,2,4)', '(0,4,3,1,5,2)'), (8, 9, 10, 11, 12, 13)),
+             (FatGraph('(0,1)', '(0)(1)'), (14, 15))]
         """
         if not args:
             if not self._mutable and not mutable:
