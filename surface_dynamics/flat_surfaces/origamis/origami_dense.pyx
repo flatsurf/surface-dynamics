@@ -1312,7 +1312,7 @@ cdef class Origami_dense_pyx:
             [0, 2]
         """
         cdef list l = []
-        cdef int * seen  = <int *> calloc(self._n, sizeof(int))
+        cdef int * seen = <int *> calloc(self._n, sizeof(int))
         cdef int i
 
         for i in range(self._n):
@@ -2074,7 +2074,6 @@ cdef class Origami_dense_pyx:
         if self._n != other._n:
             return False
         cdef Origami_dense_pyx ss, oo
-        cdef ms, mo    # missing C type before ms, mo
         ss, ms = self.relabel(inplace=False, return_map=True)
         oo, mo = other.relabel(inplace=False, return_map=True)
         cdef size_t i
