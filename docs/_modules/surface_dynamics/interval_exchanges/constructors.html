@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
-    <!-- Generated with Sphinx 5.3.0 and Furo 2023.05.20 -->
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>surface_dynamics.interval_exchanges.constructors - surface-dynamics 0.4.7 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
     <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
     
     
@@ -481,7 +481,9 @@
     <span class="k">return</span> <span class="n">res</span>
 
 
-<div class="viewcode-block" id="Permutation"><a class="viewcode-back" href="../../../interval_exchanges/constructors.html#surface_dynamics.interval_exchanges.constructors.Permutation">[docs]</a><span class="k">def</span> <span class="nf">Permutation</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Permutation">
+<a class="viewcode-back" href="../../../interval_exchanges/constructors.html#surface_dynamics.interval_exchanges.constructors.Permutation">[docs]</a>
+<span class="k">def</span> <span class="nf">Permutation</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a permutation of an interval exchange transformation.</span>
 
@@ -649,7 +651,10 @@
     <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="n">reduced</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="n">flips</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="GeneralizedPermutation"><a class="viewcode-back" href="../../../interval_exchanges/constructors.html#surface_dynamics.interval_exchanges.constructors.GeneralizedPermutation">[docs]</a><span class="k">def</span> <span class="nf">GeneralizedPermutation</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="GeneralizedPermutation">
+<a class="viewcode-back" href="../../../interval_exchanges/constructors.html#surface_dynamics.interval_exchanges.constructors.GeneralizedPermutation">[docs]</a>
+<span class="k">def</span> <span class="nf">GeneralizedPermutation</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a permutation of an interval exchange transformation.</span>
 
@@ -768,7 +773,10 @@
     <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="n">reduced</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="n">flips</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Permutations_iterator"><a class="viewcode-back" href="../../../interval_exchanges/constructors.html#surface_dynamics.interval_exchanges.constructors.Permutations_iterator">[docs]</a><span class="k">def</span> <span class="nf">Permutations_iterator</span><span class="p">(</span><span class="n">nintervals</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+
+<div class="viewcode-block" id="Permutations_iterator">
+<a class="viewcode-back" href="../../../interval_exchanges/constructors.html#surface_dynamics.interval_exchanges.constructors.Permutations_iterator">[docs]</a>
+<span class="k">def</span> <span class="nf">Permutations_iterator</span><span class="p">(</span><span class="n">nintervals</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                           <span class="n">irreducible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                           <span class="n">reduced</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                           <span class="n">alphabet</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -844,7 +852,10 @@
             <span class="n">alphabet</span><span class="o">=</span><span class="n">alphabet</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="RauzyDiagram"><a class="viewcode-back" href="../../../interval_exchanges/constructors.html#surface_dynamics.interval_exchanges.constructors.RauzyDiagram">[docs]</a><span class="nd">@rename_keyword</span><span class="p">(</span>
+
+<div class="viewcode-block" id="RauzyDiagram">
+<a class="viewcode-back" href="../../../interval_exchanges/constructors.html#surface_dynamics.interval_exchanges.constructors.RauzyDiagram">[docs]</a>
+<span class="nd">@rename_keyword</span><span class="p">(</span>
     <span class="n">lr_inversion</span><span class="o">=</span><span class="s1">&#39;left_right_inversion&#39;</span><span class="p">,</span>
     <span class="n">tb_inversion</span><span class="o">=</span><span class="s1">&#39;top_bottom_inversion&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">RauzyDiagram</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -978,12 +989,15 @@
         <span class="n">top_bottom_inversion</span><span class="o">=</span><span class="n">top_bottom_inversion</span><span class="p">,</span>
         <span class="n">symmetric</span><span class="o">=</span><span class="n">symmetric</span><span class="p">)</span></div>
 
+
 <span class="c1"># TODO</span>
 <span class="c1"># def GeneralizedPermutation_iterator():</span>
 <span class="c1">#     pass</span>
 
 
-<div class="viewcode-block" id="IntervalExchangeTransformation"><a class="viewcode-back" href="../../../interval_exchanges/constructors.html#surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformation">[docs]</a><span class="k">def</span> <span class="nf">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">permutation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="IntervalExchangeTransformation">
+<a class="viewcode-back" href="../../../interval_exchanges/constructors.html#surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformation">[docs]</a>
+<span class="k">def</span> <span class="nf">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">permutation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Constructs an Interval exchange transformation.</span>
 
@@ -1077,10 +1091,13 @@
     <span class="k">return</span> <span class="n">_IET</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">lengths</span><span class="p">)</span></div>
 
 
+
 <span class="n">IET</span> <span class="o">=</span> <span class="n">IntervalExchangeTransformation</span>
 
 
-<div class="viewcode-block" id="IntervalExchangeTransformationFamily"><a class="viewcode-back" href="../../../interval_exchanges/constructors.html#surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformationFamily">[docs]</a><span class="k">def</span> <span class="nf">IntervalExchangeTransformationFamily</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="IntervalExchangeTransformationFamily">
+<a class="viewcode-back" href="../../../interval_exchanges/constructors.html#surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformationFamily">[docs]</a>
+<span class="k">def</span> <span class="nf">IntervalExchangeTransformationFamily</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return a linear family of interval exchange transformations</span>
 
@@ -1124,10 +1141,13 @@
         <span class="k">return</span> <span class="n">IETFamily</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">C</span><span class="p">)</span></div>
 
 
+
 <span class="n">IETFamily</span> <span class="o">=</span> <span class="n">IntervalExchangeTransformationFamily</span>
 
 
-<div class="viewcode-block" id="FlipSequence"><a class="viewcode-back" href="../../../interval_exchanges/constructors.html#surface_dynamics.interval_exchanges.constructors.FlipSequence">[docs]</a><span class="k">def</span> <span class="nf">FlipSequence</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+<div class="viewcode-block" id="FlipSequence">
+<a class="viewcode-back" href="../../../interval_exchanges/constructors.html#surface_dynamics.interval_exchanges.constructors.FlipSequence">[docs]</a>
+<span class="k">def</span> <span class="nf">FlipSequence</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Build a flip sequence corresponding to a path in a Rauzy diagram.</span>
 
@@ -1157,6 +1177,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">.flip_sequence</span> <span class="kn">import</span> <span class="n">IETFlipSequence</span>
     <span class="k">return</span> <span class="n">IETFlipSequence</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span></div>
+
 </pre></div>
         </article>
       </div>
@@ -1189,12 +1210,9 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/sphinx_highlight.js"></script>
-    <script src="../../../_static/scripts/furo.js"></script>
+</div><script src="../../../_static/documentation_options.js?v=a78bb796"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/furo.js?v=32e29ea5"></script>
     </body>
 </html>

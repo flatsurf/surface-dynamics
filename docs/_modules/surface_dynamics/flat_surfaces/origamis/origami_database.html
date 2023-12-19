@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../../../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
-    <!-- Generated with Sphinx 5.3.0 and Furo 2023.05.20 -->
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>surface_dynamics.flat_surfaces.origamis.origami_database - surface-dynamics 0.4.7 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=36a5483c" />
     <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
     
     
@@ -446,7 +446,9 @@
 <span class="c1">#  gap.PrimitiveGroup(gap.NrMovedPoints(G),gap.PrimitiveIdentification(G))</span>
 
 
-<div class="viewcode-block" id="are_skeleton_equal"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.are_skeleton_equal">[docs]</a><span class="k">def</span> <span class="nf">are_skeleton_equal</span><span class="p">(</span><span class="n">sk1</span><span class="p">,</span> <span class="n">sk2</span><span class="p">):</span>
+<div class="viewcode-block" id="are_skeleton_equal">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.are_skeleton_equal">[docs]</a>
+<span class="k">def</span> <span class="nf">are_skeleton_equal</span><span class="p">(</span><span class="n">sk1</span><span class="p">,</span> <span class="n">sk2</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test whether the two skeleton ``sk1`` and ``sk2`` are equals.</span>
 
@@ -481,6 +483,7 @@
                 <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">return</span> <span class="kc">True</span></div>
+
 
 
 <span class="n">ORIGAMI_DB_skeleton</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;origamis&#39;</span><span class="p">:</span> <span class="p">{</span>
@@ -608,7 +611,9 @@
 <span class="c1"># raw data to sqldatatype conversion</span>
 <span class="c1">#</span>
 
-<div class="viewcode-block" id="real_tuple_to_data"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.real_tuple_to_data">[docs]</a><span class="k">def</span> <span class="nf">real_tuple_to_data</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<div class="viewcode-block" id="real_tuple_to_data">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.real_tuple_to_data">[docs]</a>
+<span class="k">def</span> <span class="nf">real_tuple_to_data</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a tuple of real numbers with same precision into a string.</span>
 
@@ -670,7 +675,10 @@
     <span class="k">return</span> <span class="n">s</span></div>
 
 
-<div class="viewcode-block" id="data_to_real_tuple"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.data_to_real_tuple">[docs]</a><span class="k">def</span> <span class="nf">data_to_real_tuple</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+
+<div class="viewcode-block" id="data_to_real_tuple">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.data_to_real_tuple">[docs]</a>
+<span class="k">def</span> <span class="nf">data_to_real_tuple</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a string into a tuple of real numbers.</span>
 
@@ -705,7 +713,10 @@
     <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="small_positive_integer_tuple_to_data"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.small_positive_integer_tuple_to_data">[docs]</a><span class="k">def</span> <span class="nf">small_positive_integer_tuple_to_data</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="small_positive_integer_tuple_to_data">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.small_positive_integer_tuple_to_data">[docs]</a>
+<span class="k">def</span> <span class="nf">small_positive_integer_tuple_to_data</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a tuple of integers between 0 and 35 to a string.</span>
 
@@ -731,7 +742,10 @@
     <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Integer</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">t</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="data_to_small_positive_integer_tuple"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.data_to_small_positive_integer_tuple">[docs]</a><span class="k">def</span> <span class="nf">data_to_small_positive_integer_tuple</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+
+<div class="viewcode-block" id="data_to_small_positive_integer_tuple">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.data_to_small_positive_integer_tuple">[docs]</a>
+<span class="k">def</span> <span class="nf">data_to_small_positive_integer_tuple</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a string into a tuple of Integer.</span>
 
@@ -751,7 +765,10 @@
         <span class="k">return</span> <span class="p">()</span>
     <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">Integer</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">36</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="integer_tuple_to_data"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.integer_tuple_to_data">[docs]</a><span class="k">def</span> <span class="nf">integer_tuple_to_data</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="integer_tuple_to_data">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.integer_tuple_to_data">[docs]</a>
+<span class="k">def</span> <span class="nf">integer_tuple_to_data</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a tuple of arbitrary integers into a string.</span>
 
@@ -774,7 +791,10 @@
         <span class="k">return</span> <span class="s1">&#39;&#39;</span>
     <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Integer</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">t</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="data_to_integer_tuple"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.data_to_integer_tuple">[docs]</a><span class="k">def</span> <span class="nf">data_to_integer_tuple</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+
+<div class="viewcode-block" id="data_to_integer_tuple">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.data_to_integer_tuple">[docs]</a>
+<span class="k">def</span> <span class="nf">data_to_integer_tuple</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a string into a tuple of integers.</span>
 
@@ -793,18 +813,24 @@
     <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">Integer</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">36</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span></div>
 
 
+
 <span class="n">rational_to_data</span> <span class="o">=</span> <span class="nb">str</span>
 <span class="n">data_to_rational</span> <span class="o">=</span> <span class="n">QQ</span>
 
 
-<div class="viewcode-block" id="square_num_to_str"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.square_num_to_str">[docs]</a><span class="k">def</span> <span class="nf">square_num_to_str</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+<div class="viewcode-block" id="square_num_to_str">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.square_num_to_str">[docs]</a>
+<span class="k">def</span> <span class="nf">square_num_to_str</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">80</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">chr</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">48</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">Integer</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span></div>
 
 
-<div class="viewcode-block" id="representative_to_data"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.representative_to_data">[docs]</a><span class="k">def</span> <span class="nf">representative_to_data</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
+
+<div class="viewcode-block" id="representative_to_data">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.representative_to_data">[docs]</a>
+<span class="k">def</span> <span class="nf">representative_to_data</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The maximum number of squares is 95. The encoding consists of the</span>
 <span class="sd">    concatenation of the two permutations that define the origami.</span>
@@ -845,7 +871,10 @@
         <span class="n">us</span> <span class="o">=</span> <span class="n">integer_tuple_to_data</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">u_tuple</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">rs</span> <span class="o">+</span> <span class="n">us</span></div>
 
-<div class="viewcode-block" id="data_to_representative"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.data_to_representative">[docs]</a><span class="k">def</span> <span class="nf">data_to_representative</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+
+<div class="viewcode-block" id="data_to_representative">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.data_to_representative">[docs]</a>
+<span class="k">def</span> <span class="nf">data_to_representative</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert data to representative.</span>
 
@@ -863,7 +892,10 @@
     <span class="k">return</span> <span class="n">Origami_dense_pyx</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">u</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="format_representative"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.format_representative">[docs]</a><span class="k">def</span> <span class="nf">format_representative</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+
+<div class="viewcode-block" id="format_representative">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.format_representative">[docs]</a>
+<span class="k">def</span> <span class="nf">format_representative</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a string that encodes an origami into a human readable string.</span>
 
@@ -892,8 +924,11 @@
     <span class="k">return</span> <span class="s1">&#39;r=&#39;</span> <span class="o">+</span> <span class="n">format_cycles</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;  u=&#39;</span> <span class="o">+</span> <span class="n">format_cycles</span><span class="p">(</span><span class="n">u</span><span class="p">)</span></div>
 
 
+
 <span class="c1"># stratum and component</span>
-<div class="viewcode-block" id="stratum_to_data"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.stratum_to_data">[docs]</a><span class="k">def</span> <span class="nf">stratum_to_data</span><span class="p">(</span><span class="n">h</span><span class="p">):</span>
+<div class="viewcode-block" id="stratum_to_data">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.stratum_to_data">[docs]</a>
+<span class="k">def</span> <span class="nf">stratum_to_data</span><span class="p">(</span><span class="n">h</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Encode the stratum entry.</span>
 
@@ -911,7 +946,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">integer_tuple_to_data</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">zeros</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="data_to_stratum"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.data_to_stratum">[docs]</a><span class="k">def</span> <span class="nf">data_to_stratum</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+
+<div class="viewcode-block" id="data_to_stratum">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.data_to_stratum">[docs]</a>
+<span class="k">def</span> <span class="nf">data_to_stratum</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a string into a stratum.</span>
 
@@ -926,13 +964,16 @@
     <span class="k">return</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="n">data_to_integer_tuple</span><span class="p">(</span><span class="n">s</span><span class="p">))</span></div>
 
 
+
 <span class="n">L_exp_approx_to_data</span> <span class="o">=</span> <span class="n">real_tuple_to_data</span>
 <span class="n">data_to_L_exp_approx</span> <span class="o">=</span> <span class="n">data_to_real_tuple</span>
 
 <span class="n">pole_partition_to_data</span> <span class="o">=</span> <span class="n">small_positive_integer_tuple_to_data</span>
 
 
-<div class="viewcode-block" id="data_to_pole_partition"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.data_to_pole_partition">[docs]</a><span class="k">def</span> <span class="nf">data_to_pole_partition</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<div class="viewcode-block" id="data_to_pole_partition">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.data_to_pole_partition">[docs]</a>
+<span class="k">def</span> <span class="nf">data_to_pole_partition</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    TESTS::</span>
 
@@ -947,7 +988,10 @@
     <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="format_pole_partition"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.format_pole_partition">[docs]</a><span class="k">def</span> <span class="nf">format_pole_partition</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+
+<div class="viewcode-block" id="format_pole_partition">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.format_pole_partition">[docs]</a>
+<span class="k">def</span> <span class="nf">format_pole_partition</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Format into a nice readable string the pole partition.</span>
 
@@ -965,6 +1009,7 @@
     <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> (</span><span class="si">%d</span><span class="s2">,</span><span class="si">%d</span><span class="s2">,</span><span class="si">%d</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">p</span></div>
 
 
+
 <span class="n">nb_cyls_spectrum_to_data</span> <span class="o">=</span> <span class="n">integer_tuple_to_data</span>
 <span class="n">data_to_nb_cyls_spectrum</span> <span class="o">=</span> <span class="n">data_to_integer_tuple</span>
 
@@ -972,7 +1017,9 @@
 <span class="n">data_to_sum_of_L_exp</span> <span class="o">=</span> <span class="n">data_to_rational</span>
 
 
-<div class="viewcode-block" id="orientation_stratum_to_data"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.orientation_stratum_to_data">[docs]</a><span class="k">def</span> <span class="nf">orientation_stratum_to_data</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+<div class="viewcode-block" id="orientation_stratum_to_data">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.orientation_stratum_to_data">[docs]</a>
+<span class="k">def</span> <span class="nf">orientation_stratum_to_data</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    TESTS::</span>
 
@@ -989,10 +1036,14 @@
         <span class="k">return</span> <span class="s1">&#39;&#39;</span>
     <span class="k">return</span> <span class="n">integer_tuple_to_data</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">zeros</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="data_to_orientation_stratum"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.data_to_orientation_stratum">[docs]</a><span class="k">def</span> <span class="nf">data_to_orientation_stratum</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+
+<div class="viewcode-block" id="data_to_orientation_stratum">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.data_to_orientation_stratum">[docs]</a>
+<span class="k">def</span> <span class="nf">data_to_orientation_stratum</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">s</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">QuadraticStratum</span><span class="p">(</span><span class="n">data_to_integer_tuple</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
     <span class="k">return</span> <span class="kc">None</span></div>
+
 
 
 <span class="n">cc_from_name</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">cc</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">cc</span><span class="p">)</span> <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="p">[</span><span class="n">ASC</span><span class="p">,</span><span class="n">HypASC</span><span class="p">,</span><span class="n">NonHypASC</span><span class="p">,</span><span class="n">EvenASC</span><span class="p">,</span> <span class="n">OddASC</span><span class="p">])</span>
@@ -1001,7 +1052,9 @@
 <span class="c1"># db and queries</span>
 <span class="c1">#</span>
 
-<div class="viewcode-block" id="EnhancedSQLQuery"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.EnhancedSQLQuery">[docs]</a><span class="k">class</span> <span class="nc">EnhancedSQLQuery</span><span class="p">(</span><span class="n">SQLQuery</span><span class="p">):</span>
+<div class="viewcode-block" id="EnhancedSQLQuery">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.EnhancedSQLQuery">[docs]</a>
+<span class="k">class</span> <span class="nc">EnhancedSQLQuery</span><span class="p">(</span><span class="n">SQLQuery</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query_string</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A query for a OrigamiDatabase.</span>
@@ -1021,7 +1074,10 @@
         <span class="n">SQLQuery</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">database</span><span class="p">,</span><span class="n">query_string</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="OrigamiQuery"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery">[docs]</a><span class="k">class</span> <span class="nc">OrigamiQuery</span><span class="p">:</span>
+
+<div class="viewcode-block" id="OrigamiQuery">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery">[docs]</a>
+<span class="k">class</span> <span class="nc">OrigamiQuery</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Origami database query.</span>
 
@@ -1072,7 +1128,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s1">&#39;Origami query: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">get_query_string</span><span class="p">()</span>
 
-<div class="viewcode-block" id="OrigamiQuery.database"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.database">[docs]</a>    <span class="k">def</span> <span class="nf">database</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="OrigamiQuery.database">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.database">[docs]</a>
+    <span class="k">def</span> <span class="nf">database</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the database of that query.</span>
 
@@ -1089,7 +1147,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db</span></div>
 
-<div class="viewcode-block" id="OrigamiQuery.cols"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.cols">[docs]</a>    <span class="k">def</span> <span class="nf">cols</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">cols</span><span class="p">):</span>
+
+<div class="viewcode-block" id="OrigamiQuery.cols">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.cols">[docs]</a>
+    <span class="k">def</span> <span class="nf">cols</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">cols</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or modify columns.</span>
 
@@ -1123,7 +1184,10 @@
             <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="n">ORIGAMI_DB_cols</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="OrigamiQuery.order"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.order">[docs]</a>    <span class="k">def</span> <span class="nf">order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+
+<div class="viewcode-block" id="OrigamiQuery.order">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.order">[docs]</a>
+    <span class="k">def</span> <span class="nf">order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or modify order.</span>
 
@@ -1161,7 +1225,10 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;duplicate in your list&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_order</span> <span class="o">=</span> <span class="n">tt</span></div>
 
-<div class="viewcode-block" id="OrigamiQuery.get_query_string"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.get_query_string">[docs]</a>    <span class="k">def</span> <span class="nf">get_query_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="OrigamiQuery.get_query_string">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.get_query_string">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_query_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Output the query string in sql format.</span>
 
@@ -1188,11 +1255,15 @@
             <span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot; ORDER BY &quot;</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">col_name</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">col_name</span><span class="p">,</span><span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">query</span></div>
 
-<div class="viewcode-block" id="OrigamiQuery.sql_query"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.sql_query">[docs]</a>    <span class="k">def</span> <span class="nf">sql_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="OrigamiQuery.sql_query">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.sql_query">[docs]</a>
+    <span class="k">def</span> <span class="nf">sql_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the SQLQuery.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">SQLQuery</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_query_string</span><span class="p">())</span></div>
+
 
     <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -1216,7 +1287,9 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">yield</span> <span class="n">r</span>
 
-<div class="viewcode-block" id="OrigamiQuery.list"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="OrigamiQuery.list">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.list">[docs]</a>
+    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the list of entries of the query.</span>
 
@@ -1242,7 +1315,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="OrigamiQuery.dict"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.dict">[docs]</a>    <span class="k">def</span> <span class="nf">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="OrigamiQuery.dict">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.dict">[docs]</a>
+    <span class="k">def</span> <span class="nf">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of dictionaries: col -&gt; value.</span>
 
@@ -1271,16 +1347,22 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cols</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="OrigamiQuery.number_of"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.number_of">[docs]</a>    <span class="k">def</span> <span class="nf">number_of</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="OrigamiQuery.number_of">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.number_of">[docs]</a>
+    <span class="k">def</span> <span class="nf">number_of</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of entries in the database that satisfy the</span>
 <span class="sd">        query.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span></div>
 
+
     <span class="fm">__len__</span> <span class="o">=</span> <span class="n">number_of</span>
 
-<div class="viewcode-block" id="OrigamiQuery.show"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">opts</span><span class="p">):</span>
+<div class="viewcode-block" id="OrigamiQuery.show">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiQuery.show">[docs]</a>
+    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">opts</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Output a text array with the results of that query.</span>
 
@@ -1300,10 +1382,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">opts</span><span class="p">[</span><span class="s1">&#39;format_cols&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="o">.</span><span class="n">_get_format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cols</span><span class="p">)</span>
         <span class="n">opts</span><span class="p">[</span><span class="s1">&#39;relabel_cols&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">relabel_cols</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sql_query</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="o">**</span><span class="n">opts</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sql_query</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="o">**</span><span class="n">opts</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="build_local_data"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.build_local_data">[docs]</a><span class="k">def</span> <span class="nf">build_local_data</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
+
+<div class="viewcode-block" id="build_local_data">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.build_local_data">[docs]</a>
+<span class="k">def</span> <span class="nf">build_local_data</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Build local data for the origami ``o``.</span>
 
@@ -1445,7 +1531,10 @@
 
     <span class="k">return</span> <span class="n">data</span></div>
 
-<div class="viewcode-block" id="build_lyapunov_exponents"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.build_lyapunov_exponents">[docs]</a><span class="k">def</span> <span class="nf">build_lyapunov_exponents</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mh">0X10000</span><span class="p">,</span> <span class="n">nb_experiments</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+
+<div class="viewcode-block" id="build_lyapunov_exponents">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.build_lyapunov_exponents">[docs]</a>
+<span class="k">def</span> <span class="nf">build_lyapunov_exponents</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mh">0X10000</span><span class="p">,</span> <span class="n">nb_experiments</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute the lyapunov exponents for the origami ``o`` and update the</span>
 <span class="sd">    database.</span>
@@ -1469,7 +1558,10 @@
     <span class="k">return</span> <span class="n">data</span></div>
 
 
-<div class="viewcode-block" id="build_global_data"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.build_global_data">[docs]</a><span class="k">def</span> <span class="nf">build_global_data</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="build_global_data">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.build_global_data">[docs]</a>
+<span class="k">def</span> <span class="nf">build_global_data</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute the global data that are obtained from the Teichmueller curve of the</span>
 <span class="sd">    origami ``o``. If the Teichmueller curve ``c`` is not provided, then it is</span>
@@ -1546,7 +1638,10 @@
     <span class="k">return</span> <span class="n">data</span></div>
 
 
-<div class="viewcode-block" id="OrigamiDatabase"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase">[docs]</a><span class="k">class</span> <span class="nc">OrigamiDatabase</span><span class="p">(</span><span class="n">SQLDatabase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="OrigamiDatabase">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase">[docs]</a>
+<span class="k">class</span> <span class="nc">OrigamiDatabase</span><span class="p">(</span><span class="n">SQLDatabase</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Database of arithmetic Teichmueller curves.</span>
 
@@ -1694,7 +1789,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">()</span><span class="o">.</span><span class="n">number_of</span><span class="p">()</span>
 
-<div class="viewcode-block" id="OrigamiDatabase.cols"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.cols">[docs]</a>    <span class="k">def</span> <span class="nf">cols</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="OrigamiDatabase.cols">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.cols">[docs]</a>
+    <span class="k">def</span> <span class="nf">cols</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the skeleton of self (which is the list of possible entries).</span>
 
@@ -1714,7 +1811,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">ORIGAMI_DB_cols</span><span class="p">[:]</span></div>
 
-<div class="viewcode-block" id="OrigamiDatabase.build"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">force_computation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="OrigamiDatabase.build">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.build">[docs]</a>
+    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">force_computation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the database for the given component ``comp`` up to ``N`` squares.</span>
 
@@ -1840,6 +1940,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
 
+
     <span class="k">def</span> <span class="nf">_update_from_old_versions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the database from an old one.</span>
@@ -1913,7 +2014,9 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 
-<div class="viewcode-block" id="OrigamiDatabase.update"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="OrigamiDatabase.update">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.update">[docs]</a>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the content of this database with the content of another one.</span>
 
@@ -1979,7 +2082,10 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="OrigamiDatabase.rebuild"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.rebuild">[docs]</a>    <span class="k">def</span> <span class="nf">rebuild</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">local_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lyapunov_exponents</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+
+<div class="viewcode-block" id="OrigamiDatabase.rebuild">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.rebuild">[docs]</a>
+    <span class="k">def</span> <span class="nf">rebuild</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">local_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lyapunov_exponents</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">global_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mh">0X1000</span><span class="p">,</span> <span class="n">nb_experiments</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
             <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -2037,6 +2143,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
 
+
 <span class="c1">#    def strata(self, **kwds):</span>
 <span class="c1">#        r&quot;&quot;&quot;</span>
 <span class="c1">#        Return the list of strata for which some orbit are computed.</span>
@@ -2074,7 +2181,9 @@
 <span class="c1">#        q.cols((&quot;stratum&quot;,&quot;component&quot;))</span>
 <span class="c1">#        return sorted(cc_from_name[x[1]](x[0]) for x in set(map(tuple,q)))</span>
 
-<div class="viewcode-block" id="OrigamiDatabase.info"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">genus</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dimension</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">print_all</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="OrigamiDatabase.info">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.info">[docs]</a>
+    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">genus</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dimension</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">print_all</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Print the list of connected components and the number of squares up to</span>
 <span class="sd">        which the database is filled.</span>
@@ -2132,7 +2241,10 @@
         <span class="nb">print</span><span class="p">()</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total: </span><span class="si">%d</span><span class="s2"> Teichmueller curves&quot;</span><span class="o">%</span><span class="n">n_total</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="OrigamiDatabase.help"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.help">[docs]</a>    <span class="k">def</span> <span class="nf">help</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="OrigamiDatabase.help">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.help">[docs]</a>
+    <span class="k">def</span> <span class="nf">help</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Print some help relative to the columns of the database.</span>
 
@@ -2140,7 +2252,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
-<div class="viewcode-block" id="OrigamiDatabase.max_nb_squares"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.max_nb_squares">[docs]</a>    <span class="k">def</span> <span class="nf">max_nb_squares</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="OrigamiDatabase.max_nb_squares">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.max_nb_squares">[docs]</a>
+    <span class="k">def</span> <span class="nf">max_nb_squares</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the maximum number of squares for which Teichmueller curves have</span>
 <span class="sd">        been computed.</span>
@@ -2195,6 +2310,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">comp</span><span class="se">\&quot;</span><span class="s2"> should be None, a stratum of Abelian differential or a component of stratum&quot;</span><span class="p">)</span></div>
 
+
     <span class="k">def</span> <span class="nf">_get_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cols</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the dictionary of functions for formatting the given the list</span>
@@ -2214,7 +2330,9 @@
                 <span class="n">format_cols</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">format_cols</span>
 
-<div class="viewcode-block" id="OrigamiDatabase.query"><a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">query_list</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+<div class="viewcode-block" id="OrigamiDatabase.query">
+<a class="viewcode-back" href="../../../../origamis.html#surface_dynamics.flat_surfaces.origamis.origami_database.OrigamiDatabase.query">[docs]</a>
+    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">query_list</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        From a list of restriction, returns a list of possible entry in the</span>
 <span class="sd">        database. By default, returns only the found origamis.</span>
@@ -2289,7 +2407,9 @@
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">query_string</span><span class="o">=</span><span class="n">query_string</span><span class="p">,</span>
             <span class="n">cols</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span>
-            <span class="n">format_cols</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_format</span><span class="p">(</span><span class="n">cols</span><span class="p">))</span></div></div>
+            <span class="n">format_cols</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_format</span><span class="p">(</span><span class="n">cols</span><span class="p">))</span></div>
+</div>
+
 </pre></div>
         </article>
       </div>
@@ -2322,12 +2442,9 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-    <script src="../../../../_static/jquery.js"></script>
-    <script src="../../../../_static/underscore.js"></script>
-    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../../../_static/doctools.js"></script>
-    <script src="../../../../_static/sphinx_highlight.js"></script>
-    <script src="../../../../_static/scripts/furo.js"></script>
+</div><script src="../../../../_static/documentation_options.js?v=a78bb796"></script>
+    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/scripts/furo.js?v=32e29ea5"></script>
     </body>
 </html>

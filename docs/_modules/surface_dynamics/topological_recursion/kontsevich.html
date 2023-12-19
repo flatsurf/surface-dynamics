@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
-    <!-- Generated with Sphinx 5.3.0 and Furo 2023.05.20 -->
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>surface_dynamics.topological_recursion.kontsevich - surface-dynamics 0.4.7 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
     <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
     
     
@@ -267,7 +267,9 @@
 <span class="n">ZZ_1</span> <span class="o">=</span> <span class="n">ZZ</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="psi_correlator"><a class="viewcode-back" href="../../../topological_recursion/kontsevich.html#surface_dynamics.topological_recursion.kontsevich.psi_correlator">[docs]</a><span class="k">def</span> <span class="nf">psi_correlator</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="psi_correlator">
+<a class="viewcode-back" href="../../../topological_recursion/kontsevich.html#surface_dynamics.topological_recursion.kontsevich.psi_correlator">[docs]</a>
+<span class="k">def</span> <span class="nf">psi_correlator</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the integral of psi classes</span>
 
@@ -322,7 +324,10 @@
     <span class="k">return</span> <span class="n">KontsevichTR</span><span class="p">()</span><span class="o">.</span><span class="n">F</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span> <span class="o">/</span> <span class="n">prod</span><span class="p">(</span><span class="n">ZZ</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">multifactorial</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">args</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="KontsevichTR"><a class="viewcode-back" href="../../../topological_recursion/kontsevich.html#surface_dynamics.topological_recursion.kontsevich.KontsevichTR">[docs]</a><span class="k">class</span> <span class="nc">KontsevichTR</span><span class="p">(</span><span class="n">UniqueRepresentation</span><span class="p">,</span> <span class="n">TopologicalRecursion</span><span class="p">):</span>
+
+<div class="viewcode-block" id="KontsevichTR">
+<a class="viewcode-back" href="../../../topological_recursion/kontsevich.html#surface_dynamics.topological_recursion.kontsevich.KontsevichTR">[docs]</a>
+<span class="k">class</span> <span class="nc">KontsevichTR</span><span class="p">(</span><span class="n">UniqueRepresentation</span><span class="p">,</span> <span class="n">TopologicalRecursion</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Topological recursion for intersection of psi classes (Witten&#39;s conjecture)</span>
 
@@ -362,7 +367,9 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">TopologicalRecursion</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-<div class="viewcode-block" id="KontsevichTR.A"><a class="viewcode-back" href="../../../topological_recursion/kontsevich.html#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.A">[docs]</a>    <span class="k">def</span> <span class="nf">A</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<div class="viewcode-block" id="KontsevichTR.A">
+<a class="viewcode-back" href="../../../topological_recursion/kontsevich.html#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.A">[docs]</a>
+    <span class="k">def</span> <span class="nf">A</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A-data for Kontsevich recursion</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -371,7 +378,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span></div>
 
-<div class="viewcode-block" id="KontsevichTR.B"><a class="viewcode-back" href="../../../topological_recursion/kontsevich.html#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.B">[docs]</a>    <span class="k">def</span> <span class="nf">B</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+
+<div class="viewcode-block" id="KontsevichTR.B">
+<a class="viewcode-back" href="../../../topological_recursion/kontsevich.html#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.B">[docs]</a>
+    <span class="k">def</span> <span class="nf">B</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        B-data for Kontsevich topological recursion</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -381,7 +391,10 @@
         <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">yield</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">ZZ</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="KontsevichTR.C"><a class="viewcode-back" href="../../../topological_recursion/kontsevich.html#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.C">[docs]</a>    <span class="k">def</span> <span class="nf">C</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">jmax</span><span class="p">,</span> <span class="n">kmax</span><span class="p">,</span> <span class="n">smax</span><span class="p">):</span>
+
+<div class="viewcode-block" id="KontsevichTR.C">
+<a class="viewcode-back" href="../../../topological_recursion/kontsevich.html#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.C">[docs]</a>
+    <span class="k">def</span> <span class="nf">C</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">jmax</span><span class="p">,</span> <span class="n">kmax</span><span class="p">,</span> <span class="n">smax</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        C-data for Kontsevich topological recursion</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -395,11 +408,16 @@
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jmin</span><span class="p">,</span> <span class="n">jmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
             <span class="k">yield</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="n">ZZ_1</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="KontsevichTR.D"><a class="viewcode-back" href="../../../topological_recursion/kontsevich.html#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.D">[docs]</a>    <span class="k">def</span> <span class="nf">D</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+
+<div class="viewcode-block" id="KontsevichTR.D">
+<a class="viewcode-back" href="../../../topological_recursion/kontsevich.html#surface_dynamics.topological_recursion.kontsevich.KontsevichTR.D">[docs]</a>
+    <span class="k">def</span> <span class="nf">D</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        D-data for Kontsevich topological recursion</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">QQ</span><span class="p">(((</span><span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">8</span><span class="p">))</span></div></div>
+        <span class="k">return</span> <span class="n">QQ</span><span class="p">(((</span><span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">8</span><span class="p">))</span></div>
+</div>
+
 </pre></div>
         </article>
       </div>
@@ -432,12 +450,9 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/sphinx_highlight.js"></script>
-    <script src="../../../_static/scripts/furo.js"></script>
+</div><script src="../../../_static/documentation_options.js?v=a78bb796"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/furo.js?v=32e29ea5"></script>
     </body>
 </html>

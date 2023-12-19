@@ -1,16 +1,16 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="./">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Topological recursion" href="topological_recursion/index.html" /><link rel="prev" title="Flip sequences" href="interval_exchanges/flip_sequence.html" />
 
-    <!-- Generated with Sphinx 5.3.0 and Furo 2023.05.20 -->
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>Database of cylinder diagrams and quadratic permutations - surface-dynamics 0.4.7 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
     <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
     
     
@@ -235,7 +235,7 @@
         </div>
         <article role="main">
           <section id="module-surface_dynamics.databases.flat_surfaces">
-<span id="database-of-cylinder-diagrams-and-quadratic-permutations"></span><h1>Database of cylinder diagrams and quadratic permutations<a class="headerlink" href="#module-surface_dynamics.databases.flat_surfaces" title="Permalink to this heading">#</a></h1>
+<span id="database-of-cylinder-diagrams-and-quadratic-permutations"></span><h1>Database of cylinder diagrams and quadratic permutations<a class="headerlink" href="#module-surface_dynamics.databases.flat_surfaces" title="Link to this heading">#</a></h1>
 <p>Databases for translation surfaces.</p>
 <p>This file contain different databases (with different implementations) for
 algorithms related to translation surfaces:</p>
@@ -247,7 +247,7 @@ differentiate</p></li>
 </ul>
 <dl class="py class">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.databases.flat_surfaces.</span></span><span class="sig-name descname"><span class="pre">CylinderDiagrams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.databases.flat_surfaces.</span></span><span class="sig-name descname"><span class="pre">CylinderDiagrams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase" title="surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericRepertoryDatabase</span></code></a></p>
 <p>Database of cylinder diagrams.</p>
 <p>The database consists of several files with the following name convention:
@@ -275,19 +275,19 @@ the odd component of H(2,2) is named “2_2-odd-3”.</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams.count">
-<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncyls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.count" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncyls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.count" title="Link to this definition">#</a></dt>
 <dd><p>Returns the number of cylinder diagrams for a stratum or a component of
 stratum with given number of cylinders.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams.default_path">
-<span class="sig-name descname"><span class="pre">default_path</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/usr/share/miniconda3/envs/test/lib/python3.10/site-packages/surface_dynamics/databases/cylinder_diagrams'</span></em><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.default_path" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">default_path</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/usr/share/miniconda3/envs/test/lib/python3.10/site-packages/surface_dynamics/databases/cylinder_diagrams'</span></em><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.default_path" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams.filename">
-<span class="sig-name descname"><span class="pre">filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncyls</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.filename" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncyls</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.filename" title="Link to this definition">#</a></dt>
 <dd><p>Returns the name of the file for the given component <code class="docutils literal notranslate"><span class="pre">comp</span></code> and the
 given of number of cylinders <code class="docutils literal notranslate"><span class="pre">ncyls</span></code>.</p>
 <p>EXAMPLES:</p>
@@ -304,7 +304,7 @@ given of number of cylinders <code class="docutils literal notranslate"><span cl
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams.get_iterator">
-<span class="sig-name descname"><span class="pre">get_iterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncyls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.get_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.get_iterator" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_iterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncyls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.get_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.get_iterator" title="Link to this definition">#</a></dt>
 <dd><p>Returns an iterator over the list of cylinder diagrams for the component
 <code class="docutils literal notranslate"><span class="pre">comp</span></code> read from the database.</p>
 <p>INPUT:</p>
@@ -337,7 +337,7 @@ given of number of cylinders <code class="docutils literal notranslate"><span cl
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_component">
-<span class="sig-name descname"><span class="pre">has_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.has_component"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_component" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">has_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.has_component"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_component" title="Link to this definition">#</a></dt>
 <dd><p>Test whether the database has the component <code class="docutils literal notranslate"><span class="pre">comp</span></code>.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -372,7 +372,7 @@ given of number of cylinders <code class="docutils literal notranslate"><span cl
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_stratum">
-<span class="sig-name descname"><span class="pre">has_stratum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.has_stratum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_stratum" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">has_stratum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.has_stratum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_stratum" title="Link to this definition">#</a></dt>
 <dd><p>Test whether the database contains the data for a given stratum.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -407,7 +407,7 @@ given of number of cylinders <code class="docutils literal notranslate"><span cl
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams.list_strata">
-<span class="sig-name descname"><span class="pre">list_strata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.list_strata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.list_strata" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">list_strata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.list_strata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.list_strata" title="Link to this definition">#</a></dt>
 <dd><p>List available strata in that database.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -432,7 +432,7 @@ given of number of cylinders <code class="docutils literal notranslate"><span cl
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.update" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.update" title="Link to this definition">#</a></dt>
 <dd><p>Compute once for all the given cylinder diagrams of the given
 <code class="docutils literal notranslate"><span class="pre">stratum</span></code>.</p>
 <p>Warning:</p>
@@ -471,12 +471,12 @@ given of number of cylinders <code class="docutils literal notranslate"><span cl
 
 <dl class="py class">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.databases.flat_surfaces.</span></span><span class="sig-name descname"><span class="pre">GenericRepertoryDatabase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#GenericRepertoryDatabase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.databases.flat_surfaces.</span></span><span class="sig-name descname"><span class="pre">GenericRepertoryDatabase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#GenericRepertoryDatabase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Database that consists of a list of files in a repertory.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.clean">
-<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#GenericRepertoryDatabase.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.clean" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#GenericRepertoryDatabase.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.clean" title="Link to this definition">#</a></dt>
 <dd><p>Clean the database.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -503,20 +503,20 @@ given of number of cylinders <code class="docutils literal notranslate"><span cl
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.default_name">
-<span class="sig-name descname"><span class="pre">default_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'generic_db'</span></em><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.default_name" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">default_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'generic_db'</span></em><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.default_name" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.IrregularComponentTwins">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.databases.flat_surfaces.</span></span><span class="sig-name descname"><span class="pre">IrregularComponentTwins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.databases.flat_surfaces.</span></span><span class="sig-name descname"><span class="pre">IrregularComponentTwins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase" title="surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericRepertoryDatabase</span></code></a></p>
 <p>Twin data of generalized permutation of irregular components of strata of
 Abelian differentials.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.count">
-<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.count" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.count" title="Link to this definition">#</a></dt>
 <dd><p>Returns the number of twins for that stratum.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -534,12 +534,12 @@ Abelian differentials.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.default_path">
-<span class="sig-name descname"><span class="pre">default_path</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/usr/share/miniconda3/envs/test/lib/python3.10/site-packages/surface_dynamics/databases/generalized_permutation_twins'</span></em><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.default_path" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">default_path</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/usr/share/miniconda3/envs/test/lib/python3.10/site-packages/surface_dynamics/databases/generalized_permutation_twins'</span></em><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.default_path" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.filename">
-<span class="sig-name descname"><span class="pre">filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.filename" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.filename" title="Link to this definition">#</a></dt>
 <dd><p>Returns the name of the file for the given component.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -558,7 +558,7 @@ Abelian differentials.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.get">
-<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.get" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.get" title="Link to this definition">#</a></dt>
 <dd><p>Get the list of twins for the stratum of quadratic differentials <code class="docutils literal notranslate"><span class="pre">stratum</span></code>.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -576,7 +576,7 @@ Abelian differentials.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.has_stratum">
-<span class="sig-name descname"><span class="pre">has_stratum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.has_stratum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.has_stratum" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">has_stratum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.has_stratum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.has_stratum" title="Link to this definition">#</a></dt>
 <dd><p>Test whether the component is in the database.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
@@ -591,7 +591,7 @@ Abelian differentials.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.list_strata">
-<span class="sig-name descname"><span class="pre">list_strata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.list_strata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.list_strata" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">list_strata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.list_strata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.list_strata" title="Link to this definition">#</a></dt>
 <dd><p>Returns the list of components for which the list of twins is stored.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.databases.flat_surfaces</span> <span class="kn">import</span> <span class="n">IrregularComponentTwins</span>
@@ -604,7 +604,7 @@ Abelian differentials.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.update" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.update" title="Link to this definition">#</a></dt>
 <dd><p>Update the database with the irregular component of the given stratum.</p>
 <p>The database should not be in read only mode.</p>
 </dd></dl>
@@ -613,7 +613,7 @@ Abelian differentials.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.line_count">
-<span class="sig-prename descclassname"><span class="pre">surface_dynamics.databases.flat_surfaces.</span></span><span class="sig-name descname"><span class="pre">line_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#line_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.line_count" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.databases.flat_surfaces.</span></span><span class="sig-name descname"><span class="pre">line_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#line_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.line_count" title="Link to this definition">#</a></dt>
 <dd><p>Returns the number of lines in the file whose name is filename.</p>
 </dd></dl>
 
@@ -713,12 +713,9 @@ Abelian differentials.</p>
       
     </aside>
   </div>
-</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
-    <script src="_static/scripts/furo.js"></script>
+</div><script src="_static/documentation_options.js?v=a78bb796"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
     </body>
 </html>

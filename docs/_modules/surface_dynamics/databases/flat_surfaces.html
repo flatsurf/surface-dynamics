@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
-    <!-- Generated with Sphinx 5.3.0 and Furo 2023.05.20 -->
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>surface_dynamics.databases.flat_surfaces - surface-dynamics 0.4.7 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
     <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
     
     
@@ -265,7 +265,9 @@
     <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;problem with setting paths&quot;</span><span class="p">)</span>
 <span class="n">SURFACE_DYNAMICS_DB_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">SURFACE_DYNAMICS_DB_PATH</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-<div class="viewcode-block" id="line_count"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.line_count">[docs]</a><span class="k">def</span> <span class="nf">line_count</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<div class="viewcode-block" id="line_count">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.line_count">[docs]</a>
+<span class="k">def</span> <span class="nf">line_count</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the number of lines in the file whose name is filename.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -283,7 +285,10 @@
 
     <span class="k">return</span> <span class="n">Integer</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="GenericRepertoryDatabase"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase">[docs]</a><span class="k">class</span> <span class="nc">GenericRepertoryDatabase</span><span class="p">:</span>
+
+<div class="viewcode-block" id="GenericRepertoryDatabase">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase">[docs]</a>
+<span class="k">class</span> <span class="nc">GenericRepertoryDatabase</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Database that consists of a list of files in a repertory.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -359,7 +364,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
 
-<div class="viewcode-block" id="GenericRepertoryDatabase.clean"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="GenericRepertoryDatabase.clean">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.clean">[docs]</a>
+    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clean the database.</span>
 
@@ -386,9 +393,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_only</span>
         <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span><span class="n">filename</span><span class="p">))</span></div></div>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span><span class="n">filename</span><span class="p">))</span></div>
+</div>
 
-<div class="viewcode-block" id="IrregularComponentTwins"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins">[docs]</a><span class="k">class</span> <span class="nc">IrregularComponentTwins</span><span class="p">(</span><span class="n">GenericRepertoryDatabase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="IrregularComponentTwins">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins">[docs]</a>
+<span class="k">class</span> <span class="nc">IrregularComponentTwins</span><span class="p">(</span><span class="n">GenericRepertoryDatabase</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Twin data of generalized permutation of irregular components of strata of</span>
 <span class="sd">    Abelian differentials.</span>
@@ -408,7 +419,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;Database of twins of irregular components at </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span>
 
-<div class="viewcode-block" id="IrregularComponentTwins.filename"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.filename">[docs]</a>    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
+<div class="viewcode-block" id="IrregularComponentTwins.filename">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.filename">[docs]</a>
+    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the name of the file for the given component.</span>
 
@@ -433,7 +446,10 @@
                 <span class="s1">&#39;_p&#39;</span> <span class="o">*</span> <span class="n">stratum</span><span class="o">.</span><span class="n">nb_poles</span><span class="p">()</span> <span class="o">+</span>
                 <span class="s1">&#39;-irr&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="IrregularComponentTwins.has_stratum"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.has_stratum">[docs]</a>    <span class="k">def</span> <span class="nf">has_stratum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
+
+<div class="viewcode-block" id="IrregularComponentTwins.has_stratum">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.has_stratum">[docs]</a>
+    <span class="k">def</span> <span class="nf">has_stratum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test whether the component is in the database.</span>
 
@@ -448,7 +464,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">stratum</span><span class="p">)))</span></div>
 
-<div class="viewcode-block" id="IrregularComponentTwins.update"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
+
+<div class="viewcode-block" id="IrregularComponentTwins.update">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.update">[docs]</a>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the database with the irregular component of the given stratum.</span>
 
@@ -470,7 +489,10 @@
                 <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">can</span><span class="p">))</span>
                 <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="IrregularComponentTwins.list_strata"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.list_strata">[docs]</a>    <span class="k">def</span> <span class="nf">list_strata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="IrregularComponentTwins.list_strata">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.list_strata">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_strata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the list of components for which the list of twins is stored.</span>
 
@@ -493,7 +515,10 @@
 
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">QuadraticStratum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span><span class="n">g</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)))</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="IrregularComponentTwins.get"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
+
+<div class="viewcode-block" id="IrregularComponentTwins.get">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the list of twins for the stratum of quadratic differentials ``stratum``.</span>
 
@@ -519,7 +544,10 @@
             <span class="n">s</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">res</span></div>
 
-<div class="viewcode-block" id="IrregularComponentTwins.count"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
+
+<div class="viewcode-block" id="IrregularComponentTwins.count">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.count">[docs]</a>
+    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of twins for that stratum.</span>
 
@@ -535,9 +563,13 @@
 <span class="sd">            sage: D.count(Q)</span>
 <span class="sd">            82</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">line_count</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">stratum</span><span class="p">)))</span></div></div>
+        <span class="k">return</span> <span class="n">line_count</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">stratum</span><span class="p">)))</span></div>
+</div>
 
-<div class="viewcode-block" id="CylinderDiagrams"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams">[docs]</a><span class="k">class</span> <span class="nc">CylinderDiagrams</span><span class="p">(</span><span class="n">GenericRepertoryDatabase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagrams">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams">[docs]</a>
+<span class="k">class</span> <span class="nc">CylinderDiagrams</span><span class="p">(</span><span class="n">GenericRepertoryDatabase</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Database of cylinder diagrams.</span>
 
@@ -580,7 +612,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;Database of cylinder diagrams at </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span>
 
-<div class="viewcode-block" id="CylinderDiagrams.filename"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.filename">[docs]</a>    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">ncyls</span><span class="p">):</span>
+<div class="viewcode-block" id="CylinderDiagrams.filename">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.filename">[docs]</a>
+    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">ncyls</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the name of the file for the given component ``comp`` and the</span>
 <span class="sd">        given of number of cylinders ``ncyls``.</span>
@@ -600,7 +634,10 @@
                 <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">comp</span><span class="o">.</span><span class="n">_name</span> <span class="o">+</span>
                 <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ncyls</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="CylinderDiagrams.has_component"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_component">[docs]</a>    <span class="k">def</span> <span class="nf">has_component</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagrams.has_component">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_component">[docs]</a>
+    <span class="k">def</span> <span class="nf">has_component</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test whether the database has the component ``comp``.</span>
 
@@ -638,7 +675,10 @@
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">comp</span><span class="p">,</span> <span class="n">AbelianStratumComponent</span><span class="p">),</span> <span class="s2">&quot;the argument must be a component of stratum of Abelian differentials&quot;</span>
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">comp</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span></div>
 
-<div class="viewcode-block" id="CylinderDiagrams.has_stratum"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_stratum">[docs]</a>    <span class="k">def</span> <span class="nf">has_stratum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagrams.has_stratum">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_stratum">[docs]</a>
+    <span class="k">def</span> <span class="nf">has_stratum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test whether the database contains the data for a given stratum.</span>
 
@@ -676,6 +716,7 @@
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stratum</span><span class="p">,</span> <span class="n">AbelianStratum</span><span class="p">),</span> <span class="s2">&quot;the argument must be a stratum of Abelian differential&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_component</span><span class="p">(</span><span class="n">stratum</span><span class="o">.</span><span class="n">one_component</span><span class="p">())</span></div>
 
+
     <span class="k">def</span> <span class="nf">_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterator over the list of files.</span>
@@ -696,7 +737,9 @@
             <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;cyl_diags-&#39;</span><span class="p">):</span>
                 <span class="k">yield</span> <span class="n">f</span>
 
-<div class="viewcode-block" id="CylinderDiagrams.list_strata"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.list_strata">[docs]</a>    <span class="k">def</span> <span class="nf">list_strata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CylinderDiagrams.list_strata">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.list_strata">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_strata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        List available strata in that database.</span>
 
@@ -728,7 +771,10 @@
 
         <span class="k">return</span> <span class="p">[</span><span class="n">AbelianStratum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)))</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span></div>
 
-<div class="viewcode-block" id="CylinderDiagrams.get_iterator"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.get_iterator">[docs]</a>    <span class="k">def</span> <span class="nf">get_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">ncyls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagrams.get_iterator">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.get_iterator">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">ncyls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns an iterator over the list of cylinder diagrams for the component</span>
 <span class="sd">        ``comp`` read from the database.</span>
@@ -775,6 +821,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;not in the database&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_one_file_iterator</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
+
 
     <span class="k">def</span> <span class="nf">_one_file_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -856,7 +903,9 @@
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-<div class="viewcode-block" id="CylinderDiagrams.update"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="CylinderDiagrams.update">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.update">[docs]</a>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute once for all the given cylinder diagrams of the given</span>
 <span class="sd">        ``stratum``.</span>
@@ -910,7 +959,10 @@
                     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cyl</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="CylinderDiagrams.count"><a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">ncyls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagrams.count">
+<a class="viewcode-back" href="../../../database.html#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.count">[docs]</a>
+    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">ncyls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of cylinder diagrams for a stratum or a component of</span>
 <span class="sd">        stratum with given number of cylinders.</span>
@@ -925,7 +977,9 @@
             <span class="n">s</span> <span class="o">=</span> <span class="n">comp</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span><span class="o">.</span><span class="n">nb_zeros</span><span class="p">()</span>
             <span class="k">return</span> <span class="nb">sum</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">comp</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">g</span><span class="o">+</span><span class="n">s</span><span class="p">)))</span>
 
-        <span class="k">return</span> <span class="n">line_count</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">comp</span><span class="p">,</span> <span class="n">ncyls</span><span class="p">)))</span></div></div>
+        <span class="k">return</span> <span class="n">line_count</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">comp</span><span class="p">,</span> <span class="n">ncyls</span><span class="p">)))</span></div>
+</div>
+
 </pre></div>
         </article>
       </div>
@@ -958,12 +1012,9 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/sphinx_highlight.js"></script>
-    <script src="../../../_static/scripts/furo.js"></script>
+</div><script src="../../../_static/documentation_options.js?v=a78bb796"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/furo.js?v=32e29ea5"></script>
     </body>
 </html>

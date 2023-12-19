@@ -1,16 +1,16 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Square-tiled surfaces" href="square_tiled_surfaces.html" /><link rel="prev" title="Welcome to the surface-dynamics documentation!" href="../index.html" />
 
-    <!-- Generated with Sphinx 5.3.0 and Furo 2023.05.20 -->
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>Interval exchange transformations - surface-dynamics 0.4.7 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
     
     
@@ -235,9 +235,9 @@
         </div>
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="interval-exchange-transformations">
-<h1>Interval exchange transformations<a class="headerlink" href="#interval-exchange-transformations" title="Permalink to this heading">#</a></h1>
+<h1>Interval exchange transformations<a class="headerlink" href="#interval-exchange-transformations" title="Link to this heading">#</a></h1>
 <section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
 <p>This file is a good entry point to learn how to use interval exchange
 transformations in <a class="reference external" href="https://github.com/flatsurf/surface-dynamics">surface-dynamics</a>.
 Recall that an interval
@@ -248,7 +248,7 @@ called the <em>combinatorial datum</em> and the <em>length datum</em> of the int
 exchange transformation.</p>
 </section>
 <section id="building-an-interval-exchange-transformation-and-simple-manipulations">
-<h2>Building an interval exchange transformation and simple manipulations<a class="headerlink" href="#building-an-interval-exchange-transformation-and-simple-manipulations" title="Permalink to this heading">#</a></h2>
+<h2>Building an interval exchange transformation and simple manipulations<a class="headerlink" href="#building-an-interval-exchange-transformation-and-simple-manipulations" title="Link to this heading">#</a></h2>
 <p>Here is an example of interval exchange transformation on 4 subintervals
 with rational lengths</p>
 <div class="cell docutils container">
@@ -280,7 +280,7 @@ d c b a
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d59fc0b77f885668ada236113e0a57358dac17267a952e30c407df9836d2de34.png" src="../_images/d59fc0b77f885668ada236113e0a57358dac17267a952e30c407df9836d2de34.png" />
+<img alt="../_images/69f581e5be67a1c483b6a5e0c376c91975a49ceac6eb03bc439828128403346a.png" src="../_images/69f581e5be67a1c483b6a5e0c376c91975a49ceac6eb03bc439828128403346a.png" />
 </div>
 </div>
 <p>Given a point in the interval <span class="math notranslate nohighlight">\([0, 6172/5187[\)</span> it is possible to compute
@@ -343,7 +343,7 @@ d c b a
 </div>
 </section>
 <section id="rauzy-induction-and-self-similar-iet">
-<h2>Rauzy induction and self-similar iet<a class="headerlink" href="#rauzy-induction-and-self-similar-iet" title="Permalink to this heading">#</a></h2>
+<h2>Rauzy induction and self-similar iet<a class="headerlink" href="#rauzy-induction-and-self-similar-iet" title="Link to this heading">#</a></h2>
 <p>Rauzy induction is a map from the space of interval exchange transformations to itself.
 The image <span class="math notranslate nohighlight">\(\mathcal{R}(t)\)</span> of an iet <span class="math notranslate nohighlight">\(t\)</span> is an induced map.</p>
 <div class="cell docutils container">
@@ -358,7 +358,7 @@ The image <span class="math notranslate nohighlight">\(\mathcal{R}(t)\)</span> o
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/60cfac3c457fcfb33f1d264b695205414b646760bb9fcb73b6edeaf937a50c09.png" src="../_images/60cfac3c457fcfb33f1d264b695205414b646760bb9fcb73b6edeaf937a50c09.png" />
+<img alt="../_images/3040e2fe57d7cc5d77cfac0319310e05c7cbd733e6acaa6747c2c55b6ed8c3a7.png" src="../_images/3040e2fe57d7cc5d77cfac0319310e05c7cbd733e6acaa6747c2c55b6ed8c3a7.png" />
 </div>
 </div>
 <p>From a flip sequence given combinatorially you can build the associated self-similar
@@ -373,7 +373,7 @@ interval exchange transformation</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/5c2de02df67577850c7776b94fb9e4157e9b1120c6ee3cbc2e44912e6f78797d.png" src="../_images/5c2de02df67577850c7776b94fb9e4157e9b1120c6ee3cbc2e44912e6f78797d.png" />
+<img alt="../_images/8f7c7f302e8c3e76e1dc81016e8555395f7b65956dc0b8a2b8a11eaee2aae3bb.png" src="../_images/8f7c7f302e8c3e76e1dc81016e8555395f7b65956dc0b8a2b8a11eaee2aae3bb.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -417,7 +417,7 @@ exchange transformation associated to the flip sequence <code class="docutils li
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/5a053866714a90595853de626d72e8d4bce62dbce4e3aeb6430c8d44bbd88c9d.png" src="../_images/5a053866714a90595853de626d72e8d4bce62dbce4e3aeb6430c8d44bbd88c9d.png" />
+<img alt="../_images/9e38fd79b372fa0a054487985bb6deeb2a453caefbd59f4e2896d5aadf750e78.png" src="../_images/9e38fd79b372fa0a054487985bb6deeb2a453caefbd59f4e2896d5aadf750e78.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -451,7 +451,7 @@ True
 </div>
 </section>
 <section id="suspension">
-<h2>Suspension<a class="headerlink" href="#suspension" title="Permalink to this heading">#</a></h2>
+<h2>Suspension<a class="headerlink" href="#suspension" title="Link to this heading">#</a></h2>
 <p><a class="reference external" href="https://flatsurf.github.io/sage-flatsurf/">sage-flatsurf</a> is a Python library for translation
 surfaces (and more generally similarity surfaces). One can build Masur polygons via</p>
 <div class="cell docutils container">
@@ -474,7 +474,7 @@ a translation surface that admits a pseudo-Anosov preserving the horizontal and 
 foliations)</p>
 </section>
 <section id="using-pyintervalxt">
-<h2>Using pyintervalxt<a class="headerlink" href="#using-pyintervalxt" title="Permalink to this heading">#</a></h2>
+<h2>Using pyintervalxt<a class="headerlink" href="#using-pyintervalxt" title="Link to this heading">#</a></h2>
 <p><a class="reference external" href="https://github.com/flatsurf/intervalxt">intervalxt</a> is a C++ library with a Python interface
 that implements optimized routines to deal with interval exchange
 transformations. If <code class="docutils literal notranslate"><span class="pre">intervalxt</span></code> is part of your installation you can convert
@@ -494,19 +494,15 @@ and <code class="docutils literal notranslate"><span class="pre">pyintervalxt</s
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(Re-)building pre-compiled headers (options: -O2 -march=native); this may take a minute ...
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/share/miniconda3/envs/test/lib/python3.10/site-packages/cppyy/__init__.py:319: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/share/miniconda3/envs/test/lib/python3.10/site-packages/cppyy/__init__.py:341: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
   import pkg_resources as pr
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_5727/1501804959.py:2: DeprecationWarning: the function is_NumberField is deprecated; use isinstance(x, sage.rings.number_field.number_field_base.NumberField) instead
+/tmp/ipykernel_5735/1501804959.py:2: DeprecationWarning: the function is_NumberField is deprecated; use isinstance(x, sage.rings.number_field.number_field_base.NumberField) instead
 See https://github.com/sagemath/sage/issues/35283 for details.
   u2 = iet_to_pyintervalxt(t2)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[a: 1] [b: (sqrt2 ~ 1.4142136)] [c: 2] [d: (2*sqrt2 ~ 2.8284271)] / [d] [c] [b] [a]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interval exchange transformation of [0, 3*sqrt2 + 3[ with permutation
+Interval exchange transformation of [0, 3*sqrt2 + 3[ with permutation
 a b c d
 d c b a
 </pre></div>
@@ -528,7 +524,7 @@ d c b a
 </div>
 </section>
 <section id="other-features">
-<h2>Other features<a class="headerlink" href="#other-features" title="Permalink to this heading">#</a></h2>
+<h2>Other features<a class="headerlink" href="#other-features" title="Link to this heading">#</a></h2>
 <p>This short tour did not exhaust all the possibilities of <code class="docutils literal notranslate"><span class="pre">surface-dynamics</span></code>, in particular</p>
 <ul class="simple">
 <li><p>iet statistics (in <code class="docutils literal notranslate"><span class="pre">surface_dynamics.interval_exchanges.integer_iet</span></code>)</p></li>
@@ -538,7 +534,7 @@ d c b a
 <p>These topics might be included in later versions of this document.</p>
 </section>
 <section id="missing-features">
-<h2>Missing features<a class="headerlink" href="#missing-features" title="Permalink to this heading">#</a></h2>
+<h2>Missing features<a class="headerlink" href="#missing-features" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>generalizations (linear involution associated to generalized permutations,
 interval exchange transformations with flips, affine iet, system of isometries)</p></li>
@@ -625,13 +621,10 @@ touch with us at https://github.com/flatsurf/surface-dynamics</p>
       
     </aside>
   </div>
-</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/furo.js"></script>
+</div><script src="../_static/documentation_options.js?v=a78bb796"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>

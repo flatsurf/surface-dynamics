@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
-    <!-- Generated with Sphinx 5.3.0 and Furo 2023.05.20 -->
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>surface_dynamics.flat_surfaces.separatrix_diagram - surface-dynamics 0.4.7 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
     <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
     
     
@@ -344,7 +344,9 @@
 <span class="c1">#</span>
 <span class="c1"># Abelian and quadratic Separatrix Diagram</span>
 <span class="c1">#</span>
-<div class="viewcode-block" id="two_non_connected_perms_canonical_labels"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.two_non_connected_perms_canonical_labels">[docs]</a><span class="k">def</span> <span class="nf">two_non_connected_perms_canonical_labels</span><span class="p">(</span><span class="n">bot</span><span class="p">,</span> <span class="n">top</span><span class="p">):</span>
+<div class="viewcode-block" id="two_non_connected_perms_canonical_labels">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.two_non_connected_perms_canonical_labels">[docs]</a>
+<span class="k">def</span> <span class="nf">two_non_connected_perms_canonical_labels</span><span class="p">(</span><span class="n">bot</span><span class="p">,</span> <span class="n">top</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    EXAMPLES::</span>
 
@@ -388,8 +390,11 @@
     <span class="k">return</span> <span class="n">bot</span><span class="p">,</span><span class="n">top</span></div>
 
 
+
 <span class="c1"># main class</span>
-<div class="viewcode-block" id="SeparatrixDiagram"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram">[docs]</a><span class="nd">@total_ordering</span>
+<div class="viewcode-block" id="SeparatrixDiagram">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram">[docs]</a>
+<span class="nd">@total_ordering</span>
 <span class="k">class</span> <span class="nc">SeparatrixDiagram</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Separatrix diagram of oriented foliation.</span>
@@ -540,7 +545,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">sib</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="s1">&#39;SeparatrixDiagram&#39;</span><span class="p">)(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
-<div class="viewcode-block" id="SeparatrixDiagram.to_directed_graph"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.to_directed_graph">[docs]</a>    <span class="k">def</span> <span class="nf">to_directed_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SeparatrixDiagram.to_directed_graph">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.to_directed_graph">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_directed_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a graph that encodes this separatrix diagram.</span>
 
@@ -567,6 +574,7 @@
         <span class="n">G</span><span class="o">.</span><span class="n">add_edges</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_top</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nseps</span><span class="p">()))</span>
         <span class="n">G</span><span class="o">.</span><span class="n">add_edges</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bot</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nseps</span><span class="p">()))</span>
         <span class="k">return</span> <span class="n">G</span></div>
+
 
     <span class="k">def</span> <span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -730,7 +738,9 @@
         <span class="c1"># equal</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-<div class="viewcode-block" id="SeparatrixDiagram.is_isomorphic"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.is_isomorphic">[docs]</a>    <span class="k">def</span> <span class="nf">is_isomorphic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">return_map</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="SeparatrixDiagram.is_isomorphic">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.is_isomorphic">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_isomorphic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">return_map</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test whether this separatrix diagram is isomorphic to ``other``.</span>
 
@@ -765,7 +775,10 @@
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_normal_perms</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_get_normal_perms</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.relabel"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.relabel">[docs]</a>    <span class="k">def</span> <span class="nf">relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perm</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.relabel">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.relabel">[docs]</a>
+    <span class="k">def</span> <span class="nf">relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perm</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Relabel self according to the permutation ``perm``.</span>
 
@@ -801,7 +814,10 @@
 
         <span class="k">return</span> <span class="n">S</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.canonical_label"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.canonical_label">[docs]</a>    <span class="k">def</span> <span class="nf">canonical_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.canonical_label">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.canonical_label">[docs]</a>
+    <span class="k">def</span> <span class="nf">canonical_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Relabel self according to some canonical labels.</span>
 
@@ -867,7 +883,10 @@
 
         <span class="k">return</span> <span class="n">sep</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.horizontal_symmetry"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.horizontal_symmetry">[docs]</a>    <span class="k">def</span> <span class="nf">horizontal_symmetry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.horizontal_symmetry">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.horizontal_symmetry">[docs]</a>
+    <span class="k">def</span> <span class="nf">horizontal_symmetry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the horizontal symmetric of this separatrix diagram.</span>
 
@@ -888,7 +907,10 @@
         <span class="k">return</span> <span class="n">SeparatrixDiagram</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">t</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_top_cycles</span><span class="p">),</span>
                                  <span class="nb">tuple</span><span class="p">(</span><span class="n">b</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bot_cycles</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.vertical_symmetry"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.vertical_symmetry">[docs]</a>    <span class="k">def</span> <span class="nf">vertical_symmetry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.vertical_symmetry">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.vertical_symmetry">[docs]</a>
+    <span class="k">def</span> <span class="nf">vertical_symmetry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the vertical symmetric of this separatrix diagram.</span>
 
@@ -909,7 +931,10 @@
         <span class="k">return</span> <span class="n">SeparatrixDiagram</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">b</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bot_cycles</span><span class="p">),</span>
                                  <span class="nb">tuple</span><span class="p">(</span><span class="n">t</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_top_cycles</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.inverse"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.inverse">[docs]</a>    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.inverse">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.inverse">[docs]</a>
+    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the inverse of this separatrix diagram, that is the one we obtain</span>
 <span class="sd">        after application of `-Id`.</span>
@@ -927,6 +952,7 @@
 <span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">SeparatrixDiagram</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_top_cycles</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bot_cycles</span><span class="p">))</span></div>
+
 
     <span class="k">def</span> <span class="nf">_get_normal_perms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -987,7 +1013,9 @@
 
         <span class="k">return</span> <span class="p">(</span><span class="n">bot</span><span class="p">,</span><span class="n">top</span><span class="p">),(</span><span class="n">hbot</span><span class="p">,</span><span class="n">htop</span><span class="p">),(</span><span class="n">vbot</span><span class="p">,</span><span class="n">vtop</span><span class="p">),(</span><span class="n">sbot</span><span class="p">,</span><span class="n">stop</span><span class="p">)</span>
 
-<div class="viewcode-block" id="SeparatrixDiagram.symmetries"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.symmetries">[docs]</a>    <span class="k">def</span> <span class="nf">symmetries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SeparatrixDiagram.symmetries">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.symmetries">[docs]</a>
+    <span class="k">def</span> <span class="nf">symmetries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a triple of boolean ``(horiz_sym, vert_sym, inverse_sym)`` which</span>
 <span class="sd">        correspond to the symmetry of ``self``.</span>
@@ -1076,7 +1104,10 @@
 
         <span class="k">return</span> <span class="p">(</span><span class="n">horiz_sym</span><span class="p">,</span> <span class="n">vert_sym</span><span class="p">,</span> <span class="n">inverse_sym</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.is_in_normal_form"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.is_in_normal_form">[docs]</a>    <span class="k">def</span> <span class="nf">is_in_normal_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.is_in_normal_form">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.is_in_normal_form">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_in_normal_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test normal form</span>
 
@@ -1094,11 +1125,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bot</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_top</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_normal_perms</span><span class="p">()</span></div>
 
+
     <span class="c1">#</span>
     <span class="c1"># Attributes access</span>
     <span class="c1">#</span>
 
-<div class="viewcode-block" id="SeparatrixDiagram.degree"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.degree">[docs]</a>    <span class="k">def</span> <span class="nf">degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SeparatrixDiagram.degree">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.degree">[docs]</a>
+    <span class="k">def</span> <span class="nf">degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the degree (number of separatrices) of this separatrix diagram.</span>
 
@@ -1112,10 +1146,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_top</span><span class="p">)</span></div>
 
+
     <span class="n">nseps</span> <span class="o">=</span> <span class="n">degree</span>
     <span class="n">num_edges</span> <span class="o">=</span> <span class="n">degree</span>
 
-<div class="viewcode-block" id="SeparatrixDiagram.ncyls"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.ncyls">[docs]</a>    <span class="k">def</span> <span class="nf">ncyls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SeparatrixDiagram.ncyls">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.ncyls">[docs]</a>
+    <span class="k">def</span> <span class="nf">ncyls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the number of cylinders of this separatrix diagram.</span>
 
@@ -1129,7 +1166,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_top_cycles</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.profile"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.profile">[docs]</a>    <span class="k">def</span> <span class="nf">profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.profile">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.profile">[docs]</a>
+    <span class="k">def</span> <span class="nf">profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the angles around each vertex</span>
 
@@ -1147,7 +1187,10 @@
         <span class="kn">from</span> <span class="nn">sage.combinat.partition</span> <span class="kn">import</span> <span class="n">Partition</span>
         <span class="k">return</span> <span class="n">Partition</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.euler_characteristic"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.euler_characteristic">[docs]</a>    <span class="k">def</span> <span class="nf">euler_characteristic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.euler_characteristic">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.euler_characteristic">[docs]</a>
+    <span class="k">def</span> <span class="nf">euler_characteristic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the Euler characteristic</span>
 
@@ -1166,7 +1209,10 @@
         <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">Integer</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">-</span><span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.genus"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.genus">[docs]</a>    <span class="k">def</span> <span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.genus">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.genus">[docs]</a>
+    <span class="k">def</span> <span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the genus</span>
 
@@ -1187,7 +1233,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">euler_characteristic</span><span class="p">()</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.stratum"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.stratum">[docs]</a>    <span class="k">def</span> <span class="nf">stratum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.stratum">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.stratum">[docs]</a>
+    <span class="k">def</span> <span class="nf">stratum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the Abelian stratum this separatrix diagram belongs to.</span>
 
@@ -1204,7 +1253,10 @@
 
         <span class="k">return</span> <span class="n">AbelianStratum</span><span class="p">([</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">()])</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.bot"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.bot">[docs]</a>    <span class="k">def</span> <span class="nf">bot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.bot">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.bot">[docs]</a>
+    <span class="k">def</span> <span class="nf">bot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The bot permutation as a list from 0 to nseps-1</span>
 
@@ -1220,7 +1272,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bot</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.bot_perm"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.bot_perm">[docs]</a>    <span class="k">def</span> <span class="nf">bot_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.bot_perm">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.bot_perm">[docs]</a>
+    <span class="k">def</span> <span class="nf">bot_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the bot as a permutation (element of a group)</span>
 
@@ -1240,7 +1295,10 @@
 
         <span class="k">return</span> <span class="n">PermutationGroupElement</span><span class="p">([</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bot</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.bot_orbit"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.bot_orbit">[docs]</a>    <span class="k">def</span> <span class="nf">bot_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.bot_orbit">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.bot_orbit">[docs]</a>
+    <span class="k">def</span> <span class="nf">bot_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the orbit of i under the bot permutation</span>
 
@@ -1256,7 +1314,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bot_cycles</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_bot_to_cycle</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.bot_cycle_tuples"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.bot_cycle_tuples">[docs]</a>    <span class="k">def</span> <span class="nf">bot_cycle_tuples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.bot_cycle_tuples">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.bot_cycle_tuples">[docs]</a>
+    <span class="k">def</span> <span class="nf">bot_cycle_tuples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the cycles of the bottom permutation as a list of tuples.</span>
 
@@ -1270,7 +1331,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bot_cycles</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.bot_cycle_string"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.bot_cycle_string">[docs]</a>    <span class="k">def</span> <span class="nf">bot_cycle_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.bot_cycle_string">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.bot_cycle_string">[docs]</a>
+    <span class="k">def</span> <span class="nf">bot_cycle_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the cycles of the top permutation as a string.</span>
 
@@ -1284,7 +1348,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">c</span><span class="p">))</span> <span class="o">+</span><span class="s1">&#39;)&#39;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bot_cycle_tuples</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.top"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.top">[docs]</a>    <span class="k">def</span> <span class="nf">top</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.top">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.top">[docs]</a>
+    <span class="k">def</span> <span class="nf">top</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the top permutation of self as a list.</span>
 
@@ -1300,7 +1367,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_top</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.top_perm"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.top_perm">[docs]</a>    <span class="k">def</span> <span class="nf">top_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.top_perm">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.top_perm">[docs]</a>
+    <span class="k">def</span> <span class="nf">top_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the top as a permutation</span>
 
@@ -1319,7 +1389,10 @@
             <span class="kn">from</span> <span class="nn">sage.groups.perm_gps.permgroup_element</span> <span class="kn">import</span> <span class="n">PermutationGroupElement</span>
         <span class="k">return</span> <span class="n">PermutationGroupElement</span><span class="p">([</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_top</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.top_orbit"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.top_orbit">[docs]</a>    <span class="k">def</span> <span class="nf">top_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.top_orbit">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.top_orbit">[docs]</a>
+    <span class="k">def</span> <span class="nf">top_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the orbit of ``i`` under the top permutation.</span>
 
@@ -1335,7 +1408,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_top_cycles</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_top_to_cycle</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.top_cycle_tuples"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.top_cycle_tuples">[docs]</a>    <span class="k">def</span> <span class="nf">top_cycle_tuples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.top_cycle_tuples">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.top_cycle_tuples">[docs]</a>
+    <span class="k">def</span> <span class="nf">top_cycle_tuples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the cycle of the top permutation as a list of tuples.</span>
 
@@ -1349,7 +1425,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_top_cycles</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.top_cycle_string"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.top_cycle_string">[docs]</a>    <span class="k">def</span> <span class="nf">top_cycle_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.top_cycle_string">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.top_cycle_string">[docs]</a>
+    <span class="k">def</span> <span class="nf">top_cycle_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the cycle of the top permutation as a string.</span>
 
@@ -1363,7 +1442,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">c</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_cycle_tuples</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.automorphism_group"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.automorphism_group">[docs]</a>    <span class="k">def</span> <span class="nf">automorphism_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">implementation</span><span class="o">=</span><span class="s1">&#39;graph&#39;</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.automorphism_group">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.automorphism_group">[docs]</a>
+    <span class="k">def</span> <span class="nf">automorphism_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">implementation</span><span class="o">=</span><span class="s1">&#39;graph&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the automorphism group of self.</span>
 
@@ -1397,7 +1479,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;implementation should be either &#39;graph&#39; or &#39;gap&#39;&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.homological_dimension_of_cylinders"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.homological_dimension_of_cylinders">[docs]</a>    <span class="k">def</span> <span class="nf">homological_dimension_of_cylinders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.homological_dimension_of_cylinders">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.homological_dimension_of_cylinders">[docs]</a>
+    <span class="k">def</span> <span class="nf">homological_dimension_of_cylinders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the dimension in the first homology group of the span of waist</span>
 <span class="sd">        curves of horizontal cylinders.</span>
@@ -1444,7 +1529,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Integer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ncyls</span><span class="p">()</span> <span class="o">-</span> <span class="n">SeparatrixDiagram</span><span class="o">.</span><span class="n">to_directed_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">connected_components_number</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.homologous_cylinders"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.homologous_cylinders">[docs]</a>    <span class="k">def</span> <span class="nf">homologous_cylinders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.homologous_cylinders">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.homologous_cylinders">[docs]</a>
+    <span class="k">def</span> <span class="nf">homologous_cylinders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the list of homologous cylinders.</span>
 
@@ -1469,11 +1557,14 @@
         <span class="kn">from</span> <span class="nn">.twist_space</span> <span class="kn">import</span> <span class="n">TwistSpace</span>
         <span class="k">return</span> <span class="n">TwistSpace</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">homologous_cylinders</span><span class="p">()</span></div>
 
+
     <span class="c1">#</span>
     <span class="c1"># Vertices of the separatrix diagram</span>
     <span class="c1">#</span>
 
-<div class="viewcode-block" id="SeparatrixDiagram.outgoing_edges_perm"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.outgoing_edges_perm">[docs]</a>    <span class="k">def</span> <span class="nf">outgoing_edges_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SeparatrixDiagram.outgoing_edges_perm">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.outgoing_edges_perm">[docs]</a>
+    <span class="k">def</span> <span class="nf">outgoing_edges_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Permutation associated to turning around vertices in trigonometric</span>
 <span class="sd">        order.</span>
@@ -1496,7 +1587,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">perm_compose_i</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bot</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_top</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.incoming_edges_perm"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.incoming_edges_perm">[docs]</a>    <span class="k">def</span> <span class="nf">incoming_edges_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.incoming_edges_perm">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.incoming_edges_perm">[docs]</a>
+    <span class="k">def</span> <span class="nf">incoming_edges_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Permutation associated to turning around vertices in trigonometric</span>
 <span class="sd">        order.</span>
@@ -1519,7 +1613,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">perm_compose_i</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_top</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_bot</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.vertices"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.vertices">[docs]</a>    <span class="k">def</span> <span class="nf">vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.vertices">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.vertices">[docs]</a>
+    <span class="k">def</span> <span class="nf">vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a list of pairs ``(vout, vin)`` where each pair represent a vertex and</span>
 <span class="sd">        ``vout``, ``vin`` are respectively the labels of outgoing/incoming separatrices</span>
@@ -1564,11 +1661,14 @@
             <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">cout</span><span class="p">,</span> <span class="n">cin</span><span class="p">[</span><span class="n">j</span><span class="p">:]</span> <span class="o">+</span> <span class="n">cin</span><span class="p">[:</span><span class="n">j</span><span class="p">]))</span>
         <span class="k">return</span> <span class="n">res</span></div>
 
+
     <span class="c1">#</span>
     <span class="c1"># to cylinder diagram</span>
     <span class="c1">#</span>
 
-<div class="viewcode-block" id="SeparatrixDiagram.to_cylinder_diagram"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.to_cylinder_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">to_cylinder_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pairing</span><span class="p">):</span>
+<div class="viewcode-block" id="SeparatrixDiagram.to_cylinder_diagram">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.to_cylinder_diagram">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_cylinder_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pairing</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a cylinder diagram with the given pairing</span>
 
@@ -1614,7 +1714,10 @@
 
         <span class="k">return</span> <span class="n">other</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.cylinder_diagram_iterator"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.cylinder_diagram_iterator">[docs]</a>    <span class="nd">@rename_keyword</span><span class="p">(</span><span class="n">deprecation</span><span class="o">=</span><span class="mi">666</span><span class="p">,</span> <span class="n">up_to_isomorphism</span><span class="o">=</span><span class="s1">&#39;up_to_symmetry&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.cylinder_diagram_iterator">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.cylinder_diagram_iterator">[docs]</a>
+    <span class="nd">@rename_keyword</span><span class="p">(</span><span class="n">deprecation</span><span class="o">=</span><span class="mi">666</span><span class="p">,</span> <span class="n">up_to_isomorphism</span><span class="o">=</span><span class="s1">&#39;up_to_symmetry&#39;</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">cylinder_diagram_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">up_to_symmetry</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct all cylinder diagrams from given separatrix diagram (i.e. a pair</span>
@@ -1707,7 +1810,10 @@
                 <span class="k">if</span> <span class="p">(</span><span class="n">connected</span> <span class="ow">or</span> <span class="n">c</span><span class="o">.</span><span class="n">is_connected</span><span class="p">())</span> <span class="ow">and</span> <span class="n">c</span><span class="o">.</span><span class="n">smallest_integer_lengths</span><span class="p">():</span>
                     <span class="k">yield</span> <span class="n">c</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.cylinder_diagrams"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.cylinder_diagrams">[docs]</a>    <span class="nd">@rename_keyword</span><span class="p">(</span><span class="n">deprecation</span><span class="o">=</span><span class="mi">666</span><span class="p">,</span> <span class="n">up_to_isomorphism</span><span class="o">=</span><span class="s1">&#39;up_to_symmetry&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.cylinder_diagrams">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.cylinder_diagrams">[docs]</a>
+    <span class="nd">@rename_keyword</span><span class="p">(</span><span class="n">deprecation</span><span class="o">=</span><span class="mi">666</span><span class="p">,</span> <span class="n">up_to_isomorphism</span><span class="o">=</span><span class="s1">&#39;up_to_symmetry&#39;</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">cylinder_diagrams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">up_to_symmetry</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the list of cylinder diagrams associated to this separatrix</span>
@@ -1769,7 +1875,10 @@
             <span class="n">connected</span><span class="o">=</span><span class="n">connected</span><span class="p">,</span>
             <span class="n">up_to_symmetry</span><span class="o">=</span><span class="n">up_to_symmetry</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="SeparatrixDiagram.saddle_connections_graph"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.saddle_connections_graph">[docs]</a>    <span class="k">def</span> <span class="nf">saddle_connections_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeparatrixDiagram.saddle_connections_graph">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.SeparatrixDiagram.saddle_connections_graph">[docs]</a>
+    <span class="k">def</span> <span class="nf">saddle_connections_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the fat graph (or ribbon graph) made by the saddle connections.</span>
 
@@ -1811,10 +1920,14 @@
             <span class="n">fp</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_top</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
 
         <span class="kn">from</span> <span class="nn">surface_dynamics.topology.fat_graph</span> <span class="kn">import</span> <span class="n">FatGraph</span>
-        <span class="k">return</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">fp</span><span class="o">=</span><span class="n">fp</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="n">mutable</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">fp</span><span class="o">=</span><span class="n">fp</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="n">mutable</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="cyclic_direction"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.cyclic_direction">[docs]</a><span class="k">def</span> <span class="nf">cyclic_direction</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">):</span>
+
+<div class="viewcode-block" id="cyclic_direction">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.cyclic_direction">[docs]</a>
+<span class="k">def</span> <span class="nf">cyclic_direction</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns 1 or -1 depending on the cyclic ordering of (x,y,z)</span>
 
@@ -1838,9 +1951,12 @@
     <span class="k">else</span><span class="p">:</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
 
 
+
 <span class="c1"># iterators</span>
 
-<div class="viewcode-block" id="separatrix_diagram_fast_iterator"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.separatrix_diagram_fast_iterator">[docs]</a><span class="k">def</span> <span class="nf">separatrix_diagram_fast_iterator</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">ncyls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="separatrix_diagram_fast_iterator">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.separatrix_diagram_fast_iterator">[docs]</a>
+<span class="k">def</span> <span class="nf">separatrix_diagram_fast_iterator</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span><span class="n">ncyls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterator over separatrix diagram with given ``profile``</span>
 
@@ -1928,7 +2044,10 @@
                 <span class="k">if</span> <span class="n">nb_cycles</span> <span class="o">==</span> <span class="n">k</span><span class="p">:</span>
                     <span class="k">yield</span> <span class="p">(</span><span class="n">bot</span><span class="p">,</span><span class="n">top</span><span class="p">,</span><span class="n">s</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="separatrix_diagram_iterator"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.separatrix_diagram_iterator">[docs]</a><span class="k">def</span> <span class="nf">separatrix_diagram_iterator</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">ncyls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="separatrix_diagram_iterator">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.separatrix_diagram_iterator">[docs]</a>
+<span class="k">def</span> <span class="nf">separatrix_diagram_iterator</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">ncyls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterator over separatrix diagram with given ``profile`` and number of</span>
 <span class="sd">    cylinders.</span>
@@ -1972,12 +2091,15 @@
             <span class="n">res</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">bot</span><span class="o">+</span><span class="n">top</span><span class="p">)</span> <span class="k">for</span> <span class="n">bot</span><span class="p">,</span><span class="n">top</span> <span class="ow">in</span> <span class="n">syms</span><span class="p">)</span>
             <span class="k">yield</span> <span class="n">s</span></div>
 
+
 <span class="c1">#</span>
 <span class="c1"># Cylinder diagram</span>
 <span class="c1">#  (or completely periodic decomposition)</span>
 <span class="c1">#</span>
 
-<div class="viewcode-block" id="string_to_cycle"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.string_to_cycle">[docs]</a><span class="k">def</span> <span class="nf">string_to_cycle</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<div class="viewcode-block" id="string_to_cycle">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.string_to_cycle">[docs]</a>
+<span class="k">def</span> <span class="nf">string_to_cycle</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    TESTS::</span>
 
@@ -1994,7 +2116,10 @@
     <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="orientation_cover"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.orientation_cover">[docs]</a><span class="k">def</span> <span class="nf">orientation_cover</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+
+<div class="viewcode-block" id="orientation_cover">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.orientation_cover">[docs]</a>
+<span class="k">def</span> <span class="nf">orientation_cover</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Build the cylinder diagram of Abelian differentials that double covers it.</span>
 
@@ -2057,8 +2182,11 @@
 
     <span class="k">return</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="n">cyls</span><span class="p">)</span></div>
 
+
 <span class="c1">#TODO: do something less stupid for symmetries</span>
-<div class="viewcode-block" id="hyperelliptic_cylinder_diagram_iterator"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.hyperelliptic_cylinder_diagram_iterator">[docs]</a><span class="k">def</span> <span class="nf">hyperelliptic_cylinder_diagram_iterator</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="hyperelliptic_cylinder_diagram_iterator">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.hyperelliptic_cylinder_diagram_iterator">[docs]</a>
+<span class="k">def</span> <span class="nf">hyperelliptic_cylinder_diagram_iterator</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return an iterator over cylinder diagrams of Abelian differentials that</span>
 <span class="sd">    double covers Q((a-2), -1^(a+2)).</span>
@@ -2270,7 +2398,10 @@
             <span class="c1"># reinitialize sigma</span>
             <span class="n">sigma</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">a</span><span class="p">))</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">+</span><span class="mi">2</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram">[docs]</a><span class="nd">@total_ordering</span>
+
+<div class="viewcode-block" id="CylinderDiagram">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram">[docs]</a>
+<span class="nd">@total_ordering</span>
 <span class="k">class</span> <span class="nc">CylinderDiagram</span><span class="p">(</span><span class="n">SeparatrixDiagram</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Separatrix diagram with pairing.</span>
@@ -2384,7 +2515,9 @@
             <span class="k">if</span> <span class="n">j</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">to</span> <span class="ow">or</span> <span class="n">t2c</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">min</span><span class="p">(</span><span class="n">to</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid data: j=</span><span class="si">{}</span><span class="s2"> to=</span><span class="si">{}</span><span class="s2"> t2c[j]=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">t2c</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
 
-<div class="viewcode-block" id="CylinderDiagram.weighted_adjacency_matrix"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.weighted_adjacency_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">weighted_adjacency_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">canonicalize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="CylinderDiagram.weighted_adjacency_matrix">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.weighted_adjacency_matrix">[docs]</a>
+    <span class="k">def</span> <span class="nf">weighted_adjacency_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">canonicalize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the weighted adjacency matrix of this cylinder diagram.</span>
 
@@ -2428,7 +2561,10 @@
 
         <span class="k">return</span> <span class="n">A</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.lengths_minimal_solution"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.lengths_minimal_solution">[docs]</a>    <span class="k">def</span> <span class="nf">lengths_minimal_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.lengths_minimal_solution">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.lengths_minimal_solution">[docs]</a>
+    <span class="k">def</span> <span class="nf">lengths_minimal_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return an integral solution for the lengths equation with minimal sum</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2445,7 +2581,10 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nseps</span><span class="p">())]</span></div>
 
 
-<div class="viewcode-block" id="CylinderDiagram.tikz_string"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.tikz_string">[docs]</a>    <span class="k">def</span> <span class="nf">tikz_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cyl_height</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">cyl_sep</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">cyl_pos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sep_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.tikz_string">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.tikz_string">[docs]</a>
+    <span class="k">def</span> <span class="nf">tikz_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cyl_height</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">cyl_sep</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">cyl_pos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sep_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        INPUT:</span>
 
@@ -2493,6 +2632,7 @@
             <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">fill (</span><span class="si">{}</span><span class="s1">,</span><span class="si">{}</span><span class="s1">) circle (2pt);&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">yl</span><span class="o">+</span><span class="n">cyl_height</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
+
 
     <span class="k">def</span> <span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -2582,7 +2722,9 @@
     <span class="c1">#</span>
 
 
-<div class="viewcode-block" id="CylinderDiagram.to_directed_graph"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.to_directed_graph">[docs]</a>    <span class="k">def</span> <span class="nf">to_directed_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CylinderDiagram.to_directed_graph">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.to_directed_graph">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_directed_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a labeled directed graph that encodes the cylinder diagram.</span>
 
@@ -2606,7 +2748,10 @@
 
         <span class="k">return</span> <span class="n">G</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.is_isomorphic"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.is_isomorphic">[docs]</a>    <span class="k">def</span> <span class="nf">is_isomorphic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">return_map</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.is_isomorphic">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.is_isomorphic">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_isomorphic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">return_map</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test whether this cylinder diagram is isomorphic to ``other``.</span>
 
@@ -2671,7 +2816,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">canonical_label</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">canonical_label</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.relabel"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.relabel">[docs]</a>    <span class="k">def</span> <span class="nf">relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perm</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.relabel">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.relabel">[docs]</a>
+    <span class="k">def</span> <span class="nf">relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perm</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
@@ -2728,7 +2876,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">CylinderDiagram</span><span class="p">([(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">perm</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">b</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">perm</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">b</span><span class="p">,</span><span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cylinders</span><span class="p">()])</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.canonical_label"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.canonical_label">[docs]</a>    <span class="k">def</span> <span class="nf">canonical_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_map</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.canonical_label">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.canonical_label">[docs]</a>
+    <span class="k">def</span> <span class="nf">canonical_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_map</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a cylinder diagram with canonical labels.</span>
 
@@ -2798,7 +2949,10 @@
         <span class="k">elif</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normal_form</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.separatrix_diagram"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.separatrix_diagram">[docs]</a>    <span class="k">def</span> <span class="nf">separatrix_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.separatrix_diagram">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.separatrix_diagram">[docs]</a>
+    <span class="k">def</span> <span class="nf">separatrix_diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the underlying separatrix diagram</span>
 
@@ -2815,7 +2969,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">SeparatrixDiagram</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bot</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_top</span><span class="p">,</span><span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.lengths_cone"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.lengths_cone">[docs]</a>    <span class="k">def</span> <span class="nf">lengths_cone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.lengths_cone">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.lengths_cone">[docs]</a>
+    <span class="k">def</span> <span class="nf">lengths_cone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the rational polyhedron corresponding to the set of length with</span>
 <span class="sd">        the given fixed heights.</span>
@@ -2849,7 +3006,10 @@
 
         <span class="k">return</span> <span class="n">Polyhedron</span><span class="p">(</span><span class="n">ieqs</span><span class="o">=</span><span class="n">ieqs</span><span class="p">,</span> <span class="n">eqns</span><span class="o">=</span><span class="n">eqns</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.widths_generating_series"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.widths_generating_series">[docs]</a>    <span class="k">def</span> <span class="nf">widths_generating_series</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.widths_generating_series">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.widths_generating_series">[docs]</a>
+    <span class="k">def</span> <span class="nf">widths_generating_series</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generating series of the number of lengths solutions given the widths.</span>
 
@@ -2932,7 +3092,10 @@
 
         <span class="k">return</span> <span class="n">ans</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.volume_contribution"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.volume_contribution">[docs]</a>    <span class="k">def</span> <span class="nf">volume_contribution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.volume_contribution">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.volume_contribution">[docs]</a>
+    <span class="k">def</span> <span class="nf">volume_contribution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the volume contribution of this cylinder diagram as a</span>
 <span class="sd">        generalized multiple zeta values.</span>
@@ -3025,7 +3188,10 @@
         <span class="n">m</span> <span class="o">=</span> <span class="n">ZZ</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">numbering</span> <span class="o">*</span> <span class="n">sym</span> <span class="o">/</span> <span class="n">ZZ</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nseps</span><span class="p">())</span><span class="o">.</span><span class="n">factorial</span><span class="p">()</span> <span class="o">/</span> <span class="n">aut_size</span>
         <span class="k">return</span> <span class="n">m</span> <span class="o">*</span> <span class="n">res</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.cylinders"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylinders">[docs]</a>    <span class="k">def</span> <span class="nf">cylinders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.cylinders">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylinders">[docs]</a>
+    <span class="k">def</span> <span class="nf">cylinders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the cylinders as a list of pairs ``(bot, top)``.</span>
 
@@ -3041,7 +3207,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[(</span><span class="n">b</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">top_orbit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bot_to_cyl</span><span class="p">[</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bot_cycle_tuples</span><span class="p">()]</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.bot_to_cyl"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.bot_to_cyl">[docs]</a>    <span class="k">def</span> <span class="nf">bot_to_cyl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.bot_to_cyl">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.bot_to_cyl">[docs]</a>
+    <span class="k">def</span> <span class="nf">bot_to_cyl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the cylinder above the ``j``-th separatrix.</span>
 
@@ -3062,7 +3231,10 @@
         <span class="n">jb</span><span class="p">,</span><span class="n">jt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bot_to_cyl</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bot_orbit</span><span class="p">(</span><span class="n">jb</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_orbit</span><span class="p">(</span><span class="n">jt</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.top_to_cyl"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.top_to_cyl">[docs]</a>    <span class="k">def</span> <span class="nf">top_to_cyl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.top_to_cyl">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.top_to_cyl">[docs]</a>
+    <span class="k">def</span> <span class="nf">top_to_cyl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the cylinder below the ``j``-th separatrix.</span>
 
@@ -3079,11 +3251,14 @@
         <span class="n">jb</span><span class="p">,</span><span class="n">jt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_top_to_cyl</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bot_orbit</span><span class="p">(</span><span class="n">jb</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_orbit</span><span class="p">(</span><span class="n">jt</span><span class="p">)</span></div>
 
+
     <span class="c1">#</span>
     <span class="c1"># properties</span>
     <span class="c1">#</span>
 
-<div class="viewcode-block" id="CylinderDiagram.is_connected"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.is_connected">[docs]</a>    <span class="k">def</span> <span class="nf">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CylinderDiagram.is_connected">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.is_connected">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the connectedness of this cylinder diagram.</span>
 
@@ -3109,11 +3284,14 @@
             <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">G</span><span class="o">.</span><span class="n">num_verts</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">nseps</span><span class="p">()</span> <span class="ow">and</span> <span class="n">G</span><span class="o">.</span><span class="n">is_connected</span><span class="p">()</span></div>
 
+
     <span class="c1">#</span>
     <span class="c1"># symmetries</span>
     <span class="c1">#</span>
 
-<div class="viewcode-block" id="CylinderDiagram.inverse"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.inverse">[docs]</a>    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CylinderDiagram.inverse">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.inverse">[docs]</a>
+    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the inverse cylinder diagram.</span>
 
@@ -3154,7 +3332,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">CylinderDiagram</span><span class="p">([(</span><span class="n">t</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">t</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cylinders</span><span class="p">()])</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.vertical_symmetry"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.vertical_symmetry">[docs]</a>    <span class="k">def</span> <span class="nf">vertical_symmetry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.vertical_symmetry">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.vertical_symmetry">[docs]</a>
+    <span class="k">def</span> <span class="nf">vertical_symmetry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the cylinder diagram obtained by reflecting the cylinder</span>
 <span class="sd">        configuration along the vertical axis.</span>
@@ -3176,7 +3357,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="nb">tuple</span><span class="p">((</span><span class="n">b</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">t</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">b</span><span class="p">,</span><span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cylinders</span><span class="p">()))</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.horizontal_symmetry"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.horizontal_symmetry">[docs]</a>    <span class="k">def</span> <span class="nf">horizontal_symmetry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.horizontal_symmetry">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.horizontal_symmetry">[docs]</a>
+    <span class="k">def</span> <span class="nf">horizontal_symmetry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the cylinder diagram obtained by reflecting the cylinder</span>
 <span class="sd">        configuration along the horizontal axis.</span>
@@ -3198,7 +3382,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="nb">tuple</span><span class="p">((</span><span class="n">t</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">b</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">b</span><span class="p">,</span><span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cylinders</span><span class="p">()))</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.symmetries"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.symmetries">[docs]</a>    <span class="k">def</span> <span class="nf">symmetries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.symmetries">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.symmetries">[docs]</a>
+    <span class="k">def</span> <span class="nf">symmetries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a triple ``(horiz_sym, vert_sym, inv_sym)``</span>
 
@@ -3284,7 +3471,10 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">horiz_sym</span><span class="p">,</span> <span class="n">vert_sym</span><span class="p">,</span> <span class="n">inverse_sym</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="CylinderDiagram.automorphism_group"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.automorphism_group">[docs]</a>    <span class="k">def</span> <span class="nf">automorphism_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.automorphism_group">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.automorphism_group">[docs]</a>
+    <span class="k">def</span> <span class="nf">automorphism_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the automorphism group</span>
 
@@ -3303,7 +3493,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_directed_graph</span><span class="p">()</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">(</span><span class="n">edge_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.is_hyperelliptic"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.is_hyperelliptic">[docs]</a>    <span class="k">def</span> <span class="nf">is_hyperelliptic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.is_hyperelliptic">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.is_hyperelliptic">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_hyperelliptic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test of hyperellipticity</span>
 
@@ -3455,11 +3648,14 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span></div>
 
+
     <span class="c1">#</span>
     <span class="c1"># construction</span>
     <span class="c1">#</span>
 
-<div class="viewcode-block" id="CylinderDiagram.dual_graph"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.dual_graph">[docs]</a>    <span class="k">def</span> <span class="nf">dual_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CylinderDiagram.dual_graph">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.dual_graph">[docs]</a>
+    <span class="k">def</span> <span class="nf">dual_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The dual graph of the stable curve at infinity in the horizontal</span>
 <span class="sd">        direction.</span>
@@ -3516,7 +3712,10 @@
             <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">hc2cc</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">b&#39;</span> <span class="o">%</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span><span class="n">hc2cc</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">t&#39;</span> <span class="o">%</span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]],(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
         <span class="k">return</span> <span class="n">G</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.matrix_relation"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.matrix_relation">[docs]</a>    <span class="k">def</span> <span class="nf">matrix_relation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.matrix_relation">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.matrix_relation">[docs]</a>
+    <span class="k">def</span> <span class="nf">matrix_relation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the matrix of relation on the lengths of the separatrices.</span>
 
@@ -3551,11 +3750,14 @@
                 <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">+=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="k">return</span> <span class="n">m</span></div>
 
+
     <span class="c1">#</span>
     <span class="c1"># Abelian differentials / coordinates</span>
     <span class="c1">#</span>
 
-<div class="viewcode-block" id="CylinderDiagram.stratum_component"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.stratum_component">[docs]</a>    <span class="k">def</span> <span class="nf">stratum_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CylinderDiagram.stratum_component">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.stratum_component">[docs]</a>
+    <span class="k">def</span> <span class="nf">stratum_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the connected component of stratum of ``self``.</span>
 
@@ -3602,7 +3804,10 @@
             <span class="kn">from</span> <span class="nn">.abelian_strata</span> <span class="kn">import</span> <span class="n">OddASC</span>
             <span class="k">return</span> <span class="n">OddASC</span><span class="p">(</span><span class="n">stratum</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.smallest_integer_lengths"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.smallest_integer_lengths">[docs]</a>    <span class="k">def</span> <span class="nf">smallest_integer_lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.smallest_integer_lengths">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.smallest_integer_lengths">[docs]</a>
+    <span class="k">def</span> <span class="nf">smallest_integer_lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if there is a integer solution that satisfy the cylinder</span>
 <span class="sd">        conditions.</span>
@@ -3654,11 +3859,14 @@
         <span class="k">except</span> <span class="n">MIPSolverException</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span></div>
 
+
     <span class="c1">#</span>
     <span class="c1"># homology</span>
     <span class="c1">#</span>
 
-<div class="viewcode-block" id="CylinderDiagram.to_ribbon_graph"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.to_ribbon_graph">[docs]</a>    <span class="k">def</span> <span class="nf">to_ribbon_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CylinderDiagram.to_ribbon_graph">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.to_ribbon_graph">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_ribbon_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a ribbon graph</span>
 
@@ -3712,7 +3920,10 @@
 
         <span class="k">return</span> <span class="n">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">edges</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">faces</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="n">angles</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.to_ribbon_graph_with_holonomies"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.to_ribbon_graph_with_holonomies">[docs]</a>    <span class="k">def</span> <span class="nf">to_ribbon_graph_with_holonomies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">twists</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.to_ribbon_graph_with_holonomies">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.to_ribbon_graph_with_holonomies">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_ribbon_graph_with_holonomies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">twists</span><span class="p">):</span>
         <span class="kn">from</span> <span class="nn">.homology</span> <span class="kn">import</span> <span class="n">RibbonGraphWithHolonomies</span>
 
         <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nseps</span><span class="p">()</span>
@@ -3737,7 +3948,10 @@
 
 
 
-<div class="viewcode-block" id="CylinderDiagram.spin_parity"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.spin_parity">[docs]</a>    <span class="k">def</span> <span class="nf">spin_parity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.spin_parity">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.spin_parity">[docs]</a>
+    <span class="k">def</span> <span class="nf">spin_parity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the spin parity of any surface that is built from this cylinder</span>
 <span class="sd">        diagram.</span>
@@ -3763,6 +3977,7 @@
         <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">z</span><span class="o">%</span><span class="mi">2</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span><span class="o">.</span><span class="n">zeros</span><span class="p">()):</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_ribbon_graph</span><span class="p">()</span><span class="o">.</span><span class="n">spin_parity</span><span class="p">()</span></div>
+
 
 <span class="c1">#    def circumferences_of_cylinders(self,ring=None):</span>
 <span class="c1">#        r&quot;&quot;&quot;</span>
@@ -3796,7 +4011,9 @@
     <span class="c1"># build one or many origamis</span>
     <span class="c1">#</span>
 
-<div class="viewcode-block" id="CylinderDiagram.an_origami"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.an_origami">[docs]</a>    <span class="k">def</span> <span class="nf">an_origami</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CylinderDiagram.an_origami">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.an_origami">[docs]</a>
+    <span class="k">def</span> <span class="nf">an_origami</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return one origami with this diagram cylinder if any.</span>
 
@@ -3851,7 +4068,10 @@
         <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.origamis.origami</span> <span class="kn">import</span> <span class="n">Origami_dense_pyx</span>
         <span class="k">return</span> <span class="n">Origami_dense_pyx</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">lx</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">ly</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.origami_iterator"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.origami_iterator">[docs]</a>    <span class="k">def</span> <span class="nf">origami_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.origami_iterator">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.origami_iterator">[docs]</a>
+    <span class="k">def</span> <span class="nf">origami_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iteration over all origamis with n squares.</span>
 
@@ -3884,7 +4104,10 @@
         <span class="k">for</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">widths_and_heights_iterator</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
             <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">cylcoord_to_origami_iterator</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.origamis"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.origamis">[docs]</a>    <span class="k">def</span> <span class="nf">origamis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.origamis">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.origamis">[docs]</a>
+    <span class="k">def</span> <span class="nf">origamis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the set of origamis having ``n`` squares.</span>
 
@@ -3924,7 +4147,10 @@
 
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origami_iterator</span><span class="p">(</span><span class="n">n</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.widths_and_heights_iterator"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.widths_and_heights_iterator">[docs]</a>    <span class="k">def</span> <span class="nf">widths_and_heights_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">height_one</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.widths_and_heights_iterator">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.widths_and_heights_iterator">[docs]</a>
+    <span class="k">def</span> <span class="nf">widths_and_heights_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">height_one</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterate over the possible integer widths and heights of the cylinders</span>
 <span class="sd">        for which the corresponding translation surface has area ``n``.</span>
@@ -4032,7 +4258,10 @@
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">m</span><span class="o">*</span><span class="n">l</span><span class="p">:</span>
                         <span class="k">yield</span> <span class="n">l</span><span class="p">,</span><span class="n">h</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.cylcoord_to_origami_iterator"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylcoord_to_origami_iterator">[docs]</a>    <span class="k">def</span> <span class="nf">cylcoord_to_origami_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">heights</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.cylcoord_to_origami_iterator">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylcoord_to_origami_iterator">[docs]</a>
+    <span class="k">def</span> <span class="nf">cylcoord_to_origami_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">heights</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert coordinates of the cylinders into an origami.</span>
 
@@ -4114,7 +4343,10 @@
                 <span class="n">ly</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">ly</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">widths</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
             <span class="k">yield</span> <span class="n">Origami_dense_pyx</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">lx</span><span class="p">),</span><span class="nb">tuple</span><span class="p">(</span><span class="n">ly</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.cylcoord_to_origami"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylcoord_to_origami">[docs]</a>    <span class="k">def</span> <span class="nf">cylcoord_to_origami</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">twists</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.cylcoord_to_origami">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylcoord_to_origami">[docs]</a>
+    <span class="k">def</span> <span class="nf">cylcoord_to_origami</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">twists</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert coordinates of the cylinders into an origami.</span>
 
@@ -4233,7 +4465,10 @@
         <span class="c1"># yield the one without twist</span>
         <span class="k">return</span> <span class="n">Origami_dense_pyx</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">lx</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">ly</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="CylinderDiagram.cylinder_graph"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylinder_graph">[docs]</a>    <span class="k">def</span> <span class="nf">cylinder_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CylinderDiagram.cylinder_graph">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylinder_graph">[docs]</a>
+    <span class="k">def</span> <span class="nf">cylinder_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the cylinder graph.</span>
 
@@ -4269,7 +4504,9 @@
 
         <span class="n">G</span> <span class="o">=</span> <span class="n">DiGraph</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ncyls</span><span class="p">(),</span> <span class="n">loops</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">multiedges</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">weighted</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">G</span><span class="o">.</span><span class="n">add_edges</span><span class="p">([(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="n">m</span><span class="p">)</span> <span class="ow">in</span> <span class="n">edges</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
-        <span class="k">return</span> <span class="n">G</span></div></div>
+        <span class="k">return</span> <span class="n">G</span></div>
+</div>
+
 
     <span class="c1">#TODO</span>
 <span class="c1">#    def chain_complex_dual(self, ring=None):</span>
@@ -4332,7 +4569,9 @@
 <span class="c1">#        return TranslationSurfaceChainComplex(ring,vertices,edges,angles)</span>
 
 
-<div class="viewcode-block" id="move_forward"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.move_forward">[docs]</a><span class="k">def</span> <span class="nf">move_forward</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">g01</span><span class="p">,</span> <span class="n">g23</span><span class="p">):</span>
+<div class="viewcode-block" id="move_forward">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.move_forward">[docs]</a>
+<span class="k">def</span> <span class="nf">move_forward</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">g01</span><span class="p">,</span> <span class="n">g23</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Helper function to build pillowcase covers</span>
 
@@ -4378,7 +4617,10 @@
 
     <span class="k">return</span> <span class="n">i</span><span class="p">,</span><span class="n">v</span></div>
 
-<div class="viewcode-block" id="move_backward"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.move_backward">[docs]</a><span class="k">def</span> <span class="nf">move_backward</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">g01</span><span class="p">,</span> <span class="n">g23</span><span class="p">):</span>
+
+<div class="viewcode-block" id="move_backward">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.move_backward">[docs]</a>
+<span class="k">def</span> <span class="nf">move_backward</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">g01</span><span class="p">,</span> <span class="n">g23</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Helper function to build pillowcase covers</span>
 
@@ -4424,7 +4666,10 @@
 
     <span class="k">return</span> <span class="n">i</span><span class="p">,</span><span class="n">v</span></div>
 
-<div class="viewcode-block" id="simplex_count"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.simplex_count">[docs]</a><span class="k">def</span> <span class="nf">simplex_count</span><span class="p">(</span><span class="n">rays</span><span class="p">):</span>
+
+<div class="viewcode-block" id="simplex_count">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.simplex_count">[docs]</a>
+<span class="k">def</span> <span class="nf">simplex_count</span><span class="p">(</span><span class="n">rays</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    EXAMPLES::</span>
 
@@ -4446,7 +4691,10 @@
     <span class="n">d</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rays</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">Polyhedron</span><span class="p">([[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">d</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">rays</span><span class="p">))</span><span class="o">.</span><span class="n">integral_points_count</span><span class="p">()</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">rays</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="QuadraticCylinderDiagram"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram">[docs]</a><span class="k">class</span> <span class="nc">QuadraticCylinderDiagram</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
+
+<div class="viewcode-block" id="QuadraticCylinderDiagram">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram">[docs]</a>
+<span class="k">class</span> <span class="nc">QuadraticCylinderDiagram</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Cylinder diagram for quadratic differentials</span>
 
@@ -4575,35 +4823,49 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">G</span><span class="o">.</span><span class="n">is_connected</span><span class="p">():</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the graph is not connected&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="QuadraticCylinderDiagram.num_darts"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.num_darts">[docs]</a>    <span class="k">def</span> <span class="nf">num_darts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QuadraticCylinderDiagram.num_darts">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.num_darts">[docs]</a>
+    <span class="k">def</span> <span class="nf">num_darts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Number of darts</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_g</span><span class="o">.</span><span class="n">num_darts</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="QuadraticCylinderDiagram.num_edges"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.num_edges">[docs]</a>    <span class="k">def</span> <span class="nf">num_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="QuadraticCylinderDiagram.num_edges">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.num_edges">[docs]</a>
+    <span class="k">def</span> <span class="nf">num_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Number of edges</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_g</span><span class="o">.</span><span class="n">num_edges</span><span class="p">()</span></div>
 
+
     <span class="n">nseps</span> <span class="o">=</span> <span class="n">num_edges</span>
 
-<div class="viewcode-block" id="QuadraticCylinderDiagram.edges"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.edges">[docs]</a>    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QuadraticCylinderDiagram.edges">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.edges">[docs]</a>
+    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The set of edges.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_g</span><span class="o">.</span><span class="n">edges</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="QuadraticCylinderDiagram.num_cylinders"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.num_cylinders">[docs]</a>    <span class="k">def</span> <span class="nf">num_cylinders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="QuadraticCylinderDiagram.num_cylinders">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.num_cylinders">[docs]</a>
+    <span class="k">def</span> <span class="nf">num_cylinders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Number of cylinders.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_p</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span></div>
 
+
     <span class="n">ncyls</span> <span class="o">=</span> <span class="n">num_cylinders</span>
 
-<div class="viewcode-block" id="QuadraticCylinderDiagram.stratum"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.stratum">[docs]</a>    <span class="k">def</span> <span class="nf">stratum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QuadraticCylinderDiagram.stratum">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.stratum">[docs]</a>
+    <span class="k">def</span> <span class="nf">stratum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the stratum of quadratic differentials associated to this cylinder diagram</span>
 
@@ -4626,7 +4888,10 @@
         <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.quadratic_strata</span> <span class="kn">import</span> <span class="n">QuadraticStratum</span>
         <span class="k">return</span> <span class="n">QuadraticStratum</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_g</span><span class="o">.</span><span class="n">_vertex_cycles</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="QuadraticCylinderDiagram.cylinders"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.cylinders">[docs]</a>    <span class="k">def</span> <span class="nf">cylinders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dart</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="QuadraticCylinderDiagram.cylinders">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.cylinders">[docs]</a>
+    <span class="k">def</span> <span class="nf">cylinders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dart</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Cylinders of self</span>
 
@@ -4661,6 +4926,7 @@
 
         <span class="k">return</span> <span class="n">ans</span></div>
 
+
     <span class="k">def</span> <span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
@@ -4679,7 +4945,9 @@
             <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;(</span><span class="si">{}</span><span class="s1">)-(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bot</span><span class="p">,</span><span class="n">top</span><span class="p">))</span>
         <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
-<div class="viewcode-block" id="QuadraticCylinderDiagram.lengths_cone"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.lengths_cone">[docs]</a>    <span class="k">def</span> <span class="nf">lengths_cone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QuadraticCylinderDiagram.lengths_cone">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.lengths_cone">[docs]</a>
+    <span class="k">def</span> <span class="nf">lengths_cone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the polytope of admissible lengths.</span>
 
@@ -4731,7 +4999,10 @@
         <span class="kn">from</span> <span class="nn">sage.geometry.polyhedron.constructor</span> <span class="kn">import</span> <span class="n">Polyhedron</span>
         <span class="k">return</span> <span class="n">Polyhedron</span><span class="p">(</span><span class="n">eqns</span><span class="o">=</span><span class="n">eqns</span><span class="p">,</span> <span class="n">ieqs</span><span class="o">=</span><span class="n">ieqs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="QuadraticCylinderDiagram.widths_generating_series"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.widths_generating_series">[docs]</a>    <span class="k">def</span> <span class="nf">widths_generating_series</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">):</span>
+
+<div class="viewcode-block" id="QuadraticCylinderDiagram.widths_generating_series">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.widths_generating_series">[docs]</a>
+    <span class="k">def</span> <span class="nf">widths_generating_series</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generating series of the number of saddle connection lengths of this quadratic</span>
 <span class="sd">        differential cylinder diagram.</span>
@@ -4813,6 +5084,7 @@
             <span class="n">ans</span> <span class="o">+=</span> <span class="n">f1</span>
 
         <span class="k">return</span> <span class="n">ans</span></div>
+
 
     <span class="k">def</span> <span class="nf">_lengths_to_dart_x_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lengths</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -5012,7 +5284,9 @@
 
     <span class="c1"># figure out whether this awfull method is really useful...</span>
     <span class="c1"># square tiled quadratic surface would be much more simple to handle</span>
-<div class="viewcode-block" id="QuadraticCylinderDiagram.cylcoord_to_pillowcase_cover"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.cylcoord_to_pillowcase_cover">[docs]</a>    <span class="k">def</span> <span class="nf">cylcoord_to_pillowcase_cover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">twists</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="QuadraticCylinderDiagram.cylcoord_to_pillowcase_cover">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.cylcoord_to_pillowcase_cover">[docs]</a>
+    <span class="k">def</span> <span class="nf">cylcoord_to_pillowcase_cover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">twists</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert coordinates of the cylinders into a pillowcase cover.</span>
 
@@ -5474,7 +5748,9 @@
         <span class="k">assert</span> <span class="p">(</span><span class="n">i1</span><span class="p">,</span><span class="n">u1</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">j1</span><span class="p">,</span><span class="n">v1</span><span class="p">)</span>
 
         <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.origamis.pillowcase_cover</span> <span class="kn">import</span> <span class="n">PillowcaseCover</span>
-        <span class="k">return</span> <span class="n">PillowcaseCover</span><span class="p">(</span><span class="n">g0</span><span class="p">,</span> <span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">g3</span><span class="p">,</span> <span class="n">as_tuple</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">PillowcaseCover</span><span class="p">(</span><span class="n">g0</span><span class="p">,</span> <span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">g3</span><span class="p">,</span> <span class="n">as_tuple</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+</div>
+
 </pre></div>
         </article>
       </div>
@@ -5507,12 +5783,9 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/sphinx_highlight.js"></script>
-    <script src="../../../_static/scripts/furo.js"></script>
+</div><script src="../../../_static/documentation_options.js?v=a78bb796"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/furo.js?v=32e29ea5"></script>
     </body>
 </html>

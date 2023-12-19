@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
-    <!-- Generated with Sphinx 5.3.0 and Furo 2023.05.20 -->
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>surface_dynamics.topology.fat_graph_exhaustive_generation - surface-dynamics 0.4.7 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
     <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
     
     
@@ -263,7 +263,9 @@
 <span class="c1"># Miscellaneous functions #</span>
 <span class="c1">###########################</span>
 
-<div class="viewcode-block" id="minmax"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.minmax">[docs]</a><span class="k">def</span> <span class="nf">minmax</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+<div class="viewcode-block" id="minmax">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.minmax">[docs]</a>
+<span class="k">def</span> <span class="nf">minmax</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">M</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">:</span>
@@ -273,7 +275,10 @@
     <span class="k">return</span> <span class="n">m</span><span class="p">,</span> <span class="n">M</span></div>
 
 
-<div class="viewcode-block" id="num_and_weighted_num"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.num_and_weighted_num">[docs]</a><span class="k">def</span> <span class="nf">num_and_weighted_num</span><span class="p">(</span><span class="n">it</span><span class="p">):</span>
+
+<div class="viewcode-block" id="num_and_weighted_num">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.num_and_weighted_num">[docs]</a>
+<span class="k">def</span> <span class="nf">num_and_weighted_num</span><span class="p">(</span><span class="n">it</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">sage.rings.integer_ring</span> <span class="kn">import</span> <span class="n">ZZ</span>
     <span class="kn">from</span> <span class="nn">sage.rings.rational_field</span> <span class="kn">import</span> <span class="n">QQ</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">QQ</span><span class="o">.</span><span class="n">zero</span><span class="p">()</span>
@@ -287,12 +292,15 @@
     <span class="k">return</span> <span class="n">n</span><span class="p">,</span> <span class="n">s</span></div>
 
 
+
 <span class="c1">##########################</span>
 <span class="c1"># Augmentation functions #</span>
 <span class="c1">##########################</span>
 
 <span class="c1"># augment1: trisection</span>
-<div class="viewcode-block" id="augment1"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.augment1">[docs]</a><span class="k">def</span> <span class="nf">augment1</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+<div class="viewcode-block" id="augment1">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.augment1">[docs]</a>
+<span class="k">def</span> <span class="nf">augment1</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Given a unicellular map ``cm`` with a single vertex and automorphism group</span>
 <span class="sd">    ``aut_grp``, iterate through all its canonical extensions that are</span>
@@ -339,9 +347,12 @@
         <span class="n">i</span> <span class="o">=</span> <span class="n">fp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span></div>
 
 
+
 <span class="c1"># augment2: face split</span>
 <span class="c1"># (essentially the same as augment3)</span>
-<div class="viewcode-block" id="augment2"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.augment2">[docs]</a><span class="k">def</span> <span class="nf">augment2</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+<div class="viewcode-block" id="augment2">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.augment2">[docs]</a>
+<span class="k">def</span> <span class="nf">augment2</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Given a map ``cm`` with a single vertex and automorphism group ``aut_grp``</span>
 <span class="sd">    iterate through all its canonical extensions that are obtained by splitting</span>
@@ -408,8 +419,11 @@
             <span class="n">j</span> <span class="o">=</span> <span class="n">fp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span></div>
 
 
+
 <span class="c1"># augment3: vertex split</span>
-<div class="viewcode-block" id="augment3"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.augment3">[docs]</a><span class="k">def</span> <span class="nf">augment3</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">min_degree</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+<div class="viewcode-block" id="augment3">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.augment3">[docs]</a>
+<span class="k">def</span> <span class="nf">augment3</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">min_degree</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Given a map ``cm``, its automorphism group ``aut_grp`` and a minimum</span>
 <span class="sd">    degree ``min_degree``, iterate through all the canonical extensions of</span>
@@ -482,6 +496,7 @@
             <span class="n">cm</span><span class="o">.</span><span class="n">contract_edge</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
             <span class="n">j</span> <span class="o">=</span> <span class="n">vp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span></div>
 
+
 <span class="c1"># TODO</span>
 <span class="c1"># def augment4(cm):</span>
 <span class="c1">#    r&quot;&quot;&quot;</span>
@@ -494,7 +509,9 @@
 
 
 <span class="c1"># callback to count elements (behaves somehow as a 2-tuple)</span>
-<div class="viewcode-block" id="CountAndWeightedCount"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.CountAndWeightedCount">[docs]</a><span class="k">class</span> <span class="nc">CountAndWeightedCount</span><span class="p">:</span>
+<div class="viewcode-block" id="CountAndWeightedCount">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.CountAndWeightedCount">[docs]</a>
+<span class="k">class</span> <span class="nc">CountAndWeightedCount</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="n">ZZ</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">weighted_count</span> <span class="o">=</span> <span class="n">QQ</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -530,8 +547,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="n">ZZ</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">weighted_count</span> <span class="o">+=</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">aut</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">aut</span><span class="o">.</span><span class="n">group_cardinality</span><span class="p">())))</span></div>
 
+
 <span class="c1"># callback to list elements</span>
-<div class="viewcode-block" id="ListCallback"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.ListCallback">[docs]</a><span class="k">class</span> <span class="nc">ListCallback</span><span class="p">:</span>
+<div class="viewcode-block" id="ListCallback">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.ListCallback">[docs]</a>
+<span class="k">class</span> <span class="nc">ListCallback</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mutable</span> <span class="o">=</span> <span class="n">mutable</span>
@@ -539,8 +559,12 @@
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aut</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mutable</span><span class="p">))</span>
 
-<div class="viewcode-block" id="ListCallback.list"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.ListCallback.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span></div></div>
+<div class="viewcode-block" id="ListCallback.list">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.ListCallback.list">[docs]</a>
+    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span></div>
+</div>
+
 
 
 <span class="c1"># TODO: make it work again! This is the most precious piece of information</span>
@@ -561,7 +585,9 @@
 <span class="s2">/****************************************************************/</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="FatGraphsTrace"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace">[docs]</a><span class="k">class</span> <span class="nc">FatGraphsTrace</span><span class="p">:</span>
+<div class="viewcode-block" id="FatGraphsTrace">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace">[docs]</a>
+<span class="k">class</span> <span class="nc">FatGraphsTrace</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to trace the execution of the fat graphs generation.</span>
 
@@ -581,7 +607,9 @@
         <span class="k">return</span> <span class="s1">&#39;FatGraphs trace for {</span><span class="si">%s</span><span class="s1">}&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">=</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
                                                        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_properties</span><span class="o">.</span><span class="n">items</span><span class="p">())))</span>
 
-<div class="viewcode-block" id="FatGraphsTrace.summary"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="FatGraphsTrace.summary">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.summary">[docs]</a>
+    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stdout</span>
             <span class="n">f</span> <span class="o">=</span> <span class="n">stdout</span>
@@ -623,10 +651,13 @@
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
+
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aut</span><span class="p">):</span>
         <span class="k">pass</span>
 
-<div class="viewcode-block" id="FatGraphsTrace.add_vertex"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.add_vertex">[docs]</a>    <span class="k">def</span> <span class="nf">add_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">depth</span><span class="p">):</span>
+<div class="viewcode-block" id="FatGraphsTrace.add_vertex">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.add_vertex">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">depth</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbosity</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;add_vertex(s=</span><span class="si">{}</span><span class="s1">, depth=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">depth</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vdepth</span><span class="p">:</span>
@@ -638,14 +669,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_k</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_vaut</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">aut_grp</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">aut_grp</span><span class="o">.</span><span class="n">group_cardinality</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="FatGraphsTrace.add_edge"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.add_edge">[docs]</a>    <span class="k">def</span> <span class="nf">add_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">s1</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FatGraphsTrace.add_edge">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.add_edge">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">s1</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbosity</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;add_edge(s0=</span><span class="si">{}</span><span class="s1">, s1=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s0</span><span class="p">,</span> <span class="n">s1</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">s0</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;_edges not properly initialized&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">s0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FatGraphsTrace.root"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.root">[docs]</a>    <span class="k">def</span> <span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FatGraphsTrace.root">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.root">[docs]</a>
+    <span class="k">def</span> <span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_k</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;trying to set root in a non-empty trace&quot;</span><span class="p">)</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
@@ -653,7 +690,10 @@
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;root(cm=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FatGraphsTrace.canonical_edge"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.canonical_edge">[docs]</a>    <span class="k">def</span> <span class="nf">canonical_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">caller</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FatGraphsTrace.canonical_edge">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.canonical_edge">[docs]</a>
+    <span class="k">def</span> <span class="nf">canonical_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="n">caller</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span>
 
@@ -669,7 +709,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">aut_grp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vdepth</span><span class="p">[</span><span class="n">parent</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FatGraphsTrace.non_canonical_edge"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.non_canonical_edge">[docs]</a>    <span class="k">def</span> <span class="nf">non_canonical_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">caller</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FatGraphsTrace.non_canonical_edge">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.non_canonical_edge">[docs]</a>
+    <span class="k">def</span> <span class="nf">non_canonical_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">caller</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbosity</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
@@ -678,7 +721,10 @@
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;_edges not properly initialized at </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bad_explore</span><span class="p">[</span><span class="n">parent</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span></div>
 
-<div class="viewcode-block" id="FatGraphsTrace.graphviz_tree"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.graphviz_tree">[docs]</a>    <span class="k">def</span> <span class="nf">graphviz_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FatGraphsTrace.graphviz_tree">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.graphviz_tree">[docs]</a>
+    <span class="k">def</span> <span class="nf">graphviz_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stdout</span>
             <span class="n">output</span> <span class="o">=</span> <span class="n">stdout</span>
@@ -716,13 +762,17 @@
                     <span class="k">if</span> <span class="n">s3</span> <span class="o">!=</span> <span class="n">s2</span><span class="p">:</span>
                         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;   </span><span class="si">%s</span><span class="s2"> [label=&quot;</span><span class="si">%s</span><span class="s2">&quot;];</span><span class="se">\n</span><span class="s2">&quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">s3</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
                         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;   </span><span class="si">%s</span><span class="s2"> -&gt; </span><span class="si">%s</span><span class="s2"> [color=&quot;</span><span class="si">%s</span><span class="s2">&quot;];</span><span class="se">\n</span><span class="s2">&quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">s2</span><span class="p">,</span> <span class="n">s3</span><span class="p">,</span> <span class="n">col3</span><span class="p">))</span>
-                    <span class="k">yield</span> <span class="n">cm3</span><span class="p">,</span> <span class="n">a3</span></div></div>
+                    <span class="k">yield</span> <span class="n">cm3</span><span class="p">,</span> <span class="n">a3</span></div>
+</div>
+
 
 <span class="c1">#################</span>
 <span class="c1"># Main iterator #</span>
 <span class="c1">#################</span>
 
-<div class="viewcode-block" id="StackCallback"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.StackCallback">[docs]</a><span class="k">class</span> <span class="nc">StackCallback</span><span class="p">:</span>
+<div class="viewcode-block" id="StackCallback">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.StackCallback">[docs]</a>
+<span class="k">class</span> <span class="nc">StackCallback</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gmin</span><span class="p">,</span> <span class="n">gmax</span><span class="p">,</span> <span class="n">fmin</span><span class="p">,</span> <span class="n">fmax</span><span class="p">,</span> <span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">,</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span> <span class="o">=</span> <span class="n">gmin</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_gmax</span> <span class="o">=</span> <span class="n">gmax</span>
@@ -783,7 +833,9 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;unknown caller&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="StackCallback.run"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.StackCallback.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="StackCallback.run">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.StackCallback.run">[docs]</a>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># trivial map (g = 0, nv = 1, nf = 1)</span>
         <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">nv</span> <span class="o">=</span> <span class="mi">1</span>
@@ -805,13 +857,17 @@
             <span class="n">augment2</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmax</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmin</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fmin</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">assert</span> <span class="n">cm</span><span class="o">.</span><span class="n">_n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cm</span>
-            <span class="n">augment3</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span></div></div>
+            <span class="n">augment3</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vmax</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_min_degree</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span></div>
+</div>
+
 
 <span class="c1">##############</span>
 <span class="c1"># Main class #</span>
 <span class="c1">##############</span>
 
-<div class="viewcode-block" id="FatGraphs"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs">[docs]</a><span class="k">class</span> <span class="nc">FatGraphs</span><span class="p">:</span>
+<div class="viewcode-block" id="FatGraphs">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs">[docs]</a>
+<span class="k">class</span> <span class="nc">FatGraphs</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Isomorphism classes of fat graphs with topological constraints.</span>
 
@@ -1118,7 +1174,9 @@
 
         <span class="k">return</span> <span class="s2">&quot;FatGraphs(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">genus</span><span class="p">,</span> <span class="n">faces</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">vertices</span><span class="p">]</span> <span class="o">+</span> <span class="n">constraints</span><span class="p">))</span>
 
-<div class="viewcode-block" id="FatGraphs.map_reduce"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.map_reduce">[docs]</a>    <span class="k">def</span> <span class="nf">map_reduce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="FatGraphs.map_reduce">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.map_reduce">[docs]</a>
+    <span class="k">def</span> <span class="nf">map_reduce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
@@ -1158,17 +1216,26 @@
                 <span class="n">callback</span><span class="p">,</span>
                 <span class="nb">filter</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="FatGraphs.cardinality_and_weighted_cardinality"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.cardinality_and_weighted_cardinality">[docs]</a>    <span class="k">def</span> <span class="nf">cardinality_and_weighted_cardinality</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FatGraphs.cardinality_and_weighted_cardinality">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.cardinality_and_weighted_cardinality">[docs]</a>
+    <span class="k">def</span> <span class="nf">cardinality_and_weighted_cardinality</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">N</span> <span class="o">=</span> <span class="n">CountAndWeightedCount</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">map_reduce</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="nb">filter</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">N</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FatGraphs.weighted_cardinality"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.weighted_cardinality">[docs]</a>    <span class="k">def</span> <span class="nf">weighted_cardinality</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FatGraphs.weighted_cardinality">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.weighted_cardinality">[docs]</a>
+    <span class="k">def</span> <span class="nf">weighted_cardinality</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">N</span> <span class="o">=</span> <span class="n">CountAndWeightedCount</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">map_reduce</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="nb">filter</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">N</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="FatGraphs.list"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FatGraphs.list">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.list">[docs]</a>
+    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
@@ -1187,13 +1254,17 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">L</span> <span class="o">=</span> <span class="n">ListCallback</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">map_reduce</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">L</span><span class="o">.</span><span class="n">list</span><span class="p">()</span></div></div>
+        <span class="k">return</span> <span class="n">L</span><span class="o">.</span><span class="n">list</span><span class="p">()</span></div>
+</div>
+
 
 <span class="c1">###################</span>
 <span class="c1"># Deprecated code #</span>
 <span class="c1">###################</span>
 
-<div class="viewcode-block" id="FatGraphs_g_nf_nv"><a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs_g_nf_nv">[docs]</a><span class="k">def</span> <span class="nf">FatGraphs_g_nf_nv</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">g_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">g_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv_max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="FatGraphs_g_nf_nv">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs_g_nf_nv">[docs]</a>
+<span class="k">def</span> <span class="nf">FatGraphs_g_nf_nv</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">g_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">g_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nv_max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    TESTS::</span>
 
@@ -1208,6 +1279,7 @@
     <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
     <span class="n">warn</span><span class="p">(</span><span class="s1">&#39;FatGraphs_g_nf_nv is deprecated. Use FatGraphs&#39;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="n">g</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="n">nf</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="n">nv</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="o">=</span><span class="n">vertex_min_degree</span><span class="p">,</span> <span class="n">g_min</span><span class="o">=</span><span class="n">g_min</span><span class="p">,</span> <span class="n">g_max</span><span class="o">=</span><span class="n">g_max</span><span class="p">,</span> <span class="n">nf_min</span><span class="o">=</span><span class="n">nf_min</span><span class="p">,</span> <span class="n">nf_max</span><span class="o">=</span><span class="n">nf_max</span><span class="p">,</span> <span class="n">nv_min</span><span class="o">=</span><span class="n">nv_min</span><span class="p">,</span> <span class="n">nv_max</span><span class="o">=</span><span class="n">nv_max</span><span class="p">)</span></div>
+
 </pre></div>
         </article>
       </div>
@@ -1240,12 +1312,9 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/sphinx_highlight.js"></script>
-    <script src="../../../_static/scripts/furo.js"></script>
+</div><script src="../../../_static/documentation_options.js?v=a78bb796"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/furo.js?v=32e29ea5"></script>
     </body>
 </html>
