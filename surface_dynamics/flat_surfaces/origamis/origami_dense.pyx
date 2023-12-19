@@ -40,18 +40,11 @@ from libc.math cimport isnan
 #     AttributeError: 'module' object has no attribute 'ModuleElementWithMutability'
 cimport sage.structure.element
 
-try:
-    from sage.structure.coerce import CoercionModel
-except ImportError:
-    # before Sage 8.6, CoercionModel used to be somewhere else
-    from sage.structure.element import CoercionModel
-
 from sage.rings.integer cimport Integer, smallInteger
 from sage.rings.integer import GCD_list
 
 from libc.stdlib cimport calloc, malloc, free
 from libc.string cimport memset, memcpy
-from libc.limits cimport UINT_MAX
 
 from sage.groups.perm_gps.permgroup import PermutationGroupElement
 try:
@@ -85,6 +78,7 @@ cdef extern from "lyapunov_exponents.h":
     void free_origami_with_involution_data(origami_with_involution_data *o)
     void lyapunov_exponents_with_involution(origami_with_involution_data *o, size_t NB_ITERATIONS, double * ttheta)
 
+
 def origami_from_gap_permutations(r, u):
     r"""
     TESTS::
@@ -112,6 +106,7 @@ def origami_from_gap_permutations(r, u):
     r = [r(i+1)-1 for i in range(n)]
     u = [u(i+1)-1 for i in range(n)]
     return Origami_dense_pyx(tuple(r), tuple(u))
+
 
 def lattice(vectors):
     r"""
@@ -221,35 +216,36 @@ def lattice(vectors):
 
 
 cdef inline tuple array_to_tuple(int * x, unsigned int n):
-# This approach raises a SIGSEGV error
-#    cdef int i
-#    cdef tuple res = PyTuple_New(<Py_ssize_t> n)
-#
-#    for i from 0 <= i < n:
-#        PyTuple_SetItem(res, i, PyInt_FromLong(x[i]))
-#
-#    return res
-    cdef list res = [None]*n
+    # This approach raises a SIGSEGV error
+    #    cdef int i
+    #    cdef tuple res = PyTuple_New(<Py_ssize_t> n)
+    #
+    #    for i from 0 <= i < n:
+    #        PyTuple_SetItem(res, i, PyInt_FromLong(x[i]))
+    #
+    #    return res
+    cdef list res = [None] * n
     cdef int i
 
-    for i from 0 <= i < n:
+    for i in range(n):
         res[i] = x[i]
 
     return tuple(res)
 
+
 cdef inline tuple array_to_tuple_i(int * x, unsigned int n):
-# This approach raises a SIGSEGV error
-#    cdef int i
-#    cdef tuple res = PyTuple_New(<Py_ssize_t> n)
-#
-#    for i from 0 <= i < n:
-#        PyTuple_SetItem(res, x[i], PyInt_FromLong(i))
-#
-#    return res
+    # This approach raises a SIGSEGV error
+    #    cdef int i
+    #    cdef tuple res = PyTuple_New(<Py_ssize_t> n)
+    #
+    #    for i from 0 <= i < n:
+    #        PyTuple_SetItem(res, x[i], PyInt_FromLong(i))
+    #
+    #    return res
     cdef list res = [None]*n
     cdef int i
 
-    for i from 0 <= i < n:
+    for i in range(n):
         res[x[i]] = i
 
     return tuple(res)
@@ -267,8 +263,6 @@ cdef tuple projectivize_edges(l):
     cdef Origami_dense_pyx o1, oo1, o2, oo2, ooo
     cdef dict ll
     cdef set waiting
-    cdef int *xx
-    cdef int *yy
 
     o1 = next(iterkeys(l[0])) # pick a random element in l[0] !!!!
     oo1 = o1.inverse()
@@ -320,6 +314,7 @@ cdef tuple projectivize_edges(l):
                 ll[i][o1] = oo2
 
     return ll
+
 
 def sl_orbit_from_gl_orbit(o, L, I):
     r"""
@@ -397,11 +392,15 @@ def sl_orbit_from_gl_orbit(o, L, I):
 
     return l, r, s
 
+
 def origami_unpickle(r, u, pos, name):
     o = Origami_dense_pyx(r, u)
-    if pos is not None: o.set_positions(pos)
-    if name is not None: o.rename(name)
+    if pos is not None:
+        o.set_positions(pos)
+    if name is not None:
+        o.rename(name)
     return o
+
 
 cdef class Origami_dense_pyx:
     r"""
@@ -472,7 +471,8 @@ cdef class Origami_dense_pyx:
         self._i_edges = {}
 
     def __dealloc__(self):
-        if self._r != NULL: free(self._r)
+        if self._r != NULL:
+            free(self._r)
 
     cdef Origami_dense_pyx _new_c(self, int * rr_and_uu):
         r"""
@@ -507,7 +507,6 @@ cdef class Origami_dense_pyx:
             False
         """
         cdef int * r = <int *> malloc(2 * self._n * sizeof(int))
-        cdef int * u = r + self._n
 
         memcpy(r, self._r, 2 * self._n * sizeof(int))
 
@@ -579,8 +578,10 @@ cdef class Origami_dense_pyx:
 
         # Compare number of squares
         if s._n != o._n:
-            if i < 2: return s._n < o._n
-            if i > 3: return s._n > o._n
+            if i < 2:
+                return s._n < o._n
+            if i > 3:
+                return s._n > o._n
             return i == 3
 
         # Find first index where they differ and take the difference
@@ -588,10 +589,12 @@ cdef class Origami_dense_pyx:
 
         if test == 0: # equality
             return i != 0 and i != 3 and i != 4
-        else: # different
-            if i < 2: return test < 0
-            if i > 3: return test > 0
-            return i == 3
+        # different
+        if i < 2:
+            return test < 0
+        if i > 3:
+            return test > 0
+        return i == 3
 
     def __hash__(self):
         r"""
@@ -908,7 +911,6 @@ cdef class Origami_dense_pyx:
                     k += 1
                 periods.append((smallInteger(k), smallInteger(0)))
 
-
         # Now compute the period of vertical transversals in each cylinder
         for i in range(self._n):
             if br_sg[i] == 1:
@@ -1004,7 +1006,7 @@ cdef class Origami_dense_pyx:
             sage: o.optimal_degree()
             3
         """
-        a, t, u = self.lattice_of_absolute_periods()
+        a, _, u = self.lattice_of_absolute_periods()
         return self.nb_squares() / (a*u)
 
     def is_reduced(self):
@@ -1310,7 +1312,7 @@ cdef class Origami_dense_pyx:
             [0, 2]
         """
         cdef list l = []
-        cdef int * seen  = <int *> calloc(self._n, sizeof(int))
+        cdef int * seen = <int *> calloc(self._n, sizeof(int))
         cdef int i
 
         for i in range(self._n):
@@ -1469,7 +1471,6 @@ cdef class Origami_dense_pyx:
         cdef int *rr = <int *>malloc(2*self._n*sizeof(int))
         cdef int *uu = rr + self._n
 
-
         if cylinder is not None:
             i0 = int(cylinder)
             if i0 < 0 or i0 >= self._n:
@@ -1598,12 +1599,14 @@ cdef class Origami_dense_pyx:
 
             # then we create i-edges until we find a new guy
             # we set r, u to be available
-            r = rr; u = uu
+            r = rr
+            u = uu
             while waiting:
                 oo = waiting.pop()
                 if VERBOSE:
                     print("try i-link from %s %s" % (str(oo.r_tuple()), str(oo.u_tuple())))
-                rr = oo._r; uu = oo._u
+                rr = oo._r
+                uu = oo._u
                 for i from 0 <= i < n:
                     r[i] = uu[i]
                     u[i] = rr[i]
@@ -1620,7 +1623,8 @@ cdef class Origami_dense_pyx:
                         if VERBOSE:
                             print("he was there before")
                         waiting.remove(o)
-                        r = rr; u = uu
+                        r = rr
+                        u = uu
                     else: # we find a real new guy
                         break
                 else: # symmetric under r <-> u
@@ -1882,15 +1886,16 @@ cdef class Origami_dense_pyx:
             nb_vectors_p, nb_vectors_m,
             only_mean):
         import sys
-        from time import time
         cdef origami_with_involution_data * o
         cdef double * theta
         cdef size_t i, n, n_p, n_m
         n_p = nb_vectors_p
         n_m = nb_vectors_m
 
-        if n_p == 1: n_p=2
-        if n_m == 1: n_m=2
+        if n_p == 1:
+            n_p=2
+        if n_m == 1:
+            n_m=2
         n = n_p + n_m
 
         res = [[] for _ in range(n)]
@@ -2069,7 +2074,6 @@ cdef class Origami_dense_pyx:
         if self._n != other._n:
             return False
         cdef Origami_dense_pyx ss, oo
-        cdef ms, mo
         ss, ms = self.relabel(inplace=False, return_map=True)
         oo, mo = other.relabel(inplace=False, return_map=True)
         cdef size_t i
@@ -2273,8 +2277,10 @@ cdef class Origami_dense_pyx:
         for a in map(len, singularities):
             a=a-1
             if a:
-                if a in degrees: degrees[a] += 1
-                else: degrees[a] = 1
+                if a in degrees:
+                    degrees[a] += 1
+                else:
+                    degrees[a] = 1
 
         res = []
 
@@ -2290,11 +2296,16 @@ cdef class Origami_dense_pyx:
                 print("mm = %s" % mm)
 
             # Fixed points which are not integer points
-            squares = []; h_edges = []; v_edges = []
+            squares = []
+            h_edges = []
+            v_edges = []
             for i in range(1, self.nb_squares()+1):
-                if mm(i) == i: squares.append(i)
-                if mm(i) == u(i): h_edges.append(i)
-                if mm(i) == r(i): v_edges.append(i)
+                if mm(i) == i:
+                    squares.append(i)
+                if mm(i) == u(i):
+                    h_edges.append(i)
+                if mm(i) == r(i):
+                    v_edges.append(i)
 
             # Fixed integer points
             vertices = []
@@ -2537,8 +2548,6 @@ cdef class Origami_dense_pyx:
         """
         G = self.monodromy()
         n = self.nb_squares()
-        r = self.r()
-        u = self.u()
         blocks = map(list, libgap(G).AllBlocks())
         if degree is not None:
             degree = int(degree)
@@ -2592,8 +2601,6 @@ cdef class Origami_dense_pyx:
         from sage.combinat.posets.lattices import LatticePoset
         G = libgap(self.monodromy())
         n = self.nb_squares()
-        r = self.r()
-        u = self.u()
         blocks = list(G.AllBlocks())
         if verbose:
             print(blocks)
@@ -2731,8 +2738,10 @@ cdef class Origami_dense_pyx:
 
             d = max(max(len(x) for x in sr), max(len(x) for x in su))
 
-            for p in sr: p.extend(range(len(p), d))
-            for p in su: p.extend(range(len(p), d))
+            for p in sr:
+                p.extend(range(len(p), d))
+            for p in su:
+                p.extend(range(len(p), d))
         else:
             d = len(sr[0])
 
@@ -2757,7 +2766,6 @@ cdef class Origami_dense_pyx:
 
     def rename(self, name):
         self._name = name
-
 
     #
     # Automorphisms and quotients
@@ -2919,7 +2927,6 @@ cdef class Origami_dense_pyx:
         su = self.u().cycle_string(singletons=True)
         return sr + "\n" + su
 
-
     def __repr__(self):
         if self._name is not None:
             return self._name
@@ -3050,7 +3057,8 @@ cdef class Origami_dense_pyx:
         G = Graphics()
         for i in range(self.nb_squares()):
             x0, y0 = self._pos[i]
-            x1 = x0+1; y1 = y0+1
+            x1 = x0+1
+            y1 = y0+1
             if args['square']:
                 G += polygon2d([(x0, y0), (x1, y0), (x1, y1), (x0, y1)], **d['square'])
             if args['text_square']:
@@ -3058,7 +3066,8 @@ cdef class Origami_dense_pyx:
 
         for i in range(self.nb_squares()):
             x0, y0 = self._pos[i]
-            x1 = x0+1; y1 = y0+1
+            x1 = x0+1
+            y1 = y0+1
 
             if i in self._rl_frontiers:
                 xx0, yy0 = self._pos[r[i]]
@@ -3161,12 +3170,14 @@ cdef class Origami_dense_pyx:
         cyls = []
         while udr_sq:
             j, ji = udr_sq.pop(0)
-            k = r.orbit(j)  # the min is not necessarily at a singularity
-            jj = min(k)     # because of the standard form. Hence we
-                            # construct the r orbit of j.
-                            # the bot twist is the distance between the
-                            # min square and the min singularity
-                            # width is r^-1(j)-j
+            k = r.orbit(j)
+            jj = min(k)
+            # the min is not necessarily at a singularity
+            # because of the standard form. Hence we
+            # construct the r orbit of j.
+            # the bot twist is the distance between the
+            # min square and the min singularity
+            # width is r^-1(j)-j
             bot_twist = j-jj
             w = ri(jj)-jj+1
             bot = [(j, ji)]
@@ -3727,18 +3738,22 @@ cdef gl2z_orbits(origamis, int n, int limit):
                 l_edges.clear()
                 i_edges.clear()
                 waiting.clear()
-                r = rr; u = uu
+                r = rr
+                u = uu
                 break
 
             # then we create i-edges until we find a new guy
             # we set r, u to be available
-            if VERBOSE: print("end of cusp, apply symmetry")
-            r = rr; u = uu
+            if VERBOSE:
+                print("end of cusp, apply symmetry")
+            r = rr
+            u = uu
             while waiting:
                 if VERBOSE:
                     print(" new try...")
                 oo = waiting.pop()
-                rr = oo._r; uu = oo._u
+                rr = oo._r
+                uu = oo._u
                 for i from 0 <= i < n:
                     r[i] = uu[i]
                     u[i] = rr[i]
@@ -3750,9 +3765,11 @@ cdef gl2z_orbits(origamis, int n, int limit):
                     i_edges[o] = oo
                     i_edges[oo] = o
                     if o in waiting: # we find a fake new guy
-                        if VERBOSE: print(" ...was already there")
+                        if VERBOSE:
+                            print(" ...was already there")
                         waiting.remove(o)
-                        r = rr; u = uu
+                        r = rr
+                        u = uu
                     else: # we find a real new guy
                         if VERBOSE:
                             print("go elsewhere")
@@ -3771,8 +3788,8 @@ cdef gl2z_orbits(origamis, int n, int limit):
         if l_edges: # append if we do not quit because of oversize
             orbits.append((l_edges, i_edges))
             if VERBOSE:
-                    print("new orbit of size %d" % (len(l_edges)))
-                    print("check: waiting=", waiting)
+                print("new orbit of size %d" % (len(l_edges)))
+                print("check: waiting=", waiting)
 
     free(renum)
     free(rr)
@@ -3851,8 +3868,8 @@ cdef class PillowcaseCover_dense_pyx:
         if self._g == NULL:
             raise MemoryError("not able to allocate")
 
-        for i from 0 <= i < self._n:
-            self._g[i]     = g0[i]
+        for i in range(self._n):
+            self._g[i] = g0[i]
             self._g[i+1*self._n] = g1[i]
             self._g[i+2*self._n] = g2[i]
             self._g[i+3*self._n] = g3[i]
@@ -3875,7 +3892,8 @@ cdef class PillowcaseCover_dense_pyx:
         return self._n
 
     def __dealloc__(self):
-        if self._g != NULL: free(self._g)
+        if self._g != NULL:
+            free(self._g)
 
     def __hash__(self):
         r"""
@@ -3935,12 +3953,12 @@ cdef class PillowcaseCover_dense_pyx:
             sage: p >= q or q >= r or p >= r
             False
         """
-         #0: <
-         #1: <=
-         #2: ==
-         #3: !=
-         #4: >
-         #5: >=
+        # 0: <
+        # 1: <=
+        # 2: ==
+        # 3: !=
+        # 4: >
+        # 5: >=
         cdef PillowcaseCover_dense_pyx s
         cdef PillowcaseCover_dense_pyx o
 
@@ -3952,8 +3970,10 @@ cdef class PillowcaseCover_dense_pyx:
 
         # compare the number of squares
         if s._n != o._n:
-            if i < 2: return s._n < o._n
-            if i > 3: return s._n > o._n
+            if i < 2:
+                return s._n < o._n
+            if i > 3:
+                return s._n > o._n
             return i == 3
 
         # find the first index where self and other differ and make the
@@ -3967,8 +3987,10 @@ cdef class PillowcaseCover_dense_pyx:
             # all indices are equal
             return i != 0 and i != 3 and i != 4
 
-        if i < 2: return test < 0
-        if i > 3: return test > 0
+        if i < 2:
+            return test < 0
+        if i > 3:
+            return test > 0
         return i == 3
 
     cdef PillowcaseCover_dense_pyx _new_c(self, int * g):

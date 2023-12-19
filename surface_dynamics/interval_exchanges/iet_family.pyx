@@ -765,9 +765,9 @@ cdef class IETFamily:
         """
         if intervalxt is None:
             try:
-                import gmpxxyy
-                import pyintervalxt
-                import pyeantic
+                import gmpxxyy  # no-cython-lint
+                import pyintervalxt  # no-cython-lint
+                import pyeantic  # no-cython-lint
             except ImportError:
                 intervalxt = False
             else:
