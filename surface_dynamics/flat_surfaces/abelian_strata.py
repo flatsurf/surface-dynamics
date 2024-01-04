@@ -397,7 +397,7 @@ class AbelianStratum(Stratum):
 
             sage: QuadraticStratum(0,4,2,2).nb_fake_zeros()
             1
-         """
+        """
         return self._nb_fake_zeros
 
     def genus(self):
@@ -3112,7 +3112,7 @@ class OddAbelianStratumComponent(ASC):
             H_3(4)^odd
             sage: c.spin()
             1
-         """
+        """
         return 1
 
     def permutation_representative(self, left_degree=None, reduced=True, alphabet=None, relabel=True):

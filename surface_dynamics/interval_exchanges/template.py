@@ -6555,7 +6555,7 @@ class RauzyDiagram(SageObject):
             1
             sage: r.edge_types_index('i')
             1
-         """
+        """
         if not isinstance(data,str):
             raise ValueError("the edge type must be a string")
 

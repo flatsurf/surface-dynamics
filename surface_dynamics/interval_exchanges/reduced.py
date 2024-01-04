@@ -78,7 +78,7 @@ class ReducedPermutation(SageObject):
     .. warning::
 
         Internal class! Do not use directly!
-   """
+    """
     def __getitem__(self, i):
         r"""
         TESTS::
