@@ -723,7 +723,7 @@ class FatGraphs:
     """
     def __init__(self, g=None, nf=None, ne=None, nv=None, vertex_min_degree=0, g_min=None, g_max=None, nf_min=None, nf_max=None, ne_min=None, ne_max=None, nv_min=None, nv_max=None):
         r"""
-       INPUT:
+        INPUT:
 
         - ``g``, ``g_min``, ``g_max`` - the genus
 

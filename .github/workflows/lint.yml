@@ -17,7 +17,7 @@ jobs:
       - name: Install dependencies
         shell: bash -l {0}
         run: |
-          mamba install -y codespell pycodestyle cython-lint
+          mamba install -y codespell pycodestyle cython-lint ruff=0.0.292
       - name: Run codespell
         shell: bash -l {0}
         run: codespell `git ls-files`
@@ -28,3 +28,7 @@ jobs:
       - name: Run cython-lint
         shell: bash -l {0}
         run: cython-lint --ignore=E501,E261,E222,E265,E266,E127,E128,E231,E741 surface_dynamics
+      - name: Run ruff
+        shell: bash -l {0}
+        run: |
+          ruff check --select D207,D208 surface_dynamics
