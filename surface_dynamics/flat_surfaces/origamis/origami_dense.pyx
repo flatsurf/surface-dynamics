@@ -1468,8 +1468,8 @@ cdef class Origami_dense_pyx:
             True
         """
         cdef int i
-        cdef int *rr = <int *>malloc(2*self._n*sizeof(int))
-        cdef int *uu = rr + self._n
+        cdef int * rr = <int *> malloc(2 * self._n * sizeof(int))
+        cdef int * uu = rr + self._n
 
         if cylinder is not None:
             i0 = int(cylinder)
@@ -1976,6 +1976,45 @@ cdef class Origami_dense_pyx:
 
         return res[:nb_vectors]
 
+    def fat_graph(self, verticals=False):
+        r"""
+        EXAMPLES::
+
+            sage: from surface_dynamics.all import Origami
+            sage: o = Origami('(1,2)', '(1,3)')
+            sage: o.fat_graph()
+            FatGraph('(0,3,5,2,8,11,9,6,4,7,1,10)', '(0,7,9,2)(1,10,8,11)(3,5,6,4)')
+            sage: o = Origami('(1,2,3,4,5)', '(1,6)(2,7)')
+            sage: o.fat_graph()
+            FatGraph('(0,3,17,2,20,23,21,6,24,27,25,10,8,11,5,26,4,7,1,22)(9,14,12,15)(13,18,16,19)', '(0,7,21,2)(1,22,20,23)(3,17,18,16)(4,11,25,6)(5,26,24,27)(8,15,9,10)(12,19,13,14)')
+        """
+        # for the square number i we label edges as
+        #
+        #  x---------------x
+        #  |      4u(i)+1  |
+        #  |4i+2           |
+        #  |               |
+        #  |               |
+        #  |        4r(i)  |
+        #  | 4i        +3  |
+        #  x---------------x
+        fp = [-1] * (4 * self._n)
+        for i in range(self._n):
+            down = 4 * i
+            right = 4 * self._r[i] + 3
+            up = 4 * self._u[i] + 1
+            left = 4 * i + 2
+            fp[down] = right
+            fp[right] = up
+            fp[up] = left
+            fp[left] = down
+        from surface_dynamics.topology.fat_graph import FatGraph
+        fat_graph = FatGraph(fp=fp)
+        if verticals:
+            return fat_graph, [4 * i for i in range(self._n)] + [4 * i + 1 for i in range(self._n)]
+        else:
+            return fat_graph
+
     def as_graph(self):
         r"""
         Return the graph associated to self
@@ -2090,6 +2129,28 @@ cdef class Origami_dense_pyx:
     #
     # Component of stratum
     #
+
+    def spin_parity(self):
+        r"""
+        Return the spin parity of this origami.
+
+        TESTS::
+
+            sage: from surface_dynamics import AbelianStratum
+            sage: for z in [[6], [4, 2], [2, 2, 2]]:
+            ....:     A = AbelianStratum(*z)
+            ....:     o0 = A.even_component().one_origami()
+            ....:     o1 = A.odd_component().one_origami()
+            ....:     for _ in range(20):
+            ....:         assert o0.spin_parity() == 0
+            ....:         assert o1.spin_parity() == 1
+            ....:         o0 = o0.vertical_twist(cylinder=randrange(o0.nb_squares()))
+            ....:         o0 = o0.horizontal_twist(cylinder=randrange(o0.nb_squares()))
+            ....:         o1 = o1.vertical_twist(cylinder=randrange(o1.nb_squares()))
+            ....:         o1 = o1.horizontal_twist(cylinder=randrange(o1.nb_squares()))
+        """
+        fg, verticals = self.fat_graph(verticals=True)
+        return fg.spin_parity(verticals)
 
     def stratum_component(self, fake_zeros=False, verbose=False):
         r"""
@@ -3344,15 +3405,24 @@ cdef class Origami_dense_pyx:
 
             sage: o = Origami('(1,2,3,4)(5,6)', '(1,5)(2,6)')
             sage: o.absolute_period_generators()
-            [(2, 0), (2, 0), (0, 1), (0, 1)]
+            [(2, 0), (0, 1), (0, 1), (2, 0)]
         """
-        cyl, lengths, heights, twists = self.cylinder_diagram(data=True)
-        r = cyl.to_ribbon_graph_with_holonomies(lengths, heights, twists)
+        fg = self.fat_graph()
         periods = []
-        for c in r.cycle_basis():
-            s = sum(r._holonomies[e[0]] for e in c)
-            if s:
-                periods.append(s)
+        for c in fg.cycle_basis():
+            s = [0, 0]
+            for e in c:
+                # NOTE: the edge labelling tells us about the holonomy
+                if e % 4 == 0:
+                    s[0] += 1
+                elif e % 4 == 1:
+                    s[0] -= 1
+                elif e % 4 == 2:
+                    s[1] += 1
+                else:
+                    s[1] -= 1
+            if s[0] or s[1]:
+                periods.append(tuple(s))
         return periods
 
     def stratum(self, fake_zeros=False):

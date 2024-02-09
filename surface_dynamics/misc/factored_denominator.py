@@ -187,10 +187,10 @@ class FactoredDenominator(object):
         elif isinstance(data, dict):
             if V is not None:
                 self._dict = {}
-                for k, v in data.items():
-                    k = V(k)
-                    k.set_immutable()
-                    self._dict[k] = v
+                for vect, mult in data.items():
+                    vect = V(vect)
+                    vect.set_immutable()
+                    self._dict[vect] = mult
             else:
                 self._dict = data
 
@@ -210,6 +210,34 @@ class FactoredDenominator(object):
             raise TypeError('invalid data of type {} to initialized a FactoredDenominator'.format(type(data)))
 
         self._tuple = tuple(sorted(self._dict.items()))
+
+    def permutation_action(self, p, V):
+        r"""
+        Right action of the permutation ``p``
+
+        EXAMPLES::
+
+            sage: from surface_dynamics.misc.factored_denominator import FactoredDenominator
+            sage: V = ZZ**4
+            sage: f1 = FactoredDenominator([((1,0,0,0), 2)], V)
+            sage: f1.permutation_action([1, 2, 3, 0], V)
+            {(0, 1, 0, 0): 2}
+            sage: f2 = FactoredDenominator([((0,1,2,3), 3), ((1,0,1,1), 1)], V)
+            sage: f2.permutation_action([2,0,1,3], V)
+            {(1, 2, 0, 3): 3, (0, 1, 1, 1): 1}
+        """
+        new_dict = {}
+        for vect, mult in self._dict.items():
+            new_vect = V()
+            for i, x in vect.items():
+                new_vect[p[i]] = x
+            new_vect.set_immutable()
+            new_dict[new_vect] = mult
+
+        ans = FactoredDenominator.__new__(FactoredDenominator)
+        ans._dict = new_dict
+        ans._tuple = tuple(sorted(new_dict.items()))
+        return ans
 
     def __len__(self):
         r"""
