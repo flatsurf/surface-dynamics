@@ -1,8 +1,6 @@
 # encoding=utf-8
 r"""
 Installation script for the flatsurf module
-
-It depends on distutils
 """
 
 import sys
@@ -10,11 +8,8 @@ import os
 import numpy as np
 import cypari2
 
-from distutils.core import setup
+from setuptools import setup
 from distutils.extension import Extension
-from distutils.version import LooseVersion
-from distutils.command.build_py import build_py as _build_py
-
 from Cython.Build import cythonize
 
 # NOTE: without this option, tab-completion and documentation are mostly broken within sage
@@ -22,15 +17,6 @@ from Cython.Build import cythonize
 import Cython.Compiler.Options
 Cython.Compiler.Options.embed_pos_in_docstring = True
 
-with open("surface_dynamics/version.py") as f:
-    version = f.read().strip()
-    prefix = "version='"
-    suffix = "'"
-    assert version.startswith(prefix) and version.endswith(suffix)
-    version = version[len(prefix):len(version)-len(suffix)]
-
-with open("README.md") as f:
-    long_description = f.read()
 
 try:
     import ppl
@@ -84,7 +70,7 @@ for name, data in extensions_data.items():
         full_dir = os.path.join('surface_dynamics', data['dir'])
         sources = [os.path.join(full_dir, src) for src in data['sources']]
         headers = [os.path.join(full_dir, data['dir'], head) for head in data['headers']]
-        extensions.append(Extension(data['name'], sources=sources, include_dirs=[full_dir, np.get_include()]))
+        #extensions.append(Extension(data['name'], sources=sources, include_dirs=[full_dir, np.get_include()]))
 
         sources = [os.path.join(data['dir'], src) for src in data['sources']]
         headers = [os.path.join(data['dir'], head) for head in data['headers']]
@@ -100,42 +86,4 @@ except (ImportError, ModuleNotFoundError):
 with cython_namespace_package_support():
     extensions = cythonize(extensions)
 
-setup(name='surface-dynamics',
-      version=version,
-      description="Dynamics on surfaces",
-      long_description=long_description,
-      long_description_content_type="text/markdown",
-      author='Vincent Delecroix',
-      author_email='vincent.delecroix@u-bordeaux.fr',
-      project_urls={
-       "Bug Tracker": "https://github.com/flatsurf/surface-dynamics/issues",
-       "Documentation": "https://flatsurf.github.io/surface-dynamics/",
-       "Source Code": "https://github.com/flatsurf/surface-dynamics",
-      },
-      license="GPL v2",
-      packages=['surface_dynamics',
-                'surface_dynamics/misc',
-                'surface_dynamics/topology',
-                'surface_dynamics/topological_recursion',
-                'surface_dynamics/flat_surfaces',
-                'surface_dynamics/databases',
-                'surface_dynamics/flat_surfaces/origamis',
-                'surface_dynamics/interval_exchanges'],
-      package_data={
-          'surface_dynamics': source_files,
-          'surface_dynamics/databases': ['cylinder_diagrams/cyl_diags*', 'generalized_permutation_twins/twins*'],
-          'surface_dynamics/flat_surfaces/origamis': ['origamis.db'],
-          },
-      ext_modules=extensions,
-      classifiers=[
-        'Development Status :: 4 - Beta',
-        'Intended Audience :: Science/Research',
-        'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
-        'Operating System :: OS Independent',
-        'Programming Language :: C',
-        'Programming Language :: C++',
-        'Programming Language :: Python',
-        'Programming Language :: Cython',
-        'Topic :: Scientific/Engineering :: Mathematics',
-      ],
-      keywords='surfaces, dynamics, geometry, flat surfaces, Abelian differentials, quadratic differentials, Riemann surfaces')
+setup(ext_modules=extensions)
