@@ -61,7 +61,7 @@ jobs:
       - name: Install surface-dynamics
         shell: bash -l {0}
         run: |
-          pip install --verbose --no-index .
+          pip install --verbose --no-build-isolation --no-index .
           # Show message about cppyy regenerating pre-compiled headers so it does not show during the tests
           python -c 'import cppyy' || true
       - name: Run SageMath doctests

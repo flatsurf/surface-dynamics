@@ -1,0 +1,66 @@
+[build-system]
+requires = [
+    "setuptools>=61.2",
+    "Cython <3",
+    "numpy",
+    "cypari2",
+    "ppl",
+    "sagemath-environment",  # sage.misc.package_dir.cython_namespace_package_support
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "surface-dynamics"
+description = "Dynamics on surfaces"
+requires-python = ">=3.8"
+readme = "README.md"
+authors = [{name = 'Vincent Delecroix', email = 'vincent.delecroix@u-bordeaux.fr'}]
+license = {text = "GPL v2"}
+classifiers = [
+    'Development Status :: 4 - Beta',
+    'Intended Audience :: Science/Research',
+    'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
+    'Operating System :: OS Independent',
+    'Programming Language :: C',
+    'Programming Language :: C++',
+    'Programming Language :: Python',
+    'Programming Language :: Cython',
+    'Topic :: Scientific/Engineering :: Mathematics',
+]
+keywords = ['surfaces', 'dynamics', 'geometry', 'flat surfaces',
+            'Abelian differentials', 'quadratic differentials', 'Riemann surfaces']
+dynamic = ['version']
+
+[project.urls]
+"Bug Tracker" = "https://github.com/flatsurf/surface-dynamics/issues"
+"Documentation" = "https://flatsurf.github.io/surface-dynamics/"
+"Source Code" = "https://github.com/flatsurf/surface-dynamics"
+
+[tool.setuptools]
+packages = [
+    'surface_dynamics',
+    'surface_dynamics.misc',
+    'surface_dynamics.topology',
+    'surface_dynamics.topological_recursion',
+    'surface_dynamics.flat_surfaces',
+    'surface_dynamics.databases',
+    'surface_dynamics.flat_surfaces.origamis',
+    'surface_dynamics.interval_exchanges',
+]
+
+[tool.setuptools.package_data]
+'surface_dynamics.databases' = [
+    'cylinder_diagrams/cyl_diags*',
+    'generalized_permutation_twins/twins*'
+]
+'surface_dynamics.flat_surfaces.origamis' = [
+    'origamis.db',
+    '*.pxd',
+]
+'surface_dynamics.interval_exchanges' = [
+    '*.pxd',
+    '*.h',
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "surface_dynamics.version.version"}

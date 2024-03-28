@@ -24,7 +24,7 @@ jobs:
       - name: install surface-dynamics
         shell: bash -l {0}
         run: |
-          pip install --no-index .
+          pip install --no-build-isolation --no-index .
       - name: build documentation
         shell: bash -l {0}
         run: |
