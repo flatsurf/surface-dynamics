@@ -62,7 +62,7 @@ AUTHORS:
 #    - create query interface (with interact)
 #    - allow kwds arguments to SQLQuery (like GraphQuery)
 
-#*****************************************************************************
+# ****************************************************************************
 #       Copyright (C) 2011 R. Andrew Ohana <andrew.ohana@gmail.com>
 #       Copyright (C) 2007 Emily A. Kirkman
 #                          Robert L. Miller
@@ -71,11 +71,12 @@ AUTHORS:
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
-#                  http://www.gnu.org/licenses/
-#*****************************************************************************
+#                  https://www.gnu.org/licenses/
+# ****************************************************************************
 from __future__ import print_function, absolute_import, division
 from six import string_types
 from six.moves import range, zip, filter
+from pathlib import Path
 
 import sqlite3 as sqlite
 import os
@@ -939,18 +940,20 @@ class SQLDatabase(SageObject):
         if filename is None:
             if read_only is None:
                 read_only = False
-            filename = tmp_filename() + '.db'
-        elif (filename[-3:] != '.db'):
-            raise ValueError('Please enter a valid database path (file name ' \
-                + '%s does not end in .db).'%filename)
+            filename = Path(tmp_filename(ext='.db'))
+        else:
+            filename = Path(filename)
+            if filename.suffix != '.db':
+                raise ValueError('Please enter a valid database path (file name '
+                                 '%s does not end in .db).' % filename)
         if read_only is None:
             read_only = True
 
         self.__read_only__ = read_only
         self.ignore_warnings = False
-        self.__dblocation__ = filename
-        self.__connection__ = sqlite.connect(self.__dblocation__, \
-            check_same_thread=False)
+        self.__dblocation__ = str(filename)
+        self.__connection__ = sqlite.connect(self.__dblocation__,
+                                             check_same_thread=False)
         # this is to avoid the multiple thread problem with dsage:
         # pysqlite does not trust multiple threads for the same connection
         self.__connection__.create_function("regexp", 2, regexp)
