@@ -165,7 +165,7 @@ group of translation acts transitively on the set of squares)::
 
     Compute also the index of the image in SL_2(Z/NZ) where N is the congruence
     level. This can be discriminated by looking at the action on (Z/NZ)^2 (which
-    should be transitive in the case of SL_2(Z/NZ). There are some inverse theorem
+    should be transitive in the case of SL_2(Z/NZ). There are some inverse theorems
     in Gaby thesis.
 
 AUTHOR:
@@ -183,7 +183,7 @@ AUTHOR:
 # ****************************************************************************
 
 from __future__ import print_function, absolute_import
-import os
+from pathlib import Path
 from six.moves import range, map, filter, zip
 from six import iteritems, string_types
 
@@ -199,8 +199,8 @@ from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
 from . import __path__ as db_path
 if len(db_path) != 1:
     raise RuntimeError("problem with setting paths")
-db_path = os.path.abspath(db_path[0])
-ORIGAMI_DB_LOCATION = os.path.join(db_path, 'origamis.db')
+db_path = Path(db_path[0]).resolve()
+ORIGAMI_DB_LOCATION = db_path / 'origamis.db'
 
 # for primitive and primitive orientation cover
 # classification of primitive group action in GAP (order < )
@@ -336,12 +336,12 @@ OLDS = []
 OLD_ORIGAMI_DB_skeleton = ORIGAMI_DB_skeleton['origamis'].copy()
 OLD_ORIGAMI_DB_cols = ORIGAMI_DB_cols[:]
 added_cols = [
-('relative_monodromy_name',
- 'relative_monodromy_signature', 'relative_monodromy_index', 'relative_monodromy_order',
- 'relative_monodromy_solvable', 'relative_monodromy_nilpotent',
- 'relative_monodromy_gap_primitive_id'),
-('quasi_primitive',),
-('optimal_degree',)
+    ('relative_monodromy_name',
+     'relative_monodromy_signature', 'relative_monodromy_index', 'relative_monodromy_order',
+     'relative_monodromy_solvable', 'relative_monodromy_nilpotent',
+     'relative_monodromy_gap_primitive_id'),
+    ('quasi_primitive',),
+    ('optimal_degree',)
 ]
 
 for cols in added_cols:
@@ -516,6 +516,7 @@ def data_to_small_positive_integer_tuple(s):
         return ()
     return tuple(Integer(i,36) for i in s)
 
+
 def integer_tuple_to_data(t):
     r"""
     Convert a tuple of arbitrary integers into a string.
@@ -538,6 +539,7 @@ def integer_tuple_to_data(t):
     if not t:
         return ''
     return ' '.join(Integer(x).str(36) for x in t)
+
 
 def data_to_integer_tuple(s):
     r"""
@@ -610,6 +612,7 @@ def representative_to_data(o):
         us = integer_tuple_to_data(o.u_tuple())
     return rs + us
 
+
 def data_to_representative(s):
     r"""
     Convert data to representative.
@@ -675,6 +678,7 @@ def stratum_to_data(h):
         True
     """
     return integer_tuple_to_data(h.zeros())
+
 
 def data_to_stratum(s):
     r"""
@@ -754,6 +758,7 @@ def orientation_stratum_to_data(q):
         return ''
     return integer_tuple_to_data(q.zeros())
 
+
 def data_to_orientation_stratum(s):
     if s:
         return QuadraticStratum(data_to_integer_tuple(s))
@@ -761,6 +766,7 @@ def data_to_orientation_stratum(s):
 
 
 cc_from_name = dict((cc._name, cc) for cc in [ASC,HypASC,NonHypASC,EvenASC, OddASC])
+
 
 #
 # db and queries
@@ -782,7 +788,7 @@ class EnhancedSQLQuery(SQLQuery):
         if database is None:
             database = OrigamiDatabase()
         if not isinstance(database, OrigamiDatabase):
-            raise TypeError('%s is not a valid origami database'%database)
+            raise TypeError('%s is not a valid origami database' % database)
         SQLQuery.__init__(self,database,query_string)
 
 
@@ -835,7 +841,7 @@ class OrigamiQuery:
             sage: O.query(("nb_squares","=",5))
             Origami query: SELECT representative FROM origamis WHERE nb_squares=5 ORDER BY nb_squares ASC
         """
-        return 'Origami query: %s'%self.get_query_string()
+        return 'Origami query: %s' % self.get_query_string()
 
     def database(self):
         r"""
@@ -1210,6 +1216,7 @@ def build_local_data(o):
 
     return data
 
+
 def build_lyapunov_exponents(o, nb_iterations=0X10000, nb_experiments=10):
     r"""
     Compute the lyapunov exponents for the origami ``o`` and update the
@@ -1381,7 +1388,6 @@ class OrigamiDatabase(SQLDatabase):
 
         - ``old_version`` -- an integer
         """
-        import os.path
         import surface_dynamics.flat_surfaces.origamis.origami_database as odb
 
         if dblocation is None:
@@ -1393,11 +1399,11 @@ class OrigamiDatabase(SQLDatabase):
         else:
             skeleton = ORIGAMI_DB_skeleton
 
-        if force_creation or not os.path.isfile(dblocation):
+        if force_creation or not dblocation.is_file():
             if read_only:
                 raise ValueError('read_only was set to True but no database exists at {}'.format(dblocation))
-            if os.path.isfile(dblocation):
-                os.remove(dblocation)
+            if dblocation.is_file():
+                dblocation.unlink()
             SQLDatabase.__init__(self,
                     dblocation,
                     read_only=read_only,
@@ -1537,7 +1543,7 @@ class OrigamiDatabase(SQLDatabase):
 
         for n in range(m, N):
             if verbose:
-                sys.stdout.write("nb_squares: %2d\n"%n)
+                sys.stdout.write("nb_squares: %2d\n" % n)
                 sys.stdout.write("==============\n")
                 sys.stdout.flush()
                 T1 = time()
@@ -1547,27 +1553,27 @@ class OrigamiDatabase(SQLDatabase):
                 k += 1
 
                 if verbose:
-                    sys.stdout.write("new entry r=%s u=%s\n"%(o.r(),o.u()))
+                    sys.stdout.write("new entry r=%s u=%s\n" % (o.r(),o.u()))
                     sys.stdout.write(" build local data...")
                     sys.stdout.flush()
                     t0 = time()
                 data.update(build_local_data(o))
                 if verbose:
-                    sys.stdout.write("done in %s s\n"%(time()-t0))
+                    sys.stdout.write("done in %s s\n" % (time()-t0))
                     sys.stdout.write(" build lyapunov exponents...")
                     sys.stdout.flush()
                     t1 = time()
                 data.update(build_lyapunov_exponents(o))
                 if verbose:
-                    sys.stdout.write("done in %s s\n"%(time()-t1))
+                    sys.stdout.write("done in %s s\n" % (time()-t1))
                     sys.stdout.write(" build global data...")
                     sys.stdout.flush()
                     t1 = time()
                 data.update(build_global_data(o,c))
                 if verbose:
                     t2 = time()
-                    sys.stdout.write("done in %s s\n"%(t2-t1))
-                    sys.stdout.write(" total time: %s s\n"%(t2-t0))
+                    sys.stdout.write("done in %s s\n" % (t2-t1))
+                    sys.stdout.write(" total time: %s s\n" % (t2-t0))
 
                 q = self.query(('representative','=',data['representative']))
                 if len(q) == 1:
@@ -1581,9 +1587,9 @@ class OrigamiDatabase(SQLDatabase):
 
                 if verbose:
                     for x in s1.difference(s2):
-                        sys.stdout.write("WARNING: col %s does not appear in the request\n"%x)
+                        sys.stdout.write("WARNING: col %s does not appear in the request\n" % x)
                     for x in s2.difference(s1):
-                        sys.stdout.write("WARNING: col %s appear in the request and should not\n"%x)
+                        sys.stdout.write("WARNING: col %s appear in the request and should not\n" % x)
 
                 # convert data to fit the database format
                 for key in data:
@@ -1598,10 +1604,10 @@ class OrigamiDatabase(SQLDatabase):
                     sys.stdout.flush()
 
             if verbose:
-                sys.stdout.write("TOTAL TIME: %s\n"%(time()-T1))
+                sys.stdout.write("TOTAL TIME: %s\n" % (time()-T1))
 
         if verbose:
-            sys.stdout.write("%d Teichmueller curves added in %ss\n"%(k,time()-T0))
+            sys.stdout.write("%d Teichmueller curves added in %ss\n" % (k,time()-T0))
 
         self.commit()
 
@@ -1730,8 +1736,8 @@ class OrigamiDatabase(SQLDatabase):
 
         for x in q.query_results():
             if verbose:
-                print("consider new entry %s"%x[0])
-            qq = SQLQuery(self, "SELECT * FROM origamis WHERE representative='%s'"%str(x[0]))
+                print("consider new entry %s" % x[0])
+            qq = SQLQuery(self, "SELECT * FROM origamis WHERE representative='%s'" % str(x[0]))
             if len(qq.query_results()) == 1:
                 if verbose:
                     print("yet in database")
@@ -1879,13 +1885,13 @@ class OrigamiDatabase(SQLDatabase):
             raise ValueError
 
         m = max(len(str(cc)) for a in AbelianStrata(genus=genera[-1]) for cc in a.components())
-        s = ' {0!s:%s}: {1!s:>3} T. curves (up to {2!s:>2} squares)'%m
+        s = ' {0!s:%s}: {1!s:>3} T. curves (up to {2!s:>2} squares)' % m
 
         n_total = 0
         for g in genera:
             AA = AbelianStrata(genus=g,dimension=dimension)
             if AA.cardinality():
-                print("genus %d"%g)
+                print("genus %d" % g)
                 print("=======")
                 for A in AA:
                     for CC in A.components():
@@ -1895,7 +1901,7 @@ class OrigamiDatabase(SQLDatabase):
                             n_total += n
                 print()
         print()
-        print("Total: %d Teichmueller curves"%n_total)
+        print("Total: %d Teichmueller curves" % n_total)
 
     def help(self, cols=None):
         r"""
@@ -1926,7 +1932,7 @@ class OrigamiDatabase(SQLDatabase):
             11
         """
         from surface_dynamics.flat_surfaces.abelian_strata import \
-        AbelianStratum,  AbelianStratumComponent, AbelianStrata
+            AbelianStratum, AbelianStratumComponent, AbelianStrata
 
         if comp is None:
             m = self.max_nb_squares(AbelianStratum(2))
@@ -2039,11 +2045,11 @@ class OrigamiDatabase(SQLDatabase):
                 qq.append("%s%s'%s'" % (entry, sign, str(value)))
             elif typ == 'BOOLEAN':
                 if value:
-                    qq.append("%s%s'True'"%(entry,sign))
+                    qq.append("%s%s'True'" % (entry,sign))
                 else:
-                    qq.append("%s%s'False'"%(entry,sign))
+                    qq.append("%s%s'False'" % (entry,sign))
             else:
-                qq.append("%s%s%s"%(entry,sign,str(value)))
+                qq.append("%s%s%s" % (entry,sign,str(value)))
 
         if qq:
             query_string = ' AND '.join(qq)
