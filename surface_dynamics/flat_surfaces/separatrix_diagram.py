@@ -902,7 +902,7 @@ class SeparatrixDiagram(SageObject):
 
             sage: from surface_dynamics import *
 
-            sage: a = AbelianStratum(1,1,0)
+            sage: a = Stratum([1,1,0], k=1)
             sage: s = a.separatrix_diagrams()[0]
             sage: s.profile()
             [2, 2, 1]
@@ -965,9 +965,9 @@ class SeparatrixDiagram(SageObject):
             sage: SeparatrixDiagram('(0,1)(2)','(0,2)(1)').stratum()
             H_2(2)
         """
-        from .abelian_strata import AbelianStratum
+        from .abelian_strata import Stratum
 
-        return AbelianStratum([i-1 for i in self.profile()])
+        return Stratum([i-1 for i in self.profile()], k=1)
 
     def bot(self):
         r"""
@@ -1547,8 +1547,8 @@ class SeparatrixDiagram(SageObject):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import AbelianStratum
-            sage: H11 = AbelianStratum(1,1).unique_component()
+            sage: from surface_dynamics import Stratum
+            sage: H11 = Stratum([1,1], k=1).unique_component()
             sage: for cd in H11.cylinder_diagrams():
             ....:     fg = cd.saddle_connections_graph()
             ....:     print(cd.ncyls(), [comp.genus() for comp in fg.connected_components()])
@@ -1854,7 +1854,7 @@ def hyperelliptic_cylinder_diagram_iterator(a,verbose=False):
         sage: c.stratum_component()
         H_2(2)^hyp
 
-        sage: hyp = AbelianStratum(2,2).hyperelliptic_component()
+        sage: hyp = Stratum([2,2], k=1).hyperelliptic_component()
         sage: all(c.stratum_component() == hyp for c in hyperelliptic_cylinder_diagram_iterator(6))
         True
     """
@@ -2159,8 +2159,8 @@ class CylinderDiagram(SeparatrixDiagram):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import AbelianStratum
-            sage: for cd in AbelianStratum(1,1).cylinder_diagrams():
+            sage: from surface_dynamics import Stratum
+            sage: for cd in Stratum([1,1], k=1).cylinder_diagrams():
             ....:     print(cd.weighted_adjacency_matrix())
             [4]
             [0 1]
@@ -2280,7 +2280,7 @@ class CylinderDiagram(SeparatrixDiagram):
         r"""
         TESTS::
 
-            sage: from surface_dynamics import AbelianStratum, CylinderDiagram
+            sage: from surface_dynamics import Stratum, CylinderDiagram
 
             sage: c1 = CylinderDiagram('(0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)')
             sage: c2 = CylinderDiagram('(0,5)-(1,3) (1,4)-(0,4) (2,3)-(2,5)')
@@ -2291,7 +2291,7 @@ class CylinderDiagram(SeparatrixDiagram):
             True
 
             sage: from operator import not_
-            sage: C = AbelianStratum(4).cylinder_diagrams()
+            sage: C = Stratum([4], k=1).cylinder_diagrams()
             sage: for c1 in C:
             ....:     assert c1 == c1
             ....:     assert not_(c1 != c1)
@@ -2313,9 +2313,9 @@ class CylinderDiagram(SeparatrixDiagram):
 
         TESTS::
 
-            sage: from surface_dynamics import AbelianStratum
+            sage: from surface_dynamics import Stratum
             sage: from operator import not_
-            sage: C = AbelianStratum(4).cylinder_diagrams()
+            sage: C = Stratum([4], k=1).cylinder_diagrams()
             sage: for c1 in C:
             ....:     for c2 in C:
             ....:         assert (c1 < c2) == (c2 > c1) == not_(c1 >= c2) == not_(c2 <= c1)
@@ -2706,7 +2706,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
             sage: from surface_dynamics import *
 
-            sage: c0, c1 = AbelianStratum(2).cylinder_diagrams()
+            sage: c0, c1 = Stratum([2], k=1).cylinder_diagrams()
             sage: v0 = c0.volume_contribution()  # optional: latte_int
             sage: v0                             # optional: latte_int
             (1/3)/((w)^4)
@@ -2718,19 +2718,19 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: v1.integral_sum_as_mzv()       # optional: latte_int
             2/3*ζ(1,3) + 1/3*ζ(2,2)
 
-            sage: for c in AbelianStratum(1,1).cylinder_diagrams():  # optional: latte_int
+            sage: for c in Stratum([1,1], k=1).cylinder_diagrams():  # optional: latte_int
             ....:     print(c, c.volume_contribution().integral_sum_as_mzv())
             (0,3,1,2)-(0,3,1,2) 1/6*ζ(5)
             (0)-(1) (1,2,3)-(0,2,3) 1/3*ζ(2,3) + 1/3*ζ(3,2)
             (0,3)-(1,3) (1,2)-(0,2) ζ(1,4) + 1/3*ζ(2,3)
             (0,1)-(2,3) (2)-(1) (3)-(0) 1/3*ζ(1,3) + 1/3*ζ(2,2) - 1/3*ζ(2,3) - 1/3*ζ(3,2) + 1/3*ζ(4) - 1/3*ζ(5)
 
-            sage: sum(c.volume_contribution() for c in AbelianStratum(2,1,1).cylinder_diagrams(1)).integral_sum_as_mzv()  # optional: latte_int
+            sage: sum(c.volume_contribution() for c in Stratum([2,1,1], k=1).cylinder_diagrams(1)).integral_sum_as_mzv()  # optional: latte_int
             7/180*ζ(8)
 
         Detailed contribution of 2 cylinder diagrams::
 
-            sage: cyls = AbelianStratum(2,1,1).cylinder_diagrams(2)
+            sage: cyls = Stratum([2,1,1], k=1).cylinder_diagrams(2)
             sage: sum(cyls[k].volume_contribution() for k in [2,7,8,21,22]).integral_sum_as_mzv()  # optional: latte_int
             13/630*ζ(5,3) + 13/252*ζ(6,2)
             sage: sum(cyls[k].volume_contribution() for k in [0,11,19,20]).integral_sum_as_mzv()  # optional: latte_int
@@ -2914,7 +2914,7 @@ class CylinderDiagram(SeparatrixDiagram):
 
         The inversion is an involution on cylinder diagrams::
 
-            sage: all(cc.inverse().inverse() == cc for cc in AbelianStratum(4).cylinder_diagrams()) # long time
+            sage: all(cc.inverse().inverse() == cc for cc in Stratum([4], k=1).cylinder_diagrams()) # long time
             True
         """
         return CylinderDiagram([(t,b) for (b,t) in self.cylinders()])
@@ -2935,7 +2935,7 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: c.separatrix_diagram().vertical_symmetry() == c.vertical_symmetry().separatrix_diagram()
             True
 
-            sage: A = AbelianStratum(2,2)
+            sage: A = Stratum([2,2], k=1)
             sage: all(c.vertical_symmetry().stratum() == A for c in A.cylinder_diagrams())
             True
         """
@@ -2957,7 +2957,7 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: c.separatrix_diagram().horizontal_symmetry() == c.horizontal_symmetry().separatrix_diagram()
             True
 
-            sage: A = AbelianStratum(2,2)
+            sage: A = Stratum([2,2], k=1)
             sage: all(c.horizontal_symmetry().stratum() == A for c in A.cylinder_diagrams())
             True
         """
@@ -3087,12 +3087,12 @@ class CylinderDiagram(SeparatrixDiagram):
 
         In genus 2, strata H(2) and H(1,1), all surfaces are hyperelliptic::
 
-            sage: for c in AbelianStratum(2).cylinder_diagrams():
+            sage: for c in Stratum([2], k=1).cylinder_diagrams():
             ....:     print("%d %s" % (c.ncyls(), c.is_hyperelliptic()))
             1 True
             2 True
 
-            sage: for c in AbelianStratum(1,1).cylinder_diagrams():
+            sage: for c in Stratum([1,1], k=1).cylinder_diagrams():
             ....:     print("%d %s" % (c.ncyls(), c.is_hyperelliptic()))
             1 True
             2 True
@@ -3101,19 +3101,19 @@ class CylinderDiagram(SeparatrixDiagram):
 
         In higher genera, some of them are, some of them are not::
 
-            sage: C = AbelianStratum(4).cylinder_diagrams()
+            sage: C = Stratum([4], k=1).cylinder_diagrams()
             sage: len(C)
             15
             sage: sum(c.is_hyperelliptic() for c in C)
             5
 
-            sage: C = AbelianStratum(2,2).cylinder_diagrams()
+            sage: C = Stratum([2,2], k=1).cylinder_diagrams()
             sage: len(C)
             41
             sage: sum(c.is_hyperelliptic() for c in C)
             11
         """
-        z = self.stratum().zeros()
+        z = self.stratum().signature()
         if z == [0] or z == [2] or z == [1,1]: return True
         if 0 in z:
             raise NotImplementedError("is_hyperelliptic method not implemented for cylinder diagrams with fake zeros")
@@ -3271,8 +3271,8 @@ class CylinderDiagram(SeparatrixDiagram):
                 ('%dt' %self._top_to_cyl[i][1]))
 
         # the dual graph
-        G = Graph(loops=True,multiedges=True)
-        cc = map(tuple,V.connected_components())
+        G = Graph(loops=True, multiedges=True)
+        cc = map(tuple, V.connected_components(sort=False))
         hc2cc = {} # half-cyl to conn comp
         for c in cc:
             for e in c:
@@ -3348,24 +3348,24 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: c.stratum_component()
             H_5(4^2)^odd
         """
+        # TODO: we reimplement the very same logic in interval_exchanges.template.stratum_component()
         stratum = self.stratum()
-        cc = stratum._cc
-        if len(cc) == 1:
-            return cc[0](stratum)
 
-        from .abelian_strata import HypASC
-        if cc[0] is HypASC:
+        if stratum.is_connected():
+            return stratum.unique_component()
+
+        if stratum.has_hyperelliptic_component():
             if self.is_hyperelliptic():
-                return HypASC(stratum)
-            elif len(cc) == 2:
-                return cc[1](stratum)
+                return stratum.hyperelliptic_component()
+            # TODO: we assume that the first entry is the hyperelliptic one
+            cc = stratum.connected_components()
+            if len(cc) == 2:
+                return cc[1]
 
         if self.spin_parity() == 0:
-            from .abelian_strata import EvenASC
-            return EvenASC(stratum)
+            return stratum.even_component()
         else:
-            from .abelian_strata import OddASC
-            return OddASC(stratum)
+            return stratum.odd_component()
 
     def smallest_integer_lengths(self):
         r"""
@@ -3453,10 +3453,10 @@ class CylinderDiagram(SeparatrixDiagram):
 
             sage: f = lambda c: c.to_ribbon_graph().cycle_basis(intersection=True)[1]
 
-            sage: a = AbelianStratum(2)
+            sage: a = Stratum([2], k=1)
             sage: all(f(c).rank() == 4 for c in a.cylinder_diagrams())
             True
-            sage: a = AbelianStratum(1,1)
+            sage: a = Stratum([1,1], k=1)
             sage: all(f(c).rank() == 4 for c in a.cylinder_diagrams())
             True
         """
@@ -3500,8 +3500,6 @@ class CylinderDiagram(SeparatrixDiagram):
 
         return RibbonGraphWithHolonomies(edges=edges,faces=faces,holonomies=holonomies)
 
-
-
     def spin_parity(self):
         r"""
         Return the spin parity of any surface that is built from this cylinder
@@ -3525,7 +3523,7 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: c.spin_parity()
             1
         """
-        if any(z%2 for z in self.stratum().zeros()):
+        if any(z % 2 for z in self.stratum().signature()):
             return None
         return self.to_ribbon_graph().spin_parity()
 
@@ -3906,7 +3904,7 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: o2 = o2.relabel()
             sage: o3 = c.cylcoord_to_origami([2,1,2],[1,1],[1,1])
             sage: o3 = o3.relabel()
-            sage: all(o.stratum() == AbelianStratum(2) for o in [o1,o2,o3])
+            sage: all(o.stratum() == Stratum([2], k=1) for o in [o1,o2,o3])
             True
             sage: o1 == o2 or o1 == o3 or o3 == o1
             False
@@ -4388,8 +4386,8 @@ class QuadraticCylinderDiagram(SageObject):
             sage: QuadraticCylinderDiagram('(0,1)-(2,3) (0)-(4,4) (1)-(5,5) (2)-(6,6) (3)-(7,7)').stratum()
             Q_0(2^2, -1^8)
         """
-        from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
-        return QuadraticStratum([len(t)-2 for t in self._g._vertex_cycles])
+        from surface_dynamics.flat_surfaces.quadratic_strata import Stratum
+        return Stratum([len(t)-2 for t in self._g._vertex_cycles], k=2)
 
     def cylinders(self, dart=False):
         r"""

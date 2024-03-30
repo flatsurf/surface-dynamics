@@ -400,8 +400,8 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
             return gamma_irr(p,mp.left())
 
         cc = self.stratum_component()
-        zeros = s.zeros(fake_zeros=False)
-        g = s.genus()
+        zeros = [d for d in s.signature() if d]
+        g = s.surface_genus()
         if zeros == [2*g-2] or zeros == [g-1,g-1]:  # hyp component + others
             if cc.spin() == s.hyperelliptic_component().spin():
                 d = len(self) # number of intervals of self

@@ -132,9 +132,9 @@ class TwistSpace:
 
         EXAMPLES::
 
-            sage: from surface_dynamics import AbelianStratum
+            sage: from surface_dynamics import Stratum
             sage: from surface_dynamics.flat_surfaces.twist_space import TwistSpace
-            sage: for cd in AbelianStratum(1,1,1,1).cylinder_diagrams(2):
+            sage: for cd in Stratum([1,1,1,1], k=1).cylinder_diagrams(2):
             ....:     hom_cyls = TwistSpace(cd).homologous_cylinders()
             ....:     if hom_cyls:
             ....:         print(cd)
@@ -162,9 +162,9 @@ class TwistSpace:
 
         EXAMPLES::
 
-            sage: from surface_dynamics import AbelianStratum
+            sage: from surface_dynamics import Stratum
             sage: from surface_dynamics.flat_surfaces.twist_space import TwistSpace
-            sage: for cd in AbelianStratum(1,1,1,1).cylinder_diagrams():
+            sage: for cd in Stratum([1,1,1,1], k=1).cylinder_diagrams():
             ....:     assert TwistSpace(cd).cylinder_dimension() == cd.homological_dimension_of_cylinders()
         """
         return matrix(list(self.cylinder_core_curves())).rank()

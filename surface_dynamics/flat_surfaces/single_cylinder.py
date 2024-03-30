@@ -32,7 +32,7 @@ Check for non-hyperelliptic strata::
 """
 
 from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
-from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum
+from surface_dynamics.flat_surfaces.strata import Stratum
 
 def _cylinder_check(perm):
     r"""
@@ -97,7 +97,7 @@ def even_zero_odd(num):
         sage: perm
         0 1 2 3 4 5
         2 5 4 1 3 0
-        sage: perm.stratum_component() == AbelianStratum(4).odd_component()
+        sage: perm.stratum_component() == Stratum([4], k=1).odd_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -105,7 +105,7 @@ def even_zero_odd(num):
         sage: perm
         0 1 2 3 4 5 6 7
         2 5 4 7 3 1 6 0
-        sage: perm.stratum_component() == AbelianStratum(6).odd_component()
+        sage: perm.stratum_component() == Stratum([6], k=1).odd_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -149,7 +149,7 @@ def no_two_odd(real_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
         2 5 4 7 3 8 6 9 12 11 1 10 0
-        sage: perm.stratum_component() == AbelianStratum(6,4).odd_component()
+        sage: perm.stratum_component() == Stratum([6,4], k=1).odd_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -188,7 +188,7 @@ def one_two_odd(real_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8
         2 5 8 3 6 4 1 7 0
-        sage: perm.stratum_component() == AbelianStratum(4,2).odd_component()
+        sage: perm.stratum_component() == Stratum([4,2], k=1).odd_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -196,7 +196,7 @@ def one_two_odd(real_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
         2 5 4 7 3 8 6 10 12 9 13 11 14 17 16 19 15 1 18 0
-        sage: perm.stratum_component() == AbelianStratum(8,6,2).odd_component()
+        sage: perm.stratum_component() == Stratum([8,6,2], k=1).odd_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -258,7 +258,7 @@ def even_twos_odd(real_zeros,two_count):
         sage: perm
         0 1 2 3 4 5 6
         2 4 6 3 1 5 0
-        sage: perm.stratum_component() == AbelianStratum(2,2).odd_component()
+        sage: perm.stratum_component() == Stratum([2,2], k=1).odd_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -266,7 +266,7 @@ def even_twos_odd(real_zeros,two_count):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17
         2 4 6 3 7 5 8 10 12 9 13 11 14 17 16 1 15 0
-        sage: perm.stratum_component() == AbelianStratum({4:1,2:4}).odd_component()
+        sage: perm.stratum_component() == Stratum({4:1,2:4}, k=1).odd_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -315,7 +315,7 @@ def odd_twos_odd(real_zeros,two_count):
         sage: perm
         0 1 2 3 4 5 6 7 8 9
         2 8 6 9 4 1 3 5 7 0
-        sage: perm.stratum_component() == AbelianStratum(2,2,2).odd_component()
+        sage: perm.stratum_component() == Stratum([2,2,2], k=1).odd_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -323,7 +323,7 @@ def odd_twos_odd(real_zeros,two_count):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
         2 8 6 9 4 10 3 5 7 11 13 15 12 16 14 17 20 19 1 18 0
-        sage: perm.stratum_component() == AbelianStratum({4:1,2:5}).odd_component()
+        sage: perm.stratum_component() == Stratum({4:1,2:5}, k=1).odd_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -372,7 +372,7 @@ def even_zero_even(num):
         sage: perm
         0 1 2 3 4 5 6 7
         2 7 6 5 3 1 4 0
-        sage: perm.stratum_component() == AbelianStratum(6).even_component()
+        sage: perm.stratum_component() == Stratum([6], k=1).even_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -380,7 +380,7 @@ def even_zero_even(num):
         sage: perm
         0 1 2 3 4 5 6 7 8 9
         2 7 6 5 3 9 4 1 8 0
-        sage: perm.stratum_component() == AbelianStratum(8).even_component()
+        sage: perm.stratum_component() == Stratum([8], k=1).even_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -425,7 +425,7 @@ def no_two_even(real_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10
         2 10 7 5 8 1 9 6 4 3 0
-        sage: perm.stratum_component() == AbelianStratum(4,4).even_component()
+        sage: perm.stratum_component() == Stratum([4,4], k=1).even_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -433,7 +433,7 @@ def no_two_even(real_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
         2 7 6 5 3 8 4 9 12 11 1 10 0
-        sage: perm.stratum_component() == AbelianStratum(6,4).even_component()
+        sage: perm.stratum_component() == Stratum([6,4], k=1).even_component()
         True
 
     """
@@ -444,7 +444,7 @@ def no_two_even(real_zeros):
         real_zeros.remove(4)
 
         if real_zeros:
-            odd_perm = AbelianStratum(real_zeros).odd_component().single_cylinder_representative()
+            odd_perm = Stratum(real_zeros, k=1).odd_component().single_cylinder_representative()
             return cylinder_concatenation(even_4_4,odd_perm)
         else:
             return even_4_4
@@ -453,7 +453,7 @@ def no_two_even(real_zeros):
         if len(real_zeros) == 1:
             return perm
         else:
-            odd_perm = AbelianStratum(real_zeros[1:]).odd_component().single_cylinder_representative()
+            odd_perm = Stratum(real_zeros[1:], k=1).odd_component().single_cylinder_representative()
             return cylinder_concatenation(perm,odd_perm)
 
 
@@ -482,7 +482,7 @@ def one_two_even(real_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8
         2 4 1 8 7 5 3 6 0
-        sage: perm.stratum_component() == AbelianStratum(4,2).even_component()
+        sage: perm.stratum_component() == Stratum([4,2], k=1).even_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -490,7 +490,7 @@ def one_two_even(real_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10
         2 10 9 8 6 3 5 1 4 7 0
-        sage: perm.stratum_component() == AbelianStratum(6,2).even_component()
+        sage: perm.stratum_component() == Stratum([6,2], k=1).even_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -498,7 +498,7 @@ def one_two_even(real_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
         2 7 6 5 3 8 4 10 12 9 13 11 14 17 16 19 15 1 18 0
-        sage: perm.stratum_component() == AbelianStratum(8,6,2).even_component()
+        sage: perm.stratum_component() == Stratum([8,6,2], k=1).even_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -516,11 +516,11 @@ def one_two_even(real_zeros):
         real_zeros.remove(2)
         if set(real_zeros) == {4}:
             perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8],[2,4,1,8,7,5,3,6,0])
-            odd_perm = AbelianStratum(real_zeros[1:]).odd_component().single_cylinder_representative()
+            odd_perm = Stratum(real_zeros[1:], k=1).odd_component().single_cylinder_representative()
             return cylinder_concatenation(perm,odd_perm)
         elif set(real_zeros) == {6} or set(real_zeros) == {4, 6}:
             perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10],[2,10,9,8,6,3,5,1,4,7,0])
-            odd_perm = AbelianStratum(real_zeros[1:]).odd_component().single_cylinder_representative()
+            odd_perm = Stratum(real_zeros[1:], k=1).odd_component().single_cylinder_representative()
             return cylinder_concatenation(perm,odd_perm)
         else:
             perm_1 = even_zero_even(real_zeros[0]-2)
@@ -538,7 +538,7 @@ def one_two_even(real_zeros):
             if len(real_zeros) == 1:
                 return perm
             else:
-                odd_perm = AbelianStratum(real_zeros[1:]).odd_component().single_cylinder_representative()
+                odd_perm = Stratum(real_zeros[1:], k=1).odd_component().single_cylinder_representative()
                 return cylinder_concatenation(perm,odd_perm)
 
 def two_twos_even(real_zeros):
@@ -566,7 +566,7 @@ def two_twos_even(real_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11
         2 8 5 3 1 10 9 6 4 11 7 0
-        sage: perm.stratum_component() == AbelianStratum(4,2,2).even_component()
+        sage: perm.stratum_component() == Stratum([4,2,2], k=1).even_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -574,7 +574,7 @@ def two_twos_even(real_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13
         2 7 6 5 3 8 4 9 11 13 10 1 12 0
-        sage: perm.stratum_component() == AbelianStratum(6,2,2).even_component()
+        sage: perm.stratum_component() == Stratum([6,2,2], k=1).even_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -587,7 +587,7 @@ def two_twos_even(real_zeros):
         if len(real_zeros) == 1:
             return perm
         else:
-            odd_perm = AbelianStratum(real_zeros[1:]).odd_component().single_cylinder_representative()
+            odd_perm = Stratum(real_zeros[1:], k=1).odd_component().single_cylinder_representative()
             return cylinder_concatenation(perm,odd_perm)
     else:
         odd_2_2 = GeneralizedPermutation([0,1,2,3,4,5,6],[2,4,6,3,1,5,0])
@@ -595,7 +595,7 @@ def two_twos_even(real_zeros):
         if len(real_zeros) == 1:
             return perm
         else:
-            odd_perm = AbelianStratum(real_zeros[1:]).odd_component().single_cylinder_representative()
+            odd_perm = Stratum(real_zeros[1:], k=1).odd_component().single_cylinder_representative()
             return cylinder_concatenation(perm,odd_perm)
 
 def even_twos_even(real_zeros,two_count):
@@ -626,7 +626,7 @@ def even_twos_even(real_zeros,two_count):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
         2 5 4 1 12 3 10 7 11 9 6 8 0
-        sage: perm.stratum_component() == AbelianStratum(2,2,2,2).even_component()
+        sage: perm.stratum_component() == Stratum([2,2,2,2], k=1).even_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -634,7 +634,7 @@ def even_twos_even(real_zeros,two_count):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
         2 5 4 13 12 3 10 7 11 9 6 8 14 16 18 15 19 17 20 23 22 1 21 0
-        sage: perm.stratum_component() == AbelianStratum({4:1,2:6}).even_component()
+        sage: perm.stratum_component() == Stratum({4:1,2:6}, k=1).even_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -649,7 +649,7 @@ def even_twos_even(real_zeros,two_count):
     if not real_zeros:
         return twos_perm
     else:
-        odd_perm = AbelianStratum(real_zeros).odd_component().single_cylinder_representative()
+        odd_perm = Stratum(real_zeros, k=1).odd_component().single_cylinder_representative()
         return cylinder_concatenation(twos_perm,odd_perm)
 
 
@@ -681,7 +681,7 @@ def odd_twos_even(real_zeros,two_count):
         sage: perm
         0 1 2 3 4 5 6 7 8 9
         2 9 8 7 6 3 5 1 4 0
-        sage: perm.stratum_component() == AbelianStratum(2,2,2).even_component()
+        sage: perm.stratum_component() == Stratum([2,2,2], k=1).even_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -689,7 +689,7 @@ def odd_twos_even(real_zeros,two_count):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
         2 9 8 7 6 3 5 10 4 11 13 15 12 16 14 17 20 19 1 18 0
-        sage: perm.stratum_component() == AbelianStratum({4:1,2:5}).even_component()
+        sage: perm.stratum_component() == Stratum({4:1,2:5}, k=1).even_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -705,7 +705,7 @@ def odd_twos_even(real_zeros,two_count):
     if not real_zeros:
         return twos_perm
     else:
-        odd_perm = AbelianStratum(real_zeros).odd_component().single_cylinder_representative()
+        odd_perm = Stratum(real_zeros, k=1).odd_component().single_cylinder_representative()
         return cylinder_concatenation(twos_perm,odd_perm)
 
 
@@ -736,7 +736,7 @@ def odds_right_swap(zero_pair):
         sage: perm
         0 1 2 3 4 5 6 7 8
         2 8 6 5 7 4 1 3 0
-        sage: perm.stratum_component() == AbelianStratum(3,3).non_hyperelliptic_component()
+        sage: perm.stratum_component() == Stratum([3,3], k=1).non_hyperelliptic_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -744,7 +744,7 @@ def odds_right_swap(zero_pair):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
         2 5 4 7 3 9 6 12 8 11 1 10 0
-        sage: perm.stratum_component() == AbelianStratum(5,5).non_hyperelliptic_component()
+        sage: perm.stratum_component() == Stratum([5,5], k=1).non_hyperelliptic_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -752,7 +752,7 @@ def odds_right_swap(zero_pair):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10
         2 5 4 7 3 10 6 9 1 8 0
-        sage: perm.stratum_component() == AbelianStratum(5,3).unique_component()
+        sage: perm.stratum_component() == Stratum([5,3], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -765,8 +765,8 @@ def odds_right_swap(zero_pair):
             j = (min(zero_pair)-3)//2
         else:
             j = (min(zero_pair)-1)//2
-        perm_1 = AbelianStratum(4*j+2-dif).odd_component().single_cylinder_representative()
-        perm_2 = AbelianStratum(4).odd_component().single_cylinder_representative()
+        perm_1 = Stratum([4*j+2-dif], k=1).odd_component().single_cylinder_representative()
+        perm_2 = Stratum([4], k=1).odd_component().single_cylinder_representative()
         perm = cylinder_concatenation(perm_1,perm_2)
         top_row = perm[0][1:]
         bot_row = perm[1][:-1]
@@ -805,7 +805,7 @@ def odds_left_swap(zero_pair):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
         2 5 4 8 3 7 9 6 12 11 1 10 0
-        sage: perm.stratum_component() == AbelianStratum(7,3).unique_component()
+        sage: perm.stratum_component() == Stratum([7,3], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -813,15 +813,15 @@ def odds_left_swap(zero_pair):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18
         2 5 4 7 3 9 6 12 8 11 13 10 16 15 18 14 1 17 0
-        sage: perm.stratum_component() == AbelianStratum(11,5).unique_component()
+        sage: perm.stratum_component() == Stratum([11,5], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
     """
     dif = abs(zero_pair[0]-zero_pair[1])
     j = (min(zero_pair)-1)//2
-    perm_1 = AbelianStratum(4*j+2).odd_component().single_cylinder_representative()
-    perm_2 = AbelianStratum(dif).odd_component().single_cylinder_representative()
+    perm_1 = Stratum([4*j+2], k=1).odd_component().single_cylinder_representative()
+    perm_2 = Stratum([dif], k=1).odd_component().single_cylinder_representative()
     perm = cylinder_concatenation(perm_1,perm_2)
     swap_point = len(perm_2[0])-1
     top_row = perm[0][1:]
@@ -860,7 +860,7 @@ def no_ones_odds(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
         2 5 4 8 3 7 9 6 12 11 1 10 0
-        sage: perm.stratum_component() == AbelianStratum(7,3).unique_component()
+        sage: perm.stratum_component() == Stratum([7,3], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -868,7 +868,7 @@ def no_ones_odds(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18
         2 5 4 7 3 10 6 9 11 8 12 18 16 15 17 14 1 13 0
-        sage: perm.stratum_component() == AbelianStratum(5,3,3,3).unique_component()
+        sage: perm.stratum_component() == Stratum([5,3,3,3], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -909,7 +909,7 @@ def one_one_odds(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6
         2 5 1 6 4 3 0
-        sage: perm.stratum_component() == AbelianStratum(3,1).unique_component()
+        sage: perm.stratum_component() == Stratum([3,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -917,7 +917,7 @@ def one_one_odds(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8
         2 4 7 3 1 8 6 5 0
-        sage: perm.stratum_component() == AbelianStratum(5,1).unique_component()
+        sage: perm.stratum_component() == Stratum([5,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -925,7 +925,7 @@ def one_one_odds(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18
         2 5 4 9 3 8 6 11 10 7 12 18 16 15 17 14 1 13 0
-        sage: perm.stratum_component() == AbelianStratum(7,3,3,1).unique_component()
+        sage: perm.stratum_component() == Stratum([7,3,3,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -947,7 +947,7 @@ def one_one_odds(odd_zeros):
             return cylinder_concatenation(perm,no_ones_odds(odd_zeros[1:]))
     else:
         odd_zeros.remove(1)
-        perm_1 = AbelianStratum(num-3).odd_component().single_cylinder_representative()
+        perm_1 = Stratum([num-3], k=1).odd_component().single_cylinder_representative()
         length_1 = len(perm_1[0])-1
         top_row_1 = perm_1[0]
         bot_row_1 = perm_1[1][:-1]
@@ -990,7 +990,7 @@ def two_ones_odds(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
         2 5 7 6 4 3 8 11 1 12 10 9 0
-        sage: perm.stratum_component() == AbelianStratum(3,3,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([3,3,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -998,7 +998,7 @@ def two_ones_odds(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
         2 4 7 3 9 8 6 5 10 12 15 11 17 16 14 13 18 24 22 21 23 20 1 19 0
-        sage: perm.stratum_component() == AbelianStratum(5,5,3,3,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([5,5,3,3,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1037,7 +1037,7 @@ def three_ones_odds(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10
         2 10 6 5 1 8 4 7 3 9 0
-        sage: perm.stratum_component() == AbelianStratum(3,1,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([3,1,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1045,7 +1045,7 @@ def three_ones_odds(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
         2 12 9 8 1 7 3 6 10 5 4 11 0
-        sage: perm.stratum_component() == AbelianStratum(5,1,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([5,1,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1053,7 +1053,7 @@ def three_ones_odds(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
         2 14 10 9 1 4 3 6 5 12 8 11 7 13 0
-        sage: perm.stratum_component() == AbelianStratum(7,1,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([7,1,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1065,7 +1065,7 @@ def three_ones_odds(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18
         2 5 7 6 4 3 8 11 13 12 10 9 14 17 1 18 16 15 0
-        sage: perm.stratum_component() == AbelianStratum(3,3,3,1,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([3,3,3,1,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1126,7 +1126,7 @@ def even_ones_odds(odd_zeros,one_count):
         sage: perm
         0 1 2 3 4 5 6 7 8
         2 6 5 3 1 8 4 7 0
-        sage: perm.stratum_component() == AbelianStratum(1,1,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([1,1,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1134,7 +1134,7 @@ def even_ones_odds(odd_zeros,one_count):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
         2 8 1 5 11 7 3 10 6 12 9 4 0
-        sage: perm.stratum_component() == AbelianStratum(1,1,1,1,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([1,1,1,1,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1142,7 +1142,7 @@ def even_ones_odds(odd_zeros,one_count):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18
         2 6 5 3 9 8 4 7 10 13 12 15 11 18 14 17 1 16 0
-        sage: perm.stratum_component() == AbelianStratum(5,3,1,1,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([5,3,1,1,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1150,7 +1150,7 @@ def even_ones_odds(odd_zeros,one_count):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
         2 8 13 5 11 7 3 10 6 12 9 4 14 20 18 17 19 16 1 15 0
-        sage: perm.stratum_component() == AbelianStratum(3,3,1,1,1,1,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([3,3,1,1,1,1,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1201,7 +1201,7 @@ def odd_ones_odds(odd_zeros,one_count):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
         2 4 7 3 9 8 6 5 10 14 13 11 1 16 12 15 0
-        sage: perm.stratum_component() == AbelianStratum(5,1,1,1,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([5,1,1,1,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1209,7 +1209,7 @@ def odd_ones_odds(odd_zeros,one_count):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18
         2 5 7 6 4 3 8 14 1 11 17 13 9 16 12 18 15 10 0
-        sage: perm.stratum_component() == AbelianStratum(3,1,1,1,1,1,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([3,1,1,1,1,1,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1247,7 +1247,7 @@ def min_on_bot(zero_pair):
         sage: perm
         0 1 2 3 4 5 6
         2 6 5 1 4 3 0
-        sage: perm.stratum_component() == AbelianStratum(3,1).unique_component()
+        sage: perm.stratum_component() == Stratum([3,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1255,7 +1255,7 @@ def min_on_bot(zero_pair):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10
         2 6 4 10 8 3 1 9 7 5 0
-        sage: perm.stratum_component() == AbelianStratum(5,3).unique_component()
+        sage: perm.stratum_component() == Stratum([5,3], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1263,7 +1263,7 @@ def min_on_bot(zero_pair):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
         2 6 4 10 8 3 12 9 7 5 14 11 1 13 0
-        sage: perm.stratum_component() == AbelianStratum(7,5).unique_component()
+        sage: perm.stratum_component() == Stratum([7,5], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1306,7 +1306,7 @@ def odd_zeros_one_one(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
         2 5 4 7 3 9 6 12 8 11 1 10 0
-        sage: perm.stratum_component() == AbelianStratum(5,5).non_hyperelliptic_component()
+        sage: perm.stratum_component() == Stratum([5,5], k=1).non_hyperelliptic_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1314,7 +1314,7 @@ def odd_zeros_one_one(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8
         2 4 7 3 1 8 6 5 0
-        sage: perm.stratum_component() == AbelianStratum(5,1).unique_component()
+        sage: perm.stratum_component() == Stratum([5,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1322,7 +1322,7 @@ def odd_zeros_one_one(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
         2 4 7 3 9 8 6 5 10 13 1 14 12 11 0
-        sage: perm.stratum_component() == AbelianStratum(5,3,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([5,3,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1330,7 +1330,7 @@ def odd_zeros_one_one(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
         2 12 9 8 1 7 3 6 10 5 4 11 0
-        sage: perm.stratum_component() == AbelianStratum(5,1,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([5,1,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1338,7 +1338,7 @@ def odd_zeros_one_one(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18
         2 6 5 3 9 8 4 7 10 13 12 15 11 18 14 17 1 16 0
-        sage: perm.stratum_component() == AbelianStratum(5,3,1,1,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([5,3,1,1,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1346,7 +1346,7 @@ def odd_zeros_one_one(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
         2 4 7 3 9 8 6 5 10 14 13 11 1 16 12 15 0
-        sage: perm.stratum_component() == AbelianStratum(5,1,1,1,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([5,1,1,1,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1390,7 +1390,7 @@ def only_even_2(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7
         2 6 4 1 7 5 3 0
-        sage: perm.stratum_component() == AbelianStratum(2,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([2,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1398,7 +1398,7 @@ def only_even_2(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
         2 6 4 8 7 5 3 9 13 12 10 1 15 11 14 0
-        sage: perm.stratum_component() == AbelianStratum({2:1,1:6}).unique_component()
+        sage: perm.stratum_component() == Stratum({2:1,1:6}, k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1406,7 +1406,7 @@ def only_even_2(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11
         2 7 11 6 3 9 5 1 8 4 10 0
-        sage: perm.stratum_component() == AbelianStratum(2,1,1,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([2,1,1,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1414,7 +1414,7 @@ def only_even_2(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
         2 7 11 6 3 9 5 12 8 4 10 13 17 16 14 1 19 15 18 0
-        sage: perm.stratum_component() == AbelianStratum({2:1,1:8}).unique_component()
+        sage: perm.stratum_component() == Stratum({2:1,1:8}, k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1422,7 +1422,7 @@ def only_even_2(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
         2 6 4 8 7 5 3 9 15 13 12 14 11 1 10 0
-        sage: perm.stratum_component() == AbelianStratum(3,3,2,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([3,3,2,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1430,7 +1430,7 @@ def only_even_2(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13
         2 6 4 8 7 5 3 9 12 1 13 11 10 0
-        sage: perm.stratum_component() == AbelianStratum(3,2,1,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([3,2,1,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1438,7 +1438,7 @@ def only_even_2(odd_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21
         2 8 6 5 7 4 9 3 11 13 10 14 12 15 21 19 18 20 17 1 16 0
-        sage: perm.stratum_component() == AbelianStratum(5,3,3,3,2).unique_component()
+        sage: perm.stratum_component() == Stratum([5,3,3,3,2], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1564,7 +1564,7 @@ def only_odds_11(even_zeros):
         sage: perm
         0 1 2 3 4 5 6 7
         2 6 4 1 7 5 3 0
-        sage: perm.stratum_component() == AbelianStratum(2,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([2,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1572,7 +1572,7 @@ def only_odds_11(even_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10
         2 4 9 7 3 8 5 1 10 6 0
-        sage: perm.stratum_component() == AbelianStratum(2,2,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([2,2,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1580,7 +1580,7 @@ def only_odds_11(even_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12
         2 6 4 8 7 5 3 9 12 11 1 10 0
-        sage: perm.stratum_component() == AbelianStratum(4,2,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([4,2,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1588,7 +1588,7 @@ def only_odds_11(even_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11
         2 6 4 1 8 7 10 9 11 5 3 0
-        sage: perm.stratum_component() == AbelianStratum(6,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([6,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1596,7 +1596,7 @@ def only_odds_11(even_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
         2 7 4 10 9 5 8 6 3 11 14 13 1 12 0
-        sage: perm.stratum_component() == AbelianStratum(4,4,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([4,4,1,1],k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1604,7 +1604,7 @@ def only_odds_11(even_zeros):
         sage: perm
         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
         2 7 4 14 9 8 11 10 13 5 12 6 3 15 18 17 20 16 1 19 0
-        sage: perm.stratum_component() == AbelianStratum(8,6,1,1).unique_component()
+        sage: perm.stratum_component() == Stratum([8,6,1,1], k=1).unique_component()
         True
         sage: _cylinder_check(perm)
         True
@@ -1616,7 +1616,7 @@ def only_odds_11(even_zeros):
             return perm
         else:
             even_zeros.remove(2)
-            even_perm = AbelianStratum(even_zeros).odd_component().single_cylinder_representative()
+            even_perm = Stratum(even_zeros, k=1).odd_component().single_cylinder_representative()
             return cylinder_concatenation(perm,even_perm)
     elif set(even_zeros) == {2} and len(even_zeros) % 2 == 0:
         perm = GeneralizedPermutation([0,1,2,3,4,5,6,7,8,9,10],[2,4,9,7,3,8,5,1,10,6,0])
@@ -1625,11 +1625,11 @@ def only_odds_11(even_zeros):
         else:
             even_zeros.remove(2)
             even_zeros.remove(2)
-            even_perm = AbelianStratum(even_zeros).odd_component().single_cylinder_representative()
+            even_perm = Stratum(even_zeros, k=1).odd_component().single_cylinder_representative()
             return cylinder_concatenation(perm,even_perm)
     elif even_zeros.count(2) == 1 and len(even_zeros) == 2:
         perm = GeneralizedPermutation([0,1,2,3,4,5,6,7],[2,6,4,1,7,5,3,0])
-        even_perm = AbelianStratum(even_zeros[0]).odd_component().single_cylinder_representative()
+        even_perm = Stratum([even_zeros[0]], k=1).odd_component().single_cylinder_representative()
         return cylinder_concatenation(perm,even_perm)
     else:
         num = even_zeros[0]
@@ -1643,7 +1643,7 @@ def only_odds_11(even_zeros):
             if len(even_zeros) == 1:
                 return perm
             else:
-                even_perm = AbelianStratum(even_zeros[1:]).odd_component().single_cylinder_representative()
+                even_perm = Stratum(even_zeros[1:], k=1).odd_component().single_cylinder_representative()
                 return cylinder_concatenation(perm,even_perm)
         else:
             if num == 4:
@@ -1658,7 +1658,7 @@ def only_odds_11(even_zeros):
             if len(even_zeros) == 1:
                 return perm
             else:
-                even_perm = AbelianStratum(even_zeros[1:]).odd_component().single_cylinder_representative()
+                even_perm = Stratum(even_zeros[1:], k=1).odd_component().single_cylinder_representative()
                 return cylinder_concatenation(perm,even_perm)
 
 
@@ -1688,19 +1688,19 @@ def cylinder_concatenation(perm_1, perm_2, alphabet=None):
     We first take two single cylinder permutation representatives for the odd
     components of H_3(4)^odd and H_4(6)^odd.::
 
-        sage: perm_1 = AbelianStratum(4).odd_component().single_cylinder_representative()
+        sage: perm_1 = Stratum([4], k=1).odd_component().single_cylinder_representative()
         sage: perm_1
         0 1 2 3 4 5
         2 5 4 1 3 0
-        sage: perm_1.stratum_component() == AbelianStratum(4).odd_component()
+        sage: perm_1.stratum_component() == Stratum([4], k=1).odd_component()
         True
         sage: _cylinder_check(perm_1)
         True
-        sage: perm_2 = AbelianStratum(6).odd_component().single_cylinder_representative()
+        sage: perm_2 = Stratum([6], k=1).odd_component().single_cylinder_representative()
         sage: perm_2
         0 1 2 3 4 5 6 7
         2 5 4 7 3 1 6 0
-        sage: perm_2.stratum_component() == AbelianStratum(6).odd_component()
+        sage: perm_2.stratum_component() == Stratum([6], k=1).odd_component()
         True
         sage: _cylinder_check(perm_2)
         True
@@ -1713,7 +1713,7 @@ def cylinder_concatenation(perm_1, perm_2, alphabet=None):
         sage: perm_3
         0 1 2 3 4 5 6 7 8 9 10 11 12
         2 5 4 6 3 7 10 9 12 8 1 11 0
-        sage: perm_3.stratum_component() == AbelianStratum(6,4).odd_component()
+        sage: perm_3.stratum_component() == Stratum([6,4], k=1).odd_component()
         True
         sage: _cylinder_check(perm_3)
         True
@@ -1723,19 +1723,19 @@ def cylinder_concatenation(perm_1, perm_2, alphabet=None):
     that the resulting permutation is a single cylinder permutation representative
     of the connected component H_6(6,4)^even.::
 
-        sage: perm_4 = AbelianStratum(6).even_component().single_cylinder_representative()
+        sage: perm_4 = Stratum([6], k=1).even_component().single_cylinder_representative()
         sage: perm_5 = cylinder_concatenation(perm_1,perm_4,Alphabet(name='lower'))
         sage: perm_4
         0 1 2 3 4 5 6 7
         2 7 6 5 3 1 4 0
-        sage: perm_4.stratum_component() == AbelianStratum(6).even_component()
+        sage: perm_4.stratum_component() == Stratum([6], k=1).even_component()
         True
         sage: _cylinder_check(perm_4)
         True
         sage: perm_5
         a b c d e f g h i j k l m
         c f e g d h m l k i b j a
-        sage: perm_5.stratum_component() == AbelianStratum(6,4).even_component()
+        sage: perm_5.stratum_component() == Stratum([6,4], k=1).even_component()
         True
         sage: _cylinder_check(perm_5)
         True

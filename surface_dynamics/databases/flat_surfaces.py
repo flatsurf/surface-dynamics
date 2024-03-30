@@ -130,13 +130,13 @@ class GenericRepertoryDatabase:
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
             sage: import tempfile
 
             sage: tmp_dir = tempfile.TemporaryDirectory()
             sage: C = CylinderDiagrams(tmp_dir.name, read_only=False)
-            sage: C.update(AbelianStratum(4))
+            sage: C.update(Stratum([4], k=1))
             sage: import os
             sage: sorted(os.listdir(C.path))
             ['cyl_diags-4-hyp-1',
@@ -180,12 +180,13 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
         EXAMPLES::
 
             sage: from surface_dynamics import *
-
             sage: from surface_dynamics.databases.flat_surfaces import IrregularComponentTwins
             sage: D = IrregularComponentTwins()
-            sage: D.filename(QuadraticStratum(12))
+            sage: D.filename(Stratum([12], k=2))
             'twins-12-irr'
-            sage: D.filename(QuadraticStratum(2,2))
+            sage: D.filename(Stratum([3,3,3,-1], k=2))
+            'twins-3_3_3_p-irr'
+            sage: D.filename(Stratum([2,2], k=2))
             Traceback (most recent call last):
             ...
             AssertionError: the stratum has no irregular component
@@ -193,9 +194,11 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
         from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
         assert isinstance(stratum, QuadraticStratum)
         assert stratum.has_regular_and_irregular_components(), "the stratum has no irregular component"
+        sig_pos = [z for z in stratum.signature() if z >= 0]
+        np = sum(z == -1 for z in stratum.signature())
         return ('twins-' +
-                '_'.join(str(z) for z in stratum.zeros(poles=False)) +
-                '_p' * stratum.nb_poles() +
+                '_'.join(str(z) for z in sig_pos) +
+                '_p' * np +
                 '-irr')
 
     def has_stratum(self, stratum):
@@ -208,10 +211,10 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
 
             sage: from surface_dynamics.databases.flat_surfaces import IrregularComponentTwins
             sage: D = IrregularComponentTwins()
-            sage: D.has_stratum(QuadraticStratum(12))
+            sage: D.has_stratum(Stratum([12], k=2))
             True
         """
-        return os.path.isfile(os.path.join(self.path,self.filename(stratum)))
+        return os.path.isfile(os.path.join(self.path, self.filename(stratum)))
 
     def update(self, stratum):
         r"""
@@ -246,7 +249,7 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
             sage: G.list_strata()
             [Q_3(9, -1), Q_3(6, 3, -1), Q_4(12), Q_3(3^3, -1), Q_4(6^2), Q_4(9, 3), Q_4(6, 3^2), Q_4(3^4)]
         """
-        from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
+        from surface_dynamics.flat_surfaces.quadratic_strata import Stratum
         from sage.rings.integer import Integer
         s = set()
         for f in os.listdir(self.path):
@@ -256,7 +259,7 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
                 comp = g[:i].replace('p','-1')
                 s.add(comp)
 
-        return sorted(QuadraticStratum(map(Integer,g.split('_'))) for g in s)
+        return sorted(Stratum(list(map(Integer,g.split('_'))), k=2) for g in s)
 
     def get(self, stratum):
         r"""
@@ -268,7 +271,7 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
 
             sage: from surface_dynamics.databases.flat_surfaces import IrregularComponentTwins
             sage: D = IrregularComponentTwins()
-            sage: l = D.get(QuadraticStratum(6,3,-1))
+            sage: l = D.get(Stratum([6,3,-1], k=2))
             sage: l[0]
             ((1, 2, 0, 4, 6, 7, 8, 9, 10, 11, 12, 13, 5, 3),)
             sage: len(l)
@@ -294,7 +297,7 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
 
             sage: from surface_dynamics.databases.flat_surfaces import IrregularComponentTwins
             sage: D = IrregularComponentTwins()
-            sage: Q = QuadraticStratum(12)
+            sage: Q = Stratum([12], k=2)
             sage: len(D.get(Q))
             82
             sage: D.count(Q)
@@ -312,12 +315,12 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
     EXAMPLES::
 
-        sage: from surface_dynamics import *
+        sage: from surface_dynamics import Stratum
         sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
         sage: import os
 
         sage: C = CylinderDiagrams()
-        sage: a = AbelianStratum(3,1,1,1).unique_component()
+        sage: a = Stratum([3,1,1,1], k=1).unique_component()
         sage: C.filename(a, 2)
         'cyl_diags-3_1_1_1-c-2'
         sage: os.path.isfile(os.path.join(C.path, C.filename(a, 2)))
@@ -352,16 +355,16 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
             sage: C = CylinderDiagrams()
-            sage: C.filename(AbelianStratum(4).odd_component(), 3)
+            sage: C.filename(Stratum([4], k=1).odd_component(), 3)
             'cyl_diags-4-odd-3'
-            sage: C.filename(AbelianStratum(3,3).hyperelliptic_component(), 2)
+            sage: C.filename(Stratum([3,3], k=1).hyperelliptic_component(), 2)
             'cyl_diags-3_3-hyp-2'
         """
         return ('cyl_diags-' +
-                '_'.join(str(z) for z in comp.stratum().zeros()) +
+                '_'.join(str(z) for z in comp.stratum().signature()) +
                 '-' + comp._name +
                 '-' + str(ncyls))
 
@@ -371,7 +374,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
             sage: import tempfile
 
@@ -379,14 +382,14 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             sage: C = CylinderDiagrams(tmp_dir.name, read_only=False)
             sage: C.clean()
 
-            sage: a1 = AbelianStratum(4).odd_component()
-            sage: a2 = AbelianStratum(1,1,1,1).unique_component()
+            sage: a1 = Stratum([4], k=1).odd_component()
+            sage: a2 = Stratum([1,1,1,1], k=1).unique_component()
 
             sage: C.has_component(a1)
             False
             sage: C.has_component(a2)
             False
-            sage: C.update(AbelianStratum(4))
+            sage: C.update(Stratum([4], k=1))
             sage: C.has_component(a1)
             True
 
@@ -409,22 +412,22 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
-
+            sage: from surface_dynamics import Stratum
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
+
             sage: import os
 
             sage: C = CylinderDiagrams(tmp_dir(), read_only=False)
             sage: C.clean()
 
-            sage: a1 = AbelianStratum(4)
-            sage: a2 = AbelianStratum(1,1,1,1)
+            sage: a1 = Stratum([4], k=1)
+            sage: a2 = Stratum([1,1,1,1], k=1)
 
             sage: C.has_stratum(a1)
             False
             sage: C.has_stratum(a2)
             False
-            sage: C.update(AbelianStratum(4))
+            sage: C.update(Stratum([4], k=1))
             sage: C.has_stratum(a1)
             True
 
@@ -467,8 +470,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
-
+            sage: from surface_dynamics import Stratum
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
             sage: import os
 
@@ -477,21 +479,21 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
             sage: C.list_strata()
             []
-            sage: C.update(AbelianStratum(1,1))
+            sage: C.update(Stratum([1,1], k=1))
             sage: C.list_strata()
             [H_2(1^2)]
-            sage: C.update(AbelianStratum(2))
+            sage: C.update(Stratum([2], k=1))
             sage: C.list_strata()
             [H_2(2), H_2(1^2)]
         """
-        from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum
+        from surface_dynamics.flat_surfaces.abelian_strata import Stratum
         from sage.rings.integer import Integer
         s = set()
         for f in self._files():
             g = f[10:]
             s.add(g[:g.index('-')])
 
-        return [AbelianStratum(map(Integer, g.split('_'))) for g in sorted(s, reverse=True)]
+        return [Stratum(tuple(map(Integer, g.split('_'))), k=1) for g in sorted(s, reverse=True)]
 
     def get_iterator(self, comp, ncyls=None):
         r"""
@@ -506,14 +508,13 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
-
+            sage: from surface_dynamics import Stratum
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
             sage: import os
 
             sage: C = CylinderDiagrams(tmp_dir(), read_only=False)
 
-            sage: A = AbelianStratum(2)
+            sage: A = Stratum([2], k=1)
             sage: a = A.unique_component()
             sage: C.update(A)
             sage: list(C.get_iterator(a)) == A.cylinder_diagrams()
@@ -532,8 +533,8 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
         if ncyls is None:
             from itertools import chain
-            g = comp.stratum().genus()
-            s = comp.stratum().nb_zeros()
+            g = comp.stratum().surface_genus()
+            s = len(comp.stratum().signature())
             return chain(*(self.get_iterator(comp,i) for i in range(1,g+s)))
 
         filename = os.path.join(self.path, self.filename(comp,ncyls))
@@ -632,12 +633,11 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
-
+            sage: from surface_dynamics import Stratum
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
 
             sage: C = CylinderDiagrams(tmp_dir(), read_only=False)
-            sage: C.update(AbelianStratum(4), verbose=True) # random
+            sage: C.update(Stratum([4], k=1), verbose=True) # random
             computation for H_3(4)
              ncyls = 1
              1 cyl. diags for H_3(4)^hyp
@@ -662,7 +662,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             print("computation for %s"%stratum)
             sys.stdout.flush()
 
-        for ncyls in range(1, stratum.genus() + stratum.nb_zeros()):
+        for ncyls in range(1, stratum.surface_genus() + len(stratum.signature())):
             if verbose:
                 print(" ncyls = %d"%ncyls)
                 sys.stdout.flush()
@@ -686,8 +686,8 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             return sum(self.count(cc, ncyls) for cc in comp.components())
 
         if ncyls is None:
-            g = comp.stratum().genus()
-            s = comp.stratum().nb_zeros()
+            g = comp.stratum().surface_genus()
+            s = len(comp.stratum().signature())
             return sum((self.count(comp,i) for i in range(1,g+s)))
 
         return line_count(os.path.join(self.path, self.filename(comp, ncyls)))
