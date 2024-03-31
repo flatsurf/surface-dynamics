@@ -1392,6 +1392,8 @@ class OrigamiDatabase(SQLDatabase):
 
         if dblocation is None:
             dblocation = ORIGAMI_DB_LOCATION
+        else:
+            dblocation = Path(dblocation)
 
         self._old_version = old_version
         if old_version is not False:
