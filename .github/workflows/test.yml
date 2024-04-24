@@ -75,16 +75,30 @@ jobs:
         with: { submodules: recursive }
       - uses: conda-incubator/setup-miniconda@v2
         with: { miniforge-variant: "Mambaforge", miniforge-version: "latest", python-version: "${{ matrix.python }}" }
-      - name: Install surface-dynamics
-        shell: bash -l {0}
-        run: |
-          pip install --verbose --no-index --no-deps .
-      - name: Install dependencies
+      - name: Install minimal dependencies
         shell: bash -l {0}
         run: |
           mamba install -n test sagelib=${{ matrix.sagelib }}
           echo "sagelib ==${{ matrix.sagelib }}" >> $CONDA_PREFIX/conda-meta/pinned
 
+          grep -v optional environment.yml > environment.build.yml
+
+          echo "Installing the following build environment"
+          cat environment.build.yml
+
+          mamba env update --quiet -n test -f environment.build.yml
+
+          conda list
+      - name: Install surface-dynamics
+        shell: bash -l {0}
+        run: |
+          pip install --verbose --no-index --no-deps .
+
+          # Show message about cppyy regenerating pre-compiled headers so it does not show during the tests
+          python -c 'import cppyy' || true
+      - name: Install dependencies
+        shell: bash -l {0}
+        run: |
           while read; do
             optional=$(echo "$REPLY" | grep -o '# optional: [^ ]*' | awk '{ print $3; }') || true
             (test "$optional" == '' || (echo "${{ matrix.optionals }}" | grep -E '\b'"$optional"'\b') > /dev/null) && echo "$REPLY" || true
@@ -96,9 +110,6 @@ jobs:
           mamba env update --quiet -n test -f environment.test.yml
 
           conda list
-
-          # Show message about cppyy regenerating pre-compiled headers so it does not show during the tests
-          python -c 'import cppyy' || true
       - name: Run SageMath doctests
         shell: bash -l {0}
         run: |
