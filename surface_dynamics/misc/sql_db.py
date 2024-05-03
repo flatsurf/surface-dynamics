@@ -275,6 +275,8 @@ def _create_print_table(cur, cols, **kwds):
 
     - ``max_field_size`` -- how wide each field can be
 
+    - ``field_sizes`` -- how wide each field is
+
     - ``format_cols`` -- a dictionary that allows the user to specify the
       format of a column's output by supplying a function. The format of
       the dictionary is::
@@ -305,6 +307,12 @@ def _create_print_table(cur, cols, **kwds):
     - ``html_table`` -- boolean that if True creates an html table instead of
       a print table. Always set to True in the notebook.
 
+    - ``col_spacing`` -- non-negative integer (default ``2``) -- number of
+      spaces between columns
+
+    - ``justification`` -- either a string or a list of strings -- either ``'l'`` (for left)
+      or ``'r'`` (for right) or ``'c'`` (for centered)
+
     EXAMPLES::
 
         sage: from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
@@ -318,18 +326,54 @@ def _create_print_table(cur, cols, **kwds):
         sage: _create_print_table(cur, [des[0] for des in cur.description])
         'a1                  \n--------------------\n0                  \n1                  \n1                  '
     """
-    format_cols    = kwds.get('format_cols', {})
-    plot_cols      = kwds.get('plot_cols', {})
-    max_field_size = kwds.get('max_field_size', 20)
-    id_col_index   = kwds.get('id_col')
+    format_cols = kwds.get('format_cols', {})
+    plot_cols = kwds.get('plot_cols', {})
+    if 'max_field_size' in kwds:
+        field_sizes = [kwds['max_field_size'] for _ in range(len(cols))]
+    elif 'field_sizes' in kwds:
+        field_sizes = kwds['field_sizes']
+    else:
+        field_sizes = None
+    col_spacing = kwds.get('col_spacing', 2)
+    id_col_index = kwds.get('id_col')
     relabel_cols = kwds.get('relabel_cols', {})
     col_titles = []
     for col in cols:
         col_titles.append(relabel_cols.get(col, col))
+    col_justification = kwds.get('justification', 'l')
+    if isinstance(col_justification, str):
+        if col_justification in ['l', 'r', 'c']:
+            col_justification = [col_justification] * len(cols)
+    elif not isinstance(col_justification, (tuple, list)) or len(justification) != len(cols):
+        raise ValueError('the argument \'justification\' must either be a string or a list of strings of length the number of columns')
+    for i, j in enumerate(col_justification):
+        if j not in ['l', 'c', 'r']:
+            raise ValueError('justification must either be \'l\', \'r\' or \'c\'')
+
+    # We need to run twice through the query. For this reason, we
+    # store all rows in a plain list.
+    cur = list(cur)
+
+    if field_sizes is None:
+        field_sizes = [len(title) for title in col_titles]
+        for row in cur:
+            for i, (col, value) in enumerate(zip(cols, row)):
+                if col in format_cols:
+                    value = format_cols[col](value)
+                field_sizes[i] = max(field_sizes[i], len(str(value)))
+
+    def justified_string(s, width, justification):
+        if justification == 'l':
+            return s.ljust(width)
+        elif justification == 'r':
+            return s.rjust(width)
+        elif justification == 'c':
+            return s.center(width)
+        raise ValueError('invalid justification')
 
     def row_str(row, html, id_row):
         cur_str = []
-        for col, value in zip(cols, row):
+        for col, value, field_size, justification in zip(cols, row, field_sizes, col_justification):
             if col in plot_cols:
                 if html:
                     graphic = pcol_cols[col](value)
@@ -352,9 +396,9 @@ def _create_print_table(cur, cols, **kwds):
                     field_val = '     <td bgcolor=white align=center> ' \
                         + str(field_val) + ' </td>\n'
                 else:
-                    field_val = str(field_val).ljust(max_field_size)
-            cur_str.append(field_val)
-        return ' '.join(cur_str)
+                    field_val = str(field_val)
+            cur_str.append(justified_string(field_val, field_size, justification))
+        return (' ' * col_spacing).join(cur_str)
 
     try:
         # Very old versions of SageMath set EMBEDDED_MODE when running the notebook.
@@ -375,10 +419,11 @@ def _create_print_table(cur, cols, **kwds):
         ret += '\n  </table>\n</html>'
     else:
         # Command Prompt Version
-        ret = ' '.join([col.ljust(max_field_size) for col in col_titles])
-        ret += '\n' + '-' * max_field_size * len(col_titles) + '\n'
+        ret = (' ' * col_spacing).join([justified_string(col, field_size, justification) for col, field_size, justification in zip(col_titles, field_sizes, col_justification)])
+        ret += '\n' + '-' * (sum(field_sizes) + col_spacing * (len(col_titles) - 1)) + '\n'
         ret += '\n'.join([row_str(row, False, j) for j, row in enumerate(cur)])
     return ret
+
 
 class SQLQuery(SageObject):
     def __init__(self, database, *args, **kwds):
@@ -410,7 +455,7 @@ class SQLQuery(SageObject):
             sage: r = SQLQuery(D, {'table_name':'simon', 'display_cols':['a1'], 'expression':['b2','<=', 3]})
             sage: r.show()
             a1
-            --------------------
+            --
             0
             1
         """
@@ -546,19 +591,39 @@ class SQLQuery(SageObject):
         - ``id_col`` -- reference to a column that can be used as an object
           identifier for each row
 
+        - ``col_spacing`` -- the number of spaces between each column
+
+        - ``field_sizes`` -- a list of integers (width of each column)
+
+        - ``justification`` -- how to align the content in each row, either ``'l'`` for left, ``'r'`` for right
+          or ``'c'`` for centered
+
         EXAMPLES::
 
             sage: from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
             sage: DB = SQLDatabase()
-            sage: DB.create_table('simon',{'a1':{'sql':'bool', 'primary_key':False}, 'b2':{'sql':'int'}})
-            sage: DB.add_rows('simon',[(0,0),(1,1),(1,2)])
+            sage: DB.create_table('simon',{'a1':{'sql':'bool', 'primary_key':False}, 'b1': {'sql': 'int'}, 'b2':{'sql':'int'}})
+            sage: DB.add_rows('simon',[(0,0,0),(111,182917,1),(1,2,-222222)])
             sage: r = SQLQuery(DB, {'table_name':'simon', 'display_cols':['a1'], 'expression':['b2','<=', 6]})
             sage: r.show()
             a1
-            --------------------
+            ---
             0
+            111
             1
-            1
+            sage: r = SQLQuery(DB, {'table_name':'simon', 'display_cols': ['a1', 'b1', 'b2'], 'expression': ['b2', '<=', 6]})
+            sage: r.show(col_spacing=3, justification='lcr')
+            a1      b1          b2
+            ----------------------
+            0       0            0
+            111   182917         1
+            1       2      -222222
+            sage: r.show(field_sizes=[10, 8, 9], justification='ccc')
+                a1         b1         b2
+            -------------------------------
+                0          0          0
+               111       182917       1
+                1          2       -222222
         """
         if not self.__query_string__: return self.__database__.show()
 
@@ -828,8 +893,8 @@ class SQLDatabase(SageObject):
             sage: D = SQLDatabase()
             sage: D.create_table('simon', table_skeleton)
             sage: D.show('simon')
-            graph6               vertices             edges
-            ------------------------------------------------------------
+            graph6  vertices  edges
+            -----------------------
 
         Now that we have the table, we will begin to populate the table with
         rows. First, add the graph on zero vertices.::
@@ -837,9 +902,9 @@ class SQLDatabase(SageObject):
             sage: G = Graph()
             sage: D.add_row('simon', (G.graph6_string(), 0, 0))
             sage: D.show('simon')
-            graph6               vertices             edges
-            ------------------------------------------------------------
-            ?                    0                    0
+            graph6  vertices  edges
+            -----------------------
+            ?       0         0
 
         Next, add the graph on one vertex.::
 
@@ -847,10 +912,10 @@ class SQLDatabase(SageObject):
             0
             sage: D.add_row('simon', (G.graph6_string(), 1, 0))
             sage: D.show('simon')
-            graph6               vertices             edges
-            ------------------------------------------------------------
-            ?                    0                    0
-            @                    1                    0
+            graph6  vertices  edges
+            -----------------------
+            ?       0         0
+            @       1         0
 
         Say we want a database of graphs on four or less vertices::
 
@@ -1958,21 +2023,21 @@ class SQLDatabase(SageObject):
             sage: DB.create_table('lucy', skeleton)
             sage: DB.add_rows('lucy', [(0,1,1),(1,1,4),(2,0,7),(3,1,384), (4,1,978932)])
             sage: DB.show('lucy')
-            id                   a1                   b2
-            ------------------------------------------------------------
-            0                    1                    1
-            1                    1                    4
-            2                    0                    7
-            3                    1                    384
-            4                    1                    978932
+            id  a1  b2
+            --------------
+            0   1   1
+            1   1   4
+            2   0   7
+            3   1   384
+            4   1   978932
             sage: Q = SQLQuery(DB, {'table_name':'lucy', 'display_cols':['id','a1','b2'], 'expression':['id','>=',3]})
             sage: DB.delete_rows(Q)
             sage: DB.show('lucy')
-            id                   a1                   b2
-            ------------------------------------------------------------
-            0                    1                    1
-            1                    1                    4
-            2                    0                    7
+            id  a1  b2
+            ----------
+            0   1   1
+            1   1   4
+            2   0   7
         """
         if self.__read_only__:
             raise RuntimeError('Cannot delete rows from a read only database.')
