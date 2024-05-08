@@ -45,7 +45,7 @@ display the result on the screen in a table, one can use
 
     sage: q.show()
     Origami
-    --------------------
+    --------------------------------
     r=1234 5678  u=1537 2846
     r=123456 789abc  u=17593b 284c6a
 
@@ -53,10 +53,10 @@ We can display much more information by modifying the displayed columns::
 
     sage: q.cols('nb_squares', 'stratum', 'component', 'regular', 'quasi_regular')
     sage: q.show()
-    Nb squares           Stratum              Comp.                Regular              Quasi regular
-    ----------------------------------------------------------------------------------------------------
-    8                    H_3(1^4)             c                    True                 True
-    12                   H_4(2^3)             even                 False                True
+    Nb squares  Stratum   Comp.  Regular   Quasi regular
+    ----------------------------------------------------
+    8           H_3(1^4)  c      True      True
+    12          H_4(2^3)  even   False     True
 
 And the complete list of columns in the database is obtained through::
 
@@ -153,13 +153,13 @@ group of translation acts transitively on the set of squares)::
     sage: q = D.query(regular=True)
     sage: q.cols('nb_squares', 'stratum', 'automorphism_group_name')
     sage: q.show()
-    Nb squares           Stratum              Automorphism
-    ------------------------------------------------------------
-    6                    H_3(2^2)             S3
-    8                    H_3(1^4)             D8
-    8                    H_3(1^4)             Q8
-    10                   H_5(4^2)             D10
-    12                   H_4(1^6)             A4
+    Nb squares  Stratum   Automorphism
+    ----------------------------------
+    6           H_3(2^2)  S3
+    8           H_3(1^4)  D8
+    8           H_3(1^4)  Q8
+    10          H_5(4^2)  D10
+    12          H_4(1^6)  A4
 
 .. TODO::
 
@@ -1065,8 +1065,8 @@ class OrigamiQuery:
             sage: q = O.query(("nb_squares","=",6))
             sage: q.cols(("stratum","sum_of_L_exp","L_exp_approx"))
             sage: q.show()
-            Stratum              Sum of L exp         L exp approx
-            ------------------------------------------------------------
+            Stratum    Sum of L exp  L exp approx
+            ---------------------------------------------------------------
             ...
         """
         opts['format_cols'] = self._db._get_format(self._cols)
