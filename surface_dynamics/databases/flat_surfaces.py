@@ -140,7 +140,7 @@ class GenericRepertoryDatabase:
             sage: tmp_dir = tempfile.TemporaryDirectory()
             sage: C = CylinderDiagrams(tmp_dir.name, read_only=False)
             sage: C.update(AbelianStratum(4))
-            sage: sorted(C.path.iter_dir())
+            sage: sorted(C.path.iterdir())
             ['cyl_diags-4-hyp-1',
              'cyl_diags-4-hyp-2',
              'cyl_diags-4-hyp-3',
