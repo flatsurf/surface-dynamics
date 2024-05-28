@@ -140,7 +140,7 @@ class GenericRepertoryDatabase:
             sage: tmp_dir = tempfile.TemporaryDirectory()
             sage: C = CylinderDiagrams(tmp_dir.name, read_only=False)
             sage: C.update(AbelianStratum(4))
-            sage: sorted(C.path.iterdir())
+            sage: sorted(f.name for f in C.path.iterdir())
             ['cyl_diags-4-hyp-1',
              'cyl_diags-4-hyp-2',
              'cyl_diags-4-hyp-3',
@@ -153,7 +153,7 @@ class GenericRepertoryDatabase:
         """
         assert not self.read_only
         for filename in self.path.iterdir():
-            (self.path / filename).unlink()
+            filename.unlink()
 
 
 class IrregularComponentTwins(GenericRepertoryDatabase):
@@ -253,8 +253,8 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
         from sage.rings.integer import Integer
         s = set()
         for f in self.path.iterdir():
-            if str(f).startswith('twins-'):
-                g = str(f)[6:]
+            if f.name.startswith('twins-'):
+                g = f.name[6:]
                 i = g.index('-')
                 comp = g[:i].replace('p', '-1')
                 s.add(comp)
@@ -459,8 +459,8 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             'cyl_diags-...'
         """
         for f in self.path.iterdir():
-            if str(f).startswith('cyl_diags-'):
-                yield str(f)
+            if f.name.startswith('cyl_diags-'):
+                yield f.name
 
     def list_strata(self):
         r"""
@@ -644,7 +644,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
              ncyls = 3
              2 cyl. diags for H_3(4)^hyp
              4 cyl. diags for H_3(4)^odd
-            sage: sorted(C.path.iterdir())
+            sage: sorted(f.name for f in C.path.iterdir())
             ['cyl_diags-4-hyp-1',
              'cyl_diags-4-hyp-2',
              'cyl_diags-4-hyp-3',
