@@ -4775,7 +4775,7 @@ class QuadraticCylinderDiagram(SageObject):
 
         return dart_to_corner
 
-    # figure out whether this awfull method is really useful...
+    # figure out whether this awful method is really useful...
     # square tiled quadratic surface would be much more simple to handle
     def cylcoord_to_pillowcase_cover(self, lengths, heights, twists=None, verbose=False):
         r"""
