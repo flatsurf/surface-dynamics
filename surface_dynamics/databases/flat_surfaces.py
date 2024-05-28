@@ -232,7 +232,7 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
                 res.add(cylindric_canonical(q))
         res = sorted(res)
 
-        filename = (self.path / self.filename(stratum))
+        filename = self.path / self.filename(stratum)
         with filename.open('w') as output:
             for can in res:
                 output.write(str(can))
@@ -333,7 +333,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
         sage: l[0].stratum()
         H_4(3, 1^3)
     """
-    default_path = (SURFACE_DYNAMICS_DB_PATH / "cylinder_diagrams")
+    default_path = SURFACE_DYNAMICS_DB_PATH / "cylinder_diagrams"
 
     def __repr__(self):
         r"""
