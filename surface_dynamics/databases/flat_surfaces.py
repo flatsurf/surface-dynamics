@@ -253,8 +253,8 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
         from sage.rings.integer import Integer
         s = set()
         for f in self.path.iterdir():
-            if f.startswith('twins-'):
-                g = f[6:]
+            if str(f).startswith('twins-'):
+                g = str(f)[6:]
                 i = g.index('-')
                 comp = g[:i].replace('p', '-1')
                 s.add(comp)
@@ -459,8 +459,8 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             'cyl_diags-...'
         """
         for f in self.path.iterdir():
-            if f.startswith('cyl_diags-'):
-                yield f
+            if str(f).startswith('cyl_diags-'):
+                yield str(f)
 
     def list_strata(self):
         r"""
