@@ -395,7 +395,7 @@ class Stratum(UniqueRepresentation, SageObject):
                 # even zeroes [2 l_1, 2 l_2, ..., 2 l_n]
                 return (OddASC(self), EvenASC(self))
             else:
-                return (ASC(self), ) 
+                return (ASC(self),)
 
         elif self._k == 2:
             if any(m < -1 for m in zeros):
