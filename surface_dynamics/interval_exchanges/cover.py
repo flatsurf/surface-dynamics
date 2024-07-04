@@ -1227,9 +1227,11 @@ class PermutationCover(object):
 
             sage: p = iet.Permutation('a b c', 'c b a').cover(['(1,2)','(1,3)','(1,4)'])
             sage: S = p.masur_polygon([1,4,2], [2,0,-1])  # optional: sage_flatsurf
-            sage: S.stratum()                             # optional: sage_flatsurf
+            sage: stratum = S.stratum()                   # optional: sage_flatsurf # random
+            sage: stratum                                 # optional: sage_flatsurf
             H_4(3^2)
-            sage: p.stratum()                             # optional: sage_flatsurf
+            sage: stratum = p.stratum()                   # optional: sage_flatsurf # random
+            sage: stratum                                 # optional: sage_flatsurf
             H_4(3^2)
         """
         base_ring, triangles, tops, bots, mids = self._base._masur_polygon_helper(lengths, heights)

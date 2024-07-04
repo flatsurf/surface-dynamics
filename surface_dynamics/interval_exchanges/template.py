@@ -5027,10 +5027,11 @@ class OrientablePermutationIET(PermutationIET):
 
             sage: p = iet.Permutation('a b c', 'c b a')
             sage: S = p.masur_polygon([1,4,2], [2,0,-1])  # optional: sage_flatsurf
+            sage: stratum = S.stratum()                   # optional: sage_flatsurf # random
+            sage: stratum                                 # optional: sage_flatsurf
+            H_1(0^2)
             sage: S                                       # optional: sage_flatsurf
             Translation Surface in H_1(0^2) built from 2 isosceles triangles and 2 triangles
-            sage: S.stratum()                             # optional: sage_flatsurf
-            H_1(0^2)
 
         Generic construction using suspension cone::
 
