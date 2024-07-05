@@ -291,6 +291,7 @@ class Stratum(UniqueRepresentation, SageObject):
         import warnings
 
         warnings.warn('zeros() has been deprecated and will be removed in a future version of surface-dynamics; use signature()')
+
         s = self.signature()
         if not fake_zeros:
             s = tuple(m for m in s if m)
@@ -371,7 +372,7 @@ class Stratum(UniqueRepresentation, SageObject):
         zeros = tuple(m for m in self._signature if m)
 
         if not self.surface_has_finite_area():
-            raise NotImplementedError('meromorphic differentials with higher oder poles')
+            raise NotImplementedError('meromorphic differentials with higher order poles')
 
         if self._k == 1:
             # Abelian differentials: Kontsevich-Zorich classification
