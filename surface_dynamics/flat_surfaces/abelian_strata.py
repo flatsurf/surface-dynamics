@@ -2069,7 +2069,7 @@ class HypAbelianStratumComponent(ASC):
             Rauzy diagram with 20 permutations
         """
         g = self._stratum.surface_genus()
-        n = self._stratum.nb_fake_zeros()
+        n = self._stratum.signature().count(0)
         m = sum(x != 0 for x in self._stratum.signature())
 
         if left_degree is not None:
@@ -2241,7 +2241,7 @@ class HypAbelianStratumComponent(ASC):
                     ((left_degree+1) * zeros.count(left_degree)) *
                     self.rauzy_class_cardinality(left_degree=left_degree,reduced=True))
 
-        k = self.stratum().nb_fake_zeros()
+        k = self.stratum().signature().count(0)
         dd = self.stratum().dimension()  # it is d+k
         d = dd-k
 
@@ -2261,7 +2261,7 @@ class HypAbelianStratumComponent(ASC):
         r"""
         In hyperelliptic component there is only one standard permutation.
         """
-        if not self.stratum().nb_fake_zeros():
+        if 0 not in self.stratum().signature():
             return self.permutation_representative()
 
         raise NotImplementedError("not implemented when there are fake zeros")
@@ -2278,7 +2278,7 @@ class HypAbelianStratumComponent(ASC):
             [0 1 2 3 4 5 6 7
              7 6 5 4 3 2 1 0]
         """
-        if not self.stratum().nb_fake_zeros():
+        if 0 not in self.stratum().signature():
             d = self.stratum().dimension()
             l0 = list(range(d))
             l1 = list(range(d-1,-1,-1))
@@ -2299,7 +2299,7 @@ class HypAbelianStratumComponent(ASC):
         Return the number of standard permutations in this hyperelliptic
         component.
         """
-        if not self.stratum().nb_fake_zeros():
+        if 0 not in self.stratum().signature():
             return Integer(1)
 
         raise NotImplementedError("not implemented when there are fake zeros")
@@ -2342,7 +2342,7 @@ class HypAbelianStratumComponent(ASC):
 
         stratum = self.stratum()
 
-        if stratum.nb_fake_zeros():
+        if 0 in stratum.signature():
             raise ValueError("the stratum has fake zeros")
 
         z = stratum.signature()
@@ -2947,7 +2947,7 @@ class EvenAbelianStratumComponent(ASC):
 
         fk_zeros_perm = GeneralizedPermutation([0],[0])
         mk_pt_perm = GeneralizedPermutation([0,1],[1,0])
-        for i in range(self.stratum().nb_fake_zeros()):
+        for i in range(self.stratum().signature().count(0)):
             fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)
 
         two_count = real_zeros.count(2)
@@ -3341,7 +3341,7 @@ class OddAbelianStratumComponent(ASC):
 
         fk_zeros_perm = GeneralizedPermutation([0],[0])
         mk_pt_perm = GeneralizedPermutation([0,1],[1,0])
-        for i in range(self.stratum().nb_fake_zeros()):
+        for i in range(self.stratum().signature().count(0)):
             fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)
 
         two_count = real_zeros.count(2)
@@ -3567,7 +3567,7 @@ class AbelianStrata(Strata):
 
         return ((self._genus is None or c.surface_genus() == self._genus) and
                 (self._dimension is None or c.dimension() == self._dimension) and
-                (self._fake_zeros is None or self._fake_zeros or not c.nb_fake_zeros()))
+                (self._fake_zeros is None or self._fake_zeros or not c.signature().count(0)))
 
 
 class AbelianStrata_g(AbelianStrata):

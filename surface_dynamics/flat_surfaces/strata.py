@@ -214,7 +214,7 @@ class Stratum(UniqueRepresentation, SageObject):
         elif self._k == 2 and all(x >= -1 for x in self._signature):
             return 2 * self.surface_genus() + len(self._signature) - 2
 
-        raise NotImplementedError
+        raise NotImplementedError('higher order differential')
 
     def rank(self):
         r"""
@@ -261,7 +261,7 @@ class Stratum(UniqueRepresentation, SageObject):
                 # is there a meaning for rank?
                 raise NotImplementedError
         elif self._k >= 3:
-            raise ValueError('not a GL(2,R)-invariant manifold')
+            raise ValueError('not a GL(2,R)-invariant subvariety')
 
     def signature(self):
         r"""
@@ -298,7 +298,6 @@ class Stratum(UniqueRepresentation, SageObject):
             s = tuple(m for m in s if m >= 0)
         return s
 
-    # TODO: this is a terrible name!
     def nb_zeros(self, fake_zeros=True, poles=True):
         r"""
         Returns the number of zeros of self.
@@ -335,6 +334,9 @@ class Stratum(UniqueRepresentation, SageObject):
             sage: from surface_dynamics import Stratum
 
             sage: Stratum([0], k=1).nb_fake_zeros()
+            doctest:warning
+            ...
+            UserWarning: nb_fake_zeros() has been deprecated and will be removed in a future version of surface-dynamics; use signature()
             1
             sage: Stratum([1,1,0,0], k=1).nb_fake_zeros()
             2
@@ -342,6 +344,10 @@ class Stratum(UniqueRepresentation, SageObject):
             sage: Stratum([0,4,2,2], k=2).nb_fake_zeros()
             1
         """
+        import warnings
+
+        warnings.warn('nb_fake_zeros() has been deprecated and will be removed in a future version of surface-dynamics; use signature()')
+
         return self._signature.count(0)
 
     def nb_poles(self):
@@ -364,10 +370,10 @@ class Stratum(UniqueRepresentation, SageObject):
         """
         zeros = tuple(m for m in self._signature if m)
 
-        if self._k == 1:
-            if any(m < 0 for m in zeros):
-                raise NotImplementedError('not available for meromorphic differentials')
+        if not self.surface_has_finite_area():
+            raise NotImplementedError('meromorphic differentials with higher oder poles')
 
+        if self._k == 1:
             # Abelian differentials: Kontsevich-Zorich classification
             from .abelian_strata import ASC, HypASC, NonHypASC, OddASC, EvenASC
             s = sum(zeros)
@@ -398,9 +404,6 @@ class Stratum(UniqueRepresentation, SageObject):
                 return (ASC(self),)
 
         elif self._k == 2:
-            if any(m < -1 for m in zeros):
-                raise NotImplementedError('not available for meromorphic differential with higher order poles')
-
             # quadratic differentials: Lanneau classification
             from .quadratic_strata import CQSC, HQSC, GTNQSC, GTHQSC, GOQSC, REQSC, IEQSC, GZQSC, NQSC
             nb_poles = zeros.count(-1)
@@ -453,8 +456,7 @@ class Stratum(UniqueRepresentation, SageObject):
                 else:
                     return (CQSC(self),)
 
-        else:
-            raise NotImplementedError('not available for higher order differentials')
+        raise NotImplementedError('higher order differential')
 
     #
     # String representation
@@ -689,6 +691,9 @@ class Stratum(UniqueRepresentation, SageObject):
             sage: p.stratum()
             Q_0(0^2, -1^4)
         """
+        if self._k > 2:
+            raise ValueError('stratum of higher order differentials')
+
         return self.one_component().permutation_representative(*args,**kwds)
 
     def is_empty(self):
@@ -855,6 +860,7 @@ class Stratum(UniqueRepresentation, SageObject):
         from .masur_veech_volumes import masur_veech_volume
         return masur_veech_volume(self, rational, method)
 
+
 class StratumComponent(SageObject):
     r"""
     Generic class for connected component of a stratum of flat surfaces.
@@ -982,6 +988,12 @@ class StratumComponent(SageObject):
             5
         """
         return self._stratum.surface_genus()
+
+    def surface_has_finite_area(self):
+        return self._stratum.surface_has_finite_area()
+
+    def surface_differential_order(self):
+        return self._stratum.surface_differential_order()
 
     def genus(self):
         import warnings

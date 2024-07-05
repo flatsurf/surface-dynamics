@@ -64,11 +64,13 @@ abelian_volumes_table = {
     Stratum((2,2,1,1), 1).unique_component(): QQ((131,1440))
 }
 
-def masur_veech_volume(C, rational, method):
+def masur_veech_volume(C, rational=False, method=None):
     r"""
     Return the Masur-Veech volume of the stratum or component of stratum ``C``.
 
     INPUT:
+
+    - ``C`` -- a stratum or a connected component of stratum
 
     - ``rational`` (boolean) - if ``False`` (default) return the Masur-Veech volume
       and if ``True`` return the Masur-Veech volume divided by `\zeta(2g)`.
@@ -103,7 +105,24 @@ def masur_veech_volume(C, rational, method):
         sage: H6 = Stratum([6], k=1)
         sage: all(masur_veech_volume(C, True, 'table') == masur_veech_volume(C, True, 'CMSZ') for C in H6.components())
         True
+
+    TESTS::
+
+
+            sage: masur_veech_volume(Stratum([1,1,-2], k=1))
+            Traceback (most recent call last):
+            ...
+            ValueError: meromorphic differentials with higher order poles
+            sage: masur_veech_volume(Stratum([1]*6, k=3))
+            Traceback (most recent call last):
+            ...
+            NotImplementedError: higher order differentials
     """
+    if not C.surface_has_finite_area():
+        raise ValueError('meromorphic differentials with higher order poles')
+    if C.surface_differential_order() > 2:
+        raise NotImplementedError('higher order differentials')
+
     if method is None:
         if (isinstance(C, AbelianStratum) and len(C.signature()) == 1) or \
            (isinstance(C, AbelianStratumComponent) and len(C.stratum().signature()) == 1):
@@ -119,9 +138,9 @@ def masur_veech_volume(C, rational, method):
             vol = sum(abelian_volumes_table[CC] for CC in C.components())
             S = C
         elif isinstance(C, QuadraticStratumComponent):
-            raise NotImplementedError
+            raise NotImplementedError('quadratic differentials')
         elif isinstance(C, QuadraticStratum):
-            raise NotImplementedError
+            raise NotImplementedError('quadratic differentials')
         else:
             raise ValueError('invalid input')
 

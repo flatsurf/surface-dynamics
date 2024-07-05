@@ -408,7 +408,7 @@ class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
                 if g == 1: # genus 1 is particular
                     nb_hyp = binomial(d,2)
                 else:
-                    k = s.nb_fake_zeros()
+                    k = s.signature().count(0)
                     d -= k
                     if extended:
                         nb_hyp = binomial(d+k,k) * (2*d-1) + binomial(d+k-1,k-1) * d

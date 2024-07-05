@@ -3248,7 +3248,7 @@ class PermutationLI(Permutation):
             ...
             NotImplementedError: not yet implemented! Do it!
         """
-        if self.stratum().nb_fake_zeros():
+        if 0 in self.stratum().signature():
             raise NotImplementedError("not yet implemented! Do it!")
         else:
             return self
