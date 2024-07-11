@@ -1621,6 +1621,69 @@ class FatGraph(object):
         self._n -= 2
         self._nv -= 1
 
+    def relocalise(self,e,i): # e is the dart that will be relocated, ep[e] will not and i is the edge after the coin where we put e.
+        vp = self._vp
+        ep = self._ep
+        fp = self._fp
+
+        e2 = ep[e]
+        j = ep[vp[i]]
+        next_e = fp[e2]
+        pre_e = ep[vp[e]]
+
+        vp[next_e] = ep[pre_e]
+        vp[i] = e
+        vp[e] = ep[j]
+
+        fp[pre_e] = next_e
+        fp[j] = e
+        fp[e2] = i
+
+        # if necessary, we need to update vertex and face degree
+
+    def disconnect(self,e): #disconnect the edge e from the vertex it comes
+        vp = self._vp
+        ep = self._ep
+        fp = self._fp
+
+        e2 = ep[e]
+        pre_e = ep[vp[e]]
+        next_e = fp[e2]
+        next_e2 = fp[e]
+
+        vp[next_e] = ep[pre_e]
+        vp[e] = e
+
+        fp[pre_e] = next_e
+        fp[e2] = e
+
+        self._nf += -1
+        self._nv += 1
+
+    def split_coin(self,e): #split the coin before e by puting and edge and a vertex, return the index of the dart that cut the coin
+        vp = self._vp
+        ep = self._ep
+        fp = self._fp
+
+        x = self._n
+        y = self._n + 1
+        self._n += 2
+        ep.append(y)
+        ep.append(x)
+        pre_e = ep[vp[e]]
+
+        vp[e] = x
+        vp.append(ep[pre_e])
+        vp.append(y)
+
+        fp[pre_e] = x
+        fp.append(y)
+        fp.append(e)
+
+        self._nv += 1
+    
+        return x
+
     def trisect_face(self, i, j, k):
         r"""
         Insert a bridge
