@@ -274,14 +274,6 @@ class FatGraph(object):
         if perm_num_cycles(fp, n) != self._nf:
             raise error("wrong number of faces")
 
-        if len(vl) < n or len(fl) < n or len(vd) < nv or len(fd) < nf:
-            raise error("inconsistent lengths")
-
-        if any(x < 0 or x > n for x in vd[:nv]) or sum(vd[:nv]) != m:
-            raise error("invalid vertex degrees")
-        if any(x < 0 or x > n for x in fd[:nf]) or sum(fd[:nf]) != m:
-            raise error("invalid face degrees")
-
         ffd = [0] * nf
         vvd = [0] * nv
 
@@ -295,24 +287,6 @@ class FatGraph(object):
 
             if fp[ep[vp[i]]] != i:
                 raise error("fp[ep[vp[%d]]] = %d" % (i, fp[ep[vp[i]]]))
-            if fl[i] < 0 or fl[i] >= nf:
-                raise error("face label out of range: fl[%d] = %d" % (i, fl[i]))
-            if vl[i] < 0 or vl[i] >= nv:
-                raise error("vertex label out of range: vl[%d] = %d" % (i, vl[i]))
-
-            if fl[fp[i]] != fl[i]:
-                raise error("fl[fp[%d]] = %d while fl[%d] = %d" % (i, fl[fp[i]], i, fl[i]))
-
-            if vl[vp[i]] != vl[i]:
-                raise error("vl[vp[%d]] = vl[%d] = %d while vl[%d] = %d" % (i, vp[i], vl[vp[i]], i, vl[i]))
-
-            ffd[fl[i]] += 1
-            vvd[vl[i]] += 1
-
-        if vvd != vd[:nv]:
-            raise error("inconsistent face labels/degrees, got %s instead of vd = %s" % (vvd, vd[:nv]))
-        if ffd != fd[:nf]:
-            raise error("inconsistent vertex labels/degrees, got %s instead of fd = %s" % (ffd, fd[:nf]))
 
     def is_face_bipartite(self, certificate=False):
         r"""
@@ -734,11 +708,7 @@ class FatGraph(object):
     def _check_alloc(self, n, nv, nf):
         if len(self._vp) < n or \
            len(self._ep) < n or \
-           len(self._fp) < n or \
-           len(self._vl) < n or \
-           len(self._fl) < n or \
-           len(self._fd) < nf or \
-           len(self._vd) < nv:
+           len(self._fp) < n :
             raise TypeError("reallocation needed")
 
     def split_face(self, i, j):
@@ -828,7 +798,7 @@ class FatGraph(object):
 
         i = int(i)
         j = int(j)
-        if i < 0 or i >= self._n or j < 0 or j >= n or fl[i] != fl[j]:
+        if i < 0 or i >= self._n or j < 0 or j >= n:
             raise ValueError("invalid darts i=%d and j=%d for face splitting" % (i, j))
 
         self._check_alloc(n + 2, nv, nf + 1)
@@ -1273,6 +1243,69 @@ class FatGraph(object):
 
         self._n -= 2
         self._nv -= 1
+
+    def relocalise(self,e,i): # e is the dart that will be relocated, ep[e] will not and i is the edge after the coin where we put e.
+        vp = self._vp
+        ep = self._ep
+        fp = self._fp
+
+        e2 = ep[e]
+        j = ep[vp[i]]
+        next_e = fp[e2]
+        pre_e = ep[vp[e]]
+
+        vp[next_e] = ep[pre_e]
+        vp[i] = e
+        vp[e] = ep[j]
+
+        fp[pre_e] = next_e
+        fp[j] = e
+        fp[e2] = i
+
+        # if necessary, we need to update vertex and face degree
+
+    def disconnect(self,e): #disconnect the edge e from the vertex it comes
+        vp = self._vp
+        ep = self._ep
+        fp = self._fp
+
+        e2 = ep[e]
+        pre_e = ep[vp[e]]
+        next_e = fp[e2]
+        next_e2 = fp[e]
+
+        vp[next_e] = ep[pre_e]
+        vp[e] = e
+
+        fp[pre_e] = next_e
+        fp[e2] = e
+
+        self._nf += -1
+        self._nv += 1
+
+    def split_coin(self,e): #split the coin before e by puting and edge and a vertex, return the index of the dart that cut the coin
+        vp = self._vp
+        ep = self._ep
+        fp = self._fp
+
+        x = self._n
+        y = self._n + 1
+        self._n += 2
+        ep.append(y)
+        ep.append(x)
+        pre_e = ep[vp[e]]
+
+        vp[e] = x
+        vp.append(ep[pre_e])
+        vp.append(y)
+
+        fp[pre_e] = x
+        fp.append(y)
+        fp.append(e)
+
+        self._nv += 1
+    
+        return x
 
     def trisect_face(self, i, j, k):
         r"""
