@@ -105,7 +105,6 @@ class FatGraph(object):
                  # permutations
                  '_vp',  # vertex permutation (array of length _n)
                  '_fp',  # face permutation (array of length _n)
-                 # TODO: think whether it is useful to keep any of these...
                  # labels (identify uniquely the vertices)
                  '_vl',  # vertex labels (array of length _n)
                  '_fl',  # face labels (array of length _n)
@@ -113,8 +112,8 @@ class FatGraph(object):
                  '_nv',  # number of vertices (non-negative integer)
                  '_nf',  # number of faces (non-negative integer)
                  # degrees
-                 '_vd',  # vertex degrees (array of length _nv)
-                 '_fd']  # face degrees (array of length _nf)
+                 '_vd',  # vertex degrees (array of length _nv) containing integers from 0 to nv - 1
+                 '_fd']  # face degrees (array of length _nf) containing integers from 0 to nf - 1
 
     def __init__(self, vp=None, fp=None, max_num_dart=None, mutable=False, check=True):
         vp, _, fp = constellation_init(vp, 2, fp)
@@ -127,14 +126,16 @@ class FatGraph(object):
 
         self._vl, self._vd = perm_dense_cycles(vp, self._n)
         self._nv = len(self._vd)  # number of vertices
+        self._vd.extend([-1] * (self._n - self._nv))
         self._fl, self._fd = perm_dense_cycles(fp, self._n)
         self._nf = len(self._fd)  # number of faces
+        self._fd.extend([-1] * (self._n - self._nf))
 
         self._mutable = bool(mutable)
 
         if max_num_dart is not None:
             if max_num_dart < self._n:
-                raise ValueError
+                raise ValueError('invalid argument max_num_dart')
             self._realloc(max_num_dart)
 
         if check:
@@ -216,7 +217,7 @@ class FatGraph(object):
         nf = self._nf
         nv = self._nv
 
-        if any(vp[i] == -1 or fp[i] == -1 for i in range(self._n)):
+        if any(vp[i] == -1 or fp[i] == -1 for i in range(n)):
             raise ValueError('inactive dart not allowed')
 
         if not perm_check(vp, n):
@@ -224,12 +225,12 @@ class FatGraph(object):
         if not perm_check(fp, n):
             raise ValueError("invalid face permutation: %s" % fp)
 
-        if n and (perm_num_cycles(vp, n) != self._nv):
-            raise error("wrong number of vertices")
-        if n and (perm_num_cycles(fp, n) != self._nf):
-            raise error("wrong number of faces")
+        if n and (perm_num_cycles(vp, n) != nv):
+            raise error("wrong number of vertices: nv={} vp={}".format(nv, perm_cycle_string(vp, True, n)))
+        if n and (perm_num_cycles(fp, n) != nf):
+            raise error("wrong number of faces: nf={} fp={}".format(nf, perm_cycle_string(fp, True, n)))
 
-        if len(vl) < n or len(fl) < n or len(vd) < nv or len(fd) < nf:
+        if len(vl) < n or len(fl) < n or len(vd) < n or len(fd) < n:
             raise error("inconsistent lengths")
 
         if any(x < 0 or x > n for x in vd[:nv]):
@@ -237,8 +238,20 @@ class FatGraph(object):
         if any(x < 0 or x > n for x in fd[:nf]):
             raise error("invalid face degrees")
 
+        if n == 0:
+            # the graph with no edge is a bit special as we consider it to be the sphere
+            # minus a point (= a disk)
+            if nv > 1 or nf > 1:
+                raise ValueError('the fat graph with no edge has a single vertex and a single face (nv={}, nf={})'.format(nv, nf))
+            return
+
         ffd = [0] * nf
         vvd = [0] * nv
+
+        if set(vl[:n]) != set(range(nv)):
+            raise ValueError('invalid vertex labels: {} (n={}, nv={})'.format(sorted(set(vl[:n])), n, nv))
+        if set(fl[:n]) != set(range(nf)):
+            raise ValueError('invalid face labels: {} (n={}, nf={})'.format(sorted(set(fl[:n])), n, nf))
 
         for i in range(n):
             if fp[vp[i] ^ 1] != i:
@@ -281,8 +294,8 @@ class FatGraph(object):
         self._fp.extend([-1] * (max_num_dart - self._n))
         self._vl.extend([-1] * (max_num_dart - self._n))
         self._fl.extend([-1] * (max_num_dart - self._n))
-        self._vd.extend([-1] * (max_num_dart - self._nv))
-        self._fd.extend([-1] * (max_num_dart - self._nf))
+        self._vd.extend([-1] * (max_num_dart - self._n))
+        self._fd.extend([-1] * (max_num_dart - self._n))
 
     def is_connected(self):
         r"""
@@ -991,13 +1004,23 @@ class FatGraph(object):
     # Augmentation and reduction #
     ##############################
 
-    def _check_alloc(self, n, nv, nf):
+    def _check_alloc(self, n, nv=None, nf=None):
+        if nv is not None:
+            import warnings
+
+            warnings.warn("argument nv of _check_alloc is deprecated and will be removed from a future version of surface-dynamics")
+
+        if nf is not None:
+            import warnings
+
+            warnings.warn("argument nf of _check_alloc is deprecated and will be removed from a future version of surface-dynamics")
+
         if len(self._vp) < n or \
            len(self._fp) < n or \
            len(self._vl) < n or \
            len(self._fl) < n or \
-           len(self._fd) < nf or \
-           len(self._vd) < nv:
+           len(self._fd) < n or \
+           len(self._vd) < n:
             raise TypeError("reallocation needed")
 
     def _set_genus0_loop(self):
@@ -1015,7 +1038,7 @@ class FatGraph(object):
             sage: f
             FatGraph('()', '()')
         """
-        self._check_alloc(2, 1, 2)
+        self._check_alloc(2)
         self._n = 2
         self._nf = 2
         self._nv = 1
@@ -1048,7 +1071,7 @@ class FatGraph(object):
         """
         if not self._mutable:
             raise ValueError('immutable graph; use a copy instead')
-        self._check_alloc(2, 2, 1)
+        self._check_alloc(2)
         self._n = 2
         self._nf = 1
         self._nv = 2
@@ -1082,7 +1105,7 @@ class FatGraph(object):
         """
         if not self._mutable:
             raise ValueError('immutable graph; use a copy instead')
-        self._check_alloc(4, 1, 1)
+        self._check_alloc(4)
         self._n = 4
         self._nv = self._nf = 1
         vp = self._vp
@@ -1186,7 +1209,7 @@ class FatGraph(object):
         nf = self._nf
         nv = self._nv
 
-        self._check_alloc(n + 2, nv, nf + 1)
+        self._check_alloc(n + 2)
 
         x = self._n
         y = self._n + 1
@@ -1432,7 +1455,7 @@ class FatGraph(object):
         vd = self._vd
         fd = self._fd
 
-        self._check_alloc(n + 2, nv + 1, nf)
+        self._check_alloc(n + 2)
 
         x = self._n
         y = self._n + 1
@@ -1621,67 +1644,345 @@ class FatGraph(object):
         self._n -= 2
         self._nv -= 1
 
-    def relocalise(self,e,i): # e is the dart that will be relocated, ep[e] will not and i is the edge after the coin where we put e.
+    def cut_vertex(self, i, j, check=True):
+        r"""
+        Cut a vertex in two vertices between darts ``i`` and ``j``.
+
+        More precisely, if the vertex corresponds to the cycle ``(i, I, j, J)`` after
+        this operation, the two new vertices are ``(i, I)`` and ``(j, J)``. Note that
+        the darts ``i`` and ``j`` must belong to the same vertex. Otherwise, a
+        ``ValueError`` is raised.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import FatGraph
+            sage: fg = FatGraph('(0,1)', '(0)(1)', mutable=True)
+            sage: fg.cut_vertex(0, 1)
+            sage: fg._check()
+            sage: fg
+            FatGraph('(0)(1)', '(0,1)')
+
+            sage: fg = FatGraph('(0,1,2,3)', '(0)(1,3)(2)', mutable=True)
+            sage: fg.cut_vertex(0, 1)
+            sage: fg.cut_vertex(1, 2)
+            sage: fg.cut_vertex(2, 3)
+            sage: fg._check()
+            sage: fg
+            FatGraph('(0)(1)(2)(3)', '(0,1)(2,3)')
+
+            sage: fg = FatGraph('(0,1,2,3)', '(0)(1,3)(2)', mutable=True)
+            sage: fg.cut_vertex(0, 2)
+            sage: fg._check()
+            sage: fg
+            FatGraph('(0,1)(2,3)', '(0)(1)(2)(3)')
+
+            sage: fg = FatGraph('(0,1,2,3)', '(0)(1,3)(2)', mutable=True)
+            sage: fg.cut_vertex(1, 3)
+            sage: fg._check()
+            sage: fg
+            FatGraph('(0,3)(1,2)', '(0,2)(1,3)')
+        """
+        if check:
+            if not self._mutable:
+                raise ValueError('immutable fat graph; use a mutable copy instead')
+
+            i = self._check_dart(i)
+            j = self._check_dart(j)
+            if self._vl[i] != self._vl[j]:
+                raise ValueError('darts adjacent to distinct vertices')
+
+            if i == j:
+                raise ValueError('i and j must be distinct')
+
         vp = self._vp
-        ep = self._ep
         fp = self._fp
+        vl = self._vl
+        fl = self._fl
+        vd = self._vd
+        fd = self._fd
 
-        e2 = ep[e]
-        j = ep[vp[i]]
-        next_e = fp[e2]
-        pre_e = ep[vp[e]]
+        vpi_pre = fp[i ^ 1]
+        vpj_pre = fp[j ^ 1]
+        vp[vpj_pre] = i
+        vp[vpi_pre] = j
+        fp[i ^ 1] = vpj_pre
+        fp[j ^ 1] = vpi_pre
 
-        vp[next_e] = ep[pre_e]
-        vp[i] = e
-        vp[e] = ep[j]
+        # TODO: the code below maintains self._vl, self._vd, self._nv,
+        # self._fl, self._fd and self._nf. We should have a "lighter" class
+        # without these attributes.
 
-        fp[pre_e] = next_e
-        fp[j] = e
-        fp[e2] = i
-
-        # if necessary, we need to update vertex and face degree
-
-    def disconnect(self,e): #disconnect the edge e from the vertex it comes
-        vp = self._vp
-        ep = self._ep
-        fp = self._fp
-
-        e2 = ep[e]
-        pre_e = ep[vp[e]]
-        next_e = fp[e2]
-        next_e2 = fp[e]
-
-        vp[next_e] = ep[pre_e]
-        vp[e] = e
-
-        fp[pre_e] = next_e
-        fp[e2] = e
-
-        self._nf += -1
+        k = j
+        vd[self._nv] = 0
+        while vl[k] != self._nv:
+            vl[k] = self._nv
+            vd[self._nv] += 1
+            vd[vl[i]] -= 1
+            k = vp[k]
         self._nv += 1
 
-    def split_coin(self,e): #split the coin before e by puting and edge and a vertex, return the index of the dart that cut the coin
+        if fl[i ^ 1] == fl[j ^ 1]:
+            # split faces
+            k = j ^ 1
+            fd[self._nf] = 0
+            while fl[k] != self._nf:
+                fl[k] = self._nf
+                fd[fl[i ^ 1]] -= 1
+                fd[self._nf] += 1
+                k = fp[k]
+            self._nf += 1
+
+        else:
+            # merge faces
+            min_label = fl[i ^ 1]
+            max_label = fl[j ^ 1]
+            min_start = vpi_pre
+            max_start = vpj_pre
+            if min_label > max_label:
+                min_label, max_label = max_label, min_label
+                min_start, max_start = max_start, min_start
+
+            k = max_start
+            while fl[k] == max_label:
+                fl[k] = min_label
+                k = fp[k]
+
+            if max_label != self._nf - 1:
+                k = 0
+                while fl[k] != self._nf - 1:
+                    k += 1
+                while fl[k] == self._nf - 1:
+                    fl[k] = max_label
+                    k = fp[k]
+
+            fd[min_label] = fd[min_label] + fd[max_label]
+            fd[max_label] = fd[self._nf - 1]
+            fd[self._nf - 1] = -1
+            self._nf -= 1
+
+        # TODO: remove
+        self._check()
+
+    def glue_vertices(self, i, j, check=True):
+        r"""
+        Glue the two vertices at darts ``i`` and ``j``.
+
+        More precisely, if we have two vertices corresponding to the cycles
+        ``(i, I)`` and ``(j, J)`` after this operation the newly created vertex
+        corresponds to the cycle ``(i, I, j, J)``.
+
+        Note that ``i`` and ``j`` commutes in this operation (up to the changes
+        in the vertex and face labellings).
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import FatGraph
+            sage: fg = FatGraph('(0,3)(1,2)', '(0,2)(1,3)', mutable=True)
+            sage: fg.glue_vertices(0, 1)
+            sage: fg._check()
+            sage: fg
+            FatGraph('(0,3,1,2)', '(0,3,1,2)')
+
+            sage: fg = FatGraph('(0,3)(1,2)', '(0,2)(1,3)', mutable=True)
+            sage: fg.glue_vertices(0, 2)
+            sage: fg._check()
+            sage: fg
+            FatGraph('(0,3,2,1)', '(0,2)(1)(3)')
+
+            sage: fg = FatGraph('(0,3)(1,2)', '(0,2)(1,3)', mutable=True)
+            sage: fg.glue_vertices(3, 1)
+            sage: fg._check()
+            sage: fg
+            FatGraph('(0,1,2,3)', '(0)(1,3)(2)')
+
+            sage: fg = FatGraph('(0,3)(1,2)', '(0,2)(1,3)', mutable=True)
+            sage: fg.glue_vertices(3, 2)
+            sage: fg._check()
+            sage: fg
+            FatGraph('(0,2,1,3)', '(0,2,1,3)')
+        """
+        if check:
+            if not self._mutable:
+                raise ValueError('immutable fat graph; use a mutable copy instead')
+
+            i = self._check_dart(i)
+            j = self._check_dart(j)
+            if self._vl[i] == self._vl[j]:
+                raise ValueError('darts adjacent to the same vertex')
+
         vp = self._vp
-        ep = self._ep
         fp = self._fp
+        vl = self._vl
+        fl = self._fl
+        vd = self._vd
+        fd = self._fd
+
+        vpi_pre = fp[i ^ 1]
+        vpj_pre = fp[j ^ 1]
+        vp[vpi_pre] = j
+        vp[vpj_pre] = i
+        fp[i ^ 1] = vpj_pre
+        fp[j ^ 1] = vpi_pre
+
+        # TODO: the code below maintains self._vl, self._vd, self._nv,
+        # self._fl, self._fd and self._nf. We should have a "lighter" class
+        # without these attributes.
+        min_label = vl[i]
+        max_label = vl[j]
+        min_start = i
+        max_start = j
+        if min_label > max_label:
+            min_label, max_label = max_label, min_label
+            min_start, max_start = max_start, min_start
+        k = max_start
+        while vl[k] == max_label:
+            vl[k] = min_label
+            vd[min_label] += 1
+            k = vp[k]
+        if max_label != self._nv - 1:
+            k = 0
+            while vl[k] != self._nv - 1:
+                k += 1
+            while vl[k] == self._nv - 1:
+                vl[k] = max_label
+                k = vp[k]
+        vd[self._nv - 1] = -1
+        self._nv -= 1
+
+        if fl[i ^ 1] == fl[j ^ 1]:
+            # split faces
+            k = j ^ 1
+            fd[self._nf] = 0
+            while fl[k] != self._nf:
+                fl[k] = self._nf
+                fd[fl[i ^ 1]] -= 1
+                fd[self._nf] += 1
+                k = fp[k]
+            self._nf += 1
+        else:
+            # merge faces
+            min_label = fl[i ^ 1]
+            max_label = fl[j ^ 1]
+            min_start = vpi_pre
+            max_start = vpj_pre
+            if min_label > max_label:
+                min_label, max_label = max_label, min_label
+                min_start, max_start = max_start, min_start
+
+            k = max_start
+            while fl[k] == max_label:
+                fl[k] = min_label
+                k = fp[k]
+
+            if max_label != self._nf - 1:
+                k = 0
+                while fl[k] != self._nf - 1:
+                    k += 1
+                while fl[k] == self._nf - 1:
+                    fl[k] = max_label
+                    k = fp[k]
+
+            fd[min_label] = fd[min_label] + fd[max_label]
+            fd[max_label] = fd[self._nf - 1]
+            fd[self._nf - 1] = -1
+            self._nf -= 1
+
+        # TODO: remove check
+        self._check()
+
+    def add_edge(self, i=None, j=None, check=True):
+        r"""
+        Insert a new edge.
+
+        By default the created edge is isolated. If arguments ``i`` or ``j`` is
+        provided its start or respectively end
+
+        INPUT:
+
+        - ``i``, ``j`` -- optional darts. If specified, the new darts of the edge will be
+          inserted after ``i`` and ``j`` at the corresponding vertices.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import FatGraph
+            sage: cm = FatGraph('', '', mutable=True, max_num_dart=4)
+            sage: cm.add_edge()
+            0
+            sage: cm._check()
+            sage: cm
+            FatGraph('(0)(1)', '(0,1)')
+            sage: cm.add_edge()
+            2
+            sage: cm._check()
+            sage: cm
+            FatGraph('(0)(1)(2)(3)', '(0,1)(2,3)')
+
+            sage: cm = FatGraph('(0,1)', '(0)(1)', mutable=True)
+            sage: cm._realloc(8)
+            sage: cm.add_edge(0)
+            2
+            sage: cm._check()
+            sage: cm
+            FatGraph('(0,2,1)(3)', '(0,2,3)(1)')
+            sage: cm.add_edge(0)
+            4
+            sage: cm._check()
+            sage: cm
+            FatGraph('(0,4,2,1)(3)(5)', '(0,2,3,4,5)(1)')
+            sage: cm.add_edge(3)
+            6
+            sage: cm._check()
+            sage: cm
+            FatGraph('(0,4,2,1)(3,6)(5)(7)', '(0,2,6,7,3,4,5)(1)')
+
+            sage: cm = FatGraph('(0,1)', '(0)(1)', mutable=True)
+            sage: cm._realloc(8)
+            sage: cm.add_edge(0, 1)
+            2
+            sage: cm
+            FatGraph('(0,2,1,3)', '(0,2,1,3)')
+            sage: cm.add_edge(0, 3)
+            4
+            sage: cm
+            FatGraph('(0,4,2,1,3,5)', '(0,2,1,5)(3,4)')
+            sage: cm.add_edge(1, 2)
+            6
+        """
+        if check:
+            if not self._mutable:
+                raise ValueError('immutable fat graph; use a mutable copy instead')
+            self._check_alloc(self._n + 2)
+            if i is not None:
+                i = self._check_dart(i)
+            if j is not None:
+                j = self._check_dart(j)
 
         x = self._n
         y = self._n + 1
+        self._vd[self._nv] = 1
+        self._vd[self._nv + 1] = 1
+        self._fd[self._nf] = 2
+
+        self._vl[x] = self._nv
+        self._vl[y] = self._nv + 1
+        self._fl[x] = self._nf
+        self._fl[y] = self._nf
+
+        self._vp[x] = x
+        self._vp[y] = y
+        self._fp[x] = y
+        self._fp[y] = x
+
+        self._nv += 2
+        self._nf += 1
         self._n += 2
-        ep.append(y)
-        ep.append(x)
-        pre_e = ep[vp[e]]
 
-        vp[e] = x
-        vp.append(ep[pre_e])
-        vp.append(y)
+        if i is not None:
+            self.glue_vertices(x, self._vp[i], check=check)
+        if j is not None:
+            self.glue_vertices(y, self._vp[j], check=check)
 
-        fp[pre_e] = x
-        fp.append(y)
-        fp.append(e)
-
-        self._nv += 1
-    
+        self._check()
         return x
 
     def trisect_face(self, i, j, k):
@@ -1744,7 +2045,7 @@ class FatGraph(object):
         if fl[i] != fl[j] or fl[i] != fl[k]:
             raise ValueError("darts in distinct faces")
 
-        self._check_alloc(n + 4, nv, nf)
+        self._check_alloc(n + 4)
         self._n += 4
 
         ii = vp[i] ^ 1 # = fp^-1(i) at the end of B
