@@ -2154,7 +2154,7 @@ cdef class Origami_dense_pyx:
         cyl = self.cylinder_diagram()
         if cyl.is_hyperelliptic():
             return A.hyperelliptic_component()
-        elif any(d % 2 for d in A.zeros()):
+        elif any(d % 2 for d in A.signature()):
             return A.non_hyperelliptic_component()
         elif cyl.spin_parity() == 0:
             return A.even_component()
@@ -2261,7 +2261,7 @@ cdef class Origami_dense_pyx:
         if sf1 != sf2:
             return []
 
-        from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
+        from surface_dynamics.flat_surfaces.strata import Stratum
 
         m = m2 * ~m1  # one element which reverses orientation
         if verbose:
@@ -2329,12 +2329,12 @@ cdef class Origami_dense_pyx:
 
             if points:
                 res.append((
-                    QuadraticStratum(qdegrees),
+                    Stratum(qdegrees, k=2),
                     vertices,
                     (squares, h_edges, v_edges)))
             else:
                 res.append((
-                    QuadraticStratum(qdegrees),
+                    Stratum(qdegrees, k=2),
                     tuple(len(c)-1 for c in vertices),
                     (len(squares), len(h_edges), len(v_edges))))
 
@@ -2368,7 +2368,7 @@ cdef class Origami_dense_pyx:
             (False, None)
         """
         for q, _, _ in self.orientation_data():
-            if q.genus() == 0:
+            if q.surface_genus() == 0:
                 if stratum:
                     return True, q
                 return True
@@ -3381,11 +3381,11 @@ cdef class Origami_dense_pyx:
             sage: o.stratum(True)
             H_4(3, 2, 1, 0^3)
         """
-        from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum
+        from surface_dynamics.flat_surfaces.strata import Stratum
         degrees = self.vertex_degrees(fake_zeros)
         if degrees:
-            return AbelianStratum(degrees)
-        return AbelianStratum(0)
+            return Stratum(degrees, k=1)
+        return Stratum([0], k=1)
 
     def genus(self):
         r"""
@@ -3401,7 +3401,7 @@ cdef class Origami_dense_pyx:
             sage: o.genus()
             2
         """
-        return self.stratum().genus()
+        return self.stratum().surface_genus()
 
     def veech_group(self):
         r"""
@@ -3802,9 +3802,9 @@ cpdef sl2z_orbits(origamis, int n, int limit):
 
     EXAMPLES::
 
-        sage: from surface_dynamics.all import AbelianStratum
+        sage: from surface_dynamics.all import Stratum
         sage: from surface_dynamics.flat_surfaces.origamis.origami_dense import sl2z_orbits
-        sage: C = AbelianStratum(2,2).odd_component()
+        sage: C = Stratum([2,2], k=1).odd_component()
         sage: origamis = C.origamis(10)
         sage: len(origamis)
         8955
