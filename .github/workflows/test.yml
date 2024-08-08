@@ -9,7 +9,7 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         include:
@@ -36,6 +36,22 @@ jobs:
             sagelib: "9.7"
           - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
             sagelib: "9.7"
+          - optionals: "sage,pplpy"
+            sagelib: "9.8"
+          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+            sagelib: "9.8"
+          - optionals: "sage,pplpy"
+            sagelib: "10.0"
+          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+            sagelib: "10.0"
+          - optionals: "sage,pplpy"
+            sagelib: "10.1"
+          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+            sagelib: "10.1"
+          - optionals: "sage,pplpy"
+            sagelib: "10.2"
+          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+            sagelib: "10.2"
     steps:
       - uses: actions/checkout@v2
         with: { submodules: recursive }
