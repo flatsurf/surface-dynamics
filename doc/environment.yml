@@ -11,7 +11,7 @@ dependencies:
   - jupyter_sphinx
   - jupytext
   - myst-nb
-  - furo
+  - furo>=2024.8.6
   - pip
   - pip:
     - linkchecker
