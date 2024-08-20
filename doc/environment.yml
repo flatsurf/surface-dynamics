@@ -16,3 +16,4 @@ dependencies:
   - pip:
     - linkchecker
     - sphinx_rtd_theme
+    - sage_docbuild==10.3

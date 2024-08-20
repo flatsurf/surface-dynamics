@@ -18,8 +18,8 @@ jobs:
       - name: install dependencies
         shell: bash -l {0}
         run: |
-          mamba install -n test sagelib=9.7
-          echo "sagelib == 9.7" >> $CONDA_PREFIX/conda-meta/pinned
+          mamba install -n test sagelib=10.3
+          echo "sagelib == 10.3" >> $CONDA_PREFIX/conda-meta/pinned
           mamba env update --quiet -n test -f environment.yml
           mamba env update --quiet -n test -f doc/environment.yml
           conda list
