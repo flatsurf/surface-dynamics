@@ -59,12 +59,16 @@ pygments_style = sage_docbuild.conf.pygments_style
 pygments_dark_style = sage_docbuild.conf.pygments_dark_style
 html_css_files = sage_docbuild.conf.html_css_files
 
-if html_css_files != ["custom-furo.css"]:
+if html_css_files != ["custom-furo.css", "custom-jupyter-sphinx.css", "custom-codemirror-monokai.css"]:
     raise NotImplementedError(
         "CSS customization has changed in SageMath. The configuration of surface-dynamics documentation build needs to be updated."
     )
 
-html_css_files = ["https://doc.sagemath.org/html/en/reference/_static/custom-furo.css"]
+html_css_files = [
+    "https://doc.sagemath.org/html/en/reference/_static/custom-furo.css",
+    "https://doc.sagemath.org/html/en/reference/_static/custom-jupyter-sphinx.css",
+    "https://doc.sagemath.org/html/en/reference/_static/custom-codemirror-monokai.css",
+]
 
 # There is no surface-dynamics logo yet.
 html_theme_options["light_logo"] = html_theme_options["dark_logo"] = "logo.svg"
