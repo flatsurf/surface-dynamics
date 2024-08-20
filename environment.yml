@@ -22,6 +22,6 @@ dependencies:
   # Work around https://github.com/conda-forge/givaro-feedstock/issues/13
   - givaro=4.1.1=h192cbe9_1
   - sage-flatsurf  # optional: sage_flatsurf
-  - pyeantic >=1.0.0,<2  # optional: pyeantic
+  - pyeantic >=1.0.0,<3  # optional: pyeantic
   - pyintervalxt >=3.1.0,<4  # optional: pyintervalxt
   - gmpxxyy >=1.0.1,<2  # optional: gmpxxyy
