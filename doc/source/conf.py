@@ -102,3 +102,5 @@ nitpick_ignore = [
         ('py:class', 'surface_dynamics.misc.sql_db.SQLDatabase'),
 ]
 
+def setup(app):
+    app.connect('autodoc-process-docstring', sage_docbuild.conf.skip_TESTS_block)
