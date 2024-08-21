@@ -4,13 +4,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
-    <!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
-        <title>surface_dynamics.flat_surfaces.separatrix_diagram - surface-dynamics 0.5.0 documentation</title>
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
+        <title>surface_dynamics.flat_surfaces.separatrix_diagram - surface-dynamics 0.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=387cc868" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-codemirror-monokai.css" />
     
     
 
@@ -91,19 +93,6 @@
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
   </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
-    </svg>
-  </symbol>
   <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
     <title>Auto light/dark, in light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -144,7 +133,7 @@
       <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
       <path d="M13.5 6.5l4 4" />
       <path d="M20 21l2 -2l-2 -2" />
-      <path d="M17 17l-2 2l2 2" /
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
   <symbol id="svg-eye" viewBox="0 0 24 24">
@@ -182,7 +171,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">surface-dynamics 0.5.0 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">surface-dynamics 0.6.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -210,7 +199,7 @@
     <img class="sidebar-logo only-dark" src="../../../_static/logo.svg" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">surface-dynamics 0.5.0 documentation</span>
+  <span class="sidebar-brand-text">surface-dynamics 0.6.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -1235,7 +1224,7 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: a = AbelianStratum(1,1,0)</span>
+<span class="sd">            sage: a = Stratum([1,1,0], k=1)</span>
 <span class="sd">            sage: s = a.separatrix_diagrams()[0]</span>
 <span class="sd">            sage: s.profile()</span>
 <span class="sd">            [2, 2, 1]</span>
@@ -1307,9 +1296,9 @@
 <span class="sd">            sage: SeparatrixDiagram(&#39;(0,1)(2)&#39;,&#39;(0,2)(1)&#39;).stratum()</span>
 <span class="sd">            H_2(2)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">.abelian_strata</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+        <span class="kn">from</span> <span class="nn">.abelian_strata</span> <span class="kn">import</span> <span class="n">Stratum</span>
 
-        <span class="k">return</span> <span class="n">AbelianStratum</span><span class="p">([</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">()])</span></div>
+        <span class="k">return</span> <span class="n">Stratum</span><span class="p">([</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">()],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SeparatrixDiagram.bot">
@@ -1949,8 +1938,8 @@
 
 <span class="sd">        EXAMPLES::</span>
 
-<span class="sd">            sage: from surface_dynamics import AbelianStratum</span>
-<span class="sd">            sage: H11 = AbelianStratum(1,1).unique_component()</span>
+<span class="sd">            sage: from surface_dynamics import Stratum</span>
+<span class="sd">            sage: H11 = Stratum([1,1], k=1).unique_component()</span>
 <span class="sd">            sage: for cd in H11.cylinder_diagrams():</span>
 <span class="sd">            ....:     fg = cd.saddle_connections_graph()</span>
 <span class="sd">            ....:     print(cd.ncyls(), [comp.genus() for comp in fg.connected_components()])</span>
@@ -2275,7 +2264,7 @@
 <span class="sd">        sage: c.stratum_component()</span>
 <span class="sd">        H_2(2)^hyp</span>
 
-<span class="sd">        sage: hyp = AbelianStratum(2,2).hyperelliptic_component()</span>
+<span class="sd">        sage: hyp = Stratum([2,2], k=1).hyperelliptic_component()</span>
 <span class="sd">        sage: all(c.stratum_component() == hyp for c in hyperelliptic_cylinder_diagram_iterator(6))</span>
 <span class="sd">        True</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2585,8 +2574,8 @@
 
 <span class="sd">        EXAMPLES::</span>
 
-<span class="sd">            sage: from surface_dynamics import AbelianStratum</span>
-<span class="sd">            sage: for cd in AbelianStratum(1,1).cylinder_diagrams():</span>
+<span class="sd">            sage: from surface_dynamics import Stratum</span>
+<span class="sd">            sage: for cd in Stratum([1,1], k=1).cylinder_diagrams():</span>
 <span class="sd">            ....:     print(cd.weighted_adjacency_matrix())</span>
 <span class="sd">            [4]</span>
 <span class="sd">            [0 1]</span>
@@ -2713,7 +2702,7 @@
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
-<span class="sd">            sage: from surface_dynamics import AbelianStratum, CylinderDiagram</span>
+<span class="sd">            sage: from surface_dynamics import Stratum, CylinderDiagram</span>
 
 <span class="sd">            sage: c1 = CylinderDiagram(&#39;(0,5)-(0,4) (1,4)-(1,3) (2,3)-(2,5)&#39;)</span>
 <span class="sd">            sage: c2 = CylinderDiagram(&#39;(0,5)-(1,3) (1,4)-(0,4) (2,3)-(2,5)&#39;)</span>
@@ -2724,7 +2713,7 @@
 <span class="sd">            True</span>
 
 <span class="sd">            sage: from operator import not_</span>
-<span class="sd">            sage: C = AbelianStratum(4).cylinder_diagrams()</span>
+<span class="sd">            sage: C = Stratum([4], k=1).cylinder_diagrams()</span>
 <span class="sd">            sage: for c1 in C:</span>
 <span class="sd">            ....:     assert c1 == c1</span>
 <span class="sd">            ....:     assert not_(c1 != c1)</span>
@@ -2746,9 +2735,9 @@
 
 <span class="sd">        TESTS::</span>
 
-<span class="sd">            sage: from surface_dynamics import AbelianStratum</span>
+<span class="sd">            sage: from surface_dynamics import Stratum</span>
 <span class="sd">            sage: from operator import not_</span>
-<span class="sd">            sage: C = AbelianStratum(4).cylinder_diagrams()</span>
+<span class="sd">            sage: C = Stratum([4], k=1).cylinder_diagrams()</span>
 <span class="sd">            sage: for c1 in C:</span>
 <span class="sd">            ....:     for c2 in C:</span>
 <span class="sd">            ....:         assert (c1 &lt; c2) == (c2 &gt; c1) == not_(c1 &gt;= c2) == not_(c2 &lt;= c1)</span>
@@ -3162,7 +3151,7 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: c0, c1 = AbelianStratum(2).cylinder_diagrams()</span>
+<span class="sd">            sage: c0, c1 = Stratum([2], k=1).cylinder_diagrams()</span>
 <span class="sd">            sage: v0 = c0.volume_contribution()  # optional: latte_int</span>
 <span class="sd">            sage: v0                             # optional: latte_int</span>
 <span class="sd">            (1/3)/((w)^4)</span>
@@ -3174,19 +3163,19 @@
 <span class="sd">            sage: v1.integral_sum_as_mzv()       # optional: latte_int</span>
 <span class="sd">            2/3*ζ(1,3) + 1/3*ζ(2,2)</span>
 
-<span class="sd">            sage: for c in AbelianStratum(1,1).cylinder_diagrams():  # optional: latte_int</span>
+<span class="sd">            sage: for c in Stratum([1,1], k=1).cylinder_diagrams():  # optional: latte_int</span>
 <span class="sd">            ....:     print(c, c.volume_contribution().integral_sum_as_mzv())</span>
 <span class="sd">            (0,3,1,2)-(0,3,1,2) 1/6*ζ(5)</span>
 <span class="sd">            (0)-(1) (1,2,3)-(0,2,3) 1/3*ζ(2,3) + 1/3*ζ(3,2)</span>
 <span class="sd">            (0,3)-(1,3) (1,2)-(0,2) ζ(1,4) + 1/3*ζ(2,3)</span>
 <span class="sd">            (0,1)-(2,3) (2)-(1) (3)-(0) 1/3*ζ(1,3) + 1/3*ζ(2,2) - 1/3*ζ(2,3) - 1/3*ζ(3,2) + 1/3*ζ(4) - 1/3*ζ(5)</span>
 
-<span class="sd">            sage: sum(c.volume_contribution() for c in AbelianStratum(2,1,1).cylinder_diagrams(1)).integral_sum_as_mzv()  # optional: latte_int</span>
+<span class="sd">            sage: sum(c.volume_contribution() for c in Stratum([2,1,1], k=1).cylinder_diagrams(1)).integral_sum_as_mzv()  # optional: latte_int</span>
 <span class="sd">            7/180*ζ(8)</span>
 
 <span class="sd">        Detailed contribution of 2 cylinder diagrams::</span>
 
-<span class="sd">            sage: cyls = AbelianStratum(2,1,1).cylinder_diagrams(2)</span>
+<span class="sd">            sage: cyls = Stratum([2,1,1], k=1).cylinder_diagrams(2)</span>
 <span class="sd">            sage: sum(cyls[k].volume_contribution() for k in [2,7,8,21,22]).integral_sum_as_mzv()  # optional: latte_int</span>
 <span class="sd">            13/630*ζ(5,3) + 13/252*ζ(6,2)</span>
 <span class="sd">            sage: sum(cyls[k].volume_contribution() for k in [0,11,19,20]).integral_sum_as_mzv()  # optional: latte_int</span>
@@ -3385,7 +3374,7 @@
 
 <span class="sd">        The inversion is an involution on cylinder diagrams::</span>
 
-<span class="sd">            sage: all(cc.inverse().inverse() == cc for cc in AbelianStratum(4).cylinder_diagrams()) # long time</span>
+<span class="sd">            sage: all(cc.inverse().inverse() == cc for cc in Stratum([4], k=1).cylinder_diagrams()) # long time</span>
 <span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">CylinderDiagram</span><span class="p">([(</span><span class="n">t</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">t</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cylinders</span><span class="p">()])</span></div>
@@ -3409,7 +3398,7 @@
 <span class="sd">            sage: c.separatrix_diagram().vertical_symmetry() == c.vertical_symmetry().separatrix_diagram()</span>
 <span class="sd">            True</span>
 
-<span class="sd">            sage: A = AbelianStratum(2,2)</span>
+<span class="sd">            sage: A = Stratum([2,2], k=1)</span>
 <span class="sd">            sage: all(c.vertical_symmetry().stratum() == A for c in A.cylinder_diagrams())</span>
 <span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -3434,7 +3423,7 @@
 <span class="sd">            sage: c.separatrix_diagram().horizontal_symmetry() == c.horizontal_symmetry().separatrix_diagram()</span>
 <span class="sd">            True</span>
 
-<span class="sd">            sage: A = AbelianStratum(2,2)</span>
+<span class="sd">            sage: A = Stratum([2,2], k=1)</span>
 <span class="sd">            sage: all(c.horizontal_symmetry().stratum() == A for c in A.cylinder_diagrams())</span>
 <span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -3573,12 +3562,12 @@
 
 <span class="sd">        In genus 2, strata H(2) and H(1,1), all surfaces are hyperelliptic::</span>
 
-<span class="sd">            sage: for c in AbelianStratum(2).cylinder_diagrams():</span>
+<span class="sd">            sage: for c in Stratum([2], k=1).cylinder_diagrams():</span>
 <span class="sd">            ....:     print(&quot;%d %s&quot; % (c.ncyls(), c.is_hyperelliptic()))</span>
 <span class="sd">            1 True</span>
 <span class="sd">            2 True</span>
 
-<span class="sd">            sage: for c in AbelianStratum(1,1).cylinder_diagrams():</span>
+<span class="sd">            sage: for c in Stratum([1,1], k=1).cylinder_diagrams():</span>
 <span class="sd">            ....:     print(&quot;%d %s&quot; % (c.ncyls(), c.is_hyperelliptic()))</span>
 <span class="sd">            1 True</span>
 <span class="sd">            2 True</span>
@@ -3587,19 +3576,19 @@
 
 <span class="sd">        In higher genera, some of them are, some of them are not::</span>
 
-<span class="sd">            sage: C = AbelianStratum(4).cylinder_diagrams()</span>
+<span class="sd">            sage: C = Stratum([4], k=1).cylinder_diagrams()</span>
 <span class="sd">            sage: len(C)</span>
 <span class="sd">            15</span>
 <span class="sd">            sage: sum(c.is_hyperelliptic() for c in C)</span>
 <span class="sd">            5</span>
 
-<span class="sd">            sage: C = AbelianStratum(2,2).cylinder_diagrams()</span>
+<span class="sd">            sage: C = Stratum([2,2], k=1).cylinder_diagrams()</span>
 <span class="sd">            sage: len(C)</span>
 <span class="sd">            41</span>
 <span class="sd">            sage: sum(c.is_hyperelliptic() for c in C)</span>
 <span class="sd">            11</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span><span class="o">.</span><span class="n">zeros</span><span class="p">()</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">or</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span> <span class="k">return</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="mi">0</span> <span class="ow">in</span> <span class="n">z</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;is_hyperelliptic method not implemented for cylinder diagrams with fake zeros&quot;</span><span class="p">)</span>
@@ -3760,8 +3749,8 @@
                 <span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">t&#39;</span> <span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_top_to_cyl</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
 
         <span class="c1"># the dual graph</span>
-        <span class="n">G</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="n">loops</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">multiedges</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">cc</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">tuple</span><span class="p">,</span><span class="n">V</span><span class="o">.</span><span class="n">connected_components</span><span class="p">())</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="n">loops</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">multiedges</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">cc</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="n">V</span><span class="o">.</span><span class="n">connected_components</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
         <span class="n">hc2cc</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># half-cyl to conn comp</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cc</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
@@ -3843,24 +3832,24 @@
 <span class="sd">            sage: c.stratum_component()</span>
 <span class="sd">            H_5(4^2)^odd</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: we reimplement the very same logic in interval_exchanges.template.stratum_component()</span>
         <span class="n">stratum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>
-        <span class="n">cc</span> <span class="o">=</span> <span class="n">stratum</span><span class="o">.</span><span class="n">_cc</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">cc</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">stratum</span><span class="p">)</span>
 
-        <span class="kn">from</span> <span class="nn">.abelian_strata</span> <span class="kn">import</span> <span class="n">HypASC</span>
-        <span class="k">if</span> <span class="n">cc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="n">HypASC</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">stratum</span><span class="o">.</span><span class="n">is_connected</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">stratum</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">stratum</span><span class="o">.</span><span class="n">has_hyperelliptic_component</span><span class="p">():</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_hyperelliptic</span><span class="p">():</span>
-                <span class="k">return</span> <span class="n">HypASC</span><span class="p">(</span><span class="n">stratum</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">cc</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="n">stratum</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">stratum</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+            <span class="c1"># TODO: we assume that the first entry is the hyperelliptic one</span>
+            <span class="n">cc</span> <span class="o">=</span> <span class="n">stratum</span><span class="o">.</span><span class="n">connected_components</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">cc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">spin_parity</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">.abelian_strata</span> <span class="kn">import</span> <span class="n">EvenASC</span>
-            <span class="k">return</span> <span class="n">EvenASC</span><span class="p">(</span><span class="n">stratum</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">stratum</span><span class="o">.</span><span class="n">even_component</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">.abelian_strata</span> <span class="kn">import</span> <span class="n">OddASC</span>
-            <span class="k">return</span> <span class="n">OddASC</span><span class="p">(</span><span class="n">stratum</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="n">stratum</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="CylinderDiagram.smallest_integer_lengths">
@@ -3954,10 +3943,10 @@
 
 <span class="sd">            sage: f = lambda c: c.to_ribbon_graph().cycle_basis(intersection=True)[1]</span>
 
-<span class="sd">            sage: a = AbelianStratum(2)</span>
+<span class="sd">            sage: a = Stratum([2], k=1)</span>
 <span class="sd">            sage: all(f(c).rank() == 4 for c in a.cylinder_diagrams())</span>
 <span class="sd">            True</span>
-<span class="sd">            sage: a = AbelianStratum(1,1)</span>
+<span class="sd">            sage: a = Stratum([1,1], k=1)</span>
 <span class="sd">            sage: all(f(c).rank() == 4 for c in a.cylinder_diagrams())</span>
 <span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -4005,8 +3994,6 @@
         <span class="k">return</span> <span class="n">RibbonGraphWithHolonomies</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">edges</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">faces</span><span class="p">,</span><span class="n">holonomies</span><span class="o">=</span><span class="n">holonomies</span><span class="p">)</span></div>
 
 
-
-
 <div class="viewcode-block" id="CylinderDiagram.spin_parity">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.spin_parity">[docs]</a>
     <span class="k">def</span> <span class="nf">spin_parity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -4032,7 +4019,7 @@
 <span class="sd">            sage: c.spin_parity()</span>
 <span class="sd">            1</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">z</span><span class="o">%</span><span class="mi">2</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span><span class="o">.</span><span class="n">zeros</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">z</span> <span class="o">%</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span><span class="o">.</span><span class="n">signature</span><span class="p">()):</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_ribbon_graph</span><span class="p">()</span><span class="o">.</span><span class="n">spin_parity</span><span class="p">()</span></div>
 
@@ -4431,7 +4418,7 @@
 <span class="sd">            sage: o2 = o2.relabel()</span>
 <span class="sd">            sage: o3 = c.cylcoord_to_origami([2,1,2],[1,1],[1,1])</span>
 <span class="sd">            sage: o3 = o3.relabel()</span>
-<span class="sd">            sage: all(o.stratum() == AbelianStratum(2) for o in [o1,o2,o3])</span>
+<span class="sd">            sage: all(o.stratum() == Stratum([2], k=1) for o in [o1,o2,o3])</span>
 <span class="sd">            True</span>
 <span class="sd">            sage: o1 == o2 or o1 == o3 or o3 == o1</span>
 <span class="sd">            False</span>
@@ -4943,8 +4930,8 @@
 <span class="sd">            sage: QuadraticCylinderDiagram(&#39;(0,1)-(2,3) (0)-(4,4) (1)-(5,5) (2)-(6,6) (3)-(7,7)&#39;).stratum()</span>
 <span class="sd">            Q_0(2^2, -1^8)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.quadratic_strata</span> <span class="kn">import</span> <span class="n">QuadraticStratum</span>
-        <span class="k">return</span> <span class="n">QuadraticStratum</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_g</span><span class="o">.</span><span class="n">_vertex_cycles</span><span class="p">])</span></div>
+        <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.quadratic_strata</span> <span class="kn">import</span> <span class="n">Stratum</span>
+        <span class="k">return</span> <span class="n">Stratum</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_g</span><span class="o">.</span><span class="n">_vertex_cycles</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="QuadraticCylinderDiagram.cylinders">
@@ -5340,7 +5327,7 @@
 
         <span class="k">return</span> <span class="n">dart_to_corner</span>
 
-    <span class="c1"># figure out whether this awfull method is really useful...</span>
+    <span class="c1"># figure out whether this awful method is really useful...</span>
     <span class="c1"># square tiled quadratic surface would be much more simple to handle</span>
 <div class="viewcode-block" id="QuadraticCylinderDiagram.cylcoord_to_pillowcase_cover">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.separatrix_diagram.QuadraticCylinderDiagram.cylcoord_to_pillowcase_cover">[docs]</a>
@@ -5821,7 +5808,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2021-2023, the surface-dynamics authors
+                Copyright &#169; 2021-$RELEASE_YEAR, the surface-dynamics authors
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -5841,9 +5828,9 @@
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=1dd76d02"></script>
+</div><script src="../../../_static/documentation_options.js?v=8fa8b3e9"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../../_static/scripts/furo.js?v=4e2eecee"></script>
+    <script src="../../../_static/scripts/furo.js?v=5fa4622c"></script>
     </body>
 </html>

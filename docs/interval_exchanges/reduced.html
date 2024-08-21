@@ -5,13 +5,15 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Rauzy class cardinality" href="rauzy_class_cardinality.html" /><link rel="prev" title="Labelled permutations" href="labelled.html" />
 
-    <!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
-        <title>Reduced permutations - surface-dynamics 0.5.0 documentation</title>
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
+        <title>Reduced permutations - surface-dynamics 0.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=387cc868" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-codemirror-monokai.css" />
     
     
 
@@ -92,19 +94,6 @@
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
   </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
-    </svg>
-  </symbol>
   <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
     <title>Auto light/dark, in light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -145,7 +134,7 @@
       <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
       <path d="M13.5 6.5l4 4" />
       <path d="M20 21l2 -2l-2 -2" />
-      <path d="M17 17l-2 2l2 2" /
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
   <symbol id="svg-eye" viewBox="0 0 24 24">
@@ -183,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">surface-dynamics 0.5.0 documentation</div></a>
+      <a href="../index.html"><div class="brand">surface-dynamics 0.6.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -211,7 +200,7 @@
     <img class="sidebar-logo only-dark" src="../_static/logo.svg" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">surface-dynamics 0.5.0 documentation</span>
+  <span class="sidebar-brand-text">surface-dynamics 0.6.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -309,40 +298,6 @@ diagram and the relation with the strata is not yet totally understood.</p>
 <ul class="simple">
 <li><p>Vincent Delecroix (2000-09-29): initial version</p></li>
 </ul>
-<p>TESTS:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.reduced</span> <span class="kn">import</span> <span class="n">ReducedPermutationIET</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">ReducedPermutationIET</span><span class="p">([[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">],[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">]])</span>
-<span class="n">a</span> <span class="n">b</span>
-<span class="n">b</span> <span class="n">a</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">ReducedPermutationIET</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
-<span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
-<span class="mi">3</span> <span class="mi">1</span> <span class="mi">2</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.reduced</span> <span class="kn">import</span> <span class="n">ReducedPermutationLI</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">ReducedPermutationLI</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">]])</span>
-<span class="mi">1</span> <span class="mi">1</span>
-<span class="mi">2</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">4</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">ReducedPermutationLI</span><span class="p">([[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">],[</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">]])</span>
-<span class="n">a</span> <span class="n">a</span> <span class="n">b</span> <span class="n">b</span> <span class="n">c</span> <span class="n">c</span>
-<span class="n">d</span> <span class="n">d</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.reduced</span> <span class="kn">import</span> <span class="n">FlippedReducedPermutationIET</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">FlippedReducedPermutationIET</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]],</span><span class="n">flips</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
-<span class="o">-</span><span class="mi">1</span> <span class="o">-</span><span class="mi">2</span>  <span class="mi">3</span>
- <span class="mi">3</span> <span class="o">-</span><span class="mi">2</span> <span class="o">-</span><span class="mi">1</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">FlippedReducedPermutationIET</span><span class="p">([[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">],[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">]],</span><span class="n">flips</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
- <span class="n">a</span> <span class="o">-</span><span class="n">b</span>  <span class="n">c</span>
-<span class="o">-</span><span class="n">b</span>  <span class="n">c</span>  <span class="n">a</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.reduced</span> <span class="kn">import</span> <span class="n">FlippedReducedPermutationLI</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">FlippedReducedPermutationLI</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">]],</span> <span class="n">flips</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
-<span class="o">-</span><span class="mi">1</span> <span class="o">-</span><span class="mi">1</span>
- <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">3</span> <span class="o">-</span><span class="mi">4</span> <span class="o">-</span><span class="mi">4</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">FlippedReducedPermutationLI</span><span class="p">([[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">],[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">]],</span><span class="n">flips</span><span class="o">=</span><span class="s1">&#39;ac&#39;</span><span class="p">)</span>
-<span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">a</span>  <span class="n">b</span>  <span class="n">b</span>
-<span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">c</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.reduced</span> <span class="kn">import</span> <span class="n">ReducedRauzyDiagram</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">ReducedPermutationIET</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="n">ReducedRauzyDiagram</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-</pre></div>
-</div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutation">
 <span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.reduced.</span></span><span class="sig-name descname"><span class="pre">FlippedReducedPermutation</span></span><a class="headerlink" href="#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutation" title="Link to this definition">¶</a></dt>
@@ -361,31 +316,6 @@ diagram and the relation with the strata is not yet totally understood.</p>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">b</span>  <span class="n">c</span>
 <span class="o">-</span><span class="n">a</span>  <span class="n">c</span> <span class="o">-</span><span class="n">b</span>
-</pre></div>
-</div>
-<p>TESTS:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">,</span><span class="n">flips</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">==</span> <span class="n">loads</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
-<span class="kc">True</span>
-
-<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span> <span class="s1">&#39;c a b&#39;</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()):</span>
-<span class="o">....</span><span class="p">:</span>     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="se">\n</span><span class="s1">********&#39;</span> <span class="o">%</span> <span class="n">q</span><span class="p">)</span>
-<span class="o">-</span><span class="n">a</span>  <span class="n">b</span> <span class="o">-</span><span class="n">c</span>
- <span class="n">b</span> <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">c</span>
-<span class="o">********</span>
- <span class="n">a</span> <span class="o">-</span><span class="n">b</span> <span class="o">-</span><span class="n">c</span>
-<span class="o">-</span><span class="n">b</span>  <span class="n">a</span> <span class="o">-</span><span class="n">c</span>
-<span class="o">********</span>
- <span class="n">a</span> <span class="o">-</span><span class="n">b</span>  <span class="n">c</span>
- <span class="n">c</span>  <span class="n">a</span> <span class="o">-</span><span class="n">b</span>
-<span class="o">********</span>
- <span class="n">a</span>  <span class="n">b</span> <span class="o">-</span><span class="n">c</span>
- <span class="n">b</span> <span class="o">-</span><span class="n">c</span>  <span class="n">a</span>
-<span class="o">********</span>
- <span class="n">a</span> <span class="o">-</span><span class="n">b</span>  <span class="n">c</span>
- <span class="n">c</span> <span class="o">-</span><span class="n">b</span>  <span class="n">a</span>
-<span class="o">********</span>
 </pre></div>
 </div>
 <dl class="py method">
@@ -509,27 +439,6 @@ diagram and the relation with the strata is not yet totally understood.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.reduced.</span></span><span class="sig-name descname"><span class="pre">FlippedReducedRauzyDiagram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_induction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_induction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_right_inversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_bottom_inversion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symmetric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/reduced.html#FlippedReducedRauzyDiagram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.reduced.FlippedReducedRauzyDiagram" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.FlippedRauzyDiagram" title="surface_dynamics.interval_exchanges.template.FlippedRauzyDiagram"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlippedRauzyDiagram</span></code></a>, <a class="reference internal" href="#surface_dynamics.interval_exchanges.reduced.ReducedRauzyDiagram" title="surface_dynamics.interval_exchanges.reduced.ReducedRauzyDiagram"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReducedRauzyDiagram</span></code></a></p>
 <p>Rauzy diagram of flipped reduced permutations.</p>
-<p>TESTS:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
-
-<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span> <span class="s1">&#39;c a b&#39;</span><span class="p">,</span> <span class="n">flips</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">r</span>
-<span class="n">Rauzy</span> <span class="n">diagram</span> <span class="k">with</span> <span class="mi">5</span> <span class="n">permutations</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">r</span>
-<span class="kc">True</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="n">r</span>
-<span class="kc">True</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="n">r</span>
-<span class="kc">True</span>
-
-<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a b b&#39;</span><span class="p">,</span><span class="s1">&#39;c c a&#39;</span><span class="p">,</span><span class="n">flips</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_diagram</span><span class="p">()</span>
-<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
-<span class="o">...</span>
-<span class="ne">NotImplementedError</span><span class="p">:</span> <span class="n">irreducibility</span> <span class="n">test</span> <span class="ow">not</span> <span class="n">implemented</span> <span class="k">for</span> <span class="n">generalized</span> <span class="n">permutations</span> <span class="k">with</span> <span class="n">flips</span>
-</pre></div>
-</div>
 </dd></dl>
 
 <dl class="py class">
@@ -855,19 +764,6 @@ on the type.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">alphabet</span></code> - something that should be converted to an alphabet
 of at least nintervals letters</p></li>
 </ul>
-<p>TESTS:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
-
-<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutations_iterator</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">alphabet</span><span class="o">=</span><span class="s2">&quot;abc&quot;</span><span class="p">):</span>
-<span class="o">....</span><span class="p">:</span>     <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>  <span class="c1">#indirect doctest</span>
-<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
-<span class="n">b</span> <span class="n">c</span> <span class="n">a</span>
-<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
-<span class="n">c</span> <span class="n">a</span> <span class="n">b</span>
-<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
-<span class="n">c</span> <span class="n">b</span> <span class="n">a</span>
-</pre></div>
-</div>
 </dd></dl>
 
 <dl class="py class">
@@ -881,14 +777,6 @@ of at least nintervals letters</p></li>
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.reduced.labelize_flip">
 <span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.reduced.</span></span><span class="sig-name descname"><span class="pre">labelize_flip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">couple</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/reduced.html#labelize_flip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.reduced.labelize_flip" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a string from a 2-uple couple of the form (name, flip).</p>
-<p>TESTS:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.reduced</span> <span class="kn">import</span> <span class="n">labelize_flip</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">labelize_flip</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-<span class="s1">&#39; 4&#39;</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">labelize_flip</span><span class="p">((</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-<span class="s1">&#39;-a&#39;</span>
-</pre></div>
-</div>
 </dd></dl>
 
 </section>
@@ -922,7 +810,7 @@ of at least nintervals letters</p></li>
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2021-2023, the surface-dynamics authors
+                Copyright &#169; 2021-$RELEASE_YEAR, the surface-dynamics authors
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -988,9 +876,9 @@ of at least nintervals letters</p></li>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=1dd76d02"></script>
+</div><script src="../_static/documentation_options.js?v=8fa8b3e9"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
+    <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
     </body>
 </html>

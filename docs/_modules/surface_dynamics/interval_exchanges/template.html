@@ -4,13 +4,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
-    <!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
-        <title>surface_dynamics.interval_exchanges.template - surface-dynamics 0.5.0 documentation</title>
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
+        <title>surface_dynamics.interval_exchanges.template - surface-dynamics 0.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=387cc868" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-codemirror-monokai.css" />
     
     
 
@@ -91,19 +93,6 @@
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
   </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
-    </svg>
-  </symbol>
   <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
     <title>Auto light/dark, in light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -144,7 +133,7 @@
       <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
       <path d="M13.5 6.5l4 4" />
       <path d="M20 21l2 -2l-2 -2" />
-      <path d="M17 17l-2 2l2 2" /
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
   <symbol id="svg-eye" viewBox="0 0 24 24">
@@ -182,7 +171,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">surface-dynamics 0.5.0 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">surface-dynamics 0.6.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -210,7 +199,7 @@
     <img class="sidebar-logo only-dark" src="../../../_static/logo.svg" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">surface-dynamics 0.5.0 documentation</span>
+  <span class="sidebar-brand-text">surface-dynamics 0.6.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -423,16 +412,16 @@
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    TESTS::</span>
 
-<span class="sd">        sage: from surface_dynamics import QuadraticStratum</span>
+<span class="sd">        sage: from surface_dynamics import Stratum</span>
 <span class="sd">        sage: from surface_dynamics.interval_exchanges.template import cylindric_canonical</span>
 
-<span class="sd">        sage: C = QuadraticStratum(1,genus=0).unique_component()</span>
+<span class="sd">        sage: C = Stratum({1:1, -1:5}, k=2).unique_component()</span>
 <span class="sd">        sage: R = C.permutation_representative().rauzy_diagram()</span>
 <span class="sd">        sage: K = [p for p in R if p.is_cylindric()]</span>
 <span class="sd">        sage: Kcan = set(cylindric_canonical(p) for p in K)</span>
 <span class="sd">        sage: Kcan</span>
 <span class="sd">        {((1, 0), (1, 2, 3, 4, 5, 0))}</span>
-<span class="sd">        sage: C = QuadraticStratum(1,1,genus=0).unique_component()</span>
+<span class="sd">        sage: C = Stratum({1: 2, -1: 6}, k=2).unique_component()</span>
 <span class="sd">        sage: R = C.permutation_representative().rauzy_diagram()</span>
 <span class="sd">        sage: K = [p for p in R if p.is_cylindric()]</span>
 <span class="sd">        sage: Kcan = set(cylindric_canonical(p) for p in K)</span>
@@ -3644,7 +3633,7 @@
 <span class="sd">            ...</span>
 <span class="sd">            NotImplementedError: not yet implemented! Do it!</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span><span class="o">.</span><span class="n">nb_fake_zeros</span><span class="p">():</span>
+        <span class="k">if</span> <span class="mi">0</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span><span class="o">.</span><span class="n">signature</span><span class="p">():</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;not yet implemented! Do it!&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span></div>
@@ -3668,7 +3657,7 @@
 
 <span class="sd">        Check for the correspondence::</span>
 
-<span class="sd">            sage: q = QuadraticStratum(6,6)</span>
+<span class="sd">            sage: q = Stratum([6,6], k=2)</span>
 <span class="sd">            sage: c_hyp, c_reg, c_irr = q.components()</span>
 
 <span class="sd">            sage: p_hyp = c_hyp.permutation_representative()</span>
@@ -3692,7 +3681,7 @@
 <span class="sd">            sage: p_irr.is_hyperelliptic()</span>
 <span class="sd">            False</span>
 
-<span class="sd">            sage: q = QuadraticStratum(3,3,2)</span>
+<span class="sd">            sage: q = Stratum([3,3,2], k=2)</span>
 <span class="sd">            sage: c_hyp, c_non_hyp = q.components()</span>
 <span class="sd">            sage: p_hyp = c_hyp.permutation_representative()</span>
 <span class="sd">            sage: p_hyp.is_hyperelliptic()</span>
@@ -3700,7 +3689,7 @@
 <span class="sd">            sage: p_non_hyp = c_non_hyp.permutation_representative()</span>
 <span class="sd">            sage: p_non_hyp.is_hyperelliptic()</span>
 <span class="sd">            False</span>
-<span class="sd">            sage: q = QuadraticStratum(5,5,2)</span>
+<span class="sd">            sage: q = Stratum([5,5,2], k=2)</span>
 <span class="sd">            sage: c_hyp, c_non_hyp = q.components()</span>
 <span class="sd">            sage: p_hyp = c_hyp.permutation_representative()</span>
 <span class="sd">            sage: p_hyp.is_hyperelliptic()</span>
@@ -3708,7 +3697,7 @@
 <span class="sd">            sage: p_non_hyp = c_non_hyp.permutation_representative()</span>
 <span class="sd">            sage: p_non_hyp.is_hyperelliptic()</span>
 <span class="sd">            False</span>
-<span class="sd">            sage: q = QuadraticStratum(3,3,1,1)</span>
+<span class="sd">            sage: q = Stratum([3,3,1,1], k=2)</span>
 <span class="sd">            sage: c_hyp, c_non_hyp = q.components()</span>
 <span class="sd">            sage: p_hyp = c_hyp.permutation_representative()</span>
 <span class="sd">            sage: p_hyp.is_hyperelliptic()</span>
@@ -3719,7 +3708,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">erase_marked_points</span><span class="p">()</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>
-        <span class="n">zeros</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">zeros</span><span class="p">()</span>
+        <span class="n">zeros</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span><span class="o">.</span><span class="n">has_hyperelliptic_component</span><span class="p">():</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -3816,7 +3805,7 @@
 
 <span class="sd">        Test the exceptional strata in genus 3::</span>
 
-<span class="sd">            sage: Q = QuadraticStratum(9,-1)</span>
+<span class="sd">            sage: Q = Stratum([9,-1], k=2)</span>
 <span class="sd">            sage: p = Q.regular_component().permutation_representative()</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_3(9, -1)^reg</span>
@@ -3824,7 +3813,7 @@
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_3(9, -1)^irr</span>
 
-<span class="sd">            sage: Q = QuadraticStratum(6,3,-1)</span>
+<span class="sd">            sage: Q = Stratum([6,3,-1], k=2)</span>
 <span class="sd">            sage: p = Q.regular_component().permutation_representative()</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_3(6, 3, -1)^reg</span>
@@ -3832,7 +3821,7 @@
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_3(6, 3, -1)^irr</span>
 
-<span class="sd">            sage: Q = QuadraticStratum(3,3,3,-1)</span>
+<span class="sd">            sage: Q = Stratum([3,3,3,-1], k=2)</span>
 <span class="sd">            sage: p = Q.regular_component().permutation_representative()</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_3(3^3, -1)^reg</span>
@@ -3842,7 +3831,7 @@
 
 <span class="sd">        Test the exceptional strata in genus 4::</span>
 
-<span class="sd">            sage: Q = QuadraticStratum(12)</span>
+<span class="sd">            sage: Q = Stratum([12], k=2)</span>
 <span class="sd">            sage: p = Q.regular_component().permutation_representative()</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_4(12)^reg</span>
@@ -3850,7 +3839,7 @@
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_4(12)^irr</span>
 
-<span class="sd">            sage: Q = QuadraticStratum(9,3)</span>
+<span class="sd">            sage: Q = Stratum([9,3], k=2)</span>
 <span class="sd">            sage: p = Q.regular_component().permutation_representative()</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_4(9, 3)^reg</span>
@@ -3858,7 +3847,7 @@
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_4(9, 3)^irr</span>
 
-<span class="sd">            sage: Q = QuadraticStratum(6,6)</span>
+<span class="sd">            sage: Q = Stratum([6,6], k=2)</span>
 <span class="sd">            sage: p = Q.hyperelliptic_component().permutation_representative()</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_4(6^2)^hyp</span>
@@ -3869,7 +3858,7 @@
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_4(6^2)^irr</span>
 
-<span class="sd">            sage: Q = QuadraticStratum(6,3,3)</span>
+<span class="sd">            sage: Q = Stratum([6,3,3], k=2)</span>
 <span class="sd">            sage: p = Q.regular_component().permutation_representative()</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_4(6, 3^2)^reg</span>
@@ -3877,7 +3866,7 @@
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_4(6, 3^2)^irr</span>
 
-<span class="sd">            sage: Q = QuadraticStratum(3,3,3,3)</span>
+<span class="sd">            sage: Q = Stratum([3,3,3,3], k=2)</span>
 <span class="sd">            sage: p = Q.hyperelliptic_component().permutation_representative()</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_4(3^4)^hyp</span>
@@ -4033,7 +4022,7 @@
 <span class="sd">            sage: c.stratum()</span>
 <span class="sd">            H_1(0^4)</span>
 
-<span class="sd">            sage: C = QuadraticStratum(3,2,2,1).unique_component()</span>
+<span class="sd">            sage: C = Stratum([3,2,2,1], k=2).unique_component()</span>
 <span class="sd">            sage: p = C.permutation_representative()</span>
 <span class="sd">            sage: c = p.orientation_cover()</span>
 <span class="sd">            sage: c.stratum()</span>
@@ -4430,17 +4419,17 @@
 
 <span class="sd">        - Vincent Delecroix (2008-12-20)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.abelian_strata</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+        <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.abelian_strata</span> <span class="kn">import</span> <span class="n">Stratum</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_irreducible</span><span class="p">():</span>
             <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">stratum</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">decompose</span><span class="p">()))</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">AbelianStratum</span><span class="p">([])</span>
+            <span class="k">return</span> <span class="n">Stratum</span><span class="p">([],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="n">singularities</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">()]</span>
 
-        <span class="k">return</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="n">singularities</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Stratum</span><span class="p">(</span><span class="n">singularities</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="OrientablePermutationIET.genus">
@@ -4595,15 +4584,15 @@
 <span class="sd">            sage: p_hyp = iet.Permutation(a,b_hyp)</span>
 <span class="sd">            sage: p_odd = iet.Permutation(a,b_odd)</span>
 <span class="sd">            sage: p_even = iet.Permutation(a,b_even)</span>
-<span class="sd">            sage: p_hyp.stratum() == AbelianStratum(4,4)</span>
+<span class="sd">            sage: p_hyp.stratum() == Stratum([4,4], k=1)</span>
 <span class="sd">            True</span>
 <span class="sd">            sage: p_hyp.stratum_component()</span>
 <span class="sd">            H_5(4^2)^hyp</span>
-<span class="sd">            sage: p_odd.stratum() == AbelianStratum(4,4)</span>
+<span class="sd">            sage: p_odd.stratum() == Stratum([4,4], k=1)</span>
 <span class="sd">            True</span>
 <span class="sd">            sage: p_odd.stratum_component()</span>
 <span class="sd">            H_5(4^2)^odd</span>
-<span class="sd">            sage: p_even.stratum() == AbelianStratum(4,4)</span>
+<span class="sd">            sage: p_even.stratum() == Stratum([4,4], k=1)</span>
 <span class="sd">            True</span>
 <span class="sd">            sage: p_even.stratum_component()</span>
 <span class="sd">            H_5(4^2)^even</span>
@@ -4621,32 +4610,29 @@
 <span class="sd">            sage: p_even.stratum_component()</span>
 <span class="sd">            H_4(4, 2)^even</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.abelian_strata</span> <span class="kn">import</span> <span class="p">(</span><span class="n">ASC</span><span class="p">,</span> <span class="n">HypASC</span><span class="p">,</span> <span class="n">NonHypASC</span><span class="p">,</span> <span class="n">OddASC</span><span class="p">,</span> <span class="n">EvenASC</span><span class="p">)</span>
-
+        <span class="c1"># TODO: we reimplement the very same logic in flat_surfaces.separatrix_diagram.stratum_component()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_irreducible</span><span class="p">():</span>
             <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">stratum_component</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">decompose</span><span class="p">()))</span>
 
         <span class="n">stratum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>
-        <span class="n">cc</span> <span class="o">=</span> <span class="n">stratum</span><span class="o">.</span><span class="n">_cc</span>
 
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">stratum</span><span class="o">.</span><span class="n">components</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">stratum</span><span class="o">.</span><span class="n">is_connected</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">stratum</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="n">HypASC</span> <span class="ow">in</span> <span class="n">cc</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">stratum</span><span class="o">.</span><span class="n">has_hyperelliptic_component</span><span class="p">():</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_hyperelliptic</span><span class="p">():</span>
-                <span class="k">return</span> <span class="n">HypASC</span><span class="p">(</span><span class="n">stratum</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">cc</span> <span class="o">=</span> <span class="n">cc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+                <span class="k">return</span> <span class="n">stratum</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
+            <span class="c1"># TODO: we assume that the first entry is the hyperelliptic one</span>
+            <span class="n">cc</span> <span class="o">=</span> <span class="n">stratum</span><span class="o">.</span><span class="n">connected_components</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">cc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">cc</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">stratum</span><span class="p">)</span>
-
+        <span class="c1"># if we still have several components, they must be spin</span>
+        <span class="n">spin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arf_invariant</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">spin</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">stratum</span><span class="o">.</span><span class="n">even_component</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">spin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arf_invariant</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">spin</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">EvenASC</span><span class="p">(</span><span class="n">stratum</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">OddASC</span><span class="p">(</span><span class="n">stratum</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="n">stratum</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="OrientablePermutationIET.order_of_rauzy_action">
@@ -5522,10 +5508,11 @@
 
 <span class="sd">            sage: p = iet.Permutation(&#39;a b c&#39;, &#39;c b a&#39;)</span>
 <span class="sd">            sage: S = p.masur_polygon([1,4,2], [2,0,-1])  # optional: sage_flatsurf</span>
+<span class="sd">            sage: stratum = S.stratum()                   # optional: sage_flatsurf # random</span>
+<span class="sd">            sage: stratum                                 # optional: sage_flatsurf</span>
+<span class="sd">            H_1(0^2)</span>
 <span class="sd">            sage: S                                       # optional: sage_flatsurf</span>
 <span class="sd">            Translation Surface in H_1(0^2) built from 2 isosceles triangles and 2 triangles</span>
-<span class="sd">            sage: S.stratum()                             # optional: sage_flatsurf</span>
-<span class="sd">            H_1(0^2)</span>
 
 <span class="sd">        Generic construction using suspension cone::</span>
 
@@ -5736,8 +5723,8 @@
 <span class="sd">            Q_0(-1^4)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_irreducible</span><span class="p">():</span>
-            <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.quadratic_strata</span> <span class="kn">import</span> <span class="n">QuadraticStratum</span>
-            <span class="k">return</span> <span class="n">QuadraticStratum</span><span class="p">([</span><span class="n">x</span><span class="o">-</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">()])</span>
+            <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.quadratic_strata</span> <span class="kn">import</span> <span class="n">Stratum</span>
+            <span class="k">return</span> <span class="n">Stratum</span><span class="p">([</span><span class="n">x</span><span class="o">-</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">()],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;stratum is well defined only for irreducible permutations&quot;</span><span class="p">)</span></div>
 </div>
 
@@ -7905,7 +7892,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2021-2023, the surface-dynamics authors
+                Copyright &#169; 2021-$RELEASE_YEAR, the surface-dynamics authors
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -7925,9 +7912,9 @@
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=1dd76d02"></script>
+</div><script src="../../../_static/documentation_options.js?v=8fa8b3e9"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../../_static/scripts/furo.js?v=4e2eecee"></script>
+    <script src="../../../_static/scripts/furo.js?v=5fa4622c"></script>
     </body>
 </html>

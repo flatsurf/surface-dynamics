@@ -4,13 +4,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
-    <!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
-        <title>surface_dynamics.flat_surfaces.masur_veech_volumes - surface-dynamics 0.5.0 documentation</title>
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
+        <title>surface_dynamics.flat_surfaces.masur_veech_volumes - surface-dynamics 0.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=387cc868" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-codemirror-monokai.css" />
     
     
 
@@ -91,19 +93,6 @@
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
   </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
-    </svg>
-  </symbol>
   <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
     <title>Auto light/dark, in light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -144,7 +133,7 @@
       <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
       <path d="M13.5 6.5l4 4" />
       <path d="M20 21l2 -2l-2 -2" />
-      <path d="M17 17l-2 2l2 2" /
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
   <symbol id="svg-eye" viewBox="0 0 24 24">
@@ -182,7 +171,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">surface-dynamics 0.5.0 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">surface-dynamics 0.6.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -210,7 +199,7 @@
     <img class="sidebar-logo only-dark" src="../../../_static/logo.svg" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">surface-dynamics 0.5.0 documentation</span>
+  <span class="sidebar-brand-text">surface-dynamics 0.6.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -304,6 +293,7 @@
 <span class="kn">from</span> <span class="nn">sage.all</span> <span class="kn">import</span> <span class="n">ZZ</span><span class="p">,</span> <span class="n">QQ</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">pi</span>
 <span class="kn">from</span> <span class="nn">sage.arith.misc</span> <span class="kn">import</span> <span class="n">bernoulli</span><span class="p">,</span> <span class="n">factorial</span>
 
+<span class="kn">from</span> <span class="nn">.strata</span> <span class="kn">import</span> <span class="n">Stratum</span>
 <span class="kn">from</span> <span class="nn">.abelian_strata</span> <span class="kn">import</span> <span class="n">AbelianStratum</span><span class="p">,</span> <span class="n">AbelianStratumComponent</span>
 <span class="kn">from</span> <span class="nn">.quadratic_strata</span> <span class="kn">import</span> <span class="n">QuadraticStratum</span><span class="p">,</span> <span class="n">QuadraticStratumComponent</span>
 
@@ -312,57 +302,59 @@
 <span class="c1"># - Eskin-Masur-Zorich &quot;principal boundary ...&quot;</span>
 <span class="n">abelian_volumes_table</span> <span class="o">=</span> <span class="p">{</span>
     <span class="c1"># dim 2</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">0</span><span class="p">,),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span>
     <span class="c1"># dim 4</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">2</span><span class="p">,),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)),</span>
     <span class="c1"># dim 5</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)),</span>
     <span class="c1"># dim 6</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span><span class="mi">64</span><span class="p">)),</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span><span class="mi">18</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">4</span><span class="p">,),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span><span class="mi">64</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">4</span><span class="p">,),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span><span class="mi">18</span><span class="p">)),</span>
     <span class="c1"># dim 7</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">16</span><span class="p">,</span><span class="mi">45</span><span class="p">)),</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)),</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span><span class="mi">32</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">16</span><span class="p">,</span><span class="mi">45</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span><span class="mi">32</span><span class="p">)),</span>
     <span class="c1"># dim 8</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">25</span><span class="p">,</span> <span class="mi">1536</span><span class="p">)),</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)),</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">even_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span><span class="mi">405</span><span class="p">)),</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">6</span><span class="p">,),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">25</span><span class="p">,</span> <span class="mi">1536</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">6</span><span class="p">,),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">6</span><span class="p">,),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">even_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span><span class="mi">405</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)),</span>
     <span class="c1"># dim 9</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span><span class="mi">35</span><span class="p">)),</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">42</span><span class="p">)),</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">even_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">45</span><span class="p">,</span><span class="mi">512</span><span class="p">)),</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">non_hyperelliptic_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">27</span><span class="p">)),</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">105</span><span class="p">)),</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span><span class="mi">36</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span><span class="mi">35</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">42</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">even_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">45</span><span class="p">,</span><span class="mi">512</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">non_hyperelliptic_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">27</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">105</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span><span class="mi">36</span><span class="p">)),</span>
     <span class="c1"># dim 10</span>
-    <span class="c1"># AbelianStratum(8).hyperelliptic_component()</span>
-    <span class="c1"># AbelianStratum(8).odd_component()</span>
-    <span class="c1"># AbelianStratum(8).even_component()</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">275</span><span class="p">,</span><span class="mi">1728</span><span class="p">)),</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">15</span><span class="p">)),</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">155</span><span class="p">,</span><span class="mi">2304</span><span class="p">)),</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">even_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">37</span><span class="p">,</span><span class="mi">720</span><span class="p">)),</span>
+    <span class="c1"># Stratum((8,), k=1).hyperelliptic_component()</span>
+    <span class="c1"># Stratum((8,), k=1).odd_component()</span>
+    <span class="c1"># Stratum((8,), k=1).even_component()</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">275</span><span class="p">,</span><span class="mi">1728</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">15</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">155</span><span class="p">,</span><span class="mi">2304</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">even_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">37</span><span class="p">,</span><span class="mi">720</span><span class="p">)),</span>
     <span class="c1"># dim 11</span>
-    <span class="c1"># AbelianStratum(7, 1)^c</span>
-    <span class="c1"># AbelianStratum(6, 2)^odd</span>
-    <span class="c1"># AbelianStratum(6, 2)^even</span>
-    <span class="c1"># AbelianStratum(5, 3)^c</span>
-    <span class="c1"># AbelianStratum(4^2)^hyp</span>
-    <span class="c1"># AbelianStratum(4^2)^odd</span>
-    <span class="c1"># AbelianStratum(4^2)^even</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">124</span><span class="p">,</span><span class="mi">1215</span><span class="p">)),</span>
-    <span class="n">AbelianStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">131</span><span class="p">,</span><span class="mi">1440</span><span class="p">))</span>
+    <span class="c1"># Stratum((7, 1), k=1).unique_component()</span>
+    <span class="c1"># Stratum((6, 2), k=1).odd_component()</span>
+    <span class="c1"># Stratum((6, 2), k=1).even_component()</span>
+    <span class="c1"># Stratum((5, 3), k=1).unique_component()</span>
+    <span class="c1"># Stratum((4, 4), k=1).hyperelliptic_component()</span>
+    <span class="c1"># Stratum((4, 4), k=1).odd_component()</span>
+    <span class="c1"># Stratum((4, 4), k=1).even_component()</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">124</span><span class="p">,</span><span class="mi">1215</span><span class="p">)),</span>
+    <span class="n">Stratum</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">():</span> <span class="n">QQ</span><span class="p">((</span><span class="mi">131</span><span class="p">,</span><span class="mi">1440</span><span class="p">))</span>
 <span class="p">}</span>
 
 <div class="viewcode-block" id="masur_veech_volume">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.masur_veech_volumes.masur_veech_volume">[docs]</a>
-<span class="k">def</span> <span class="nf">masur_veech_volume</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">rational</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">masur_veech_volume</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the Masur-Veech volume of the stratum or component of stratum ``C``.</span>
 
 <span class="sd">    INPUT:</span>
+
+<span class="sd">    - ``C`` -- a stratum or a connected component of stratum</span>
 
 <span class="sd">    - ``rational`` (boolean) - if ``False`` (default) return the Masur-Veech volume</span>
 <span class="sd">      and if ``True`` return the Masur-Veech volume divided by `\zeta(2g)`.</span>
@@ -377,10 +369,10 @@
 
 <span class="sd">    TESTS::</span>
 
-<span class="sd">        sage: from surface_dynamics import AbelianStratum</span>
+<span class="sd">        sage: from surface_dynamics import Stratum</span>
 <span class="sd">        sage: from surface_dynamics.flat_surfaces.masur_veech_volumes import masur_veech_volume</span>
 
-<span class="sd">        sage: H4 = AbelianStratum(4)</span>
+<span class="sd">        sage: H4 = Stratum([4], k=1)</span>
 <span class="sd">        sage: masur_veech_volume(H4, False, &#39;table&#39;)</span>
 <span class="sd">        61/108864*pi^6</span>
 <span class="sd">        sage: masur_veech_volume(H4, False, &#39;CMSZ&#39;)</span>
@@ -394,13 +386,30 @@
 <span class="sd">        sage: masur_veech_volume(H4.odd_component(), False, &#39;CMSZ&#39;)</span>
 <span class="sd">        1/2430*pi^6</span>
 
-<span class="sd">        sage: H6 = AbelianStratum(6)</span>
+<span class="sd">        sage: H6 = Stratum([6], k=1)</span>
 <span class="sd">        sage: all(masur_veech_volume(C, True, &#39;table&#39;) == masur_veech_volume(C, True, &#39;CMSZ&#39;) for C in H6.components())</span>
 <span class="sd">        True</span>
+
+<span class="sd">    TESTS::</span>
+
+
+<span class="sd">            sage: masur_veech_volume(Stratum([1,1,-2], k=1))</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">            ...</span>
+<span class="sd">            ValueError: meromorphic differentials with higher order poles</span>
+<span class="sd">            sage: masur_veech_volume(Stratum([1]*6, k=3))</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">            ...</span>
+<span class="sd">            NotImplementedError: higher order differentials</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">C</span><span class="o">.</span><span class="n">surface_has_finite_area</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;meromorphic differentials with higher order poles&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">C</span><span class="o">.</span><span class="n">surface_differential_order</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;higher order differentials&#39;</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">method</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">AbelianStratum</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">zeros</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">or</span> \
-           <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">AbelianStratumComponent</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span><span class="o">.</span><span class="n">zeros</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">AbelianStratum</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">signature</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">or</span> \
+           <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">AbelianStratumComponent</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span><span class="o">.</span><span class="n">signature</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
             <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;CMSZ&#39;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;table&#39;</span>
@@ -413,26 +422,26 @@
             <span class="n">vol</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">abelian_volumes_table</span><span class="p">[</span><span class="n">CC</span><span class="p">]</span> <span class="k">for</span> <span class="n">CC</span> <span class="ow">in</span> <span class="n">C</span><span class="o">.</span><span class="n">components</span><span class="p">())</span>
             <span class="n">S</span> <span class="o">=</span> <span class="n">C</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">QuadraticStratumComponent</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;quadratic differentials&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">QuadraticStratum</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;quadratic differentials&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;invalid input&#39;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">vol</span> <span class="k">if</span> <span class="n">rational</span> <span class="k">else</span> <span class="n">vol</span> <span class="o">*</span> <span class="n">zeta</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">S</span><span class="o">.</span><span class="n">genus</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">vol</span> <span class="k">if</span> <span class="n">rational</span> <span class="k">else</span> <span class="n">vol</span> <span class="o">*</span> <span class="n">zeta</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">S</span><span class="o">.</span><span class="n">surface_genus</span><span class="p">())</span>
 
     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;CMSZ&#39;</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">AbelianStratum</span><span class="p">):</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">zeros</span><span class="p">())</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">signature</span><span class="p">())</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">NotImplementedError</span>
-            <span class="n">g</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">surface_genus</span><span class="p">()</span>
             <span class="c1"># be careful, the output starts in genus g=1</span>
             <span class="k">return</span> <span class="n">minimal_strata_CMSZ</span><span class="p">(</span><span class="n">g</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="n">rational</span><span class="p">)[</span><span class="n">g</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">AbelianStratumComponent</span><span class="p">):</span>
             <span class="n">S</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="o">.</span><span class="n">zeros</span><span class="p">())</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="o">.</span><span class="n">signature</span><span class="p">())</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">NotImplementedError</span>
-            <span class="n">g</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">surface_genus</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">C</span><span class="o">.</span><span class="n">_name</span> <span class="o">==</span> <span class="s1">&#39;hyp&#39;</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">minimal_strata_hyp</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">rational</span><span class="p">)</span>
 
@@ -472,17 +481,17 @@
 <span class="sd">         12569/279936000*pi^8,</span>
 <span class="sd">         12587/3311616000*pi^10]</span>
 
-<span class="sd">        sage: from surface_dynamics import AbelianStratum</span>
+<span class="sd">        sage: from surface_dynamics import Stratum</span>
 <span class="sd">        sage: from surface_dynamics.flat_surfaces.masur_veech_volumes import masur_veech_volume</span>
 <span class="sd">        sage: for rat in [True, False]:</span>
 <span class="sd">        ....:     V0, V2, V4, V6 = minimal_strata_CMSZ(5, rational=rat)</span>
-<span class="sd">        ....:     MV0 = masur_veech_volume(AbelianStratum(0), rat, &#39;table&#39;)</span>
+<span class="sd">        ....:     MV0 = masur_veech_volume(Stratum([0], k=1), rat, &#39;table&#39;)</span>
 <span class="sd">        ....:     assert V0 == MV0, (V0, MV0, rat)</span>
-<span class="sd">        ....:     MV2 = masur_veech_volume(AbelianStratum(2), rat, &#39;table&#39;)</span>
+<span class="sd">        ....:     MV2 = masur_veech_volume(Stratum([2], k=1), rat, &#39;table&#39;)</span>
 <span class="sd">        ....:     assert V2 == MV2, (V2, MV2, rat)</span>
-<span class="sd">        ....:     MV4 = masur_veech_volume(AbelianStratum(4), rat, &#39;table&#39;)</span>
+<span class="sd">        ....:     MV4 = masur_veech_volume(Stratum([4], k=1), rat, &#39;table&#39;)</span>
 <span class="sd">        ....:     assert V4 == MV4, (V4, MV4, rat)</span>
-<span class="sd">        ....:     MV6 = masur_veech_volume(AbelianStratum(6), rat, &#39;table&#39;)</span>
+<span class="sd">        ....:     MV6 = masur_veech_volume(Stratum([6], k=1), rat, &#39;table&#39;)</span>
 <span class="sd">        ....:     assert V6 == MV6, (V6, MV6, rat)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">gmax</span> <span class="o">-</span> <span class="mi">1</span>
@@ -573,7 +582,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2021-2023, the surface-dynamics authors
+                Copyright &#169; 2021-$RELEASE_YEAR, the surface-dynamics authors
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -593,9 +602,9 @@
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=1dd76d02"></script>
+</div><script src="../../../_static/documentation_options.js?v=8fa8b3e9"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../../_static/scripts/furo.js?v=4e2eecee"></script>
+    <script src="../../../_static/scripts/furo.js?v=5fa4622c"></script>
     </body>
 </html>

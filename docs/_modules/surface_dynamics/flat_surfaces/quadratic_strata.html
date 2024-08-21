@@ -4,13 +4,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
-    <!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
-        <title>surface_dynamics.flat_surfaces.quadratic_strata - surface-dynamics 0.5.0 documentation</title>
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
+        <title>surface_dynamics.flat_surfaces.quadratic_strata - surface-dynamics 0.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=387cc868" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-codemirror-monokai.css" />
     
     
 
@@ -91,19 +93,6 @@
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
   </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
-    </svg>
-  </symbol>
   <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
     <title>Auto light/dark, in light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -144,7 +133,7 @@
       <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
       <path d="M13.5 6.5l4 4" />
       <path d="M20 21l2 -2l-2 -2" />
-      <path d="M17 17l-2 2l2 2" /
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
   <symbol id="svg-eye" viewBox="0 0 24 24">
@@ -182,7 +171,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">surface-dynamics 0.5.0 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">surface-dynamics 0.6.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -210,7 +199,7 @@
     <img class="sidebar-logo only-dark" src="../../../_static/logo.svg" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">surface-dynamics 0.5.0 documentation</span>
+  <span class="sidebar-brand-text">surface-dynamics 0.6.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -362,26 +351,26 @@
 
 <span class="sd">Construction of a stratum from a list of singularity degrees::</span>
 
-<span class="sd">    sage: a = QuadraticStratum(2,2)</span>
+<span class="sd">    sage: a = Stratum([2,2], k=2)</span>
 <span class="sd">    sage: a</span>
 <span class="sd">    Q_2(2^2)</span>
-<span class="sd">    sage: a.genus()</span>
+<span class="sd">    sage: a.surface_genus()</span>
 <span class="sd">    2</span>
 
 <span class="sd">::</span>
 
-<span class="sd">    sage: a = QuadraticStratum(4,3,2,2,1)</span>
+<span class="sd">    sage: a = Stratum([4,3,2,2,1], k=2)</span>
 <span class="sd">    sage: a</span>
 <span class="sd">    Q_4(4, 3, 2^2, 1)</span>
-<span class="sd">    sage: a.genus()</span>
+<span class="sd">    sage: a.surface_genus()</span>
 <span class="sd">    4</span>
 
 <span class="sd">By convention, the degrees are always written in decreasing order::</span>
 
-<span class="sd">    sage: a1 = QuadraticStratum(7,5,3,1)</span>
+<span class="sd">    sage: a1 = Stratum([7,5,3,1], k=2)</span>
 <span class="sd">    sage: a1</span>
 <span class="sd">    Q_5(7, 5, 3, 1)</span>
-<span class="sd">    sage: a2 = QuadraticStratum(3,1,7,5)</span>
+<span class="sd">    sage: a2 = Stratum([3,1,7,5], k=2)</span>
 <span class="sd">    sage: a2</span>
 <span class="sd">    Q_5(7, 5, 3, 1)</span>
 <span class="sd">    sage: a1 == a2</span>
@@ -389,16 +378,16 @@
 
 <span class="sd">List the connected components of a stratum::</span>
 
-<span class="sd">    sage: a = QuadraticStratum(6,2)</span>
+<span class="sd">    sage: a = Stratum([6,2], k=2)</span>
 <span class="sd">    sage: a.components()</span>
-<span class="sd">    [Q_3(6, 2)^hyp, Q_3(6, 2)^nonhyp]</span>
+<span class="sd">    (Q_3(6, 2)^hyp, Q_3(6, 2)^nonhyp)</span>
 
 <span class="sd">::</span>
 
-<span class="sd">    sage: a = QuadraticStratum(12)</span>
+<span class="sd">    sage: a = Stratum([12], k=2)</span>
 <span class="sd">    sage: cc = a.components()</span>
 <span class="sd">    sage: cc</span>
-<span class="sd">    [Q_4(12)^reg, Q_4(12)^irr]</span>
+<span class="sd">    (Q_4(12)^reg, Q_4(12)^irr)</span>
 <span class="sd">    sage: for c in cc:</span>
 <span class="sd">    ....:     print(c)</span>
 <span class="sd">    ....:     print(c.permutation_representative())</span>
@@ -411,9 +400,9 @@
 
 <span class="sd">::</span>
 
-<span class="sd">    sage: a = QuadraticStratum(1, 1, 1, 1)</span>
+<span class="sd">    sage: a = Stratum([1, 1, 1, 1], k=2)</span>
 <span class="sd">    sage: a.components()</span>
-<span class="sd">    [Q_2(1^4)^hyp]</span>
+<span class="sd">    (Q_2(1^4)^hyp,)</span>
 <span class="sd">    sage: c = a.components()[0]</span>
 <span class="sd">    sage: p = c.permutation_representative(); p</span>
 <span class="sd">    0 1 2 3 1 4 5</span>
@@ -449,38 +438,26 @@
 
 <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.strata</span> <span class="kn">import</span> <span class="n">Stratum</span><span class="p">,</span> <span class="n">StratumComponent</span><span class="p">,</span><span class="n">Strata</span>
 
-<div class="viewcode-block" id="QuadraticStratum">
-<a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStratum">[docs]</a>
-<span class="k">class</span> <span class="nc">QuadraticStratum</span><span class="p">(</span><span class="n">Stratum</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Stratum of quadratic differentials.</span>
 
-<span class="sd">    EXAMPLES::</span>
-
-<span class="sd">        sage: from surface_dynamics import *</span>
-
-<span class="sd">        sage: Q = QuadraticStratum(15,-1,-1,-1); Q</span>
-<span class="sd">        Q_4(15, -1^3)</span>
-<span class="sd">        sage: Q.components()</span>
-<span class="sd">        [Q_4(15, -1^3)^c]</span>
-
-<span class="sd">        sage: Q = QuadraticStratum(6,6); Q</span>
-<span class="sd">        Q_4(6^2)</span>
-<span class="sd">        sage: Q.components()</span>
-<span class="sd">        [Q_4(6^2)^hyp, Q_4(6^2)^reg, Q_4(6^2)^irr]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;Q&quot;</span>
-    <span class="n">_latex_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">mathcal</span><span class="si">{Q}</span><span class="s2">&quot;</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">__classcall_private__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">l</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+<div class="viewcode-block" id="DeprecatedQuadraticStratumConstructor">
+<a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.quadratic_strata.DeprecatedQuadraticStratumConstructor">[docs]</a>
+<span class="k">def</span> <span class="nf">DeprecatedQuadraticStratumConstructor</span><span class="p">(</span><span class="o">*</span><span class="n">l</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 <span class="sd">            sage: QuadraticStratum(-1,-1,-1,-1) is QuadraticStratum({-1:4})</span>
+<span class="sd">            doctest:warning</span>
+<span class="sd">            ...</span>
+<span class="sd">            UserWarning: QuadraticStratum has changed its arguments in order to handle meromorphic and higher-order differentials; use Stratum instead</span>
+<span class="sd">            True</span>
+<span class="sd">            sage: QuadraticStratum(-1,-1,-1,-1) is Stratum((-1,-1,-1,-1), 2)</span>
 <span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">warnings</span>
+
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;QuadraticStratum has changed its arguments in order to handle meromorphic and higher-order differentials; use Stratum instead&#39;</span><span class="p">)</span>
+
         <span class="n">genus</span> <span class="o">=</span> <span class="n">kwds</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;genus&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">kwds</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;unsupported keyword arguments&#39;</span><span class="p">)</span>
@@ -495,228 +472,44 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">l</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the list must be nonempty&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="n">l</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(([</span><span class="n">v</span><span class="p">]</span><span class="o">*</span><span class="n">e</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="n">iteritems</span><span class="p">(</span><span class="n">l</span><span class="p">)),[])</span>
-
-        <span class="n">allzeros</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">l</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">nb_poles</span> <span class="o">=</span> <span class="n">allzeros</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">nb_fake_zeros</span> <span class="o">=</span> <span class="n">allzeros</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">zeros</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">allzeros</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">allzeros</span><span class="p">)</span><span class="o">-</span><span class="n">nb_fake_zeros</span><span class="o">-</span><span class="n">nb_poles</span><span class="p">])</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(([</span><span class="n">v</span><span class="p">]</span><span class="o">*</span><span class="n">e</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="n">iteritems</span><span class="p">(</span><span class="n">l</span><span class="p">)),</span> <span class="p">[])</span>
 
         <span class="k">if</span> <span class="n">genus</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">g</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">zeros</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">-</span> <span class="n">nb_poles</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span>
             <span class="k">if</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">genus</span> <span class="o">&gt;</span> <span class="n">g</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span>
             <span class="k">elif</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">genus</span> <span class="o">&lt;</span> <span class="n">g</span><span class="p">:</span>
-                <span class="n">nb_poles</span> <span class="o">+=</span> <span class="n">g</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">genus</span>
+                <span class="n">l</span> <span class="o">+=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)</span> <span class="o">*</span> <span class="p">(</span><span class="n">g</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">genus</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">UniqueRepresentation</span><span class="o">.</span><span class="n">__classcall__</span><span class="p">(</span><span class="n">QuadraticStratum</span><span class="p">,</span> <span class="n">zeros</span><span class="p">,</span> <span class="n">nb_poles</span><span class="p">,</span> <span class="n">nb_fake_zeros</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zeros</span><span class="p">,</span> <span class="n">nb_poles</span><span class="p">,</span> <span class="n">nb_fake_zeros</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        TESTS::</span>
-
-<span class="sd">            sage: from surface_dynamics import *</span>
-
-<span class="sd">            sage: a = QuadraticStratum(4,-1,-1,-1,-1,0)</span>
-<span class="sd">            sage: loads(dumps(a)) == a</span>
-<span class="sd">            True</span>
-<span class="sd">            sage: QuadraticStratum([])</span>
-<span class="sd">            Traceback (most recent call last):</span>
-<span class="sd">            ...</span>
-<span class="sd">            ValueError: the list must be nonempty</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span> <span class="o">=</span> <span class="n">zeros</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_nb_poles</span> <span class="o">=</span> <span class="n">nb_poles</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_nb_fake_zeros</span> <span class="o">=</span> <span class="n">nb_fake_zeros</span>
-
-        <span class="c1"># nfz (for &quot;non fake zeros&quot;)</span>
-        <span class="n">nfz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nb_poles</span>
-
-        <span class="n">genus</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">nfz</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span>
-        <span class="k">if</span> <span class="n">genus</span><span class="o">%</span><span class="mi">4</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the sum of the zeros should sum up to an integer congruent to 0 mod 4&quot;</span><span class="p">)</span>
-        <span class="n">genus</span> <span class="o">//=</span> <span class="mi">4</span>
-
-        <span class="c1"># Lanneau classification of connected components</span>
-
-        <span class="c1">#TODO: check genus 2 components</span>
-        <span class="c1">#TODO: in genus 2, decide between GTHQSC/GTNQSC and HQSC/NQSC</span>
-        <span class="k">if</span> <span class="n">genus</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">(</span><span class="n">GZQSC</span><span class="p">,)</span>
-
-        <span class="c1">#TODO: all genus 1 strata are connected, but two are hyperelliptic; give the component a different name then?</span>
-        <span class="k">elif</span> <span class="n">genus</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span> <span class="o">==</span> <span class="p">():</span>
-                <span class="c1"># print &quot;The stratum Q(0) is empty!&quot;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">()</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,):</span>
-                <span class="c1"># print &quot;The stratum Q(1,-1) is empty!&quot;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">(</span><span class="n">GOQSC</span><span class="p">,)</span>
-
-        <span class="k">elif</span> <span class="n">genus</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span> <span class="o">==</span> <span class="p">(</span><span class="mi">4</span><span class="p">,):</span>
-                <span class="c1"># print &quot;The stratum Q(4) is empty!&quot;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">()</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>
-                <span class="c1"># print &quot;The stratum Q(3,1) is empty!&quot;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">()</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span> <span class="o">==</span> <span class="p">(</span><span class="mi">6</span><span class="p">,):</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">(</span><span class="n">HQSC</span><span class="p">,</span><span class="n">GTNQSC</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">(</span><span class="n">HQSC</span><span class="p">,</span><span class="n">GTNQSC</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">(</span><span class="n">GTHQSC</span><span class="p">,)</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">(</span><span class="n">GTHQSC</span><span class="p">,)</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">(</span><span class="n">GTHQSC</span><span class="p">,)</span>
-            <span class="k">else</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">(</span><span class="n">GTNQSC</span><span class="p">,)</span>
-
-        <span class="k">elif</span> <span class="n">genus</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nb_poles</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">((</span><span class="n">z</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">z</span><span class="o">%</span><span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">(</span><span class="n">REQSC</span><span class="p">,</span> <span class="n">IEQSC</span><span class="p">)</span>
-
-        <span class="k">elif</span> <span class="n">genus</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nb_poles</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">z</span><span class="o">%</span><span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span><span class="p">):</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">12</span><span class="p">,),(</span><span class="mi">9</span><span class="p">,</span><span class="mi">3</span><span class="p">)]:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">(</span><span class="n">REQSC</span><span class="p">,</span> <span class="n">IEQSC</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">),(</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)]:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">(</span><span class="n">HQSC</span><span class="p">,</span> <span class="n">REQSC</span><span class="p">,</span> <span class="n">IEQSC</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nfz</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">nfz</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">%</span><span class="mi">4</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">nfz</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">%</span><span class="mi">4</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">(</span><span class="n">HQSC</span><span class="p">,</span><span class="n">NQSC</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">nfz</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">nfz</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">nfz</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">nfz</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">nfz</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="ow">and</span> <span class="n">nfz</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">%</span><span class="mi">2</span> <span class="ow">and</span> <span class="n">nfz</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">%</span><span class="mi">2</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">(</span><span class="n">HQSC</span><span class="p">,</span><span class="n">NQSC</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">nfz</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">nfz</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">nfz</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">nfz</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">%</span><span class="mi">2</span> <span class="ow">and</span> <span class="n">nfz</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">%</span><span class="mi">4</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">(</span><span class="n">HQSC</span><span class="p">,</span><span class="n">NQSC</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">nfz</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">nfz</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">nfz</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">and</span> <span class="n">nfz</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">%</span><span class="mi">2</span> <span class="ow">and</span> <span class="n">nfz</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">%</span><span class="mi">4</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">(</span><span class="n">HQSC</span><span class="p">,</span><span class="n">NQSC</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="o">=</span> <span class="p">(</span><span class="n">CQSC</span><span class="p">,)</span>
-
-<div class="viewcode-block" id="QuadraticStratum.zeros">
-<a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStratum.zeros">[docs]</a>
-    <span class="k">def</span> <span class="nf">zeros</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">poles</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fake_zeros</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the list of zeros of self.</span>
-
-<span class="sd">        EXAMPLES::</span>
-
-<span class="sd">            sage: from surface_dynamics import *</span>
-
-<span class="sd">            sage: QuadraticStratum({-1:4}).zeros()</span>
-<span class="sd">            (-1, -1, -1, -1)</span>
-<span class="sd">            sage: QuadraticStratum({1:8}).zeros()</span>
-<span class="sd">            (1, 1, 1, 1, 1, 1, 1, 1)</span>
-
-<span class="sd">            sage: QuadraticStratum({-1:4}).zeros(poles=False)</span>
-<span class="sd">            ()</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span>
-        <span class="k">if</span> <span class="n">fake_zeros</span><span class="p">:</span>
-            <span class="n">z</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nb_fake_zeros</span>
-        <span class="k">if</span> <span class="n">poles</span><span class="p">:</span>
-            <span class="n">z</span> <span class="o">+=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nb_poles</span>
-        <span class="k">return</span> <span class="n">z</span></div>
+        <span class="n">l</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">l</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">Stratum</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="QuadraticStratum.nb_zeros">
-<a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStratum.nb_zeros">[docs]</a>
-    <span class="k">def</span> <span class="nf">nb_zeros</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">poles</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fake_zeros</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        EXAMPLES::</span>
 
-<span class="sd">            sage: from surface_dynamics import *</span>
+<div class="viewcode-block" id="QuadraticStratum">
+<a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStratum">[docs]</a>
+<span class="k">class</span> <span class="nc">QuadraticStratum</span><span class="p">(</span><span class="n">Stratum</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Stratum of quadratic differentials.</span>
 
-<span class="sd">            sage: QuadraticStratum({-1:4}).nb_zeros()</span>
-<span class="sd">            4</span>
-<span class="sd">            sage: QuadraticStratum({-1:4,1:4}).nb_zeros()</span>
-<span class="sd">            8</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">n</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_zeros</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">poles</span><span class="p">:</span>
-            <span class="n">n</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nb_poles</span>
-        <span class="k">if</span> <span class="n">fake_zeros</span><span class="p">:</span>
-            <span class="n">n</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nb_fake_zeros</span>
-        <span class="k">return</span> <span class="n">n</span></div>
+<span class="sd">    EXAMPLES::</span>
 
+<span class="sd">        sage: from surface_dynamics import *</span>
 
-<div class="viewcode-block" id="QuadraticStratum.nb_poles">
-<a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStratum.nb_poles">[docs]</a>
-    <span class="k">def</span> <span class="nf">nb_poles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return the number of poles of this quadratic stratum.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nb_poles</span></div>
+<span class="sd">        sage: Q = Stratum([15,-1,-1,-1], k=2)</span>
+<span class="sd">        sage: Q</span>
+<span class="sd">        Q_4(15, -1^3)</span>
+<span class="sd">        sage: Q.components()</span>
+<span class="sd">        (Q_4(15, -1^3)^c,)</span>
 
-
-<div class="viewcode-block" id="QuadraticStratum.nb_fake_zeros">
-<a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStratum.nb_fake_zeros">[docs]</a>
-    <span class="k">def</span> <span class="nf">nb_fake_zeros</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return the number of fake zeros of this quadratic stratum.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nb_fake_zeros</span></div>
-
-
-<div class="viewcode-block" id="QuadraticStratum.genus">
-<a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStratum.genus">[docs]</a>
-    <span class="k">def</span> <span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the genus.</span>
-
-<span class="sd">        EXAMPLES::</span>
-
-<span class="sd">            sage: from surface_dynamics import *</span>
-
-<span class="sd">            sage: QuadraticStratum(-1,-1,-1,-1).genus()</span>
-<span class="sd">            0</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">Integer</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">poles</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">fake_zeros</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span><span class="o">//</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="QuadraticStratum.dimension">
-<a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStratum.dimension">[docs]</a>
-    <span class="k">def</span> <span class="nf">dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the complex dimension of this stratum.</span>
-
-<span class="sd">        The complex dimension is the number of intervals minus one of any linear</span>
-<span class="sd">        involution associated to this stratum.</span>
-
-<span class="sd">        EXAMPLES::</span>
-
-<span class="sd">            sage: from surface_dynamics import *</span>
-
-<span class="sd">            sage: QuadraticStratum({-1:4}).dimension()</span>
-<span class="sd">            2</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nb_zeros</span><span class="p">()</span> <span class="o">-</span> <span class="mi">2</span></div>
-
-
-<div class="viewcode-block" id="QuadraticStratum.rank">
-<a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStratum.rank">[docs]</a>
-    <span class="k">def</span> <span class="nf">rank</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return the rank of this GL(2,R)-invariant manifold (half dimension of the</span>
-<span class="sd">        absolute part of the tangent space).</span>
-
-<span class="sd">        EXAMPLES::</span>
-
-<span class="sd">            sage: from surface_dynamics import QuadraticStratum, QuadraticStrata</span>
-
-<span class="sd">            sage: QuadraticStratum({-1: 4}).rank()</span>
-<span class="sd">            1</span>
-<span class="sd">            sage: QuadraticStratum({-1:4, 0:5}).rank()</span>
-<span class="sd">            1</span>
-
-<span class="sd">        Complete list of rank 2 quadratic strata listed by dimension::</span>
-
-<span class="sd">            sage: for dim in range(4, 9):</span>
-<span class="sd">            ....:     quad = [Q for Q in QuadraticStrata(dimension=dim) if Q.rank() == 2]</span>
-<span class="sd">            ....:     print(&quot;%d: %s&quot; % (dim, &quot;, &quot;.join(map(str, quad))))</span>
-<span class="sd">            4: Q_2(5, -1), Q_1(1^2, -1^2), Q_1(3, -1^3), Q_0(1, -1^5)</span>
-<span class="sd">            5: Q_3(8), Q_2(2, 1^2), Q_2(4, 1, -1), Q_2(3, 2, -1), Q_2(6, -1^2), Q_1(2, 1, -1^3), Q_1(4, -1^4), Q_0(2, -1^6)</span>
-<span class="sd">            6: Q_3(6, 2), Q_3(4^2), Q_2(2^2, 1, -1), Q_2(4, 2, -1^2), Q_1(2^2, -1^4)</span>
-<span class="sd">            7: Q_3(4, 2^2), Q_2(2^3, -1^2)</span>
-<span class="sd">            8: Q_3(2^4)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">z</span> <span class="o">%</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">poles</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span><span class="o">//</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span></div>
+<span class="sd">        sage: Q = Stratum([6,6], k=2)</span>
+<span class="sd">        sage: Q</span>
+<span class="sd">        Q_4(6^2)</span>
+<span class="sd">        sage: Q.components()</span>
+<span class="sd">        (Q_4(6^2)^hyp, Q_4(6^2)^reg, Q_4(6^2)^irr)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;Q&quot;</span>
+    <span class="n">_latex_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">mathcal</span><span class="si">{Q}</span><span class="s2">&quot;</span>
 
 
 <div class="viewcode-block" id="QuadraticStratum.orientation_cover">
@@ -735,7 +528,8 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: q = QuadraticStratum({4:1,-1:4}); q</span>
+<span class="sd">            sage: q = Stratum({4:1,-1:4}, k=2)</span>
+<span class="sd">            sage: q</span>
 <span class="sd">            Q_1(4, -1^4)</span>
 <span class="sd">            sage: a1 = q.orientation_cover(); a1</span>
 <span class="sd">            H_3(2^2)</span>
@@ -746,14 +540,16 @@
 <span class="sd">        form `Q(n,-1^{n+4})`) the dimension coincide. From [Lan08] we know that</span>
 <span class="sd">        it only happens for those ones::</span>
 
-<span class="sd">            sage: q = QuadraticStratum(4,genus=0); q</span>
+<span class="sd">            sage: q = Stratum({4:1, -1:8}, k=2)</span>
+<span class="sd">            sage: q</span>
 <span class="sd">            Q_0(4, -1^8)</span>
 <span class="sd">            sage: q.dimension()</span>
 <span class="sd">            7</span>
 <span class="sd">            sage: q.orientation_cover().dimension()</span>
 <span class="sd">            7</span>
 
-<span class="sd">            sage: q = QuadraticStratum(3,1,genus=0); q</span>
+<span class="sd">            sage: q = Stratum({3:1, 1:1, -1:8}, k=2)</span>
+<span class="sd">            sage: q</span>
 <span class="sd">            Q_0(3, 1, -1^8)</span>
 <span class="sd">            sage: q.dimension()</span>
 <span class="sd">            8</span>
@@ -764,25 +560,23 @@
 
 <span class="sd">        TESTS::</span>
 
-<span class="sd">            sage: QuadraticStratum({-1:4}).orientation_cover()</span>
+<span class="sd">            sage: Stratum({-1:4}, k=2).orientation_cover()</span>
 <span class="sd">            H_1(0)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.abelian_strata</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
-
         <span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">zeros</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">signature</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">z</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">fake_zeros</span><span class="p">:</span>
                     <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">z</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">z</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">z</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">z</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
-                <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">z</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">z</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">z</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">l</span><span class="p">:</span>
             <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="n">l</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Stratum</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="QuadraticStratum.spin">
@@ -810,23 +604,24 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: QuadraticStratum(1,3).spin()</span>
+<span class="sd">            sage: Stratum([1,3], k=2).spin()</span>
 <span class="sd">            0</span>
-<span class="sd">            sage: QuadraticStratum(1,3,genus=1).spin()</span>
+<span class="sd">            sage: Stratum({1:1,3:1,-1:4}, k=2).spin()</span>
 <span class="sd">            1</span>
-<span class="sd">            sage: QuadraticStratum(2,2).spin() is None</span>
+<span class="sd">            sage: Stratum([2,2], k=2).spin() is None</span>
 <span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">k</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">zeros</span><span class="p">():</span>
-            <span class="n">zz</span> <span class="o">=</span> <span class="n">z</span><span class="o">%</span><span class="mi">4</span>
+        <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">signature</span><span class="p">():</span>
+            <span class="n">zz</span> <span class="o">=</span> <span class="n">z</span> <span class="o">%</span> <span class="mi">4</span>
             <span class="k">if</span> <span class="n">zz</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">None</span>
             <span class="n">k</span><span class="p">[</span><span class="n">zz</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
 
-        <span class="k">return</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">k</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="o">//</span><span class="mi">4</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span></div>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">k</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">//</span> <span class="mi">4</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span></div>
 
 
+    <span class="c1"># TODO: redesign this</span>
 <div class="viewcode-block" id="QuadraticStratum.has_hyperelliptic_component">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.quadratic_strata.QuadraticStratum.has_hyperelliptic_component">[docs]</a>
     <span class="k">def</span> <span class="nf">has_hyperelliptic_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -838,12 +633,12 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: QuadraticStratum(2,2).has_hyperelliptic_component()</span>
+<span class="sd">            sage: Stratum([2,2], k=2).has_hyperelliptic_component()</span>
 <span class="sd">            True</span>
-<span class="sd">            sage: QuadraticStratum(3,1).has_hyperelliptic_component()</span>
+<span class="sd">            sage: Stratum([3,1], k=2).has_hyperelliptic_component()</span>
 <span class="sd">            False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">HQSC</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="ow">or</span> <span class="n">GTHQSC</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span></div>
+        <span class="k">return</span> <span class="n">HQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected_components</span><span class="p">()</span> <span class="ow">or</span> <span class="n">GTHQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected_components</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="QuadraticStratum.hyperelliptic_component">
@@ -856,17 +651,17 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: QuadraticStratum(2,2).hyperelliptic_component()</span>
+<span class="sd">            sage: Stratum([2,2], k=2).hyperelliptic_component()</span>
 <span class="sd">            Q_2(2^2)^hyp</span>
 
-<span class="sd">            sage: QuadraticStratum(3,1).hyperelliptic_component()</span>
+<span class="sd">            sage: Stratum([3,1], k=2).hyperelliptic_component()</span>
 <span class="sd">            Traceback (most recent call last):</span>
 <span class="sd">            ...</span>
 <span class="sd">            ValueError: the stratum has no hyperelliptic component</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">HQSC</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">HQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected_components</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">HQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">GTHQSC</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">GTHQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected_components</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">GTHQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the stratum has no hyperelliptic component&quot;</span><span class="p">)</span></div>
 
@@ -881,12 +676,12 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: QuadraticStratum(10,10).has_non_hyperelliptic_component()</span>
+<span class="sd">            sage: Stratum([10,10], k=2).has_non_hyperelliptic_component()</span>
 <span class="sd">            True</span>
-<span class="sd">            sage: QuadraticStratum(6,6).has_non_hyperelliptic_component()</span>
+<span class="sd">            sage: Stratum([6,6], k=2).has_non_hyperelliptic_component()</span>
 <span class="sd">            False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">NQSC</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span> <span class="ow">or</span> <span class="n">GTNQSC</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span></div>
+        <span class="k">return</span> <span class="n">NQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected_components</span><span class="p">()</span> <span class="ow">or</span> <span class="n">GTNQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected_components</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="QuadraticStratum.non_hyperelliptic_component">
@@ -900,16 +695,17 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: QuadraticStratum(10,10).non_hyperelliptic_component()</span>
+<span class="sd">            sage: Stratum([10,10], k=2).non_hyperelliptic_component()</span>
 <span class="sd">            Q_6(10^2)^nonhyp</span>
-<span class="sd">            sage: QuadraticStratum(2,2).non_hyperelliptic_component()</span>
+<span class="sd">            sage: Stratum([2,2], k=2).non_hyperelliptic_component()</span>
 <span class="sd">            Traceback (most recent call last):</span>
 <span class="sd">            ...</span>
 <span class="sd">            ValueError: no non hyperelliptic component</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">NQSC</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span><span class="p">:</span>
+        <span class="n">ccs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected_components</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">NQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">in</span> <span class="n">ccs</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">NQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">GTNQSC</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">GTNQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">in</span> <span class="n">ccs</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">GTNQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;no non hyperelliptic component&quot;</span><span class="p">)</span></div>
 
@@ -930,12 +726,12 @@
 
 <span class="sd">           sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: QuadraticStratum(9,-1).has_regular_and_irregular_components()</span>
+<span class="sd">            sage: Stratum([9,-1], k=2).has_regular_and_irregular_components()</span>
 <span class="sd">            True</span>
-<span class="sd">            sage: QuadraticStratum(11,1).has_regular_and_irregular_components()</span>
+<span class="sd">            sage: Stratum([11,1], k=2).has_regular_and_irregular_components()</span>
 <span class="sd">            False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">REQSC</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span></div>
+        <span class="k">return</span> <span class="n">REQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected_components</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="QuadraticStratum.regular_component">
@@ -948,14 +744,14 @@
 
 <span class="sd">           sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: QuadraticStratum(12).regular_component()</span>
+<span class="sd">            sage: Stratum([12], k=2).regular_component()</span>
 <span class="sd">            Q_4(12)^reg</span>
-<span class="sd">            sage: QuadraticStratum(2,2,2,2).regular_component()</span>
+<span class="sd">            sage: Stratum([2,2,2,2], k=2).regular_component()</span>
 <span class="sd">            Traceback (most recent call last):</span>
 <span class="sd">            ...</span>
 <span class="sd">            ValueError: no regular component for this stratum</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">REQSC</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">REQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected_components</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">REQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;no regular component for this stratum&quot;</span><span class="p">)</span></div>
 
@@ -970,14 +766,14 @@
 
 <span class="sd">           sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: QuadraticStratum(3,3,3,-1).irregular_component()</span>
+<span class="sd">            sage: Stratum([3,3,3,-1], k=2).irregular_component()</span>
 <span class="sd">            Q_3(3^3, -1)^irr</span>
-<span class="sd">            sage: QuadraticStratum(2,2).irregular_component()</span>
+<span class="sd">            sage: Stratum([2,2], k=2).irregular_component()</span>
 <span class="sd">            Traceback (most recent call last):</span>
 <span class="sd">            ...</span>
 <span class="sd">            ValueError: no irregular component for this stratum</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">IEQSC</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cc</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">IEQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected_components</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">IEQSC</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;no irregular component for this stratum&quot;</span><span class="p">)</span></div>
 
@@ -992,7 +788,7 @@
 
 <span class="sd">           sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: Q = QuadraticStratum(4,4)</span>
+<span class="sd">            sage: Q = Stratum([4,4], k=2)</span>
 <span class="sd">            sage: Q.random_cylindric_permutation()  # random</span>
 <span class="sd">            0 1 2 3 4 5 1 5</span>
 <span class="sd">            2 6 3 6 4 0</span>
@@ -1033,32 +829,32 @@
 
 <span class="sd">           sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: cc = QuadraticStratum(5,genus=0).unique_component()</span>
+<span class="sd">            sage: cc = Stratum({5:1, -1:9}, k=2).unique_component()</span>
 <span class="sd">            sage: cc.orientation_cover_component()</span>
 <span class="sd">            H_4(6)^hyp</span>
 
-<span class="sd">            sage: cc = QuadraticStratum(5,genus=1).unique_component()</span>
+<span class="sd">            sage: cc = Stratum({5:1, -1:5}, k=2).unique_component()</span>
 <span class="sd">            sage: cc.orientation_cover_component()</span>
 <span class="sd">            H_4(6)^odd</span>
 
-<span class="sd">            sage: cc = QuadraticStratum(5,genus=2).unique_component()</span>
+<span class="sd">            sage: cc = Stratum({5:1, -1:1}, k=2).unique_component()</span>
 <span class="sd">            sage: cc.orientation_cover_component()</span>
 <span class="sd">            H_4(6)^even</span>
 
-<span class="sd">            sage: cc = QuadraticStratum(1,1,genus=0).unique_component()</span>
+<span class="sd">            sage: cc = Stratum({1: 2, -1: 6}, k=2).unique_component()</span>
 <span class="sd">            sage: cc.orientation_cover_component()</span>
 <span class="sd">            H_3(2^2)^odd</span>
 
-<span class="sd">            sage: cc = QuadraticStratum(4,genus=0).unique_component()</span>
+<span class="sd">            sage: cc = Stratum({4:1, -1:8}, k=2).unique_component()</span>
 <span class="sd">            sage: cc.orientation_cover_component()</span>
 <span class="sd">            H_3(2^2)^hyp</span>
 
-<span class="sd">            sage: cc = QuadraticStratum(1,1,genus=1).unique_component()</span>
+<span class="sd">            sage: cc = Stratum({1:2, -1:2}, k=2).unique_component()</span>
 <span class="sd">            sage: cc.orientation_cover_component()</span>
 <span class="sd">            H_3(2^2)^hyp</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">stratum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>
-        <span class="n">zeros</span> <span class="o">=</span> <span class="n">stratum</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">poles</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fake_zeros</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">zeros</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span> <span class="k">if</span> <span class="n">d</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
         <span class="n">astratum</span> <span class="o">=</span> <span class="n">stratum</span><span class="o">.</span><span class="n">orientation_cover</span><span class="p">(</span><span class="n">fake_zeros</span><span class="o">=</span><span class="n">fake_zeros</span><span class="p">)</span>
 
         <span class="c1"># 0) easy case: the stratum is connected</span>
@@ -1066,12 +862,13 @@
             <span class="k">return</span> <span class="n">astratum</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
 
         <span class="c1"># 1) canonical construction of Abelian hyperelliptic components</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">zeros</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">stratum</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">zeros</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">stratum</span><span class="o">.</span><span class="n">surface_genus</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">astratum</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
 
         <span class="c1"># 2) other possibility for the hyperelliptic components (low genus</span>
         <span class="c1"># special case for Q(1,1,-1,-1))</span>
-        <span class="k">if</span> <span class="n">zeros</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="n">stratum</span><span class="o">.</span><span class="n">nb_poles</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">nb_poles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">zeros</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">nb_poles</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">astratum</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">()</span>
 
         <span class="c1"># 3) composant with spin</span>
@@ -1097,14 +894,15 @@
 
 <span class="sd">           sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: Q = QuadraticStratum({4:1,-1:4}); Q</span>
+<span class="sd">            sage: Q = Stratum({4:1,-1:4}, k=2)</span>
+<span class="sd">            sage: Q</span>
 <span class="sd">            Q_1(4, -1^4)</span>
 <span class="sd">            sage: c = Q.unique_component()</span>
 <span class="sd">            sage: p = c.random_cylindric_permutation()</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_1(4, -1^4)^c</span>
 
-<span class="sd">            sage: Q = QuadraticStratum(6,6)</span>
+<span class="sd">            sage: Q = Stratum([6,6], k=2)</span>
 <span class="sd">            sage: c_hyp, c_reg, c_irr = Q.components()</span>
 <span class="sd">            sage: (c_hyp, c_reg, c_irr)</span>
 <span class="sd">            (Q_4(6^2)^hyp, Q_4(6^2)^reg, Q_4(6^2)^irr)</span>
@@ -1163,23 +961,23 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: Q = QuadraticStratum({1:1,-1:5})</span>
+<span class="sd">            sage: Q = Stratum({1:1,-1:5}, k=2)</span>
 <span class="sd">            sage: c = Q.unique_component().one_cylinder_diagram()</span>
 <span class="sd">            sage: c</span>
 <span class="sd">            (0,0,1,1,2,2)-(3,3)</span>
 <span class="sd">            sage: c.stratum() == Q</span>
 <span class="sd">            True</span>
 
-<span class="sd">            sage: Q = QuadraticStratum(5,-1)</span>
+<span class="sd">            sage: Q = Stratum([5,-1], k=2)</span>
 <span class="sd">            sage: c = Q.unique_component().one_cylinder_diagram()</span>
 <span class="sd">            sage: c</span>
 <span class="sd">            (0,1,1,2)-(3,0,3,2)</span>
 <span class="sd">            sage: c.stratum() == Q</span>
 <span class="sd">            True</span>
 
-<span class="sd">            sage: QuadraticStratum({-1:4}).unique_component().one_cylinder_diagram()</span>
+<span class="sd">            sage: Stratum({-1:4}, k=2).unique_component().one_cylinder_diagram()</span>
 <span class="sd">            (0,0)-(1,1)</span>
-<span class="sd">            sage: QuadraticStratum({-1:4,0:1}).unique_component().one_cylinder_diagram()</span>
+<span class="sd">            sage: Stratum({-1:4,0:1}, k=2).unique_component().one_cylinder_diagram()</span>
 <span class="sd">            (0,0)-(1,1,2,2)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.separatrix_diagram</span> <span class="kn">import</span> <span class="n">QuadraticCylinderDiagram</span>
@@ -1201,7 +999,7 @@
 <span class="c1">#        &quot;&quot;&quot;</span>
 <span class="c1">#        from separatrix_diagram import CylinderDiagram</span>
 <span class="c1">#        p = self.permutation_representative()</span>
-<span class="c1">#        g = self.stratum().genus()</span>
+<span class="c1">#        g = self.stratum().surface_genus()</span>
 <span class="c1">#        n = len(p)-1</span>
 <span class="c1">#        p.alphabet(range(n+1))</span>
 <span class="c1">#        assert p[0][0] == p[1][-1]</span>
@@ -1339,16 +1137,16 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: R = QuadraticStratum([3,3,3,-1]).regular_component()</span>
-<span class="sd">            sage: R.lyapunov_exponents_H_plus(nb_iterations=2**21) # abs tol .05</span>
+<span class="sd">            sage: R = Stratum([3,3,3,-1], k=2).regular_component()</span>
+<span class="sd">            sage: R.lyapunov_exponents_H_plus(nb_iterations=2**21) # long time # abs tol .05</span>
 <span class="sd">            [0.596, 0.405, 0.202]</span>
-<span class="sd">            sage: sum(_) # abs tol .05</span>
+<span class="sd">            sage: sum(_) # long time # abs tol .05</span>
 <span class="sd">            1.2</span>
 
-<span class="sd">            sage: R = QuadraticStratum([2,2,2,2]).unique_component()</span>
-<span class="sd">            sage: R.lyapunov_exponents_H_plus(nb_iterations=2**21) # abs tol .05</span>
+<span class="sd">            sage: R = Stratum([2,2,2,2], k=2).unique_component()</span>
+<span class="sd">            sage: R.lyapunov_exponents_H_plus(nb_iterations=2**21) # long time # abs tol .05</span>
 <span class="sd">            [0.651, 0.469, 0.243]</span>
-<span class="sd">            sage: sum(_) # abs tol .05</span>
+<span class="sd">            sage: sum(_) # long time # abs tol .05</span>
 <span class="sd">            1.3636</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">permutation_representative</span><span class="p">(</span><span class="n">reduced</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div>
@@ -1364,12 +1162,12 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: Q = QuadraticStratum({1:3, -1:3}).unique_component()</span>
-<span class="sd">            sage: Q.lyapunov_exponents_H_minus(nb_iterations=2**21) # abs tol .05</span>
+<span class="sd">            sage: Q = Stratum({1:3, -1:3}, k=2).unique_component()</span>
+<span class="sd">            sage: Q.lyapunov_exponents_H_minus(nb_iterations=2**21) # long time # abs tol .05</span>
 <span class="sd">            [1.000, 0.369, 0.176]</span>
 
-<span class="sd">            sage: R = QuadraticStratum([3,3,3,-1]).regular_component()</span>
-<span class="sd">            sage: R.lyapunov_exponents_H_minus(nb_iterations=2**21) # abs tol .05</span>
+<span class="sd">            sage: R = Stratum([3,3,3,-1], k=2).regular_component()</span>
+<span class="sd">            sage: R.lyapunov_exponents_H_minus(nb_iterations=2**21) # long time # abs tol .05</span>
 <span class="sd">            [1.000, 0.328, 0.1899, 0.0820]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">perm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">permutation_representative</span><span class="p">(</span><span class="n">reduced</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">orientation_cover</span><span class="p">()</span>
@@ -1399,25 +1197,25 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: QuadraticStratum(-1,-1,-1,-1).permutation_representative()</span>
+<span class="sd">            sage: Stratum([-1,-1,-1,-1], k=2).permutation_representative()</span>
 <span class="sd">            0 1 1</span>
 <span class="sd">            2 2 0</span>
-<span class="sd">            sage: QuadraticStratum(1,genus=0).permutation_representative()</span>
+<span class="sd">            sage: Stratum({1:1, -1:5}, k=2).permutation_representative()</span>
 <span class="sd">            0 1 1</span>
 <span class="sd">            2 2 3 3 4 4 0</span>
-<span class="sd">            sage: QuadraticStratum(2,genus=0).permutation_representative()</span>
+<span class="sd">            sage: Stratum({2:1, -1:6}, k=2).permutation_representative()</span>
 <span class="sd">            0 1 1</span>
 <span class="sd">            2 2 3 3 4 4 5 5 0</span>
-<span class="sd">            sage: QuadraticStratum([1,1],genus=0).permutation_representative()</span>
+<span class="sd">            sage: Stratum({1:2, -1:6}, k=2).permutation_representative()</span>
 <span class="sd">            0 1 1</span>
 <span class="sd">            2 2 3 4 4 5 5 3 6 6 0</span>
-<span class="sd">            sage: QuadraticStratum([2,1],genus=0).permutation_representative()</span>
+<span class="sd">            sage: Stratum({2:1, 1:1, -1:7}, k=2).permutation_representative()</span>
 <span class="sd">            0 1 1</span>
 <span class="sd">            2 2 3 3 4 5 5 6 6 4 7 7 0</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">nb_poles</span><span class="p">()</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">nb_fake_zeros</span><span class="p">()</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">fake_zeros</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">poles</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span> <span class="k">if</span> <span class="n">m</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 
         <span class="n">ll</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">f</span><span class="p">:</span> <span class="n">ll</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="s1">&#39;0&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="nb">range</span><span class="p">(</span><span class="n">f</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
@@ -1466,16 +1264,16 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: QuadraticStratum([2],genus=1).permutation_representative()</span>
+<span class="sd">            sage: Stratum({2: 1, -1: 2}, k=2).permutation_representative()</span>
 <span class="sd">            0 1 2 2</span>
 <span class="sd">            1 3 3 0</span>
-<span class="sd">            sage: QuadraticStratum([3],genus=1).permutation_representative()</span>
+<span class="sd">            sage: Stratum({3: 1, -1: 3}, k=2).permutation_representative()</span>
 <span class="sd">            0 1 2 2 3 3</span>
 <span class="sd">            1 4 4 0</span>
-<span class="sd">            sage: QuadraticStratum([1,1],genus=1).permutation_representative()</span>
+<span class="sd">            sage: Stratum({1: 2, -1: 2}, k=2).permutation_representative()</span>
 <span class="sd">            0 1 2 3 3</span>
 <span class="sd">            2 1 4 4 0</span>
-<span class="sd">            sage: Q = QuadraticStratum([2,1],genus=1)</span>
+<span class="sd">            sage: Q = Stratum({2: 1, 1: 1, -1: 3}, k=2)</span>
 <span class="sd">            sage: Q.permutation_representative(alphabet=&#39;abcdef&#39;)</span>
 <span class="sd">            a b c c d e e</span>
 <span class="sd">            d b f f a</span>
@@ -1484,12 +1282,12 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: QuadraticStratum([1],genus=1).permutation_representative()</span>
+<span class="sd">            sage: Stratum({1: 1, -1: 1}, k=2).permutation_representative()</span>
 <span class="sd">            Traceback (most recent call last):</span>
 <span class="sd">            ...</span>
 <span class="sd">            EmptySetError: The stratum is empty</span>
 
-<span class="sd">            sage: Q = QuadraticStratum(2,-1,-1,0)</span>
+<span class="sd">            sage: Q = Stratum([2,-1,-1,0], k=2)</span>
 <span class="sd">            sage: p = Q.permutation_representative()</span>
 <span class="sd">            sage: p</span>
 <span class="sd">            0 1 2 3 3</span>
@@ -1497,9 +1295,9 @@
 <span class="sd">            sage: p.stratum() == Q</span>
 <span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">nb_poles</span><span class="p">()</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">nb_fake_zeros</span><span class="p">()</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">fake_zeros</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">poles</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span> <span class="k">if</span> <span class="n">m</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 
         <span class="n">l0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">p</span><span class="p">):</span>
@@ -1550,28 +1348,28 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: Q = QuadraticStratum([1,1,1,1],genus=2)</span>
+<span class="sd">            sage: Q = Stratum({1: 4}, k=2)</span>
 <span class="sd">            sage: H = Q.hyperelliptic_component()</span>
 <span class="sd">            sage: H.permutation_representative()</span>
 <span class="sd">            0 1 2 3 1 4 5</span>
 <span class="sd">            2 6 5 4 6 3 0</span>
 
-<span class="sd">            sage: Q = QuadraticStratum([2,1,1],genus=2)</span>
+<span class="sd">            sage: Q = Stratum([2,1,1], k=2)</span>
 <span class="sd">            sage: H = Q.hyperelliptic_component()</span>
 <span class="sd">            sage: H.permutation_representative(alphabet=&#39;abcdef&#39;)</span>
 <span class="sd">            a b c b d e</span>
 <span class="sd">            f e d f c a</span>
 
 
-<span class="sd">            sage: Q = QuadraticStratum([2,2],genus=2)</span>
+<span class="sd">            sage: Q = Stratum([2,2], k=2)</span>
 <span class="sd">            sage: H = Q.hyperelliptic_component()</span>
 <span class="sd">            sage: H.permutation_representative()</span>
 <span class="sd">            0 1 2 1 3</span>
 <span class="sd">            4 3 4 2 0</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">nb_poles</span><span class="p">()</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">nb_fake_zeros</span><span class="p">()</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">fake_zeros</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">poles</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span> <span class="k">if</span> <span class="n">m</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">f</span><span class="p">:</span> <span class="n">ll</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="s1">&#39;0&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="nb">range</span><span class="p">(</span><span class="n">f</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
         <span class="k">else</span><span class="p">:</span> <span class="n">ll</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1626,20 +1424,20 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: Q = QuadraticStratum([6],genus=2)</span>
+<span class="sd">            sage: Q = Stratum({6: 1, -1: 2}, k=2)</span>
 <span class="sd">            sage: N = Q.non_hyperelliptic_component()</span>
 <span class="sd">            sage: N.permutation_representative()</span>
 <span class="sd">            0 1 2 1 3</span>
 <span class="sd">            3 4 4 5 5 2 0</span>
-<span class="sd">            sage: Q = QuadraticStratum([3,3],genus=2)</span>
+<span class="sd">            sage: Q = Stratum({3: 2, -1: 2}, k=2)</span>
 <span class="sd">            sage: N = Q.non_hyperelliptic_component()</span>
 <span class="sd">            sage: N.permutation_representative()</span>
 <span class="sd">            0 1 2 1 3</span>
 <span class="sd">            4 3 5 5 4 6 6 2 0</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">nb_poles</span><span class="p">()</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">nb_fake_zeros</span><span class="p">()</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">fake_zeros</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">poles</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span> <span class="k">if</span> <span class="n">m</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">4</span><span class="p">,):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The stratum Q(4) is empty!&quot;</span><span class="p">)</span>
@@ -1700,22 +1498,22 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: cc = QuadraticStratum([6],genus=2).hyperelliptic_component()</span>
+<span class="sd">            sage: cc = Stratum({6:1, -1:2}, k=2).hyperelliptic_component()</span>
 <span class="sd">            sage: cc.permutation_representative()</span>
 <span class="sd">            0 1 2 3 4 1</span>
 <span class="sd">            5 4 3 2 5 0</span>
-<span class="sd">            sage: cc = QuadraticStratum([3,3],genus=2).hyperelliptic_component()</span>
+<span class="sd">            sage: cc = Stratum({3: 2, -1: 2}, k=2).hyperelliptic_component()</span>
 <span class="sd">            sage: cc.permutation_representative()</span>
 <span class="sd">            0 1 2 3 4 5 1</span>
 <span class="sd">            6 5 4 3 2 6 0</span>
-<span class="sd">            sage: cc = QuadraticStratum(10,10).hyperelliptic_component()</span>
+<span class="sd">            sage: cc = Stratum([10,10], k=2).hyperelliptic_component()</span>
 <span class="sd">            sage: cc.permutation_representative()</span>
 <span class="sd">            0 1 2 3 4 5 6 1 7 8 9 10 11</span>
 <span class="sd">            11 10 9 8 7 12 6 5 4 3 2 12 0</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">nb_poles</span><span class="p">()</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">nb_fake_zeros</span><span class="p">()</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">fake_zeros</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">poles</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span> <span class="k">if</span> <span class="n">m</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">ll</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;0&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">f</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
@@ -1728,7 +1526,7 @@
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
             <span class="n">r</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
             <span class="n">s</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
-        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">z</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">%</span><span class="mi">2</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">z</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>
             <span class="n">r</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
             <span class="n">s</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">//</span><span class="mi">2</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
@@ -1794,35 +1592,35 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: cc = QuadraticStratum(6,-1,-1).non_hyperelliptic_component()</span>
+<span class="sd">            sage: cc = Stratum([6,-1,-1], k=2).non_hyperelliptic_component()</span>
 <span class="sd">            sage: p = cc.permutation_representative(); p</span>
 <span class="sd">            0 1 2 1 3</span>
 <span class="sd">            3 4 4 5 5 2 0</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_2(6, -1^2)^nonhyp</span>
 
-<span class="sd">            sage: cc = QuadraticStratum([3,3],genus=2).non_hyperelliptic_component()</span>
+<span class="sd">            sage: cc = Stratum({3: 2, -1: 2}, k=2).non_hyperelliptic_component()</span>
 <span class="sd">            sage: p = cc.permutation_representative(); p</span>
 <span class="sd">            0 1 2 1 3</span>
 <span class="sd">            4 3 5 5 4 6 6 2 0</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_2(3^2, -1^2)^nonhyp</span>
 
-<span class="sd">            sage: cc = QuadraticStratum(8).unique_component()</span>
+<span class="sd">            sage: cc = Stratum([8], k=2).unique_component()</span>
 <span class="sd">            sage: p = cc.permutation_representative(); p</span>
 <span class="sd">            0 1 2 1 2 3</span>
 <span class="sd">            4 5 4 5 3 0</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_3(8)^c</span>
 
-<span class="sd">            sage: Q = QuadraticStratum(4,4).unique_component()</span>
+<span class="sd">            sage: Q = Stratum([4,4], k=2).unique_component()</span>
 <span class="sd">            sage: p = Q.permutation_representative(); p</span>
 <span class="sd">            0 1 2 3 2 3 4</span>
 <span class="sd">            5 6 5 6 1 4 0</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_3(4^2)^c</span>
 
-<span class="sd">            sage: Q = QuadraticStratum({12:1,-1:4}).unique_component()</span>
+<span class="sd">            sage: Q = Stratum({12:1,-1:4}, k=2).unique_component()</span>
 <span class="sd">            sage: p = Q.permutation_representative()</span>
 <span class="sd">            sage: p</span>
 <span class="sd">            0 1 2 1 2 3 3 4 4 5 5 6 6 7</span>
@@ -1830,10 +1628,11 @@
 <span class="sd">            sage: p.stratum()</span>
 <span class="sd">            Q_3(12, -1^4)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">nb_poles</span><span class="p">()</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">nb_fake_zeros</span><span class="p">()</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">fake_zeros</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">poles</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">//</span><span class="mi">4</span><span class="o">+</span><span class="mi">1</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span> <span class="k">if</span> <span class="n">m</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="o">//</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">1</span>
 
         <span class="k">if</span> <span class="n">f</span><span class="p">:</span> <span class="n">ll</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="s1">&#39;0&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="nb">range</span><span class="p">(</span><span class="n">f</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
         <span class="k">else</span><span class="p">:</span> <span class="n">ll</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1898,56 +1697,56 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: cc = QuadraticStratum(9,-1).regular_component()</span>
+<span class="sd">            sage: cc = Stratum([9,-1], k=2).regular_component()</span>
 <span class="sd">            sage: p = cc.permutation_representative(); p</span>
 <span class="sd">            0 1 2 1 2 3 3 4</span>
 <span class="sd">            5 6 5 6 4 0</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_3(9, -1)^reg</span>
 
-<span class="sd">            sage: cc = QuadraticStratum(6,3,-1).regular_component()</span>
+<span class="sd">            sage: cc = Stratum([6,3,-1], k=2).regular_component()</span>
 <span class="sd">            sage: p = cc.permutation_representative(); p</span>
 <span class="sd">            0 1 2 3 1 2 4 4 5</span>
 <span class="sd">            6 7 6 7 3 5 0</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_3(6, 3, -1)^reg</span>
 
-<span class="sd">            sage: cc = QuadraticStratum(12).regular_component()</span>
+<span class="sd">            sage: cc = Stratum([12], k=2).regular_component()</span>
 <span class="sd">            sage: p = cc.permutation_representative(); p</span>
 <span class="sd">            0 1 2 1 2 3 4 3 4 5</span>
 <span class="sd">            5 6 7 6 7 0</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_4(12)^reg</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">nb_poles</span><span class="p">()</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">nb_fake_zeros</span><span class="p">()</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">fake_zeros</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">poles</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">d</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">())</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">d</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">())</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span> <span class="k">if</span> <span class="n">d</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="n">f</span><span class="p">:</span> <span class="n">ll</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">f</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
         <span class="k">else</span><span class="p">:</span> <span class="n">ll</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-        <span class="k">if</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">12</span><span class="p">,):</span>
+        <span class="k">if</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">12</span><span class="p">]:</span>
             <span class="n">l0</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
             <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
             <span class="n">l0</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
             <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">]:</span>
             <span class="n">l0</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">]</span>
             <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
             <span class="n">l0</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
             <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
             <span class="n">l0</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
             <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
             <span class="n">l0</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
             <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
             <span class="n">l0</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
             <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
             <span class="n">l0</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
             <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1989,57 +1788,56 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: cc = QuadraticStratum(9,-1).irregular_component()</span>
+<span class="sd">            sage: cc = Stratum([9,-1], k=2).irregular_component()</span>
 <span class="sd">            sage: p = cc.permutation_representative(); p</span>
 <span class="sd">            0 1 2 3 4 1 2 3 4 5</span>
 <span class="sd">            5 6 6 0</span>
 <span class="sd">            sage: p.stratum_component()  # optional</span>
 <span class="sd">            Q_3(9, -1)^irr</span>
 
-<span class="sd">            sage: cc = QuadraticStratum(6,3,-1).irregular_component()</span>
+<span class="sd">            sage: cc = Stratum([6,3,-1], k=2).irregular_component()</span>
 <span class="sd">            sage: p = cc.permutation_representative(); p</span>
 <span class="sd">            0 1 2 3 4 5 1 2 3 4 5 6</span>
 <span class="sd">            6 7 7 0</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_3(6, 3, -1)^irr</span>
 
-<span class="sd">            sage: cc = QuadraticStratum(12).irregular_component()</span>
+<span class="sd">            sage: cc = Stratum([12], k=2).irregular_component()</span>
 <span class="sd">            sage: p = cc.permutation_representative(); p</span>
 <span class="sd">            0 1 2 3 4 5 6 5</span>
 <span class="sd">            7 6 4 7 3 2 1 0</span>
 <span class="sd">            sage: p.stratum_component()</span>
 <span class="sd">            Q_4(12)^irr</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">nb_poles</span><span class="p">()</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">nb_fake_zeros</span><span class="p">()</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">fake_zeros</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">poles</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">d</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">())</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">d</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">())</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span> <span class="k">if</span> <span class="n">d</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="n">f</span><span class="p">:</span> <span class="n">ll</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="s1">&#39;0&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="nb">range</span><span class="p">(</span><span class="n">f</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
         <span class="k">else</span><span class="p">:</span> <span class="n">ll</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-        <span class="k">if</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">12</span><span class="p">,):</span>
+        <span class="k">if</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">12</span><span class="p">]:</span>
             <span class="n">l0</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
             <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
             <span class="n">l0</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
             <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">]:</span>
             <span class="n">l0</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
             <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
             <span class="n">l0</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
             <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
             <span class="n">l0</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
             <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
             <span class="n">l0</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
             <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
             <span class="n">l0</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
             <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">z</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
             <span class="n">l0</span> <span class="o">=</span> <span class="n">ll</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
             <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -2347,9 +2145,11 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">QuadraticStratum</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="k">return</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_genus</span> <span class="ow">and</span>
-                <span class="n">c</span><span class="o">.</span><span class="n">nb_poles</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_nb_poles</span> <span class="ow">and</span>
-                <span class="n">c</span><span class="o">.</span><span class="n">nb_poles</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_nb_poles</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">z</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">signature</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">surface_genus</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_genus</span> <span class="ow">and</span>
+                <span class="n">p</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_nb_poles</span> <span class="ow">and</span>
+                <span class="n">p</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_nb_poles</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_repr_base_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -2385,11 +2185,11 @@
             <span class="n">s</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">g</span><span class="o">-</span><span class="mi">4</span><span class="o">+</span><span class="n">nb_poles</span>
             <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">g</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="k">yield</span> <span class="n">QuadraticStratum</span><span class="p">({</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">})</span>
+                    <span class="k">yield</span> <span class="n">Stratum</span><span class="p">({</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">},</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
                 <span class="n">nb_poles</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">continue</span>
             <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">Partitions</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-                <span class="n">Q</span> <span class="o">=</span> <span class="n">QuadraticStratum</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">+</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">nb_poles</span><span class="p">)</span>
+                <span class="n">Q</span> <span class="o">=</span> <span class="n">Stratum</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">+</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">nb_poles</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">Q</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
                     <span class="k">yield</span> <span class="n">Q</span>
             <span class="n">nb_poles</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -2425,8 +2225,8 @@
             <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;empty list&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">g</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Q(4) and Q(3,1) are empty</span>
-            <span class="k">return</span> <span class="n">QuadraticStratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">QuadraticStratum</span><span class="p">([</span><span class="mi">4</span><span class="o">*</span><span class="n">g</span><span class="o">-</span><span class="mi">4</span><span class="o">+</span><span class="n">p</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">p</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="n">Stratum</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Stratum</span><span class="p">([</span><span class="mi">4</span><span class="o">*</span><span class="n">g</span><span class="o">-</span><span class="mi">4</span><span class="o">+</span><span class="n">p</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
 
 
     <span class="n">an_element_</span> <span class="o">=</span> <span class="n">first</span>
@@ -2479,7 +2279,7 @@
         <span class="k">if</span> <span class="n">g</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># Q(0) and Q(1,-1) are empty</span>
             <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;empty list&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">QuadraticStratum</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">g</span><span class="o">-</span><span class="mi">4</span><span class="o">+</span><span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">p</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Stratum</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">g</span><span class="o">-</span><span class="mi">4</span><span class="o">+</span><span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
 </div>
 
 
@@ -2585,24 +2385,25 @@
 <span class="sd">            sage: from surface_dynamics import *</span>
 
 <span class="sd">            sage: q = QuadraticStrata(dimension=7, fake_zeros=False)</span>
-<span class="sd">            sage: QuadraticStratum(5, 2, 1) in q</span>
+<span class="sd">            sage: Stratum([5, 2, 1], k=2) in q</span>
 <span class="sd">            True</span>
-<span class="sd">            sage: QuadraticStratum(7, 1, 0) in q</span>
+<span class="sd">            sage: Stratum([7, 1, 0], k=2) in q</span>
 <span class="sd">            False</span>
 
 <span class="sd">            sage: q = QuadraticStrata(dimension=7, fake_zeros=True)</span>
-<span class="sd">            sage: QuadraticStratum(5, 2, 1) in q</span>
+<span class="sd">            sage: Stratum([5, 2, 1], k=2) in q</span>
 <span class="sd">            True</span>
-<span class="sd">            sage: QuadraticStratum(7, 1, 0) in q</span>
+<span class="sd">            sage: Stratum([7, 1, 0], k=2) in q</span>
 <span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">QuadraticStratum</span><span class="p">)</span> <span class="ow">and</span>
-                <span class="n">c</span><span class="o">.</span><span class="n">dimension</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dimension</span> <span class="ow">and</span>
-                <span class="n">c</span><span class="o">.</span><span class="n">nb_poles</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_nb_poles</span> <span class="ow">and</span>
-                <span class="n">c</span><span class="o">.</span><span class="n">nb_poles</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_nb_poles</span> <span class="ow">and</span>
-                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fake_zeros</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">c</span><span class="o">.</span><span class="n">nb_fake_zeros</span><span class="p">()))</span>
-
-        <span class="n">z</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">zeros</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Stratum</span><span class="p">)</span> <span class="ow">or</span> <span class="n">c</span><span class="o">.</span><span class="n">_k</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">d</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">signature</span><span class="p">())</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">d</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">signature</span><span class="p">())</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">dimension</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dimension</span> <span class="ow">and</span>
+                <span class="n">p</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_nb_poles</span> <span class="ow">and</span>
+                <span class="n">p</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_nb_poles</span> <span class="ow">and</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fake_zeros</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">f</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_repr_base_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -2659,14 +2460,14 @@
             <span class="k">for</span> <span class="n">nb_fake_zeros</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dimension</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
                 <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dimension</span> <span class="o">-</span> <span class="n">nb_fake_zeros</span>
                 <span class="k">for</span> <span class="n">Q</span> <span class="ow">in</span> <span class="n">QuadraticStrata_d</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_nb_poles</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_nb_poles</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-                    <span class="k">yield</span> <span class="n">QuadraticStratum</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">zeros</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span> <span class="o">*</span> <span class="n">nb_fake_zeros</span><span class="p">)</span>
+                    <span class="k">yield</span> <span class="n">Stratum</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span> <span class="o">*</span> <span class="n">nb_fake_zeros</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="kn">from</span> <span class="nn">sage.combinat.partition</span> <span class="kn">import</span> <span class="n">Partitions</span>
 
         <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dimension</span>
         <span class="k">if</span> <span class="n">d</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">QuadraticStratum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">Stratum</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">m</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_nb_poles</span><span class="p">)</span>
             <span class="n">M</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">d</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_nb_poles</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
@@ -2675,7 +2476,7 @@
                     <span class="c1"># d+z+p is 0 mod 2</span>
                     <span class="c1"># 2d-2z-2p &gt;= -4 (or z &lt;= d+2-p)</span>
                     <span class="k">for</span> <span class="n">Z</span> <span class="ow">in</span> <span class="n">Partitions</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">d</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">z</span><span class="o">-</span><span class="n">p</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">z</span><span class="p">):</span>
-                        <span class="n">Q</span> <span class="o">=</span> <span class="n">QuadraticStratum</span><span class="p">(</span><span class="n">Z</span><span class="o">+</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">p</span><span class="p">)</span>
+                        <span class="n">Q</span> <span class="o">=</span> <span class="n">Stratum</span><span class="p">(</span><span class="n">Z</span><span class="o">+</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
                         <span class="k">if</span> <span class="ow">not</span> <span class="n">Q</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
                             <span class="k">yield</span> <span class="n">Q</span></div>
 
@@ -2751,7 +2552,7 @@
 
 <span class="sd">        TESTS::</span>
 
-<span class="sd">            sage: from surface_dynamics import *</span>
+<span class="sd">            sage: from surface_dynamics import Stratum, QuadraticStrata</span>
 
 <span class="sd">            sage: Q1 = QuadraticStrata(dimension=7, genus=2, fake_zeros=True)</span>
 <span class="sd">            sage: Q2 = QuadraticStrata(dimension=7, genus=2, fake_zeros=False)</span>
@@ -2763,13 +2564,13 @@
 <span class="sd">            sage: all(s in Q2 for s in Q1)</span>
 <span class="sd">            False</span>
 
-<span class="sd">            sage: q = QuadraticStratum({-1:4})</span>
+<span class="sd">            sage: q = Stratum({-1:4}, k=2)</span>
 <span class="sd">            sage: q in QuadraticStrata(genus=0, dimension=2, fake_zeros=False)</span>
 <span class="sd">            True</span>
 <span class="sd">            sage: q in QuadraticStrata(genus=0, dimension=2, fake_zeros=True)</span>
 <span class="sd">            True</span>
 
-<span class="sd">            sage: q = QuadraticStratum({-1:4,0:1})</span>
+<span class="sd">            sage: q = Stratum({-1:4,0:1}, k=2)</span>
 <span class="sd">            sage: q in QuadraticStrata(genus=0, dimension=3, fake_zeros=False)</span>
 <span class="sd">            False</span>
 <span class="sd">            sage: q in QuadraticStrata(genus=0, dimension=3, fake_zeros=True)</span>
@@ -2779,12 +2580,15 @@
 <span class="sd">            sage: all(s in Q for s in Q)</span>
 <span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">QuadraticStratum</span><span class="p">)</span> <span class="ow">and</span>
-                <span class="n">c</span><span class="o">.</span><span class="n">dimension</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dimension</span> <span class="ow">and</span>
-                <span class="n">c</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_genus</span> <span class="ow">and</span>
-                <span class="n">c</span><span class="o">.</span><span class="n">nb_poles</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_nb_poles</span> <span class="ow">and</span>
-                <span class="n">c</span><span class="o">.</span><span class="n">nb_poles</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_nb_poles</span> <span class="ow">and</span>
-                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fake_zeros</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">c</span><span class="o">.</span><span class="n">nb_fake_zeros</span><span class="p">()))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Stratum</span><span class="p">)</span> <span class="ow">or</span> <span class="n">c</span><span class="o">.</span><span class="n">_k</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">np</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">z</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">signature</span><span class="p">())</span>
+        <span class="n">nf</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">z</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">signature</span><span class="p">())</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">dimension</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dimension</span> <span class="ow">and</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">surface_genus</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_genus</span> <span class="ow">and</span>
+                <span class="n">np</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_nb_poles</span> <span class="ow">and</span>
+                <span class="n">np</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_nb_poles</span> <span class="ow">and</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fake_zeros</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">nf</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_repr_base_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -2803,7 +2607,7 @@
 
 <span class="sd">        TESTS::</span>
 
-<span class="sd">            sage: from surface_dynamics import *</span>
+<span class="sd">            sage: from surface_dynamics import QuadraticStrata</span>
 
 <span class="sd">            sage: for q in QuadraticStrata(genus=1, dimension=6): print(q)</span>
 <span class="sd">            Q_1(1^3, -1^3)</span>
@@ -2823,7 +2627,7 @@
             <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dimension</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">QuadraticStrata_gd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_genus</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dimension</span> <span class="o">-</span> <span class="n">n</span><span class="p">,</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_min_nb_poles</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_nb_poles</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-                    <span class="k">yield</span> <span class="n">QuadraticStratum</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">zeros</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span><span class="o">*</span><span class="n">n</span><span class="p">)</span>
+                    <span class="k">yield</span> <span class="n">Stratum</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">signature</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span><span class="o">*</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="kn">from</span> <span class="nn">sage.combinat.partition</span> <span class="kn">import</span> <span class="n">Partitions</span>
@@ -2831,14 +2635,14 @@
         <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_genus</span>
         <span class="k">if</span> <span class="n">d</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">g</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_nb_poles</span> <span class="o">&lt;=</span> <span class="mi">4</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_nb_poles</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="n">QuadraticStratum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">yield</span> <span class="n">Stratum</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">m</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_min_nb_poles</span><span class="p">)</span>
             <span class="n">M</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">d</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_nb_poles</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">M</span><span class="p">):</span>
                 <span class="n">z</span> <span class="o">=</span> <span class="n">d</span> <span class="o">-</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">g</span> <span class="o">+</span> <span class="mi">2</span>
                 <span class="k">for</span> <span class="n">Z</span> <span class="ow">in</span> <span class="n">Partitions</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">d</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">z</span><span class="o">-</span><span class="n">p</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="n">z</span><span class="p">):</span>
-                    <span class="n">Q</span> <span class="o">=</span> <span class="n">QuadraticStratum</span><span class="p">(</span><span class="n">Z</span><span class="o">+</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">p</span><span class="p">)</span>
+                    <span class="n">Q</span> <span class="o">=</span> <span class="n">Stratum</span><span class="p">(</span><span class="n">Z</span><span class="o">+</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">Q</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
                         <span class="k">yield</span> <span class="n">Q</span></div>
 
@@ -2854,7 +2658,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2021-2023, the surface-dynamics authors
+                Copyright &#169; 2021-$RELEASE_YEAR, the surface-dynamics authors
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -2874,9 +2678,9 @@
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=1dd76d02"></script>
+</div><script src="../../../_static/documentation_options.js?v=8fa8b3e9"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../../_static/scripts/furo.js?v=4e2eecee"></script>
+    <script src="../../../_static/scripts/furo.js?v=5fa4622c"></script>
     </body>
 </html>
