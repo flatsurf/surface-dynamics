@@ -49,3 +49,7 @@ jobs:
           FOLDER: html/surface-dynamics
           TARGET_FOLDER: docs/
         if: ${{ github.event_name == 'push' }}
+
+env:
+  MAKEFLAGS: -j4
+  SAGE_NUM_THREADS: 4
