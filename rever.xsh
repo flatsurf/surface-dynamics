@@ -43,7 +43,7 @@ $ACTIVITIES = [
 $VERSION_BUMP_PATTERNS = [
     ('surface_dynamics/version.py', r"version=", r"version='$VERSION'"),
     ('doc/source/conf.py', r"release = ", r"release = '$VERSION'"),
-    ('doc/conf.py', r'copyright = ', "copyright = \"2021-$RELEASE_YEAR, the surface-dynamics authors\""),
+    ('doc/source/conf.py', r'copyright = ', "copyright = \"2021-$RELEASE_YEAR, the surface-dynamics authors\""),
 ]
 
 $CHANGELOG_FILENAME = 'NEWS'
