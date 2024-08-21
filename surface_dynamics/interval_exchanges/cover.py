@@ -1391,7 +1391,8 @@ class RegularCover(PermutationCover):
 
     def degree(self):
         try:
-            d = self._grp.cardinality()
+            from sage.rings.integer_ring import ZZ
+            d = ZZ(self._grp.cardinality())
         except AttributeError:
             # cardinality not implemented yet on GroupLibGAP
             d = self._grp._libgap.Size().sage()
