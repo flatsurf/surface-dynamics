@@ -11,8 +11,10 @@ dependencies:
   - jupyter_sphinx
   - jupytext
   - myst-nb
-  - furo
+  # Force a recent furo to work around CSS errors
+  - furo=2024.8.6
+  - linkchecker
+  - sphinx_rtd_theme
   - pip
   - pip:
-    - linkchecker
-    - sphinx_rtd_theme
+    - sage-docbuild==10.3

@@ -9,38 +9,78 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         include:
           - optionals: "sage,pplpy"
             sagelib: "9.3"
+            python: "3.9"
           # Test SageMath 9.3 with all compiled optional dependencies that were
           # packaged in conda-forge at the time (the others cannot be installed
           # because of FLINT incompatibilities)
           - optionals: "sage,pplpy,sage_flatsurf"
             sagelib: "9.3"
+            python: "3.9"
           - optionals: "sage,pplpy"
             sagelib: "9.4"
+            python: "3.9"
           - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
             sagelib: "9.4"
+            python: "3.9"
           - optionals: "sage,pplpy"
             sagelib: "9.5"
+            python: "3.9"
           - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
             sagelib: "9.5"
+            python: "3.9"
           - optionals: "sage,pplpy"
             sagelib: "9.6"
+            python: "3.10"
           - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
             sagelib: "9.6"
+            python: "3.10"
           - optionals: "sage,pplpy"
             sagelib: "9.7"
+            python: "3.10"
           - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
             sagelib: "9.7"
+            python: "3.10"
+          - optionals: "sage,pplpy"
+            sagelib: "9.8"
+            python: "3.10"
+          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+            sagelib: "9.8"
+            python: "3.10"
+          - optionals: "sage,pplpy"
+            sagelib: "10.0"
+            python: "3.10"
+          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+            sagelib: "10.0"
+            python: "3.10"
+          - optionals: "sage,pplpy"
+            sagelib: "10.1"
+            python: "3.10"
+          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+            sagelib: "10.1"
+            python: "3.10"
+          - optionals: "sage,pplpy"
+            sagelib: "10.2"
+            python: "3.10"
+          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+            sagelib: "10.2"
+            python: "3.10"
+          - optionals: "sage,pplpy"
+            sagelib: "10.3"
+            python: "3.10"
+          - optionals: "sage,pplpy,gmpxxyy,pyeantic,pyintervalxt,sage_flatsurf"
+            sagelib: "10.3"
+            python: "3.10"
     steps:
       - uses: actions/checkout@v2
         with: { submodules: recursive }
       - uses: conda-incubator/setup-miniconda@v2
-        with: { miniforge-variant: "Mambaforge", miniforge-version: "latest" }
+        with: { miniforge-variant: "Mambaforge", miniforge-version: "latest", python-version: "${{ matrix.python }}" }
       - name: Install dependencies
         shell: bash -l {0}
         run: |

@@ -939,10 +939,10 @@ class PermutationCover(object):
             ....:                    ((8,1,2,4), [0,0,1,2,2])]:
             ....:     c1 = cyclic_cover(*dat)
             ....:     c2 = cyclic_cover_regular(*dat)
-            ....:     assert c1.isotypic_projectors(floating_point=True)[1] == ans
-            ....:     assert c1.isotypic_projectors(floating_point=False)[1] == ans
-            ....:     assert c2.isotypic_projectors(floating_point=True)[1] == ans
-            ....:     assert c2.isotypic_projectors(floating_point=False)[1] == ans
+            ....:     assert sorted(c1.isotypic_projectors(floating_point=True)[1]) == ans
+            ....:     assert sorted(c1.isotypic_projectors(floating_point=False)[1]) == ans
+            ....:     assert sorted(c2.isotypic_projectors(floating_point=True)[1]) == ans
+            ....:     assert sorted(c2.isotypic_projectors(floating_point=False)[1]) == ans
             ....:     assert c1.genus() == sum(ans)
         """
         if characters is None or characters is True:
@@ -1391,7 +1391,8 @@ class RegularCover(PermutationCover):
 
     def degree(self):
         try:
-            d = self._grp.cardinality()
+            from sage.rings.integer_ring import ZZ
+            d = ZZ(self._grp.cardinality())
         except AttributeError:
             # cardinality not implemented yet on GroupLibGAP
             d = self._grp._libgap.Size().sage()

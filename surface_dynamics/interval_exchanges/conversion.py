@@ -40,7 +40,8 @@ def iet_to_pyintervalxt(T):
         sage: x = polygen(QQ)
         sage: K.<sqrt2> = NumberField(x^2 - 2, embedding=AA(2).sqrt())
         sage: T = iet.IntervalExchangeTransformation(p, [1, sqrt2, sqrt2-1])
-        sage: iet_to_pyintervalxt(T)  # optional: pyeantic  # optional: pyintervalxt
+        sage: T = iet_to_pyintervalxt(T)  # optional: pyeantic  # optional: pyintervalxt  # random output due to deprecation warnings from cppyy
+        sage: T  # optional: pyintervalxt
         [a: 1] [b: (sqrt2 ~ 1.4142136)] [c: (sqrt2-1 ~ 0.41421356)] / [c] [b] [a]
     """
     try:

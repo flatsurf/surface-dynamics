@@ -3,7 +3,7 @@ import sage_docbuild.conf
 # -- Project information -----------------------------------------------------
 
 project = 'surface-dynamics'
-copyright = '2021-2023, the surface-dynamics authors'
+copyright = '2021-2024, the surface-dynamics authors'
 author = 'the surface-dynamics authors'
 
 # The full version, including alpha/beta/rc tags
@@ -59,12 +59,16 @@ pygments_style = sage_docbuild.conf.pygments_style
 pygments_dark_style = sage_docbuild.conf.pygments_dark_style
 html_css_files = sage_docbuild.conf.html_css_files
 
-if html_css_files != ["custom-furo.css"]:
+if html_css_files != ["custom-furo.css", "custom-jupyter-sphinx.css", "custom-codemirror-monokai.css"]:
     raise NotImplementedError(
         "CSS customization has changed in SageMath. The configuration of surface-dynamics documentation build needs to be updated."
     )
 
-html_css_files = ["https://doc.sagemath.org/html/en/reference/_static/custom-furo.css"]
+html_css_files = [
+    "https://doc.sagemath.org/html/en/reference/_static/custom-furo.css",
+    "https://doc.sagemath.org/html/en/reference/_static/custom-jupyter-sphinx.css",
+    "https://doc.sagemath.org/html/en/reference/_static/custom-codemirror-monokai.css",
+]
 
 # There is no surface-dynamics logo yet.
 html_theme_options["light_logo"] = html_theme_options["dark_logo"] = "logo.svg"
@@ -98,3 +102,5 @@ nitpick_ignore = [
         ('py:class', 'surface_dynamics.misc.sql_db.SQLDatabase'),
 ]
 
+def setup(app):
+    app.connect('autodoc-process-docstring', sage_docbuild.conf.skip_TESTS_block)
