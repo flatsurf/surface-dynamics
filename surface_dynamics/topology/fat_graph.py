@@ -245,6 +245,10 @@ class FatGraph(object):
                 raise ValueError('the fat graph with no edge has a single vertex and a single face (nv={}, nf={})'.format(nv, nf))
             return
 
+        for i in range(n):
+            if fp[vp[i] ^ 1] != i:
+                raise error("fp[ep[vp[%d]]] = %d" % (i, fp[vp[i] ^ 1]))
+
         ffd = [0] * nf
         vvd = [0] * nv
 
@@ -254,8 +258,6 @@ class FatGraph(object):
             raise ValueError('invalid face labels: {} (n={}, nf={})'.format(sorted(set(fl[:n])), n, nf))
 
         for i in range(n):
-            if fp[vp[i] ^ 1] != i:
-                raise error("fp[ep[vp[%d]]] = %d" % (i, fp[vp[i] ^ 1]))
             if fl[i] < 0 or fl[i] >= nf:
                 raise error("face label out of range: fl[%d] = %d" % (i, fl[i]))
             if vl[i] < 0 or vl[i] >= nv:
@@ -1125,11 +1127,19 @@ class FatGraph(object):
         r"""
         Insert an edge between the darts ``i`` and ``j`` to split the face.
 
+        This method only work when ``i`` and ``j`` belongs to the same face.
+
         One of the face will contains i, fp[i], ...,  (the x-face) and the
         other one will contain j, fp[j], ... In the special case i=j, a
         monogon (= face with only one edge) is created.
 
         The converse operation is implemented in :meth:`remove_edge`.
+
+        This operation is equivalent to first adding an isolated edge with
+        :meth:`add_edge` and perform two :meth:`swap`: ``swap(j, k)`` and
+        ``swap(i, k + 1)`` where ``(k, k+1)`` is the added edge. Though,
+        contrarily to :meth:`swap` this method does not perform relabelling and
+        runs in constant time for labelled fat graphs.
 
         EXAMPLES:
 
@@ -1146,11 +1156,23 @@ class FatGraph(object):
             sage: cm.split_face(2, 0)
             sage: cm == FatGraph(vp20, fp20)
             True
+            sage: cm = FatGraph(vp, fp, 6, mutable=True)
+            sage: k = cm.add_edge()
+            sage: cm.swap(0, k)
+            sage: cm.swap(2, k + 1)
+            sage: cm == FatGraph(vp20, fp20)
+            True
 
             sage: vp10 = '(0,4,2,1,5,3)'
             sage: fp10 = '(0,2,5)(1,3,4)'
             sage: cm = FatGraph(vp, fp, 6, mutable=True)
             sage: cm.split_face(1, 0)
+            sage: cm == FatGraph(vp10, fp10)
+            True
+            sage: cm = FatGraph(vp, fp, 6, mutable=True)
+            sage: k = cm.add_edge()
+            sage: cm.swap(0, k)
+            sage: cm.swap(1, k + 1)
             sage: cm == FatGraph(vp10, fp10)
             True
 
@@ -1160,6 +1182,12 @@ class FatGraph(object):
             sage: cm.split_face(3, 0)
             sage: cm == FatGraph(vp30, fp30)
             True
+            sage: cm = FatGraph(vp, fp, 6, mutable=True)
+            sage: k = cm.add_edge()
+            sage: cm.swap(0, k)
+            sage: cm.swap(3, k + 1)
+            sage: cm == FatGraph(vp30, fp30)
+            True
 
             sage: vp00 = '(0,5,4,2,1,3)'
             sage: fp00 = '(0,2,1,3,4)(5)'
@@ -1167,11 +1195,23 @@ class FatGraph(object):
             sage: cm.split_face(0, 0)
             sage: cm == FatGraph(vp00, fp00)
             True
+            sage: cm = FatGraph(vp, fp, 6, mutable=True)
+            sage: k = cm.add_edge()
+            sage: cm.swap(0, k)
+            sage: cm.swap(0, k + 1)
+            sage: cm == FatGraph(vp00, fp00)
+            True
 
             sage: vp22 = '(0,2,5,4,1,3)'
             sage: fp22 = '(0,4,2,1,3)(5)'
             sage: cm = FatGraph(vp, fp, 6, mutable=True)
             sage: cm.split_face(2, 2)
+            sage: cm == FatGraph(vp22, fp22)
+            True
+            sage: cm = FatGraph(vp, fp, 6, mutable=True)
+            sage: k = cm.add_edge()
+            sage: cm.swap(2, k)
+            sage: cm.swap(2, k + 1)
             sage: cm == FatGraph(vp22, fp22)
             True
 
@@ -1408,8 +1448,14 @@ class FatGraph(object):
         r"""
         Insert a new edge to split the vertex located at the darts i and j.
 
-        This operation keeps the genus constant. The inverse operation is implemented
-        in :meth:`contract_edge`.
+        This operation keeps the genus constant. The inverse operation is
+        implemented in :meth:`contract_edge`.
+
+        This operation is equivalent to first adding an isolated loop with
+        :meth:`add_loop` and perform two :meth:`swap`: ``swap(j, k)``, and
+        ``swap(i, k + 1)`` where ``(k, k+1)`` is the added edge. Though,
+        contrarily to :meth:`swap` this method does not perform relabelling and
+        runs in constant time for labelled fat graphs.
 
         EXAMPLES::
 
@@ -1421,21 +1467,39 @@ class FatGraph(object):
             sage: vp02 = '(0,4,1,3)(2,5)'
             sage: fp02 = '(0,4,2,1,3,5)'
             sage: cm = FatGraph(vp, fp, 6, mutable=True)
-            sage: cm.split_vertex(0,2)
+            sage: cm.split_vertex(0, 2)
+            sage: cm == FatGraph(vp02, fp02)
+            True
+            sage: cm = FatGraph(vp, fp, 6, mutable=True)
+            sage: k = cm.add_loop()
+            sage: cm.swap(2, k)
+            sage: cm.swap(0, k + 1)
             sage: cm == FatGraph(vp02, fp02)
             True
 
             sage: vp01 = '(0,4,3)(1,5,2)'
             sage: fp01 = '(0,2,4,1,3,5)'
             sage: cm = FatGraph(vp, fp, 6, mutable=True)
-            sage: cm.split_vertex(0,1)
+            sage: cm.split_vertex(0, 1)
+            sage: cm == FatGraph(vp01, fp01)
+            True
+            sage: cm = FatGraph(vp, fp, 6, mutable=True)
+            sage: k = cm.add_loop()
+            sage: cm.swap(1, k)
+            sage: cm.swap(0, k + 1)
             sage: cm == FatGraph(vp01, fp01)
             True
 
             sage: vp03 = '(0,4)(1,3,5,2)'
             sage: fp03 = '(0,2,1,4,3,5)'
             sage: cm = FatGraph(vp, fp, 6, mutable=True)
-            sage: cm.split_vertex(0,3)
+            sage: cm.split_vertex(0, 3)
+            sage: cm == FatGraph(vp03, fp03)
+            True
+            sage: cm = FatGraph(vp, fp, 6, mutable=True)
+            sage: k = cm.add_loop()
+            sage: cm.swap(3, k)
+            sage: cm.swap(0, k + 1)
             sage: cm == FatGraph(vp03, fp03)
             True
         """
@@ -1644,6 +1708,106 @@ class FatGraph(object):
         self._n -= 2
         self._nv -= 1
 
+    def swap(self, i, j, check=True):
+        r"""
+         Modify the fat graph by multiplying the vertex and face permutations
+         by the transposition (i,j) respectively on left and right.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import FatGraph
+            sage: g = FatGraph('(0,1,2,3)', '(0)(2)(3,1)', mutable=True)
+            sage: g.swap(0, 1)
+            sage: g
+            FatGraph('(0,2,3)(1)', '(0,1,3)(2)')
+            sage: g.swap(0, 2)
+            sage: g
+            FatGraph('(0,3)(1)(2)', '(0,1,3,2)')
+            sage: g.swap(0, 3)
+            sage: g
+            FatGraph('(0)(1)(2)(3)', '(0,1)(2,3)')
+        """
+        if check:
+            i = self._check_dart(i)
+            j = self._check_dart(j)
+
+        vp = self._vp
+        fp = self._fp
+
+        fpi_pre = vp[i] ^ 1
+        fpj_pre = vp[j] ^ 1
+
+        vp[i], vp[j] = vp[j], vp[i]
+        fp[fpi_pre], fp[fpj_pre] = fp[fpj_pre], fp[fpi_pre]
+
+        # TODO: the code below maintains label and degrees (ie self._vl,
+        # self._vd, self._nv, self._fl, self._fd, self._nf). We should have a
+        # "lighter" class without these attributes.
+
+        vl = self._vl
+        vd = self._vd
+        nv = self._nv
+        fl = self._fl
+        fd = self._fd
+        nf = self._nf
+
+        def split(p, d, l, i, j, m):
+            k = j
+            d[m] = 0
+            li = l[i]
+            while l[k] != m:
+                l[k] = m
+                d[m] += 1
+                d[li] -= 1
+                k = p[k]
+
+        def merge(p, d, l, i, j, m):
+            if l[i] < l[j]:
+                min_label = l[i]
+                max_label = l[j]
+                k = j
+            else:
+                min_label = l[j]
+                max_label = l[i]
+                k = i
+            assert max_label > min_label
+            assert l[k] == max_label
+            while l[k] == max_label:
+                l[k] = min_label
+                k = p[k]
+            d[min_label] += d[max_label]
+
+            if max_label != m - 1:
+                k = 0
+                while l[k] != m - 1:
+                    k += 1
+                while l[k] == m - 1:
+                    l[k] = max_label
+                    k = p[k]
+                d[max_label] = d[m - 1]
+
+            d[m - 1] = -1
+
+        if vl[i] == vl[j]:
+            # vertex split (attributes the new label to the vertex containing j)
+            split(vp, vd, vl, i, j, nv)
+            self._nv += 1
+
+        else:
+            # vertex fusion
+            merge(vp, vd, vl, vp[i], vp[j], nv)
+            self._nv -= 1
+
+        if fl[i] == fl[j]:
+            # face split (attributes the new label to the face containing j)
+            split(fp, fd, fl, i, j, nf)
+            self._nf += 1
+
+        else:
+            # face fusion
+            merge(fp, fd, fl, i, j, nf)
+            self._nf -= 1
+
     def cut_vertex(self, i, j, check=True):
         r"""
         Cut a vertex in two vertices between darts ``i`` and ``j``.
@@ -1694,74 +1858,7 @@ class FatGraph(object):
             if i == j:
                 raise ValueError('i and j must be distinct')
 
-        vp = self._vp
-        fp = self._fp
-        vl = self._vl
-        fl = self._fl
-        vd = self._vd
-        fd = self._fd
-
-        vpi_pre = fp[i ^ 1]
-        vpj_pre = fp[j ^ 1]
-        vp[vpj_pre] = i
-        vp[vpi_pre] = j
-        fp[i ^ 1] = vpj_pre
-        fp[j ^ 1] = vpi_pre
-
-        # TODO: the code below maintains self._vl, self._vd, self._nv,
-        # self._fl, self._fd and self._nf. We should have a "lighter" class
-        # without these attributes.
-
-        k = j
-        vd[self._nv] = 0
-        while vl[k] != self._nv:
-            vl[k] = self._nv
-            vd[self._nv] += 1
-            vd[vl[i]] -= 1
-            k = vp[k]
-        self._nv += 1
-
-        if fl[i ^ 1] == fl[j ^ 1]:
-            # split faces
-            k = j ^ 1
-            fd[self._nf] = 0
-            while fl[k] != self._nf:
-                fl[k] = self._nf
-                fd[fl[i ^ 1]] -= 1
-                fd[self._nf] += 1
-                k = fp[k]
-            self._nf += 1
-
-        else:
-            # merge faces
-            min_label = fl[i ^ 1]
-            max_label = fl[j ^ 1]
-            min_start = vpi_pre
-            max_start = vpj_pre
-            if min_label > max_label:
-                min_label, max_label = max_label, min_label
-                min_start, max_start = max_start, min_start
-
-            k = max_start
-            while fl[k] == max_label:
-                fl[k] = min_label
-                k = fp[k]
-
-            if max_label != self._nf - 1:
-                k = 0
-                while fl[k] != self._nf - 1:
-                    k += 1
-                while fl[k] == self._nf - 1:
-                    fl[k] = max_label
-                    k = fp[k]
-
-            fd[min_label] = fd[min_label] + fd[max_label]
-            fd[max_label] = fd[self._nf - 1]
-            fd[self._nf - 1] = -1
-            self._nf -= 1
-
-        # TODO: remove
-        self._check()
+        self.swap(self._fp[i ^ 1], self._fp[j ^ 1])
 
     def glue_vertices(self, i, j, check=True):
         r"""
@@ -1810,89 +1907,11 @@ class FatGraph(object):
             if self._vl[i] == self._vl[j]:
                 raise ValueError('darts adjacent to the same vertex')
 
-        vp = self._vp
-        fp = self._fp
-        vl = self._vl
-        fl = self._fl
-        vd = self._vd
-        fd = self._fd
-
-        vpi_pre = fp[i ^ 1]
-        vpj_pre = fp[j ^ 1]
-        vp[vpi_pre] = j
-        vp[vpj_pre] = i
-        fp[i ^ 1] = vpj_pre
-        fp[j ^ 1] = vpi_pre
-
-        # TODO: the code below maintains self._vl, self._vd, self._nv,
-        # self._fl, self._fd and self._nf. We should have a "lighter" class
-        # without these attributes.
-        min_label = vl[i]
-        max_label = vl[j]
-        min_start = i
-        max_start = j
-        if min_label > max_label:
-            min_label, max_label = max_label, min_label
-            min_start, max_start = max_start, min_start
-        k = max_start
-        while vl[k] == max_label:
-            vl[k] = min_label
-            vd[min_label] += 1
-            k = vp[k]
-        if max_label != self._nv - 1:
-            k = 0
-            while vl[k] != self._nv - 1:
-                k += 1
-            while vl[k] == self._nv - 1:
-                vl[k] = max_label
-                k = vp[k]
-        vd[self._nv - 1] = -1
-        self._nv -= 1
-
-        if fl[i ^ 1] == fl[j ^ 1]:
-            # split faces
-            k = j ^ 1
-            fd[self._nf] = 0
-            while fl[k] != self._nf:
-                fl[k] = self._nf
-                fd[fl[i ^ 1]] -= 1
-                fd[self._nf] += 1
-                k = fp[k]
-            self._nf += 1
-        else:
-            # merge faces
-            min_label = fl[i ^ 1]
-            max_label = fl[j ^ 1]
-            min_start = vpi_pre
-            max_start = vpj_pre
-            if min_label > max_label:
-                min_label, max_label = max_label, min_label
-                min_start, max_start = max_start, min_start
-
-            k = max_start
-            while fl[k] == max_label:
-                fl[k] = min_label
-                k = fp[k]
-
-            if max_label != self._nf - 1:
-                k = 0
-                while fl[k] != self._nf - 1:
-                    k += 1
-                while fl[k] == self._nf - 1:
-                    fl[k] = max_label
-                    k = fp[k]
-
-            fd[min_label] = fd[min_label] + fd[max_label]
-            fd[max_label] = fd[self._nf - 1]
-            fd[self._nf - 1] = -1
-            self._nf -= 1
-
-        # TODO: remove check
-        self._check()
+        self.swap(self._fp[i ^ 1], self._fp[j ^ 1])
 
     def add_edge(self, i=None, j=None, check=True):
         r"""
-        Insert a new edge.
+        Insert an isolated edge.
 
         By default the created edge is isolated. If arguments ``i`` or ``j`` is
         provided its start or respectively end
@@ -1982,7 +2001,46 @@ class FatGraph(object):
         if j is not None:
             self.glue_vertices(y, self._vp[j], check=check)
 
-        self._check()
+        return x
+
+    def add_loop(self, check=True):
+        r"""
+        Insert an isolated loop.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import FatGraph
+            sage: cm = FatGraph('', '', mutable=True, max_num_dart=4)
+            sage: cm.add_loop()
+            0
+            sage: cm.add_loop()
+            2
+            sage: cm
+            FatGraph('(0,1)(2,3)', '(0)(1)(2)(3)')
+        """
+        if check:
+            self._check_alloc(self._n + 2)
+
+        x = self._n
+        y = self._n + 1
+        self._vd[self._nv] = 2
+        self._fd[self._nf] = 1
+        self._fd[self._nf + 1] = 1
+
+        self._vl[x] = self._nv
+        self._vl[y] = self._nv
+        self._fl[x] = self._nf
+        self._fl[y] = self._nf + 1
+
+        self._vp[x] = y
+        self._vp[y] = x
+        self._fp[x] = x
+        self._fp[y] = y
+
+        self._nv += 1
+        self._nf += 2
+        self._n += 2
+
         return x
 
     def trisect_face(self, i, j, k):
