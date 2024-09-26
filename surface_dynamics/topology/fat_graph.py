@@ -2479,7 +2479,6 @@ class FatGraph(object):
                 # two faces less
                 raise NotImplementedError('move dart in different face')
 
-    
     def rotate(self, e):
         r"""
         Rotate the edge ``e`` counterclockwise.
