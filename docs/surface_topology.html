@@ -3519,6 +3519,82 @@ permutation as one determines the other:</p>
 </pre></div>
 </div>
 <dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph.FatGraph.add_edge">
+<span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/topology/fat_graph.html#FatGraph.add_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topology.fat_graph.FatGraph.add_edge" title="Link to this definition">¶</a></dt>
+<dd><p>Insert an isolated edge.</p>
+<p>By default the created edge is isolated. If arguments <code class="docutils literal notranslate"><span class="pre">i</span></code> or <code class="docutils literal notranslate"><span class="pre">j</span></code> is
+provided its start or respectively end</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>, <code class="docutils literal notranslate"><span class="pre">j</span></code> – optional darts. If specified, the new darts of the edge will be
+inserted after <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">j</span></code> at the corresponding vertices.</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">FatGraph</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_num_dart</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">()</span>
+<span class="mi">0</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">_check</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0)(1)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,1)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">()</span>
+<span class="mi">2</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">_check</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0)(1)(2)(3)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,1)(2,3)&#39;</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,1)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0)(1)&#39;</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">_realloc</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="mi">2</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">_check</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,2,1)(3)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,3)(1)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="mi">4</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">_check</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,4,2,1)(3)(5)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,3,4,5)(1)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="mi">6</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">_check</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,4,2,1)(3,6)(5)(7)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,6,7,3,4,5)(1)&#39;</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,1)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0)(1)&#39;</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">_realloc</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="mi">2</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,2,1,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,3)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="mi">4</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,4,2,1,3,5)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,5)(3,4)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="mi">6</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph.FatGraph.add_loop">
+<span class="sig-name descname"><span class="pre">add_loop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/topology/fat_graph.html#FatGraph.add_loop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topology.fat_graph.FatGraph.add_loop" title="Link to this definition">¶</a></dt>
+<dd><p>Insert an isolated loop.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">FatGraph</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_num_dart</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_loop</span><span class="p">()</span>
+<span class="mi">0</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_loop</span><span class="p">()</span>
+<span class="mi">2</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,1)(2,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0)(1)(2)(3)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph.FatGraph.automorphism_face_action">
 <span class="sig-name descname"><span class="pre">automorphism_face_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/topology/fat_graph.html#FatGraph.automorphism_face_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topology.fat_graph.FatGraph.automorphism_face_action" title="Link to this definition">¶</a></dt>
 <dd><p>Return the action of <code class="docutils literal notranslate"><span class="pre">g</span></code> on faces.</p>
@@ -4077,6 +4153,46 @@ genera of the components.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph.FatGraph.move_dart">
+<span class="sig-name descname"><span class="pre">move_dart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/topology/fat_graph.html#FatGraph.move_dart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topology.fat_graph.FatGraph.move_dart" title="Link to this definition">¶</a></dt>
+<dd><p>Move the dart <code class="docutils literal notranslate"><span class="pre">i</span></code> so that it comes right after <code class="docutils literal notranslate"><span class="pre">j</span></code> around the
+corresponding vertex.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">j</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, then <code class="docutils literal notranslate"><span class="pre">i</span></code> becomes the only dart adjacent to a
+new vertex. This requires <code class="docutils literal notranslate"><span class="pre">i</span></code> to be adjacent to two distinct faces.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code> (integer) – a dart</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">j</span></code> (integer or <code class="docutils literal notranslate"><span class="pre">None</span></code>) – (optional) dart</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">FatGraph</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,3,5)(1,4,2)&#39;</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">move_dart</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">_check</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0)(1,4,2)(3,5)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,5,1)(3,4)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">move_dart</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">NotImplementedError</span><span class="p">:</span> <span class="n">cylinder</span> <span class="n">case</span><span class="p">:</span> <span class="n">single</span> <span class="n">face</span> <span class="n">adjacent</span> <span class="n">to</span> <span class="n">i</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,3,5)(1,4,2)&#39;</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">move_dart</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">_check</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,1,4,2)(3,5)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0)(1,2,5)(3,4)&#39;</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,3,5)(1,4,2)&#39;</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">move_dart</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">_check</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,4,2,1)(3,5)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,5)(1)(3,4)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph.FatGraph.num_edges">
 <span class="sig-name descname"><span class="pre">num_edges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/topology/fat_graph.html#FatGraph.num_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topology.fat_graph.FatGraph.num_edges" title="Link to this definition">¶</a></dt>
 <dd><p>Return the number of edges.</p>
@@ -4267,10 +4383,16 @@ Inverse operation of <a class="reference internal" href="#surface_dynamics.topol
 <dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph.FatGraph.split_face">
 <span class="sig-name descname"><span class="pre">split_face</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/topology/fat_graph.html#FatGraph.split_face"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topology.fat_graph.FatGraph.split_face" title="Link to this definition">¶</a></dt>
 <dd><p>Insert an edge between the darts <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">j</span></code> to split the face.</p>
+<p>This method only work when <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">j</span></code> belongs to the same face.</p>
 <p>One of the face will contains i, fp[i], …,  (the x-face) and the
 other one will contain j, fp[j], … In the special case i=j, a
 monogon (= face with only one edge) is created.</p>
 <p>The converse operation is implemented in <a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.remove_edge" title="surface_dynamics.topology.fat_graph.FatGraph.remove_edge"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_edge()</span></code></a>.</p>
+<p>This operation is equivalent to first adding an isolated edge with
+<a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.add_edge" title="surface_dynamics.topology.fat_graph.FatGraph.add_edge"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_edge()</span></code></a> and perform two <a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.swap" title="surface_dynamics.topology.fat_graph.FatGraph.swap"><code class="xref py py-meth docutils literal notranslate"><span class="pre">swap()</span></code></a>: <code class="docutils literal notranslate"><span class="pre">swap(j,</span> <span class="pre">k)</span></code> and
+<code class="docutils literal notranslate"><span class="pre">swap(i,</span> <span class="pre">k</span> <span class="pre">+</span> <span class="pre">1)</span></code> where <code class="docutils literal notranslate"><span class="pre">(k,</span> <span class="pre">k+1)</span></code> is the added edge. Though,
+contrarily to <a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.swap" title="surface_dynamics.topology.fat_graph.FatGraph.swap"><code class="xref py py-meth docutils literal notranslate"><span class="pre">swap()</span></code></a> this method does not perform relabelling and
+runs in constant time for labelled fat graphs.</p>
 <p>EXAMPLES:</p>
 <p>The once punctured torus:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.topology.fat_graph</span> <span class="kn">import</span> <span class="n">FatGraph</span>
@@ -4284,11 +4406,23 @@ monogon (= face with only one edge) is created.</p>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">split_face</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp20</span><span class="p">,</span> <span class="n">fp20</span><span class="p">)</span>
 <span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">k</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp20</span><span class="p">,</span> <span class="n">fp20</span><span class="p">)</span>
+<span class="kc">True</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">vp10</span> <span class="o">=</span> <span class="s1">&#39;(0,4,2,1,5,3)&#39;</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">fp10</span> <span class="o">=</span> <span class="s1">&#39;(0,2,5)(1,3,4)&#39;</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">split_face</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp10</span><span class="p">,</span> <span class="n">fp10</span><span class="p">)</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">k</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp10</span><span class="p">,</span> <span class="n">fp10</span><span class="p">)</span>
 <span class="kc">True</span>
 
@@ -4298,6 +4432,12 @@ monogon (= face with only one edge) is created.</p>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">split_face</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp30</span><span class="p">,</span> <span class="n">fp30</span><span class="p">)</span>
 <span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">k</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp30</span><span class="p">,</span> <span class="n">fp30</span><span class="p">)</span>
+<span class="kc">True</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">vp00</span> <span class="o">=</span> <span class="s1">&#39;(0,5,4,2,1,3)&#39;</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">fp00</span> <span class="o">=</span> <span class="s1">&#39;(0,2,1,3,4)(5)&#39;</span>
@@ -4305,11 +4445,23 @@ monogon (= face with only one edge) is created.</p>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">split_face</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp00</span><span class="p">,</span> <span class="n">fp00</span><span class="p">)</span>
 <span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">k</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp00</span><span class="p">,</span> <span class="n">fp00</span><span class="p">)</span>
+<span class="kc">True</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">vp22</span> <span class="o">=</span> <span class="s1">&#39;(0,2,5,4,1,3)&#39;</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">fp22</span> <span class="o">=</span> <span class="s1">&#39;(0,4,2,1,3)(5)&#39;</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">split_face</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp22</span><span class="p">,</span> <span class="n">fp22</span><span class="p">)</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">k</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_edge</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp22</span><span class="p">,</span> <span class="n">fp22</span><span class="p">)</span>
 <span class="kc">True</span>
 </pre></div>
@@ -4336,8 +4488,13 @@ monogon (= face with only one edge) is created.</p>
 <dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph.FatGraph.split_vertex">
 <span class="sig-name descname"><span class="pre">split_vertex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/topology/fat_graph.html#FatGraph.split_vertex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topology.fat_graph.FatGraph.split_vertex" title="Link to this definition">¶</a></dt>
 <dd><p>Insert a new edge to split the vertex located at the darts i and j.</p>
-<p>This operation keeps the genus constant. The inverse operation is implemented
-in <a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.contract_edge" title="surface_dynamics.topology.fat_graph.FatGraph.contract_edge"><code class="xref py py-meth docutils literal notranslate"><span class="pre">contract_edge()</span></code></a>.</p>
+<p>This operation keeps the genus constant. The inverse operation is
+implemented in <a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.contract_edge" title="surface_dynamics.topology.fat_graph.FatGraph.contract_edge"><code class="xref py py-meth docutils literal notranslate"><span class="pre">contract_edge()</span></code></a>.</p>
+<p>This operation is equivalent to first adding an isolated loop with
+<a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.add_loop" title="surface_dynamics.topology.fat_graph.FatGraph.add_loop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_loop()</span></code></a> and perform two <a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.swap" title="surface_dynamics.topology.fat_graph.FatGraph.swap"><code class="xref py py-meth docutils literal notranslate"><span class="pre">swap()</span></code></a>: <code class="docutils literal notranslate"><span class="pre">swap(j,</span> <span class="pre">k)</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">swap(i,</span> <span class="pre">k</span> <span class="pre">+</span> <span class="pre">1)</span></code> where <code class="docutils literal notranslate"><span class="pre">(k,</span> <span class="pre">k+1)</span></code> is the added edge. Though,
+contrarily to <a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.swap" title="surface_dynamics.topology.fat_graph.FatGraph.swap"><code class="xref py py-meth docutils literal notranslate"><span class="pre">swap()</span></code></a> this method does not perform relabelling and
+runs in constant time for labelled fat graphs.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.topology.fat_graph</span> <span class="kn">import</span> <span class="n">FatGraph</span>
 
@@ -4347,23 +4504,64 @@ in <a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatG
 <span class="n">sage</span><span class="p">:</span> <span class="n">vp02</span> <span class="o">=</span> <span class="s1">&#39;(0,4,1,3)(2,5)&#39;</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">fp02</span> <span class="o">=</span> <span class="s1">&#39;(0,4,2,1,3,5)&#39;</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">split_vertex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">split_vertex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp02</span><span class="p">,</span> <span class="n">fp02</span><span class="p">)</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">k</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_loop</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp02</span><span class="p">,</span> <span class="n">fp02</span><span class="p">)</span>
 <span class="kc">True</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">vp01</span> <span class="o">=</span> <span class="s1">&#39;(0,4,3)(1,5,2)&#39;</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">fp01</span> <span class="o">=</span> <span class="s1">&#39;(0,2,4,1,3,5)&#39;</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">split_vertex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">split_vertex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp01</span><span class="p">,</span> <span class="n">fp01</span><span class="p">)</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">k</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_loop</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp01</span><span class="p">,</span> <span class="n">fp01</span><span class="p">)</span>
 <span class="kc">True</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">vp03</span> <span class="o">=</span> <span class="s1">&#39;(0,4)(1,3,5,2)&#39;</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">fp03</span> <span class="o">=</span> <span class="s1">&#39;(0,2,1,4,3,5)&#39;</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">split_vertex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">split_vertex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp03</span><span class="p">,</span> <span class="n">fp03</span><span class="p">)</span>
 <span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">k</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">add_loop</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cm</span> <span class="o">==</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp03</span><span class="p">,</span> <span class="n">fp03</span><span class="p">)</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph.FatGraph.swap">
+<span class="sig-name descname"><span class="pre">swap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/topology/fat_graph.html#FatGraph.swap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.topology.fat_graph.FatGraph.swap" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Modify the fat graph by multiplying the vertex and face permutations
+by the transposition (i,j) respectively on left and right.</p>
+</div></blockquote>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">FatGraph</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span> <span class="o">=</span> <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,1,2,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0)(2)(3,1)&#39;</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,2,3)(1)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,1,3)(2)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,3)(1)(2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,1,3,2)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0)(1)(2)(3)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,1)(2,3)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -5013,6 +5211,8 @@ consider the vertices with maximal degree.</p>
 </li>
 <li><a class="reference internal" href="#module-surface_dynamics.topology.fat_graph">Fat graphs (or combinatorial maps)</a><ul>
 <li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph"><code class="docutils literal notranslate"><span class="pre">FatGraph</span></code></a><ul>
+<li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.add_edge"><code class="docutils literal notranslate"><span class="pre">FatGraph.add_edge()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.add_loop"><code class="docutils literal notranslate"><span class="pre">FatGraph.add_loop()</span></code></a></li>
 <li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.automorphism_face_action"><code class="docutils literal notranslate"><span class="pre">FatGraph.automorphism_face_action()</span></code></a></li>
 <li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.automorphism_group"><code class="docutils literal notranslate"><span class="pre">FatGraph.automorphism_group()</span></code></a></li>
 <li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.automorphism_vertex_action"><code class="docutils literal notranslate"><span class="pre">FatGraph.automorphism_vertex_action()</span></code></a></li>
@@ -5042,6 +5242,7 @@ consider the vertices with maximal degree.</p>
 <li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.is_triangulation"><code class="docutils literal notranslate"><span class="pre">FatGraph.is_triangulation()</span></code></a></li>
 <li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.is_vertex_regular"><code class="docutils literal notranslate"><span class="pre">FatGraph.is_vertex_regular()</span></code></a></li>
 <li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.monodromy_group"><code class="docutils literal notranslate"><span class="pre">FatGraph.monodromy_group()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.move_dart"><code class="docutils literal notranslate"><span class="pre">FatGraph.move_dart()</span></code></a></li>
 <li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.num_edges"><code class="docutils literal notranslate"><span class="pre">FatGraph.num_edges()</span></code></a></li>
 <li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.num_faces"><code class="docutils literal notranslate"><span class="pre">FatGraph.num_faces()</span></code></a></li>
 <li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.num_vertices"><code class="docutils literal notranslate"><span class="pre">FatGraph.num_vertices()</span></code></a></li>
@@ -5053,6 +5254,7 @@ consider the vertices with maximal degree.</p>
 <li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.rotate_dual"><code class="docutils literal notranslate"><span class="pre">FatGraph.rotate_dual()</span></code></a></li>
 <li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.split_face"><code class="docutils literal notranslate"><span class="pre">FatGraph.split_face()</span></code></a></li>
 <li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.split_vertex"><code class="docutils literal notranslate"><span class="pre">FatGraph.split_vertex()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.swap"><code class="docutils literal notranslate"><span class="pre">FatGraph.swap()</span></code></a></li>
 <li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.to_string"><code class="docutils literal notranslate"><span class="pre">FatGraph.to_string()</span></code></a></li>
 <li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.trisect_face"><code class="docutils literal notranslate"><span class="pre">FatGraph.trisect_face()</span></code></a></li>
 <li><a class="reference internal" href="#surface_dynamics.topology.fat_graph.FatGraph.vertex_degrees"><code class="docutils literal notranslate"><span class="pre">FatGraph.vertex_degrees()</span></code></a></li>
