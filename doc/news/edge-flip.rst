@@ -1,3 +1,3 @@
 **Added:**
 
-* New functions for FatGraph: cut_vertex, glue_vertices, add_edge
+* New functions for modifying FatGraph: add_edge, add_loop, swap, move_dart
