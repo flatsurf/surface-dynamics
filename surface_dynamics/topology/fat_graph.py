@@ -1808,107 +1808,6 @@ class FatGraph(object):
             merge(fp, fd, fl, i, j, nf)
             self._nf -= 1
 
-    def cut_vertex(self, i, j, check=True):
-        r"""
-        Cut a vertex in two vertices between darts ``i`` and ``j``.
-
-        More precisely, if the vertex corresponds to the cycle ``(i, I, j, J)`` after
-        this operation, the two new vertices are ``(i, I)`` and ``(j, J)``. Note that
-        the darts ``i`` and ``j`` must belong to the same vertex. Otherwise, a
-        ``ValueError`` is raised.
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import FatGraph
-            sage: fg = FatGraph('(0,1)', '(0)(1)', mutable=True)
-            sage: fg.cut_vertex(0, 1)
-            sage: fg._check()
-            sage: fg
-            FatGraph('(0)(1)', '(0,1)')
-
-            sage: fg = FatGraph('(0,1,2,3)', '(0)(1,3)(2)', mutable=True)
-            sage: fg.cut_vertex(0, 1)
-            sage: fg.cut_vertex(1, 2)
-            sage: fg.cut_vertex(2, 3)
-            sage: fg._check()
-            sage: fg
-            FatGraph('(0)(1)(2)(3)', '(0,1)(2,3)')
-
-            sage: fg = FatGraph('(0,1,2,3)', '(0)(1,3)(2)', mutable=True)
-            sage: fg.cut_vertex(0, 2)
-            sage: fg._check()
-            sage: fg
-            FatGraph('(0,1)(2,3)', '(0)(1)(2)(3)')
-
-            sage: fg = FatGraph('(0,1,2,3)', '(0)(1,3)(2)', mutable=True)
-            sage: fg.cut_vertex(1, 3)
-            sage: fg._check()
-            sage: fg
-            FatGraph('(0,3)(1,2)', '(0,2)(1,3)')
-        """
-        if check:
-            if not self._mutable:
-                raise ValueError('immutable fat graph; use a mutable copy instead')
-
-            i = self._check_dart(i)
-            j = self._check_dart(j)
-            if self._vl[i] != self._vl[j]:
-                raise ValueError('darts adjacent to distinct vertices')
-
-            if i == j:
-                raise ValueError('i and j must be distinct')
-
-        self.swap(self._fp[i ^ 1], self._fp[j ^ 1])
-
-    def glue_vertices(self, i, j, check=True):
-        r"""
-        Glue the two vertices at darts ``i`` and ``j``.
-
-        More precisely, if we have two vertices corresponding to the cycles
-        ``(i, I)`` and ``(j, J)`` after this operation the newly created vertex
-        corresponds to the cycle ``(i, I, j, J)``.
-
-        Note that ``i`` and ``j`` commutes in this operation (up to the changes
-        in the vertex and face labellings).
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import FatGraph
-            sage: fg = FatGraph('(0,3)(1,2)', '(0,2)(1,3)', mutable=True)
-            sage: fg.glue_vertices(0, 1)
-            sage: fg._check()
-            sage: fg
-            FatGraph('(0,3,1,2)', '(0,3,1,2)')
-
-            sage: fg = FatGraph('(0,3)(1,2)', '(0,2)(1,3)', mutable=True)
-            sage: fg.glue_vertices(0, 2)
-            sage: fg._check()
-            sage: fg
-            FatGraph('(0,3,2,1)', '(0,2)(1)(3)')
-
-            sage: fg = FatGraph('(0,3)(1,2)', '(0,2)(1,3)', mutable=True)
-            sage: fg.glue_vertices(3, 1)
-            sage: fg._check()
-            sage: fg
-            FatGraph('(0,1,2,3)', '(0)(1,3)(2)')
-
-            sage: fg = FatGraph('(0,3)(1,2)', '(0,2)(1,3)', mutable=True)
-            sage: fg.glue_vertices(3, 2)
-            sage: fg._check()
-            sage: fg
-            FatGraph('(0,2,1,3)', '(0,2,1,3)')
-        """
-        if check:
-            if not self._mutable:
-                raise ValueError('immutable fat graph; use a mutable copy instead')
-
-            i = self._check_dart(i)
-            j = self._check_dart(j)
-            if self._vl[i] == self._vl[j]:
-                raise ValueError('darts adjacent to the same vertex')
-
-        self.swap(self._fp[i ^ 1], self._fp[j ^ 1])
-
     def add_edge(self, i=None, j=None, check=True):
         r"""
         Insert an isolated edge.
@@ -1997,9 +1896,9 @@ class FatGraph(object):
         self._n += 2
 
         if i is not None:
-            self.glue_vertices(x, self._vp[i], check=check)
+            self.swap(self._fp[x ^ 1], self._fp[self._vp[i] ^ 1])
         if j is not None:
-            self.glue_vertices(y, self._vp[j], check=check)
+            self.swap(self._fp[y ^ 1], self._fp[self._vp[j] ^ 1])
 
         return x
 
@@ -2328,44 +2227,38 @@ class FatGraph(object):
 
     def move_dart(self, i, j=None, check=True):
         r"""
-        Move the dart ``i`` so that it comes right after ``j`` around the corresponding vertex.
+        Move the dart ``i`` so that it comes right after ``j`` around the
+        corresponding vertex.
 
-
-        If ``j`` is ``None``, then ``i`` becomes the only dart adjacent to a new vertex. This
-        requires ``i`` to be adjacent to two distinct faces.
-
+        If ``j`` is ``None``, then ``i`` becomes the only dart adjacent to a
+        new vertex. This requires ``i`` to be adjacent to two distinct faces.
 
         INPUT:
-
 
         - ``i`` (integer) -- a dart
 
 
         - ``j`` (integer or ``None``) -- (optional) dart
 
-
         EXAMPLES::
 
-
             sage: from surface_dynamics import FatGraph
-
 
             sage: cm = FatGraph('(0,3,5)(1,4,2)', mutable=True)
             sage: cm.move_dart(0)
             sage: cm._check()
+            sage: cm
             FatGraph('(0)(1,4,2)(3,5)', '(0,2,5,1)(3,4)')
             sage: cm.move_dart(1)
             Traceback (most recent call last):
             ...
             NotImplementedError: cylinder case: single face adjacent to i
 
-
             sage: cm = FatGraph('(0,3,5)(1,4,2)', mutable=True)
             sage: cm.move_dart(0, 2)
             sage: cm._check()
             sage: cm
             FatGraph('(0,1,4,2)(3,5)', '(0)(1,2,5)(3,4)')
-
 
             sage: cm = FatGraph('(0,3,5)(1,4,2)', mutable=True)
             sage: cm.move_dart(0, 1)
@@ -2376,12 +2269,10 @@ class FatGraph(object):
         if not self._mutable:
             raise ValueError('immutable fat graph; use a mutable copy instead')
 
-
         if check:
             i = self._check_dart(i)
             if j is not None:
                 j = self._check_dart(j)
-
 
         if j is not None:
             if i == j:
@@ -2389,40 +2280,32 @@ class FatGraph(object):
         if self._fl[i] == self._fl[i ^ 1]:
             raise NotImplementedError('cylinder case: single face adjacent to i')
 
-
         vp = self._vp
         fp = self._fp
 
-
         vli = self._vl[i]
         fli = self._fl[i]
-
 
         # remove i where it used to be
         vpi_pre = fp[i ^ 1]
         fpi_pre = vp[i] ^ 1
 
-
         assert vp[vpi_pre] == i
         assert fp[fpi_pre] == i
 
-
         vp[vpi_pre] = vp[i]
         fp[fpi_pre] = vpi_pre
-
 
         # insert i
         if j is None:
             vp[i] = i
             fp[i ^ 1] = i
 
-
             # update vertex data
             self._vd[self._vl[i]] -= 1
             self._vl[i] = self._nv
             self._vd[self._nv] = 1
             self._nv += 1
-
 
             # merge the faces fl[i] and fl[i ^ 1]
             new_label = min(self._fl[i], self._fl[i ^ 1])
@@ -2440,7 +2323,6 @@ class FatGraph(object):
             self._fd[self._nf - 1] = -1
             self._nf -= 1
 
-
         else:
             fpj_pre = vp[j] ^ 1
             vp[i] = vp[j]
@@ -2448,16 +2330,13 @@ class FatGraph(object):
             fp[fpj_pre] = i
             fp[i ^ 1] = j
 
-
             self._vd[self._vl[i]] -= 1
             self._vl[i] = self._vl[j]
             self._vd[self._vl[i]] += 1
 
-
             fli = self._fl[i]
             flj = self._fl[j]
             flii = self._fl[i ^ 1]
-
 
             if fli == flj:
                 # same number of faces
