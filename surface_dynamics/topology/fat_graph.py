@@ -2326,6 +2326,160 @@ class FatGraph(object):
         assert perm_check(vp, self._n), vp
         assert perm_check(fp, self._n), fp
 
+    def move_dart(self, i, j=None, check=True):
+        r"""
+        Move the dart ``i`` so that it comes right after ``j`` around the corresponding vertex.
+
+
+        If ``j`` is ``None``, then ``i`` becomes the only dart adjacent to a new vertex. This
+        requires ``i`` to be adjacent to two distinct faces.
+
+
+        INPUT:
+
+
+        - ``i`` (integer) -- a dart
+
+
+        - ``j`` (integer or ``None``) -- (optional) dart
+
+
+        EXAMPLES::
+
+
+            sage: from surface_dynamics import FatGraph
+
+
+            sage: cm = FatGraph('(0,3,5)(1,4,2)', mutable=True)
+            sage: cm.move_dart(0)
+            sage: cm._check()
+            FatGraph('(0)(1,4,2)(3,5)', '(0,2,5,1)(3,4)')
+            sage: cm.move_dart(1)
+            Traceback (most recent call last):
+            ...
+            NotImplementedError: cylinder case: single face adjacent to i
+
+
+            sage: cm = FatGraph('(0,3,5)(1,4,2)', mutable=True)
+            sage: cm.move_dart(0, 2)
+            sage: cm._check()
+            sage: cm
+            FatGraph('(0,1,4,2)(3,5)', '(0)(1,2,5)(3,4)')
+
+
+            sage: cm = FatGraph('(0,3,5)(1,4,2)', mutable=True)
+            sage: cm.move_dart(0, 1)
+            sage: cm._check()
+            sage: cm
+            FatGraph('(0,4,2,1)(3,5)', '(0,2,5)(1)(3,4)')
+        """
+        if not self._mutable:
+            raise ValueError('immutable fat graph; use a mutable copy instead')
+
+
+        if check:
+            i = self._check_dart(i)
+            if j is not None:
+                j = self._check_dart(j)
+
+
+        if j is not None:
+            if i == j:
+                raise ValueError('invalid input')
+        if self._fl[i] == self._fl[i ^ 1]:
+            raise NotImplementedError('cylinder case: single face adjacent to i')
+
+
+        vp = self._vp
+        fp = self._fp
+
+
+        vli = self._vl[i]
+        fli = self._fl[i]
+
+
+        # remove i where it used to be
+        vpi_pre = fp[i ^ 1]
+        fpi_pre = vp[i] ^ 1
+
+
+        assert vp[vpi_pre] == i
+        assert fp[fpi_pre] == i
+
+
+        vp[vpi_pre] = vp[i]
+        fp[fpi_pre] = vpi_pre
+
+
+        # insert i
+        if j is None:
+            vp[i] = i
+            fp[i ^ 1] = i
+
+
+            # update vertex data
+            self._vd[self._vl[i]] -= 1
+            self._vl[i] = self._nv
+            self._vd[self._nv] = 1
+            self._nv += 1
+
+
+            # merge the faces fl[i] and fl[i ^ 1]
+            new_label = min(self._fl[i], self._fl[i ^ 1])
+            old_label = max(self._fl[i], self._fl[i ^ 1])
+            k = fp[i]
+            # TODO: this operation should be incompatible with face labelling
+            # TODO: make something more efficient than running through all darts
+            for k in range(self._n):
+                if self._fl[k] == old_label:
+                    self._fl[k] = new_label
+                elif self._fl[k] == self._nf - 1:
+                    self._fl[k] = old_label
+            self._fd[new_label] = self._fd[new_label] + self._fd[old_label]
+            self._fd[old_label] = self._fd[self._nf - 1]
+            self._fd[self._nf - 1] = -1
+            self._nf -= 1
+
+
+        else:
+            fpj_pre = vp[j] ^ 1
+            vp[i] = vp[j]
+            vp[j] = i
+            fp[fpj_pre] = i
+            fp[i ^ 1] = j
+
+
+            self._vd[self._vl[i]] -= 1
+            self._vl[i] = self._vl[j]
+            self._vd[self._vl[i]] += 1
+
+
+            fli = self._fl[i]
+            flj = self._fl[j]
+            flii = self._fl[i ^ 1]
+
+
+            if fli == flj:
+                # same number of faces
+                k = j
+                while self._fl[k] == fli:
+                    self._fl[k] = flii
+                    self._fd[fli] -= 1
+                    self._fd[flii] += 1
+                    k = fp[k]
+            elif flii == flj:
+                # same number of faces
+                k = vpi_pre
+                while self._fl[k] == flii:
+                    self._fl[k] = fli
+                    self._fd[fli] += 1
+                    self._fd[flii] -= 1
+                    k = fp[k]
+            else:
+                # two faces less
+                raise NotImplementedError('move dart in different face')
+
+    
     def rotate(self, e):
         r"""
         Rotate the edge ``e`` counterclockwise.
