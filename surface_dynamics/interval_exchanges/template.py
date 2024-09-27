@@ -693,7 +693,8 @@ class Permutation(SageObject):
         """
         return type(self) == type(other) and \
                self._twin == other._twin and \
-               all(self._alphabet[l] == other._alphabet[o] for i in range(2) for l, o in zip(self._labels[i], other._labels[i])) and \
+               ((self._labels == None and other._labels == None) or \
+                 all(self._alphabet[l] == other._alphabet[o] for i in range(2) for l, o in zip(self._labels[i], other._labels[i]))) and \
                self._flips == other._flips
 
     def __lt__(self, other):
