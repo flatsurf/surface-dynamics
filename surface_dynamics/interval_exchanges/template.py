@@ -691,11 +691,19 @@ class Permutation(SageObject):
             sage: p1.reduced() != p3.reduced()
             False
         """
-        return type(self) == type(other) and \
-               self._twin == other._twin and \
-               ((self._labels == None and other._labels == None) or \
-                 all(self._alphabet[l] == other._alphabet[o] for i in range(2) for l, o in zip(self._labels[i], other._labels[i]))) and \
-               self._flips == other._flips
+        if (type(self) != type(other) or
+            self._twin != other._twin or
+            self._flips != other._flips):
+            return False
+
+        if self._labels:
+            if self._alphabet is other._alphabet:
+                return self._labels == other._labels
+            else:
+                # (slower) comparison over different alphabets using letters
+                return self.list() == other.list()
+
+        return True
 
     def __lt__(self, other):
         r"""
@@ -807,10 +815,19 @@ class Permutation(SageObject):
             return False
 
         if self._labels is not None:
-            if [self._alphabet[l] for i in range(2) for l in self._labels[i]] < [other._alphabet[o] for i in range(2) for o in other._labels[i]] :
-                return True
-            if [self._alphabet[l] for i in range(2) for l in self._labels[i]] > [other._alphabet[o] for i in range(2) for o in other._labels[i]] :
-                return False
+            if self._alphabet is other._alphabet:
+                if self._labels < other._labels:
+                    return True
+                elif self._labels > other._labels:
+                    return False
+            else:
+                # (slower) comparison over different alphabets using letters
+                slist = self.list()
+                olist = other.list()
+                if slist < olist:
+                    return True
+                elif slist > olist:
+                    return False
 
         if self._flips is not None:
             if self._flips < other._flips:
