@@ -807,9 +807,9 @@ class Permutation(SageObject):
             return False
 
         if self._labels is not None:
-            if [self._alphabet[l] for l in self._labels] < [other._alphabet[o] for o in other._labels] :
+            if [self._alphabet[l] for i in range(2) for l in self._labels[i]] < [other._alphabet[o] for i in range(2) for o in other._labels[i]] :
                 return True
-            if [self._alphabet[l] for l in self._labels] > [other._alphabet[o] for o in other._labels] :
+            if [self._alphabet[l] for i in range(2) for l in self._labels[i]] > [other._alphabet[o] for i in range(2) for o in other._labels[i]] :
                 return False
 
         if self._flips is not None:
