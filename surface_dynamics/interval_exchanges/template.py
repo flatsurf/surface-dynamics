@@ -492,8 +492,8 @@ class Permutation(SageObject):
             sage: p2 = iet.Permutation('a b', 'b a', alphabet='ba')
             sage: q1 = iet.Permutation('b a', 'a b', alphabet='ab')
             sage: q2 = iet.Permutation('b a', 'a b', alphabet='ba')
-            sage: p1 == p2 or p2 == p1
-            False
+            sage: p1 == p2 and p2 == p1
+            True
             sage: p1 == q1 or q1 == p1
             False
             sage: p1 == q2 or q2 == p1
@@ -503,7 +503,7 @@ class Permutation(SageObject):
             sage: p2 == q2 or q2 == p2
             False
             sage: q1 == q2 or q2 == q1
-            False
+            True
 
         ::
 
@@ -511,8 +511,8 @@ class Permutation(SageObject):
             sage: p2 = iet.GeneralizedPermutation('a a','b b',alphabet='ba')
             sage: q1 = iet.GeneralizedPermutation('b b','a a',alphabet='ab')
             sage: q2 = iet.GeneralizedPermutation('b b','a a',alphabet='ba')
-            sage: p1 == p2 or p2 == p1
-            False
+            sage: p1 == p2 and p2 == p1
+            True
             sage: p1 == q1 or q1 == p1
             False
             sage: p1 == q2 or q2 == p1
@@ -521,8 +521,8 @@ class Permutation(SageObject):
             False
             sage: p2 == q2 or q2 == p2
             False
-            sage: q1 == q2 or q2 == q1
-            False
+            sage: q1 == q2 and q2 == q1
+            True
 
         ::
 
@@ -598,8 +598,8 @@ class Permutation(SageObject):
             sage: p2 = iet.Permutation('a b', 'b a', alphabet='ba')
             sage: q1 = iet.Permutation('b a', 'a b', alphabet='ab')
             sage: q2 = iet.Permutation('b a', 'a b', alphabet='ba')
-            sage: p1 != p2 and p2 != p1
-            True
+            sage: p1 != p2 or p2 != p1
+            False
             sage: p1 != q1 and q1 != p1
             True
             sage: p1 != q2 and q2 != p1
@@ -608,8 +608,8 @@ class Permutation(SageObject):
             True
             sage: p2 != q2 and q2 != p2
             True
-            sage: q1 != q2 and q2 != q1
-            True
+            sage: q1 != q2 or q2 != q1
+            False
 
         ::
 
@@ -618,17 +618,17 @@ class Permutation(SageObject):
             sage: q1 = iet.GeneralizedPermutation('b b','a a',alphabet='ab')
             sage: q2 = iet.GeneralizedPermutation('b b','a a',alphabet='ba')
             sage: p1 != p2 or p2 != p1
+            False
+            sage: p1 != q1 and q1 != p1
             True
-            sage: p1 != q1 or q1 != p1
+            sage: p1 != q2 and q2 != p1
             True
-            sage: p1 != q2 or q2 != p1
+            sage: p2 != q1 and q1 != p2
             True
-            sage: p2 != q1 or q1 != p2
-            True
-            sage: p2 != q2 or q2 != p2
+            sage: p2 != q2 and q2 != p2
             True
             sage: q1 != q2 or q2 != q1
-            True
+            False
 
         ::
 
@@ -693,9 +693,8 @@ class Permutation(SageObject):
         """
         return type(self) == type(other) and \
                self._twin == other._twin and \
-               self._labels == other._labels and \
-               self._flips == other._flips and \
-               (self._labels is None or self._alphabet == other._alphabet)
+               all(self._alphabet[l] == other._alphabet[o] for i in range(2) for l, o in zip(self._labels[i], other._labels[i])) and \
+               self._flips == other._flips
 
     def __lt__(self, other):
         r"""
@@ -807,9 +806,9 @@ class Permutation(SageObject):
             return False
 
         if self._labels is not None:
-            if self._labels < other._labels:
+            if [self._alphabet[l] for l in self._labels] < [other._alphabet[o] for o in other._labels] :
                 return True
-            elif self._labels > other._labels:
+            if [self._alphabet[l] for l in self._labels] > [other._alphabet[o] for o in other._labels] :
                 return False
 
         if self._flips is not None:
