@@ -705,13 +705,13 @@ flipped intervals.</p></li>
 </pre></div>
 </div>
 <p>Managing the alphabet: two labelled permutations with different (ordered)
-alphabet but with the same labels are different:</p>
+alphabet but with the same labels are equal:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="s1">&#39;ab&#39;</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span><span class="s1">&#39;b a&#39;</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="s1">&#39;ba&#39;</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
 <span class="kc">True</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">==</span> <span class="n">q</span>
-<span class="kc">False</span>
+<span class="kc">True</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">rauzy_move_matrix</span><span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
 <span class="p">[</span><span class="mi">1</span> <span class="mi">0</span><span class="p">]</span>
 <span class="p">[</span><span class="mi">1</span> <span class="mi">1</span><span class="p">]</span>

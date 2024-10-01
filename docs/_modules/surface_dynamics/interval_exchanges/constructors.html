@@ -588,14 +588,14 @@
 <span class="sd">        2 1</span>
 
 <span class="sd">    Managing the alphabet: two labelled permutations with different (ordered)</span>
-<span class="sd">    alphabet but with the same labels are different::</span>
+<span class="sd">    alphabet but with the same labels are equal::</span>
 
 <span class="sd">        sage: p = iet.Permutation(&#39;a b&#39;,&#39;b a&#39;, alphabet=&#39;ab&#39;)</span>
 <span class="sd">        sage: q = iet.Permutation(&#39;a b&#39;,&#39;b a&#39;, alphabet=&#39;ba&#39;)</span>
 <span class="sd">        sage: str(p) == str(q)</span>
 <span class="sd">        True</span>
 <span class="sd">        sage: p == q</span>
-<span class="sd">        False</span>
+<span class="sd">        True</span>
 <span class="sd">        sage: p.rauzy_move_matrix(&#39;top&#39;)</span>
 <span class="sd">        [1 0]</span>
 <span class="sd">        [1 1]</span>

@@ -778,10 +778,10 @@
 
 <span class="sd">            sage: from surface_dynamics import *</span>
 
-<span class="sd">            sage: p1 = iet.Permutation(&#39;a b&#39;,&#39;a b&#39;,reduced=True,alphabet=&#39;ab&#39;)</span>
-<span class="sd">            sage: p2 = iet.Permutation(&#39;a b&#39;,&#39;a b&#39;,reduced=True,alphabet=&#39;ba&#39;)</span>
-<span class="sd">            sage: q1 = iet.Permutation(&#39;a b&#39;,&#39;b a&#39;,reduced=True,alphabet=&#39;ab&#39;)</span>
-<span class="sd">            sage: q2 = iet.Permutation(&#39;a b&#39;,&#39;b a&#39;,reduced=True,alphabet=&#39;ba&#39;)</span>
+<span class="sd">            sage: p1 = iet.Permutation(&#39;a b&#39;, &#39;a b&#39;, reduced=True, alphabet=&#39;ab&#39;)</span>
+<span class="sd">            sage: p2 = iet.Permutation(&#39;a b&#39;, &#39;a b&#39;, reduced=True, alphabet=&#39;ba&#39;)</span>
+<span class="sd">            sage: q1 = iet.Permutation(&#39;a b&#39;, &#39;b a&#39;, reduced=True, alphabet=&#39;ab&#39;)</span>
+<span class="sd">            sage: q2 = iet.Permutation(&#39;a b&#39;, &#39;b a&#39;, reduced=True, alphabet=&#39;ba&#39;)</span>
 <span class="sd">            sage: p1 == p2 and p2 == p1 and q1 == q2 and q2 == q1</span>
 <span class="sd">            True</span>
 <span class="sd">            sage: p1 == q1 or p2 == q1 or q1 == p1 or q1 == p2</span>
@@ -791,8 +791,8 @@
 <span class="sd">            sage: p2 = iet.Permutation(&#39;a b&#39;, &#39;b a&#39;, alphabet=&#39;ba&#39;)</span>
 <span class="sd">            sage: q1 = iet.Permutation(&#39;b a&#39;, &#39;a b&#39;, alphabet=&#39;ab&#39;)</span>
 <span class="sd">            sage: q2 = iet.Permutation(&#39;b a&#39;, &#39;a b&#39;, alphabet=&#39;ba&#39;)</span>
-<span class="sd">            sage: p1 == p2 or p2 == p1</span>
-<span class="sd">            False</span>
+<span class="sd">            sage: p1 == p2 and p2 == p1</span>
+<span class="sd">            True</span>
 <span class="sd">            sage: p1 == q1 or q1 == p1</span>
 <span class="sd">            False</span>
 <span class="sd">            sage: p1 == q2 or q2 == p1</span>
@@ -802,16 +802,16 @@
 <span class="sd">            sage: p2 == q2 or q2 == p2</span>
 <span class="sd">            False</span>
 <span class="sd">            sage: q1 == q2 or q2 == q1</span>
-<span class="sd">            False</span>
+<span class="sd">            True</span>
 
 <span class="sd">        ::</span>
 
-<span class="sd">            sage: p1 = iet.GeneralizedPermutation(&#39;a a&#39;,&#39;b b&#39;,alphabet=&#39;ab&#39;)</span>
-<span class="sd">            sage: p2 = iet.GeneralizedPermutation(&#39;a a&#39;,&#39;b b&#39;,alphabet=&#39;ba&#39;)</span>
-<span class="sd">            sage: q1 = iet.GeneralizedPermutation(&#39;b b&#39;,&#39;a a&#39;,alphabet=&#39;ab&#39;)</span>
-<span class="sd">            sage: q2 = iet.GeneralizedPermutation(&#39;b b&#39;,&#39;a a&#39;,alphabet=&#39;ba&#39;)</span>
-<span class="sd">            sage: p1 == p2 or p2 == p1</span>
-<span class="sd">            False</span>
+<span class="sd">            sage: p1 = iet.GeneralizedPermutation(&#39;a a&#39;, &#39;b b&#39;, alphabet=&#39;ab&#39;)</span>
+<span class="sd">            sage: p2 = iet.GeneralizedPermutation(&#39;a a&#39;, &#39;b b&#39;, alphabet=&#39;ba&#39;)</span>
+<span class="sd">            sage: q1 = iet.GeneralizedPermutation(&#39;b b&#39;, &#39;a a&#39;, alphabet=&#39;ab&#39;)</span>
+<span class="sd">            sage: q2 = iet.GeneralizedPermutation(&#39;b b&#39;, &#39;a a&#39;, alphabet=&#39;ba&#39;)</span>
+<span class="sd">            sage: p1 == p2 and p2 == p1</span>
+<span class="sd">            True</span>
 <span class="sd">            sage: p1 == q1 or q1 == p1</span>
 <span class="sd">            False</span>
 <span class="sd">            sage: p1 == q2 or q2 == p1</span>
@@ -820,14 +820,14 @@
 <span class="sd">            False</span>
 <span class="sd">            sage: p2 == q2 or q2 == p2</span>
 <span class="sd">            False</span>
-<span class="sd">            sage: q1 == q2 or q2 == q1</span>
-<span class="sd">            False</span>
+<span class="sd">            sage: q1 == q2 and q2 == q1</span>
+<span class="sd">            True</span>
 
 <span class="sd">        ::</span>
 
-<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a b b&#39;, &#39;c c a&#39;, reduced = True)</span>
-<span class="sd">            sage: q = iet.GeneralizedPermutation(&#39;b a a&#39;, &#39;c c b&#39;, reduced = True)</span>
-<span class="sd">            sage: r = iet.GeneralizedPermutation(&#39;t s s&#39;, &#39;w w t&#39;, reduced = True)</span>
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a b b&#39;, &#39;c c a&#39;, reduced=True)</span>
+<span class="sd">            sage: q = iet.GeneralizedPermutation(&#39;b a a&#39;, &#39;c c b&#39;, reduced=True)</span>
+<span class="sd">            sage: r = iet.GeneralizedPermutation(&#39;t s s&#39;, &#39;w w t&#39;, reduced=True)</span>
 <span class="sd">            sage: p == q</span>
 <span class="sd">            True</span>
 <span class="sd">            sage: p == r</span>
@@ -835,7 +835,7 @@
 
 <span class="sd">        ::</span>
 
-<span class="sd">            sage: p = iet.Permutation(&#39;a b&#39;,&#39;a b&#39;,reduced=True,flips=&#39;a&#39;)</span>
+<span class="sd">            sage: p = iet.Permutation(&#39;a b&#39;, &#39;a b&#39;, reduced=True, flips=&#39;a&#39;)</span>
 <span class="sd">            sage: q = copy(p)</span>
 <span class="sd">            sage: q.alphabet([0,1])</span>
 <span class="sd">            sage: p == q</span>
@@ -859,14 +859,14 @@
 
 <span class="sd">            sage: a0 = [0,0,1]</span>
 <span class="sd">            sage: a1 = [1,2,2]</span>
-<span class="sd">            sage: p = iet.GeneralizedPermutation(a0,a1,reduced=True,flips=[0])</span>
+<span class="sd">            sage: p = iet.GeneralizedPermutation(a0, a1, reduced=True, flips=[0])</span>
 <span class="sd">            sage: q = copy(p)</span>
 <span class="sd">            sage: q.alphabet(&quot;abc&quot;)</span>
 <span class="sd">            sage: p == q</span>
 <span class="sd">            True</span>
 <span class="sd">            sage: b0 = [1,0,0]</span>
 <span class="sd">            sage: b1 = [2,2,1]</span>
-<span class="sd">            sage: r = iet.GeneralizedPermutation(b0,b1,reduced=True,flips=[0])</span>
+<span class="sd">            sage: r = iet.GeneralizedPermutation(b0, b1, reduced=True, flips=[0])</span>
 <span class="sd">            sage: p == r or q == r</span>
 <span class="sd">            False</span>
 
@@ -897,8 +897,8 @@
 <span class="sd">            sage: p2 = iet.Permutation(&#39;a b&#39;, &#39;b a&#39;, alphabet=&#39;ba&#39;)</span>
 <span class="sd">            sage: q1 = iet.Permutation(&#39;b a&#39;, &#39;a b&#39;, alphabet=&#39;ab&#39;)</span>
 <span class="sd">            sage: q2 = iet.Permutation(&#39;b a&#39;, &#39;a b&#39;, alphabet=&#39;ba&#39;)</span>
-<span class="sd">            sage: p1 != p2 and p2 != p1</span>
-<span class="sd">            True</span>
+<span class="sd">            sage: p1 != p2 or p2 != p1</span>
+<span class="sd">            False</span>
 <span class="sd">            sage: p1 != q1 and q1 != p1</span>
 <span class="sd">            True</span>
 <span class="sd">            sage: p1 != q2 and q2 != p1</span>
@@ -907,33 +907,33 @@
 <span class="sd">            True</span>
 <span class="sd">            sage: p2 != q2 and q2 != p2</span>
 <span class="sd">            True</span>
-<span class="sd">            sage: q1 != q2 and q2 != q1</span>
-<span class="sd">            True</span>
+<span class="sd">            sage: q1 != q2 or q2 != q1</span>
+<span class="sd">            False</span>
 
 <span class="sd">        ::</span>
 
-<span class="sd">            sage: p1 = iet.GeneralizedPermutation(&#39;a a&#39;,&#39;b b&#39;,alphabet=&#39;ab&#39;)</span>
-<span class="sd">            sage: p2 = iet.GeneralizedPermutation(&#39;a a&#39;,&#39;b b&#39;,alphabet=&#39;ba&#39;)</span>
-<span class="sd">            sage: q1 = iet.GeneralizedPermutation(&#39;b b&#39;,&#39;a a&#39;,alphabet=&#39;ab&#39;)</span>
-<span class="sd">            sage: q2 = iet.GeneralizedPermutation(&#39;b b&#39;,&#39;a a&#39;,alphabet=&#39;ba&#39;)</span>
+<span class="sd">            sage: p1 = iet.GeneralizedPermutation(&#39;a a&#39;, &#39;b b&#39;, alphabet=&#39;ab&#39;)</span>
+<span class="sd">            sage: p2 = iet.GeneralizedPermutation(&#39;a a&#39;, &#39;b b&#39;, alphabet=&#39;ba&#39;)</span>
+<span class="sd">            sage: q1 = iet.GeneralizedPermutation(&#39;b b&#39;, &#39;a a&#39;, alphabet=&#39;ab&#39;)</span>
+<span class="sd">            sage: q2 = iet.GeneralizedPermutation(&#39;b b&#39;, &#39;a a&#39;, alphabet=&#39;ba&#39;)</span>
 <span class="sd">            sage: p1 != p2 or p2 != p1</span>
+<span class="sd">            False</span>
+<span class="sd">            sage: p1 != q1 and q1 != p1</span>
 <span class="sd">            True</span>
-<span class="sd">            sage: p1 != q1 or q1 != p1</span>
+<span class="sd">            sage: p1 != q2 and q2 != p1</span>
 <span class="sd">            True</span>
-<span class="sd">            sage: p1 != q2 or q2 != p1</span>
+<span class="sd">            sage: p2 != q1 and q1 != p2</span>
 <span class="sd">            True</span>
-<span class="sd">            sage: p2 != q1 or q1 != p2</span>
-<span class="sd">            True</span>
-<span class="sd">            sage: p2 != q2 or q2 != p2</span>
+<span class="sd">            sage: p2 != q2 and q2 != p2</span>
 <span class="sd">            True</span>
 <span class="sd">            sage: q1 != q2 or q2 != q1</span>
-<span class="sd">            True</span>
+<span class="sd">            False</span>
 
 <span class="sd">        ::</span>
 
-<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a b b&#39;, &#39;c c a&#39;, reduced = True)</span>
-<span class="sd">            sage: q = iet.GeneralizedPermutation(&#39;b b a&#39;, &#39;c c a&#39;, reduced = True)</span>
-<span class="sd">            sage: r = iet.GeneralizedPermutation(&#39;i j j&#39;, &#39;k k i&#39;, reduced = True)</span>
+<span class="sd">            sage: p = iet.GeneralizedPermutation(&#39;a b b&#39;, &#39;c c a&#39;, reduced=True)</span>
+<span class="sd">            sage: q = iet.GeneralizedPermutation(&#39;b b a&#39;, &#39;c c a&#39;, reduced=True)</span>
+<span class="sd">            sage: r = iet.GeneralizedPermutation(&#39;i j j&#39;, &#39;k k i&#39;, reduced=True)</span>
 <span class="sd">            sage: p != q</span>
 <span class="sd">            True</span>
 <span class="sd">            sage: p != r</span>
@@ -990,11 +990,19 @@
 <span class="sd">            sage: p1.reduced() != p3.reduced()</span>
 <span class="sd">            False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">and</span> \
-               <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_twin</span> <span class="ow">and</span> \
-               <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_labels</span> <span class="ow">and</span> \
-               <span class="bp">self</span><span class="o">.</span><span class="n">_flips</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_flips</span> <span class="ow">and</span> \
-               <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labels</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_alphabet</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">or</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">_twin</span> <span class="ow">or</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_flips</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">_flips</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">other</span><span class="o">.</span><span class="n">_alphabet</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span> <span class="ow">is</span> <span class="n">other</span><span class="o">.</span><span class="n">_alphabet</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_labels</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># (slower) comparison over different alphabets using letters</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -1013,12 +1021,12 @@
 <span class="sd">            sage: p1 = iet.GeneralizedPermutation(&#39;a b&#39;, &#39;b a&#39;, reduced=True)</span>
 <span class="sd">            sage: p0 &lt; p1 and p1 &gt; p0</span>
 <span class="sd">            True</span>
-<span class="sd">            sage: q0 = iet.GeneralizedPermutation(&#39;a b c&#39;,&#39;a b c&#39;,reduced=True)</span>
-<span class="sd">            sage: q1 = iet.GeneralizedPermutation(&#39;a b c&#39;,&#39;a c b&#39;,reduced=True)</span>
-<span class="sd">            sage: q2 = iet.GeneralizedPermutation(&#39;a b c&#39;,&#39;b a c&#39;,reduced=True)</span>
-<span class="sd">            sage: q3 = iet.GeneralizedPermutation(&#39;a b c&#39;,&#39;c a b&#39;,reduced=True)</span>
-<span class="sd">            sage: q4 = iet.GeneralizedPermutation(&#39;a b c&#39;,&#39;b c a&#39;,reduced=True)</span>
-<span class="sd">            sage: q5 = iet.GeneralizedPermutation(&#39;a b c&#39;,&#39;c b a&#39;,reduced=True)</span>
+<span class="sd">            sage: q0 = iet.GeneralizedPermutation(&#39;a b c&#39;, &#39;a b c&#39;, reduced=True)</span>
+<span class="sd">            sage: q1 = iet.GeneralizedPermutation(&#39;a b c&#39;, &#39;a c b&#39;, reduced=True)</span>
+<span class="sd">            sage: q2 = iet.GeneralizedPermutation(&#39;a b c&#39;, &#39;b a c&#39;, reduced=True)</span>
+<span class="sd">            sage: q3 = iet.GeneralizedPermutation(&#39;a b c&#39;, &#39;c a b&#39;, reduced=True)</span>
+<span class="sd">            sage: q4 = iet.GeneralizedPermutation(&#39;a b c&#39;, &#39;b c a&#39;, reduced=True)</span>
+<span class="sd">            sage: q5 = iet.GeneralizedPermutation(&#39;a b c&#39;, &#39;c b a&#39;, reduced=True)</span>
 <span class="sd">            sage: p0 &lt; q0 and q0 &gt; p0 and p1 &lt; q0 and q0 &gt; p1</span>
 <span class="sd">            True</span>
 <span class="sd">            sage: q0 &lt; q1 and q1 &gt; q0</span>
@@ -1041,13 +1049,13 @@
 <span class="sd">            sage: (p1 &gt; p0) and (p1 == p1)</span>
 <span class="sd">            True</span>
 
-<span class="sd">            sage: p0 = iet.GeneralizedPermutation(&#39;0 0&#39;,&#39;1 1 2 2&#39;)</span>
-<span class="sd">            sage: p1 = iet.GeneralizedPermutation(&#39;0 0&#39;,&#39;1 2 1 2&#39;)</span>
-<span class="sd">            sage: p2 = iet.GeneralizedPermutation(&#39;0 0&#39;,&#39;1 2 2 1&#39;)</span>
-<span class="sd">            sage: p3 = iet.GeneralizedPermutation(&#39;0 0 1 1&#39;,&#39;2 2&#39;)</span>
-<span class="sd">            sage: p4 = iet.GeneralizedPermutation(&#39;0 0 1&#39;,&#39;1 2 2&#39;)</span>
-<span class="sd">            sage: p5 = iet.GeneralizedPermutation(&#39;0 1 0 1&#39;,&#39;2 2&#39;)</span>
-<span class="sd">            sage: p6 = iet.GeneralizedPermutation(&#39;0 1 1 0&#39;,&#39;2 2&#39;)</span>
+<span class="sd">            sage: p0 = iet.GeneralizedPermutation(&#39;0 0&#39;, &#39;1 1 2 2&#39;)</span>
+<span class="sd">            sage: p1 = iet.GeneralizedPermutation(&#39;0 0&#39;, &#39;1 2 1 2&#39;)</span>
+<span class="sd">            sage: p2 = iet.GeneralizedPermutation(&#39;0 0&#39;, &#39;1 2 2 1&#39;)</span>
+<span class="sd">            sage: p3 = iet.GeneralizedPermutation(&#39;0 0 1 1&#39;, &#39;2 2&#39;)</span>
+<span class="sd">            sage: p4 = iet.GeneralizedPermutation(&#39;0 0 1&#39;, &#39;1 2 2&#39;)</span>
+<span class="sd">            sage: p5 = iet.GeneralizedPermutation(&#39;0 1 0 1&#39;, &#39;2 2&#39;)</span>
+<span class="sd">            sage: p6 = iet.GeneralizedPermutation(&#39;0 1 1 0&#39;, &#39;2 2&#39;)</span>
 <span class="sd">            sage: p0 == p0 and p0 &lt; p1 and p0 &lt; p2 and p0 &lt; p3 and p0 &lt; p4</span>
 <span class="sd">            True</span>
 <span class="sd">            sage: p0 &lt; p5 and p0 &lt; p6 and p1 &lt; p2 and p1 &lt; p3 and p1 &lt; p4</span>
@@ -1061,16 +1069,16 @@
 <span class="sd">            sage: p3 == p3 and p4 == p4 and p5 == p5 and p6 == p6</span>
 <span class="sd">            True</span>
 
-<span class="sd">            sage: p = iet.Permutation(&#39;a b&#39;,&#39;a b&#39;,reduced=True,flips=&#39;a&#39;)</span>
+<span class="sd">            sage: p = iet.Permutation(&#39;a b&#39;, &#39;a b&#39;, reduced=True, flips=&#39;a&#39;)</span>
 <span class="sd">            sage: q = copy(p)</span>
 <span class="sd">            sage: q.alphabet([0,1])</span>
 <span class="sd">            sage: p == q</span>
 <span class="sd">            True</span>
 <span class="sd">            sage: l0 = [&#39;a b&#39;,&#39;a b&#39;]</span>
 <span class="sd">            sage: l1 = [&#39;a b&#39;,&#39;b a&#39;]</span>
-<span class="sd">            sage: p1 = iet.Permutation(l1,reduced=True, flips=&#39;b&#39;)</span>
-<span class="sd">            sage: p2 = iet.Permutation(l1,reduced=True, flips=&#39;a&#39;)</span>
-<span class="sd">            sage: p3 = iet.Permutation(l1,reduced=True, flips=&#39;ab&#39;)</span>
+<span class="sd">            sage: p1 = iet.Permutation(l1, reduced=True, flips=&#39;b&#39;)</span>
+<span class="sd">            sage: p2 = iet.Permutation(l1, reduced=True, flips=&#39;a&#39;)</span>
+<span class="sd">            sage: p3 = iet.Permutation(l1, reduced=True, flips=&#39;ab&#39;)</span>
 <span class="sd">            sage: p2 &gt; p3 and p3 &lt; p2</span>
 <span class="sd">            True</span>
 <span class="sd">            sage: p1 &gt; p2 and p2 &lt; p1</span>
@@ -1086,14 +1094,25 @@
 <span class="sd">            True</span>
 <span class="sd">            sage: q3 &lt; q1</span>
 <span class="sd">            True</span>
-<span class="sd">            sage: r = iet.Permutation(&#39;a b c&#39;,&#39;a b c&#39;, reduced=True, flips=&#39;a&#39;)</span>
+<span class="sd">            sage: r = iet.Permutation(&#39;a b c&#39;, &#39;a b c&#39;, reduced=True, flips=&#39;a&#39;)</span>
 <span class="sd">            sage: r &gt; p1 and r &gt; p2 and r &gt; p3</span>
 <span class="sd">            True</span>
 <span class="sd">            sage: p1 &lt; r and p2 &lt; r and p3 &lt; r</span>
 <span class="sd">            True</span>
+
+<span class="sd">            sage: p1 = iet.Permutation(&#39;a b&#39;, &#39;b a&#39;, alphabet=&#39;ab&#39;)</span>
+<span class="sd">            sage: p2 = iet.Permutation(&#39;a b&#39;, &#39;b a&#39;, alphabet=&#39;ba&#39;)</span>
+<span class="sd">            sage: p1 &lt; p2</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">            ...</span>
+<span class="sd">            ValueError: comparison of permutations over different alphabets</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Permutations must be of the same type&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">other</span><span class="o">.</span><span class="n">_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">other</span><span class="o">.</span><span class="n">_alphabet</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;comparison of permutations over different alphabets&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -1105,7 +1124,7 @@
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_twin</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">_twin</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">other</span><span class="o">.</span><span class="n">_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">_labels</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">True</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">_labels</span><span class="p">:</span>
