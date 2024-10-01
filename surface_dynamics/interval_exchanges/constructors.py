@@ -304,14 +304,14 @@ def Permutation(arg1, arg2=None, reduced=None, flips=None, alphabet=None):
         2 1
 
     Managing the alphabet: two labelled permutations with different (ordered)
-    alphabet but with the same labels are different::
+    alphabet but with the same labels are equal::
 
         sage: p = iet.Permutation('a b','b a', alphabet='ab')
         sage: q = iet.Permutation('a b','b a', alphabet='ba')
         sage: str(p) == str(q)
         True
         sage: p == q
-        False
+        True
         sage: p.rauzy_move_matrix('top')
         [1 0]
         [1 1]
