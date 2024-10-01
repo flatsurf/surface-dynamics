@@ -696,7 +696,7 @@ class Permutation(SageObject):
             self._flips != other._flips):
             return False
 
-        if self._labels:
+        if self._labels is not None and other._alphabet is not None:
             if self._alphabet is other._alphabet:
                 return self._labels == other._labels
             else:
@@ -804,6 +804,10 @@ class Permutation(SageObject):
         if type(self) != type(other):
             raise TypeError("Permutations must be of the same type")
 
+        if self._labels is not None and other._labels is not None:
+            if self._alphabet is not other._alphabet:
+                raise ValueError('comparison of permutations over different alphabets')
+
         if len(self) < len(other):
             return True
         elif len(self) > len(other):
@@ -814,20 +818,11 @@ class Permutation(SageObject):
         elif self._twin > other._twin:
             return False
 
-        if self._labels is not None:
-            if self._alphabet is other._alphabet:
-                if self._labels < other._labels:
-                    return True
-                elif self._labels > other._labels:
-                    return False
-            else:
-                # (slower) comparison over different alphabets using letters
-                slist = self.list()
-                olist = other.list()
-                if slist < olist:
-                    return True
-                elif slist > olist:
-                    return False
+        if self._labels is not None and other._labels is not None:
+            if self._labels < other._labels:
+                return True
+            elif self._labels > other._labels:
+                return False
 
         if self._flips is not None:
             if self._flips < other._flips:
