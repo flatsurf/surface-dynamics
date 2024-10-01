@@ -479,10 +479,10 @@ class Permutation(SageObject):
 
             sage: from surface_dynamics import *
 
-            sage: p1 = iet.Permutation('a b','a b',reduced=True,alphabet='ab')
-            sage: p2 = iet.Permutation('a b','a b',reduced=True,alphabet='ba')
-            sage: q1 = iet.Permutation('a b','b a',reduced=True,alphabet='ab')
-            sage: q2 = iet.Permutation('a b','b a',reduced=True,alphabet='ba')
+            sage: p1 = iet.Permutation('a b', 'a b', reduced=True, alphabet='ab')
+            sage: p2 = iet.Permutation('a b', 'a b', reduced=True, alphabet='ba')
+            sage: q1 = iet.Permutation('a b', 'b a', reduced=True, alphabet='ab')
+            sage: q2 = iet.Permutation('a b', 'b a', reduced=True, alphabet='ba')
             sage: p1 == p2 and p2 == p1 and q1 == q2 and q2 == q1
             True
             sage: p1 == q1 or p2 == q1 or q1 == p1 or q1 == p2
@@ -507,10 +507,10 @@ class Permutation(SageObject):
 
         ::
 
-            sage: p1 = iet.GeneralizedPermutation('a a','b b',alphabet='ab')
-            sage: p2 = iet.GeneralizedPermutation('a a','b b',alphabet='ba')
-            sage: q1 = iet.GeneralizedPermutation('b b','a a',alphabet='ab')
-            sage: q2 = iet.GeneralizedPermutation('b b','a a',alphabet='ba')
+            sage: p1 = iet.GeneralizedPermutation('a a', 'b b', alphabet='ab')
+            sage: p2 = iet.GeneralizedPermutation('a a', 'b b', alphabet='ba')
+            sage: q1 = iet.GeneralizedPermutation('b b', 'a a', alphabet='ab')
+            sage: q2 = iet.GeneralizedPermutation('b b', 'a a', alphabet='ba')
             sage: p1 == p2 and p2 == p1
             True
             sage: p1 == q1 or q1 == p1
@@ -526,9 +526,9 @@ class Permutation(SageObject):
 
         ::
 
-            sage: p = iet.GeneralizedPermutation('a b b', 'c c a', reduced = True)
-            sage: q = iet.GeneralizedPermutation('b a a', 'c c b', reduced = True)
-            sage: r = iet.GeneralizedPermutation('t s s', 'w w t', reduced = True)
+            sage: p = iet.GeneralizedPermutation('a b b', 'c c a', reduced=True)
+            sage: q = iet.GeneralizedPermutation('b a a', 'c c b', reduced=True)
+            sage: r = iet.GeneralizedPermutation('t s s', 'w w t', reduced=True)
             sage: p == q
             True
             sage: p == r
@@ -536,7 +536,7 @@ class Permutation(SageObject):
 
         ::
 
-            sage: p = iet.Permutation('a b','a b',reduced=True,flips='a')
+            sage: p = iet.Permutation('a b', 'a b', reduced=True, flips='a')
             sage: q = copy(p)
             sage: q.alphabet([0,1])
             sage: p == q
@@ -560,14 +560,14 @@ class Permutation(SageObject):
 
             sage: a0 = [0,0,1]
             sage: a1 = [1,2,2]
-            sage: p = iet.GeneralizedPermutation(a0,a1,reduced=True,flips=[0])
+            sage: p = iet.GeneralizedPermutation(a0, a1, reduced=True, flips=[0])
             sage: q = copy(p)
             sage: q.alphabet("abc")
             sage: p == q
             True
             sage: b0 = [1,0,0]
             sage: b1 = [2,2,1]
-            sage: r = iet.GeneralizedPermutation(b0,b1,reduced=True,flips=[0])
+            sage: r = iet.GeneralizedPermutation(b0, b1, reduced=True, flips=[0])
             sage: p == r or q == r
             False
 
@@ -613,10 +613,10 @@ class Permutation(SageObject):
 
         ::
 
-            sage: p1 = iet.GeneralizedPermutation('a a','b b',alphabet='ab')
-            sage: p2 = iet.GeneralizedPermutation('a a','b b',alphabet='ba')
-            sage: q1 = iet.GeneralizedPermutation('b b','a a',alphabet='ab')
-            sage: q2 = iet.GeneralizedPermutation('b b','a a',alphabet='ba')
+            sage: p1 = iet.GeneralizedPermutation('a a', 'b b', alphabet='ab')
+            sage: p2 = iet.GeneralizedPermutation('a a', 'b b', alphabet='ba')
+            sage: q1 = iet.GeneralizedPermutation('b b', 'a a', alphabet='ab')
+            sage: q2 = iet.GeneralizedPermutation('b b', 'a a', alphabet='ba')
             sage: p1 != p2 or p2 != p1
             False
             sage: p1 != q1 and q1 != p1
@@ -632,9 +632,9 @@ class Permutation(SageObject):
 
         ::
 
-            sage: p = iet.GeneralizedPermutation('a b b', 'c c a', reduced = True)
-            sage: q = iet.GeneralizedPermutation('b b a', 'c c a', reduced = True)
-            sage: r = iet.GeneralizedPermutation('i j j', 'k k i', reduced = True)
+            sage: p = iet.GeneralizedPermutation('a b b', 'c c a', reduced=True)
+            sage: q = iet.GeneralizedPermutation('b b a', 'c c a', reduced=True)
+            sage: r = iet.GeneralizedPermutation('i j j', 'k k i', reduced=True)
             sage: p != q
             True
             sage: p != r
@@ -722,12 +722,12 @@ class Permutation(SageObject):
             sage: p1 = iet.GeneralizedPermutation('a b', 'b a', reduced=True)
             sage: p0 < p1 and p1 > p0
             True
-            sage: q0 = iet.GeneralizedPermutation('a b c','a b c',reduced=True)
-            sage: q1 = iet.GeneralizedPermutation('a b c','a c b',reduced=True)
-            sage: q2 = iet.GeneralizedPermutation('a b c','b a c',reduced=True)
-            sage: q3 = iet.GeneralizedPermutation('a b c','c a b',reduced=True)
-            sage: q4 = iet.GeneralizedPermutation('a b c','b c a',reduced=True)
-            sage: q5 = iet.GeneralizedPermutation('a b c','c b a',reduced=True)
+            sage: q0 = iet.GeneralizedPermutation('a b c', 'a b c', reduced=True)
+            sage: q1 = iet.GeneralizedPermutation('a b c', 'a c b', reduced=True)
+            sage: q2 = iet.GeneralizedPermutation('a b c', 'b a c', reduced=True)
+            sage: q3 = iet.GeneralizedPermutation('a b c', 'c a b', reduced=True)
+            sage: q4 = iet.GeneralizedPermutation('a b c', 'b c a', reduced=True)
+            sage: q5 = iet.GeneralizedPermutation('a b c', 'c b a', reduced=True)
             sage: p0 < q0 and q0 > p0 and p1 < q0 and q0 > p1
             True
             sage: q0 < q1 and q1 > q0
@@ -750,13 +750,13 @@ class Permutation(SageObject):
             sage: (p1 > p0) and (p1 == p1)
             True
 
-            sage: p0 = iet.GeneralizedPermutation('0 0','1 1 2 2')
-            sage: p1 = iet.GeneralizedPermutation('0 0','1 2 1 2')
-            sage: p2 = iet.GeneralizedPermutation('0 0','1 2 2 1')
-            sage: p3 = iet.GeneralizedPermutation('0 0 1 1','2 2')
-            sage: p4 = iet.GeneralizedPermutation('0 0 1','1 2 2')
-            sage: p5 = iet.GeneralizedPermutation('0 1 0 1','2 2')
-            sage: p6 = iet.GeneralizedPermutation('0 1 1 0','2 2')
+            sage: p0 = iet.GeneralizedPermutation('0 0', '1 1 2 2')
+            sage: p1 = iet.GeneralizedPermutation('0 0', '1 2 1 2')
+            sage: p2 = iet.GeneralizedPermutation('0 0', '1 2 2 1')
+            sage: p3 = iet.GeneralizedPermutation('0 0 1 1', '2 2')
+            sage: p4 = iet.GeneralizedPermutation('0 0 1', '1 2 2')
+            sage: p5 = iet.GeneralizedPermutation('0 1 0 1', '2 2')
+            sage: p6 = iet.GeneralizedPermutation('0 1 1 0', '2 2')
             sage: p0 == p0 and p0 < p1 and p0 < p2 and p0 < p3 and p0 < p4
             True
             sage: p0 < p5 and p0 < p6 and p1 < p2 and p1 < p3 and p1 < p4
@@ -770,16 +770,16 @@ class Permutation(SageObject):
             sage: p3 == p3 and p4 == p4 and p5 == p5 and p6 == p6
             True
 
-            sage: p = iet.Permutation('a b','a b',reduced=True,flips='a')
+            sage: p = iet.Permutation('a b', 'a b', reduced=True, flips='a')
             sage: q = copy(p)
             sage: q.alphabet([0,1])
             sage: p == q
             True
             sage: l0 = ['a b','a b']
             sage: l1 = ['a b','b a']
-            sage: p1 = iet.Permutation(l1,reduced=True, flips='b')
-            sage: p2 = iet.Permutation(l1,reduced=True, flips='a')
-            sage: p3 = iet.Permutation(l1,reduced=True, flips='ab')
+            sage: p1 = iet.Permutation(l1, reduced=True, flips='b')
+            sage: p2 = iet.Permutation(l1, reduced=True, flips='a')
+            sage: p3 = iet.Permutation(l1, reduced=True, flips='ab')
             sage: p2 > p3 and p3 < p2
             True
             sage: p1 > p2 and p2 < p1
@@ -795,11 +795,18 @@ class Permutation(SageObject):
             True
             sage: q3 < q1
             True
-            sage: r = iet.Permutation('a b c','a b c', reduced=True, flips='a')
+            sage: r = iet.Permutation('a b c', 'a b c', reduced=True, flips='a')
             sage: r > p1 and r > p2 and r > p3
             True
             sage: p1 < r and p2 < r and p3 < r
             True
+
+            sage: p1 = iet.Permutation('a b', 'b a', alphabet='ab')
+            sage: p2 = iet.Permutation('a b', 'b a', alphabet='ba')
+            sage: p1 < p2
+            Traceback (most recent call last):
+            ...
+            ValueError: comparison of permutations over different alphabets
         """
         if type(self) != type(other):
             raise TypeError("Permutations must be of the same type")
