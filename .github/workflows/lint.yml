@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: conda-incubator/setup-miniconda@v2
-        with: { miniforge-variant: "Mambaforge", miniforge-version: "latest" }
+        with: { miniforge-version: "latest" }
       - name: Install dependencies
         shell: bash -l {0}
         run: |
