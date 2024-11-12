@@ -2,7 +2,8 @@
     "creators": [
         {
             "orcid": "0000-0001-8313-1644",
-            "name": "Chapoton, Frédéric"
+            "name": "Chapoton, Frédéric",
+	    "affiliation": "CNRS - Université de Strasbourg"
         },
         {
             "name": "Davis, Diana"
@@ -19,6 +20,7 @@
             "name": "Fougeron, Charles"
         },
         {
+            "orcid": "0000-0002-9186-3762",
             "name": "Jeffreys, Luke"
         },
         {
