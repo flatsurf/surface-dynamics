@@ -1,0 +1,43 @@
+{
+    "creators": [
+        {
+            "orcid": "0000-0001-8313-1644",
+            "name": "Chapoton, Frédéric"
+        },
+        {
+            "name": "Davis, Diana"
+        },
+        {
+            "orcid": "0000-0002-9608-782X",
+            "name": "Delecroix, Vincent",
+            "affiliation": "CNRS - Université de Bordeaux"
+        },
+        {
+            "name": "Fontaine, Oscar"
+        },
+        {
+            "name": "Fougeron, Charles"
+        },
+        {
+            "name": "Jeffreys, Luke"
+        },
+        {
+            "orcid": "0000-0001-8313-1644",
+            "name": "Lelièvre, Samuel",
+            "affiliation": "Université Paris-Saclay"
+        },
+        {
+            "orcid": "0000-0002-3930-9107",
+            "name": "Rüth, Julian"
+        },
+        {
+            "name": "Yakovlev, Ivan"
+        },
+        {
+            "name": "Zhang, Christopher"
+        }
+    ],
+    "license": "GPL-2.0-or-later",
+    "title": "surface-dynamics",
+    "description": "<p>The surface-dynamics package for SageMath provides functionality related to interval exchange transformations, translation surfaces, mapping classes and more.</p><p>Please visit our <a href='https://flatsurf.github.io/surface-dynamics/'>documentation</a> for more information.</p>"
+}
