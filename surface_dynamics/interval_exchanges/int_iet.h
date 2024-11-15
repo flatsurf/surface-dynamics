@@ -7,9 +7,9 @@
 /*       Copyright (C) 2015 Vincent Delecroix <vincent.delecroix@labri.fr>   */
 /*                                                                           */
 /*  Distributed under the terms of the GNU General Public License (GPL)      */
-/*                                                                           */
-/*                  http://www.gnu.org/licenses/                             */
-/*                                                                           */
+/*  as published by the Free Software Foundation; either version 2 of        */
+/*  the License, or (at your option) any later version.                      */
+/*                  https://www.gnu.org/licenses/                            */
 /*****************************************************************************/
 
 #include <stdint.h>

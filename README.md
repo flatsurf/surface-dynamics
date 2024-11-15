@@ -2,12 +2,12 @@
     <img alt="logo" src="https://user-images.githubusercontent.com/373765/255104540-451305f4-42e4-4c16-aee1-b38a0e6d41ad.svg">
 </p>
 
-<h1><p align="center">Surface dynamics</p></h1>
+<h1><p align="center">surface-dynamics</p></h1>
 
-The ``surface-dynamics`` package for SageMath adds functionality related to
-interval exchange transformations, translation surfaces, mapping classes
-and more. It is based on `SageMath <https://www.sagemath.org>`_ and relies
-heavily on:
+The ``surface-dynamics`` package for SageMath provides functionality related to
+interval exchange transformations, translation surfaces, mapping classes and
+more. It is based on `SageMath <https://www.sagemath.org>`_ and relies heavily
+on:
 
 * gmp or mpir for arbitrary precision arithmetic
 * PARI/GP for number field computations
@@ -180,20 +180,17 @@ For problems with macOS: samuel.lelievre@gmail.com
 
 ## Authors
 
-* Vincent Delecroix: maintainer
-* Samuel Lelièvre: origami and permutation representatives for quadratic strata
-* Charles Fougeron: Lyapunov exponents for strata coverings
-* Luke Jeffreys: single cylinder representatives for strata of Abelian
-  differentials
-* Ivan Yakovlev: Masur-Veech volumes of connected components of minimal strata
-  of Abelian differentials
+See [AUTHORS](./AUTHORS) for a list of authors or visit [our zenodo
+page](https://zenodo.org/badge/latestdoi/347440823).
 
 ## How to cite this project
 
-If you have used this project for please cite us
-as described [on our zenodo site](https://zenodo.org/badge/latestdoi/347440823).
+If you have used this project to prepare a publication please cite us as
+described [on our zenodo page](https://zenodo.org/badge/latestdoi/347440823).
 
 ## Versions
 
 The first release of ``surface-dynamics`` as a sagemath spkg happened on the
-30th of july 2015. Versions are now track on [zenodo](https://zenodo.org/badge/latestdoi/347440823).
+30th of July 2015. Refer to our [Releases
+Page](https://github.com/flatsurf/surface-dynamics/releases) for the latest
+releases.
