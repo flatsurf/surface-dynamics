@@ -1,7 +1,7 @@
 # ********************************************************************
 #  This file is part of surface-dynamics.
 #
-#        Copyright (C) 2021 Julian Rüth
+#        Copyright (C) 2021-2024 Julian Rüth
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ $ACTIVITIES = [
 ]
 
 $VERSION_BUMP_PATTERNS = [
-    ('surface_dynamics/version.py', r"version=", r"version='$VERSION'"),
+    ('pyproject.toml', r"version = ", r'version = "$VERSION"'),
     ('doc/source/conf.py', r"release = ", r"release = '$VERSION'"),
     ('doc/source/conf.py', r'copyright = ', "copyright = \"2021-$RELEASE_YEAR, the surface-dynamics authors\""),
 ]

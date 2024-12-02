@@ -1,0 +1,147 @@
+[build-system]
+requires = ["setuptools>=42", "setuptools_scm>=8", "wheel", "Cython", "numpy", "cypari2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "surface-dynamics"
+version = "0.6.0"
+description = "Dynamics on surfaces"
+readme = "README.md"
+license = {text = "GPL-2.0-or-later" }
+authors = [
+    { name = "Vincent Delecroix", email = "vincent.delecroix@u-bordeaux.fr" }
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+    "Operating System :: OS Independent",
+    "Programming Language :: C",
+    "Programming Language :: C++",
+    "Programming Language :: Python",
+    "Programming Language :: Cython",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+keywords = [
+    "surfaces", "dynamics", "geometry", "flat surfaces", "Abelian differentials",
+    "quadratic differentials", "Riemann surfaces"
+]
+
+[project.urls]
+"Bug Tracker" = "https://github.com/flatsurf/surface-dynamics/issues"
+"Documentation" = "https://flatsurf.github.io/surface-dynamics/"
+"Source Code" = "https://github.com/flatsurf/surface-dynamics"
+
+[tool.setuptools.packages.find]
+include = ["surface_dynamics", "surface_dynamics.*"]
+
+[tool.setuptools.package-data]
+"*" = ["databases/cylinder_diagrams/cyl_diags*", "databases/generalized_permutation_twins/twins*", "flat_surfaces/origamis/origamis.db"]
+
+[tool.setuptools.exclude-package-data]
+"*" = [".gitignore", ".gitattributes", "pixi.lock"]
+
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-64"]
+
+[tool.pixi.environments]
+sagemath-96-minimal = ["sagemath-96", "pplpy"]
+sagemath-96-all = ["sagemath-96", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-97-minimal = ["sagemath-97", "pplpy"]
+sagemath-97-all = ["sagemath-97", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-98-minimal = ["sagemath-98", "pplpy"]
+sagemath-98-all = ["sagemath-98", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-100-minimal = ["sagemath-100", "pplpy"]
+sagemath-100-all = ["sagemath-100", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-101-minimal = ["sagemath-101", "pplpy"]
+sagemath-101-all = ["sagemath-101", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-102-minimal = ["sagemath-102", "pplpy"]
+sagemath-102-all = ["sagemath-102", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-103-minimal = ["sagemath-103", "pplpy"]
+sagemath-103-all = ["sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+dev = ["sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+
+[tool.pixi.activation.env]
+SURFACE_DYNAMICS_OPTIONALS="sage$SURFACE_DYNAMICS_OPTIONAL_PPLPY$SURFACE_DYNAMICS_OPTIONAL_GMPXXYY$SURFACE_DYNAMICS_OPTIONAL_PYEANTIC$SURFACE_DYNAMICS_OPTIONAL_PYINTERVALXT$SURFACE_DYNAMICS_OPTIONAL_SAGE_FLATSURF"
+
+[tool.pixi.tasks.build]
+cmd = "pip install --no-build-isolation -ve ."
+inputs = ["pyproject.toml", "setup.py", "surface_dynamics/**/*.pyx", "surface_dynamics/**/*.c", "surface_dynamics/**/*.h"]
+
+[tool.pixi.tasks.test]
+depends-on = ["test-doctest", "test-pytest"]
+
+[tool.pixi.tasks.test-doctest]
+cmd = "echo $SURFACE_DYNAMICS_OPTIONALS && sage -tp --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
+depends-on = ["build"]
+
+[tool.pixi.tasks.test-pytest]
+cmd = "pytest -n $(nproc)"
+depends-on = ["build"]
+
+[tool.pixi.dependencies]
+pip = "*"
+setuptools = ">=42"
+setuptools_scm = ">=8"
+wheel = "*"
+cython = "*"
+numpy = "*"
+cypari2 = "*"
+pytest-xdist = "*"
+
+sagelib = "*"
+pytest = "*"
+# ipywidgets is needed by SageMath doctesting
+ipywidgets = "*"
+
+[tool.pixi.feature.pplpy.dependencies]
+pplpy = "*"
+
+[tool.pixi.feature.pplpy.activation.env]
+SURFACE_DYNAMICS_OPTIONAL_PPLPY=",pplpy"
+
+[tool.pixi.feature.gmpxxyy.dependencies]
+gmpxxyy = "*"
+
+[tool.pixi.feature.gmpxxyy.activation.env]
+SURFACE_DYNAMICS_OPTIONAL_GMPXXYY=",gmpxxyy"
+
+[tool.pixi.feature.pyeantic.dependencies]
+pyeantic = "*"
+
+[tool.pixi.feature.pyeantic.activation.env]
+SURFACE_DYNAMICS_OPTIONAL_PYEANTIC=",pyeantic"
+
+[tool.pixi.feature.pyintervalxt.dependencies]
+pyintervalxt = "*"
+
+[tool.pixi.feature.pyintervalxt.activation.env]
+SURFACE_DYNAMICS_OPTIONAL_PYINTERVALXT=",pyintervalxt"
+
+[tool.pixi.feature.sage-flatsurf.dependencies]
+sage-flatsurf = "*"
+
+[tool.pixi.feature.sage-flatsurf.activation.env]
+SURFACE_DYNAMICS_OPTIONAL_SAGE_FLATSURF=",sage_flatsurf"
+
+[tool.pixi.feature.sagemath-96.dependencies]
+sagelib = "9.6"
+
+[tool.pixi.feature.sagemath-97.dependencies]
+sagelib = "9.7"
+
+[tool.pixi.feature.sagemath-98.dependencies]
+sagelib = "9.8"
+
+[tool.pixi.feature.sagemath-100.dependencies]
+sagelib = "10.0"
+
+[tool.pixi.feature.sagemath-101.dependencies]
+sagelib = "10.1"
+
+[tool.pixi.feature.sagemath-102.dependencies]
+sagelib = "10.2"
+
+[tool.pixi.feature.sagemath-103.dependencies]
+sagelib = "10.3"

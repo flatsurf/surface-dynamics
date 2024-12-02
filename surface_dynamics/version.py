@@ -1,1 +1,3 @@
-version='0.6.0'
+import importlib.metadata
+
+version = importlib.metadata.version("surface-dynamics")
