@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=42", "setuptools_scm>=8", "wheel", "Cython", "numpy", "cypari2"]
+requires = ["setuptools>=42", "wheel", "Cython", "numpy", "cypari2"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,7 +7,7 @@ name = "surface-dynamics"
 version = "0.6.0"
 description = "Dynamics on surfaces"
 readme = "README.md"
-license = {text = "GPL-2.0-or-later" }
+license = { text = "GPL-2.0-or-later" }
 authors = [
     { name = "Vincent Delecroix", email = "vincent.delecroix@u-bordeaux.fr" }
 ]
@@ -32,14 +32,23 @@ keywords = [
 "Documentation" = "https://flatsurf.github.io/surface-dynamics/"
 "Source Code" = "https://github.com/flatsurf/surface-dynamics"
 
-[tool.setuptools.packages.find]
-include = ["surface_dynamics", "surface_dynamics.*"]
+[tool.setuptools]
+# package-dir = {"" = "."}
+include-package-data = false
+license-files = ["COPYING"]
 
-[tool.setuptools.package-data]
-"*" = ["databases/cylinder_diagrams/cyl_diags*", "databases/generalized_permutation_twins/twins*", "flat_surfaces/origamis/origamis.db"]
-
-[tool.setuptools.exclude-package-data]
-"*" = [".gitignore", ".gitattributes", "pixi.lock"]
+# [tool.setuptools.packages.find]
+# include = ["surface_dynamics", "surface_dynamics.*"]
+# 
+# [tool.setuptools.package-data]
+# "*" = ["databases/cylinder_diagrams/cyl_diags*", "databases/generalized_permutation_twins/twins*", "flat_surfaces/origamis/origamis.db"]
+# 
+# [tool.setuptools.exclude-package-data]
+# # Do not install Cython generate files.
+# "surface_dynamics.interval_exchanges" = ["lyapunov_exponents.c", "integer_iet.c", "iet_family.cpp"]
+# "surface_dynamics.flat_surfaces.origamis" = ["origami_dense.c"]
+# # Do not install large database files.
+# "surface_dynamics.databases.cylinder_diagrams" = ["cyl_diags-10-*", "cyl_diags-5_2_1-*", "cyl_diags-6_1_1-*", "cyl_diags-4_3_1-*"]
 
 [tool.pixi.project]
 channels = ["conda-forge"]
@@ -83,13 +92,15 @@ cmd = "echo $SURFACE_DYNAMICS_OPTIONALS && sage -tp --force-lib --initial --opti
 depends-on = ["build"]
 
 [tool.pixi.tasks.test-pytest]
-cmd = "pytest -n $(nproc)"
+cmd = "pytest -n auto tests/"
 depends-on = ["build"]
+
+[tool.pixi.feature.dev.tasks.sdist]
+cmd = "python -m build --sdist --no-isolation"
 
 [tool.pixi.dependencies]
 pip = "*"
 setuptools = ">=42"
-setuptools_scm = ">=8"
 wheel = "*"
 cython = "*"
 numpy = "*"
