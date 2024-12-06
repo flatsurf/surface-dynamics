@@ -46,6 +46,12 @@ channels = ["conda-forge"]
 platforms = ["linux-64", "osx-64"]
 
 [tool.pixi.environments]
+sagemath-93-minimal = ["sagemath-93", "pplpy"]
+sagemath-93-sage-flatsurf = ["sagemath-93", "pplpy", "sage-flatsurf"]
+sagemath-94-minimal = ["sagemath-94", "pplpy"]
+sagemath-94-all = ["sagemath-94", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-95-minimal = ["sagemath-95", "pplpy"]
+sagemath-95-all = ["sagemath-95", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
 sagemath-96-minimal = ["sagemath-96", "pplpy"]
 sagemath-96-all = ["sagemath-96", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
 sagemath-97-minimal = ["sagemath-97", "pplpy"]
@@ -60,7 +66,7 @@ sagemath-102-minimal = ["sagemath-102", "pplpy"]
 sagemath-102-all = ["sagemath-102", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
 sagemath-103-minimal = ["sagemath-103", "pplpy"]
 sagemath-103-all = ["sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
-dev = ["sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+dev = ["dev", "sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
 
 [tool.pixi.activation.env]
 SURFACE_DYNAMICS_OPTIONALS="sage$SURFACE_DYNAMICS_OPTIONAL_PPLPY$SURFACE_DYNAMICS_OPTIONAL_GMPXXYY$SURFACE_DYNAMICS_OPTIONAL_PYEANTIC$SURFACE_DYNAMICS_OPTIONAL_PYINTERVALXT$SURFACE_DYNAMICS_OPTIONAL_SAGE_FLATSURF"
@@ -95,6 +101,9 @@ pytest = "*"
 # ipywidgets is needed by SageMath doctesting
 ipywidgets = "*"
 
+[tool.pixi.feature.dev.dependencies]
+python-build = "*"
+
 [tool.pixi.feature.pplpy.dependencies]
 pplpy = "*"
 
@@ -124,6 +133,15 @@ sage-flatsurf = "*"
 
 [tool.pixi.feature.sage-flatsurf.activation.env]
 SURFACE_DYNAMICS_OPTIONAL_SAGE_FLATSURF=",sage_flatsurf"
+
+[tool.pixi.feature.sagemath-93.dependencies]
+sagelib = "9.3"
+
+[tool.pixi.feature.sagemath-94.dependencies]
+sagelib = "9.4"
+
+[tool.pixi.feature.sagemath-95.dependencies]
+sagelib = "9.5"
 
 [tool.pixi.feature.sagemath-96.dependencies]
 sagelib = "9.6"
