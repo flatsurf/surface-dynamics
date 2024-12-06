@@ -532,7 +532,7 @@ class OrigamiVertices(OrigamiObjects):
             sage: V.derivative()
             [1 1 1]
         """
-        return matrix([1]*len(self._vertices), ring=QQ)
+        return matrix(QQ, [1]*len(self._vertices))
 
     def _repr_(self):
         return "Vertices of origami\n%s" % self.origami()
