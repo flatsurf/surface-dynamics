@@ -260,7 +260,7 @@ class OrigamiFaces(OrigamiObjects):
         n = self._origami.nb_squares()
         ri = self._origami.r_inv_tuple()
         ui = self._origami.u_inv_tuple()
-        der = matrix(2*n,n,ring=QQ)
+        der = matrix(QQ, 2*n, n)
         for i in range(n):
             if ui[i] != i:  # horiz sides
                 der[i,i] = -1
