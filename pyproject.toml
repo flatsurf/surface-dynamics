@@ -112,6 +112,10 @@ depends-on = ["test-doctest", "test-pytest"]
 cmd = "PYTHONPATH=$(pwd)/.github/workflows/disable-pytest sage -tp --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
 depends-on = ["build"]
 
+[tool.pixi.tasks.test-doctest-long]
+cmd = "PYTHONPATH=$(pwd)/.github/workflows/disable-pytest sage -tp --force-lib --initial --long --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
+depends-on = ["build"]
+
 [tool.pixi.tasks.test-pytest]
 cmd = "pytest -n $(nproc) tests/"
 depends-on = ["build"]
@@ -210,6 +214,10 @@ more-itertools = "*"
 
 [tool.pixi.feature.sage-flatsurf.tasks.test-doctest]
 cmd = "PYTHONPATH=$(pwd)/.github/workflows/disable-pytest sage -tp --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
+depends-on = ["build", "install-sage-flatsurf"]
+
+[tool.pixi.feature.sage-flatsurf.tasks.test-doctest-long]
+cmd = "PYTHONPATH=$(pwd)/.github/workflows/disable-pytest sage -tp --force-lib --initial --long --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
 depends-on = ["build", "install-sage-flatsurf"]
 
 [tool.pixi.feature.sage-flatsurf.tasks.install-sage-flatsurf]
