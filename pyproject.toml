@@ -78,6 +78,7 @@ dev = ["dev", "sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "s
 
 [tool.pixi.activation.env]
 SURFACE_DYNAMICS_OPTIONALS="sage$SURFACE_DYNAMICS_OPTIONAL_PPLPY$SURFACE_DYNAMICS_OPTIONAL_GMPXXYY$SURFACE_DYNAMICS_OPTIONAL_PYEANTIC$SURFACE_DYNAMICS_OPTIONAL_PYINTERVALXT$SURFACE_DYNAMICS_OPTIONAL_SAGE_FLATSURF"
+SAGE_NUM_THREADS="$(nproc)"
 
 [tool.pixi.tasks.build]
 cmd = "pip install --ignore-installed --no-build-isolation -ve ."
@@ -107,11 +108,11 @@ inputs = ["pyproject.toml", "setup.py",
 depends-on = ["test-doctest", "test-pytest"]
 
 [tool.pixi.tasks.test-doctest]
-cmd = "sage -tp --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
+cmd = "PYTHONPATH=$(pwd)/.github/workflows/disable-pytest sage -tp --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
 depends-on = ["build"]
 
 [tool.pixi.tasks.test-pytest]
-cmd = "pytest -n auto tests/"
+cmd = "pytest -n $(nproc) tests/"
 depends-on = ["build"]
 
 [tool.pixi.feature.dev.tasks.sdist]
@@ -167,7 +168,7 @@ matplotlib-base = "*"
 more-itertools = "*"
 
 [tool.pixi.feature.sage-flatsurf.tasks.test-doctest]
-cmd = "sage -tp --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
+cmd = "PYTHONPATH=$(pwd)/.github/workflows/disable-pytest sage -tp --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
 depends-on = ["build", "install-sage-flatsurf"]
 
 [tool.pixi.feature.sage-flatsurf.tasks.install-sage-flatsurf]
