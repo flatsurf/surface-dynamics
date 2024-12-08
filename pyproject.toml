@@ -33,22 +33,21 @@ keywords = [
 "Source Code" = "https://github.com/flatsurf/surface-dynamics"
 
 [tool.setuptools]
-# package-dir = {"" = "."}
-include-package-data = false
+include-package-data = true
 license-files = ["COPYING"]
 
-# [tool.setuptools.packages.find]
-# include = ["surface_dynamics", "surface_dynamics.*"]
-# 
-# [tool.setuptools.package-data]
-# "*" = ["databases/cylinder_diagrams/cyl_diags*", "databases/generalized_permutation_twins/twins*", "flat_surfaces/origamis/origamis.db"]
-# 
-# [tool.setuptools.exclude-package-data]
-# # Do not install Cython generate files.
-# "surface_dynamics.interval_exchanges" = ["lyapunov_exponents.c", "integer_iet.c", "iet_family.cpp"]
-# "surface_dynamics.flat_surfaces.origamis" = ["origami_dense.c"]
-# # Do not install large database files.
-# "surface_dynamics.databases.cylinder_diagrams" = ["cyl_diags-10-*", "cyl_diags-5_2_1-*", "cyl_diags-6_1_1-*", "cyl_diags-4_3_1-*"]
+[tool.setuptools.packages.find]
+include = ["surface_dynamics", "surface_dynamics.*"]
+
+[tool.setuptools.package-data]
+"*" = ["databases/cylinder_diagrams/cyl_diags*", "databases/generalized_permutation_twins/twins*", "flat_surfaces/origamis/origamis.db"]
+
+[tool.setuptools.exclude-package-data]
+# Do not install Cython generated files.
+"surface_dynamics.interval_exchanges" = ["lyapunov_exponents.c", "integer_iet.c", "iet_family.cpp"]
+"surface_dynamics.flat_surfaces.origamis" = ["origami_dense.c"]
+# Do not install large database files.
+"surface_dynamics.databases.cylinder_diagrams" = ["cyl_diags-10-*", "cyl_diags-5_2_1-*", "cyl_diags-6_1_1-*", "cyl_diags-4_3_1-*"]
 
 [tool.pixi.project]
 channels = ["conda-forge"]
@@ -81,14 +80,34 @@ dev = ["dev", "sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "s
 SURFACE_DYNAMICS_OPTIONALS="sage$SURFACE_DYNAMICS_OPTIONAL_PPLPY$SURFACE_DYNAMICS_OPTIONAL_GMPXXYY$SURFACE_DYNAMICS_OPTIONAL_PYEANTIC$SURFACE_DYNAMICS_OPTIONAL_PYINTERVALXT$SURFACE_DYNAMICS_OPTIONAL_SAGE_FLATSURF"
 
 [tool.pixi.tasks.build]
-cmd = "pip install --no-build-isolation -ve ."
-inputs = ["pyproject.toml", "setup.py", "surface_dynamics/**/*.pyx", "surface_dynamics/**/*.c", "surface_dynamics/**/*.h"]
+cmd = "pip install --ignore-installed --no-build-isolation -ve ."
+inputs = ["pyproject.toml", "setup.py",
+    "surface_dynamics/flat_surfaces/origamis/origami_dense.pyx",
+    "surface_dynamics/flat_surfaces/origamis/origami_dense.pxd",
+    "surface_dynamics/flat_surfaces/origamis/normal_form.h",
+    "surface_dynamics/flat_surfaces/origamis/normal_form.c",
+    "surface_dynamics/flat_surfaces/origamis/lyapunov_exponents.h",
+    "surface_dynamics/flat_surfaces/origamis/lyapunov_exponents.c",
+    "surface_dynamics/interval_exchanges/lyapunov_exponents.pyx",
+    "surface_dynamics/interval_exchanges/generalized_permutation.c",
+    "surface_dynamics/interval_exchanges/lin_alg.c",
+    "surface_dynamics/interval_exchanges/quad_cover.c",
+    "surface_dynamics/interval_exchanges/random.c",
+    "surface_dynamics/interval_exchanges/permutation.c",
+    "surface_dynamics/interval_exchanges/integer_iet.pyx",
+    "surface_dynamics/interval_exchanges/integer_iet.pxd",
+    "surface_dynamics/interval_exchanges/int_iet.h",
+    "surface_dynamics/interval_exchanges/int_iet.c",
+    "surface_dynamics/interval_exchanges/lyapunov_exponents.h",
+    "surface_dynamics/interval_exchanges/int_vector.c",
+    "surface_dynamics/interval_exchanges/iet_family.pyx",
+]
 
 [tool.pixi.tasks.test]
 depends-on = ["test-doctest", "test-pytest"]
 
 [tool.pixi.tasks.test-doctest]
-cmd = "echo $SURFACE_DYNAMICS_OPTIONALS && sage -tp --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
+cmd = "sage -tp --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
 depends-on = ["build"]
 
 [tool.pixi.tasks.test-pytest]
@@ -111,6 +130,9 @@ sagelib = "*"
 pytest = "*"
 # ipywidgets is needed by SageMath doctesting
 ipywidgets = "*"
+sympy = "*"
+gap-defaults = "*"
+sagemath-db-conway-polynomials = "*"
 
 [tool.pixi.feature.dev.dependencies]
 python-build = "*"
@@ -140,7 +162,16 @@ pyintervalxt = "*"
 SURFACE_DYNAMICS_OPTIONAL_PYINTERVALXT=",pyintervalxt"
 
 [tool.pixi.feature.sage-flatsurf.dependencies]
-sage-flatsurf = "*"
+bidict = "*"
+matplotlib-base = "*"
+more-itertools = "*"
+
+[tool.pixi.feature.sage-flatsurf.tasks.test-doctest]
+cmd = "sage -tp --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
+depends-on = ["build", "install-sage-flatsurf"]
+
+[tool.pixi.feature.sage-flatsurf.tasks.install-sage-flatsurf]
+cmd = "pip install --no-deps sage-flatsurf"
 
 [tool.pixi.feature.sage-flatsurf.activation.env]
 SURFACE_DYNAMICS_OPTIONAL_SAGE_FLATSURF=",sage_flatsurf"

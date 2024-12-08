@@ -22,6 +22,8 @@ from setuptools import setup, Extension
 import Cython.Compiler.Options
 Cython.Compiler.Options.embed_pos_in_docstring = True
 
+# NOTE: When adding files here, make sure to duplicate the list in the inputs
+# of the build task in pyproject.toml.
 extensions = [
     Extension(
         "surface_dynamics.flat_surfaces.origamis.origami_dense",
