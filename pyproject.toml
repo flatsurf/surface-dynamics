@@ -74,11 +74,12 @@ sagemath-102-minimal = ["sagemath-102", "pplpy"]
 sagemath-102-all = ["sagemath-102", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
 sagemath-103-minimal = ["sagemath-103", "pplpy"]
 sagemath-103-all = ["sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
-dev = ["dev", "sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+dev = ["dev", "doc", "sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
 
 [tool.pixi.activation.env]
 SURFACE_DYNAMICS_OPTIONALS="sage$SURFACE_DYNAMICS_OPTIONAL_PPLPY$SURFACE_DYNAMICS_OPTIONAL_GMPXXYY$SURFACE_DYNAMICS_OPTIONAL_PYEANTIC$SURFACE_DYNAMICS_OPTIONAL_PYINTERVALXT$SURFACE_DYNAMICS_OPTIONAL_SAGE_FLATSURF"
 SAGE_NUM_THREADS="$(nproc)"
+MAKEFLAGS="-j$(nproc)"
 
 [tool.pixi.tasks.build]
 cmd = "pip install --ignore-installed --no-build-isolation -ve ."
@@ -137,6 +138,43 @@ sagemath-db-conway-polynomials = "*"
 
 [tool.pixi.feature.dev.dependencies]
 python-build = "*"
+
+[tool.pixi.feature.doc.dependencies]
+furo = "*"
+myst-nb = "*"
+sphinx = "*"
+jupyter_sphinx = "*"
+
+[tool.pixi.feature.doc.pypi-dependencies]
+sage-docbuild = "==10.3"
+
+[tool.pixi.feature.doc.tasks.doc]
+cmd = """
+sh -c '
+python -m http.server $PORT --bind localhost --directory build/html &
+SERVER_PID=$!
+trap "kill $SERVER_PID" EXIT
+
+sleep 1
+
+echo "Preview the documentation at http://localhost:$PORT/"
+echo "Press Ctrl-C to continue"
+
+wait $SERVER_PID
+'
+"""
+env = { PORT = "8880" }
+depends-on = ["doc-build"]
+cwd = "doc"
+
+[tool.pixi.feature.doc.tasks.doc-build]
+cwd = "doc"
+cmd = "make html SPHINXOPTS='-W -n --keep-going'"
+
+[tool.pixi.feature.doc.tasks.doc-linkcheck]
+cmd = "make linkcheck"
+depends-on = ["doc-build"]
+cwd = "doc"
 
 [tool.pixi.feature.pplpy.dependencies]
 pplpy = "*"

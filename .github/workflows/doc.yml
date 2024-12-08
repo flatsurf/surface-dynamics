@@ -11,45 +11,27 @@ jobs:
   build-manual:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
-        with: { submodules: recursive }
-      - uses: conda-incubator/setup-miniconda@v2
-        with: { miniforge-version: "latest", python-version: "3.10" }
-      - name: install dependencies
-        shell: bash -l {0}
-        run: |
-          mamba install -n test sagelib=10.3
-          echo "sagelib == 10.3" >> $CONDA_PREFIX/conda-meta/pinned
-          mamba env update --quiet -n test -f environment.yml
-          mamba env update --quiet -n test -f doc/environment.yml
-          conda list
-      - name: install surface-dynamics
-        shell: bash -l {0}
-        run: |
-          pip install --no-index .
+      - uses: actions/checkout@v4
+      - uses: prefix-dev/setup-pixi@v0.8.1
+        with: { pixi-version: v0.39.0 }
       - name: build documentation
-        shell: bash -l {0}
         run: |
-          sphinx-build -b html -n doc/source html/surface-dynamics --color -a -E -W
-          touch html/surface-dynamics/.nojekyll
+          pixi run doc-build
+          # Do not run Jekyll to create GitHub Pages but take HTML files as they are.
+          touch doc/_build/html/.nojekyll
       - name: detect broken links
-        shell: bash -l {0}
-        run: |
-          python -m http.server 8880 --directory html &
-          sleep 1
-          # We ignore _modules since sphinx puts all modules in the module
-          # overview but does not generate pages for .pyx modules.
-          # We ignore warnings. They are usually 302 (temporary redirect) which
-          # we do not consider a problem.
-          linkchecker --check-extern --ignore-url=_modules/ --no-warnings http://localhost:8880
+        run: pixi run doc-linkcheck
+      - name: provide documentation as artifact for netlify workflow
+        uses: actions/upload-artifact@v3
+        with:
+          name: doc
+          path: doc/build/html
       - uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: html/surface-dynamics
-          TARGET_FOLDER: docs/
+          FOLDER: doc/build/html
+          TARGET_FOLDER: docs
         if: ${{ github.event_name == 'push' }}
-
-env:
-  MAKEFLAGS: -j4
-  SAGE_NUM_THREADS: 4
+      - uses: flatsurf/actions/show-logs@main
+        if: ${{ always() }}
