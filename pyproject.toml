@@ -172,6 +172,7 @@ cwd = "doc"
 [tool.pixi.feature.doc.tasks.doc-build]
 cwd = "doc"
 cmd = "make html SPHINXOPTS='-W -n --keep-going'"
+depends-on = ["build"]
 
 [tool.pixi.feature.doc.tasks.doc-linkcheck]
 cmd = "make linkcheck"
