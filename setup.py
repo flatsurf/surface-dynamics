@@ -69,7 +69,10 @@ else:
         include_dirs=[numpy.get_include()],
     ))
 
-# Work around changes in SageMath 9.7, see https://trac.sagemath.org/wiki/ReleaseTours/sage-9.7#Packagessagesage.rings...arenownamespaces
+# Work around changes in SageMath 9.7, see
+# https://trac.sagemath.org/wiki/ReleaseTours/sage-9.7#Packagessagesage.rings...arenownamespaces,
+# i.e., work around import errors with Cython <3. This is also the reason we
+# cannot currently build with meson.
 try:
     from sage.misc.package_dir import cython_namespace_package_support
 except (ImportError, ModuleNotFoundError):
