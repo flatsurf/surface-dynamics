@@ -16,7 +16,7 @@ jobs:
         with: { pixi-version: v0.39.0 }
       - name: build documentation
         run: |
-          pixi run doc-build
+          pixi run -e dev doc-build
           # Do not run Jekyll to create GitHub Pages but take HTML files as they are.
           touch doc/_build/html/.nojekyll
       - name: detect broken links
