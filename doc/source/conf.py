@@ -3,7 +3,7 @@ import sage_docbuild.conf
 # -- Project information -----------------------------------------------------
 
 project = 'surface-dynamics'
-copyright = "2021-$RELEASE_YEAR, the surface-dynamics authors"
+copyright = "2021-2024, the surface-dynamics authors"
 author = 'the surface-dynamics authors'
 
 # The full version, including alpha/beta/rc tags
