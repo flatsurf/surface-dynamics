@@ -28,10 +28,9 @@ jobs:
           path: doc/build/html
       - uses: JamesIves/github-pages-deploy-action@v4.7.2
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: doc/build/html
-          TARGET_FOLDER: docs
+          branch: gh-pages
+          folder: doc/build/html
+          target-folder: docs
         if: ${{ github.event_name == 'push' }}
       - uses: flatsurf/actions/show-logs@main
         if: ${{ always() }}
