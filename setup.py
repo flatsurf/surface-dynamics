@@ -81,7 +81,8 @@ except (ImportError, ModuleNotFoundError):
     from contextlib import nullcontext as cython_namespace_package_support
 
 with cython_namespace_package_support():
-    extensions = cythonize(extensions, compiler_directives={"language_level": "3"})
+    # We force cythonization since Cython caching does not catch when we switch between different versions of SageMath otherwise.
+    extensions = cythonize(extensions, force=True, compiler_directives={"language_level": "3"})
 
 
 setup(ext_modules=extensions)
