@@ -4,4 +4,4 @@
 
 **Fixed:**
 
-* Fixed copyright yaer in documentation.
+* Fixed copyright year in documentation.
