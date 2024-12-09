@@ -7,7 +7,7 @@ exclude surface_dynamics/databases/cylinder_diagrams/cyl_diags-4_3_1-*
 # We include Cython source files
 recursive-include surface_dynamics *.pyx
 recursive-include surface_dynamics *.pxd
-# We do not generate Cython-generated source files
+# We do not include Cython-generated source files
 exclude surface_dynamics/flat_surfaces/origamis/origami_dense.c
 exclude surface_dynamics/interval_exchanges/integer_iet.c
 exclude surface_dynamics/interval_exchanges/lyapunov_exponents.c
