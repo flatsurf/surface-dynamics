@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - { environment: "default", on: "ubuntu-24.04" }
+          - { environment: "dev", on: "ubuntu-24.04" }
           - { environment: "sagemath-93-minimal", on: "ubuntu-24.04" }
           - { environment: "sagemath-93-sage-flatsurf", on: "ubuntu-24.04" }
           - { environment: "sagemath-94-minimal", on: "ubuntu-24.04" }
