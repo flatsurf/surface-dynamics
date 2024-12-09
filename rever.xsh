@@ -1,7 +1,7 @@
 # ********************************************************************
 #  This file is part of surface-dynamics.
 #
-#        Copyright (C) 2021 Julian Rüth
+#        Copyright (C) 2021-2024 Julian Rüth
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
 # ********************************************************************
 
 import sys
+from datetime import datetime
 
 try:
   input("Are you sure you are on the master branch which is identical to origin/master? [ENTER]")
@@ -41,9 +42,9 @@ $ACTIVITIES = [
 ]
 
 $VERSION_BUMP_PATTERNS = [
-    ('surface_dynamics/version.py', r"version=", r"version='$VERSION'"),
+    ('pyproject.toml', r"version = ", r'version = "$VERSION"'),
     ('doc/source/conf.py', r"release = ", r"release = '$VERSION'"),
-    ('doc/source/conf.py', r'copyright = ', "copyright = \"2021-$RELEASE_YEAR, the surface-dynamics authors\""),
+    ('doc/source/conf.py', r'copyright = ', r'copyright = "2021-{0}, the surface-dynamics authors"'.format(datetime.now().year)),
 ]
 
 $CHANGELOG_FILENAME = 'NEWS'

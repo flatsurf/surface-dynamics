@@ -1,0 +1,294 @@
+[build-system]
+requires = ["setuptools>=42", "wheel", "Cython", "numpy", "cypari2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "surface-dynamics"
+version = "0.6.0"
+description = "Dynamics on surfaces"
+readme = "README.md"
+license = { text = "GPL-2.0-or-later" }
+authors = [
+    { name = "Vincent Delecroix", email = "vincent.delecroix@u-bordeaux.fr" }
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+    "Operating System :: OS Independent",
+    "Programming Language :: C",
+    "Programming Language :: C++",
+    "Programming Language :: Python",
+    "Programming Language :: Cython",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+keywords = [
+    "surfaces", "dynamics", "geometry", "flat surfaces", "Abelian differentials",
+    "quadratic differentials", "Riemann surfaces"
+]
+
+[project.urls]
+"Bug Tracker" = "https://github.com/flatsurf/surface-dynamics/issues"
+"Documentation" = "https://flatsurf.github.io/surface-dynamics/"
+"Source Code" = "https://github.com/flatsurf/surface-dynamics"
+
+[tool.setuptools]
+include-package-data = true
+license-files = ["COPYING"]
+
+[tool.setuptools.packages.find]
+include = ["surface_dynamics", "surface_dynamics.*"]
+
+[tool.setuptools.package-data]
+"*" = ["databases/cylinder_diagrams/cyl_diags*", "databases/generalized_permutation_twins/twins*", "flat_surfaces/origamis/origamis.db"]
+
+[tool.setuptools.exclude-package-data]
+# Do not install Cython generated files.
+"surface_dynamics.interval_exchanges" = ["lyapunov_exponents.c", "integer_iet.c", "iet_family.cpp"]
+"surface_dynamics.flat_surfaces.origamis" = ["origami_dense.c"]
+# Do not install large database files.
+"surface_dynamics.databases.cylinder_diagrams" = ["cyl_diags-10-*", "cyl_diags-5_2_1-*", "cyl_diags-6_1_1-*", "cyl_diags-4_3_1-*"]
+
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-64"]
+
+[tool.pixi.environments]
+sagemath-93-minimal = ["sagemath-93", "pplpy"]
+sagemath-93-sage-flatsurf = ["sagemath-93", "pplpy", "sage-flatsurf"]
+sagemath-94-minimal = ["sagemath-94", "pplpy"]
+sagemath-94-all = ["sagemath-94", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-95-minimal = ["sagemath-95", "pplpy"]
+sagemath-95-all = ["sagemath-95", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-96-minimal = ["sagemath-96", "pplpy"]
+sagemath-96-all = ["sagemath-96", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-97-minimal = ["sagemath-97", "pplpy"]
+sagemath-97-all = ["sagemath-97", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-98-minimal = ["sagemath-98", "pplpy"]
+sagemath-98-all = ["sagemath-98", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-100-minimal = ["sagemath-100", "pplpy"]
+sagemath-100-all = ["sagemath-100", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-101-minimal = ["sagemath-101", "pplpy"]
+sagemath-101-all = ["sagemath-101", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-102-minimal = ["sagemath-102", "pplpy"]
+sagemath-102-all = ["sagemath-102", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-103-minimal = ["sagemath-103", "pplpy"]
+sagemath-103-all = ["sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+dev = ["dev", "lint", "doc", "sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+
+##############
+# ACTIVATION #
+##############
+[tool.pixi.activation.env]
+SURFACE_DYNAMICS_OPTIONALS="sage$SURFACE_DYNAMICS_OPTIONAL_PPLPY$SURFACE_DYNAMICS_OPTIONAL_GMPXXYY$SURFACE_DYNAMICS_OPTIONAL_PYEANTIC$SURFACE_DYNAMICS_OPTIONAL_PYINTERVALXT$SURFACE_DYNAMICS_OPTIONAL_SAGE_FLATSURF"
+SAGE_NUM_THREADS="$(nproc)"
+MAKEFLAGS="-j$(nproc)"
+
+[tool.pixi.feature.pplpy.activation.env]
+SURFACE_DYNAMICS_OPTIONAL_PPLPY=",pplpy"
+
+[tool.pixi.feature.gmpxxyy.activation.env]
+SURFACE_DYNAMICS_OPTIONAL_GMPXXYY=",gmpxxyy"
+
+[tool.pixi.feature.pyeantic.activation.env]
+SURFACE_DYNAMICS_OPTIONAL_PYEANTIC=",pyeantic"
+
+[tool.pixi.feature.pyintervalxt.activation.env]
+SURFACE_DYNAMICS_OPTIONAL_PYINTERVALXT=",pyintervalxt"
+
+[tool.pixi.feature.sage-flatsurf.activation.env]
+SURFACE_DYNAMICS_OPTIONAL_SAGE_FLATSURF=",sage_flatsurf"
+
+#########
+# TASKS #
+#########
+[tool.pixi.tasks.build]
+cmd = "pip install --ignore-installed --no-build-isolation -ve ."
+inputs = ["pyproject.toml", "setup.py",
+    "surface_dynamics/flat_surfaces/origamis/origami_dense.pyx",
+    "surface_dynamics/flat_surfaces/origamis/origami_dense.pxd",
+    "surface_dynamics/flat_surfaces/origamis/normal_form.h",
+    "surface_dynamics/flat_surfaces/origamis/normal_form.c",
+    "surface_dynamics/flat_surfaces/origamis/lyapunov_exponents.h",
+    "surface_dynamics/flat_surfaces/origamis/lyapunov_exponents.c",
+    "surface_dynamics/interval_exchanges/lyapunov_exponents.pyx",
+    "surface_dynamics/interval_exchanges/generalized_permutation.c",
+    "surface_dynamics/interval_exchanges/lin_alg.c",
+    "surface_dynamics/interval_exchanges/quad_cover.c",
+    "surface_dynamics/interval_exchanges/random.c",
+    "surface_dynamics/interval_exchanges/permutation.c",
+    "surface_dynamics/interval_exchanges/integer_iet.pyx",
+    "surface_dynamics/interval_exchanges/integer_iet.pxd",
+    "surface_dynamics/interval_exchanges/int_iet.h",
+    "surface_dynamics/interval_exchanges/int_iet.c",
+    "surface_dynamics/interval_exchanges/lyapunov_exponents.h",
+    "surface_dynamics/interval_exchanges/int_vector.c",
+    "surface_dynamics/interval_exchanges/iet_family.pyx",
+]
+
+# "test" is a shortcut that should (together with its dependencies) run in the "dev" environment.
+# To achieve this, we need to split it into two tasks like this (otherwise,
+# pixi is going to ask which environment the dependencies should run in.)
+[tool.pixi.tasks.test]
+cmd = "pixi run dev-test"
+
+[tool.pixi.tasks.dev-test]
+depends-on = ["test-doctest", "test-pytest"]
+
+[tool.pixi.tasks.test-doctest]
+cmd = "PYTHONPATH=$(pwd)/.github/workflows/disable-pytest sage -tp --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
+depends-on = ["build"]
+
+[tool.pixi.tasks.test-doctest-long]
+cmd = "PYTHONPATH=$(pwd)/.github/workflows/disable-pytest sage -tp --force-lib --initial --long --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
+depends-on = ["build"]
+
+[tool.pixi.tasks.test-pytest]
+cmd = "pytest -n $(nproc) tests/"
+depends-on = ["build"]
+
+[tool.pixi.feature.dev.tasks.sdist]
+cmd = "python -m build --sdist --no-isolation"
+
+[tool.pixi.feature.lint.tasks]
+codespell = "codespell $(git ls-files '*.py' '*.c' '*.h' '*.pyx' '*.md' '*.rst')"
+# We ignore warnings in pycodestyle that are incompatible with black's formatting rules
+pycodestyle = "pycodestyle --select W2,W3 --max-line-length=256 surface_dynamics/ tests/"
+ruff = "ruff check --select D207,D208 surface_dynamics/ tests/"
+cython-lint = "cython-lint --ignore=E501,E261,E222,E265,E266,E127,E128,E231,E741 surface_dynamics"
+lint = { depends-on = ["codespell", "pycodestyle", "ruff", "cython-lint"] }
+
+# "test" is a shortcut that should (together with its dependencies) run in the "dev" environment.
+# To achieve this, we need to split it into two tasks like this (otherwise,
+# pixi is going to ask which environment the dependencies should run in.)
+[tool.pixi.feature.doc.tasks.doc]
+cmd = "pixi run dev-doc"
+
+[tool.pixi.feature.doc.tasks.dev-doc]
+cmd = """
+sh -c '
+python -m http.server $PORT --bind localhost --directory build/html &
+SERVER_PID=$!
+trap "kill $SERVER_PID" EXIT
+
+sleep 1
+
+echo "Preview the documentation at http://localhost:$PORT/"
+echo "Press Ctrl-C to continue"
+
+wait $SERVER_PID
+'
+"""
+env = { PORT = "8880" }
+depends-on = ["doc-build"]
+cwd = "doc"
+
+[tool.pixi.feature.doc.tasks.doc-build]
+cwd = "doc"
+cmd = "make html SPHINXOPTS='-W -n --keep-going'"
+depends-on = ["build", "install-sage-flatsurf"]
+
+[tool.pixi.feature.doc.tasks.doc-linkcheck]
+cmd = "make linkcheck"
+depends-on = ["doc-build"]
+cwd = "doc"
+
+[tool.pixi.feature.sage-flatsurf.tasks.test-doctest]
+cmd = "PYTHONPATH=$(pwd)/.github/workflows/disable-pytest sage -tp --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
+depends-on = ["build", "install-sage-flatsurf"]
+
+[tool.pixi.feature.sage-flatsurf.tasks.test-doctest-long]
+cmd = "PYTHONPATH=$(pwd)/.github/workflows/disable-pytest sage -tp --force-lib --initial --long --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
+depends-on = ["build", "install-sage-flatsurf"]
+
+[tool.pixi.feature.sage-flatsurf.tasks.install-sage-flatsurf]
+cmd = "pip install --no-deps sage-flatsurf"
+
+################
+# DEPENDENCIES #
+################
+[tool.pixi.dependencies]
+pip = "*"
+setuptools = ">=42"
+wheel = "*"
+cython = "*"
+c-compiler = "*"
+cxx-compiler = "*"
+numpy = "*"
+cypari2 = "*"
+pytest-xdist = "*"
+
+sagelib = "*"
+pytest = "*"
+# ipywidgets is needed by SageMath doctesting
+ipywidgets = "*"
+sympy = "*"
+gap-defaults = "*"
+sagemath-db-conway-polynomials = "*"
+
+[tool.pixi.feature.dev.dependencies]
+python-build = "*"
+
+[tool.pixi.feature.lint.dependencies]
+jupytext = "*"
+codespell = "*"
+pylint = "*"
+ruff = "*"
+pycodestyle = "*"
+cython-lint = "*"
+
+[tool.pixi.feature.doc.dependencies]
+furo = "*"
+myst-nb = "*"
+sphinx = "*"
+jupyter_sphinx = "*"
+
+[tool.pixi.feature.doc.pypi-dependencies]
+sage-docbuild = "==10.3"
+
+[tool.pixi.feature.pplpy.dependencies]
+pplpy = "*"
+
+[tool.pixi.feature.gmpxxyy.dependencies]
+gmpxxyy = "*"
+
+[tool.pixi.feature.pyeantic.dependencies]
+pyeantic = "*"
+
+[tool.pixi.feature.pyintervalxt.dependencies]
+pyintervalxt = "*"
+
+[tool.pixi.feature.sage-flatsurf.dependencies]
+bidict = "*"
+matplotlib-base = "*"
+more-itertools = "*"
+
+[tool.pixi.feature.sagemath-93.dependencies]
+sagelib = "9.3"
+
+[tool.pixi.feature.sagemath-94.dependencies]
+sagelib = "9.4"
+
+[tool.pixi.feature.sagemath-95.dependencies]
+sagelib = "9.5"
+
+[tool.pixi.feature.sagemath-96.dependencies]
+sagelib = "9.6"
+
+[tool.pixi.feature.sagemath-97.dependencies]
+sagelib = "9.7"
+
+[tool.pixi.feature.sagemath-98.dependencies]
+sagelib = "9.8"
+
+[tool.pixi.feature.sagemath-100.dependencies]
+sagelib = "10.0"
+
+[tool.pixi.feature.sagemath-101.dependencies]
+sagelib = "10.1"
+
+[tool.pixi.feature.sagemath-102.dependencies]
+sagelib = "10.2"
+
+[tool.pixi.feature.sagemath-103.dependencies]
+sagelib = "10.3"

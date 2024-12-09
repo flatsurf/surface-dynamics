@@ -19,7 +19,7 @@ Initialization of a simple iet with integer lengths::
 Rotation corresponds to iet with two intervals::
 
     sage: p = iet.Permutation('a b', 'b a')
-    sage: T = iet.IntervalExchangeTransformation(p, [1, (sqrt(5)-1)/2])
+    sage: T = iet.IntervalExchangeTransformation(p, [1, (sqrt(5)-1)/2])  # random output due to deprecation warnings in some versions of SageMath
     sage: T.in_which_interval(0)
     'a'
     sage: T.in_which_interval(T(0))
