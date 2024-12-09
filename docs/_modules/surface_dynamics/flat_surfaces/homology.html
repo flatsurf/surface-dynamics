@@ -1,0 +1,1874 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
+
+    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+        <title>surface_dynamics.flat_surfaces.homology - surface-dynamics 0.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-codemirror-monokai.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  --color-brand-primary: #0f0fff;
+  --color-brand-content: #0f0fff;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../index.html"><div class="brand">surface-dynamics 0.6.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../../../_static/logo.svg" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../../../_static/logo.svg" alt="Dark Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">surface-dynamics 0.6.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/interval_exchanges.html">Interval exchange transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/square_tiled_surfaces.html">Square-tiled surfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/rank2_genus3_classification.html">Filtering Possible <span class="math notranslate nohighlight">\(\mathcal M\)</span>-Parallel Classes</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../origamis.html">Origamis</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../interval_exchanges/index.html">Interval exchange transformations</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Interval exchange transformations</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../interval_exchanges/constructors.html">Interval exchange constructors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../interval_exchanges/template.html">Permutation template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../interval_exchanges/labelled.html">Labelled permutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../interval_exchanges/reduced.html">Reduced permutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../interval_exchanges/rauzy_class_cardinality.html">Rauzy class cardinality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../interval_exchanges/cover.html">Covering construction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../interval_exchanges/iet.html">Interval exchange transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../interval_exchanges/integer_iet.html">Integral interval exchanges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../interval_exchanges/iet_family.html">Interval exchange families</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../interval_exchanges/flip_sequence.html">Flip sequences</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../topological_recursion/index.html">Topological recursion</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Topological recursion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../topological_recursion/topological_recursion.html">Generic topological recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../topological_recursion/kontsevich.html">Kontsevich topological recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../topological_recursion/masur_veech.html">Masur-Veech topological recursion</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../misc/index.html">Miscellaneous</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Miscellaneous</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../misc/constellation.html">Constellations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../misc/group_representation.html">Finite group representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../misc/plane_tree.html">Plane trees</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Source code for surface_dynamics.flat_surfaces.homology</h1><div class="highlight"><pre>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Simplicial complex, homology of surfaces and translation surfaces</span>
+
+<span class="sd">In this module are implemented simple homology computation for translation</span>
+<span class="sd">surfaces. There are three main classes:</span>
+
+<span class="sd">- :class:`RibbonGraph`: decomposition of a surface into polygons. The</span>
+<span class="sd">  combinatorics is stored as a triple of permutations `v` (vertices), `e`</span>
+<span class="sd">  (edges), `f` (faces) so that the product `vef` is the identity. The domain of</span>
+<span class="sd">  the permutations correspond to the half edges or *darts*. The permutation `e`</span>
+<span class="sd">  is an involution so that `e(i)` is the other half of the edge starting at</span>
+<span class="sd">  `i`. The fixed points of `e` corresponds to edge glued to themselves. The</span>
+<span class="sd">  permutation `v` is obtained by turning around a vertex, while `f` turning</span>
+<span class="sd">  around a face.</span>
+
+<span class="sd">- :class:`RibbonGraphWithAngles`: a ribbon graph with an additional angle</span>
+<span class="sd">  structure.</span>
+
+<span class="sd">- :class:`RibbonGraphWithHolonomies`: a ribbon graph with an additional holonomy</span>
+<span class="sd">  structure on its edges.</span>
+
+<span class="sd">EXAMPLES::</span>
+
+<span class="sd">    sage: from surface_dynamics import *</span>
+
+<span class="sd">To create a ribbon graph you just need to fix two of the permutations `v`, `e`,</span>
+<span class="sd">`f`::</span>
+
+<span class="sd">    sage: R = RibbonGraph(vertices=&#39;(0,1,4,3)(5,2)&#39;,edges=&#39;(0,3)(1,2)(4,5)&#39;)</span>
+<span class="sd">    sage: R</span>
+<span class="sd">    Ribbon graph with 2 vertices, 3 edges and 3 faces</span>
+
+<span class="sd">The vertices, edges and faces are by definition the cycles of the permutation.</span>
+<span class="sd">Calling the method :meth:`~RibbonGraph.vertices`, :meth:`~RibbonGraph.edges` or</span>
+<span class="sd">:meth:`~RibbonGraph.faces` gives you access to these cycles::</span>
+
+<span class="sd">    sage: R.vertices()</span>
+<span class="sd">    [[0, 1, 4, 3], [2, 5]]</span>
+<span class="sd">    sage: R.edges()</span>
+<span class="sd">    [[0, 3], [1, 2], [4, 5]]</span>
+<span class="sd">    sage: R.faces()</span>
+<span class="sd">    [[0, 4, 2], [1, 5], [3]]</span>
+
+<span class="sd">Given a half edge (i.e. a dart), you can get the index of the vertex, edge or</span>
+<span class="sd">face it belongs with the methods :meth:`~RibbonGraph.dart_to_vertex`,</span>
+<span class="sd">:meth:`~RibbonGraph.dart_to_edge` and :meth:`~RibbonGraph.dart_to_edge`::</span>
+
+<span class="sd">    sage: R.dart_to_vertex(1)</span>
+<span class="sd">    0</span>
+<span class="sd">    sage: 1 in R.vertices()[0]</span>
+<span class="sd">    True</span>
+<span class="sd">    sage: R.dart_to_vertex(2)</span>
+<span class="sd">    1</span>
+<span class="sd">    sage: 2 in R.vertices()[1]</span>
+<span class="sd">    True</span>
+
+<span class="sd">    sage: R.dart_to_edge(3)</span>
+<span class="sd">    0</span>
+<span class="sd">    sage: R.dart_to_edge(4)</span>
+<span class="sd">    2</span>
+
+<span class="sd">    sage: R.dart_to_face(4)</span>
+<span class="sd">    0</span>
+<span class="sd">    sage: R.dart_to_face(3)</span>
+<span class="sd">    2</span>
+
+<span class="sd">To initialize a ribbon graph with angles, you have to input the standard data to</span>
+<span class="sd">initialize a ribbon graph plus a list of positive rational numbers which</span>
+<span class="sd">corresponds to the angles between darts (more precisely, the number at position</span>
+<span class="sd">i is the angle between i and v(i))::</span>
+
+<span class="sd">    sage: e = &#39;(0,1)(2,3)&#39;</span>
+<span class="sd">    sage: f = &#39;(0,2,1,3)&#39;</span>
+<span class="sd">    sage: a = [1/2,1/2,1/2,1/2]</span>
+<span class="sd">    sage: r = RibbonGraphWithAngles(edges=e,faces=f,angles=a)</span>
+<span class="sd">    sage: r.spin_parity()</span>
+<span class="sd">    1</span>
+
+<span class="sd">TODO:</span>
+
+<span class="sd">- Oriented ribbon graphs are *exactly* separatrix diagrams. An orientation on a Ribbon</span>
+<span class="sd">  graphs is a choice of orientation for each vertex so that each face has all of its</span>
+<span class="sd">  edges oriented in the same direction as we go along the boundaries.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1">#*****************************************************************************</span>
+<span class="c1">#       Copyright (C) 2019 Vincent Delecroix &lt;20100.delecroix@gmail.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1">#  Distributed under the terms of the GNU General Public License (GPL)</span>
+<span class="c1">#  as published by the Free Software Foundation; either version 2 of</span>
+<span class="c1">#  the License, or (at your option) any later version.</span>
+<span class="c1">#                  https://www.gnu.org/licenses/</span>
+<span class="c1">#*****************************************************************************</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">range</span><span class="p">,</span> <span class="nb">map</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="nb">zip</span>
+
+<span class="kn">from</span> <span class="nn">surface_dynamics.misc.permutation</span> <span class="kn">import</span> <span class="p">(</span><span class="n">perm_init</span><span class="p">,</span> <span class="n">constellation_init</span><span class="p">,</span> <span class="n">perm_cycles</span><span class="p">,</span> <span class="n">perm_invert</span><span class="p">,</span>
+        <span class="n">perm_check</span><span class="p">,</span> <span class="n">perm_compose</span><span class="p">,</span> <span class="n">equalize_perms</span><span class="p">,</span> <span class="n">perm_orbit</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">sage.misc.cachefunc</span> <span class="kn">import</span> <span class="n">cached_method</span>
+
+<span class="kn">from</span> <span class="nn">sage.modules.free_module</span> <span class="kn">import</span> <span class="n">FreeModule</span>
+<span class="kn">from</span> <span class="nn">sage.matrix.constructor</span> <span class="kn">import</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">identity_matrix</span>
+
+<span class="kn">from</span> <span class="nn">sage.structure.sage_object</span> <span class="kn">import</span> <span class="n">SageObject</span>
+<span class="kn">from</span> <span class="nn">sage.rings.integer_ring</span> <span class="kn">import</span> <span class="n">ZZ</span>
+<span class="kn">from</span> <span class="nn">sage.rings.rational_field</span> <span class="kn">import</span> <span class="n">QQ</span>
+
+
+<span class="c1"># TODO: introduce an oriented ribbon graph class</span>
+<span class="c1"># an oriented ribbon graph is a ribbon graph such that one can choose</span>
+<span class="c1"># coherently an orientation of each edge so that each face gets</span>
+<span class="c1"># all its edges oriented the same way</span>
+<span class="c1"># (the dual corresponds in having all vertices being either sources or sinks)</span>
+<span class="c1"># we encode this by choosing by labeling for each edge with the smaller edge index</span>
+
+<div class="viewcode-block" id="RibbonGraph">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph">[docs]</a>
+<span class="k">class</span> <span class="nc">RibbonGraph</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generic class for Ribbon graph.</span>
+
+<span class="sd">    A Ribbon graph (or fat graph or combinatorial map) is a graph embedded in a</span>
+<span class="sd">    surface. This class uses representation as a triple ``(v,e,f)`` of</span>
+<span class="sd">    permutations such that `vef = 1` and the action of the group generated by</span>
+<span class="sd">    `v,e,f` acts transitively in the domain. The cycles of ``v`` are</span>
+<span class="sd">    considered as vertices, the ones of ``e`` are considered as edges and the</span>
+<span class="sd">    ones of ``f`` as the faces. Each element of the domain is a half-edge which</span>
+<span class="sd">    is called a *dart*. A dart is also associated to an oriented edge.</span>
+
+<span class="sd">    The domain of the permutations must be a subset of [0, ..., N-1] for some N.</span>
+<span class="sd">    The edges are always considered to be (i, ~i) where i is the bit complement</span>
+<span class="sd">    of the integer i (~0 = -1, ~-3 = 2). So that an edge always has a canonical</span>
+<span class="sd">    representative number given by the non-negative version.</span>
+
+<span class="sd">    A dense ribbon graph has the following attributes</span>
+
+<span class="sd">      - total_darts - non negative integer - the total number darts</span>
+<span class="sd">      - num_darts - non negative integer - the number of active darts</span>
+<span class="sd">      - active_darts - bitset - list of lengths _total_darts with True or</span>
+<span class="sd">        False. The position i is True if i is an active dart.</span>
+
+<span class="sd">      - vertices, vertices_inv - list - partial permutations of [0,N] which are</span>
+<span class="sd">        inverse of each other</span>
+<span class="sd">      - vertex_cycles - the cycles of the partial permutation vertices</span>
+<span class="sd">      - dart_to_vertex_index</span>
+
+<span class="sd">      - edges, edges_inv - list - partial permutations of [0,N] which are</span>
+<span class="sd">        inverse of each other</span>
+<span class="sd">      - edge_cycles - the cycles of the partial permutation edge</span>
+<span class="sd">      - dart_to_edge_index</span>
+
+<span class="sd">      - faces, faces_inv - list - partial permutations of [0,N] which are</span>
+<span class="sd">        inverse of each other</span>
+<span class="sd">      - face_cycles - the cycles of the partial permutation faces</span>
+<span class="sd">      - dart_to_face_index</span>
+
+<span class="sd">    EXAMPLES::</span>
+
+<span class="sd">        sage: from surface_dynamics import *</span>
+
+<span class="sd">        sage: RibbonGraph([],[],[])</span>
+<span class="sd">        Ribbon graph with 1 vertex, 0 edge and 1 face</span>
+<span class="sd">        sage: RibbonGraph(&#39;()&#39;,&#39;(0,1)&#39;,&#39;(0,1)&#39;)</span>
+<span class="sd">        Ribbon graph with 2 vertices, 1 edge and 1 face</span>
+
+<span class="sd">        sage: G = RibbonGraph(&#39;(0,3)(1,2)&#39;,&#39;(0,1)(2,3)&#39;,&#39;(0,2)(1,3)&#39;)</span>
+<span class="sd">        sage: G</span>
+<span class="sd">        Ribbon graph with 2 vertices, 2 edges and 2 faces</span>
+<span class="sd">        sage: G.darts()</span>
+<span class="sd">        [0, 1, 2, 3]</span>
+<span class="sd">        sage: G.genus()</span>
+<span class="sd">        0</span>
+
+<span class="sd">        sage: G = RibbonGraph(edges=&#39;(0,2)(1,3)(4,6)(5,7)&#39;,faces=&#39;(0,1,2,3,4,5,6,7)&#39;)</span>
+<span class="sd">        sage: G</span>
+<span class="sd">        Ribbon graph with 1 vertex, 4 edges and 1 face</span>
+<span class="sd">        sage: G.darts()</span>
+<span class="sd">        [0, 1, 2, 3, 4, 5, 6, 7]</span>
+<span class="sd">        sage: G.genus()</span>
+<span class="sd">        2</span>
+
+<span class="sd">        sage: G = RibbonGraph(vertices=&#39;(0,2,3,6)(1,4,5,7)&#39;)</span>
+<span class="sd">        sage: G</span>
+<span class="sd">        Ribbon graph with 2 vertices, 4 edges and 4 faces</span>
+<span class="sd">        sage: G.edges()</span>
+<span class="sd">        [[0, 1], [2, 3], [4, 5], [6, 7]]</span>
+<span class="sd">        sage: G.genus()</span>
+<span class="sd">        0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">faces</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import RibbonGraph</span>
+<span class="sd">            sage: RibbonGraph([0r,1r],[1r,0r],[1r,0r])</span>
+<span class="sd">            Ribbon graph with 2 vertices, 1 edge and 1 face</span>
+
+<span class="sd">            sage: RibbonGraph([-1,1,-1,3],[-1,3,-1,1],[-1,3,-1,1])</span>
+<span class="sd">            Ribbon graph with 2 vertices, 1 edge and 1 face</span>
+
+<span class="sd">            sage: RibbonGraph(vertices=&#39;(1)(5)&#39;, edges=&#39;(1,5)&#39;, faces=&#39;(1,5)&#39;)</span>
+<span class="sd">            Ribbon graph with 2 vertices, 1 edge and 1 face</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vertices</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">faces</span> <span class="o">=</span> <span class="n">constellation_init</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">faces</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="n">check</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_total_darts</span> <span class="o">=</span> <span class="n">total_darts</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span>
+        <span class="n">num_darts</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">]</span> <span class="o">*</span> <span class="n">total_darts</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,(</span><span class="n">jv</span><span class="p">,</span> <span class="n">je</span><span class="p">,</span> <span class="n">jf</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">faces</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">jv</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">je</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">jf</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;inconsistent permutations&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">je</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">jf</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;inconsistent permutations&quot;</span><span class="p">)</span>
+                <span class="n">num_darts</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_darts</span> <span class="o">=</span> <span class="n">num_darts</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vertices</span> <span class="o">=</span> <span class="n">vertices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_cycles</span> <span class="o">=</span> <span class="n">perm_cycles</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">singletons</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dart_to_vertex_index</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">total_darts</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vertex_cycles</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dart_to_vertex_index</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span> <span class="o">=</span> <span class="n">edges</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edge_cycles</span> <span class="o">=</span> <span class="n">perm_cycles</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">singletons</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dart_to_edge_index</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">total_darts</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">edge</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edge_cycles</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">edge</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dart_to_edge_index</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_faces</span> <span class="o">=</span> <span class="n">faces</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_face_cycles</span> <span class="o">=</span> <span class="n">perm_cycles</span><span class="p">(</span><span class="n">faces</span><span class="p">,</span> <span class="n">singletons</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dart_to_face_index</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">total_darts</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_face_cycles</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dart_to_face_index</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vertices_inv</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">total_darts</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edges_inv</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">total_darts</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_faces_inv</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">total_darts</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">total_darts</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_vertices_inv</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_edges_inv</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_faces_inv</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_faces</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connected</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">connected</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">check</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_check</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        String representation.</span>
+
+<span class="sd">        TESTS::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: RibbonGraph(edges=&#39;(0,1)(2,3)&#39;,faces=&#39;(0,1,2,3)&#39;)._repr_()</span>
+<span class="sd">            &#39;Ribbon graph with 3 vertices, 2 edges and 1 face&#39;</span>
+<span class="sd">            sage: RibbonGraph(edges=&#39;(0,1)&#39;,faces=&#39;(0)(1)&#39;)._repr_()</span>
+<span class="sd">            &#39;Ribbon graph with 1 vertex, 1 edge and 2 faces&#39;</span>
+<span class="sd">            sage: RibbonGraph(edges=&#39;(0,1)(2,3)&#39;,faces=&#39;(0,2)(1,3)&#39;)._repr_()</span>
+<span class="sd">            &#39;Ribbon graph with 2 vertices, 2 edges and 2 faces&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_vertices</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">vert_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> vertex&quot;</span> <span class="o">%</span><span class="n">n</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">vert_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> vertices&quot;</span> <span class="o">%</span><span class="n">n</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_edges</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">edge_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> edge&quot;</span> <span class="o">%</span><span class="n">n</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">edge_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> edges&quot;</span> <span class="o">%</span><span class="n">n</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_faces</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">face_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> face&quot;</span> <span class="o">%</span><span class="n">n</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">face_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> faces&quot;</span> <span class="o">%</span><span class="n">n</span>
+        <span class="k">return</span> <span class="s2">&quot;Ribbon graph with </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2"> and </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">vert_str</span><span class="p">,</span><span class="n">edge_str</span><span class="p">,</span><span class="n">face_str</span><span class="p">)</span>
+
+    <span class="nd">@cached_method</span>
+    <span class="k">def</span> <span class="nf">_symmetric_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">sage.groups.perm_gps.permgroup_named</span> <span class="kn">import</span> <span class="n">SymmetricGroup</span>
+        <span class="k">return</span> <span class="n">SymmetricGroup</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">)</span> <span class="k">if</span> <span class="n">j</span><span class="p">])</span>
+
+<div class="viewcode-block" id="RibbonGraph.monodromy_group">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.monodromy_group">[docs]</a>
+    <span class="k">def</span> <span class="nf">monodromy_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the group generated by the three defining permutations.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import RibbonGraph</span>
+
+<span class="sd">            sage: r1 = RibbonGraph(vertices=&#39;(0)(2)(1,3,4,5)&#39;, edges=&#39;(0,1)(2,3)(4,5)&#39;)</span>
+<span class="sd">            sage: G1 = r1.monodromy_group()</span>
+<span class="sd">            sage: G1</span>
+<span class="sd">            Subgroup ...</span>
+<span class="sd">            sage: G1.is_isomorphic(SymmetricGroup(5))</span>
+<span class="sd">            True</span>
+
+<span class="sd">            sage: r2 = RibbonGraph(vertices=&#39;(0)(2)(1,3,4)(5,6,7)&#39;, edges=&#39;(0,1)(2,3)(4,5)(6,7)&#39;)</span>
+<span class="sd">            sage: G2 = r2.monodromy_group()</span>
+<span class="sd">            sage: G2</span>
+<span class="sd">            Subgroup ...</span>
+<span class="sd">            sage: G2.is_isomorphic(PSL(2,7))</span>
+<span class="sd">            True</span>
+
+<span class="sd">            sage: r3 = RibbonGraph(vertices=&#39;(1)(5)&#39;, edges=&#39;(1,5)&#39;, faces=&#39;(1,5)&#39;)</span>
+<span class="sd">            sage: r3.monodromy_group()</span>
+<span class="sd">            Subgroup ...</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symmetric_group</span><span class="p">()</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">S</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertices</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">S</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">S</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_faces</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">v</span><span class="o">*</span><span class="n">e</span><span class="o">*</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">is_one</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">S</span><span class="o">.</span><span class="n">subgroup</span><span class="p">([</span><span class="n">v</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">f</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.automorphism_group">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.automorphism_group">[docs]</a>
+    <span class="k">def</span> <span class="nf">automorphism_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fix_vertices</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_edges</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_faces</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the automorphism group of this ribbon graph.</span>
+
+<span class="sd">        The automorphism is simply the intersection of the centralizers</span>
+<span class="sd">        of the defining permutations.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+<span class="sd">            sage: r = RibbonGraph(&#39;(1,6,5)(2,3,4)&#39;, &#39;(1,2)(3,4)(5,6)&#39;, &#39;(1,4,2,5)(3)(6)&#39;)</span>
+<span class="sd">            sage: r.automorphism_group().cardinality()</span>
+<span class="sd">            2</span>
+<span class="sd">            sage: r.automorphism_group(fix_faces=True).cardinality()</span>
+<span class="sd">            1</span>
+
+<span class="sd">            sage: r = RibbonGraph(&#39;(1,4,5)(2,6,3)&#39;, &#39;(1,2)(3,4)(5,6)&#39;, &#39;(1,3)(2,5)(4,6)&#39;)</span>
+<span class="sd">            sage: r.automorphism_group().cardinality()</span>
+<span class="sd">            6</span>
+
+<span class="sd">        Examples in genus 1::</span>
+
+<span class="sd">            sage: r = RibbonGraph(&#39;(1,5,4)(6,3,2)&#39;, &#39;(1,2)(3,4)(5,6)&#39;, &#39;(1,3,5,2,4,6)&#39;)</span>
+<span class="sd">            sage: A = r.automorphism_group()</span>
+<span class="sd">            sage: A</span>
+<span class="sd">            Subgroup ...</span>
+<span class="sd">            sage: A.cardinality()</span>
+<span class="sd">            6</span>
+<span class="sd">            sage: r.automorphism_group(fix_faces=True) == A</span>
+<span class="sd">            True</span>
+
+<span class="sd">            sage: r = RibbonGraph(&#39;(1,3,2,4)&#39;, &#39;(1,2)(3,4)&#39;, &#39;(1,3,2,4)&#39;)</span>
+<span class="sd">            sage: r.automorphism_group().cardinality()</span>
+<span class="sd">            4</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symmetric_group</span><span class="p">()</span><span class="o">.</span><span class="n">centralizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monodromy_group</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">C</span><span class="o">.</span><span class="n">cardinality</span><span class="p">()</span><span class="o">.</span><span class="n">is_one</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">C</span>
+
+        <span class="k">if</span> <span class="n">fix_vertices</span> <span class="ow">or</span> <span class="n">fix_edges</span> <span class="ow">or</span> <span class="n">fix_faces</span><span class="p">:</span>
+            <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symmetric_group</span><span class="p">()</span>
+            <span class="n">B</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">fix_vertices</span><span class="p">:</span>
+                <span class="n">B</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vertex_cycles</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">fix_edges</span><span class="p">:</span>
+                <span class="n">B</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edge_cycles</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">fix_faces</span><span class="p">:</span>
+                <span class="n">B</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_face_cycles</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">BB</span> <span class="ow">in</span> <span class="n">B</span><span class="p">:</span>
+                <span class="n">gens</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">BB</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">gens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">S</span><span class="p">([(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">])]))</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                        <span class="n">gens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">S</span><span class="p">([</span><span class="nb">tuple</span><span class="p">(</span><span class="n">s</span><span class="p">)]))</span>
+                <span class="n">C</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">S</span><span class="o">.</span><span class="n">subgroup</span><span class="p">(</span><span class="n">gens</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">C</span></div>
+
+
+    <span class="c1"># TODO: perform the expansion as quasi-polynomial</span>
+    <span class="c1"># TODO: see how the recursion formula translates on this generating series</span>
+<div class="viewcode-block" id="RibbonGraph.length_rational_fraction">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.length_rational_fraction">[docs]</a>
+    <span class="k">def</span> <span class="nf">length_rational_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the generating series for the number of lengths with the given boundaries</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">sage.symbolic.ring</span> <span class="kn">import</span> <span class="n">SR</span>
+
+        <span class="n">F</span> <span class="o">=</span> <span class="n">SR</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">dart</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_total_darts</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">[</span><span class="n">dart</span><span class="p">]:</span>
+                <span class="k">continue</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dart_to_edge_index</span><span class="p">[</span><span class="n">dart</span><span class="p">]</span>
+            <span class="n">j1</span><span class="p">,</span> <span class="n">j2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edge_cycles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">j1</span> <span class="o">==</span> <span class="n">dart</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">j2</span> <span class="o">==</span> <span class="n">dart</span>
+
+            <span class="n">f1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dart_to_face_index</span><span class="p">[</span><span class="n">j1</span><span class="p">]</span>
+            <span class="n">f2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dart_to_face_index</span><span class="p">[</span><span class="n">j2</span><span class="p">]</span>
+
+            <span class="n">b1</span> <span class="o">=</span> <span class="n">SR</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">f1</span><span class="p">))</span>
+            <span class="n">b2</span> <span class="o">=</span> <span class="n">SR</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">f2</span><span class="p">))</span>
+
+            <span class="n">F</span> <span class="o">*=</span> <span class="n">b1</span><span class="o">*</span><span class="n">b2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">b1</span><span class="o">*</span><span class="n">b2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">F</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.add_extra_darts">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.add_extra_darts">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_extra_darts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add extra darts to support a total of ``2 n`` darts.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_darts</span>
+        <span class="k">if</span> <span class="mi">2</span><span class="o">*</span><span class="n">n</span> <span class="o">&gt;</span> <span class="n">m</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_total_darts</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_vertices</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertices_inv</span><span class="p">,</span>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges_inv</span><span class="p">,</span>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">_faces</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_faces_inv</span><span class="p">]:</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span> <span class="o">-</span> <span class="n">m</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span> <span class="o">-</span> <span class="n">m</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_check</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check that the data of the Ribbon graph is coherent</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_darts</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the length of active darts is not total_darts&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_darts</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the number of darts do not coincide with active darts&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_total_darts</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertices_inv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dart </span><span class="si">%d</span><span class="s2"> is active but has no vertex&quot;</span> <span class="o">%</span><span class="n">i</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges_inv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dart </span><span class="si">%d</span><span class="s2"> is active but has no edge&quot;</span> <span class="o">%</span><span class="n">i</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_faces</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_faces_inv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dart </span><span class="si">%d</span><span class="s2"> is active but has no face&quot;</span> <span class="o">%</span><span class="n">i</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_vertices_inv</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;vertices is not the inverse of vertices_inv&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_edges_inv</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;edges is not the inverse of edges_inv&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_faces</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_faces_inv</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;faces is not the inverse of faces_inv&quot;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_faces</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]]]</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the Ribbon graph condition vef=() is not satisfied for </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span><span class="n">i</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertices_inv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dart </span><span class="si">%d</span><span class="s2"> is not active but has a vertex&quot;</span> <span class="o">%</span><span class="n">i</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges_inv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dart </span><span class="si">%d</span><span class="s2"> is not active but has an edge&quot;</span> <span class="o">%</span><span class="n">i</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_faces</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_faces_inv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dart </span><span class="si">%d</span><span class="s2"> is not active but has a face&quot;</span> <span class="o">%</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connected</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_connected</span><span class="p">(</span><span class="n">force_computation</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the graph is not connected&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RibbonGraph.is_connected">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_connected">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_computation</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">force_computation</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connected</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="kn">from</span> <span class="nn">sage.graphs.graph</span> <span class="kn">import</span> <span class="n">Graph</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="n">loops</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">multiedges</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_total_darts</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_vertices</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_faces</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">G</span><span class="o">.</span><span class="n">is_connected</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.relabel">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.relabel">[docs]</a>
+    <span class="k">def</span> <span class="nf">relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        perm is a of range(0,N)</span>
+
+<span class="sd">        If ``perm`` is None, relabel the darts on 0,2M keeping the relative</span>
+<span class="sd">        order of the darts.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">perm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">perm</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">num_darts</span><span class="p">()</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_darts</span><span class="p">()):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                    <span class="n">perm</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
+                    <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">vertices</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_darts</span><span class="p">()</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_darts</span><span class="p">()</span>
+        <span class="n">faces</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_darts</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_darts</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="n">vertices</span><span class="p">[</span><span class="n">perm</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">perm</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+                <span class="n">edges</span><span class="p">[</span><span class="n">perm</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">perm</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+                <span class="n">faces</span><span class="p">[</span><span class="n">perm</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">perm</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_faces</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+
+        <span class="k">return</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span><span class="n">edges</span><span class="p">,</span><span class="n">faces</span><span class="p">)</span></div>
+
+
+    <span class="c1">#</span>
+    <span class="c1"># Darts</span>
+    <span class="c1">#</span>
+
+<div class="viewcode-block" id="RibbonGraph.num_darts">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_darts">[docs]</a>
+    <span class="k">def</span> <span class="nf">num_darts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the number of darts.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_darts</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.darts">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.darts">[docs]</a>
+    <span class="k">def</span> <span class="nf">darts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the list of darts</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_total_darts</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.num_vertices">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_vertices">[docs]</a>
+    <span class="k">def</span> <span class="nf">num_vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the number of vertices.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vertex_cycles</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.vertex_perm">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.vertex_perm">[docs]</a>
+    <span class="k">def</span> <span class="nf">vertex_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the permutation that define the vertices.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertices</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.vertex_orbit">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.vertex_orbit">[docs]</a>
+    <span class="k">def</span> <span class="nf">vertex_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the orbit of ``i`` under the permutation that define the</span>
+<span class="sd">        vertices.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="n">perm_orbit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vertices</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.vertices">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.vertices">[docs]</a>
+    <span class="k">def</span> <span class="nf">vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the list of vertices as cycles decomposition of the vertex</span>
+<span class="sd">        permutation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_cycles</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.dart_to_vertex">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_vertex">[docs]</a>
+    <span class="k">def</span> <span class="nf">dart_to_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the vertex on which the dart ``i`` is attached.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dart_to_vertex_index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dart </span><span class="si">%d</span><span class="s2"> is not active&quot;</span> <span class="o">%</span><span class="n">i</span><span class="p">)</span></div>
+
+
+    <span class="c1">#</span>
+    <span class="c1"># Edges</span>
+    <span class="c1">#</span>
+
+<div class="viewcode-block" id="RibbonGraph.num_edges">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_edges">[docs]</a>
+    <span class="k">def</span> <span class="nf">num_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the number of edges.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edge_cycles</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.edge_perm">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.edge_perm">[docs]</a>
+    <span class="k">def</span> <span class="nf">edge_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the permutation that define the edges.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.edge_orbit">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.edge_orbit">[docs]</a>
+    <span class="k">def</span> <span class="nf">edge_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the orbit of the dart ``i`` under the permutation that defines</span>
+<span class="sd">        the edges.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="n">perm_orbit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.edges">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.edges">[docs]</a>
+    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the set of edges.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edge_cycles</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.dart_to_edge">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_edge">[docs]</a>
+    <span class="k">def</span> <span class="nf">dart_to_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the edge the darts ``i`` belongs to.</span>
+
+<span class="sd">        If orientation is set to ``True`` then the output is a `2`-tuple</span>
+<span class="sd">        ``(e,o)`` where ``e`` is the index of the edge and ``o`` is its</span>
+<span class="sd">        orientation as ``+1`` or ``-1``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">orientation</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dart_to_edge_index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dart_to_edge_index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edge_cycles</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edge_cycles</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;this should not happen!&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dart </span><span class="si">%d</span><span class="s2"> is not active&quot;</span> <span class="o">%</span><span class="n">i</span><span class="p">)</span></div>
+
+
+    <span class="c1">#</span>
+    <span class="c1"># Faces</span>
+    <span class="c1">#</span>
+
+<div class="viewcode-block" id="RibbonGraph.num_faces">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_faces">[docs]</a>
+    <span class="k">def</span> <span class="nf">num_faces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the number of faces.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_face_cycles</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.face_perm">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.face_perm">[docs]</a>
+    <span class="k">def</span> <span class="nf">face_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the permutation that defines the face.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_faces</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.face_orbit">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.face_orbit">[docs]</a>
+    <span class="k">def</span> <span class="nf">face_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the orbit of ``i`` under the permutation associated to faces.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="n">perm_orbit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_faces</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.faces">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.faces">[docs]</a>
+    <span class="k">def</span> <span class="nf">faces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the list of faces.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_face_cycles</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.dart_to_face">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_face">[docs]</a>
+    <span class="k">def</span> <span class="nf">dart_to_face</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dart_to_face_index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dart </span><span class="si">{}</span><span class="s2"> is not active&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.dual">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.dual">[docs]</a>
+    <span class="k">def</span> <span class="nf">dual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the dual Ribbon graph.</span>
+
+<span class="sd">        The *dual* ribbon graph of `(v,e,f)` is `(f^{-1}, e, v^{-1})`.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: r = RibbonGraph(edges=&#39;(0,1)&#39;,faces=&#39;(0)(1)&#39;); r</span>
+<span class="sd">            Ribbon graph with 1 vertex, 1 edge and 2 faces</span>
+<span class="sd">            sage: r.dual()</span>
+<span class="sd">            Ribbon graph with 2 vertices, 1 edge and 1 face</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">RibbonGraph</span><span class="p">(</span>
+            <span class="n">vertices</span><span class="o">=</span><span class="n">perm_invert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_faces</span><span class="p">),</span>
+            <span class="n">edges</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">,</span>
+            <span class="n">faces</span><span class="o">=</span><span class="n">perm_invert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vertices</span><span class="p">))</span></div>
+
+
+    <span class="c1">#</span>
+    <span class="c1"># euler characteristic</span>
+    <span class="c1">#</span>
+
+<div class="viewcode-block" id="RibbonGraph.euler_characteristic">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.euler_characteristic">[docs]</a>
+    <span class="k">def</span> <span class="nf">euler_characteristic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the Euler characteristic of the embedded surface.</span>
+
+<span class="sd">        The *Euler characteristic* of a surface complex is `V - E + F`, where</span>
+<span class="sd">        `V` is the number of vertices, `E` the number of edges and `F` the</span>
+<span class="sd">        number of faces.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: r = RibbonGraph(edges=&#39;(0,1)(2,3)(4,5)&#39;,faces=&#39;(0,2,4)(1)(3,5)&#39;)</span>
+<span class="sd">            sage: r.euler_characteristic()</span>
+<span class="sd">            2</span>
+
+<span class="sd">            sage: r = RibbonGraph(edges=&#39;(0,1)(2,3)&#39;,faces=&#39;(0,2,1,3)&#39;)</span>
+<span class="sd">            sage: r.euler_characteristic()</span>
+<span class="sd">            0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_vertices</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_edges</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_faces</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.is_plane">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_plane">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_plane</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns true if and only if the ribbon graph belongs in a sphere. In</span>
+<span class="sd">        other words if it has genus 0.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: r = RibbonGraph(vertices=&#39;(0)(1)&#39;,edges=&#39;(0,1)&#39;)</span>
+<span class="sd">            sage: r.is_plane()</span>
+<span class="sd">            True</span>
+
+<span class="sd">            sage: r = RibbonGraph(vertices=&#39;(0,1)&#39;,edges=&#39;(0,1)&#39;)</span>
+<span class="sd">            sage: r.is_plane()</span>
+<span class="sd">            True</span>
+
+<span class="sd">            sage: r = RibbonGraph(edges=&#39;(0,1)(2,3)&#39;,faces=&#39;(0,2)(1,3)&#39;)</span>
+<span class="sd">            sage: r.is_plane()</span>
+<span class="sd">            True</span>
+
+<span class="sd">            sage: r = RibbonGraph(edges=&#39;(0,1)(2,3)&#39;,faces=&#39;(0,2,1,3)&#39;)</span>
+<span class="sd">            sage: r.is_plane()</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">euler_characteristic</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.is_plane_tree">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_plane_tree">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_plane_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns True if and only if the ribbon graph is a planar tree. In other</span>
+<span class="sd">        words, it has genus 0 and only one face.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: r = RibbonGraph(vertices=&#39;(0)(1)&#39;,edges=&#39;(0,1)&#39;)</span>
+<span class="sd">            sage: r.is_plane_tree()</span>
+<span class="sd">            True</span>
+
+<span class="sd">            sage: r = RibbonGraph(vertices=&#39;(0)(1,2,4)(3)(5)&#39;,edges=&#39;(0,1)(2,3)(4,5)&#39;)</span>
+<span class="sd">            sage: r.is_plane_tree()</span>
+<span class="sd">            True</span>
+
+<span class="sd">            sage: r = RibbonGraph(vertices=&#39;(0,1)&#39;,edges=&#39;(0,1)&#39;)</span>
+<span class="sd">            sage: r.is_plane_tree()</span>
+<span class="sd">            False</span>
+<span class="sd">            sage: r.is_plane()</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_faces</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.is_triangulated">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_triangulated">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_triangulated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns True if the surface is triangulated. In other words, faces</span>
+<span class="sd">        consist only of the product of 3-cycles.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: r = RibbonGraph(edges=&#39;(0,1)(2,3)(4,5)&#39;,faces=&#39;(0,2,4)(1,5,3)&#39;)</span>
+<span class="sd">            sage: r.is_triangulated()</span>
+<span class="sd">            True</span>
+
+<span class="sd">            sage: r = RibbonGraph(edges=&#39;(0,1)(2,3)&#39;,faces=&#39;(0,2,1,3)&#39;)</span>
+<span class="sd">            sage: r.is_triangulated()</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">faces</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.genus">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.genus">[docs]</a>
+    <span class="k">def</span> <span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the genus of the surface associated to this Ribbon graph.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: R = RibbonGraph(vertices=&#39;(1)(2)&#39;,edges=&#39;(1,2)&#39;)</span>
+<span class="sd">            sage: R.genus()</span>
+<span class="sd">            0</span>
+
+<span class="sd">            sage: e=&#39;(1,3)(2,4)&#39;</span>
+<span class="sd">            sage: f=&#39;(1,2,3,4)&#39;</span>
+<span class="sd">            sage: RibbonGraph(edges=e,faces=f).genus()</span>
+<span class="sd">            1</span>
+
+<span class="sd">            sage: e=&#39;(1,3)(2,4)(5,7)(6,8)&#39;</span>
+<span class="sd">            sage: f=&#39;(1,2,3,4,5,6,7,8)&#39;</span>
+<span class="sd">            sage: RibbonGraph(edges=e,faces=f).genus()</span>
+<span class="sd">            2</span>
+
+<span class="sd">            sage: e=&#39;(1,3)(2,4)(5,7)(6,8)(9,11)(10,12)&#39;</span>
+<span class="sd">            sage: f=&#39;(1,2,3,4,5,6,7,8,9,10,11,12)&#39;</span>
+<span class="sd">            sage: RibbonGraph(edges=e,faces=f).genus()</span>
+<span class="sd">            3</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">euler_characteristic</span><span class="p">()</span><span class="o">//</span><span class="mi">2</span></div>
+
+
+    <span class="c1">#</span>
+    <span class="c1"># cycles and fundamental group</span>
+    <span class="c1">#</span>
+
+<div class="viewcode-block" id="RibbonGraph.spanning_tree">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.spanning_tree">[docs]</a>
+    <span class="k">def</span> <span class="nf">spanning_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a spanning tree</span>
+
+<span class="sd">        OUTPUT:</span>
+
+<span class="sd">        - spanning tree as a DiGraph</span>
+
+<span class="sd">        - remaining edges as 2-tuples ``(i,e[i])``</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: R = RibbonGraph(&#39;(1,2,3)&#39;,&#39;(1,2)(3,4)&#39;)</span>
+<span class="sd">            sage: R</span>
+<span class="sd">            Ribbon graph with 2 vertices, 2 edges and 2 faces</span>
+<span class="sd">            sage: T,o = R.spanning_tree()</span>
+<span class="sd">            sage: T</span>
+<span class="sd">            Digraph on 2 vertices</span>
+<span class="sd">            sage: T.edges(sort=True)</span>
+<span class="sd">            [(0, 1, (3, 4))]</span>
+<span class="sd">            sage: o</span>
+<span class="sd">            [(1, 2)]</span>
+
+<span class="sd">            sage: R = RibbonGraph(&#39;(1,2,3)(4,5,6)&#39;,&#39;(1,2)(3,4)(5,6)&#39;)</span>
+<span class="sd">            sage: R</span>
+<span class="sd">            Ribbon graph with 2 vertices, 3 edges and 3 faces</span>
+<span class="sd">            sage: T,o = R.spanning_tree()</span>
+<span class="sd">            sage: T</span>
+<span class="sd">            Digraph on 2 vertices</span>
+<span class="sd">            sage: T.edges(sort=True)</span>
+<span class="sd">            [(0, 1, (3, 4))]</span>
+<span class="sd">            sage: o</span>
+<span class="sd">            [(1, 2), (5, 6)]</span>
+
+<span class="sd">            sage: e = &#39;(1,3)(5,7)(2,4)(6,8)&#39;</span>
+<span class="sd">            sage: f = &#39;(1,2,3,4,5,6,7,8)&#39;</span>
+<span class="sd">            sage: R = RibbonGraph(edges=e, faces=f)</span>
+<span class="sd">            sage: T,o = R.spanning_tree()</span>
+<span class="sd">            sage: T</span>
+<span class="sd">            Digraph on 1 vertex</span>
+<span class="sd">            sage: o</span>
+<span class="sd">            [[1, 3], [2, 4], [5, 7], [6, 8]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">sage.graphs.digraph</span> <span class="kn">import</span> <span class="n">DiGraph</span>
+
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">darts</span><span class="p">()</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertices</span><span class="p">()</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">edge_perm</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_darts</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">DiGraph</span><span class="p">(),[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_vertices</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">DiGraph</span><span class="p">({</span><span class="mi">0</span><span class="p">:[]}),</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">()</span>
+
+        <span class="n">T</span> <span class="o">=</span> <span class="n">DiGraph</span><span class="p">()</span>
+
+        <span class="n">v0</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">root</span> <span class="ow">in</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">v1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="n">root</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">v1</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="n">T</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span><span class="n">v1</span><span class="p">,(</span><span class="n">root</span><span class="p">,</span><span class="n">e</span><span class="p">[</span><span class="n">root</span><span class="p">]))</span>
+        <span class="n">o</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">v0</span><span class="p">,</span><span class="n">v1</span><span class="p">])</span>       <span class="c1"># seen vertices</span>
+        <span class="n">waiting</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="n">root</span><span class="p">],</span><span class="n">root</span><span class="p">]</span>  <span class="c1"># waiting darts</span>
+        <span class="n">cc</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">while</span> <span class="n">waiting</span><span class="p">:</span>
+            <span class="n">ii</span> <span class="o">=</span> <span class="n">waiting</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="c1"># this is a dart</span>
+            <span class="n">v0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span>
+            <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">v0</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_orbit</span><span class="p">(</span><span class="n">ii</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="n">v1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">v1</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">e</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                        <span class="n">o</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">j</span><span class="p">,</span><span class="n">e</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">T</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span><span class="n">v1</span><span class="p">,(</span><span class="n">j</span><span class="p">,</span><span class="n">e</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
+                    <span class="n">waiting</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                    <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">v1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">T</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">o</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.collapse">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.collapse">[docs]</a>
+    <span class="k">def</span> <span class="nf">collapse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spanning_tree</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a ribbon graph callapsed along a spanning tree.</span>
+
+<span class="sd">        The resulting graph is on the same surface as the preceding but has only</span>
+<span class="sd">        one vertex. It could be used twice to provide a polygonal representation</span>
+<span class="sd">        with one vertex and one face.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: R = RibbonGraph(vertices=&#39;(0,1,2,5)(3,7)(4,10,9)(6,11,12)(8,13)&#39;)</span>
+<span class="sd">            sage: R.genus()</span>
+<span class="sd">            1</span>
+<span class="sd">            sage: R.num_vertices()</span>
+<span class="sd">            5</span>
+<span class="sd">            sage: R.num_edges()</span>
+<span class="sd">            7</span>
+<span class="sd">            sage: R.num_faces()</span>
+<span class="sd">            2</span>
+<span class="sd">            sage: R2 = R.collapse()</span>
+<span class="sd">            sage: R2</span>
+<span class="sd">            Ribbon graph with 1 vertex, 3 edges and 2 faces</span>
+<span class="sd">            sage: R</span>
+<span class="sd">            Ribbon graph with 5 vertices, 7 edges and 2 faces</span>
+<span class="sd">            sage: R3 = R2.dual().collapse().dual()</span>
+<span class="sd">            sage: R3</span>
+<span class="sd">            Ribbon graph with 1 vertex, 2 edges and 1 face</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+
+        <span class="k">if</span> <span class="n">spanning_tree</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">spanning_tree</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spanning_tree</span><span class="p">()</span>
+
+        <span class="n">darts_to_kill</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([])</span>
+        <span class="k">for</span> <span class="n">v0</span><span class="p">,</span><span class="n">v1</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="n">spanning_tree</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+            <span class="n">darts_to_kill</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">darts_to_kill</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="n">new_edges</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">darts_to_kill</span><span class="p">:</span>
+                <span class="n">new_edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="n">new_faces</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">faces</span><span class="p">():</span>
+            <span class="n">ff</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">darts_to_kill</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ff</span><span class="p">:</span>
+                <span class="n">new_faces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ff</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">new_edges</span><span class="p">),</span> <span class="n">faces</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">new_faces</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.boundaries">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.boundaries">[docs]</a>
+    <span class="k">def</span> <span class="nf">boundaries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the list of cycles which are boundaries.</span>
+
+<span class="sd">        A cycle is a *boundary* if it bounds a face.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: r = RibbonGraph(&#39;(1,2,3)(4,5,6)&#39;,&#39;(1,2)(3,4)(5,6)&#39;)</span>
+<span class="sd">            sage: r.boundaries()</span>
+<span class="sd">            [[(1, 2)],  [(2, 1), (3, 4), (6, 5), (4, 3)], [(5, 6)]]</span>
+
+<span class="sd">            sage: r = RibbonGraph(&#39;(1,2,3)(4,5)(6,7,8)&#39;,edges=&#39;(1,2)(3,4)(5,6)(7,8)&#39;)</span>
+<span class="sd">            sage: r.boundaries()</span>
+<span class="sd">            [[(1, 2)],  [(2, 1), (3, 4), (5, 6), (8, 7), (6, 5), (4, 3)], [(7, 8)]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">edge_perm</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">([[(</span><span class="n">i</span><span class="p">,</span><span class="n">e</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">faces</span><span class="p">()])</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.cycle_basis">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.cycle_basis">[docs]</a>
+    <span class="k">def</span> <span class="nf">cycle_basis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intersection</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a base of oriented cycles of the Ribbon graph modulo boundaries.</span>
+
+<span class="sd">        If ``intersection`` is set to True then the method also returns the</span>
+<span class="sd">        intersection matrix of the cycles.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: r = RibbonGraph(&#39;(1,2,3)(4,5,6)&#39;,&#39;(1,2)(3,4)(5,6)&#39;)</span>
+<span class="sd">            sage: r.cycle_basis()</span>
+<span class="sd">            []</span>
+
+<span class="sd">            sage: r = RibbonGraph(&#39;(1,2,3)(4,5)(6,7,8)&#39;,edges=&#39;(1,2)(3,4)(5,6)(7,8)&#39;)</span>
+<span class="sd">            sage: r.cycle_basis()</span>
+<span class="sd">            []</span>
+
+<span class="sd">            sage: r = RibbonGraph(&#39;(1,4,5)(2,3)(6,7,8)&#39;,edges=&#39;(1,2)(3,4)(5,6)(7,8)&#39;)</span>
+<span class="sd">            sage: r.cycle_basis()</span>
+<span class="sd">            []</span>
+
+<span class="sd">            sage: e = &#39;(1,3)(2,4)(5,7)(6,8)&#39;</span>
+<span class="sd">            sage: f = &#39;(1,2,3,4,5,6,7,8)&#39;</span>
+<span class="sd">            sage: r = RibbonGraph(edges=e,faces=f)</span>
+<span class="sd">            sage: r.cycle_basis()</span>
+<span class="sd">            [[[1, 3]], [[2, 4]], [[5, 7]], [[6, 8]]]</span>
+
+<span class="sd">            sage: f = &#39;(0,10,13)(6,17,11)(2,14,7)(15,12,3)(16,20,19)(18,1,9)(4,22,21)(23,8,5)&#39;</span>
+<span class="sd">            sage: e = tuple((i,i+1) for i in range(0,24,2))</span>
+<span class="sd">            sage: r = RibbonGraph(edges=e,faces=f); r</span>
+<span class="sd">            Ribbon graph with 2 vertices, 12 edges and 8 faces</span>
+<span class="sd">            sage: c,m = r.cycle_basis(intersection=True)</span>
+<span class="sd">            sage: c</span>
+<span class="sd">            [[(0, 1), [4, 5]], [[8, 9]], [[12, 13]], [[14, 15], (1, 0)]]</span>
+<span class="sd">            sage: m</span>
+<span class="sd">            [ 0  1  0  0]</span>
+<span class="sd">            [-1  0  0  0]</span>
+<span class="sd">            [ 0  0  0  1]</span>
+<span class="sd">            [ 0  0 -1  0]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">T</span><span class="p">,</span><span class="n">o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spanning_tree</span><span class="p">()</span>
+
+        <span class="c1"># build a Ribbon graph with one vertex and one face</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collapse</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">dual</span><span class="p">()</span><span class="o">.</span><span class="n">collapse</span><span class="p">()</span><span class="o">.</span><span class="n">dual</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">T</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">edges</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">intersection</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">vertices</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">M</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+            <span class="n">I</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">cycles</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># the cycles</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">edges</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;build cycle from edge </span><span class="si">%s</span><span class="s2"> between vertex v0=</span><span class="si">%d</span><span class="s2"> and v1=</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="bp">self</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
+
+            <span class="c1"># build the branch to the root from v0</span>
+            <span class="n">v0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; build branch from v0=</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">v0</span><span class="p">)</span>
+            <span class="n">p0</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">while</span> <span class="n">v0</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">v0</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">e0</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">incoming_edges</span><span class="p">(</span><span class="n">v0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># (v_in,v_out,label)</span>
+                <span class="n">p0</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; add </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">v0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; branch is </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">p0</span><span class="p">))</span>
+            <span class="c1"># build the branch to the root from v1</span>
+
+            <span class="n">v1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; build branch from v1=</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">v1</span><span class="p">)</span>
+            <span class="n">p1</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">while</span> <span class="n">v1</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">v1</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">e1</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">incoming_edges</span><span class="p">(</span><span class="n">v1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">p1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; add </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">v1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; branch is </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">p1</span><span class="p">))</span>
+            <span class="c1"># clean the branches by removing common part</span>
+            <span class="k">while</span> <span class="n">p0</span> <span class="ow">and</span> <span class="n">p1</span> <span class="ow">and</span> <span class="n">p0</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">p1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;find common element&quot;</span><span class="p">,</span> <span class="n">p0</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">p0</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">p1</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="c1"># add the cycle to the list</span>
+            <span class="n">cycles</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">p0</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">p1</span><span class="p">))</span>
+
+            <span class="c1"># compute algebraic intersection with preceding cycles</span>
+            <span class="k">if</span> <span class="n">intersection</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">_</span><span class="p">,</span><span class="n">ee</span><span class="p">,</span><span class="n">_</span> <span class="ow">in</span> <span class="n">cycles</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;compute intersection&quot;</span><span class="p">)</span>
+                    <span class="n">p_in</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="n">p_out</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">p_in</span><span class="p">)</span> <span class="o">%</span> <span class="n">M</span>
+                    <span class="n">q_in</span>  <span class="o">=</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ee</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="n">p_in</span><span class="p">)</span> <span class="o">%</span> <span class="n">M</span>
+                    <span class="n">q_out</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ee</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">p_in</span><span class="p">)</span> <span class="o">%</span> <span class="n">M</span>
+                    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  after reduction: p_out = </span><span class="si">%d</span><span class="s2">, q_in = </span><span class="si">%d</span><span class="s2">, q_out = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">p_out</span><span class="p">,</span> <span class="n">q_in</span><span class="p">,</span> <span class="n">q_out</span><span class="p">))</span>
+
+                    <span class="c1"># compute intersection</span>
+                    <span class="c1"># p_in = 0 and the others 3 are positive</span>
+                    <span class="k">if</span> <span class="n">q_in</span> <span class="o">&lt;</span> <span class="n">p_out</span> <span class="ow">and</span> <span class="n">p_out</span> <span class="o">&lt;</span> <span class="n">q_out</span><span class="p">:</span>
+                        <span class="n">i</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">q_out</span> <span class="o">&lt;</span> <span class="n">p_out</span> <span class="ow">and</span> <span class="n">p_out</span> <span class="o">&lt;</span> <span class="n">q_in</span><span class="p">:</span>
+                        <span class="n">i</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">i</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+                <span class="n">I</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="c1"># make cycle as list</span>
+        <span class="n">cycles</span> <span class="o">=</span> <span class="p">[</span><span class="n">p0</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="n">e</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="n">c</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">p1</span><span class="p">]</span> <span class="k">for</span> <span class="n">p0</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">p1</span> <span class="ow">in</span> <span class="n">cycles</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">intersection</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cycles</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">I</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">])):</span>
+                    <span class="n">m</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">jj</span><span class="p">]</span> <span class="o">=</span> <span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">jj</span><span class="p">]</span>
+                    <span class="n">m</span><span class="p">[</span><span class="n">jj</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">I</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">jj</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="n">cycles</span><span class="p">,</span> <span class="n">m</span>
+        <span class="k">return</span> <span class="n">cycles</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraph.is_cycle">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_cycle">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_cycle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test whether ``c`` is a cycle.</span>
+
+<span class="sd">        A *path* is a sequence of oriented edges such that each edge starts</span>
+<span class="sd">        where the preceding one ends. A *cycle* is a path which starts where it</span>
+<span class="sd">        ends.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+</div>
+
+
+<div class="viewcode-block" id="RibbonGraphWithAngles">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles">[docs]</a>
+<span class="k">class</span> <span class="nc">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">RibbonGraph</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A Ribbon graph with angles between edges</span>
+
+<span class="sd">    Currently angles can only be *rational* multiples of pi.</span>
+
+<span class="sd">    TODO:</span>
+
+<span class="sd">    - allows any kind of angles by providing a sum for the total and considering</span>
+<span class="sd">      each angle as a (projective) portion of the total angle.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">faces</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span><span class="n">edges</span><span class="p">,</span><span class="n">faces</span><span class="p">)</span>
+        <span class="n">RibbonGraph</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">r</span><span class="o">.</span><span class="n">vertex_perm</span><span class="p">(),</span><span class="n">r</span><span class="o">.</span><span class="n">edge_perm</span><span class="p">(),</span><span class="n">r</span><span class="o">.</span><span class="n">face_perm</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_darts</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;there are </span><span class="si">%d</span><span class="s2"> angles and </span><span class="si">%d</span><span class="s2"> darts&quot;</span> <span class="o">%</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">angles</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">num_darts</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_angles</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="n">angles</span><span class="p">))</span>
+          <span class="c1"># angle between a dart and its vertex-neighbour</span>
+          <span class="c1"># (rational number as multiple of pi)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_total_angle</span> <span class="o">=</span> <span class="p">[]</span>
+          <span class="c1"># total angle around vertices</span>
+          <span class="c1"># (integer which corresponds to a multiple of pi)</span>
+
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertices</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_total_angle</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">angles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">v</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">faces</span><span class="p">():</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_angles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">a</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the angle of a face should be (nb_edges - 2) x pi&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RibbonGraphWithAngles.angle_between_darts">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_between_darts">[docs]</a>
+    <span class="k">def</span> <span class="nf">angle_between_darts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the angle between the darts ``d1`` and ``d2``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_orbit</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">d2</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">v</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;d1=</span><span class="si">%s</span><span class="s2"> and d2=</span><span class="si">%s</span><span class="s2"> are not at the same vertex&quot;</span> <span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">d1</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="n">d2</span><span class="p">)))</span>
+
+        <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">d2</span><span class="p">:</span>
+            <span class="n">a</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_angles</span><span class="p">[</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">a</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraphWithAngles.angle_at_vertex">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_at_vertex">[docs]</a>
+    <span class="k">def</span> <span class="nf">angle_at_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Angle at a vertex (coefficient of pi)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_angle</span><span class="p">[</span><span class="n">v</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraphWithAngles.angle_at_vertices">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_at_vertices">[docs]</a>
+    <span class="k">def</span> <span class="nf">angle_at_vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the list of angles at a vertex.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_angle</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraphWithAngles.winding">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.winding">[docs]</a>
+    <span class="k">def</span> <span class="nf">winding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return winding number along the cycle ``c``.</span>
+
+<span class="sd">        This is NOT well defined because it depends on the way we choose to pass</span>
+<span class="sd">        on the left or on the right at singularity.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">d1</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">d2</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="n">d2</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;c is not a cycle&quot;</span><span class="p">)</span>
+            <span class="n">a</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle_between_darts</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span><span class="n">d2</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+        <span class="n">d1</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">d2</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="n">d2</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;c is not a cycle&quot;</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle_between_darts</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span><span class="n">d2</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">a</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraphWithAngles.holonomy_representation">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.holonomy_representation">[docs]</a>
+    <span class="k">def</span> <span class="nf">holonomy_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the holonomy representation in `SO(2)` as two lists.</span>
+
+<span class="sd">        The first list correspond to cycles around vertices, while the second</span>
+<span class="sd">        correspond to a cycle basis that generate homology.</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: e = &#39;(0,1)(2,3)&#39;</span>
+<span class="sd">            sage: f = &#39;(0,2,1,3)&#39;</span>
+<span class="sd">            sage: a = [1/2,1/2,1/2,1/2]</span>
+<span class="sd">            sage: r = RibbonGraphWithAngles(edges=e,faces=f,angles=a)</span>
+<span class="sd">            sage: r.holonomy_representation()</span>
+<span class="sd">            ([0], [0, 0])</span>
+
+<span class="sd">        The standard cube::</span>
+
+<span class="sd">            sage: e = tuple((i,i+1) for i in range(0,24,2))</span>
+<span class="sd">            sage: f = &#39;(0,20,7,10)(16,22,19,21)(2,9,5,23)(14,3,17,1)(12,8,15,11)(18,4,13,6)&#39;</span>
+<span class="sd">            sage: a = [1/2]*24</span>
+<span class="sd">            sage: r = RibbonGraphWithAngles(edges=e,faces=f,angles=a)</span>
+<span class="sd">            sage: r.holonomy_representation()</span>
+<span class="sd">            ([3/2, 3/2, 3/2, 3/2, 3/2, 3/2, 3/2, 3/2], [])</span>
+
+<span class="sd">        Two copies of a triangle::</span>
+
+<span class="sd">            sage: e = &#39;(0,1)(2,3)(4,5)&#39;</span>
+<span class="sd">            sage: f = &#39;(0,2,4)(1,5,3)&#39;</span>
+<span class="sd">            sage: a = [1/2,1/6,1/3,1/3,1/6,1/2]</span>
+<span class="sd">            sage: r = RibbonGraphWithAngles(edges=e,faces=f,angles=a)</span>
+<span class="sd">            sage: r.holonomy_representation()</span>
+<span class="sd">            ([1, 1/2, 1/2], [])</span>
+
+<span class="sd">            sage: a = [1/3,7/15,1/5,1/5,7/15,1/3]</span>
+<span class="sd">            sage: r = RibbonGraphWithAngles(edges=e,faces=f,angles=a)</span>
+<span class="sd">            sage: r.holonomy_representation()</span>
+<span class="sd">            ([2/3, 2/3, 2/3], [])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">sage.functions.other</span> <span class="kn">import</span> <span class="n">floor</span>
+
+        <span class="n">l1</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_vertices</span><span class="p">()):</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle_at_vertex</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+            <span class="n">l1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">floor</span><span class="p">(</span><span class="n">w</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+
+        <span class="n">l2</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cycle_basis</span><span class="p">():</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">winding</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+            <span class="n">l2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">floor</span><span class="p">(</span><span class="n">w</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">l1</span><span class="p">,</span><span class="n">l2</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraphWithAngles.has_trivial_holonomy">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.has_trivial_holonomy">[docs]</a>
+    <span class="k">def</span> <span class="nf">has_trivial_holonomy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test whether self has trivial holonomy representation</span>
+
+<span class="sd">        EXAMPLES::</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">            sage: e = &#39;(0,1)(2,3)&#39;</span>
+<span class="sd">            sage: f = &#39;(0,2,1,3)&#39;</span>
+<span class="sd">            sage: a = [1/2,1/2,1/2,1/2]</span>
+<span class="sd">            sage: r = RibbonGraphWithAngles(edges=e,faces=f,angles=a)</span>
+<span class="sd">            sage: r.has_trivial_holonomy()</span>
+<span class="sd">            True</span>
+
+<span class="sd">            sage: e = &#39;(0,1)(2,3)(4,5)&#39;</span>
+<span class="sd">            sage: f = &#39;(0,2,4)(1,5,3)&#39;</span>
+<span class="sd">            sage: a = [1/3,7/15,1/5,1/5,7/15,1/3]</span>
+<span class="sd">            sage: r = RibbonGraphWithAngles(edges=e,faces=f,angles=a)</span>
+<span class="sd">            sage: r.has_trivial_holonomy()</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">l1</span><span class="p">,</span><span class="n">l2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">holonomy_representation</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l1</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraphWithAngles.spin_parity">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.spin_parity">[docs]</a>
+    <span class="k">def</span> <span class="nf">spin_parity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the spin parity of the Ribbon graph with angles.</span>
+
+<span class="sd">        The surface should be holonomy free and with odd multiple of 2 pi</span>
+<span class="sd">        angles. Implements the formula of [Joh80]_.</span>
+
+<span class="sd">        EXAMPLES:</span>
+
+<span class="sd">            sage: from surface_dynamics import *</span>
+
+<span class="sd">        We first consider the case of the torus::</span>
+
+<span class="sd">            sage: e = &#39;(0,1)(2,3)&#39;</span>
+<span class="sd">            sage: f = &#39;(0,2,1,3)&#39;</span>
+<span class="sd">            sage: a = [1/2,1/2,1/2,1/2]</span>
+<span class="sd">            sage: r = RibbonGraphWithAngles(edges=e,faces=f,angles=a)</span>
+<span class="sd">            sage: r.spin_parity()</span>
+<span class="sd">            1</span>
+
+<span class="sd">        Then the case of genus 2 surface (with an angle of 6pi)::</span>
+
+<span class="sd">            sage: e = &#39;(0,1)(2,3)(4,5)(6,7)&#39;</span>
+<span class="sd">            sage: f = &#39;(0,2,4,3,6,1,7,5)&#39;</span>
+<span class="sd">            sage: a = [1/2,1/2,1,1/2,1/2,1,3/2,1/2]</span>
+<span class="sd">            sage: r = RibbonGraphWithAngles(edges=e,faces=f,angles=a)</span>
+<span class="sd">            sage: r.spin_parity()</span>
+<span class="sd">            1</span>
+
+<span class="sd">            sage: e = &#39;(0,1)(2,3)(4,5)(6,7)&#39;</span>
+<span class="sd">            sage: f = &#39;(0,2,4,6,1,3,5,7)&#39;</span>
+<span class="sd">            sage: a = [1/2,1/2,1,1,1,1,1/2,1/2]</span>
+<span class="sd">            sage: r = RibbonGraphWithAngles(edges=e,faces=f,angles=a)</span>
+<span class="sd">            sage: r.spin_parity()</span>
+<span class="sd">            1</span>
+
+<span class="sd">            sage: e = &#39;(0,1)(2,3)(4,5)(6,7)&#39;</span>
+<span class="sd">            sage: f = &#39;(0,2,4,6,1,3,5,7)&#39;</span>
+<span class="sd">            sage: a = [3/4]*8</span>
+<span class="sd">            sage: r = RibbonGraphWithAngles(edges=e,faces=f,angles=a)</span>
+<span class="sd">            sage: r.spin_parity()</span>
+<span class="sd">            1</span>
+
+<span class="sd">        In genus 3 two spin parities occur for one conical angle 10pi::</span>
+
+<span class="sd">            sage: e = &#39;(0,1)(2,3)(4,5)(6,7)(8,9)(10,11)&#39;</span>
+<span class="sd">            sage: f1 = &#39;(0,4,6,8,10,2,1,9,11,5,7,3)&#39;</span>
+<span class="sd">            sage: f2 = &#39;(0,4,6,8,10,2,1,5,7,9,11,3)&#39;</span>
+<span class="sd">            sage: a = [1/2,1/2,1/2,1/2] + [1]*8</span>
+<span class="sd">            sage: r1 = RibbonGraphWithAngles(edges=e,faces=f1,angles=a)</span>
+<span class="sd">            sage: r1.spin_parity()</span>
+<span class="sd">            1</span>
+<span class="sd">            sage: r2 = RibbonGraphWithAngles(edges=e,faces=f2,angles=a)</span>
+<span class="sd">            sage: r2.spin_parity()</span>
+<span class="sd">            0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">sage.rings.finite_rings.finite_field_constructor</span> <span class="kn">import</span> <span class="n">GF</span>
+        <span class="c1"># mod F2 we have: q(x+y) = B(x,y) + q(x) + q(y)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_trivial_holonomy</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the surface does not have trivial holonomy&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">%</span><span class="mi">4</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle_at_vertices</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;each angle should be odd multiple of 2pi&quot;</span><span class="p">)</span>
+
+        <span class="n">GF2</span> <span class="o">=</span> <span class="n">GF</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">c</span><span class="p">,</span><span class="n">M</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cycle_basis</span><span class="p">(</span><span class="n">intersection</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">winding</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">winding</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">w</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;fatal error ! each winding should be a multiple of 2&quot;</span><span class="p">)</span>
+            <span class="n">winding</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">GF2</span><span class="p">(</span><span class="n">w</span><span class="o">//</span><span class="mi">2</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cycles with winding&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">winding</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;intersection matrix on Z&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+
+        <span class="c1"># compute a base change to get a symplectic basis</span>
+        <span class="n">_</span><span class="p">,</span><span class="n">P</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">symplectic_form</span><span class="p">()</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">change_ring</span><span class="p">(</span><span class="n">GF2</span><span class="p">)</span>
+        <span class="n">P</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">change_ring</span><span class="p">(</span><span class="n">GF2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;base change for symplectic basis on GF(2)&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+
+        <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="n">GF2</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+            <span class="c1"># 1. computation of q(P.row(i))</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">a_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">g</span><span class="p">)</span> <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="c1">## winding + nb_components</span>
+            <span class="n">t_a</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">winding</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a_indices</span><span class="p">)</span>
+            <span class="c1">## self intersection</span>
+            <span class="k">for</span> <span class="n">j1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a_indices</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">j2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">j1</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">a_indices</span><span class="p">)):</span>
+                    <span class="n">t_a</span> <span class="o">+=</span> <span class="n">M</span><span class="p">[</span><span class="n">a_indices</span><span class="p">[</span><span class="n">j1</span><span class="p">],</span><span class="n">a_indices</span><span class="p">[</span><span class="n">j2</span><span class="p">]]</span>
+
+            <span class="c1"># 2. computation of q(P.row(g+i))</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="n">g</span><span class="o">+</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">b_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">g</span><span class="p">)</span> <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="c1">## winding + nb_components</span>
+            <span class="n">t_b</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">winding</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">b_indices</span><span class="p">)</span>
+            <span class="c1">## self intersection</span>
+            <span class="k">for</span> <span class="n">j1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">b_indices</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">j2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">j1</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">b_indices</span><span class="p">)):</span>
+                    <span class="n">t_b</span> <span class="o">+=</span> <span class="n">M</span><span class="p">[</span><span class="n">b_indices</span><span class="p">[</span><span class="n">j1</span><span class="p">],</span><span class="n">b_indices</span><span class="p">[</span><span class="n">j2</span><span class="p">]]</span>
+
+            <span class="c1"># 3. add to s the contribution of the couple</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;contribution from </span><span class="si">%d</span><span class="s2"> is </span><span class="si">%d</span><span class="s2"> * </span><span class="si">%d</span><span class="s2"> = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">t_a</span><span class="p">,</span> <span class="n">t_b</span><span class="p">,</span> <span class="n">t_a</span> <span class="o">*</span> <span class="n">t_b</span><span class="p">))</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="n">t_a</span><span class="o">*</span><span class="n">t_b</span>
+
+        <span class="k">return</span> <span class="n">s</span></div>
+</div>
+
+
+<div class="viewcode-block" id="angle">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.angle">[docs]</a>
+<span class="k">def</span> <span class="nf">angle</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the argument of the vector ``v``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">acos</span><span class="p">,</span><span class="n">asin</span><span class="p">,</span><span class="n">sqrt</span><span class="p">,</span><span class="n">pi</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">asin</span><span class="p">(</span><span class="n">y</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">pi</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="n">asin</span><span class="p">(</span><span class="n">y</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">pi</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">y</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">acos</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">pi</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="n">acos</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">pi</span></div>
+
+
+<div class="viewcode-block" id="RibbonGraphWithHolonomies">
+<a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithHolonomies">[docs]</a>
+<span class="k">class</span> <span class="nc">RibbonGraphWithHolonomies</span><span class="p">(</span><span class="n">RibbonGraph</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A Ribbon graph with holonomies.</span>
+
+<span class="sd">    For now</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">faces</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">holonomies</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span><span class="n">edges</span><span class="p">,</span><span class="n">faces</span><span class="p">)</span>
+        <span class="n">RibbonGraph</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">r</span><span class="o">.</span><span class="n">vertex_perm</span><span class="p">(),</span><span class="n">r</span><span class="o">.</span><span class="n">edge_perm</span><span class="p">(),</span><span class="n">r</span><span class="o">.</span><span class="n">face_perm</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">holonomies</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_darts</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;there are </span><span class="si">%d</span><span class="s2"> angles and </span><span class="si">%d</span><span class="s2"> darts&quot;</span> <span class="o">%</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">angles</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">num_darts</span><span class="p">()))</span>
+
+        <span class="n">V</span> <span class="o">=</span> <span class="n">FreeModule</span><span class="p">(</span><span class="n">ZZ</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_holonomies</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">holonomies</span><span class="p">))</span></div>
+
+
+        <span class="c1">#self._angles = map(angle, self._holonomies)</span>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2021-2024, the surface-dynamics authors
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../_static/documentation_options.js?v=8fa8b3e9"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/furo.js?v=5fa4622c"></script>
+    </body>
+</html>

@@ -1,0 +1,733 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Interval exchange constructors" href="constructors.html" /><link rel="prev" title="Origamis" href="../origamis.html" />
+
+    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+        <title>Interval exchange transformations - surface-dynamics 0.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-codemirror-monokai.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  --color-brand-primary: #0f0fff;
+  --color-brand-content: #0f0fff;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">surface-dynamics 0.6.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/logo.svg" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/logo.svg" alt="Dark Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">surface-dynamics 0.6.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/interval_exchanges.html">Interval exchange transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/square_tiled_surfaces.html">Square-tiled surfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/rank2_genus3_classification.html">Filtering Possible <span class="math notranslate nohighlight">\(\mathcal M\)</span>-Parallel Classes</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../origamis.html">Origamis</a></li>
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">Interval exchange transformations</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Interval exchange transformations</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="constructors.html">Interval exchange constructors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="template.html">Permutation template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelled.html">Labelled permutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reduced.html">Reduced permutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html">Rauzy class cardinality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cover.html">Covering construction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iet.html">Interval exchange transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integer_iet.html">Integral interval exchanges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iet_family.html">Interval exchange families</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flip_sequence.html">Flip sequences</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../topological_recursion/index.html">Topological recursion</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Topological recursion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/topological_recursion.html">Generic topological recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/kontsevich.html">Kontsevich topological recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/masur_veech.html">Masur-Veech topological recursion</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../misc/index.html">Miscellaneous</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Miscellaneous</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../misc/constellation.html">Constellations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/group_representation.html">Finite group representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/plane_tree.html">Plane trees</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/interval_exchanges/index.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="interval-exchange-transformations">
+<h1>Interval exchange transformations<a class="headerlink" href="#interval-exchange-transformations" title="Link to this heading">¶</a></h1>
+<section id="permutations">
+<h2>Permutations<a class="headerlink" href="#permutations" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="constructors.html">Interval exchange constructors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="constructors.html#surface_dynamics.interval_exchanges.constructors.FlipSequence"><code class="docutils literal notranslate"><span class="pre">FlipSequence()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="constructors.html#surface_dynamics.interval_exchanges.constructors.GeneralizedPermutation"><code class="docutils literal notranslate"><span class="pre">GeneralizedPermutation()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="constructors.html#surface_dynamics.interval_exchanges.constructors.IET"><code class="docutils literal notranslate"><span class="pre">IET()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="constructors.html#surface_dynamics.interval_exchanges.constructors.IETFamily"><code class="docutils literal notranslate"><span class="pre">IETFamily()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="constructors.html#surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformation"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="constructors.html#surface_dynamics.interval_exchanges.constructors.IntervalExchangeTransformationFamily"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformationFamily()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="constructors.html#surface_dynamics.interval_exchanges.constructors.Permutation"><code class="docutils literal notranslate"><span class="pre">Permutation()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="constructors.html#surface_dynamics.interval_exchanges.constructors.Permutations_iterator"><code class="docutils literal notranslate"><span class="pre">Permutations_iterator()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="constructors.html#surface_dynamics.interval_exchanges.constructors.RauzyDiagram"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="template.html">Permutation template</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.FlippedPermutation"><code class="docutils literal notranslate"><span class="pre">FlippedPermutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.FlippedPermutationIET"><code class="docutils literal notranslate"><span class="pre">FlippedPermutationIET</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.FlippedPermutationIET.backward_rauzy_move"><code class="docutils literal notranslate"><span class="pre">FlippedPermutationIET.backward_rauzy_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.FlippedPermutationIET.rauzy_move"><code class="docutils literal notranslate"><span class="pre">FlippedPermutationIET.rauzy_move()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.FlippedPermutationLI"><code class="docutils literal notranslate"><span class="pre">FlippedPermutationLI</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.FlippedPermutationLI.backward_rauzy_move"><code class="docutils literal notranslate"><span class="pre">FlippedPermutationLI.backward_rauzy_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.FlippedPermutationLI.rauzy_move"><code class="docutils literal notranslate"><span class="pre">FlippedPermutationLI.rauzy_move()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.FlippedRauzyDiagram"><code class="docutils literal notranslate"><span class="pre">FlippedRauzyDiagram</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.FlippedRauzyDiagram.complete"><code class="docutils literal notranslate"><span class="pre">FlippedRauzyDiagram.complete()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.arf_invariant"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.arf_invariant()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.attached_in_degree"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.attached_in_degree()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.attached_out_degree"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.attached_out_degree()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.backward_rauzy_move"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.backward_rauzy_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.decompose"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.decompose()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.erase_marked_points"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.erase_marked_points()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.genus"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.genus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.heights_cone"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.heights_cone()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.intersection_matrix"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.intersection_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.invariant_density_rauzy"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.invariant_density_rauzy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.is_cylindric"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.is_cylindric()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.is_hyperelliptic"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.is_hyperelliptic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.is_identity"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.is_identity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.is_standard"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.is_standard()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.marked_profile"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.marked_profile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.marking"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.marking()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.masur_polygon"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.masur_polygon()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.order_of_rauzy_action"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.order_of_rauzy_action()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.profile"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.profile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.rauzy_move"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.rauzy_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.stratum"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.stratum()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.stratum_component"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.stratum_component()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.suspension_cone"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.suspension_cone()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.to_cylindric"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.to_cylindric()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.to_origami"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.to_origami()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.to_permutation"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.to_permutation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.to_standard"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationIET.to_standard()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationLI"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationLI</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationLI.backward_rauzy_move"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationLI.backward_rauzy_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationLI.rauzy_move"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationLI.rauzy_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.OrientablePermutationLI.stratum"><code class="docutils literal notranslate"><span class="pre">OrientablePermutationLI.stratum()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation"><code class="docutils literal notranslate"><span class="pre">Permutation</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.alphabet"><code class="docutils literal notranslate"><span class="pre">Permutation.alphabet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.cover"><code class="docutils literal notranslate"><span class="pre">Permutation.cover()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.flips"><code class="docutils literal notranslate"><span class="pre">Permutation.flips()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.horizontal_inverse"><code class="docutils literal notranslate"><span class="pre">Permutation.horizontal_inverse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.interval_diagram"><code class="docutils literal notranslate"><span class="pre">Permutation.interval_diagram()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.left_right_inverse"><code class="docutils literal notranslate"><span class="pre">Permutation.left_right_inverse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.length"><code class="docutils literal notranslate"><span class="pre">Permutation.length()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.length_bottom"><code class="docutils literal notranslate"><span class="pre">Permutation.length_bottom()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.length_top"><code class="docutils literal notranslate"><span class="pre">Permutation.length_top()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.letters"><code class="docutils literal notranslate"><span class="pre">Permutation.letters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.lr_inverse"><code class="docutils literal notranslate"><span class="pre">Permutation.lr_inverse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.regular_cover"><code class="docutils literal notranslate"><span class="pre">Permutation.regular_cover()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.str"><code class="docutils literal notranslate"><span class="pre">Permutation.str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.symmetric"><code class="docutils literal notranslate"><span class="pre">Permutation.symmetric()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.tb_inverse"><code class="docutils literal notranslate"><span class="pre">Permutation.tb_inverse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.top_bottom_inverse"><code class="docutils literal notranslate"><span class="pre">Permutation.top_bottom_inverse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.Permutation.vertical_inverse"><code class="docutils literal notranslate"><span class="pre">Permutation.vertical_inverse()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationIET"><code class="docutils literal notranslate"><span class="pre">PermutationIET</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationIET.has_rauzy_move"><code class="docutils literal notranslate"><span class="pre">PermutationIET.has_rauzy_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationIET.is_irreducible"><code class="docutils literal notranslate"><span class="pre">PermutationIET.is_irreducible()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationIET.twin"><code class="docutils literal notranslate"><span class="pre">PermutationIET.twin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationIET.twin_list"><code class="docutils literal notranslate"><span class="pre">PermutationIET.twin_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationLI"><code class="docutils literal notranslate"><span class="pre">PermutationLI</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationLI.erase_marked_points"><code class="docutils literal notranslate"><span class="pre">PermutationLI.erase_marked_points()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationLI.genus"><code class="docutils literal notranslate"><span class="pre">PermutationLI.genus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationLI.has_rauzy_move"><code class="docutils literal notranslate"><span class="pre">PermutationLI.has_rauzy_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationLI.is_cylindric"><code class="docutils literal notranslate"><span class="pre">PermutationLI.is_cylindric()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationLI.is_hyperelliptic"><code class="docutils literal notranslate"><span class="pre">PermutationLI.is_hyperelliptic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationLI.is_irreducible"><code class="docutils literal notranslate"><span class="pre">PermutationLI.is_irreducible()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationLI.marked_profile"><code class="docutils literal notranslate"><span class="pre">PermutationLI.marked_profile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationLI.marking"><code class="docutils literal notranslate"><span class="pre">PermutationLI.marking()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationLI.orientation_cover"><code class="docutils literal notranslate"><span class="pre">PermutationLI.orientation_cover()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationLI.profile"><code class="docutils literal notranslate"><span class="pre">PermutationLI.profile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationLI.stratum_component"><code class="docutils literal notranslate"><span class="pre">PermutationLI.stratum_component()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationLI.to_cylindric"><code class="docutils literal notranslate"><span class="pre">PermutationLI.to_cylindric()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationLI.twin"><code class="docutils literal notranslate"><span class="pre">PermutationLI.twin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.PermutationLI.twin_list"><code class="docutils literal notranslate"><span class="pre">PermutationLI.twin_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.Path"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram.Path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.alphabet"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram.alphabet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.cardinality"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram.cardinality()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.complete"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram.complete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.edge_iterator"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram.edge_iterator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.edge_to_loser"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram.edge_to_loser()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.edge_to_matrix"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram.edge_to_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.edge_to_winner"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram.edge_to_winner()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.edge_types"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram.edge_types()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.edge_types_index"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram.edge_types_index()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.edges"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram.edges()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.graph"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram.graph()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.letters"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram.letters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.path"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram.path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.vertex_iterator"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram.vertex_iterator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.RauzyDiagram.vertices"><code class="docutils literal notranslate"><span class="pre">RauzyDiagram.vertices()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.cylindric_canonical"><code class="docutils literal notranslate"><span class="pre">cylindric_canonical()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.interval_conversion"><code class="docutils literal notranslate"><span class="pre">interval_conversion()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.labelize_flip"><code class="docutils literal notranslate"><span class="pre">labelize_flip()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.side_conversion"><code class="docutils literal notranslate"><span class="pre">side_conversion()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="template.html#surface_dynamics.interval_exchanges.template.to_fat_graphs"><code class="docutils literal notranslate"><span class="pre">to_fat_graphs()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="labelled.html">Labelled permutations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationIET"><code class="docutils literal notranslate"><span class="pre">FlippedLabelledPermutationIET</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationIET.rauzy_diagram"><code class="docutils literal notranslate"><span class="pre">FlippedLabelledPermutationIET.rauzy_diagram()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationIET.reduced"><code class="docutils literal notranslate"><span class="pre">FlippedLabelledPermutationIET.reduced()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationLI"><code class="docutils literal notranslate"><span class="pre">FlippedLabelledPermutationLI</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationLI.left_rauzy_move"><code class="docutils literal notranslate"><span class="pre">FlippedLabelledPermutationLI.left_rauzy_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationLI.rauzy_diagram"><code class="docutils literal notranslate"><span class="pre">FlippedLabelledPermutationLI.rauzy_diagram()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationLI.reduced"><code class="docutils literal notranslate"><span class="pre">FlippedLabelledPermutationLI.reduced()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledPermutationLI.right_rauzy_move"><code class="docutils literal notranslate"><span class="pre">FlippedLabelledPermutationLI.right_rauzy_move()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.FlippedLabelledRauzyDiagram"><code class="docutils literal notranslate"><span class="pre">FlippedLabelledRauzyDiagram</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation"><code class="docutils literal notranslate"><span class="pre">LabelledPermutation</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation.list"><code class="docutils literal notranslate"><span class="pre">LabelledPermutation.list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation.rauzy_move_loser"><code class="docutils literal notranslate"><span class="pre">LabelledPermutation.rauzy_move_loser()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation.rauzy_move_matrix"><code class="docutils literal notranslate"><span class="pre">LabelledPermutation.rauzy_move_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation.rauzy_move_winner"><code class="docutils literal notranslate"><span class="pre">LabelledPermutation.rauzy_move_winner()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutation.relabel"><code class="docutils literal notranslate"><span class="pre">LabelledPermutation.relabel()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET"><code class="docutils literal notranslate"><span class="pre">LabelledPermutationIET</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET.lyapunov_exponents_approx"><code class="docutils literal notranslate"><span class="pre">LabelledPermutationIET.lyapunov_exponents_approx()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET.rauzy_diagram"><code class="docutils literal notranslate"><span class="pre">LabelledPermutationIET.rauzy_diagram()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET.rauzy_move_interval_substitution"><code class="docutils literal notranslate"><span class="pre">LabelledPermutationIET.rauzy_move_interval_substitution()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET.rauzy_move_orbit_substitution"><code class="docutils literal notranslate"><span class="pre">LabelledPermutationIET.rauzy_move_orbit_substitution()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationIET.reduced"><code class="docutils literal notranslate"><span class="pre">LabelledPermutationIET.reduced()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI"><code class="docutils literal notranslate"><span class="pre">LabelledPermutationLI</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.has_right_rauzy_move"><code class="docutils literal notranslate"><span class="pre">LabelledPermutationLI.has_right_rauzy_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.left_rauzy_move"><code class="docutils literal notranslate"><span class="pre">LabelledPermutationLI.left_rauzy_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.lyapunov_exponents_H_minus"><code class="docutils literal notranslate"><span class="pre">LabelledPermutationLI.lyapunov_exponents_H_minus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.lyapunov_exponents_H_plus"><code class="docutils literal notranslate"><span class="pre">LabelledPermutationLI.lyapunov_exponents_H_plus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.rauzy_diagram"><code class="docutils literal notranslate"><span class="pre">LabelledPermutationLI.rauzy_diagram()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.reduced"><code class="docutils literal notranslate"><span class="pre">LabelledPermutationLI.reduced()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationLI.right_rauzy_move"><code class="docutils literal notranslate"><span class="pre">LabelledPermutationLI.right_rauzy_move()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledPermutationsIET_iterator"><code class="docutils literal notranslate"><span class="pre">LabelledPermutationsIET_iterator()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram"><code class="docutils literal notranslate"><span class="pre">LabelledRauzyDiagram</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.Path"><code class="docutils literal notranslate"><span class="pre">LabelledRauzyDiagram.Path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.edge_to_interval_substitution"><code class="docutils literal notranslate"><span class="pre">LabelledRauzyDiagram.edge_to_interval_substitution()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.edge_to_orbit_substitution"><code class="docutils literal notranslate"><span class="pre">LabelledRauzyDiagram.edge_to_orbit_substitution()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.full_loop_iterator"><code class="docutils literal notranslate"><span class="pre">LabelledRauzyDiagram.full_loop_iterator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="labelled.html#surface_dynamics.interval_exchanges.labelled.LabelledRauzyDiagram.full_nloop_iterator"><code class="docutils literal notranslate"><span class="pre">LabelledRauzyDiagram.full_nloop_iterator()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reduced.html">Reduced permutations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutation"><code class="docutils literal notranslate"><span class="pre">FlippedReducedPermutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationIET"><code class="docutils literal notranslate"><span class="pre">FlippedReducedPermutationIET</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationIET.list"><code class="docutils literal notranslate"><span class="pre">FlippedReducedPermutationIET.list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationIET.rauzy_diagram"><code class="docutils literal notranslate"><span class="pre">FlippedReducedPermutationIET.rauzy_diagram()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationLI"><code class="docutils literal notranslate"><span class="pre">FlippedReducedPermutationLI</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationLI.list"><code class="docutils literal notranslate"><span class="pre">FlippedReducedPermutationLI.list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedPermutationLI.rauzy_diagram"><code class="docutils literal notranslate"><span class="pre">FlippedReducedPermutationLI.rauzy_diagram()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.FlippedReducedRauzyDiagram"><code class="docutils literal notranslate"><span class="pre">FlippedReducedRauzyDiagram</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutation"><code class="docutils literal notranslate"><span class="pre">ReducedPermutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationIET"><code class="docutils literal notranslate"><span class="pre">ReducedPermutationIET</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationIET.list"><code class="docutils literal notranslate"><span class="pre">ReducedPermutationIET.list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationIET.rauzy_class_cardinality"><code class="docutils literal notranslate"><span class="pre">ReducedPermutationIET.rauzy_class_cardinality()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationIET.rauzy_diagram"><code class="docutils literal notranslate"><span class="pre">ReducedPermutationIET.rauzy_diagram()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationIET.rauzy_move_relabel"><code class="docutils literal notranslate"><span class="pre">ReducedPermutationIET.rauzy_move_relabel()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationLI"><code class="docutils literal notranslate"><span class="pre">ReducedPermutationLI</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationLI.list"><code class="docutils literal notranslate"><span class="pre">ReducedPermutationLI.list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationLI.rauzy_diagram"><code class="docutils literal notranslate"><span class="pre">ReducedPermutationLI.rauzy_diagram()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedPermutationsIET_iterator"><code class="docutils literal notranslate"><span class="pre">ReducedPermutationsIET_iterator()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.ReducedRauzyDiagram"><code class="docutils literal notranslate"><span class="pre">ReducedRauzyDiagram</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reduced.html#surface_dynamics.interval_exchanges.reduced.labelize_flip"><code class="docutils literal notranslate"><span class="pre">labelize_flip()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rauzy_class_cardinality.html">Rauzy class cardinality</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.bidecompositions"><code class="docutils literal notranslate"><span class="pre">bidecompositions()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.c"><code class="docutils literal notranslate"><span class="pre">c()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.check_marking"><code class="docutils literal notranslate"><span class="pre">check_marking()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.check_std_marking"><code class="docutils literal notranslate"><span class="pre">check_std_marking()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.collapse"><code class="docutils literal notranslate"><span class="pre">collapse()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.d"><code class="docutils literal notranslate"><span class="pre">d()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.delta_irr"><code class="docutils literal notranslate"><span class="pre">delta_irr()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.delta_std"><code class="docutils literal notranslate"><span class="pre">delta_std()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.gamma_irr"><code class="docutils literal notranslate"><span class="pre">gamma_irr()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.gamma_std"><code class="docutils literal notranslate"><span class="pre">gamma_std()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.marking_iterator"><code class="docutils literal notranslate"><span class="pre">marking_iterator()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.number_of_irreducible_permutations"><code class="docutils literal notranslate"><span class="pre">number_of_irreducible_permutations()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.number_of_standard_permutations"><code class="docutils literal notranslate"><span class="pre">number_of_standard_permutations()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.spin_difference_for_irreducible_permutations"><code class="docutils literal notranslate"><span class="pre">spin_difference_for_irreducible_permutations()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.spin_difference_for_standard_permutations"><code class="docutils literal notranslate"><span class="pre">spin_difference_for_standard_permutations()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html#surface_dynamics.interval_exchanges.rauzy_class_cardinality.split"><code class="docutils literal notranslate"><span class="pre">split()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cover.html">Covering construction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover"><code class="docutils literal notranslate"><span class="pre">PermutationCover</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.automorphism_group"><code class="docutils literal notranslate"><span class="pre">PermutationCover.automorphism_group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.base"><code class="docutils literal notranslate"><span class="pre">PermutationCover.base()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.covering_data"><code class="docutils literal notranslate"><span class="pre">PermutationCover.covering_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.covering_data_tuple"><code class="docutils literal notranslate"><span class="pre">PermutationCover.covering_data_tuple()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.degree"><code class="docutils literal notranslate"><span class="pre">PermutationCover.degree()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.genus"><code class="docutils literal notranslate"><span class="pre">PermutationCover.genus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.group"><code class="docutils literal notranslate"><span class="pre">PermutationCover.group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.interval_diagram"><code class="docutils literal notranslate"><span class="pre">PermutationCover.interval_diagram()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.is_orientable"><code class="docutils literal notranslate"><span class="pre">PermutationCover.is_orientable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.isotypic_projection_matrix"><code class="docutils literal notranslate"><span class="pre">PermutationCover.isotypic_projection_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.isotypic_projectors"><code class="docutils literal notranslate"><span class="pre">PermutationCover.isotypic_projectors()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.lyapunov_exponents_H_plus"><code class="docutils literal notranslate"><span class="pre">PermutationCover.lyapunov_exponents_H_plus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.masur_polygon"><code class="docutils literal notranslate"><span class="pre">PermutationCover.masur_polygon()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.monodromy"><code class="docutils literal notranslate"><span class="pre">PermutationCover.monodromy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.profile"><code class="docutils literal notranslate"><span class="pre">PermutationCover.profile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.PermutationCover.stratum"><code class="docutils literal notranslate"><span class="pre">PermutationCover.stratum()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.RegularCover"><code class="docutils literal notranslate"><span class="pre">RegularCover</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.RegularCover.degree"><code class="docutils literal notranslate"><span class="pre">RegularCover.degree()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.RegularCover.group"><code class="docutils literal notranslate"><span class="pre">RegularCover.group()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.RegularCover.is_orientable"><code class="docutils literal notranslate"><span class="pre">RegularCover.is_orientable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.RegularCover.monodromy"><code class="docutils literal notranslate"><span class="pre">RegularCover.monodromy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.RegularCover.profile"><code class="docutils literal notranslate"><span class="pre">RegularCover.profile()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cover.html#surface_dynamics.interval_exchanges.cover.to_gap"><code class="docutils literal notranslate"><span class="pre">to_gap()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="id1">
+<h2>Interval exchange transformations<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="iet.html">Interval exchange transformations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.backward_rauzy_move"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.backward_rauzy_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.base_ring"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.base_ring()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.domain_singularities"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.domain_singularities()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.erase_marked_points"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.erase_marked_points()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.in_which_interval"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.in_which_interval()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.inverse"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.inverse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.is_identity"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.is_identity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.length"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.length()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.lengths"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.lengths()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.normalize"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.normalize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.permutation"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.permutation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.plot"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.plot_function"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.plot_function()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.plot_towers"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.plot_towers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.plot_two_intervals"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.plot_two_intervals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.range_singularities"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.range_singularities()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.rauzy_move"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.rauzy_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.recoding"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.recoding()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.sah_arnoux_fathi_invariant"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.sah_arnoux_fathi_invariant()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.show"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.singularities"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.singularities()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.translations"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.translations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.vector_space"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.vector_space()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.zorich_move"><code class="docutils literal notranslate"><span class="pre">IntervalExchangeTransformation.zorich_move()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="iet.html#surface_dynamics.interval_exchanges.iet.wedge"><code class="docutils literal notranslate"><span class="pre">wedge()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="integer_iet.html">Integral interval exchanges</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="integer_iet.html#surface_dynamics.interval_exchanges.integer_iet.cylinder_number"><code class="docutils literal notranslate"><span class="pre">cylinder_number()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="integer_iet.html#surface_dynamics.interval_exchanges.integer_iet.cylinder_statistics"><code class="docutils literal notranslate"><span class="pre">cylinder_statistics()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="integer_iet.html#surface_dynamics.interval_exchanges.integer_iet.cylinder_widths"><code class="docutils literal notranslate"><span class="pre">cylinder_widths()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="integer_iet.html#surface_dynamics.interval_exchanges.integer_iet.cylinder_widths_and_heights"><code class="docutils literal notranslate"><span class="pre">cylinder_widths_and_heights()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="integer_iet.html#surface_dynamics.interval_exchanges.integer_iet.interval_exchange_statistics"><code class="docutils literal notranslate"><span class="pre">interval_exchange_statistics()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="integer_iet.html#surface_dynamics.interval_exchanges.integer_iet.interval_exchange_statistics_sample"><code class="docutils literal notranslate"><span class="pre">interval_exchange_statistics_sample()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="integer_iet.html#surface_dynamics.interval_exchanges.integer_iet.perm_to_twin"><code class="docutils literal notranslate"><span class="pre">perm_to_twin()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="iet_family.html">Interval exchange families</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="iet_family.html#surface_dynamics.interval_exchanges.iet_family.IETFamily"><code class="docutils literal notranslate"><span class="pre">IETFamily</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="iet_family.html#surface_dynamics.interval_exchanges.iet_family.IETFamily.children"><code class="docutils literal notranslate"><span class="pre">IETFamily.children()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet_family.html#surface_dynamics.interval_exchanges.iet_family.IETFamily.has_connection"><code class="docutils literal notranslate"><span class="pre">IETFamily.has_connection()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet_family.html#surface_dynamics.interval_exchanges.iet_family.IETFamily.permutation"><code class="docutils literal notranslate"><span class="pre">IETFamily.permutation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet_family.html#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element"><code class="docutils literal notranslate"><span class="pre">IETFamily.random_element()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet_family.html#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_element_statistics"><code class="docutils literal notranslate"><span class="pre">IETFamily.random_element_statistics()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet_family.html#surface_dynamics.interval_exchanges.iet_family.IETFamily.random_integer_point_statistics"><code class="docutils literal notranslate"><span class="pre">IETFamily.random_integer_point_statistics()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet_family.html#surface_dynamics.interval_exchanges.iet_family.IETFamily.ray_coefficient"><code class="docutils literal notranslate"><span class="pre">IETFamily.ray_coefficient()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet_family.html#surface_dynamics.interval_exchanges.iet_family.IETFamily.rays"><code class="docutils literal notranslate"><span class="pre">IETFamily.rays()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="iet_family.html#surface_dynamics.interval_exchanges.iet_family.IETFamily.tree"><code class="docutils literal notranslate"><span class="pre">IETFamily.tree()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="flip_sequence.html">Flip sequences</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.close"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.close()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.dual_substitution"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.dual_substitution()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.end"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.end()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.find_closure"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.find_closure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.interval_substitution"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.interval_substitution()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_closed"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.is_closed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_complete"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.is_complete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_full"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.is_full()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.is_loop"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.is_loop()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.left_right_inverse"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.left_right_inverse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.losers"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.losers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.matrix"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.orbit_substitution"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.orbit_substitution()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.rauzy_move"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.rauzy_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.relabel"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.relabel()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.self_similar_iet"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.self_similar_iet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.self_similar_interval_exchange_transformation"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.self_similar_interval_exchange_transformation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.start"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.start()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.substitution"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.substitution()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.top_bottom_inverse"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.top_bottom_inverse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.winners"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.winners()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_sequence.html#surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence.winners_losers"><code class="docutils literal notranslate"><span class="pre">IETFlipSequence.winners_losers()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="constructors.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Interval exchange constructors</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../origamis.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Origamis</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2021-2024, the surface-dynamics authors
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Interval exchange transformations</a><ul>
+<li><a class="reference internal" href="#permutations">Permutations</a></li>
+<li><a class="reference internal" href="#id1">Interval exchange transformations</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=8fa8b3e9"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

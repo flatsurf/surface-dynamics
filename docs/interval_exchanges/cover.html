@@ -1,0 +1,985 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Interval exchange transformations" href="iet.html" /><link rel="prev" title="Rauzy class cardinality" href="rauzy_class_cardinality.html" />
+
+    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+        <title>Covering construction - surface-dynamics 0.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-furo.css" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="https://doc.sagemath.org/html/en/reference/_static/custom-codemirror-monokai.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  --color-brand-primary: #0f0fff;
+  --color-brand-content: #0f0fff;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">surface-dynamics 0.6.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/logo.svg" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/logo.svg" alt="Dark Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">surface-dynamics 0.6.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/interval_exchanges.html">Interval exchange transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/square_tiled_surfaces.html">Square-tiled surfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/rank2_genus3_classification.html">Filtering Possible <span class="math notranslate nohighlight">\(\mathcal M\)</span>-Parallel Classes</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../strata.html">Strata of Abelian and quadratic differentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../surface_topology.html">Surface topology and geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../origamis.html">Origamis</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Interval exchange transformations</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Interval exchange transformations</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="constructors.html">Interval exchange constructors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="template.html">Permutation template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelled.html">Labelled permutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reduced.html">Reduced permutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rauzy_class_cardinality.html">Rauzy class cardinality</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Covering construction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iet.html">Interval exchange transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integer_iet.html">Integral interval exchanges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iet_family.html">Interval exchange families</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flip_sequence.html">Flip sequences</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../database.html">Database of cylinder diagrams and quadratic permutations</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../topological_recursion/index.html">Topological recursion</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Topological recursion</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/topological_recursion.html">Generic topological recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/kontsevich.html">Kontsevich topological recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/masur_veech.html">Masur-Veech topological recursion</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../misc/index.html">Miscellaneous</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Miscellaneous</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../misc/constellation.html">Constellations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/group_representation.html">Finite group representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/plane_tree.html">Plane trees</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/interval_exchanges/cover.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="module-surface_dynamics.interval_exchanges.cover">
+<span id="covering-construction"></span><h1>Covering construction<a class="headerlink" href="#module-surface_dynamics.interval_exchanges.cover" title="Link to this heading">¶</a></h1>
+<p>Permutation cover</p>
+<p>This module deals with combinatorial data for covering of connected
+components of strata of Abelian and quadratic differentials. The main
+feature is to be able to compute Lyapunov exponents.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.cover.</span></span><span class="sig-name descname"><span class="pre">PermutationCover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">perms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>An interval exchange permutation together with covering data.</p>
+<p>Let <cite>pi</cite> be the combinatorial data of an interval exchange transformation
+(or linear involution) on the alphabet <cite>{1, 2, ldots, m}</cite>. A cover of
+degree <cite>d</cite> is given by a list of permutations <cite>sigma_i in S_d</cite> for each <cite>i
+in {1, 2, ldots, m}</cite>.</p>
+<p>In order to do so, each interval on the base surface should come with an
+orientation. This orientation is automatically chosen by convention
+according to a clockwise orientation of the surface. The two copies of any
+interval have to be oriented alternatively in this chosen orientation and
+in the opposite to it.</p>
+<p>This convention is made such that the permutation associated to each interval
+is the action of the path going into the interval oriented according to
+the clockwise orientation and going out of the other one.</p>
+<p>This class store three attributes</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_base</span></code> – combinatorial data of an i.e.t. or a l.i.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_degree_cover</span></code> – (integer) degree of the cover</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_permut_cover</span></code> – list of permutations describing the cover</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_inv_permut_cover</span></code> – list of inverses of <code class="docutils literal notranslate"><span class="pre">_permut_cover</span></code></p></li>
+</ul>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.automorphism_group">
+<span class="sig-name descname"><span class="pre">automorphism_group</span></span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.automorphism_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.automorphism_group" title="Link to this definition">¶</a></dt>
+<dd><p>File: /home/runner/work/surface-dynamics/surface-dynamics/surface_dynamics/interval_exchanges/cover.py (starting at line 621)</p>
+<p>Return the Deck group of the cover.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b c c&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,3,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">()</span>
+<span class="n">Permutation</span> <span class="n">Group</span> <span class="k">with</span> <span class="n">generators</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">()</span>
+<span class="n">Permutation</span> <span class="n">Group</span> <span class="k">with</span> <span class="n">generators</span> <span class="p">[()]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.base">
+<span class="sig-name descname"><span class="pre">base</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.base" title="Link to this definition">¶</a></dt>
+<dd><p>Return the combinatorial data corresponding to the base of this cover</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a b b&#39;</span><span class="p">,</span><span class="s1">&#39;c c a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2,3)&#39;</span><span class="p">,</span><span class="s1">&#39;(1,3)&#39;</span><span class="p">,</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">base</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">b</span>
+<span class="n">c</span> <span class="n">c</span> <span class="n">a</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">==</span> <span class="n">p</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.covering_data">
+<span class="sig-name descname"><span class="pre">covering_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.covering_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.covering_data" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the permutation associated to the given <code class="docutils literal notranslate"><span class="pre">label</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Stratum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">components</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">permutation_representative</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pc</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">orientation_cover</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pc</span>
+<span class="n">Covering</span> <span class="n">of</span> <span class="n">degree</span> <span class="mi">2</span> <span class="n">of</span> <span class="n">the</span> <span class="n">permutation</span><span class="p">:</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">3</span>
+<span class="mi">2</span> <span class="mi">1</span> <span class="mi">4</span> <span class="mi">4</span> <span class="mi">0</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">pc</span><span class="o">.</span><span class="n">covering_data</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pc</span><span class="o">.</span><span class="n">covering_data</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.covering_data_tuple">
+<span class="sig-name descname"><span class="pre">covering_data_tuple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.covering_data_tuple"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.covering_data_tuple" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the permutation associated to the given <code class="docutils literal notranslate"><span class="pre">label</span></code> as a tuple on
+<cite>{0, 1, ldots, d-1}</cite> where <cite>d</cite> is the degree of the cover.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Stratum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">components</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">permutation_representative</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pc</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">orientation_cover</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pc</span>
+<span class="n">Covering</span> <span class="n">of</span> <span class="n">degree</span> <span class="mi">2</span> <span class="n">of</span> <span class="n">the</span> <span class="n">permutation</span><span class="p">:</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">3</span>
+<span class="mi">2</span> <span class="mi">1</span> <span class="mi">4</span> <span class="mi">4</span> <span class="mi">0</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">pc</span><span class="o">.</span><span class="n">covering_data_tuple</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pc</span><span class="o">.</span><span class="n">covering_data_tuple</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.degree">
+<span class="sig-name descname"><span class="pre">degree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.degree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.degree" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.genus">
+<span class="sig-name descname"><span class="pre">genus</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.genus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.genus" title="Link to this definition">¶</a></dt>
+<dd><p>Genus of the covering translation surface</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b c c&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span>
+<span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span>
+<span class="mi">0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.group">
+<span class="sig-name descname"><span class="pre">group</span></span><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.group" title="Link to this definition">¶</a></dt>
+<dd><p>File: /home/runner/work/surface-dynamics/surface-dynamics/surface_dynamics/interval_exchanges/cover.py (starting at line 621)</p>
+<p>Return the Deck group of the cover.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b c c&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,3,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">()</span>
+<span class="n">Permutation</span> <span class="n">Group</span> <span class="k">with</span> <span class="n">generators</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">()</span>
+<span class="n">Permutation</span> <span class="n">Group</span> <span class="k">with</span> <span class="n">generators</span> <span class="p">[()]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.interval_diagram">
+<span class="sig-name descname"><span class="pre">interval_diagram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sign</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.interval_diagram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.interval_diagram" title="Link to this definition">¶</a></dt>
+<dd><p>Return the interval diagram.</p>
+<p>This is the permutation induced on the subintervals of this cover while
+we turn around the singularities. This is mainly used to compute the
+stratum of this permutation.</p>
+<p>OUTPUT:</p>
+<p>A list of lists of pairs <code class="docutils literal notranslate"><span class="pre">(label,</span> <span class="pre">index</span> <span class="pre">of</span> <span class="pre">interval)</span></code> if
+<code class="docutils literal notranslate"><span class="pre">sign=False</span></code> or a list of triples <code class="docutils literal notranslate"><span class="pre">(label,</span> <span class="pre">index</span> <span class="pre">of</span> <span class="pre">interval,</span>
+<span class="pre">sign)</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b c c&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span><span class="s1">&#39;(1,3)&#39;</span><span class="p">,</span><span class="s1">&#39;(1,4)&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">interval_diagram</span><span class="p">()</span>
+<span class="p">[[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">interval_diagram</span><span class="p">(</span><span class="n">sign</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">[[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)],</span>
+     <span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)],</span>
+     <span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)],</span>
+     <span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="o">...</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+     <span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+     <span class="p">[(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="o">...</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+     <span class="p">[(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+     <span class="p">[(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)],</span>
+     <span class="p">[(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)],</span>
+     <span class="p">[(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.is_orientable">
+<span class="sig-name descname"><span class="pre">is_orientable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.is_orientable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.is_orientable" title="Link to this definition">¶</a></dt>
+<dd><p>Test whether this permutation cover has an orientable foliation.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b c c&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">product</span><span class="p">((</span><span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+<span class="p">(</span><span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">cov</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">c</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%28s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cov</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">is_orientable</span><span class="p">()))</span>
+<span class="p">(</span><span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">)</span> <span class="kc">False</span>
+<span class="p">(</span><span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">)</span> <span class="kc">False</span>
+<span class="p">(</span><span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">)</span> <span class="kc">False</span>
+<span class="p">(</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">)</span> <span class="kc">False</span>
+<span class="p">(</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">)</span> <span class="kc">True</span>
+<span class="p">(</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">)</span> <span class="kc">False</span>
+<span class="p">(</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">)</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.isotypic_projection_matrix">
+<span class="sig-name descname"><span class="pre">isotypic_projection_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">floating_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.isotypic_projection_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.isotypic_projection_matrix" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.isotypic_projectors">
+<span class="sig-name descname"><span class="pre">isotypic_projectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">characters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">floating_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.isotypic_projectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.isotypic_projectors" title="Link to this definition">¶</a></dt>
+<dd><p>Return the list of projectors on isotypical components in the canonical basis
+as well as the half ranks of the projection in absolute homology.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">characters</span></code> - (default <code class="docutils literal notranslate"><span class="pre">None</span></code>), if set to <code class="docutils literal notranslate"><span class="pre">None</span></code> compute projectors for
+all characters, otherwise if set to a list of characters return only the projectors
+for these characters.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">floating_point</span></code> - (default <code class="docutils literal notranslate"><span class="pre">True</span></code>) if set to <code class="docutils literal notranslate"><span class="pre">True</span></code> then all computations are
+performed over floating point numbers. Otherwise, exact cyclotomic elements are kept
+until the very last steps of the computation.</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">QuaternionGroup</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">gens</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pp</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">regular_cover</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">X</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">isotypic_projectors</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">array</span><span class="p">([[</span><span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span>
+        <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span>
+        <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">],</span>
+<span class="o">...</span>
+        <span class="p">[</span><span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span>
+         <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.125</span><span class="p">]])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">isotypic_projectors</span><span class="p">(</span><span class="n">floating_point</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="n">pp</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.lyapunov_exponents_H_plus">
+<span class="sig-name descname"><span class="pre">lyapunov_exponents_H_plus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nb_vectors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_experiments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">65536</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_speed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isotypic_decomposition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">floating_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.lyapunov_exponents_H_plus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.lyapunov_exponents_H_plus" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the H^+ Lyapunov exponents in  the covering locus.</p>
+<p>This method calls a C-library that performs renormalization (i.e. Rauzy
+induction and orthogonalization of vectors under the Kontsevich-Zorich
+cocycle). The computation might be significantly faster if
+<code class="docutils literal notranslate"><span class="pre">nb_vectors=1</span></code> (or if it is not provided but genus is 1) as in this
+case no orthogonalization is needed.</p>
+<p>INPUT:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nb_vectors</span></code> – the number of exponents to compute. The number of
+vectors must not exceed the dimension of the space!</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nb_experiments</span></code> – the number of experiments to perform. It might
+be around 100 (default value) in order that the estimation of
+confidence interval is accurate enough.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nb_iterations</span></code> – the number of iteration of the Rauzy-Zorich
+algorithm to perform for each experiments. The default is 2^15=32768
+which is rather small but provide a good compromise between speed and
+quality of approximation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code> – if provided (as a file object or a string) output
+the additional information in the given file rather than on the
+standard output.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">return_speed</span></code> – whether or not return the lyapunov exponents list
+in a pair with the speed of the geodesic.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">isotypic_decomposition</span></code> – either a boolean or a character or a
+list of characters.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">return_char</span></code> – whether or not return the character corresponding to
+the isotypic component.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">verbose</span></code> – if <code class="docutils literal notranslate"><span class="pre">True</span></code> provide additional information rather than
+returning only the Lyapunov exponents (i.e. elapsed time, confidence
+intervals, …)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float</span></code> – whether the isotypical decomposition and projectors are computed
+over exact or floating point numbers</p></li>
+</ul>
+</div></blockquote>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="n">Stratum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">one_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">19</span><span class="p">)</span>  <span class="c1"># abs tol 0.1</span>
+<span class="p">[</span><span class="mf">0.666666</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">permutation_representative</span><span class="p">(</span><span class="n">reduced</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">orientation_cover</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="n">isotypic_decomposition</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">19</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># abs tol 0.1</span>
+<span class="mf">1.000000</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;e a a&#39;</span><span class="p">,</span> <span class="s1">&#39;b b c c d d e&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>
+<span class="n">Q_0</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">^</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">alphabet</span><span class="p">()</span>
+<span class="p">{</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">}</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">stratum</span><span class="p">(</span><span class="n">fake_zeros</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">Q_1</span><span class="p">(</span><span class="mi">1</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="o">^</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">19</span><span class="p">)</span>  <span class="c1"># abs tol 0.1</span>
+<span class="p">[</span><span class="mf">0.666666</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Some cyclic covers (see <a class="reference internal" href="../references.html#eskkonzor11" id="id2"><span>[EskKonZor11]</span></a> for the formulas):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;c a a&#39;</span><span class="p">,</span> <span class="s1">&#39;b b c&#39;</span><span class="p">,</span> <span class="n">alphabet</span><span class="o">=</span><span class="s1">&#39;abc&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">def</span> <span class="nf">cyclic</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">return</span> <span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="n">a</span><span class="p">)</span><span class="o">%</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">def</span> <span class="nf">cyclic_cover</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="n">cyclic</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">c</span><span class="p">),</span> <span class="n">cyclic</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">a</span><span class="p">),</span> <span class="n">cyclic</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">b</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">def</span> <span class="nf">cyclic_cover_regular</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">G</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">MultiplicativeAbelian</span><span class="p">([</span><span class="n">n</span><span class="p">])</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">x</span><span class="p">,</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">gens</span><span class="p">()</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">regular_cover</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="o">**</span><span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="o">**</span><span class="n">b</span><span class="p">])</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">cyclic_cover</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="n">isotypic_decomposition</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">19</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span>  <span class="c1"># abs tol 0.1</span>
+<span class="p">[[],</span>
+ <span class="p">[</span><span class="mf">0.2857</span><span class="p">,</span> <span class="mf">0.2857</span><span class="p">],</span>
+ <span class="p">[</span><span class="mf">0.5714</span><span class="p">,</span> <span class="mf">0.5714</span><span class="p">],</span>
+ <span class="p">[</span><span class="mf">0.2857</span><span class="p">,</span> <span class="mf">0.2857</span><span class="p">]]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">cyclic_cover</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="n">isotypic_decomposition</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_char</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">19</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">([],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># abs tol 0.1</span>
+<span class="p">[</span><span class="mf">0.2857</span><span class="p">,</span> <span class="mf">0.2857</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">E</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">+</span> <span class="n">E</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">^</span><span class="mi">6</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">E</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">+</span> <span class="n">E</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">^</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># abs tol 0.1</span>
+<span class="p">[</span><span class="mf">0.2857</span><span class="p">,</span> <span class="mf">0.2857</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">E</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">E</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">^</span><span class="mi">5</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span>  <span class="n">E</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">E</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">^</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># abs tol 0.1</span>
+<span class="p">[</span><span class="mf">0.5714</span><span class="p">,</span> <span class="mf">0.5714</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">lexp</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">E</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="n">E</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">^</span><span class="mi">4</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">E</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="n">E</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">^</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The Eierlegendewollmilchsau as a quaternionic cover of the once
+punctured torus:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">QuaternionGroup</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">gens</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">19</span><span class="p">)</span>  <span class="c1"># abs tol 0.05</span>
+<span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.masur_polygon">
+<span class="sig-name descname"><span class="pre">masur_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lengths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heights</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.masur_polygon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.masur_polygon" title="Link to this definition">¶</a></dt>
+<dd><p>Return the Masur polygon for the given <code class="docutils literal notranslate"><span class="pre">lengths</span></code> and <code class="docutils literal notranslate"><span class="pre">heights</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">iet</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span> <span class="s1">&#39;c b a&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span><span class="s1">&#39;(1,3)&#39;</span><span class="p">,</span><span class="s1">&#39;(1,4)&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">S</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">masur_polygon</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># optional: sage_flatsurf</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">stratum</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>                   <span class="c1"># optional: sage_flatsurf # random</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">stratum</span>                                 <span class="c1"># optional: sage_flatsurf</span>
+<span class="n">H_4</span><span class="p">(</span><span class="mi">3</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">stratum</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>                   <span class="c1"># optional: sage_flatsurf # random</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">stratum</span>                                 <span class="c1"># optional: sage_flatsurf</span>
+<span class="n">H_4</span><span class="p">(</span><span class="mi">3</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.monodromy">
+<span class="sig-name descname"><span class="pre">monodromy</span></span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.monodromy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.monodromy" title="Link to this definition">¶</a></dt>
+<dd><p>File: /home/runner/work/surface-dynamics/surface-dynamics/surface_dynamics/interval_exchanges/cover.py (starting at line 602)</p>
+<p>Return the monodromy of this covering.</p>
+<p>That it to say the permutation group generated by the action of the
+fundamental group.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b c c&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,3,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">monodromy</span><span class="p">()</span>
+<span class="n">Permutation</span> <span class="n">Group</span> <span class="k">with</span> <span class="n">generators</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">()]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">monodromy</span><span class="p">()</span>
+<span class="n">Permutation</span> <span class="n">Group</span> <span class="k">with</span> <span class="n">generators</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">()]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.profile">
+<span class="sig-name descname"><span class="pre">profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.profile" title="Link to this definition">¶</a></dt>
+<dd><p>Return the profile of the surface.</p>
+<p>The <em>profile</em> of a translation surface is the list of angles of
+singularities in the surface divided by pi.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,3)&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">profile</span><span class="p">()</span>
+<span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2,3)&#39;</span><span class="p">,</span><span class="s1">&#39;(1,4)&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">profile</span><span class="p">()</span>
+<span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2,3)(4,5,6)&#39;</span><span class="p">,</span><span class="s1">&#39;(1,4,7)(2,5)(3,6)&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">profile</span><span class="p">()</span>
+<span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b c c&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">profile</span><span class="p">()</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.PermutationCover.stratum">
+<span class="sig-name descname"><span class="pre">stratum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fake_zeros</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#PermutationCover.stratum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.stratum" title="Link to this definition">¶</a></dt>
+<dd><p>Return the stratum of the covering translation surface.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b c c&#39;</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>
+<span class="n">H_1</span><span class="p">(</span><span class="mi">0</span><span class="o">^</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">stratum</span><span class="p">(</span><span class="n">fake_zeros</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">H_1</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>
+<span class="n">Q_0</span><span class="p">(</span><span class="mi">0</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">^</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">stratum</span><span class="p">(</span><span class="n">fake_zeros</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">Q_0</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">^</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.RegularCover">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.cover.</span></span><span class="sig-name descname"><span class="pre">RegularCover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover" title="surface_dynamics.interval_exchanges.cover.PermutationCover"><code class="xref py py-class docutils literal notranslate"><span class="pre">PermutationCover</span></code></a></p>
+<p>An interval exchange permutation together with a regular covering data.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b c&#39;</span><span class="p">,</span> <span class="s1">&#39;c b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span> <span class="o">=</span> <span class="n">Zmod</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">regular_cover</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">Regular</span> <span class="n">cover</span> <span class="n">of</span> <span class="n">degree</span> <span class="mi">3</span> <span class="k">with</span> <span class="n">group</span> <span class="n">Multiplicative</span> <span class="n">Abelian</span> <span class="n">group</span> <span class="n">isomorphic</span> <span class="n">to</span> <span class="n">C3</span> <span class="n">of</span> <span class="n">the</span> <span class="n">permutation</span><span class="p">:</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
+<span class="n">c</span> <span class="n">b</span> <span class="n">a</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span> <span class="o">=</span> <span class="n">AbelianGroup</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">regular_cover</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)])</span>
+<span class="n">Regular</span> <span class="n">cover</span> <span class="n">of</span> <span class="n">degree</span> <span class="mi">8</span> <span class="k">with</span> <span class="n">group</span> <span class="n">Multiplicative</span> <span class="n">Abelian</span> <span class="n">group</span> <span class="n">isomorphic</span> <span class="n">to</span> <span class="n">C2</span> <span class="n">x</span> <span class="n">C4</span> <span class="n">of</span> <span class="n">the</span> <span class="n">permutation</span><span class="p">:</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
+<span class="n">c</span> <span class="n">b</span> <span class="n">a</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span> <span class="o">=</span> <span class="n">GL</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g1</span><span class="p">,</span> <span class="n">g2</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">gens</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">regular_cover</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="p">[</span><span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">g1</span> <span class="o">*</span> <span class="n">g2</span><span class="p">])</span>
+<span class="n">Regular</span> <span class="n">cover</span> <span class="n">of</span> <span class="n">degree</span> <span class="mi">48</span> <span class="k">with</span> <span class="n">group</span> <span class="n">General</span> <span class="n">Linear</span> <span class="n">Group</span> <span class="n">of</span> <span class="n">degree</span> <span class="mi">2</span> <span class="n">over</span> <span class="n">Finite</span> <span class="n">Field</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">3</span> <span class="n">of</span> <span class="n">the</span> <span class="n">permutation</span><span class="p">:</span>
+<span class="n">a</span> <span class="n">b</span> <span class="n">c</span>
+<span class="n">c</span> <span class="n">b</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>An example using a semi-direct product built with GAP:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">C1</span> <span class="o">=</span> <span class="n">libgap</span><span class="o">.</span><span class="n">CyclicGroup</span><span class="p">(</span><span class="mi">2</span><span class="o">^</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C2</span> <span class="o">=</span> <span class="n">libgap</span><span class="o">.</span><span class="n">CyclicGroup</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">gens1</span> <span class="o">=</span> <span class="n">libgap</span><span class="o">.</span><span class="n">GeneratorsOfGroup</span><span class="p">(</span><span class="n">C1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">gens2</span> <span class="o">=</span> <span class="n">libgap</span><span class="o">.</span><span class="n">GeneratorsOfGroup</span><span class="p">(</span><span class="n">C2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">alpha</span> <span class="o">=</span> <span class="n">libgap</span><span class="o">.</span><span class="n">GroupHomomorphismByImages</span><span class="p">(</span><span class="n">C1</span><span class="p">,</span> <span class="n">C1</span><span class="p">,</span> <span class="p">[</span><span class="n">gens1</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">gens1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">^</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">phi</span> <span class="o">=</span> <span class="n">libgap</span><span class="o">.</span><span class="n">GroupHomomorphismByImages</span><span class="p">(</span><span class="n">C2</span><span class="p">,</span> <span class="n">libgap</span><span class="o">.</span><span class="n">AutomorphismGroup</span><span class="p">(</span><span class="n">C1</span><span class="p">),</span> <span class="p">[</span><span class="n">gens2</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">alpha</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span> <span class="o">=</span> <span class="n">libgap</span><span class="o">.</span><span class="n">SemidirectProduct</span><span class="p">(</span><span class="n">C2</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">C1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">libgap</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">libgap</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s2">&quot;Embedding&quot;</span><span class="p">)(</span><span class="n">G</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">gens1</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">libgap</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">libgap</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s2">&quot;Embedding&quot;</span><span class="p">)(</span><span class="n">G</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">gens2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">Permutation</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b a&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pp</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">regular_cover</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pp</span>
+<span class="n">Regular</span> <span class="n">cover</span> <span class="n">of</span> <span class="n">degree</span> <span class="mi">64</span> <span class="k">with</span> <span class="n">group</span> <span class="o">&lt;</span><span class="n">pc</span> <span class="n">group</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">64</span> <span class="k">with</span> <span class="mi">6</span> <span class="n">generators</span><span class="o">&gt;</span> <span class="n">of</span> <span class="n">the</span> <span class="n">permutation</span><span class="p">:</span>
+<span class="n">a</span> <span class="n">b</span>
+<span class="n">b</span> <span class="n">a</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pp</span><span class="o">.</span><span class="n">isotypic_projectors</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">pp</span><span class="o">.</span><span class="n">lyapunov_exponents_H_plus</span><span class="p">(</span><span class="n">isotypic_decomposition</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># not tested (too long)</span>
+<span class="p">[[</span><span class="mf">1.000</span><span class="p">],</span>
+ <span class="p">[],</span>
+ <span class="p">[],</span>
+ <span class="p">[],</span>
+ <span class="p">[</span><span class="mf">0.5065137173173205</span><span class="p">,</span> <span class="mf">0.5064242515256905</span><span class="p">],</span>
+ <span class="p">[</span><span class="mf">0.25364063157823696</span><span class="p">,</span> <span class="mf">0.25344903617958725</span><span class="p">],</span>
+ <span class="p">[</span><span class="mf">0.7562155727190676</span><span class="p">,</span> <span class="mf">0.7562259157608896</span><span class="p">],</span>
+ <span class="p">[</span><span class="mf">0.1267784864027805</span><span class="p">,</span> <span class="mf">0.12676433404844129</span><span class="p">],</span>
+ <span class="p">[</span><span class="mf">0.3806034038221321</span><span class="p">,</span> <span class="mf">0.38056305175722355</span><span class="p">],</span>
+ <span class="p">[</span><span class="mf">0.6287868199859215</span><span class="p">,</span> <span class="mf">0.6287551837770511</span><span class="p">],</span>
+ <span class="p">[</span><span class="mf">0.8797056039630107</span><span class="p">,</span> <span class="mf">0.8797049392731162</span><span class="p">],</span>
+ <span class="p">[</span><span class="mf">0.06522712186764967</span><span class="p">,</span> <span class="mf">0.06491210232533576</span><span class="p">],</span>
+ <span class="p">[</span><span class="mf">0.1903390673409358</span><span class="p">,</span> <span class="mf">0.19013594965668126</span><span class="p">],</span>
+ <span class="p">[</span><span class="mf">0.3173095347090416</span><span class="p">,</span> <span class="mf">0.3171889234380455</span><span class="p">],</span>
+ <span class="p">[</span><span class="mf">0.44497853721724967</span><span class="p">,</span> <span class="mf">0.444804933849061</span><span class="p">],</span>
+ <span class="p">[</span><span class="mf">0.5662613367551405</span><span class="p">,</span> <span class="mf">0.5662491535341443</span><span class="p">],</span>
+ <span class="p">[</span><span class="mf">0.6906239438432811</span><span class="p">,</span> <span class="mf">0.6905716259455005</span><span class="p">],</span>
+ <span class="p">[</span><span class="mf">0.8165503109407333</span><span class="p">,</span> <span class="mf">0.8164624067719244</span><span class="p">],</span>
+ <span class="p">[</span><span class="mf">0.9385523471932377</span><span class="p">,</span> <span class="mf">0.9383981565833286</span><span class="p">]]</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.RegularCover.degree">
+<span class="sig-name descname"><span class="pre">degree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover.degree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover.degree" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.RegularCover.group">
+<span class="sig-name descname"><span class="pre">group</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover.group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover.group" title="Link to this definition">¶</a></dt>
+<dd><p>File: /home/runner/work/surface-dynamics/surface-dynamics/surface_dynamics/interval_exchanges/cover.py (starting at line 621)</p>
+<p>Return the Deck group of the cover.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b c c&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,3,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">()</span>
+<span class="n">Permutation</span> <span class="n">Group</span> <span class="k">with</span> <span class="n">generators</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">()</span>
+<span class="n">Permutation</span> <span class="n">Group</span> <span class="k">with</span> <span class="n">generators</span> <span class="p">[()]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.RegularCover.is_orientable">
+<span class="sig-name descname"><span class="pre">is_orientable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover.is_orientable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover.is_orientable" title="Link to this definition">¶</a></dt>
+<dd><p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a b c d&#39;</span><span class="p">,</span> <span class="s1">&#39;b e d c f f e&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span> <span class="o">=</span> <span class="n">Zmod</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">regular_cover</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">is_orientable</span><span class="p">()</span>
+<span class="kc">False</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">regular_cover</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">is_orientable</span><span class="p">()</span>
+<span class="kc">False</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">regular_cover</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">is_orientable</span><span class="p">()</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b c c&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span> <span class="o">=</span> <span class="n">GL</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">GF</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g1</span> <span class="o">=</span> <span class="n">G</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">g2</span> <span class="o">=</span> <span class="n">G</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">regular_cover</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="p">[</span><span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">g1</span><span class="p">])</span><span class="o">.</span><span class="n">is_orientable</span><span class="p">()</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.RegularCover.monodromy">
+<span class="sig-name descname"><span class="pre">monodromy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover.monodromy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover.monodromy" title="Link to this definition">¶</a></dt>
+<dd><p>File: /home/runner/work/surface-dynamics/surface-dynamics/surface_dynamics/interval_exchanges/cover.py (starting at line 602)</p>
+<p>Return the monodromy of this covering.</p>
+<p>That it to say the permutation group generated by the action of the
+fundamental group.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">GeneralizedPermutation</span><span class="p">(</span><span class="s1">&#39;a a b&#39;</span><span class="p">,</span> <span class="s1">&#39;b c c&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,3,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">monodromy</span><span class="p">()</span>
+<span class="n">Permutation</span> <span class="n">Group</span> <span class="k">with</span> <span class="n">generators</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">()]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">cover</span><span class="p">([</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">monodromy</span><span class="p">()</span>
+<span class="n">Permutation</span> <span class="n">Group</span> <span class="k">with</span> <span class="n">generators</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">()]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.RegularCover.profile">
+<span class="sig-name descname"><span class="pre">profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#RegularCover.profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.RegularCover.profile" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.cover.to_gap">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.interval_exchanges.cover.</span></span><span class="sig-name descname"><span class="pre">to_gap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/interval_exchanges/cover.html#to_gap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.interval_exchanges.cover.to_gap" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="iet.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Interval exchange transformations</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="rauzy_class_cardinality.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Rauzy class cardinality</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2021-2024, the surface-dynamics authors
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Covering construction</a><ul>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover"><code class="docutils literal notranslate"><span class="pre">PermutationCover</span></code></a><ul>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.automorphism_group"><code class="docutils literal notranslate"><span class="pre">PermutationCover.automorphism_group</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.base"><code class="docutils literal notranslate"><span class="pre">PermutationCover.base()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.covering_data"><code class="docutils literal notranslate"><span class="pre">PermutationCover.covering_data()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.covering_data_tuple"><code class="docutils literal notranslate"><span class="pre">PermutationCover.covering_data_tuple()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.degree"><code class="docutils literal notranslate"><span class="pre">PermutationCover.degree()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.genus"><code class="docutils literal notranslate"><span class="pre">PermutationCover.genus()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.group"><code class="docutils literal notranslate"><span class="pre">PermutationCover.group</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.interval_diagram"><code class="docutils literal notranslate"><span class="pre">PermutationCover.interval_diagram()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.is_orientable"><code class="docutils literal notranslate"><span class="pre">PermutationCover.is_orientable()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.isotypic_projection_matrix"><code class="docutils literal notranslate"><span class="pre">PermutationCover.isotypic_projection_matrix()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.isotypic_projectors"><code class="docutils literal notranslate"><span class="pre">PermutationCover.isotypic_projectors()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.lyapunov_exponents_H_plus"><code class="docutils literal notranslate"><span class="pre">PermutationCover.lyapunov_exponents_H_plus()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.masur_polygon"><code class="docutils literal notranslate"><span class="pre">PermutationCover.masur_polygon()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.monodromy"><code class="docutils literal notranslate"><span class="pre">PermutationCover.monodromy</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.profile"><code class="docutils literal notranslate"><span class="pre">PermutationCover.profile()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.PermutationCover.stratum"><code class="docutils literal notranslate"><span class="pre">PermutationCover.stratum()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.RegularCover"><code class="docutils literal notranslate"><span class="pre">RegularCover</span></code></a><ul>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.RegularCover.degree"><code class="docutils literal notranslate"><span class="pre">RegularCover.degree()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.RegularCover.group"><code class="docutils literal notranslate"><span class="pre">RegularCover.group()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.RegularCover.is_orientable"><code class="docutils literal notranslate"><span class="pre">RegularCover.is_orientable()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.RegularCover.monodromy"><code class="docutils literal notranslate"><span class="pre">RegularCover.monodromy()</span></code></a></li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.RegularCover.profile"><code class="docutils literal notranslate"><span class="pre">RegularCover.profile()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#surface_dynamics.interval_exchanges.cover.to_gap"><code class="docutils literal notranslate"><span class="pre">to_gap()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=8fa8b3e9"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
+    </body>
+</html>
