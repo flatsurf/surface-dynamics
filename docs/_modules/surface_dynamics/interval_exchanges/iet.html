@@ -301,7 +301,7 @@
 <span class="sd">Rotation corresponds to iet with two intervals::</span>
 
 <span class="sd">    sage: p = iet.Permutation(&#39;a b&#39;, &#39;b a&#39;)</span>
-<span class="sd">    sage: T = iet.IntervalExchangeTransformation(p, [1, (sqrt(5)-1)/2])</span>
+<span class="sd">    sage: T = iet.IntervalExchangeTransformation(p, [1, (sqrt(5)-1)/2])  # random output due to deprecation warnings in some versions of SageMath</span>
 <span class="sd">    sage: T.in_which_interval(0)</span>
 <span class="sd">    &#39;a&#39;</span>
 <span class="sd">    sage: T.in_which_interval(T(0))</span>
@@ -2382,7 +2382,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2021-$RELEASE_YEAR, the surface-dynamics authors
+                Copyright &#169; 2021-2024, the surface-dynamics authors
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
