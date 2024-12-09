@@ -20,7 +20,7 @@ jobs:
           # Do not run Jekyll to create GitHub Pages but take HTML files as they are.
           touch doc/build/html/.nojekyll
       - name: detect broken links
-        run: pixi run doc-linkcheck
+        run: pixi run -e dev doc-linkcheck
       - name: provide documentation as artifact for netlify workflow
         uses: actions/upload-artifact@v3
         with:
