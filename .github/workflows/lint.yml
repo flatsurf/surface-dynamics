@@ -8,27 +8,31 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
-    runs-on: ubuntu-22.04
+  codespell:
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: conda-incubator/setup-miniconda@v2
-        with: { miniforge-version: "latest" }
-      - name: Install dependencies
-        shell: bash -l {0}
-        run: |
-          mamba install -y codespell pycodestyle cython-lint ruff=0.0.292
-      - name: Run codespell
-        shell: bash -l {0}
-        run: codespell `git ls-files`
-      - name: Run pycodestyle
-        shell: bash -l {0}
-        # We currently only check for some warnings. We should enable & fix more of them.
-        run: pycodestyle --select=W2,W3 surface_dynamics/
-      - name: Run cython-lint
-        shell: bash -l {0}
-        run: cython-lint --ignore=E501,E261,E222,E265,E266,E127,E128,E231,E741 surface_dynamics
-      - name: Run ruff
-        shell: bash -l {0}
-        run: |
-          ruff check --select D207,D208 surface_dynamics
+      - uses: actions/checkout@v4
+      - uses: prefix-dev/setup-pixi@v0.8.1
+        with: { pixi-version: v0.39.0 }
+      - run: pixi run codespell
+  pycodestyle:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: prefix-dev/setup-pixi@v0.8.1
+        with: { pixi-version: v0.39.0 }
+      - run: pixi run pycodestyle
+  ruff:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: prefix-dev/setup-pixi@v0.8.1
+        with: { pixi-version: v0.39.0 }
+      - run: pixi run ruff
+  cython-lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: prefix-dev/setup-pixi@v0.8.1
+        with: { pixi-version: v0.39.0 }
+      - run: pixi run cython-lint

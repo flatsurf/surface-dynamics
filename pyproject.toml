@@ -74,7 +74,7 @@ sagemath-102-minimal = ["sagemath-102", "pplpy"]
 sagemath-102-all = ["sagemath-102", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
 sagemath-103-minimal = ["sagemath-103", "pplpy"]
 sagemath-103-all = ["sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
-dev = ["dev", "doc", "sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+dev = ["dev", "lint", "doc", "sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
 
 [tool.pixi.activation.env]
 SURFACE_DYNAMICS_OPTIONALS="sage$SURFACE_DYNAMICS_OPTIONAL_PPLPY$SURFACE_DYNAMICS_OPTIONAL_GMPXXYY$SURFACE_DYNAMICS_OPTIONAL_PYEANTIC$SURFACE_DYNAMICS_OPTIONAL_PYINTERVALXT$SURFACE_DYNAMICS_OPTIONAL_SAGE_FLATSURF"
@@ -144,6 +144,22 @@ sagemath-db-conway-polynomials = "*"
 
 [tool.pixi.feature.dev.dependencies]
 python-build = "*"
+
+[tool.pixi.feature.lint.dependencies]
+jupytext = "*"
+codespell = "*"
+pylint = "*"
+ruff = "*"
+pycodestyle = "*"
+cython-lint = "*"
+
+[tool.pixi.feature.lint.tasks]
+codespell = "codespell $(git ls-files '*.py' '*.c' '*.h' '*.pyx' '*.md' '*.rst')"
+# We ignore warnings in pycodestyle that are incompatible with black's formatting rules
+pycodestyle = "pycodestyle --select W2,W3 --max-line-length=256 surface_dynamics/ tests/"
+ruff = "ruff check --select D207,D208 surface_dynamics/ tests/"
+cython-lint = "cython-lint --ignore=E501,E261,E222,E265,E266,E127,E128,E231,E741 surface_dynamics"
+lint = { depends-on = ["codespell", "pycodestyle", "ruff", "cython-lint"] }
 
 [tool.pixi.feature.doc.dependencies]
 furo = "*"
