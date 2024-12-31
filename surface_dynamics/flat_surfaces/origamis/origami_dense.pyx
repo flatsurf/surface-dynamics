@@ -61,11 +61,11 @@ from sage.libs.gap.libgap import libgap
 from sage.misc.decorators import options
 
 cdef extern from "normal_form.h":
-    int origami_normal_form(int *x, int *y, int *ren, unsigned int n)
-    int pillowcase_cover_normal_form(int *g, int *ren, unsigned int n)
+    int origami_normal_form(int *x, int *y, int *ren, int n)
+    int pillowcase_cover_normal_form(int *g, int *ren, int n)
     # TODO: inline troubles
-    int origami_diff(int *o1, int *o2, unsigned int n)
-    int pillowcase_cover_diff(int *g1, int *g2, unsigned int n)
+    int origami_diff(int *o1, int *o2, int n)
+    int pillowcase_cover_diff(int *g1, int *g2, int n)
 
 cdef extern from "lyapunov_exponents.h":
     ctypedef struct origami_data
@@ -215,7 +215,7 @@ def lattice(vectors):
     return (a, w[0][1], w[0][0])
 
 
-cdef inline tuple array_to_tuple(int * x, unsigned int n):
+cdef inline tuple array_to_tuple(int * x, int n):
     # This approach raises a SIGSEGV error
     #    cdef int i
     #    cdef tuple res = PyTuple_New(<Py_ssize_t> n)
@@ -233,7 +233,7 @@ cdef inline tuple array_to_tuple(int * x, unsigned int n):
     return tuple(res)
 
 
-cdef inline tuple array_to_tuple_i(int * x, unsigned int n):
+cdef inline tuple array_to_tuple_i(int * x, int n):
     # This approach raises a SIGSEGV error
     #    cdef int i
     #    cdef tuple res = PyTuple_New(<Py_ssize_t> n)
@@ -1888,7 +1888,8 @@ cdef class Origami_dense_pyx:
         import sys
         cdef origami_with_involution_data * o
         cdef double * theta
-        cdef size_t i, n, n_p, n_m
+        cdef int i
+        cdef size_t j, n, n_p, n_m
         n_p = nb_vectors_p
         n_m = nb_vectors_m
 
@@ -1921,8 +1922,8 @@ cdef class Origami_dense_pyx:
             lyapunov_exponents_with_involution(o, nb_iterations, theta)
             while any(isnan(theta[i]) for i in range(n+1)):
                 lyapunov_exponents_with_involution(o, nb_iterations, theta)
-            for i in range(n):
-                res[i].append(R(theta[i+1] / (2*theta[0])))
+            for j in range(n):
+                res[j].append(R(theta[j + 1] / (2 * theta[0])))
 
         free_origami_with_involution_data(o)
         free(s)
@@ -1930,8 +1931,8 @@ cdef class Origami_dense_pyx:
 
         if only_mean:
             rres = []
-            for i in range(n):
-                rres.append(sum(res[i]) / nb_experiments)
+            for j in range(n):
+                rres.append(sum(res[j]) / nb_experiments)
 
             return rres[:nb_vectors_p], rres[n_p:n_p+nb_vectors_m]
 
@@ -2076,7 +2077,7 @@ cdef class Origami_dense_pyx:
         cdef Origami_dense_pyx ss, oo
         ss, ms = self.relabel(inplace=False, return_map=True)
         oo, mo = other.relabel(inplace=False, return_map=True)
-        cdef size_t i
+        cdef int i
         for i in range(self._n):
             if ss._r[i] != oo._r[i]:
                 return (False, None) if certificate else False
@@ -2720,7 +2721,7 @@ cdef class Origami_dense_pyx:
         from sage.groups.perm_gps.permgroup_named import SymmetricGroup
 
         cdef int N = self._n
-        cdef size_t i, j
+        cdef int i, j
 
         if len(sr) != N or len(su) != N:
             raise ValueError("sr and su should be two lists of length %d" % N)

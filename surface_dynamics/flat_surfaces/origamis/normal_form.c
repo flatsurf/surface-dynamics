@@ -6,24 +6,24 @@
 /***************/
 
 /* TODO: inline troubles */
-int origami_diff(int *x1, int *x2, unsigned int n)
+int origami_diff(int *x1, int *x2, int n)
 {
-	unsigned int i;
+	int i;
 	int test;
 
-	for(i=0; i<2*n; ++i)
-		if(test = x1[i] - x2[i]) return test;
+	for(i = 0; i < 2 * n; ++i)
+		if((test = x1[i] - x2[i])) return test;
 	return 0;
 }
 
 /* TODO: inline troubles */
-int pillowcase_cover_diff(int *g1, int *g2, unsigned int n)
+int pillowcase_cover_diff(int *g1, int *g2, int n)
 {
-	unsigned int i;
+	int i;
 	int test;
 
-	for(i=0; i<4*n; ++i)
-		if(test = g1[i] - g2[i]) return test;
+	for(i = 0; i < 4 * n; ++i)
+		if((test = g1[i] - g2[i])) return test;
 	return 0;
 }
 
@@ -109,10 +109,10 @@ void SF_free(void)
 }
 
 /* TODO: add in argument the list of potential 0 squares */
-void origami_normal_form(int *x, int *y, int *renum, unsigned int n)
+void origami_normal_form(int *x, int *y, int *renum, int n)
 {
-	int i,j,k,cmax;
-	int mi,m;
+	int i, j, k, cmax;
+	int mi, m;
 	int i_test = 0;
 	int * tmp;
 
@@ -126,7 +126,7 @@ void origami_normal_form(int *x, int *y, int *renum, unsigned int n)
 	/* set SF_xxx = MAX and SF_yyy = MAX */
 	/* set SF_vertices = x y x^-1 y ^-1  */
 	/* set SF_seen = 1                   */
-    for(i=0; i<n; ++i)
+    for(i = 0; i < n; ++i)
 	{
 		SF_xxx[i] = SF_yyy[i] = n;
 
