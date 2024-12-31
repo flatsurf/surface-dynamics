@@ -100,7 +100,7 @@ class Stratum(UniqueRepresentation, SageObject):
             from .quadratic_strata import QuadraticStratum as cls
         else:
             cls = Stratum
-        return object.__new__(cls)
+        return UniqueRepresentation.__new__(cls)
 
     def __init__(self, signature, k=1):
         s = sum(signature)

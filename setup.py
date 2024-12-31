@@ -57,19 +57,20 @@ extensions = [
     )
 ]
 
-try:
-    import ppl as _
-except ImportError:
-    import sys
-    print('Warning: pplpy not installed. Will not compile iet_family.', file=sys.stderr)
-else:
-    extensions.append(Extension(
-        "surface_dynamics.interval_exchanges.iet_family",
-        sources=[
-            "surface_dynamics/interval_exchanges/iet_family.pyx",
-        ],
-        include_dirs=[numpy.get_include()],
-    ))
+# iet_family seems broken on OSX and sage app 10-5
+#try:
+#    import ppl as _
+#except ImportError:
+#    import sys
+#    print('Warning: pplpy not installed. Will not compile iet_family.', file=sys.stderr)
+#else:
+#    extensions.append(Extension(
+#        "surface_dynamics.interval_exchanges.iet_family",
+#        sources=[
+#            "surface_dynamics/interval_exchanges/iet_family.pyx",
+#        ],
+#        include_dirs=[numpy.get_include()],
+#    ))
 
 # Work around changes in SageMath 9.7, see
 # https://trac.sagemath.org/wiki/ReleaseTours/sage-9.7#Packagessagesage.rings...arenownamespaces,
