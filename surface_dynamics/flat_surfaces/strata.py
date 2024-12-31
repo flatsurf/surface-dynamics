@@ -76,31 +76,41 @@ class Stratum(UniqueRepresentation, SageObject):
         sage: loads(dumps(S)) == S
         True
     """
+    # NOTE: calling Stratum(...) might return one of the subclasses
+    # AbelianStratum or QuadraticStratum. The dispatch is done in
+    # __classcall_private__ which is not inherited. The argument normalization
+    # (in order for the unique representation to work) is done in __classcall__
+    # which is inherited.
     @staticmethod
-    def __classcall_private__(self, signature, k=1):
+    def __classcall_private__(cls, signature, k=1):
+        if not isinstance(k, numbers.Integral) or k <= 0:
+            raise ValueError('k must be a positive integer')
+        k = int(k)
+
+        if k == 1:
+            from .abelian_strata import AbelianStratum
+            return AbelianStratum(signature, k)
+        elif k == 2:
+            from .quadratic_strata import QuadraticStratum
+            return QuadraticStratum(signature, k)
+        else:
+            return Stratum.__classcall__(cls, signature, k)
+
+    @staticmethod
+    def __classcall__(cls, signature, k=1):
         if not isinstance(k, numbers.Integral) or k <= 0:
             raise ValueError('k must be a positive integer')
         k = int(k)
         if isinstance(signature, dict):
             signature = sum(([i] * mult for i, mult in signature.items()), [])
-        signature = tuple(signature)
+        signature = tuple(sorted(map(int, signature), reverse=True))
         if not signature:
             raise ValueError('the signature must be non-empty')
         for m in signature:
             if not isinstance(m, numbers.Integral):
                 raise ValueError('mu must be a list of integers')
 
-        signature = tuple(sorted(map(int, signature), reverse=True))
-        return super().__classcall__(Stratum, signature, k)
-
-    def __new__(cls, signature, k):
-        if k == 1:
-            from .abelian_strata import AbelianStratum as cls
-        elif k == 2:
-            from .quadratic_strata import QuadraticStratum as cls
-        else:
-            cls = Stratum
-        return UniqueRepresentation.__new__(cls)
+        return super().__classcall__(cls, signature, k)
 
     def __init__(self, signature, k=1):
         s = sum(signature)
