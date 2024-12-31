@@ -75,6 +75,12 @@ class Stratum(UniqueRepresentation, SageObject):
         sage: S = Stratum((2, 2, 2), k=3)
         sage: loads(dumps(S)) == S
         True
+
+    Test unique representation::
+
+        sage: assert Stratum([1, 2, 1], k=1) is Stratum((2, 1, 1), k=1)
+        sage: assert Stratum([1, 2, 1], k=2) is Stratum((2, 1, 1), k=2)
+        sage: assert Stratum([2, 4, 2], k=4) is Stratum((4, 2, 2), k=4)
     """
     # NOTE: calling Stratum(...) might return one of the subclasses
     # AbelianStratum or QuadraticStratum. The dispatch is done in
