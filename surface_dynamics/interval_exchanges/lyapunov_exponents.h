@@ -34,7 +34,7 @@ long double ldrand(void);
 typedef struct Xgeneralized_permutation{
 int * perm;
 int * twin;
-int k,n;
+int k, n;
 } generalized_permutation;
 
 generalized_permutation * new_generalized_permutation(int *perm, int *twin, int k, int n);

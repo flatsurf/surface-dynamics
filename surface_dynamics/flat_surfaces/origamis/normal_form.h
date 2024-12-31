@@ -13,9 +13,9 @@ void SF_free(void);
 /*    0 if o1 == o2                            */ 
 /*    1 if o1 > o2                             */
 /* TODO: inline troubles*/
-int origami_diff(int *o1, int *o2, unsigned int n);
+int origami_diff(int *o1, int *o2, int n);
 /* Comparison of two origamis. */
-int pillowcase_cover_diff(int *g1, int *g2, unsigned int n);
+int pillowcase_cover_diff(int *g1, int *g2, int n);
 /* Comparison of pillowcase covers. */
 
 /***********************************************/
@@ -23,5 +23,5 @@ int pillowcase_cover_diff(int *g1, int *g2, unsigned int n);
 /* Modify x and y in order to make the origami (x,y) in */
 /* normal form                                          */
 /* renum is set to the permutation used to renumerote   */
-void origami_normal_form(int *x, int *y, int *renum, unsigned int n);
+void origami_normal_form(int *x, int *y, int *renum, int n);
 /* int pillowcase_cover_normal_form(int *g, int *renum, unsigned int n); */
