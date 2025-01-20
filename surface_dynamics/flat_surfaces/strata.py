@@ -218,6 +218,14 @@ class Stratum(UniqueRepresentation, SageObject):
             sage: Stratum({-1:4}, k=2).dimension()
             2
 
+            sage: Stratum((1, -1), k=1).dimension()
+            2
+
+            sage: Stratum((-1, -1, -2), k=2).dimension()
+            1
+            sage: Stratum((-2, -2, -2), k=3).dimension()
+            1
+
         ::
 
             sage: a = Stratum((4,3,2,1,0), k=1)
@@ -227,10 +235,8 @@ class Stratum(UniqueRepresentation, SageObject):
         """
         if self._k == 1 and all(x >= 0 for x in self._signature):
             return 2 * self.surface_genus() + len(self._signature) - 1
-        elif self._k == 2 and all(x >= -1 for x in self._signature):
+        else:
             return 2 * self.surface_genus() + len(self._signature) - 2
-
-        raise NotImplementedError('higher order differential')
 
     def rank(self):
         r"""
