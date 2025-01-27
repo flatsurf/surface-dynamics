@@ -162,11 +162,6 @@ sage -tp surface_dynamics
 ```
 </details>
 
-## Documentation
-
-* short tutorial: https://www.labri.fr/perso/vdelecro/flatsurf.html
-* complete module documentation: https://flatsurf.github.io/surface-dynamics/
-
 ## Feedback and Contributions
 
 If you have tried out surface-dynamics, we are thrilled to learn about your
