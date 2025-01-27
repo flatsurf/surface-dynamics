@@ -13,15 +13,16 @@
 <p align="center">TODO</p>
 <hr>
 
-The ``surface-dynamics`` package for SageMath provides functionality related to
-interval exchange transformations, translation surfaces, mapping classes and
-more. It is based on [SageMath](https://www.sagemath.org) and relies heavily
-on:
+The ``surface-dynamics`` package for [SageMath](https://www.sagemath.org)
+provides functionality related to interval exchange transformations,
+translation surfaces, mapping classes and more. It is based on SageMath and
+relies heavily on:
 
-* GMP for arbitrary precision arithmetic
-* PARI/GP for number field computations
-* GAP for finite groups representation and permutation groups
-* PPL (Parma Polyhedra Library) and LattE (Lattice point Enumeration) for
+* [GMP](https://gmplib.org/) for arbitrary precision arithmetic
+* [PARI/GP](https://pari.math.u-bordeaux.fr/) for number field computations
+* [GAP](https://www.gap-system.org/) for finite groups representation and permutation groups
+* [PPL](https://www.bugseng.com/ppl) (Parma Polyhedra Library) and
+  [LattE](https://www.math.ucdavis.edu/~latte/) (Lattice point Enumeration) for
   polytope computations
 
 ## Usage
