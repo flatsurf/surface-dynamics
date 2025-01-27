@@ -131,7 +131,7 @@ inputs = ["pyproject.toml", "setup.py",
 # "test" is a shortcut that should (together with its dependencies) run in the "dev" environment.
 # To achieve this, we need to split it into two tasks like this (otherwise,
 # pixi is going to ask which environment the dependencies should run in.)
-[tool.pixi.tasks.test]
+[tool.pixi.feature.dev.tasks.test]
 cmd = "pixi run dev-test"
 
 [tool.pixi.tasks.dev-test]
