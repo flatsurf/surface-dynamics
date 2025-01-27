@@ -109,10 +109,10 @@ Once you have cloned this source repository, you can use the following commands:
 <details>
 <summary>What is pixi?</summary>
 
-pixi is a tool based on
+pixi is a tool for developers based on
 [conda](https://en.wikipedia.org/wiki/Conda_(package_manager)) &
-[conda-forge](https://conda-forge.org) for developers so that we can all use
-the same workflows in the same defined environments.
+[conda-forge](https://conda-forge.org) so that we can all use the same
+workflows in the same defined environments.
 
 pixi allows us to ship a very opinionated setup to developers, namely a number
 of opinionated scripts with corresponding tested (and opinionated)
