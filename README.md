@@ -31,52 +31,54 @@ Here is an example session showcasing some of the computations that are
 possible with surface-dynamics. For further examples, please consult [our
 documentation](https://flatsurf.github.io/surface-dynamics/).
 
-    sage: from surface_dynamics.all import *
-    sage: o = Origami('(1,2)', '(1,3)')
-    sage: o
-    (1,2)(3)
-    (1,3)(2)
-    sage: o.sum_of_lyapunov_exponents()
-    4/3
-    sage: o.lyapunov_exponents_approx()    # abs tol 0.05
-    [0.33441823619678734]
-    sage: o.veech_group()
-    Arithmetic subgroup with permutations of right cosets
-     S2=(2,3)
-     S3=(1,2,3)
-     L=(1,2)
-     R=(1,3)
-    sage: q = QuadraticStratum(1, 1, 1, 1)
-    sage: q.orientation_cover()
-    H_5(2^4)
-    sage: q.components()
-    [Q_2(1^4)^hyp]
-    sage: c = q.components()[0]
-    sage: c
-    Q_2(1^4)^hyp
-    sage: c.orientation_cover_component()
-    H_5(2^4)^odd
+```python
+sage: from surface_dynamics.all import *
+sage: o = Origami('(1,2)', '(1,3)')
+sage: o
+(1,2)(3)
+(1,3)(2)
+sage: o.sum_of_lyapunov_exponents()
+4/3
+sage: o.lyapunov_exponents_approx()    # abs tol 0.05
+[0.33441823619678734]
+sage: o.veech_group()
+Arithmetic subgroup with permutations of right cosets
+ S2=(2,3)
+ S3=(1,2,3)
+ L=(1,2)
+ R=(1,3)
+sage: q = QuadraticStratum(1, 1, 1, 1)
+sage: q.orientation_cover()
+H_5(2^4)
+sage: q.components()
+[Q_2(1^4)^hyp]
+sage: c = q.components()[0]
+sage: c
+Q_2(1^4)^hyp
+sage: c.orientation_cover_component()
+H_5(2^4)^odd
 
-    sage: AbelianStrata(genus=3).list()
-    [H_3(4), H_3(3, 1), H_3(2^2), H_3(2, 1^2), H_3(1^4)]
+sage: AbelianStrata(genus=3).list()
+[H_3(4), H_3(3, 1), H_3(2^2), H_3(2, 1^2), H_3(1^4)]
 
-    sage: O = OrigamiDatabase()
-    sage: q = O.query(("stratum", "=", AbelianStratum(2)), ("nb_squares", "=", 5))
-    sage: q.number_of()
-    2
-    sage: for o in q:
-    ....:     print("%s\n- - - - - - - -" % o)
-    (1)(2)(3)(4,5)
-    (1,2,3,4)(5)
-    - - - - - - - -
-    (1)(2)(3,4,5)
-    (1,2,3)(4)(5)
-    - - - - - - - -
-    sage: Q12_reg = QuadraticStratum(12).regular_component()
-    sage: Q12_reg.lyapunov_exponents_H_plus(nb_iterations=2**20)   # abs tol 0.05
-    [0.6634, 0.4496, 0.2305, 0.0871]
-    sage: Q12_reg.lyapunov_exponents_H_minus(nb_iterations=2**20)  # abs tol 0.05
-    [1.0000, 0.3087, 0.1192]
+sage: O = OrigamiDatabase()
+sage: q = O.query(("stratum", "=", AbelianStratum(2)), ("nb_squares", "=", 5))
+sage: q.number_of()
+2
+sage: for o in q:
+....:     print("%s\n- - - - - - - -" % o)
+(1)(2)(3)(4,5)
+(1,2,3,4)(5)
+- - - - - - - -
+(1)(2)(3,4,5)
+(1,2,3)(4)(5)
+- - - - - - - -
+sage: Q12_reg = QuadraticStratum(12).regular_component()
+sage: Q12_reg.lyapunov_exponents_H_plus(nb_iterations=2**20)   # abs tol 0.05
+[0.6634, 0.4496, 0.2305, 0.0871]
+sage: Q12_reg.lyapunov_exponents_H_minus(nb_iterations=2**20)  # abs tol 0.05
+[1.0000, 0.3087, 0.1192]
+```
 
 ## Installation
 
