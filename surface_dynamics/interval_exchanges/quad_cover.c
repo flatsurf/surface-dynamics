@@ -138,7 +138,7 @@ new_quad_cover(generalized_permutation * gp, size_t ** sigma, size_t degree,
 /*   Finally, we set nb_vectors vectors, with degree*nb_intervals coordinates, to follow the monodromy afterward. */
 {
 
-    size_t i;
+    int i;
     quad_cover *qcc;
 
     qcc = (quad_cover *) malloc(sizeof(quad_cover));
@@ -215,7 +215,7 @@ new_quad_cover(generalized_permutation * gp, size_t ** sigma, size_t degree,
         }
         else
         {
-            if (((gp->twin)[i] < gp->k) || ((gp->twin)[i] > i))
+            if (((gp->twin)[i] < (int) (gp->k)) || ((gp->twin)[i] > i))
                 (qcc->intervals)[i].orientation = -1;
         }
 
@@ -454,8 +454,7 @@ void
 print_quad_cover(quad_cover * qcc)
 {
     interval *i;
-    size_t j, n, d, k;
-    int verbose = 0;
+    size_t j, n;
 
     i = qcc->top;
     while (i->prev != NULL)
@@ -795,8 +794,7 @@ lyapunov_exponents_isotypic(quad_cover * qcc, double *theta,
                             size_t nb_iterations, size_t nb_char,
                             size_t * dimensions, double *proj)
 {
-    size_t i, j, nb_ren = 0;
-    double buffer;
+    size_t i, nb_ren = 0;
 
     set_random_lengths_quad_cover(qcc);
     set_random_vectors(qcc);

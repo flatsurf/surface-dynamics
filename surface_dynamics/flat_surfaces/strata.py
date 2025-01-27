@@ -75,32 +75,48 @@ class Stratum(UniqueRepresentation, SageObject):
         sage: S = Stratum((2, 2, 2), k=3)
         sage: loads(dumps(S)) == S
         True
+
+    Test unique representation::
+
+        sage: assert Stratum([1, 2, 1], k=1) is Stratum((2, 1, 1), k=1)
+        sage: assert Stratum([1, 2, 1], k=2) is Stratum((2, 1, 1), k=2)
+        sage: assert Stratum([2, 4, 2], k=4) is Stratum((4, 2, 2), k=4)
     """
+    # NOTE: calling Stratum(...) might return one of the subclasses
+    # AbelianStratum or QuadraticStratum. The dispatch is done in
+    # __classcall_private__ which is not inherited. The argument normalization
+    # (in order for the unique representation to work) is done in __classcall__
+    # which is inherited.
     @staticmethod
-    def __classcall_private__(self, signature, k=1):
+    def __classcall_private__(cls, signature, k=1):
+        if not isinstance(k, numbers.Integral) or k <= 0:
+            raise ValueError('k must be a positive integer')
+        k = int(k)
+
+        if k == 1:
+            from .abelian_strata import AbelianStratum
+            return AbelianStratum(signature, k)
+        elif k == 2:
+            from .quadratic_strata import QuadraticStratum
+            return QuadraticStratum(signature, k)
+        else:
+            return Stratum.__classcall__(cls, signature, k)
+
+    @staticmethod
+    def __classcall__(cls, signature, k=1):
         if not isinstance(k, numbers.Integral) or k <= 0:
             raise ValueError('k must be a positive integer')
         k = int(k)
         if isinstance(signature, dict):
             signature = sum(([i] * mult for i, mult in signature.items()), [])
-        signature = tuple(signature)
+        signature = tuple(sorted(map(int, signature), reverse=True))
         if not signature:
             raise ValueError('the signature must be non-empty')
         for m in signature:
             if not isinstance(m, numbers.Integral):
                 raise ValueError('mu must be a list of integers')
 
-        signature = tuple(sorted(map(int, signature), reverse=True))
-        return super().__classcall__(Stratum, signature, k)
-
-    def __new__(cls, signature, k):
-        if k == 1:
-            from .abelian_strata import AbelianStratum as cls
-        elif k == 2:
-            from .quadratic_strata import QuadraticStratum as cls
-        else:
-            cls = Stratum
-        return object.__new__(cls)
+        return super().__classcall__(cls, signature, k)
 
     def __init__(self, signature, k=1):
         s = sum(signature)
@@ -202,6 +218,14 @@ class Stratum(UniqueRepresentation, SageObject):
             sage: Stratum({-1:4}, k=2).dimension()
             2
 
+            sage: Stratum((1, -1), k=1).dimension()
+            2
+
+            sage: Stratum((-1, -1, -2), k=2).dimension()
+            1
+            sage: Stratum((-2, -2, -2), k=3).dimension()
+            1
+
         ::
 
             sage: a = Stratum((4,3,2,1,0), k=1)
@@ -211,10 +235,8 @@ class Stratum(UniqueRepresentation, SageObject):
         """
         if self._k == 1 and all(x >= 0 for x in self._signature):
             return 2 * self.surface_genus() + len(self._signature) - 1
-        elif self._k == 2 and all(x >= -1 for x in self._signature):
+        else:
             return 2 * self.surface_genus() + len(self._signature) - 2
-
-        raise NotImplementedError('higher order differential')
 
     def rank(self):
         r"""
