@@ -626,7 +626,7 @@ def RauzyDiagram(arg1, arg2=None, reduced=False, flips=None, alphabet=None,
     interval exchange transformation). The edges correspond to the action of the
     different operations considered.
 
-    It first appeard in the original article of Rauzy [Rau80]_.
+    It first appeared in the original article of Rauzy [Rau80]_.
 
     INPUT:
 
