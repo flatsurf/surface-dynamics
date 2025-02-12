@@ -6,7 +6,7 @@
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>surface_dynamics.flat_surfaces.homology - surface-dynamics 0.6.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=302659d7" />
@@ -373,20 +373,20 @@
 <span class="c1">#                  https://www.gnu.org/licenses/</span>
 <span class="c1">#*****************************************************************************</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
-<span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">range</span><span class="p">,</span> <span class="nb">map</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="nb">zip</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">six.moves</span><span class="w"> </span><span class="kn">import</span> <span class="nb">range</span><span class="p">,</span> <span class="nb">map</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="nb">zip</span>
 
-<span class="kn">from</span> <span class="nn">surface_dynamics.misc.permutation</span> <span class="kn">import</span> <span class="p">(</span><span class="n">perm_init</span><span class="p">,</span> <span class="n">constellation_init</span><span class="p">,</span> <span class="n">perm_cycles</span><span class="p">,</span> <span class="n">perm_invert</span><span class="p">,</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.permutation</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">perm_init</span><span class="p">,</span> <span class="n">constellation_init</span><span class="p">,</span> <span class="n">perm_cycles</span><span class="p">,</span> <span class="n">perm_invert</span><span class="p">,</span>
         <span class="n">perm_check</span><span class="p">,</span> <span class="n">perm_compose</span><span class="p">,</span> <span class="n">equalize_perms</span><span class="p">,</span> <span class="n">perm_orbit</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">sage.misc.cachefunc</span> <span class="kn">import</span> <span class="n">cached_method</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.misc.cachefunc</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_method</span>
 
-<span class="kn">from</span> <span class="nn">sage.modules.free_module</span> <span class="kn">import</span> <span class="n">FreeModule</span>
-<span class="kn">from</span> <span class="nn">sage.matrix.constructor</span> <span class="kn">import</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">identity_matrix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.modules.free_module</span><span class="w"> </span><span class="kn">import</span> <span class="n">FreeModule</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.matrix.constructor</span><span class="w"> </span><span class="kn">import</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">identity_matrix</span>
 
-<span class="kn">from</span> <span class="nn">sage.structure.sage_object</span> <span class="kn">import</span> <span class="n">SageObject</span>
-<span class="kn">from</span> <span class="nn">sage.rings.integer_ring</span> <span class="kn">import</span> <span class="n">ZZ</span>
-<span class="kn">from</span> <span class="nn">sage.rings.rational_field</span> <span class="kn">import</span> <span class="n">QQ</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.structure.sage_object</span><span class="w"> </span><span class="kn">import</span> <span class="n">SageObject</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.rings.integer_ring</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZZ</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.rings.rational_field</span><span class="w"> </span><span class="kn">import</span> <span class="n">QQ</span>
 
 
 <span class="c1"># TODO: introduce an oriented ribbon graph class</span>
@@ -398,7 +398,7 @@
 
 <div class="viewcode-block" id="RibbonGraph">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph">[docs]</a>
-<span class="k">class</span> <span class="nc">RibbonGraph</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RibbonGraph</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generic class for Ribbon graph.</span>
 
@@ -470,7 +470,7 @@
 <span class="sd">        sage: G.genus()</span>
 <span class="sd">        0</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">faces</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">faces</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
@@ -535,7 +535,7 @@
         <span class="k">if</span> <span class="n">check</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_check</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        String representation.</span>
 
@@ -568,13 +568,13 @@
         <span class="k">return</span> <span class="s2">&quot;Ribbon graph with </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2"> and </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">vert_str</span><span class="p">,</span><span class="n">edge_str</span><span class="p">,</span><span class="n">face_str</span><span class="p">)</span>
 
     <span class="nd">@cached_method</span>
-    <span class="k">def</span> <span class="nf">_symmetric_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="kn">from</span> <span class="nn">sage.groups.perm_gps.permgroup_named</span> <span class="kn">import</span> <span class="n">SymmetricGroup</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_symmetric_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.groups.perm_gps.permgroup_named</span><span class="w"> </span><span class="kn">import</span> <span class="n">SymmetricGroup</span>
         <span class="k">return</span> <span class="n">SymmetricGroup</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">)</span> <span class="k">if</span> <span class="n">j</span><span class="p">])</span>
 
 <div class="viewcode-block" id="RibbonGraph.monodromy_group">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.monodromy_group">[docs]</a>
-    <span class="k">def</span> <span class="nf">monodromy_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">monodromy_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the group generated by the three defining permutations.</span>
 
@@ -610,7 +610,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.automorphism_group">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.automorphism_group">[docs]</a>
-    <span class="k">def</span> <span class="nf">automorphism_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fix_vertices</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_edges</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_faces</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">automorphism_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fix_vertices</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_edges</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_faces</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the automorphism group of this ribbon graph.</span>
 
@@ -675,11 +675,11 @@
     <span class="c1"># TODO: see how the recursion formula translates on this generating series</span>
 <div class="viewcode-block" id="RibbonGraph.length_rational_fraction">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.length_rational_fraction">[docs]</a>
-    <span class="k">def</span> <span class="nf">length_rational_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">length_rational_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the generating series for the number of lengths with the given boundaries</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">sage.symbolic.ring</span> <span class="kn">import</span> <span class="n">SR</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.symbolic.ring</span><span class="w"> </span><span class="kn">import</span> <span class="n">SR</span>
 
         <span class="n">F</span> <span class="o">=</span> <span class="n">SR</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
 
@@ -706,7 +706,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.add_extra_darts">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.add_extra_darts">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_extra_darts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_extra_darts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add extra darts to support a total of ``2 n`` darts.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -721,7 +721,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_check</span><span class="p">()</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check that the data of the Ribbon graph is coherent</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -762,11 +762,11 @@
 
 <div class="viewcode-block" id="RibbonGraph.is_connected">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_connected">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_computation</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_computation</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">force_computation</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connected</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
 
-        <span class="kn">from</span> <span class="nn">sage.graphs.graph</span> <span class="kn">import</span> <span class="n">Graph</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.graphs.graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">Graph</span>
         <span class="n">G</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="n">loops</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">multiedges</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_total_darts</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
@@ -778,7 +778,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.relabel">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.relabel">[docs]</a>
-    <span class="k">def</span> <span class="nf">relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        perm is a of range(0,N)</span>
 
@@ -811,7 +811,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.num_darts">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_darts">[docs]</a>
-    <span class="k">def</span> <span class="nf">num_darts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">num_darts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of darts.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -820,7 +820,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.darts">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.darts">[docs]</a>
-    <span class="k">def</span> <span class="nf">darts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">darts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the list of darts</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -829,7 +829,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.num_vertices">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_vertices">[docs]</a>
-    <span class="k">def</span> <span class="nf">num_vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">num_vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of vertices.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -838,7 +838,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.vertex_perm">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.vertex_perm">[docs]</a>
-    <span class="k">def</span> <span class="nf">vertex_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">vertex_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the permutation that define the vertices.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -847,7 +847,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.vertex_orbit">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.vertex_orbit">[docs]</a>
-    <span class="k">def</span> <span class="nf">vertex_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">vertex_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the orbit of ``i`` under the permutation that define the</span>
 <span class="sd">        vertices.</span>
@@ -859,7 +859,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.vertices">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.vertices">[docs]</a>
-    <span class="k">def</span> <span class="nf">vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the list of vertices as cycles decomposition of the vertex</span>
 <span class="sd">        permutation.</span>
@@ -869,7 +869,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.dart_to_vertex">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_vertex">[docs]</a>
-    <span class="k">def</span> <span class="nf">dart_to_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dart_to_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the vertex on which the dart ``i`` is attached.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -884,7 +884,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.num_edges">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_edges">[docs]</a>
-    <span class="k">def</span> <span class="nf">num_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">num_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of edges.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -893,7 +893,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.edge_perm">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.edge_perm">[docs]</a>
-    <span class="k">def</span> <span class="nf">edge_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">edge_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the permutation that define the edges.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -902,7 +902,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.edge_orbit">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.edge_orbit">[docs]</a>
-    <span class="k">def</span> <span class="nf">edge_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">edge_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the orbit of the dart ``i`` under the permutation that defines</span>
 <span class="sd">        the edges.</span>
@@ -914,7 +914,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.edges">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.edges">[docs]</a>
-    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the set of edges.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -923,7 +923,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.dart_to_edge">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_edge">[docs]</a>
-    <span class="k">def</span> <span class="nf">dart_to_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dart_to_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the edge the darts ``i`` belongs to.</span>
 
@@ -950,7 +950,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.num_faces">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_faces">[docs]</a>
-    <span class="k">def</span> <span class="nf">num_faces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">num_faces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the number of faces.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -959,7 +959,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.face_perm">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.face_perm">[docs]</a>
-    <span class="k">def</span> <span class="nf">face_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">face_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the permutation that defines the face.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -968,7 +968,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.face_orbit">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.face_orbit">[docs]</a>
-    <span class="k">def</span> <span class="nf">face_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">face_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the orbit of ``i`` under the permutation associated to faces.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -979,7 +979,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.faces">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.faces">[docs]</a>
-    <span class="k">def</span> <span class="nf">faces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">faces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the list of faces.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -988,7 +988,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.dart_to_face">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_face">[docs]</a>
-    <span class="k">def</span> <span class="nf">dart_to_face</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dart_to_face</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_darts</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dart_to_face_index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dart </span><span class="si">{}</span><span class="s2"> is not active&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span></div>
@@ -996,7 +996,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.dual">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.dual">[docs]</a>
-    <span class="k">def</span> <span class="nf">dual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the dual Ribbon graph.</span>
 
@@ -1023,7 +1023,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.euler_characteristic">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.euler_characteristic">[docs]</a>
-    <span class="k">def</span> <span class="nf">euler_characteristic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">euler_characteristic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the Euler characteristic of the embedded surface.</span>
 
@@ -1048,7 +1048,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.is_plane">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_plane">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_plane</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_plane</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns true if and only if the ribbon graph belongs in a sphere. In</span>
 <span class="sd">        other words if it has genus 0.</span>
@@ -1078,7 +1078,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.is_plane_tree">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_plane_tree">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_plane_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_plane_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if and only if the ribbon graph is a planar tree. In other</span>
 <span class="sd">        words, it has genus 0 and only one face.</span>
@@ -1106,7 +1106,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.is_triangulated">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_triangulated">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_triangulated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_triangulated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if the surface is triangulated. In other words, faces</span>
 <span class="sd">        consist only of the product of 3-cycles.</span>
@@ -1128,7 +1128,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.genus">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.genus">[docs]</a>
-    <span class="k">def</span> <span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the genus of the surface associated to this Ribbon graph.</span>
 
@@ -1164,7 +1164,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.spanning_tree">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.spanning_tree">[docs]</a>
-    <span class="k">def</span> <span class="nf">spanning_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">spanning_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a spanning tree</span>
 
@@ -1209,7 +1209,7 @@
 <span class="sd">            sage: o</span>
 <span class="sd">            [[1, 3], [2, 4], [5, 7], [6, 8]]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">sage.graphs.digraph</span> <span class="kn">import</span> <span class="n">DiGraph</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.graphs.digraph</span><span class="w"> </span><span class="kn">import</span> <span class="n">DiGraph</span>
 
         <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">darts</span><span class="p">()</span>
         <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertices</span><span class="p">()</span>
@@ -1253,7 +1253,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.collapse">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.collapse">[docs]</a>
-    <span class="k">def</span> <span class="nf">collapse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spanning_tree</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">collapse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spanning_tree</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a ribbon graph callapsed along a spanning tree.</span>
 
@@ -1284,7 +1284,7 @@
 <span class="sd">            Ribbon graph with 1 vertex, 2 edges and 1 face</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
 
         <span class="k">if</span> <span class="n">spanning_tree</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">spanning_tree</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spanning_tree</span><span class="p">()</span>
@@ -1310,7 +1310,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.boundaries">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.boundaries">[docs]</a>
-    <span class="k">def</span> <span class="nf">boundaries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">boundaries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the list of cycles which are boundaries.</span>
 
@@ -1334,7 +1334,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.cycle_basis">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.cycle_basis">[docs]</a>
-    <span class="k">def</span> <span class="nf">cycle_basis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intersection</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cycle_basis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intersection</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a base of oriented cycles of the Ribbon graph modulo boundaries.</span>
 
@@ -1468,7 +1468,7 @@
 
 <div class="viewcode-block" id="RibbonGraph.is_cycle">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_cycle">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_cycle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_cycle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test whether ``c`` is a cycle.</span>
 
@@ -1487,7 +1487,7 @@
 
 <div class="viewcode-block" id="RibbonGraphWithAngles">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles">[docs]</a>
-<span class="k">class</span> <span class="nc">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">RibbonGraph</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">RibbonGraph</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A Ribbon graph with angles between edges</span>
 
@@ -1498,7 +1498,7 @@
 <span class="sd">    - allows any kind of angles by providing a sum for the total and considering</span>
 <span class="sd">      each angle as a (projective) portion of the total angle.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">faces</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">faces</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span><span class="n">edges</span><span class="p">,</span><span class="n">faces</span><span class="p">)</span>
         <span class="n">RibbonGraph</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">r</span><span class="o">.</span><span class="n">vertex_perm</span><span class="p">(),</span><span class="n">r</span><span class="o">.</span><span class="n">edge_perm</span><span class="p">(),</span><span class="n">r</span><span class="o">.</span><span class="n">face_perm</span><span class="p">())</span>
 
@@ -1522,7 +1522,7 @@
 
 <div class="viewcode-block" id="RibbonGraphWithAngles.angle_between_darts">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_between_darts">[docs]</a>
-    <span class="k">def</span> <span class="nf">angle_between_darts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">angle_between_darts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the angle between the darts ``d1`` and ``d2``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1540,7 +1540,7 @@
 
 <div class="viewcode-block" id="RibbonGraphWithAngles.angle_at_vertex">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_at_vertex">[docs]</a>
-    <span class="k">def</span> <span class="nf">angle_at_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">angle_at_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Angle at a vertex (coefficient of pi)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1549,7 +1549,7 @@
 
 <div class="viewcode-block" id="RibbonGraphWithAngles.angle_at_vertices">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_at_vertices">[docs]</a>
-    <span class="k">def</span> <span class="nf">angle_at_vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">angle_at_vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the list of angles at a vertex.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1558,7 +1558,7 @@
 
 <div class="viewcode-block" id="RibbonGraphWithAngles.winding">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.winding">[docs]</a>
-    <span class="k">def</span> <span class="nf">winding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">winding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return winding number along the cycle ``c``.</span>
 
@@ -1583,7 +1583,7 @@
 
 <div class="viewcode-block" id="RibbonGraphWithAngles.holonomy_representation">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.holonomy_representation">[docs]</a>
-    <span class="k">def</span> <span class="nf">holonomy_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">holonomy_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the holonomy representation in `SO(2)` as two lists.</span>
 
@@ -1624,7 +1624,7 @@
 <span class="sd">            sage: r.holonomy_representation()</span>
 <span class="sd">            ([2/3, 2/3, 2/3], [])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">sage.functions.other</span> <span class="kn">import</span> <span class="n">floor</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.functions.other</span><span class="w"> </span><span class="kn">import</span> <span class="n">floor</span>
 
         <span class="n">l1</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_vertices</span><span class="p">()):</span>
@@ -1641,7 +1641,7 @@
 
 <div class="viewcode-block" id="RibbonGraphWithAngles.has_trivial_holonomy">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.has_trivial_holonomy">[docs]</a>
-    <span class="k">def</span> <span class="nf">has_trivial_holonomy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">has_trivial_holonomy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test whether self has trivial holonomy representation</span>
 
@@ -1669,7 +1669,7 @@
 
 <div class="viewcode-block" id="RibbonGraphWithAngles.spin_parity">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.spin_parity">[docs]</a>
-    <span class="k">def</span> <span class="nf">spin_parity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">spin_parity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the spin parity of the Ribbon graph with angles.</span>
 
@@ -1725,7 +1725,7 @@
 <span class="sd">            sage: r2.spin_parity()</span>
 <span class="sd">            0</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">sage.rings.finite_rings.finite_field_constructor</span> <span class="kn">import</span> <span class="n">GF</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.rings.finite_rings.finite_field_constructor</span><span class="w"> </span><span class="kn">import</span> <span class="n">GF</span>
         <span class="c1"># mod F2 we have: q(x+y) = B(x,y) + q(x) + q(y)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_trivial_holonomy</span><span class="p">():</span>
@@ -1794,11 +1794,11 @@
 
 <div class="viewcode-block" id="angle">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.angle">[docs]</a>
-<span class="k">def</span> <span class="nf">angle</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">angle</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the argument of the vector ``v``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">acos</span><span class="p">,</span><span class="n">asin</span><span class="p">,</span><span class="n">sqrt</span><span class="p">,</span><span class="n">pi</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">acos</span><span class="p">,</span><span class="n">asin</span><span class="p">,</span><span class="n">sqrt</span><span class="p">,</span><span class="n">pi</span>
     <span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
@@ -1816,13 +1816,13 @@
 
 <div class="viewcode-block" id="RibbonGraphWithHolonomies">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.flat_surfaces.homology.RibbonGraphWithHolonomies">[docs]</a>
-<span class="k">class</span> <span class="nc">RibbonGraphWithHolonomies</span><span class="p">(</span><span class="n">RibbonGraph</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RibbonGraphWithHolonomies</span><span class="p">(</span><span class="n">RibbonGraph</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A Ribbon graph with holonomies.</span>
 
 <span class="sd">    For now</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">faces</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">holonomies</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">faces</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">holonomies</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span><span class="n">edges</span><span class="p">,</span><span class="n">faces</span><span class="p">)</span>
         <span class="n">RibbonGraph</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">r</span><span class="o">.</span><span class="n">vertex_perm</span><span class="p">(),</span><span class="n">r</span><span class="o">.</span><span class="n">edge_perm</span><span class="p">(),</span><span class="n">r</span><span class="o">.</span><span class="n">face_perm</span><span class="p">())</span>
 

@@ -6,7 +6,7 @@
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>surface_dynamics.misc.constellation - surface-dynamics 0.6.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=302659d7" />
@@ -318,21 +318,21 @@
 <span class="c1">#                  https://www.gnu.org/licenses/</span>
 <span class="c1"># ****************************************************************************</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span>
-<span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">range</span><span class="p">,</span> <span class="nb">zip</span><span class="p">,</span> <span class="nb">filter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">six.moves</span><span class="w"> </span><span class="kn">import</span> <span class="nb">range</span><span class="p">,</span> <span class="nb">zip</span><span class="p">,</span> <span class="nb">filter</span>
 
-<span class="kn">from</span> <span class="nn">sage.structure.parent</span> <span class="kn">import</span> <span class="n">Parent</span>
-<span class="kn">from</span> <span class="nn">sage.structure.element</span> <span class="kn">import</span> <span class="n">Element</span>
-<span class="kn">from</span> <span class="nn">sage.structure.unique_representation</span> <span class="kn">import</span> <span class="n">UniqueRepresentation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.structure.parent</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.structure.element</span><span class="w"> </span><span class="kn">import</span> <span class="n">Element</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.structure.unique_representation</span><span class="w"> </span><span class="kn">import</span> <span class="n">UniqueRepresentation</span>
 
-<span class="kn">from</span> <span class="nn">sage.rings.integer</span> <span class="kn">import</span> <span class="n">Integer</span>
-<span class="kn">from</span> <span class="nn">sage.combinat.partition</span> <span class="kn">import</span> <span class="n">Partition</span>
-<span class="kn">from</span> <span class="nn">sage.structure.sage_object</span> <span class="kn">import</span> <span class="n">SageObject</span>
-<span class="kn">from</span> <span class="nn">sage.groups.perm_gps.permgroup_element</span> <span class="kn">import</span> <span class="n">PermutationGroupElement</span>
-<span class="kn">from</span> <span class="nn">sage.graphs.graph</span> <span class="kn">import</span> <span class="n">Graph</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.rings.integer</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.combinat.partition</span><span class="w"> </span><span class="kn">import</span> <span class="n">Partition</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.structure.sage_object</span><span class="w"> </span><span class="kn">import</span> <span class="n">SageObject</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.groups.perm_gps.permgroup_element</span><span class="w"> </span><span class="kn">import</span> <span class="n">PermutationGroupElement</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.graphs.graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">Graph</span>
 
 <span class="c1"># we import everything from sage.misc.permutation</span>
-<span class="kn">from</span> <span class="nn">surface_dynamics.misc.permutation</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.permutation</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 
 <span class="n">ZZ_0</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
@@ -341,7 +341,7 @@
 
 <div class="viewcode-block" id="Constellations">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellations">[docs]</a>
-<span class="k">def</span> <span class="nf">Constellations</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">Constellations</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Build a set of constellations.</span>
 
@@ -398,7 +398,7 @@
 
 <div class="viewcode-block" id="Constellation">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation">[docs]</a>
-<span class="k">def</span> <span class="nf">Constellation</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">Constellation</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Constellation</span>
 
@@ -450,14 +450,14 @@
 
 <div class="viewcode-block" id="Constellation_class">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class">[docs]</a>
-<span class="k">class</span> <span class="nc">Constellation_class</span><span class="p">(</span><span class="n">Element</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Constellation_class</span><span class="p">(</span><span class="n">Element</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Constellation</span>
 
 <span class="sd">    A constellation or a tuple of permutations `(g_0,g_1,...,g_k)`</span>
 <span class="sd">    such that the product `g_0 g_1 ... g_k` is the identity.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
@@ -487,7 +487,7 @@
         <span class="k">if</span> <span class="n">check</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_check</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a hash for ``self``</span>
 
@@ -505,7 +505,7 @@
 
 <div class="viewcode-block" id="Constellation_class.set_immutable">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.set_immutable">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_immutable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_immutable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does nothing, as ``self`` is already immutable</span>
 
@@ -523,7 +523,7 @@
 
 <div class="viewcode-block" id="Constellation_class.is_mutable">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.is_mutable">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_mutable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_mutable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return ``False`` as ``self`` is immutable</span>
 
@@ -540,7 +540,7 @@
 
 <div class="viewcode-block" id="Constellation_class.switch">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.switch">[docs]</a>
-    <span class="k">def</span> <span class="nf">switch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j0</span><span class="p">,</span> <span class="n">j1</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">switch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j0</span><span class="p">,</span> <span class="n">j1</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Switch the vertices and edges at `i` and `i+1`</span>
 
@@ -575,7 +575,7 @@
         <span class="n">perm_switch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_g</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_g</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">j0</span><span class="p">,</span> <span class="n">j1</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_set_g_unsafe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_g_unsafe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        set gi[j] to k</span>
 
@@ -607,7 +607,7 @@
 
 <div class="viewcode-block" id="Constellation_class.euler_characteristic">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.euler_characteristic">[docs]</a>
-    <span class="k">def</span> <span class="nf">euler_characteristic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">euler_characteristic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the Euler characteristic of the surface</span>
 
@@ -630,7 +630,7 @@
 
 <div class="viewcode-block" id="Constellation_class.genus">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.genus">[docs]</a>
-    <span class="k">def</span> <span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the genus of the surface</span>
 
@@ -644,7 +644,7 @@
         <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">euler_characteristic</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check that the constellation is valid and if not raise ValueError</span>
 
@@ -682,7 +682,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connected</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">perms_are_transitive</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_g</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;not connected&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
@@ -706,7 +706,7 @@
 
 <div class="viewcode-block" id="Constellation_class.mutable_copy">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.mutable_copy">[docs]</a>
-    <span class="k">def</span> <span class="nf">mutable_copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mutable_copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a mutable copy of ``self``</span>
 
@@ -728,7 +728,7 @@
 
 <div class="viewcode-block" id="Constellation_class.is_connected">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.is_connected">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test of connectedness</span>
 
@@ -751,7 +751,7 @@
 
 <div class="viewcode-block" id="Constellation_class.connected_components">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.connected_components">[docs]</a>
-    <span class="k">def</span> <span class="nf">connected_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">connected_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the connected components ?</span>
 
@@ -799,7 +799,7 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">Constellation</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">))]</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
@@ -812,7 +812,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_g</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_g</span>
 
-    <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        TESTS::</span>
@@ -828,7 +828,7 @@
 
 <div class="viewcode-block" id="Constellation_class.is_isomorphic">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.is_isomorphic">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_isomorphic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">return_map</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_isomorphic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">return_map</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test of isomorphism</span>
 
@@ -867,7 +867,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">relabel</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">relabel</span><span class="p">())</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
@@ -911,16 +911,16 @@
         <span class="c1"># equality</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span> <span class="ow">or</span> <span class="bp">self</span> <span class="o">&lt;</span> <span class="n">other</span>
 
-    <span class="k">def</span> <span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">&lt;</span> <span class="n">other</span>
 
-    <span class="k">def</span> <span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">&lt;=</span> <span class="n">other</span>
 
-    <span class="k">def</span> <span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        String representation</span>
 
@@ -939,7 +939,7 @@
 
 <div class="viewcode-block" id="Constellation_class.degree">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.degree">[docs]</a>
-    <span class="k">def</span> <span class="nf">degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the degree of the constellation</span>
 
@@ -963,7 +963,7 @@
 
 <div class="viewcode-block" id="Constellation_class.length">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.length">[docs]</a>
-    <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Number of permutations</span>
 
@@ -983,7 +983,7 @@
 
 <div class="viewcode-block" id="Constellation_class.profile">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.profile">[docs]</a>
-    <span class="k">def</span> <span class="nf">profile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">profile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the profile of ``self``</span>
 
@@ -1011,7 +1011,7 @@
 
 <div class="viewcode-block" id="Constellation_class.g">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.g">[docs]</a>
-    <span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">g</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the permutation i of the constellation as a list</span>
 
@@ -1027,7 +1027,7 @@
 <span class="sd">            sage: c.g(2)</span>
 <span class="sd">            [4, 0, 1, 2, 3]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">copy</span>
         <span class="k">if</span> <span class="n">i</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_g</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1036,7 +1036,7 @@
 
 <div class="viewcode-block" id="Constellation_class.g_cycle_tuples">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.g_cycle_tuples">[docs]</a>
-    <span class="k">def</span> <span class="nf">g_cycle_tuples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">singletons</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">g_cycle_tuples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">singletons</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the tuples associated to the cycles of the permutations of ``self``</span>
 
@@ -1058,7 +1058,7 @@
 
 <div class="viewcode-block" id="Constellation_class.g_cycle_string">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.g_cycle_string">[docs]</a>
-    <span class="k">def</span> <span class="nf">g_cycle_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">singletons</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">g_cycle_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">singletons</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the permutations of a constellation, as cycles</span>
 
@@ -1084,7 +1084,7 @@
 
 <div class="viewcode-block" id="Constellation_class.g_next">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.g_next">[docs]</a>
-    <span class="k">def</span> <span class="nf">g_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">g_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the image of `j` for the permutation `g_i` in constant time</span>
 
@@ -1106,7 +1106,7 @@
 
 <div class="viewcode-block" id="Constellation_class.g_prev">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.g_prev">[docs]</a>
-    <span class="k">def</span> <span class="nf">g_prev</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">g_prev</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the image of `j` for the permutation `g_i` in constant time</span>
 
@@ -1132,7 +1132,7 @@
 
 <div class="viewcode-block" id="Constellation_class.g_orbit">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.g_orbit">[docs]</a>
-    <span class="k">def</span> <span class="nf">g_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">g_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the orbit of `j` under `g_i`</span>
 
@@ -1154,7 +1154,7 @@
 
 <div class="viewcode-block" id="Constellation_class.relabel">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.relabel">[docs]</a>
-    <span class="k">def</span> <span class="nf">relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_map</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_map</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Relabel ``self``.</span>
 
@@ -1250,7 +1250,7 @@
 
 <div class="viewcode-block" id="Constellation_class.braid_group_action">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.braid_group_action">[docs]</a>
-    <span class="k">def</span> <span class="nf">braid_group_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">braid_group_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Acts on self as the braid group generator that exchanges</span>
 <span class="sd">        position `i` and `i+1`</span>
@@ -1315,7 +1315,7 @@
 
 <div class="viewcode-block" id="Constellation_class.braid_group_orbit">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellation_class.braid_group_orbit">[docs]</a>
-    <span class="k">def</span> <span class="nf">braid_group_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">braid_group_orbit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the graph of the action of the braid group.</span>
 
@@ -1336,7 +1336,7 @@
 <span class="sd">            sage: G.num_edges()</span>
 <span class="sd">            12</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">sage.graphs.digraph</span> <span class="kn">import</span> <span class="n">DiGraph</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.graphs.digraph</span><span class="w"> </span><span class="kn">import</span> <span class="n">DiGraph</span>
 
         <span class="n">G</span> <span class="o">=</span> <span class="n">DiGraph</span><span class="p">(</span><span class="n">multiedges</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">loops</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">waiting</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">relabel</span><span class="p">()]</span>
@@ -1355,21 +1355,21 @@
 
 <div class="viewcode-block" id="Constellations_all">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellations_all">[docs]</a>
-<span class="k">class</span> <span class="nc">Constellations_all</span><span class="p">(</span><span class="n">UniqueRepresentation</span><span class="p">,</span> <span class="n">Parent</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Constellations_all</span><span class="p">(</span><span class="n">UniqueRepresentation</span><span class="p">,</span> <span class="n">Parent</span><span class="p">):</span>
     <span class="n">Element</span> <span class="o">=</span> <span class="n">Constellation_class</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
 <span class="sd">            sage: from surface_dynamics.misc.constellation import Constellations</span>
 <span class="sd">            sage: TestSuite(Constellations()).run()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">sage.categories.infinite_enumerated_sets</span> <span class="kn">import</span> <span class="n">InfiniteEnumeratedSets</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.categories.infinite_enumerated_sets</span><span class="w"> </span><span class="kn">import</span> <span class="n">InfiniteEnumeratedSets</span>
         <span class="n">Parent</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">InfiniteEnumeratedSets</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connected</span> <span class="o">=</span> <span class="n">connected</span>
 
-    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">elt</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">elt</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
@@ -1392,7 +1392,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elt</span><span class="p">,</span> <span class="n">Constellation_class</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connected</span> <span class="ow">or</span> <span class="n">elt</span><span class="o">.</span><span class="n">is_connected</span><span class="p">())</span>
 
-    <span class="k">def</span> <span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        String representation.</span>
 
@@ -1408,7 +1408,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;Constellations&quot;</span>
 
-    <span class="k">def</span> <span class="nf">_element_constructor_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_element_constructor_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a constellation.</span>
 
@@ -1448,7 +1448,7 @@
 
 <div class="viewcode-block" id="Constellations_all.an_element">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellations_all.an_element">[docs]</a>
-    <span class="k">def</span> <span class="nf">an_element</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">an_element</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a constellation.</span>
 
@@ -1464,7 +1464,7 @@
         <span class="k">return</span> <span class="n">Constellations</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">an_element</span><span class="p">()</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
@@ -1507,7 +1507,7 @@
 
 <div class="viewcode-block" id="Constellations_ld">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellations_ld">[docs]</a>
-<span class="k">class</span> <span class="nc">Constellations_ld</span><span class="p">(</span><span class="n">UniqueRepresentation</span><span class="p">,</span> <span class="n">Parent</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Constellations_ld</span><span class="p">(</span><span class="n">UniqueRepresentation</span><span class="p">,</span> <span class="n">Parent</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Constellations of given length and degree.</span>
 
@@ -1526,7 +1526,7 @@
 <span class="sd">        sage: Constellations(2,3,connected=False).cardinality()</span>
 <span class="sd">        6</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">degree</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">degree</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
@@ -1534,7 +1534,7 @@
 
 <span class="sd">            sage: TestSuite(Constellations(length=3,degree=4)).run()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">sage.categories.finite_enumerated_sets</span> <span class="kn">import</span> <span class="n">FiniteEnumeratedSets</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.categories.finite_enumerated_sets</span><span class="w"> </span><span class="kn">import</span> <span class="n">FiniteEnumeratedSets</span>
         <span class="n">Parent</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">facade</span><span class="o">=</span><span class="n">Constellations_all</span><span class="p">(),</span> <span class="n">category</span><span class="o">=</span><span class="n">FiniteEnumeratedSets</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_degree</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="n">degree</span><span class="p">)</span>
@@ -1544,7 +1544,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;degree should be a positive integer&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connected</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">connected</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elt</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elt</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
@@ -1569,7 +1569,7 @@
 
 <div class="viewcode-block" id="Constellations_ld.first">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellations_ld.first">[docs]</a>
-    <span class="k">def</span> <span class="nf">first</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">first</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the first element in lexicographic order</span>
 
@@ -1594,7 +1594,7 @@
 
 <div class="viewcode-block" id="Constellations_ld.last">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellations_ld.last">[docs]</a>
-    <span class="k">def</span> <span class="nf">last</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">last</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the last element in lexicographic order</span>
 
@@ -1617,7 +1617,7 @@
         <span class="k">return</span> <span class="n">Constellation</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
@@ -1633,7 +1633,7 @@
             <span class="k">return</span> <span class="s2">&quot;Connected constellations &quot;</span> <span class="o">+</span> <span class="n">s</span>
         <span class="k">return</span> <span class="s2">&quot;Constellations &quot;</span> <span class="o">+</span> <span class="n">s</span>
 
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        iterator over all constellations of given degree and length</span>
 
@@ -1657,8 +1657,8 @@
 <span class="sd">            sage: Constellations(4,4).cardinality()  # long time</span>
 <span class="sd">            12858</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">sage.arith.srange</span> <span class="kn">import</span> <span class="n">srange</span>
-        <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span><span class="p">,</span> <span class="n">permutations</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.arith.srange</span><span class="w"> </span><span class="kn">import</span> <span class="n">srange</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">product</span><span class="p">,</span> <span class="n">permutations</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_degree</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
@@ -1672,7 +1672,7 @@
 
 <div class="viewcode-block" id="Constellations_ld.random_element">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellations_ld.random_element">[docs]</a>
-    <span class="k">def</span> <span class="nf">random_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">random_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        a random element</span>
 
@@ -1690,8 +1690,8 @@
 <span class="sd">            sage: c.degree() == 3 and c.length() == 3</span>
 <span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">sage.groups.perm_gps.permgroup_named</span> <span class="kn">import</span> <span class="n">SymmetricGroup</span>
-        <span class="kn">from</span> <span class="nn">sage.groups.perm_gps.permgroup</span> <span class="kn">import</span> <span class="n">PermutationGroup</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.groups.perm_gps.permgroup_named</span><span class="w"> </span><span class="kn">import</span> <span class="n">SymmetricGroup</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.groups.perm_gps.permgroup</span><span class="w"> </span><span class="kn">import</span> <span class="n">PermutationGroup</span>
 
         <span class="n">l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span>
         <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_degree</span>
@@ -1705,7 +1705,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">permutation_to_perm</span><span class="p">,</span> <span class="n">g</span><span class="p">))</span><span class="o">+</span><span class="p">[</span><span class="kc">None</span><span class="p">],</span> <span class="n">mutable</span><span class="o">=</span><span class="n">mutable</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_element_constructor_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_element_constructor_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build an element of self.</span>
 
@@ -1732,7 +1732,7 @@
 
 <div class="viewcode-block" id="Constellations_ld.an_element">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellations_ld.an_element">[docs]</a>
-    <span class="k">def</span> <span class="nf">an_element</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">an_element</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a constellation in ``self``.</span>
 
@@ -1758,7 +1758,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="p">()([])</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_degree</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="kn">from</span> <span class="nn">sage.categories.sets_cat</span> <span class="kn">import</span> <span class="n">EmptySetError</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">sage.categories.sets_cat</span><span class="w"> </span><span class="kn">import</span> <span class="n">EmptySetError</span>
                 <span class="k">raise</span> <span class="n">EmptySetError</span>
             <span class="k">return</span> <span class="bp">self</span><span class="p">()([[</span><span class="mi">0</span><span class="p">]])</span>
 
@@ -1772,7 +1772,7 @@
 
 <div class="viewcode-block" id="Constellations_ld.braid_group_action">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellations_ld.braid_group_action">[docs]</a>
-    <span class="k">def</span> <span class="nf">braid_group_action</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">braid_group_action</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        List of graphs that corresponds to the braid group action on ``self`` up</span>
 <span class="sd">        to isomorphism.</span>
@@ -1803,7 +1803,7 @@
 
 <div class="viewcode-block" id="Constellations_ld.braid_group_orbits">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellations_ld.braid_group_orbits">[docs]</a>
-    <span class="k">def</span> <span class="nf">braid_group_orbits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">braid_group_orbits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Orbits under the action of braid group.</span>
 
@@ -1828,7 +1828,7 @@
 
 <div class="viewcode-block" id="Constellations_p">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellations_p">[docs]</a>
-<span class="k">class</span> <span class="nc">Constellations_p</span><span class="p">(</span><span class="n">UniqueRepresentation</span><span class="p">,</span> <span class="n">Parent</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Constellations_p</span><span class="p">(</span><span class="n">UniqueRepresentation</span><span class="p">,</span> <span class="n">Parent</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Constellations with fixed profile.</span>
 
@@ -1876,7 +1876,7 @@
 <span class="sd">        sage: len(C.isomorphism_representatives())</span>
 <span class="sd">        1</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">,</span> <span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        OPTIONS:</span>
 
@@ -1898,14 +1898,14 @@
             <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">!=</span> <span class="n">d</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;all partition in the passport should have the same sum.&quot;</span><span class="p">)</span>
 
-        <span class="kn">from</span> <span class="nn">sage.categories.finite_enumerated_sets</span> <span class="kn">import</span> <span class="n">FiniteEnumeratedSets</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.categories.finite_enumerated_sets</span><span class="w"> </span><span class="kn">import</span> <span class="n">FiniteEnumeratedSets</span>
         <span class="n">Parent</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">facade</span><span class="o">=</span><span class="n">Constellations_all</span><span class="p">(),</span> <span class="n">category</span><span class="o">=</span><span class="n">FiniteEnumeratedSets</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_profile</span> <span class="o">=</span> <span class="n">profile</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_degree</span> <span class="o">=</span> <span class="n">d</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="o">=</span> <span class="n">l</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connected</span> <span class="o">=</span> <span class="n">connected</span>
 
-    <span class="k">def</span> <span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
@@ -1918,7 +1918,7 @@
 
 <div class="viewcode-block" id="Constellations_p.isomorphism_representatives">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellations_p.isomorphism_representatives">[docs]</a>
-    <span class="k">def</span> <span class="nf">isomorphism_representatives</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isomorphism_representatives</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a set of isomorphism representative of ``self``.</span>
 
@@ -1951,7 +1951,7 @@
         <span class="k">return</span> <span class="n">result</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_element_constructor_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_element_constructor_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build an element of self.</span>
 
@@ -1976,7 +1976,7 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;not able to build a constellation with profile </span><span class="si">%s</span><span class="s2"> from the given data&quot;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_profile</span><span class="p">,))</span>
         <span class="k">return</span> <span class="n">c</span>
 
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterator of the elements in ``self``.</span>
 
@@ -2010,8 +2010,8 @@
 <span class="sd">            g1 (0,3,1)(2)</span>
 <span class="sd">            g2 (0,1)(2,3)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">sage.arith.srange</span> <span class="kn">import</span> <span class="n">srange</span>
-        <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span><span class="p">,</span> <span class="n">permutations</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.arith.srange</span><span class="w"> </span><span class="kn">import</span> <span class="n">srange</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">product</span><span class="p">,</span> <span class="n">permutations</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_degree</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
@@ -2027,7 +2027,7 @@
 
 <div class="viewcode-block" id="Constellations_p.braid_group_action">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellations_p.braid_group_action">[docs]</a>
-    <span class="k">def</span> <span class="nf">braid_group_action</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">braid_group_action</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        List of graphs that corresponds to the braid group action on ``self`` up</span>
 <span class="sd">        to isomorphism.</span>
@@ -2057,7 +2057,7 @@
 
 <div class="viewcode-block" id="Constellations_p.braid_group_orbits">
 <a class="viewcode-back" href="../../../misc/constellation.html#surface_dynamics.misc.constellation.Constellations_p.braid_group_orbits">[docs]</a>
-    <span class="k">def</span> <span class="nf">braid_group_orbits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">braid_group_orbits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Orbits under the action of braid group.</span>
 

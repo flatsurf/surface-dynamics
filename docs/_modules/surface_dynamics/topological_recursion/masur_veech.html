@@ -6,7 +6,7 @@
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>surface_dynamics.topological_recursion.masur_veech - surface-dynamics 0.6.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=302659d7" />
@@ -319,11 +319,11 @@
 <span class="c1">#  the License, or (at your option) any later version.</span>
 <span class="c1">#                  https://www.gnu.org/licenses/</span>
 <span class="c1"># ****************************************************************************</span>
-<span class="kn">from</span> <span class="nn">sage.rings.all</span> <span class="kn">import</span> <span class="n">ZZ</span><span class="p">,</span> <span class="n">QQ</span>
-<span class="kn">from</span> <span class="nn">sage.structure.element</span> <span class="kn">import</span> <span class="n">get_coercion_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.rings.all</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZZ</span><span class="p">,</span> <span class="n">QQ</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.structure.element</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_coercion_model</span>
 
-<span class="kn">from</span> <span class="nn">.topological_recursion</span> <span class="kn">import</span> <span class="n">TopologicalRecursion</span>
-<span class="kn">from</span> <span class="nn">.no_pi</span> <span class="kn">import</span> <span class="n">zeta_no_pi</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.topological_recursion</span><span class="w"> </span><span class="kn">import</span> <span class="n">TopologicalRecursion</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.no_pi</span><span class="w"> </span><span class="kn">import</span> <span class="n">zeta_no_pi</span>
 
 <span class="n">ZZ_0</span> <span class="o">=</span> <span class="n">ZZ</span><span class="o">.</span><span class="n">zero</span><span class="p">()</span>
 <span class="n">ZZ_1</span> <span class="o">=</span> <span class="n">ZZ</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
@@ -332,7 +332,7 @@
 
 <div class="viewcode-block" id="MasurVeechTR">
 <a class="viewcode-back" href="../../../topological_recursion/masur_veech.html#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR">[docs]</a>
-<span class="k">class</span> <span class="nc">MasurVeechTR</span><span class="p">(</span><span class="n">TopologicalRecursion</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MasurVeechTR</span><span class="p">(</span><span class="n">TopologicalRecursion</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Topological recursion for Masur-Veech volumes (Anderssen et al.)</span>
 
@@ -350,7 +350,7 @@
 <span class="sd">        7/27*t^3 + 4/9*t^2 + 8/27*t</span>
 <span class="sd">        1/9*t^4 + 8/27*t^3 + 256/675*t^2 + 16/75*t</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge_weight</span><span class="o">=</span><span class="n">ZZ_1</span><span class="p">,</span> <span class="n">vertex_weight</span><span class="o">=</span><span class="n">ZZ_1</span><span class="p">,</span> <span class="n">cache_all</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge_weight</span><span class="o">=</span><span class="n">ZZ_1</span><span class="p">,</span> <span class="n">vertex_weight</span><span class="o">=</span><span class="n">ZZ_1</span><span class="p">,</span> <span class="n">cache_all</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        INPUT:</span>
 
@@ -369,14 +369,14 @@
 
 <div class="viewcode-block" id="MasurVeechTR.A">
 <a class="viewcode-back" href="../../../topological_recursion/masur_veech.html#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.A">[docs]</a>
-    <span class="k">def</span> <span class="nf">A</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">A</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">ZZ_1</span></div>
 
 
 <div class="viewcode-block" id="MasurVeechTR.B">
 <a class="viewcode-back" href="../../../topological_recursion/masur_veech.html#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.B">[docs]</a>
-    <span class="k">def</span> <span class="nf">B</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">B</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="c1"># twist</span>
             <span class="n">kbound</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">g</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">n</span>
@@ -391,7 +391,7 @@
 
 <div class="viewcode-block" id="MasurVeechTR.C">
 <a class="viewcode-back" href="../../../topological_recursion/masur_veech.html#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.C">[docs]</a>
-    <span class="k">def</span> <span class="nf">C</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">jmax</span><span class="p">,</span> <span class="n">kmax</span><span class="p">,</span> <span class="n">smax</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">C</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">jmax</span><span class="p">,</span> <span class="n">kmax</span><span class="p">,</span> <span class="n">smax</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterate through the non-zero ``(j, k, C(i, j, k))`` given the ``i``.</span>
 
@@ -442,7 +442,7 @@
 
 <div class="viewcode-block" id="MasurVeechTR.D">
 <a class="viewcode-back" href="../../../topological_recursion/masur_veech.html#surface_dynamics.topological_recursion.masur_veech.MasurVeechTR.D">[docs]</a>
-    <span class="k">def</span> <span class="nf">D</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">D</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edge_weight</span> <span class="o">*</span> <span class="n">zeta_no_pi</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
         <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>

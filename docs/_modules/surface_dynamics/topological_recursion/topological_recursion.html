@@ -6,7 +6,7 @@
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>surface_dynamics.topological_recursion.topological_recursion - surface-dynamics 0.6.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=302659d7" />
@@ -318,19 +318,19 @@
 <span class="c1">#  the License, or (at your option) any later version.</span>
 <span class="c1">#                  https://www.gnu.org/licenses/</span>
 <span class="c1"># ****************************************************************************</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
-<span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">range</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">six.moves</span><span class="w"> </span><span class="kn">import</span> <span class="nb">range</span>
 
-<span class="kn">import</span> <span class="nn">numbers</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
 
-<span class="kn">from</span> <span class="nn">sage.misc.misc_c</span> <span class="kn">import</span> <span class="n">prod</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.misc.misc_c</span><span class="w"> </span><span class="kn">import</span> <span class="n">prod</span>
 
-<span class="kn">from</span> <span class="nn">sage.rings.all</span> <span class="kn">import</span> <span class="n">ZZ</span><span class="p">,</span> <span class="n">QQ</span>
-<span class="kn">from</span> <span class="nn">sage.arith.misc</span> <span class="kn">import</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">binomial</span>
-<span class="kn">from</span> <span class="nn">sage.combinat.integer_lists.invlex</span> <span class="kn">import</span> <span class="n">IntegerListsLex</span>
-<span class="kn">from</span> <span class="nn">sage.combinat.composition</span> <span class="kn">import</span> <span class="n">Compositions</span>
-<span class="kn">from</span> <span class="nn">sage.combinat.partition</span> <span class="kn">import</span> <span class="n">Partitions</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.rings.all</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZZ</span><span class="p">,</span> <span class="n">QQ</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.arith.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">binomial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.combinat.integer_lists.invlex</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntegerListsLex</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.combinat.composition</span><span class="w"> </span><span class="kn">import</span> <span class="n">Compositions</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.combinat.partition</span><span class="w"> </span><span class="kn">import</span> <span class="n">Partitions</span>
 
 <span class="n">ZZ_0</span> <span class="o">=</span> <span class="n">ZZ</span><span class="o">.</span><span class="n">zero</span><span class="p">()</span>
 <span class="n">ZZ_2</span> <span class="o">=</span> <span class="n">ZZ</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -338,7 +338,7 @@
 
 <div class="viewcode-block" id="compositions">
 <a class="viewcode-back" href="../../../topological_recursion/topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.compositions">[docs]</a>
-<span class="k">def</span> <span class="nf">compositions</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compositions</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return compositions of sum at most 3g-3+n and length n</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -350,7 +350,7 @@
 
 <div class="viewcode-block" id="TopologicalRecursion">
 <a class="viewcode-back" href="../../../topological_recursion/topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion">[docs]</a>
-<span class="k">class</span> <span class="nc">TopologicalRecursion</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TopologicalRecursion</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A generic topological recursion.</span>
 
@@ -359,7 +359,7 @@
 <span class="sd">    - :class:`~surface_dynamics.topological_recursion.kontsevich.KontsevichTR`</span>
 <span class="sd">    - :class:`~surface_dynamics.topological_recursion.masur_veech.MasurVeechTR`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">base_ring</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">base_ring</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cache_all</span> <span class="o">=</span> <span class="n">cache_all</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_base_ring</span> <span class="o">=</span> <span class="n">QQ</span> <span class="k">if</span> <span class="n">base_ring</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">base_ring</span>
@@ -369,33 +369,33 @@
     <span class="c1"># They have to be implemented in subclasses</span>
 <div class="viewcode-block" id="TopologicalRecursion.A">
 <a class="viewcode-back" href="../../../topological_recursion/topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.A">[docs]</a>
-    <span class="k">def</span> <span class="nf">A</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">A</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 
 <div class="viewcode-block" id="TopologicalRecursion.B">
 <a class="viewcode-back" href="../../../topological_recursion/topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.B">[docs]</a>
-    <span class="k">def</span> <span class="nf">B</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">B</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
     <span class="c1"># iterator (k, B(i, j, k))</span>
 
 <div class="viewcode-block" id="TopologicalRecursion.C">
 <a class="viewcode-back" href="../../../topological_recursion/topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.C">[docs]</a>
-    <span class="k">def</span> <span class="nf">C</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">C</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
     <span class="c1"># iterator (j, k, C(i, j, k))</span>
 
 <div class="viewcode-block" id="TopologicalRecursion.D">
 <a class="viewcode-back" href="../../../topological_recursion/topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.D">[docs]</a>
-    <span class="k">def</span> <span class="nf">D</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">D</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 
 <div class="viewcode-block" id="TopologicalRecursion.F">
 <a class="viewcode-back" href="../../../topological_recursion/topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.F">[docs]</a>
-    <span class="k">def</span> <span class="nf">F</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">I</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">F</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">I</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the value of the partition function F_{g,n}(I) where I = (i_0, i_1, ..., i_{n-1}) is</span>
 <span class="sd">        a tuple of n non-negative integers whose sum is &lt;= 3g-3+n.</span>
@@ -422,7 +422,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_virasoro</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_virasoro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">I</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_virasoro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">I</span><span class="p">):</span>
         <span class="c1"># TODO: we should use exponential notations for I</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[(</span><span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">I</span><span class="p">)]</span>
@@ -530,9 +530,9 @@
 
 <div class="viewcode-block" id="TopologicalRecursion.polynomial">
 <a class="viewcode-back" href="../../../topological_recursion/topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.polynomial">[docs]</a>
-    <span class="k">def</span> <span class="nf">polynomial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">ring</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">polynomial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">ring</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">ring</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">sage.rings.polynomial.polynomial_ring_constructor</span> <span class="kn">import</span> <span class="n">PolynomialRing</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sage.rings.polynomial.polynomial_ring_constructor</span><span class="w"> </span><span class="kn">import</span> <span class="n">PolynomialRing</span>
             <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="c1"># Otherwise, the b is not numbered!</span>
                 <span class="n">ring</span> <span class="o">=</span> <span class="n">PolynomialRing</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_ring</span><span class="p">,</span> <span class="s1">&#39;b0&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
@@ -546,7 +546,7 @@
 
 <div class="viewcode-block" id="TopologicalRecursion.write">
 <a class="viewcode-back" href="../../../topological_recursion/topological_recursion.html#surface_dynamics.topological_recursion.topological_recursion.TopologicalRecursion.write">[docs]</a>
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Print normalized values of the polynomials F_{g,n}</span>
 <span class="sd">        &quot;&quot;&quot;</span>

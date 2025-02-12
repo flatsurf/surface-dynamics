@@ -6,7 +6,7 @@
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>surface_dynamics.flat_surfaces.strata - surface-dynamics 0.6.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=302659d7" />
@@ -296,18 +296,18 @@
 <span class="c1">#                  https://www.gnu.org/licenses/</span>
 <span class="c1">#*****************************************************************************</span>
 
-<span class="kn">import</span> <span class="nn">numbers</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
 
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">total_ordering</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">total_ordering</span>
 
-<span class="kn">from</span> <span class="nn">sage.misc.cachefunc</span> <span class="kn">import</span> <span class="n">cached_method</span>
-<span class="kn">from</span> <span class="nn">sage.structure.unique_representation</span> <span class="kn">import</span> <span class="n">UniqueRepresentation</span>
-<span class="kn">from</span> <span class="nn">sage.structure.sage_object</span> <span class="kn">import</span> <span class="n">SageObject</span>
-<span class="kn">from</span> <span class="nn">sage.structure.parent</span> <span class="kn">import</span> <span class="n">Parent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.misc.cachefunc</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_method</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.structure.unique_representation</span><span class="w"> </span><span class="kn">import</span> <span class="n">UniqueRepresentation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.structure.sage_object</span><span class="w"> </span><span class="kn">import</span> <span class="n">SageObject</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.structure.parent</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parent</span>
 
 <div class="viewcode-block" id="list_to_exp_list">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.list_to_exp_list">[docs]</a>
-<span class="k">def</span> <span class="nf">list_to_exp_list</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_to_exp_list</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert list into exponential notation.</span>
 
@@ -337,7 +337,7 @@
 
 <div class="viewcode-block" id="Stratum">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum">[docs]</a>
-<span class="k">class</span> <span class="nc">Stratum</span><span class="p">(</span><span class="n">UniqueRepresentation</span><span class="p">,</span> <span class="n">SageObject</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Stratum</span><span class="p">(</span><span class="n">UniqueRepresentation</span><span class="p">,</span> <span class="n">SageObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Stratum of holomorphic or meromorphic k-differentials on smooth connected Riemann surfaces.</span>
 
@@ -375,22 +375,22 @@
     <span class="c1"># (in order for the unique representation to work) is done in __classcall__</span>
     <span class="c1"># which is inherited.</span>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">__classcall_private__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">signature</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__classcall_private__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">signature</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Integral</span><span class="p">)</span> <span class="ow">or</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;k must be a positive integer&#39;</span><span class="p">)</span>
         <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">.abelian_strata</span> <span class="kn">import</span> <span class="n">AbelianStratum</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">.abelian_strata</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbelianStratum</span>
             <span class="k">return</span> <span class="n">AbelianStratum</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">.quadratic_strata</span> <span class="kn">import</span> <span class="n">QuadraticStratum</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">.quadratic_strata</span><span class="w"> </span><span class="kn">import</span> <span class="n">QuadraticStratum</span>
             <span class="k">return</span> <span class="n">QuadraticStratum</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Stratum</span><span class="o">.</span><span class="n">__classcall__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">signature</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">__classcall__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">signature</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__classcall__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">signature</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Integral</span><span class="p">)</span> <span class="ow">or</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;k must be a positive integer&#39;</span><span class="p">)</span>
         <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
@@ -405,7 +405,7 @@
 
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__classcall__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">signature</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signature</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signature</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">signature</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">s</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">k</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;the sum of orders must be congruent to 2 k = </span><span class="si">{}</span><span class="s1"> got </span><span class="si">{}</span><span class="s1"> (mu=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">k</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">signature</span><span class="p">))</span>
@@ -414,12 +414,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_k</span> <span class="o">=</span> <span class="n">k</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_signature</span> <span class="o">=</span> <span class="n">signature</span>
 
-    <span class="k">def</span> <span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Stratum</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_signature</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_k</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Stratum.surface_differential_order">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.surface_differential_order">[docs]</a>
-    <span class="k">def</span> <span class="nf">surface_differential_order</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">surface_differential_order</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the order of differentials in this stratum.</span>
 
@@ -436,7 +436,7 @@
     <span class="c1"># the name here might be misleading as this is not the genus of the space but of the object in the moduli</span>
 <div class="viewcode-block" id="Stratum.surface_genus">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.surface_genus">[docs]</a>
-    <span class="k">def</span> <span class="nf">surface_genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">surface_genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the genus of the surfaces in this stratum.</span>
 
@@ -459,8 +459,8 @@
 
 <div class="viewcode-block" id="Stratum.genus">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.genus">[docs]</a>
-    <span class="k">def</span> <span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="kn">import</span> <span class="nn">warnings</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;genus() has been deprecated and will be removed in a future version of surface-dynamics; use surface_genus()&#39;</span><span class="p">)</span>
 
@@ -469,7 +469,7 @@
 
 <div class="viewcode-block" id="Stratum.surface_has_finite_area">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.surface_has_finite_area">[docs]</a>
-    <span class="k">def</span> <span class="nf">surface_has_finite_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">surface_has_finite_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return whether the k-differentials in this moduli space have finite or</span>
 <span class="sd">        infinite area.</span>
@@ -494,7 +494,7 @@
 
 <div class="viewcode-block" id="Stratum.dimension">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.dimension">[docs]</a>
-    <span class="k">def</span> <span class="nf">dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the complex dimension of this stratum.</span>
 
@@ -542,7 +542,7 @@
 
 <div class="viewcode-block" id="Stratum.rank">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.rank">[docs]</a>
-    <span class="k">def</span> <span class="nf">rank</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rank</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the rank of this GL(2,R)-invariant manifold (half dimension of the</span>
 <span class="sd">        absolute part of the tangent space).</span>
@@ -592,7 +592,7 @@
 
 <div class="viewcode-block" id="Stratum.signature">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.signature">[docs]</a>
-    <span class="k">def</span> <span class="nf">signature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">signature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the order of zeros with multiplicities.</span>
 
@@ -619,8 +619,8 @@
 
 <div class="viewcode-block" id="Stratum.zeros">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.zeros">[docs]</a>
-    <span class="k">def</span> <span class="nf">zeros</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fake_zeros</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">poles</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="kn">import</span> <span class="nn">warnings</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">zeros</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fake_zeros</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">poles</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;zeros() has been deprecated and will be removed in a future version of surface-dynamics; use signature()&#39;</span><span class="p">)</span>
 
@@ -634,7 +634,7 @@
 
 <div class="viewcode-block" id="Stratum.nb_zeros">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.nb_zeros">[docs]</a>
-    <span class="k">def</span> <span class="nf">nb_zeros</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fake_zeros</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">poles</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nb_zeros</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fake_zeros</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">poles</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of zeros of self.</span>
 
@@ -655,7 +655,7 @@
 <span class="sd">            sage: Stratum({-1:4,1:4}, k=2).nb_zeros()</span>
 <span class="sd">            8</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">import</span> <span class="nn">warnings</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;nb_zero() has been deprecated and will be removed in a future version of surface-dynamics; use signature()&#39;</span><span class="p">)</span>
 
@@ -664,7 +664,7 @@
 
 <div class="viewcode-block" id="Stratum.nb_fake_zeros">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.nb_fake_zeros">[docs]</a>
-    <span class="k">def</span> <span class="nf">nb_fake_zeros</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nb_fake_zeros</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the number of fake zeros.</span>
 
@@ -683,7 +683,7 @@
 <span class="sd">            sage: Stratum([0,4,2,2], k=2).nb_fake_zeros()</span>
 <span class="sd">            1</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">import</span> <span class="nn">warnings</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;nb_fake_zeros() has been deprecated and will be removed in a future version of surface-dynamics; use signature()&#39;</span><span class="p">)</span>
 
@@ -692,11 +692,11 @@
 
 <div class="viewcode-block" id="Stratum.nb_poles">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.nb_poles">[docs]</a>
-    <span class="k">def</span> <span class="nf">nb_poles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nb_poles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the number of poles of this quadratic stratum.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">import</span> <span class="nn">warnings</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;nb_poles() has been deprecated and will be removed in a future version of surface-dynamics; use signature()&#39;</span><span class="p">)</span>
 
@@ -706,7 +706,7 @@
 <div class="viewcode-block" id="Stratum.connected_components">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.connected_components">[docs]</a>
     <span class="nd">@cached_method</span>
-    <span class="k">def</span> <span class="nf">connected_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">connected_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the connected components of this stratum of differentials.</span>
 
@@ -720,7 +720,7 @@
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_k</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="c1"># Abelian differentials: Kontsevich-Zorich classification</span>
-            <span class="kn">from</span> <span class="nn">.abelian_strata</span> <span class="kn">import</span> <span class="n">ASC</span><span class="p">,</span> <span class="n">HypASC</span><span class="p">,</span> <span class="n">NonHypASC</span><span class="p">,</span> <span class="n">OddASC</span><span class="p">,</span> <span class="n">EvenASC</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">.abelian_strata</span><span class="w"> </span><span class="kn">import</span> <span class="n">ASC</span><span class="p">,</span> <span class="n">HypASC</span><span class="p">,</span> <span class="n">NonHypASC</span><span class="p">,</span> <span class="n">OddASC</span><span class="p">,</span> <span class="n">EvenASC</span>
             <span class="n">s</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">zeros</span><span class="p">)</span>
             <span class="n">genus</span> <span class="o">=</span> <span class="n">s</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
 
@@ -750,7 +750,7 @@
 
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_k</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="c1"># quadratic differentials: Lanneau classification</span>
-            <span class="kn">from</span> <span class="nn">.quadratic_strata</span> <span class="kn">import</span> <span class="n">CQSC</span><span class="p">,</span> <span class="n">HQSC</span><span class="p">,</span> <span class="n">GTNQSC</span><span class="p">,</span> <span class="n">GTHQSC</span><span class="p">,</span> <span class="n">GOQSC</span><span class="p">,</span> <span class="n">REQSC</span><span class="p">,</span> <span class="n">IEQSC</span><span class="p">,</span> <span class="n">GZQSC</span><span class="p">,</span> <span class="n">NQSC</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">.quadratic_strata</span><span class="w"> </span><span class="kn">import</span> <span class="n">CQSC</span><span class="p">,</span> <span class="n">HQSC</span><span class="p">,</span> <span class="n">GTNQSC</span><span class="p">,</span> <span class="n">GTHQSC</span><span class="p">,</span> <span class="n">GOQSC</span><span class="p">,</span> <span class="n">REQSC</span><span class="p">,</span> <span class="n">IEQSC</span><span class="p">,</span> <span class="n">GZQSC</span><span class="p">,</span> <span class="n">NQSC</span>
             <span class="n">nb_poles</span> <span class="o">=</span> <span class="n">zeros</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
             <span class="n">s</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">zeros</span><span class="p">)</span>
             <span class="n">genus</span> <span class="o">=</span> <span class="n">s</span> <span class="o">//</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">1</span>
@@ -808,7 +808,7 @@
     <span class="c1"># String representation</span>
     <span class="c1">#</span>
 
-    <span class="k">def</span> <span class="nf">_flat_zero_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_flat_zero_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        String representation of the zeros.</span>
 
@@ -822,7 +822,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">signature</span><span class="p">()))</span>
 
-    <span class="k">def</span> <span class="nf">_exp_zero_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_exp_zero_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        String representation with exponential notation</span>
 
@@ -839,7 +839,7 @@
     <span class="c1"># this attribute can be switched between _flat_zero_str and _exp_zero_str</span>
     <span class="n">_zero_str</span> <span class="o">=</span> <span class="n">_exp_zero_str</span>
 
-    <span class="k">def</span> <span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
@@ -862,7 +862,7 @@
 
         <span class="k">return</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">surface_genus</span><span class="p">())</span> <span class="o">+</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zero_str</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
 
-    <span class="k">def</span> <span class="nf">_latex_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_latex_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Latex string representation</span>
 
@@ -881,7 +881,7 @@
     <span class="c1"># Equality and comparisons</span>
     <span class="c1">#</span>
 
-    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Comparison</span>
 
@@ -969,16 +969,16 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_k</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">_k</span>
 
-    <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
 
-    <span class="k">def</span> <span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span> <span class="ow">or</span> <span class="bp">self</span> <span class="o">&lt;</span> <span class="n">other</span>
 
-    <span class="k">def</span> <span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">&lt;</span> <span class="n">other</span>
 
-    <span class="k">def</span> <span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">&lt;=</span> <span class="n">other</span>
 
     <span class="c1">#</span>
@@ -987,7 +987,7 @@
 
 <div class="viewcode-block" id="Stratum.is_connected">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.is_connected">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test if the strata is connected.</span>
 
@@ -1010,7 +1010,7 @@
 
 <div class="viewcode-block" id="Stratum.permutation_representative">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.permutation_representative">[docs]</a>
-    <span class="k">def</span> <span class="nf">permutation_representative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">permutation_representative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a permutation of interval exchanges associated to this stratum.</span>
 
@@ -1050,7 +1050,7 @@
 
 <div class="viewcode-block" id="Stratum.is_empty">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.is_empty">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return True if the stratum is empty</span>
 
@@ -1068,7 +1068,7 @@
 
 <div class="viewcode-block" id="Stratum.number_of_components">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.number_of_components">[docs]</a>
-    <span class="k">def</span> <span class="nf">number_of_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">number_of_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the number of connected components of self</span>
 
@@ -1088,7 +1088,7 @@
 
 <div class="viewcode-block" id="Stratum.one_component">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.one_component">[docs]</a>
-    <span class="k">def</span> <span class="nf">one_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">one_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a connected component of this stratum.</span>
 
@@ -1101,13 +1101,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">():</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="kn">from</span> <span class="nn">sage.categories.sets_cat</span> <span class="kn">import</span> <span class="n">EmptySetError</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.categories.sets_cat</span><span class="w"> </span><span class="kn">import</span> <span class="n">EmptySetError</span>
         <span class="k">raise</span> <span class="n">EmptySetError</span><span class="p">(</span><span class="s2">&quot;The stratum is empty&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Stratum.unique_component">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.unique_component">[docs]</a>
-    <span class="k">def</span> <span class="nf">unique_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">unique_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the unique component of self or raise a ValueError.</span>
 
@@ -1145,7 +1145,7 @@
 
 <div class="viewcode-block" id="Stratum.random_component">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.random_component">[docs]</a>
-    <span class="k">def</span> <span class="nf">random_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">random_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a random connected component of this stratum.</span>
 
@@ -1160,15 +1160,15 @@
 <span class="sd">            Q_4(6^2)^reg</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">():</span>
-            <span class="kn">from</span> <span class="nn">sage.misc.prandom</span> <span class="kn">import</span> <span class="n">choice</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sage.misc.prandom</span><span class="w"> </span><span class="kn">import</span> <span class="n">choice</span>
             <span class="k">return</span> <span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">())</span>
-        <span class="kn">from</span> <span class="nn">sage.categories.sets_cat</span> <span class="kn">import</span> <span class="n">EmptySetError</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.categories.sets_cat</span><span class="w"> </span><span class="kn">import</span> <span class="n">EmptySetError</span>
         <span class="k">raise</span> <span class="n">EmptySetError</span><span class="p">(</span><span class="s2">&quot;The stratum is empty&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Stratum.components">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.components">[docs]</a>
-    <span class="k">def</span> <span class="nf">components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lists the connected components of the Stratum.</span>
 
@@ -1206,7 +1206,7 @@
 
 <div class="viewcode-block" id="Stratum.masur_veech_volume">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Stratum.masur_veech_volume">[docs]</a>
-    <span class="k">def</span> <span class="nf">masur_veech_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">masur_veech_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the Masur-Veech volume of this stratum.</span>
 
@@ -1229,7 +1229,7 @@
 <span class="sd">            sage: Stratum([20], k=1).masur_veech_volume()</span>
 <span class="sd">            1604064377302075061983/792184445986404135075840000000000*pi^22</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">.masur_veech_volumes</span> <span class="kn">import</span> <span class="n">masur_veech_volume</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.masur_veech_volumes</span><span class="w"> </span><span class="kn">import</span> <span class="n">masur_veech_volume</span>
         <span class="k">return</span> <span class="n">masur_veech_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rational</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span></div>
 </div>
 
@@ -1237,7 +1237,7 @@
 
 <div class="viewcode-block" id="StratumComponent">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.StratumComponent">[docs]</a>
-<span class="k">class</span> <span class="nc">StratumComponent</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">StratumComponent</span><span class="p">(</span><span class="n">SageObject</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generic class for connected component of a stratum of flat surfaces.</span>
 
@@ -1255,7 +1255,7 @@
     <span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="n">_latex_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stratum</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
@@ -1270,7 +1270,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span> <span class="o">=</span> <span class="n">stratum</span>
 
-    <span class="k">def</span> <span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reduce method for pickling</span>
 
@@ -1304,7 +1304,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="p">,)</span>
 
-    <span class="k">def</span> <span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_repr_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        String representation</span>
 
@@ -1321,7 +1321,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;^&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
 
-    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
@@ -1339,7 +1339,7 @@
 
 <div class="viewcode-block" id="StratumComponent.stratum">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.StratumComponent.stratum">[docs]</a>
-    <span class="k">def</span> <span class="nf">stratum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">stratum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the stratum associated to self</span>
 
@@ -1356,7 +1356,7 @@
 
 <div class="viewcode-block" id="StratumComponent.surface_genus">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.StratumComponent.surface_genus">[docs]</a>
-    <span class="k">def</span> <span class="nf">surface_genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">surface_genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return genus of the corresponding stratum</span>
 
@@ -1373,20 +1373,20 @@
 
 <div class="viewcode-block" id="StratumComponent.surface_has_finite_area">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.StratumComponent.surface_has_finite_area">[docs]</a>
-    <span class="k">def</span> <span class="nf">surface_has_finite_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">surface_has_finite_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">surface_has_finite_area</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="StratumComponent.surface_differential_order">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.StratumComponent.surface_differential_order">[docs]</a>
-    <span class="k">def</span> <span class="nf">surface_differential_order</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">surface_differential_order</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">surface_differential_order</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="StratumComponent.genus">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.StratumComponent.genus">[docs]</a>
-    <span class="k">def</span> <span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="kn">import</span> <span class="nn">warnings</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;genus() has been deprecated and will be removed in a future version of surface-dynamics; use surface_genus()&#39;</span><span class="p">)</span>
 
@@ -1395,7 +1395,7 @@
 
 <div class="viewcode-block" id="StratumComponent.dimension">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.StratumComponent.dimension">[docs]</a>
-    <span class="k">def</span> <span class="nf">dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the (complex) dimension of this GL(2,R)-invariant orbifold.</span>
 
@@ -1413,7 +1413,7 @@
 
 <div class="viewcode-block" id="StratumComponent.rank">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.StratumComponent.rank">[docs]</a>
-    <span class="k">def</span> <span class="nf">rank</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rank</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the rank of this GL(2,R)-invariant orbifold.</span>
 
@@ -1429,7 +1429,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span><span class="o">.</span><span class="n">rank</span><span class="p">()</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Equality test</span>
 
@@ -1449,7 +1449,7 @@
 
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stratum</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_stratum</span>
 
-    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Comparison</span>
 
@@ -1491,7 +1491,7 @@
 
 <div class="viewcode-block" id="StratumComponent.masur_veech_volume">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.StratumComponent.masur_veech_volume">[docs]</a>
-    <span class="k">def</span> <span class="nf">masur_veech_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">masur_veech_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the Masur-Veech volume of this stratum component.</span>
 
@@ -1512,7 +1512,7 @@
 <span class="sd">            sage: Stratum([6], k=1).even_component().masur_veech_volume()</span>
 <span class="sd">            32/1913625*pi^8</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">.masur_veech_volumes</span> <span class="kn">import</span> <span class="n">masur_veech_volume</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.masur_veech_volumes</span><span class="w"> </span><span class="kn">import</span> <span class="n">masur_veech_volume</span>
         <span class="k">return</span> <span class="n">masur_veech_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rational</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span></div>
 </div>
 
@@ -1523,7 +1523,7 @@
 
 <div class="viewcode-block" id="Strata">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.strata.Strata">[docs]</a>
-<span class="k">class</span> <span class="nc">Strata</span><span class="p">(</span><span class="n">Parent</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Strata</span><span class="p">(</span><span class="n">Parent</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Strata of Abelian or Quadratic differentials.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

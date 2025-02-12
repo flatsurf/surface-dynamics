@@ -6,7 +6,7 @@
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>surface_dynamics.misc.plane_tree - surface-dynamics 0.6.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=302659d7" />
@@ -304,15 +304,15 @@
 <span class="c1">#                  https://www.gnu.org/licenses/</span>
 <span class="c1">#*****************************************************************************</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">print_function</span>
 
-<span class="kn">from</span> <span class="nn">sage.rings.integer</span> <span class="kn">import</span> <span class="n">Integer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.rings.integer</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integer</span>
 
 <span class="c1">###################################</span>
 <span class="c1"># Rooted trees (Beyer-Hedetniemi) #</span>
 <span class="c1">###################################</span>
 
-<span class="k">def</span> <span class="nf">_TMP_successor</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_TMP_successor</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    given a level sequence generate the next (Beyer-Hedetniemi)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -335,7 +335,7 @@
 
     <span class="k">return</span> <span class="n">ll</span>
 
-<span class="k">def</span> <span class="nf">_TMP_rooted_trees</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_TMP_rooted_trees</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the list of rooted trees using the preceding function</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -349,7 +349,7 @@
 
 <div class="viewcode-block" id="rooted_tree_iterator">
 <a class="viewcode-back" href="../../../misc/plane_tree.html#surface_dynamics.misc.plane_tree.rooted_tree_iterator">[docs]</a>
-<span class="k">def</span> <span class="nf">rooted_tree_iterator</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rooted_tree_iterator</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterator through regular level sequences of rooted trees.</span>
 <span class="sd">    (only works for n &gt;= 3)</span>
@@ -452,7 +452,7 @@
 
 <div class="viewcode-block" id="rooted_plane_tree_iterator">
 <a class="viewcode-back" href="../../../misc/plane_tree.html#surface_dynamics.misc.plane_tree.rooted_plane_tree_iterator">[docs]</a>
-<span class="k">def</span> <span class="nf">rooted_plane_tree_iterator</span><span class="p">(</span><span class="n">nmin</span><span class="p">,</span><span class="n">nmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rooted_plane_tree_iterator</span><span class="p">(</span><span class="n">nmin</span><span class="p">,</span><span class="n">nmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterator through rooted plane trees with at least ``nmin`` and at most</span>
 <span class="sd">    ``nmax`` vertices. If ``nmax`` is not furnished then it is automatically set</span>
@@ -510,7 +510,7 @@
 
 <div class="viewcode-block" id="half_turn">
 <a class="viewcode-back" href="../../../misc/plane_tree.html#surface_dynamics.misc.plane_tree.half_turn">[docs]</a>
-<span class="k">def</span> <span class="nf">half_turn</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">half_turn</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Half turn of canonical form of a tree t which has an odd diameter.</span>
 
@@ -543,7 +543,7 @@
 
 <div class="viewcode-block" id="cmp_halves">
 <a class="viewcode-back" href="../../../misc/plane_tree.html#surface_dynamics.misc.plane_tree.cmp_halves">[docs]</a>
-<span class="k">def</span> <span class="nf">cmp_halves</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cmp_halves</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compare the subtrees [2:i] and [i:].</span>
 
@@ -556,7 +556,7 @@
 
 <div class="viewcode-block" id="cmp_subtree">
 <a class="viewcode-back" href="../../../misc/plane_tree.html#surface_dynamics.misc.plane_tree.cmp_subtree">[docs]</a>
-<span class="k">def</span> <span class="nf">cmp_subtree</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="n">d1</span><span class="p">,</span><span class="n">t2</span><span class="p">,</span><span class="n">d2</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cmp_subtree</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="n">d1</span><span class="p">,</span><span class="n">t2</span><span class="p">,</span><span class="n">d2</span><span class="p">):</span>
     <span class="n">test</span> <span class="o">=</span> <span class="p">(</span><span class="n">d1</span> <span class="o">&gt;</span> <span class="n">d2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">d1</span> <span class="o">&lt;</span> <span class="n">d2</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">test</span><span class="p">:</span> <span class="k">return</span> <span class="n">test</span>
 
@@ -565,7 +565,7 @@
 
 <div class="viewcode-block" id="is_lyndon">
 <a class="viewcode-back" href="../../../misc/plane_tree.html#surface_dynamics.misc.plane_tree.is_lyndon">[docs]</a>
-<span class="k">def</span> <span class="nf">is_lyndon</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_lyndon</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns</span>
 <span class="sd">    Lyndon -&gt; True</span>
@@ -655,7 +655,7 @@
 
 <div class="viewcode-block" id="unrooted_plane_tree_iterator">
 <a class="viewcode-back" href="../../../misc/plane_tree.html#surface_dynamics.misc.plane_tree.unrooted_plane_tree_iterator">[docs]</a>
-<span class="k">def</span> <span class="nf">unrooted_plane_tree_iterator</span><span class="p">(</span><span class="n">nmin</span><span class="p">,</span><span class="n">nmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">unrooted_plane_tree_iterator</span><span class="p">(</span><span class="n">nmin</span><span class="p">,</span><span class="n">nmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterator through plane trees with at most nmax vertices. A representative of</span>
 <span class="sd">    each equivalence class of rooted tree is returned. The order is decreasing</span>
@@ -808,7 +808,7 @@
 <span class="c1"># Modified version of Nakano&#39;s algorithm to generate separatrix diagrams #</span>
 <span class="c1">##########################################################################</span>
 
-<span class="k">def</span> <span class="nf">_TMP_admissible_plane_tree_iterator</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_TMP_admissible_plane_tree_iterator</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterator through plane trees with at most nmax vertices.</span>
 
@@ -877,7 +877,7 @@
 
 <div class="viewcode-block" id="admissible_plane_tree_iterator">
 <a class="viewcode-back" href="../../../misc/plane_tree.html#surface_dynamics.misc.plane_tree.admissible_plane_tree_iterator">[docs]</a>
-<span class="k">def</span> <span class="nf">admissible_plane_tree_iterator</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">admissible_plane_tree_iterator</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plane tree for separatrix diagram of hyperelliptic strata. Return triple</span>
 <span class="sd">    (t,n,l) where t is a tree, n its number of nodes and l its number of leaves.</span>

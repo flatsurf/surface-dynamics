@@ -7,7 +7,7 @@
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Integral interval exchanges - surface-dynamics 0.6.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
@@ -295,7 +295,7 @@
 <dd><p>File: surface_dynamics/interval_exchanges/integer_iet.pyx (starting at line 704)</p>
 <p>Return the number of cylinders and of a given interval exchange</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.integer_iet</span> <span class="kn">import</span> <span class="n">cylinder_number</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.interval_exchanges.integer_iet</span><span class="w"> </span><span class="kn">import</span> <span class="n">cylinder_number</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">top</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">bot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
@@ -340,7 +340,7 @@ sum <code class="docutils literal notranslate"><span class="pre">L</span></code>
 whose cylinder decomposition has statistics <code class="docutils literal notranslate"><span class="pre">k</span></code>. If <code class="docutils literal notranslate"><span class="pre">flat=True</span></code> a list
 for each each term is a statistics.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.integer_iet</span> <span class="kn">import</span> <span class="n">cylinder_statistics</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.interval_exchanges.integer_iet</span><span class="w"> </span><span class="kn">import</span> <span class="n">cylinder_statistics</span>
 </pre></div>
 </div>
 <p>The case of H(0,0):</p>
@@ -390,7 +390,7 @@ for each each term is a statistics.</p>
 <dd><p>File: surface_dynamics/interval_exchanges/integer_iet.pyx (starting at line 769)</p>
 <p>Return the widths of cylinders of the interval exchange determined by <code class="docutils literal notranslate"><span class="pre">top</span></code>, <code class="docutils literal notranslate"><span class="pre">bot</span></code>, <code class="docutils literal notranslate"><span class="pre">lengths</span></code>.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.integer_iet</span> <span class="kn">import</span> <span class="n">cylinder_widths</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.interval_exchanges.integer_iet</span><span class="w"> </span><span class="kn">import</span> <span class="n">cylinder_widths</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">top</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">bot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
@@ -449,7 +449,7 @@ for each each term is a statistics.</p>
 <p>Return the list of pairs <code class="docutils literal notranslate"><span class="pre">(width,</span> <span class="pre">height)</span></code> of each periodic component of the
 iet determined by <code class="docutils literal notranslate"><span class="pre">top</span></code>, <code class="docutils literal notranslate"><span class="pre">bot</span></code> and <code class="docutils literal notranslate"><span class="pre">lengths</span></code>.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.integer_iet</span> <span class="kn">import</span> <span class="n">cylinder_widths_and_heights</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.interval_exchanges.integer_iet</span><span class="w"> </span><span class="kn">import</span> <span class="n">cylinder_widths_and_heights</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">cylinder_widths_and_heights</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)]</span>
 <span class="kc">True</span>
@@ -496,7 +496,7 @@ whose cylinder decomposition has statistics <code class="docutils literal notran
 for each each term is a statistics.</p>
 <p>EXAMPLES:</p>
 <p>Rotations always give a unique cylinder:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.integer_iet</span> <span class="kn">import</span> <span class="n">interval_exchange_statistics</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.interval_exchanges.integer_iet</span><span class="w"> </span><span class="kn">import</span> <span class="n">interval_exchange_statistics</span>
    <span class="n">sage</span><span class="p">:</span> <span class="n">interval_exchange_statistics</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
    <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">9</span><span class="p">}</span>
 
@@ -523,7 +523,7 @@ for each each term is a statistics.</p>
 </pre></div>
 </div>
 <p>You can recover <code class="docutils literal notranslate"><span class="pre">kind=0</span></code> and <code class="docutils literal notranslate"><span class="pre">kind=1</span></code> by looking and lengths and sums:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">s0</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">s2</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -590,7 +590,7 @@ whose cylinder decomposition has statistics <code class="docutils literal notran
 for each each term is a statistics.</p>
 <p>EXAMPLES:</p>
 <p>Rotations always give a unique cylinder:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.integer_iet</span> <span class="kn">import</span> <span class="n">interval_exchange_statistics</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.interval_exchanges.integer_iet</span><span class="w"> </span><span class="kn">import</span> <span class="n">interval_exchange_statistics</span>
    <span class="n">sage</span><span class="p">:</span> <span class="n">interval_exchange_statistics</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="mi">10</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
    <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">9</span><span class="p">}</span>
 
@@ -617,7 +617,7 @@ for each each term is a statistics.</p>
 </pre></div>
 </div>
 <p>You can recover <code class="docutils literal notranslate"><span class="pre">kind=0</span></code> and <code class="docutils literal notranslate"><span class="pre">kind=1</span></code> by looking and lengths and sums:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">s0</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">s2</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -646,7 +646,7 @@ for each each term is a statistics.</p>
 <dd><p>File: surface_dynamics/interval_exchanges/integer_iet.pyx (starting at line 105)</p>
 <p>Return the twin associated to the permutation <code class="docutils literal notranslate"><span class="pre">p</span></code>.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.interval_exchanges.integer_iet</span> <span class="kn">import</span> <span class="n">perm_to_twin</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.interval_exchanges.integer_iet</span><span class="w"> </span><span class="kn">import</span> <span class="n">perm_to_twin</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">perm_to_twin</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
 <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">perm_to_twin</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>

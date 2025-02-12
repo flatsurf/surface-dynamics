@@ -7,7 +7,7 @@
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Finite group representation - surface-dynamics 0.6.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
@@ -299,7 +299,7 @@ group.</p>
 the group action on <cite>ZZ^d</cite>. It is used to produce the projection matrices
 on the isotypic subspaces.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.group_representation</span> <span class="kn">import</span> <span class="n">conjugacy_class_matrix</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.group_representation</span><span class="w"> </span><span class="kn">import</span> <span class="n">conjugacy_class_matrix</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">G</span> <span class="o">=</span> <span class="n">QuaternionGroup</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">Ggap</span> <span class="o">=</span> <span class="n">libgap</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
@@ -360,7 +360,7 @@ on the isotypic subspaces.</p>
 \[\pi_\chi = \sum_{g \in G} \overline_{\chi(g)} g\]</div>
 </div>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.group_representation</span> <span class="kn">import</span> <span class="n">real_characters</span><span class="p">,</span> <span class="n">isotypic_projection_matrix</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.group_representation</span><span class="w"> </span><span class="kn">import</span> <span class="n">real_characters</span><span class="p">,</span> <span class="n">isotypic_projection_matrix</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">G</span> <span class="o">=</span> <span class="n">AlternatingGroup</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span><span class="n">deg</span> <span class="o">=</span> <span class="n">real_characters</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">isotypic_projection_matrix</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">deg</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -419,7 +419,7 @@ classes is the same as the one returned by GAP.</p></li>
 <li><p>degrees - the list of degrees of the characters</p></li>
 </ul>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.group_representation</span> <span class="kn">import</span> <span class="n">real_characters</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.group_representation</span><span class="w"> </span><span class="kn">import</span> <span class="n">real_characters</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">deg</span> <span class="o">=</span> <span class="n">real_characters</span><span class="p">(</span><span class="n">AlternatingGroup</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">T</span>
 <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
@@ -449,7 +449,7 @@ classes is the same as the one returned by GAP.</p></li>
 <span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.group_representation.</span></span><span class="sig-name descname"><span class="pre">real_isotypic_projection_matrices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/surface_dynamics/misc/group_representation.html#real_isotypic_projection_matrices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.misc.group_representation.real_isotypic_projection_matrices" title="Link to this definition">¶</a></dt>
 <dd><p>Return the real projections</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.misc.group_representation</span> <span class="kn">import</span> <span class="n">real_isotypic_projection_matrices</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.group_representation</span><span class="w"> </span><span class="kn">import</span> <span class="n">real_isotypic_projection_matrices</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">G</span> <span class="o">=</span> <span class="n">AlternatingGroup</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">mats</span> <span class="o">=</span> <span class="n">real_isotypic_projection_matrices</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>

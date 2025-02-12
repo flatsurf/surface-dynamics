@@ -6,7 +6,7 @@
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>surface_dynamics.topology.fat_graph - surface-dynamics 0.6.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=302659d7" />
@@ -293,13 +293,13 @@
 <span class="c1">#                  https://www.gnu.org/licenses/</span>
 <span class="c1"># ****************************************************************************</span>
 
-<span class="kn">import</span> <span class="nn">numbers</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
 
-<span class="kn">from</span> <span class="nn">sage.rings.integer_ring</span> <span class="kn">import</span> <span class="n">ZZ</span>
-<span class="kn">from</span> <span class="nn">sage.rings.rational_field</span> <span class="kn">import</span> <span class="n">QQ</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.rings.integer_ring</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZZ</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.rings.rational_field</span><span class="w"> </span><span class="kn">import</span> <span class="n">QQ</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
-<span class="kn">from</span> <span class="nn">surface_dynamics.misc.permutation</span> <span class="kn">import</span> <span class="p">(</span><span class="n">perm_compose</span><span class="p">,</span> <span class="n">perm_conjugate</span><span class="p">,</span> <span class="n">perm_conjugate_inplace</span><span class="p">,</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.permutation</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">perm_compose</span><span class="p">,</span> <span class="n">perm_conjugate</span><span class="p">,</span> <span class="n">perm_conjugate_inplace</span><span class="p">,</span>
                                                <span class="n">perm_dense_cycles</span><span class="p">,</span> <span class="n">constellation_init</span><span class="p">,</span>
                                                <span class="n">perm_num_cycles</span><span class="p">,</span> <span class="n">perm_on_list_inplace</span><span class="p">,</span> <span class="n">perm_orbit</span><span class="p">,</span>
                                                <span class="n">perm_from_base64_str</span><span class="p">,</span> <span class="n">perm_base64_str</span><span class="p">,</span>
@@ -315,7 +315,7 @@
 
 <div class="viewcode-block" id="num_and_weighted_num">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.num_and_weighted_num">[docs]</a>
-<span class="k">def</span> <span class="nf">num_and_weighted_num</span><span class="p">(</span><span class="n">it</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">num_and_weighted_num</span><span class="p">(</span><span class="n">it</span><span class="p">):</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">QQ</span><span class="o">.</span><span class="n">zero</span><span class="p">()</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">ZZ</span><span class="o">.</span><span class="n">zero</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">aut</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
@@ -330,7 +330,7 @@
 
 <div class="viewcode-block" id="list_extrems">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.list_extrems">[docs]</a>
-<span class="k">def</span> <span class="nf">list_extrems</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_extrems</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    EXAMPLES::</span>
 
@@ -352,7 +352,7 @@
 
 <div class="viewcode-block" id="FatGraph">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph">[docs]</a>
-<span class="k">class</span> <span class="nc">FatGraph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FatGraph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Fat graph or graph embedded in an orientable surface.</span>
 
@@ -405,7 +405,7 @@
                  <span class="s1">&#39;_vd&#39;</span><span class="p">,</span>  <span class="c1"># vertex degrees (array of length _nv) containing integers from 0 to nv - 1</span>
                  <span class="s1">&#39;_fd&#39;</span><span class="p">]</span>  <span class="c1"># face degrees (array of length _nf) containing integers from 0 to nf - 1</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_num_dart</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_num_dart</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="n">vp</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">fp</span> <span class="o">=</span> <span class="n">constellation_init</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span> <span class="o">=</span> <span class="n">vp</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fp</span> <span class="o">=</span> <span class="n">fp</span>
@@ -434,7 +434,7 @@
 <div class="viewcode-block" id="FatGraph.from_unicellular_word">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.from_unicellular_word">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_unicellular_word</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_unicellular_word</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build a fat graph from a word on the letters {0, ..., n-1} where</span>
 <span class="sd">        each letter appears exactly twice.</span>
@@ -475,7 +475,7 @@
 <div class="viewcode-block" id="FatGraph.from_string">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.from_string">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_string</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build a fat graph from a serialized string.</span>
 
@@ -500,7 +500,7 @@
         <span class="k">return</span> <span class="n">FatGraph</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="ne">RuntimeError</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="ne">RuntimeError</span><span class="p">):</span>
         <span class="n">vp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span>
         <span class="n">vl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vl</span>
         <span class="n">vd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vd</span>
@@ -572,7 +572,7 @@
         <span class="k">if</span> <span class="n">ffd</span> <span class="o">!=</span> <span class="n">fd</span><span class="p">[:</span><span class="n">nf</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="n">error</span><span class="p">(</span><span class="s2">&quot;inconsistent face labels/degrees, got </span><span class="si">%s</span><span class="s2"> instead of fd = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ffd</span><span class="p">,</span> <span class="n">fd</span><span class="p">[:</span><span class="n">nf</span><span class="p">]))</span>
 
-    <span class="k">def</span> <span class="nf">_check_dart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_dart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Integral</span><span class="p">)</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;dart must be a non-negative integer, got i=</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
         <span class="n">i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
@@ -580,12 +580,12 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;dart i=</span><span class="si">%d</span><span class="s1"> out of range&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">i</span>
 
-    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutable</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;mutable FatGraph not hashable&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">perm_hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="mi">13522761</span> <span class="o">*</span> <span class="n">perm_hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">_realloc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_num_dart</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_realloc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_num_dart</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">max_num_dart</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_num_dart</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">))</span>
@@ -597,7 +597,7 @@
 
 <div class="viewcode-block" id="FatGraph.is_connected">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.is_connected">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return whether the graph is connected.</span>
 
@@ -614,7 +614,7 @@
 
 <div class="viewcode-block" id="FatGraph.connected_components">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.connected_components">[docs]</a>
-    <span class="k">def</span> <span class="nf">connected_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">connected_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the list of connected components.</span>
 
@@ -646,7 +646,7 @@
 
 <div class="viewcode-block" id="FatGraph.disjoint_union">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.disjoint_union">[docs]</a>
-    <span class="k">def</span> <span class="nf">disjoint_union</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">disjoint_union</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the union of ``self`` with the graphs provided as arguments.</span>
 
@@ -685,7 +685,7 @@
 
 <div class="viewcode-block" id="FatGraph.edge_flip">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.edge_flip">[docs]</a>
-    <span class="k">def</span> <span class="nf">edge_flip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">edge_flip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the half-edge that together with ``i`` makes an edge.</span>
 
@@ -708,7 +708,7 @@
 
 <div class="viewcode-block" id="FatGraph.darts">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.darts">[docs]</a>
-    <span class="k">def</span> <span class="nf">darts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">darts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterator through the list of darts.</span>
 
@@ -723,7 +723,7 @@
 
 <div class="viewcode-block" id="FatGraph.copy">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.copy">[docs]</a>
-    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a copy of this fat graph.</span>
 
@@ -763,7 +763,7 @@
 
 <div class="viewcode-block" id="FatGraph.to_string">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.to_string">[docs]</a>
-    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Serialization to string.</span>
 
@@ -781,16 +781,16 @@
             <span class="n">perm_base64_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_symmetric_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_symmetric_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Underlying symmetric group.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">sage.groups.perm_gps.permgroup_named</span> <span class="kn">import</span> <span class="n">SymmetricGroup</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.groups.perm_gps.permgroup_named</span><span class="w"> </span><span class="kn">import</span> <span class="n">SymmetricGroup</span>
         <span class="k">return</span> <span class="n">SymmetricGroup</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
 <div class="viewcode-block" id="FatGraph.monodromy_group">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.monodromy_group">[docs]</a>
-    <span class="k">def</span> <span class="nf">monodromy_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">monodromy_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the group generated by the vertex and face permutations.</span>
 
@@ -820,7 +820,7 @@
 
 <div class="viewcode-block" id="FatGraph.is_face_bipartite">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.is_face_bipartite">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_face_bipartite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">certificate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_face_bipartite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">certificate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return whether the faces admit a proper 2-coloring.</span>
 
@@ -883,7 +883,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">colors</span><span class="p">)</span> <span class="k">if</span> <span class="n">certificate</span> <span class="k">else</span> <span class="kc">True</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span>
         <span class="n">fd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">_nf</span><span class="p">]</span>
         <span class="n">vd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vd</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">_nv</span><span class="p">]</span>
@@ -892,7 +892,7 @@
         <span class="k">return</span> <span class="s2">&quot;FatGraph(&#39;</span><span class="si">%s</span><span class="s2">&#39;, &#39;</span><span class="si">%s</span><span class="s2">&#39;)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">perm_cycle_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vp</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span>
                                                <span class="n">perm_cycle_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TESTS::</span>
 
@@ -916,12 +916,12 @@
                    <span class="bp">self</span><span class="o">.</span><span class="n">_fp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_fp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
 
 <div class="viewcode-block" id="FatGraph.vertex_permutation">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.vertex_permutation">[docs]</a>
-    <span class="k">def</span> <span class="nf">vertex_permutation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">vertex_permutation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the vertex permutation as a list.</span>
 
@@ -936,7 +936,7 @@
 
 <div class="viewcode-block" id="FatGraph.face_permutation">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.face_permutation">[docs]</a>
-    <span class="k">def</span> <span class="nf">face_permutation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">face_permutation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the face permutation as a list.</span>
 
@@ -951,7 +951,7 @@
 
 <div class="viewcode-block" id="FatGraph.vertex_degrees">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.vertex_degrees">[docs]</a>
-    <span class="k">def</span> <span class="nf">vertex_degrees</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">vertex_degrees</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the degree of vertices.</span>
 
@@ -968,19 +968,19 @@
 
 <div class="viewcode-block" id="FatGraph.vertex_min_degree">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.vertex_min_degree">[docs]</a>
-    <span class="k">def</span> <span class="nf">vertex_min_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">vertex_min_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="k">else</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nv</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="FatGraph.vertex_max_degree">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.vertex_max_degree">[docs]</a>
-    <span class="k">def</span> <span class="nf">vertex_max_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">vertex_max_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="k">else</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nv</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="FatGraph.face_degrees">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.face_degrees">[docs]</a>
-    <span class="k">def</span> <span class="nf">face_degrees</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">face_degrees</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
@@ -993,19 +993,19 @@
 
 <div class="viewcode-block" id="FatGraph.face_min_degree">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.face_min_degree">[docs]</a>
-    <span class="k">def</span> <span class="nf">face_min_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">face_min_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="k">else</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nf</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="FatGraph.face_max_degree">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.face_max_degree">[docs]</a>
-    <span class="k">def</span> <span class="nf">face_max_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">face_max_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span> <span class="k">else</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nf</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="FatGraph.profile">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.profile">[docs]</a>
-    <span class="k">def</span> <span class="nf">profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the pair of vertex and face profiles.</span>
 
@@ -1022,7 +1022,7 @@
 
 <div class="viewcode-block" id="FatGraph.num_vertices">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.num_vertices">[docs]</a>
-    <span class="k">def</span> <span class="nf">num_vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">num_vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the number of vertices.</span>
 
@@ -1039,7 +1039,7 @@
 
 <div class="viewcode-block" id="FatGraph.num_edges">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.num_edges">[docs]</a>
-    <span class="k">def</span> <span class="nf">num_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">num_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the number of edges.</span>
 
@@ -1056,7 +1056,7 @@
 
 <div class="viewcode-block" id="FatGraph.num_faces">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.num_faces">[docs]</a>
-    <span class="k">def</span> <span class="nf">num_faces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">num_faces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the number of faces.</span>
 
@@ -1073,7 +1073,7 @@
 
 <div class="viewcode-block" id="FatGraph.vertices">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.vertices">[docs]</a>
-    <span class="k">def</span> <span class="nf">vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the vertices as a list of lists.</span>
 
@@ -1088,7 +1088,7 @@
 
 <div class="viewcode-block" id="FatGraph.edges">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.edges">[docs]</a>
-    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the edges.</span>
 
@@ -1103,7 +1103,7 @@
 
 <div class="viewcode-block" id="FatGraph.faces">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.faces">[docs]</a>
-    <span class="k">def</span> <span class="nf">faces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">faces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the faces.</span>
 
@@ -1118,7 +1118,7 @@
 
 <div class="viewcode-block" id="FatGraph.is_vertex_regular">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.is_vertex_regular">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_vertex_regular</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_vertex_regular</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return whether all vertices have the same degree.</span>
 
@@ -1138,7 +1138,7 @@
 
 <div class="viewcode-block" id="FatGraph.is_face_regular">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.is_face_regular">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_face_regular</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_face_regular</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return whether all faces have the same degree.</span>
 
@@ -1158,7 +1158,7 @@
 
 <div class="viewcode-block" id="FatGraph.is_cubic">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.is_cubic">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_cubic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_cubic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return whether all vertices have degree 3.</span>
 
@@ -1175,7 +1175,7 @@
 
 <div class="viewcode-block" id="FatGraph.is_triangulation">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.is_triangulation">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_triangulation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_triangulation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return whether the underlying graph is a triangulation.</span>
 
@@ -1192,7 +1192,7 @@
 
 <div class="viewcode-block" id="FatGraph.genus">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.genus">[docs]</a>
-    <span class="k">def</span> <span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">genus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the genus of this graph.</span>
 
@@ -1228,7 +1228,7 @@
 
 <div class="viewcode-block" id="FatGraph.euler_characteristic">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.euler_characteristic">[docs]</a>
-    <span class="k">def</span> <span class="nf">euler_characteristic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">euler_characteristic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the Euler characteristic of the associated surface.</span>
 
@@ -1256,7 +1256,7 @@
     <span class="c1"># TODO: fix your mind about the meaning of dual!!!</span>
 <div class="viewcode-block" id="FatGraph.dual">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.dual">[docs]</a>
-    <span class="k">def</span> <span class="nf">dual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the dual fat graph.</span>
 
@@ -1286,7 +1286,7 @@
 
 <div class="viewcode-block" id="FatGraph.edge_lengths_polytope">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.edge_lengths_polytope">[docs]</a>
-    <span class="k">def</span> <span class="nf">edge_lengths_polytope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">edge_lengths_polytope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the polytope of edge lengths where the input ``b`` specifies the</span>
 <span class="sd">        length of faces.</span>
@@ -1347,13 +1347,13 @@
                 <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="n">eqns</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="o">-</span><span class="n">bb</span><span class="p">]</span> <span class="o">+</span> <span class="n">l</span><span class="p">)</span>
 
-        <span class="kn">from</span> <span class="nn">sage.geometry.polyhedron.constructor</span> <span class="kn">import</span> <span class="n">Polyhedron</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.geometry.polyhedron.constructor</span><span class="w"> </span><span class="kn">import</span> <span class="n">Polyhedron</span>
         <span class="k">return</span> <span class="n">Polyhedron</span><span class="p">(</span><span class="n">ieqs</span><span class="o">=</span><span class="n">ieqs</span><span class="p">,</span> <span class="n">eqns</span><span class="o">=</span><span class="n">eqns</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="FatGraph.integral_points">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.integral_points">[docs]</a>
-    <span class="k">def</span> <span class="nf">integral_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">integral_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the edge lengths solution to the face lengths constraint ``b``.</span>
 
@@ -1401,14 +1401,14 @@
     <span class="c1"># Augmentation and reduction #</span>
     <span class="c1">##############################</span>
 
-    <span class="k">def</span> <span class="nf">_check_alloc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_alloc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">nv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="kn">import</span> <span class="nn">warnings</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;argument nv of _check_alloc is deprecated and will be removed from a future version of surface-dynamics&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">nf</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="kn">import</span> <span class="nn">warnings</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;argument nf of _check_alloc is deprecated and will be removed from a future version of surface-dynamics&quot;</span><span class="p">)</span>
 
@@ -1420,7 +1420,7 @@
            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vd</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;reallocation needed&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_set_genus0_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_genus0_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
@@ -1451,7 +1451,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_vl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vl</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_vd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 
-    <span class="k">def</span> <span class="nf">_set_genus0_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_genus0_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
@@ -1484,7 +1484,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_fl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fl</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 
-    <span class="k">def</span> <span class="nf">_set_genus1_square</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_genus1_square</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
@@ -1520,7 +1520,7 @@
 
 <div class="viewcode-block" id="FatGraph.split_face">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.split_face">[docs]</a>
-    <span class="k">def</span> <span class="nf">split_face</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">split_face</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Insert an edge between the darts ``i`` and ``j`` to split the face.</span>
 
@@ -1714,7 +1714,7 @@
 
 <div class="viewcode-block" id="FatGraph.remove_edge">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.remove_edge">[docs]</a>
-    <span class="k">def</span> <span class="nf">remove_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove an edge.</span>
 
@@ -1847,7 +1847,7 @@
 
 <div class="viewcode-block" id="FatGraph.split_vertex">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.split_vertex">[docs]</a>
-    <span class="k">def</span> <span class="nf">split_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">split_vertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Insert a new edge to split the vertex located at the darts i and j.</span>
 
@@ -1989,7 +1989,7 @@
 
 <div class="viewcode-block" id="FatGraph.contract_edge">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.contract_edge">[docs]</a>
-    <span class="k">def</span> <span class="nf">contract_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">contract_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Contract an edge between two distinct zeros.</span>
 
@@ -2117,7 +2117,7 @@
 
 <div class="viewcode-block" id="FatGraph.swap">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.swap">[docs]</a>
-    <span class="k">def</span> <span class="nf">swap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">swap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">         Modify the fat graph by multiplying the vertex and face permutations</span>
 <span class="sd">         by the transposition (i,j) respectively on left and right.</span>
@@ -2160,7 +2160,7 @@
         <span class="n">fd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span>
         <span class="n">nf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nf</span>
 
-        <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">split</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
             <span class="n">k</span> <span class="o">=</span> <span class="n">j</span>
             <span class="n">d</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">li</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
@@ -2170,7 +2170,7 @@
                 <span class="n">d</span><span class="p">[</span><span class="n">li</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
                 <span class="n">k</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
 
-        <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">l</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
                 <span class="n">min_label</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                 <span class="n">max_label</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
@@ -2220,7 +2220,7 @@
 
 <div class="viewcode-block" id="FatGraph.add_edge">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.add_edge">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Insert an isolated edge.</span>
 
@@ -2317,7 +2317,7 @@
 
 <div class="viewcode-block" id="FatGraph.add_loop">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.add_loop">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Insert an isolated loop.</span>
 
@@ -2360,7 +2360,7 @@
 
 <div class="viewcode-block" id="FatGraph.trisect_face">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.trisect_face">[docs]</a>
-    <span class="k">def</span> <span class="nf">trisect_face</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">trisect_face</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Insert a bridge</span>
 
@@ -2530,7 +2530,7 @@
 
 <div class="viewcode-block" id="FatGraph.remove_face_trisection">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.remove_face_trisection">[docs]</a>
-    <span class="k">def</span> <span class="nf">remove_face_trisection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_face_trisection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove the face trisection at ``x``.</span>
 
@@ -2649,7 +2649,7 @@
 
 <div class="viewcode-block" id="FatGraph.move_dart">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.move_dart">[docs]</a>
-    <span class="k">def</span> <span class="nf">move_dart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">move_dart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Move the dart ``i`` so that it comes right after ``j`` around the</span>
 <span class="sd">        corresponding vertex.</span>
@@ -2785,7 +2785,7 @@
 
 <div class="viewcode-block" id="FatGraph.rotate">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.rotate">[docs]</a>
-    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rotate the edge ``e`` counterclockwise.</span>
 
@@ -2858,7 +2858,7 @@
 
 <div class="viewcode-block" id="FatGraph.rotate_dual">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.rotate_dual">[docs]</a>
-    <span class="k">def</span> <span class="nf">rotate_dual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rotate_dual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rotate the edge ``e`` counterclockwise in the dual graph.</span>
 
@@ -2896,7 +2896,7 @@
     <span class="c1">######################################</span>
 
     <span class="c1"># NOTE: this is broken for non-connected surfaces!</span>
-    <span class="k">def</span> <span class="nf">_good_starts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i0</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">fix_vertices</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_faces</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_good_starts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i0</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">fix_vertices</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_faces</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a set of half edges invariant under the (yet unknown)</span>
 <span class="sd">        automorphism group.</span>
@@ -3069,7 +3069,7 @@
 
         <span class="k">return</span> <span class="n">ans</span>
 
-    <span class="k">def</span> <span class="nf">_canonical_labelling_from</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_canonical_labelling_from</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i0</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Edges gets relabelled (2i, 2i+1).</span>
 
@@ -3156,7 +3156,7 @@
         <span class="k">return</span> <span class="n">fc</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">rel</span>
 
     <span class="c1"># TODO: this is a waste! We should implement the proper partial relabeling</span>
-    <span class="k">def</span> <span class="nf">_canonical_labelling_from_if_better</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">best</span><span class="p">,</span> <span class="n">i0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_canonical_labelling_from_if_better</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">best</span><span class="p">,</span> <span class="n">i0</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        INPUT:</span>
 
@@ -3281,7 +3281,7 @@
             <span class="k">return</span> <span class="n">is_fc_better</span><span class="p">,</span> <span class="n">cur</span>
 
     <span class="c1"># NOTE: this is broken for non-connected surfaces!</span>
-    <span class="k">def</span> <span class="nf">_is_canonical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_canonical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i0</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a pair ``(answer, automorphisms)`` where answer is a boolean</span>
 <span class="sd">        that says whether this map is in canonical form and ``automorphisms`` form</span>
@@ -3339,7 +3339,7 @@
 
 <div class="viewcode-block" id="FatGraph.automorphism_vertex_action">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.automorphism_vertex_action">[docs]</a>
-    <span class="k">def</span> <span class="nf">automorphism_vertex_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">automorphism_vertex_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the action of ``g`` on vertices.</span>
 
@@ -3368,7 +3368,7 @@
 
 <div class="viewcode-block" id="FatGraph.automorphism_face_action">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.automorphism_face_action">[docs]</a>
-    <span class="k">def</span> <span class="nf">automorphism_face_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">automorphism_face_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the action of ``g`` on faces.</span>
 
@@ -3397,7 +3397,7 @@
 
 <div class="viewcode-block" id="FatGraph.automorphism_group">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.automorphism_group">[docs]</a>
-    <span class="k">def</span> <span class="nf">automorphism_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fix_vertices</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_edges</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_faces</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">automorphism_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fix_vertices</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_edges</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_faces</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        EXAMPLES::</span>
 
@@ -3488,7 +3488,7 @@
 
 <div class="viewcode-block" id="FatGraph.relabel">
 <a class="viewcode-back" href="../../../surface_topology.html#surface_dynamics.topology.fat_graph.FatGraph.relabel">[docs]</a>
-    <span class="k">def</span> <span class="nf">relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Relabel according to the permutation ``r``.</span>
 

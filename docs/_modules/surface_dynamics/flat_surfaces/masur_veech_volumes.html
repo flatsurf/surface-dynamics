@@ -6,7 +6,7 @@
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>surface_dynamics.flat_surfaces.masur_veech_volumes - surface-dynamics 0.6.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=302659d7" />
@@ -290,12 +290,12 @@
 <span class="sd">    Eskin-Okounkov-Pandharipande, etc)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">sage.all</span> <span class="kn">import</span> <span class="n">ZZ</span><span class="p">,</span> <span class="n">QQ</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">pi</span>
-<span class="kn">from</span> <span class="nn">sage.arith.misc</span> <span class="kn">import</span> <span class="n">bernoulli</span><span class="p">,</span> <span class="n">factorial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.all</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZZ</span><span class="p">,</span> <span class="n">QQ</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">pi</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.arith.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">bernoulli</span><span class="p">,</span> <span class="n">factorial</span>
 
-<span class="kn">from</span> <span class="nn">.strata</span> <span class="kn">import</span> <span class="n">Stratum</span>
-<span class="kn">from</span> <span class="nn">.abelian_strata</span> <span class="kn">import</span> <span class="n">AbelianStratum</span><span class="p">,</span> <span class="n">AbelianStratumComponent</span>
-<span class="kn">from</span> <span class="nn">.quadratic_strata</span> <span class="kn">import</span> <span class="n">QuadraticStratum</span><span class="p">,</span> <span class="n">QuadraticStratumComponent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.strata</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.abelian_strata</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbelianStratum</span><span class="p">,</span> <span class="n">AbelianStratumComponent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.quadratic_strata</span><span class="w"> </span><span class="kn">import</span> <span class="n">QuadraticStratum</span><span class="p">,</span> <span class="n">QuadraticStratumComponent</span>
 
 <span class="c1"># In the table below, the volume is normalized by dividing by zeta(2g)</span>
 <span class="c1"># These values appear in</span>
@@ -348,7 +348,7 @@
 
 <div class="viewcode-block" id="masur_veech_volume">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.masur_veech_volumes.masur_veech_volume">[docs]</a>
-<span class="k">def</span> <span class="nf">masur_veech_volume</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">masur_veech_volume</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the Masur-Veech volume of the stratum or component of stratum ``C``.</span>
 
@@ -461,7 +461,7 @@
 
 <div class="viewcode-block" id="minimal_strata_CMSZ">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.masur_veech_volumes.minimal_strata_CMSZ">[docs]</a>
-<span class="k">def</span> <span class="nf">minimal_strata_CMSZ</span><span class="p">(</span><span class="n">gmax</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">minimal_strata_CMSZ</span><span class="p">(</span><span class="n">gmax</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the volumes of `\cH(2g-2)` for the genus `g` going from ``1`` up to ``gmax-1``.</span>
 
@@ -513,7 +513,7 @@
 
 <div class="viewcode-block" id="minimal_strata_hyp">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.masur_veech_volumes.minimal_strata_hyp">[docs]</a>
-<span class="k">def</span> <span class="nf">minimal_strata_hyp</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">minimal_strata_hyp</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the volume of the hyperelliptic component H^{hyp}(2g-2).</span>
 
@@ -540,7 +540,7 @@
 
 <div class="viewcode-block" id="minimal_strata_spin_diff">
 <a class="viewcode-back" href="../../../strata.html#surface_dynamics.flat_surfaces.masur_veech_volumes.minimal_strata_spin_diff">[docs]</a>
-<span class="k">def</span> <span class="nf">minimal_strata_spin_diff</span><span class="p">(</span><span class="n">gmax</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">minimal_strata_spin_diff</span><span class="p">(</span><span class="n">gmax</span><span class="p">,</span> <span class="n">rational</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the differences of volumes between even and odd components in</span>
 <span class="sd">    H(2g-2) for the genus `g` going from ``1`` up to ``gmax-1``.</span>

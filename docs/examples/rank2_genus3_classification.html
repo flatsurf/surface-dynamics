@@ -7,7 +7,7 @@
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Filtering Possible \(\mathcal M\)-Parallel Classes - surface-dynamics 0.6.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
@@ -301,7 +301,7 @@ A database for the possible cylinder diagrams for <span class="math notranslate 
 example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">CylinderDiagram</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagram</span>
 
 <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,2)-(6) (1,4)-(3,5) (3,6)-(2,4) (5)-(0,1)&#39;</span><span class="p">)</span>
 </pre></div>
@@ -324,9 +324,9 @@ can set <code class="docutils literal notranslate"><span class="pre">singletons=
 M\)</span>-parallel class by themselves.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sage.all</span> <span class="kn">import</span> <span class="n">Partitions</span><span class="p">,</span> <span class="n">SetPartitions</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sage.all</span><span class="w"> </span><span class="kn">import</span> <span class="n">Partitions</span><span class="p">,</span> <span class="n">SetPartitions</span>
 
-<span class="k">def</span> <span class="nf">list_partitions</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">singletons</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_partitions</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">singletons</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of all ways to partition the set [1..n] into m sets.</span>
 
 <span class="sd">    If singletons==False, do not allow singleton sets.</span>
@@ -385,9 +385,9 @@ M\)</span>-parallel class by themselves.</p>
 do not satisfy this condition.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">surface_dynamics.flat_surfaces.twist_space</span> <span class="kn">import</span> <span class="n">TwistSpace</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.flat_surfaces.twist_space</span><span class="w"> </span><span class="kn">import</span> <span class="n">TwistSpace</span>
 
-<span class="k">def</span> <span class="nf">check_homologous_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">partition</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_homologous_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">partition</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Check that homologous cylinders are in the same M-parallel class</span>
 <span class="sd">    in `partition`.&quot;&quot;&quot;</span>
     <span class="n">tw</span> <span class="o">=</span> <span class="n">TwistSpace</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
@@ -403,7 +403,7 @@ do not satisfy this condition.</p>
                 <span class="k">return</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="kc">True</span>
 
-<span class="k">def</span> <span class="nf">filter_homologous_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">filter_homologous_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;rFilter out the partitions in part_list when</span>
 <span class="sd">    check_homologous_condition=False.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">part</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">part_list</span> <span class="k">if</span> <span class="n">check_homologous_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part</span><span class="p">)]</span>
@@ -478,7 +478,7 @@ examples of this.  It would be nice to have a more general function that finds
 all homology relations, and determines all such conditions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_cylinder_in_partition</span><span class="p">(</span><span class="n">partition</span><span class="p">,</span> <span class="n">cylinder</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">find_cylinder_in_partition</span><span class="p">(</span><span class="n">partition</span><span class="p">,</span> <span class="n">cylinder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Find the M-parallel class in `partition` than contains `cylinder`.</span>
 
 <span class="sd">    `partition` is a list of frozen sets.</span>
@@ -491,7 +491,7 @@ all homology relations, and determines all such conditions.</p>
     <span class="c1"># If cylinder was not found in partition</span>
     <span class="k">return</span> <span class="kc">None</span>
 
-<span class="k">def</span> <span class="nf">check_pants_condition</span><span class="p">(</span><span class="n">partition</span><span class="p">,</span> <span class="n">pants_list</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_pants_condition</span><span class="p">(</span><span class="n">partition</span><span class="p">,</span> <span class="n">pants_list</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Check the partition satisfies any homology conditions coming from</span>
 <span class="sd">    the pants in pants_list.</span>
 
@@ -517,7 +517,7 @@ all homology relations, and determines all such conditions.</p>
             <span class="k">return</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="kc">True</span>
 
-<span class="k">def</span> <span class="nf">find_generalized_pants</span><span class="p">(</span><span class="n">digraph</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_generalized_pants</span><span class="p">(</span><span class="n">digraph</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds cases when n cylinders are all only attached to the side</span>
 <span class="sd">    of a single cylinder. This is like a generalized version of a</span>
 <span class="sd">    topological pair of pants allows n pant legs.</span>
@@ -552,7 +552,7 @@ all homology relations, and determines all such conditions.</p>
             <span class="n">pants_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">pants</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pants_set</span>
 
-<span class="k">def</span> <span class="nf">filter_pants_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">filter_pants_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter out the partitions in part_list when check_pants_condition=False.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cyl_graph</span> <span class="o">=</span> <span class="n">cd</span><span class="o">.</span><span class="n">cylinder_graph</span><span class="p">()</span>
@@ -647,16 +647,16 @@ than 3 <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel cla
 <code class="docutils literal notranslate"><span class="pre">filter_standard_twist_condition</span></code> checks this condition.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sage.all</span> <span class="kn">import</span> <span class="n">block_matrix</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">MixedIntegerLinearProgram</span>
-<span class="kn">from</span> <span class="nn">sage.numerical.mip</span> <span class="kn">import</span> <span class="n">MIPSolverException</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sage.all</span><span class="w"> </span><span class="kn">import</span> <span class="n">block_matrix</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">MixedIntegerLinearProgram</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.numerical.mip</span><span class="w"> </span><span class="kn">import</span> <span class="n">MIPSolverException</span>
 
-<span class="k">def</span> <span class="nf">class_matrix</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">m_class</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">class_matrix</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">m_class</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Stacks the core curves of the cylinders in an M-parallel class into a</span>
 <span class="sd">    single matrix.&quot;&quot;&quot;</span>
     <span class="n">core_curves</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">tw</span><span class="o">.</span><span class="n">cylinder_core_curves</span><span class="p">())</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">matrix</span><span class="p">([</span><span class="n">core_curves</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">m_class</span><span class="p">]))</span>
 
-<span class="k">def</span> <span class="nf">ordered_partition</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">partition</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ordered_partition</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">partition</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Checks the standard twist condition on a specific ordered set of the</span>
 <span class="sd">    equivalence classes.&quot;&quot;&quot;</span>
     <span class="n">c0</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -683,7 +683,7 @@ than 3 <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel cla
         <span class="c1"># MIPSolverException means that no solution exists.</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-<span class="k">def</span> <span class="nf">check_standard_twist_condition</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">partition</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_standard_twist_condition</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">partition</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;If the partition does not have three equivalence classes, return</span>
 <span class="sd">    true. Otherwise, check that the equation</span>
 <span class="sd">    Σa_iα_i = Σb_jβ_j + Σc_kγ_k</span>
@@ -703,7 +703,7 @@ than 3 <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel cla
                     <span class="k">return</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="kc">True</span>
 
-<span class="k">def</span> <span class="nf">filter_standard_twist_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">filter_standard_twist_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">):</span>
     <span class="n">tw</span> <span class="o">=</span> <span class="n">TwistSpace</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">part</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">part_list</span>
                  <span class="k">if</span> <span class="n">check_standard_twist_condition</span><span class="p">(</span><span class="n">tw</span><span class="p">,</span> <span class="n">part</span><span class="p">)]</span>
@@ -818,14 +818,14 @@ condition since <span class="math notranslate nohighlight">\(C\)</span> is a lea
 <span class="math notranslate nohighlight">\(D\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_simple</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">is_simple</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if cylinder number `index` is simple.&quot;&quot;&quot;</span>
     <span class="n">cylinder</span> <span class="o">=</span> <span class="n">cd</span><span class="o">.</span><span class="n">cylinders</span><span class="p">()[</span><span class="n">index</span><span class="p">]</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cylinder</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">cylinder</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">True</span>
     <span class="k">return</span> <span class="kc">False</span>
 
-<span class="k">def</span> <span class="nf">find_leaves</span><span class="p">(</span><span class="n">digraph</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_leaves</span><span class="p">(</span><span class="n">digraph</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tuples (leaf, neighbor) for all leaves of `digraph`.</span>
 
 <span class="sd">    A leaf is a vertex such that it only has one neighbor, where we</span>
@@ -841,7 +841,7 @@ condition since <span class="math notranslate nohighlight">\(C\)</span> is a lea
             <span class="n">leaf_neighbers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">neighbors</span><span class="p">))))</span>
     <span class="k">return</span> <span class="n">leaf_neighbers</span>
 
-<span class="k">def</span> <span class="nf">check_leaf_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">partition</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_leaf_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">partition</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Check for the following condition:</span>
 <span class="sd">    If a cylinder C is only bordering another cylinder D, then C and D cannot</span>
 <span class="sd">    be in the same M-parallel class.</span>
@@ -856,7 +856,7 @@ condition since <span class="math notranslate nohighlight">\(C\)</span> is a lea
                 <span class="k">return</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="kc">True</span>
 
-<span class="k">def</span> <span class="nf">filter_leaf_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">filter_leaf_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part_list</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter out the partitions in part_list when check_leaf_condition=False.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">part</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">part_list</span> <span class="k">if</span> <span class="n">check_leaf_condition</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">part</span><span class="p">)]</span>
@@ -908,10 +908,10 @@ H(3,1)\)</span> has no rank 2 invariant subvarieties, so we would like to filter
 many partitions as possible.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">Stratum</span>
-<span class="kn">from</span> <span class="nn">surface_dynamics.databases.flat_surfaces</span> <span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
 
-<span class="k">def</span> <span class="nf">filter_partitions</span><span class="p">(</span><span class="n">cyl_diag_list</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">filter_partitions</span><span class="p">(</span><span class="n">cyl_diag_list</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;For each cylinder diagram in cyl_diag_list, list all partitions with</span>
 <span class="sd">    num_classes number of classes and filter out the invalid ones.</span>
 
@@ -1013,7 +1013,7 @@ least 2 <span class="math notranslate nohighlight">\(\cal M\)</span>-parallel cl
 subvarieties in some genus 3 strata.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">list_cylinder_classes</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">num_cylinders</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">list_cylinder_classes</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">num_cylinders</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Runs filter_partitions on every cylinder diagram with num_cylinders</span>
 <span class="sd">    number of cylinders in a stratum H.&quot;&quot;&quot;</span>
     <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">()</span>

@@ -7,7 +7,7 @@
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Database of cylinder diagrams and quadratic permutations - surface-dynamics 0.6.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
@@ -306,9 +306,9 @@ differentiate</p></li>
 “stratum-component-ncyls”. As an example, the list of 3-cylinder diagrams in
 the odd component of H(2,2) is named “2_2-odd-3”.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">Stratum</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.databases.flat_surfaces</span> <span class="kn">import</span> <span class="n">CylinderDiagrams</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Stratum</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
@@ -343,8 +343,8 @@ stratum with given number of cylinders.</p>
 <dd><p>Returns the name of the file for the given component <code class="docutils literal notranslate"><span class="pre">comp</span></code> and the
 given of number of cylinders <code class="docutils literal notranslate"><span class="pre">ncyls</span></code>.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">Stratum</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.databases.flat_surfaces</span> <span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)</span>
 <span class="s1">&#39;cyl_diags-4-odd-3&#39;</span>
@@ -365,9 +365,9 @@ given of number of cylinders <code class="docutils literal notranslate"><span cl
 <li><p><code class="docutils literal notranslate"><span class="pre">ncyls</span></code> - number of cylinders</p></li>
 </ul>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">Stratum</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.databases.flat_surfaces</span> <span class="kn">import</span> <span class="n">CylinderDiagrams</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">(),</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
@@ -391,9 +391,9 @@ given of number of cylinders <code class="docutils literal notranslate"><span cl
 <span class="sig-name descname"><span class="pre">has_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.has_component"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_component" title="Link to this definition">¶</a></dt>
 <dd><p>Test whether the database has the component <code class="docutils literal notranslate"><span class="pre">comp</span></code>.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">Stratum</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.databases.flat_surfaces</span> <span class="kn">import</span> <span class="n">CylinderDiagrams</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">tempfile</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">(</span><span class="n">tmp_dir</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -426,10 +426,10 @@ given of number of cylinders <code class="docutils literal notranslate"><span cl
 <span class="sig-name descname"><span class="pre">has_stratum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.has_stratum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_stratum" title="Link to this definition">¶</a></dt>
 <dd><p>Test whether the database contains the data for a given stratum.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">Stratum</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.databases.flat_surfaces</span> <span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
 
-<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">(),</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
@@ -461,9 +461,9 @@ given of number of cylinders <code class="docutils literal notranslate"><span cl
 <span class="sig-name descname"><span class="pre">list_strata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#CylinderDiagrams.list_strata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.list_strata" title="Link to this definition">¶</a></dt>
 <dd><p>List available strata in that database.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">Stratum</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.databases.flat_surfaces</span> <span class="kn">import</span> <span class="n">CylinderDiagrams</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">(),</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
@@ -490,8 +490,8 @@ given of number of cylinders <code class="docutils literal notranslate"><span cl
 </pre></div>
 </div>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">Stratum</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.databases.flat_surfaces</span> <span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">(),</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># random</span>
@@ -528,14 +528,14 @@ given of number of cylinders <code class="docutils literal notranslate"><span cl
 <span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#GenericRepertoryDatabase.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.clean" title="Link to this definition">¶</a></dt>
 <dd><p>Clean the database.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="n">Stratum</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.databases.flat_surfaces</span> <span class="kn">import</span> <span class="n">CylinderDiagrams</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">tempfile</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
 
 <span class="n">sage</span><span class="p">:</span> <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">(</span><span class="n">tmp_dir</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="n">sage</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
 <span class="p">[</span><span class="s1">&#39;cyl_diags-4-hyp-1&#39;</span><span class="p">,</span>
  <span class="s1">&#39;cyl_diags-4-hyp-2&#39;</span><span class="p">,</span>
@@ -568,9 +568,9 @@ Abelian differentials.</p>
 <span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.count" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the number of twins for that stratum.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 
-<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.databases.flat_surfaces</span> <span class="kn">import</span> <span class="n">IrregularComponentTwins</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">IrregularComponentTwins</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">IrregularComponentTwins</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">Stratum</span><span class="p">([</span><span class="mi">12</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Q</span><span class="p">))</span>
@@ -591,8 +591,8 @@ Abelian differentials.</p>
 <span class="sig-name descname"><span class="pre">filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.filename" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the name of the file for the given component.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.databases.flat_surfaces</span> <span class="kn">import</span> <span class="n">IrregularComponentTwins</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">IrregularComponentTwins</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">IrregularComponentTwins</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">12</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 <span class="s1">&#39;twins-12-irr&#39;</span>
@@ -611,9 +611,9 @@ Abelian differentials.</p>
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.get" title="Link to this definition">¶</a></dt>
 <dd><p>Get the list of twins for the stratum of quadratic differentials <code class="docutils literal notranslate"><span class="pre">stratum</span></code>.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 
-<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.databases.flat_surfaces</span> <span class="kn">import</span> <span class="n">IrregularComponentTwins</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">IrregularComponentTwins</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">IrregularComponentTwins</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">l</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -629,9 +629,9 @@ Abelian differentials.</p>
 <span class="sig-name descname"><span class="pre">has_stratum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.has_stratum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.has_stratum" title="Link to this definition">¶</a></dt>
 <dd><p>Test whether the component is in the database.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 
-<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.databases.flat_surfaces</span> <span class="kn">import</span> <span class="n">IrregularComponentTwins</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">IrregularComponentTwins</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">IrregularComponentTwins</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">has_stratum</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">12</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 <span class="kc">True</span>
@@ -644,7 +644,7 @@ Abelian differentials.</p>
 <span class="sig-name descname"><span class="pre">list_strata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surface_dynamics/databases/flat_surfaces.html#IrregularComponentTwins.list_strata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.list_strata" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the list of components for which the list of twins is stored.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">surface_dynamics.databases.flat_surfaces</span> <span class="kn">import</span> <span class="n">IrregularComponentTwins</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">IrregularComponentTwins</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">G</span> <span class="o">=</span> <span class="n">IrregularComponentTwins</span><span class="p">()</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">G</span><span class="o">.</span><span class="n">list_strata</span><span class="p">()</span>
 <span class="p">[</span><span class="n">Q_3</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">Q_3</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">Q_4</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span> <span class="n">Q_3</span><span class="p">(</span><span class="mi">3</span><span class="o">^</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">Q_4</span><span class="p">(</span><span class="mi">6</span><span class="o">^</span><span class="mi">2</span><span class="p">),</span> <span class="n">Q_4</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">Q_4</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="o">^</span><span class="mi">2</span><span class="p">),</span> <span class="n">Q_4</span><span class="p">(</span><span class="mi">3</span><span class="o">^</span><span class="mi">4</span><span class="p">)]</span>

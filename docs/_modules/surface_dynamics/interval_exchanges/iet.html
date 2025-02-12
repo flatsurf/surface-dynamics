@@ -6,7 +6,7 @@
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>surface_dynamics.interval_exchanges.iet - surface-dynamics 0.6.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=302659d7" />
@@ -335,20 +335,20 @@
 <span class="c1">#                  https://www.gnu.org/licenses/</span>
 <span class="c1">#*****************************************************************************</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
-<span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">range</span><span class="p">,</span> <span class="nb">map</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="nb">zip</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">six.moves</span><span class="w"> </span><span class="kn">import</span> <span class="nb">range</span><span class="p">,</span> <span class="nb">map</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="nb">zip</span>
 
-<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
-<span class="kn">from</span> <span class="nn">sage.modules.free_module_element</span> <span class="kn">import</span> <span class="n">free_module_element</span>
-<span class="kn">from</span> <span class="nn">sage.rings.all</span> <span class="kn">import</span> <span class="n">ZZ</span><span class="p">,</span> <span class="n">QQ</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">copy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.modules.free_module_element</span><span class="w"> </span><span class="kn">import</span> <span class="n">free_module_element</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sage.rings.all</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZZ</span><span class="p">,</span> <span class="n">QQ</span>
 
-<span class="kn">from</span> <span class="nn">.template</span> <span class="kn">import</span> <span class="n">side_conversion</span><span class="p">,</span> <span class="n">interval_conversion</span>
-<span class="kn">from</span> <span class="nn">.labelled</span> <span class="kn">import</span> <span class="n">LabelledPermutationIET</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.template</span><span class="w"> </span><span class="kn">import</span> <span class="n">side_conversion</span><span class="p">,</span> <span class="n">interval_conversion</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.labelled</span><span class="w"> </span><span class="kn">import</span> <span class="n">LabelledPermutationIET</span>
 
 
 <div class="viewcode-block" id="wedge">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.wedge">[docs]</a>
-<span class="k">def</span> <span class="nf">wedge</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">wedge</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the wedge of the vectors ``u`` and ``v``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -361,7 +361,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation">[docs]</a>
-<span class="k">class</span> <span class="nc">IntervalExchangeTransformation</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IntervalExchangeTransformation</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Interval exchange transformation</span>
 
@@ -416,7 +416,7 @@
 <span class="sd">        ...</span>
 <span class="sd">        ValueError: lengths must be non-negative, got -1.0</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">permutation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_ring</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">permutation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_ring</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        INPUT:</span>
 
@@ -432,7 +432,7 @@
 <span class="sd">            sage: p == loads(dumps(p))</span>
 <span class="sd">            True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">sage.modules.free_module_element</span> <span class="kn">import</span> <span class="n">free_module_element</span> <span class="k">as</span> <span class="n">vector</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.modules.free_module_element</span><span class="w"> </span><span class="kn">import</span> <span class="n">free_module_element</span> <span class="k">as</span> <span class="n">vector</span>
 
         <span class="k">if</span> <span class="n">permutation</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">lengths</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_permutation</span> <span class="o">=</span> <span class="kc">None</span>
@@ -457,13 +457,13 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.vector_space">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.vector_space">[docs]</a>
-    <span class="k">def</span> <span class="nf">vector_space</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">vector_space</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_space</span></div>
 
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.base_ring">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.base_ring">[docs]</a>
-    <span class="k">def</span> <span class="nf">base_ring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">base_ring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the base ring over which the lengths are defined</span>
 
@@ -494,7 +494,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.permutation">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.permutation">[docs]</a>
-    <span class="k">def</span> <span class="nf">permutation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">permutation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the permutation associated to this iet.</span>
 
@@ -516,7 +516,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.length">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.length">[docs]</a>
-    <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the length of a subinterval, or if ``label`` is None the total length.</span>
 
@@ -541,7 +541,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.lengths">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.lengths">[docs]</a>
-    <span class="k">def</span> <span class="nf">lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the list of lengths associated to this iet.</span>
 
@@ -563,7 +563,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.translations">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.translations">[docs]</a>
-    <span class="k">def</span> <span class="nf">translations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">translations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the vector of translations operated on each intervals.</span>
 
@@ -613,7 +613,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.sah_arnoux_fathi_invariant">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.sah_arnoux_fathi_invariant">[docs]</a>
-    <span class="k">def</span> <span class="nf">sah_arnoux_fathi_invariant</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sah_arnoux_fathi_invariant</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the Sah-Arnoux-Fathi invariant</span>
 
@@ -732,7 +732,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.normalize">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.normalize">[docs]</a>
-    <span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a interval exchange transformation of normalized lengths.</span>
 
@@ -778,7 +778,7 @@
             <span class="k">return</span> <span class="n">res</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A representation string.</span>
 
@@ -799,7 +799,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.is_identity">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.is_identity">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_identity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_identity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if self is the identity.</span>
 
@@ -825,7 +825,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.inverse">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.inverse">[docs]</a>
-    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the inverse iet.</span>
 
@@ -866,7 +866,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.erase_marked_points">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.erase_marked_points">[docs]</a>
-    <span class="k">def</span> <span class="nf">erase_marked_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">erase_marked_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove the marked points.</span>
 
@@ -1172,7 +1172,7 @@
         <span class="k">return</span> <span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">newlengths</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Composition of iet.</span>
 
@@ -1263,7 +1263,7 @@
             <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">IntervalExchangeTransformation</span><span class="p">)</span> <span class="ow">and</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">length</span><span class="p">())</span>
 
-        <span class="kn">from</span> <span class="nn">.labelled</span> <span class="kn">import</span> <span class="n">LabelledPermutationIET</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.labelled</span><span class="w"> </span><span class="kn">import</span> <span class="n">LabelledPermutationIET</span>
 
         <span class="n">other_sg</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">range_singularities</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
         <span class="n">self_sg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">domain_singularities</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
@@ -1329,7 +1329,7 @@
         <span class="n">p</span> <span class="o">=</span> <span class="n">LabelledPermutationIET</span><span class="p">((</span><span class="n">top_interval</span><span class="p">,</span><span class="n">bottom_interval</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">l_lengths</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tests equality</span>
 
@@ -1346,7 +1346,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_permutation</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_permutation</span> <span class="ow">and</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_lengths</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_lengths</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tests difference</span>
 
@@ -1365,7 +1365,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.recoding">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.recoding">[docs]</a>
-    <span class="k">def</span> <span class="nf">recoding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">recoding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Recode this interval exchange transformation on the words of length</span>
 <span class="sd">        ``n``.</span>
@@ -1434,7 +1434,7 @@
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">top</span><span class="p">):</span>
             <span class="n">itop</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
 
-        <span class="k">def</span> <span class="nf">key</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">key</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
             <span class="k">return</span> <span class="p">[</span><span class="n">itop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
         <span class="n">top</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">cuts</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
         <span class="n">lengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="n">top</span><span class="p">]</span>
@@ -1442,14 +1442,14 @@
         <span class="n">bot</span> <span class="o">=</span> <span class="n">cuts</span>
         <span class="n">bot</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">unrank</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="n">bot</span><span class="p">]</span>
 
-        <span class="kn">from</span> <span class="nn">.labelled</span> <span class="kn">import</span> <span class="n">LabelledPermutationIET</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.labelled</span><span class="w"> </span><span class="kn">import</span> <span class="n">LabelledPermutationIET</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">LabelledPermutationIET</span><span class="p">((</span><span class="n">top</span><span class="p">,</span><span class="n">bot</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">IntervalExchangeTransformation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">lengths</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.in_which_interval">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.in_which_interval">[docs]</a>
-    <span class="k">def</span> <span class="nf">in_which_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">in_which_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the letter for which x is in this interval.</span>
 
@@ -1515,7 +1515,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.singularities">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.singularities">[docs]</a>
-    <span class="k">def</span> <span class="nf">singularities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">singularities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The list of singularities of &#39;T&#39; and &#39;T^{-1}&#39;.</span>
 
@@ -1537,7 +1537,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.domain_singularities">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.domain_singularities">[docs]</a>
-    <span class="k">def</span> <span class="nf">domain_singularities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">domain_singularities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the list of singularities of T</span>
 
@@ -1562,7 +1562,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.range_singularities">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.range_singularities">[docs]</a>
-    <span class="k">def</span> <span class="nf">range_singularities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">range_singularities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the list of singularities of `T^{-1}`</span>
 
@@ -1584,7 +1584,7 @@
         <span class="k">return</span> <span class="n">l</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the image of value by this transformation</span>
 
@@ -1616,7 +1616,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.rauzy_move">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.rauzy_move">[docs]</a>
-    <span class="k">def</span> <span class="nf">rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_on_saddles</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_on_saddles</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Performs a Rauzy move.</span>
 
@@ -1720,7 +1720,7 @@
                 <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">winner</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">sage.combinat.words.morphism</span> <span class="kn">import</span> <span class="n">WordMorphism</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sage.combinat.words.morphism</span><span class="w"> </span><span class="kn">import</span> <span class="n">WordMorphism</span>
             <span class="k">return</span> <span class="n">res</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">WordMorphism</span><span class="p">(</span><span class="n">towers</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">res</span></div>
@@ -1728,7 +1728,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.backward_rauzy_move">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.backward_rauzy_move">[docs]</a>
-    <span class="k">def</span> <span class="nf">backward_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">backward_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a new interval exchange transformation obtained by performing a backward Rauzy move.</span>
 
@@ -1762,7 +1762,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.zorich_move">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.zorich_move">[docs]</a>
-    <span class="k">def</span> <span class="nf">zorich_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">zorich_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Performs a Rauzy move.</span>
 
@@ -1848,7 +1848,7 @@
             <span class="k">return</span> <span class="n">res</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">side</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">error_on_saddles</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">side</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">error_on_saddles</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform a Rauzy move inplace</span>
 
@@ -1965,7 +1965,7 @@
 
         <span class="k">return</span> <span class="n">winner</span><span class="p">,</span> <span class="n">abc</span>
 
-    <span class="k">def</span> <span class="nf">_backward_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_backward_rauzy_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">winner</span><span class="p">,</span> <span class="n">side</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Inplace backward Rauzy move.</span>
 
@@ -2002,7 +2002,7 @@
         <span class="n">loser_interval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_permutation</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">winner</span><span class="p">][</span><span class="n">side</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lengths</span><span class="p">[</span><span class="n">winner_interval</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lengths</span><span class="p">[</span><span class="n">loser_interval</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_zorich_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">side</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_zorich_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">side</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Performs a Zorich move (acceleration of Rauzy) inplace</span>
 
@@ -2129,7 +2129,7 @@
 
         <span class="k">return</span> <span class="n">winner_letter</span><span class="p">,</span> <span class="n">k</span><span class="o">*</span><span class="n">m</span> <span class="o">+</span> <span class="n">r</span>
 
-    <span class="k">def</span> <span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a copy of this interval exchange transformation.</span>
 
@@ -2153,7 +2153,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.plot_function">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.plot_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">d</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">d</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a plot of the interval exchange transformation as a</span>
 <span class="sd">        function.</span>
@@ -2174,8 +2174,8 @@
 <span class="sd">            sage: t.plot_function(rgbcolor=(0,1,0))    # not tested (problem with matplotlib font cache)</span>
 <span class="sd">            Graphics object consisting of 4 graphics primitives</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">sage.plot.plot</span> <span class="kn">import</span> <span class="n">Graphics</span>
-        <span class="kn">from</span> <span class="nn">sage.plot.line</span> <span class="kn">import</span> <span class="n">line2d</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.plot.plot</span><span class="w"> </span><span class="kn">import</span> <span class="n">Graphics</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.plot.line</span><span class="w"> </span><span class="kn">import</span> <span class="n">line2d</span>
 
         <span class="n">G</span> <span class="o">=</span> <span class="n">Graphics</span><span class="p">()</span>
         <span class="n">l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">singularities</span><span class="p">()</span>
@@ -2190,7 +2190,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.plot_two_intervals">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.plot_two_intervals">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot_two_intervals</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_two_intervals</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
         <span class="n">vertical_alignment</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span>
@@ -2226,13 +2226,13 @@
 <span class="sd">            sage: t.plot_two_intervals() # random output due to matplotlib deprecation warnings with SageMath &lt;9.1</span>
 <span class="sd">            Graphics object consisting of 8 graphics primitives</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">sage.plot.plot</span> <span class="kn">import</span> <span class="n">Graphics</span>
-        <span class="kn">from</span> <span class="nn">sage.plot.line</span> <span class="kn">import</span> <span class="n">line2d</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.plot.plot</span><span class="w"> </span><span class="kn">import</span> <span class="n">Graphics</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.plot.line</span><span class="w"> </span><span class="kn">import</span> <span class="n">line2d</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">sage.plot.plot</span> <span class="kn">import</span> <span class="n">text</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sage.plot.plot</span><span class="w"> </span><span class="kn">import</span> <span class="n">text</span>
         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">sage.plot.text</span> <span class="kn">import</span> <span class="n">text</span>
-        <span class="kn">from</span> <span class="nn">sage.plot.colors</span> <span class="kn">import</span> <span class="n">rainbow</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sage.plot.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">text</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.plot.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">rainbow</span>
 
         <span class="n">G</span> <span class="o">=</span> <span class="n">Graphics</span><span class="p">()</span>
 
@@ -2290,7 +2290,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.plot_towers">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.plot_towers">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot_towers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">colors</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_towers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">colors</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot the towers of this interval exchange obtained from Rauzy induction.</span>
 
@@ -2317,13 +2317,13 @@
         <span class="n">lengths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">length</span><span class="p">)</span> <span class="k">for</span> <span class="n">length</span> <span class="ow">in</span> <span class="n">T</span><span class="o">.</span><span class="n">lengths</span><span class="p">()]</span>
 
         <span class="k">if</span> <span class="n">colors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">sage.plot.colors</span> <span class="kn">import</span> <span class="n">rainbow</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sage.plot.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">rainbow</span>
             <span class="n">colors</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span><span class="n">z</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span><span class="n">z</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">rainbow</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)))}</span>
 
-        <span class="kn">from</span> <span class="nn">sage.plot.graphics</span> <span class="kn">import</span> <span class="n">Graphics</span>
-        <span class="kn">from</span> <span class="nn">sage.plot.line</span> <span class="kn">import</span> <span class="n">line2d</span>
-        <span class="kn">from</span> <span class="nn">sage.plot.polygon</span> <span class="kn">import</span> <span class="n">polygon2d</span>
-        <span class="kn">from</span> <span class="nn">sage.plot.text</span> <span class="kn">import</span> <span class="n">text</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.plot.graphics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Graphics</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.plot.line</span><span class="w"> </span><span class="kn">import</span> <span class="n">line2d</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.plot.polygon</span><span class="w"> </span><span class="kn">import</span> <span class="n">polygon2d</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sage.plot.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">text</span>
         <span class="n">G</span> <span class="o">=</span> <span class="n">Graphics</span><span class="p">()</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">px</span>
         <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">pi</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
@@ -2355,7 +2355,7 @@
 
 <div class="viewcode-block" id="IntervalExchangeTransformation.show">
 <a class="viewcode-back" href="../../../interval_exchanges/iet.html#surface_dynamics.interval_exchanges.iet.IntervalExchangeTransformation.show">[docs]</a>
-    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shows a picture of the interval exchange transformation</span>
 
