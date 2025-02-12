@@ -74,7 +74,11 @@ sagemath-102-minimal = ["sagemath-102", "pplpy"]
 sagemath-102-all = ["sagemath-102", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
 sagemath-103-minimal = ["sagemath-103", "pplpy"]
 sagemath-103-all = ["sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
-dev = ["dev", "lint", "doc", "sagemath-103", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-104-minimal = ["sagemath-104", "pplpy"]
+sagemath-104-all = ["sagemath-104", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-105-minimal = ["sagemath-105", "pplpy"]
+sagemath-105-all = ["sagemath-105", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+dev = ["dev", "lint", "doc", "sagemath-105", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
 
 ##############
 # ACTIVATION #
@@ -292,3 +296,9 @@ sagelib = "10.2"
 
 [tool.pixi.feature.sagemath-103.dependencies]
 sagelib = "10.3"
+
+[tool.pixi.feature.sagemath-104.dependencies]
+sagelib = "10.4"
+
+[tool.pixi.feature.sagemath-105.dependencies]
+sagelib = "10.5"
