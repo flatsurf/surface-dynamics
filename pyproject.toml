@@ -268,37 +268,37 @@ matplotlib-base = "*"
 more-itertools = "*"
 
 [tool.pixi.feature.sagemath-93.dependencies]
-sagelib = "9.3"
+sagelib = "==9.3"
 
 [tool.pixi.feature.sagemath-94.dependencies]
-sagelib = "9.4"
+sagelib = "==9.4"
 
 [tool.pixi.feature.sagemath-95.dependencies]
-sagelib = "9.5"
+sagelib = "==9.5"
 
 [tool.pixi.feature.sagemath-96.dependencies]
-sagelib = "9.6"
+sagelib = "==9.6"
 
 [tool.pixi.feature.sagemath-97.dependencies]
-sagelib = "9.7"
+sagelib = "==9.7"
 
 [tool.pixi.feature.sagemath-98.dependencies]
-sagelib = "9.8"
+sagelib = "==9.8"
 
 [tool.pixi.feature.sagemath-100.dependencies]
-sagelib = "10.0"
+sagelib = "==10.0"
 
 [tool.pixi.feature.sagemath-101.dependencies]
-sagelib = "10.1"
+sagelib = "==10.1"
 
 [tool.pixi.feature.sagemath-102.dependencies]
-sagelib = "10.2"
+sagelib = "==10.2"
 
 [tool.pixi.feature.sagemath-103.dependencies]
-sagelib = "10.3"
+sagelib = "==10.3"
 
 [tool.pixi.feature.sagemath-104.dependencies]
-sagelib = "10.4"
+sagelib = "==10.4"
 
 [tool.pixi.feature.sagemath-105.dependencies]
-sagelib = "10.5"
+sagelib = "==10.5"
