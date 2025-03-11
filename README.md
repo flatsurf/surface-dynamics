@@ -10,7 +10,7 @@
   <a href="https://doi.org/10.5281/zenodo.13356803"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.13356803.svg" alt="DOI 10.5281/zenodo.13356803"></a>
 </p>
 
-<p align="center">TODO</p>
+<p align="center">Dynamics with Surfaces</p>
 <hr>
 
 The ``surface-dynamics`` package for [SageMath](https://www.sagemath.org)
