@@ -140,6 +140,29 @@ The command below checks that ``t4`` is indeed self induced
 print(t4.normalize() == t5.normalize())
 ```
 
+## Strata of Abelian and quadratic differentials
+
+The connected components of the graph obtained by applying Rauzy induction are known
+to be in bijection with connected components of the moduli space of Abelian differentials
+(for permutations) and quadratic differentials (for generalized permutations). This follows
+from work of Veech, Kontsevich-Zorich, Boissy. In `surface-dynamics` both ways of the
+correspondence are implemented.
+
+From a permutation or a generalized permutation, you can obtain the associated
+stratum or connected component of stratum
+```{code-cell}
+iet.Permutation("a b c d", "d c b a").stratum()
+iet.Permutation("a b c d e f g", "f d g c e b a").stratum_component()
+iet.GeneralizedPermutation("a a", "b b c c d d e e").stratum()
+iet.GeneralizedPermutation("a b a c d e f g", "d g e h c b f h").stratum_component()
+```
+
+And given a stratum, you can obtain a permutation or generalized permutation
+```{code-cell}
+Stratum([4], k=1).odd_component().permutation_representative()
+Stratum([12], k=2).irregular_component().permutation_representative()
+```
+
 ## Suspension
 
 [sage-flatsurf](https://flatsurf.github.io/sage-flatsurf/) is a Python library for translation
@@ -178,6 +201,32 @@ One feature of ``intervalxt`` is that it can certify that an iet has no periodic
 u2.boshernitzanNoPeriodicTrajectory()
 ```
 
+## Lyapunov exponents
+
+Approximations of the Lyapunov exponents of the Kontsevich-Zorich cocycle can be computed in various
+situations. For example on connected component of Abelian strata
+```{code-cell}
+H4_odd = Stratum([4]).odd_component()
+H4_odd.lyapunov_exponents()
+```
+or quadratic differentials
+```{code-cell}
+Q12_reg = Stratum([12], k=2).regular_component()
+Q12_reg.lyapunov_exponents_H_plus()
+Q12_reg.lyapunov_exponents_H_minus()
+```
+
+More generally, one can compute the Lyapunov exponents of the restriction of
+the Kontsevich-Zorich cocycle in a covering locus to any isotypic invariant
+subbundle
+```{code-cell}
+p = iet.GeneralizedPermutation("a a", "b b c c d d e e")
+c = p.cover(["(1,2,3,4)", "(1,4,3,2)", "(1,2,3,4)", "()", "()"])
+print(c.stratum())
+for (lexp, char) in c.lyapunov_exponents_H_plus(isotypic_decomposition=True, return_char=True):
+....:     print("{:15}: {}".format(char, lexp))
+```
+
 ## Other features
 
 This short tour did not exhaust all the possibilities of ``surface-dynamics``, in particular
@@ -185,8 +234,6 @@ This short tour did not exhaust all the possibilities of ``surface-dynamics``, i
 - iet statistics (in `surface_dynamics.interval_exchanges.integer_iet`)
 
 - linear families of iet (in `surface_dynamics.interval_exchanges.iet_family`)
-
-- coverings and Lyapunov exponents of the Kontsevich-Zorich cocycle
 
 These topics might be included in later versions of this document.
 

@@ -34,10 +34,14 @@ jobs:
           - { environment: "sagemath-102-all", on: "ubuntu-24.04" }
           - { environment: "sagemath-103-minimal", on: "ubuntu-24.04" }
           - { environment: "sagemath-103-all", on: "ubuntu-24.04" }
+          - { environment: "sagemath-104-minimal", on: "ubuntu-24.04" }
+          - { environment: "sagemath-104-all", on: "ubuntu-24.04" }
+          - { environment: "sagemath-105-minimal", on: "ubuntu-24.04" }
+          - { environment: "sagemath-105-all", on: "ubuntu-24.04" }
     steps:
       - uses: actions/checkout@v4
         with: { submodules: recursive }
-      - uses: prefix-dev/setup-pixi@v0.8.1
+      - uses: prefix-dev/setup-pixi@v0.8.3
         with: { pixi-version: v0.39.0 }
       - run: pixi run -e ${{ matrix.environment }} test-doctest-long
       - run: pixi run -e ${{ matrix.environment }} test-pytest
