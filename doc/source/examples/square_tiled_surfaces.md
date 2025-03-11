@@ -33,6 +33,7 @@ print(o.u())
 
 Some well-know square-tiled surfaces are ready-made
 ```{code-cell}
+from surface_dynamics import origamis
 ew = origamis.EierlegendeWollmilchsau()
 print(ew)
 print(ew.r())
@@ -41,6 +42,7 @@ print(ew.u())
 and it is also possible to get representative or exhaustive list in a given stratum
 or stratum component
 ```{code-cell}
+from surface_dynamics import Stratum
 H2_hyp = Stratum([2]).hyperelliptic_component()
 print(H2_hyp.origamis(4))
 ```
@@ -53,7 +55,7 @@ are available. The stratum and stratum component
 print(o.stratum())
 print(o.stratum_component())
 print(ew.stratum())
-print(ew.stratum_component()
+print(ew.stratum_component())
 ```
 
 ## Veech group and Teichmüller curve
@@ -77,13 +79,13 @@ through the origamis it contains. For example we study the distribution of the
 number of cylinders in all Teichmüller curves of the component (genus 3) with
 11 squares
 ```{code-cell}
-cc = AbelianStratum(4).odd_component()
+cc = Stratum([4]).odd_component()
 for T in cc.arithmetic_teichmueller_curves(11):
-....:     cyls = [0]*3
-....:     for o in T:
-....:         n = len(o.cylinder_decomposition())
-....:         cyls[n-1] += 1
-....:     print cyls
+    cyls = [0]*3
+    for o in T:
+        n = len(o.cylinder_decomposition())
+        cyls[n-1] += 1
+    print(cyls)
 ```
 
 ## The origami database
@@ -94,7 +96,7 @@ database and can also be read from other programs.
 ```{code-cell}
 from surface_dynamics import OrigamiDatabase
 D = OrigamiDatabase()
-q = D.query(stratum=AbelianStratum(2), nb_squares=9)
+q = D.query(stratum=Stratum([2]), nb_squares=9)
 print(q.number_of())
 o1,o2 = q.list()
 print(o1)
@@ -107,9 +109,9 @@ D.cols()
 ```
 Each of these columns is available for display
 ```{code-cell}
-q = D.query(stratum=AbelianStratum(2))
+q = D.query(stratum=Stratum([2]))
 D = OrigamiDatabase()
-q = D.query(('stratum', '=', AbelianStratum(2)), ('nb_squares', '<', 15))
+q = D.query(('stratum', '=', Stratum([2])), ('nb_squares', '<', 15))
 q.cols('nb_squares', 'veech_group_level', 'teich_curve_nu2', 'teich_curve_nu3', 'teich_curve_genus', 'monodromy_name')
 q.show()
 ```
