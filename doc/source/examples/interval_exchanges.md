@@ -159,6 +159,8 @@ iet.GeneralizedPermutation("a b a c d e f g", "d g e h c b f h").stratum_compone
 
 And given a stratum, you can obtain a permutation or generalized permutation
 ```{code-cell}
+from surface_dynamics import Stratum
+
 Stratum([4], k=1).odd_component().permutation_representative()
 Stratum([12], k=2).irregular_component().permutation_representative()
 ```
