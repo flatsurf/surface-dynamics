@@ -12,7 +12,7 @@ kernelspec:
   name: sagemath
 ---
 
-# Square-tiled surfaces
+# Square-tiled Surfaces
 
 Square-tiled surfaces or orgamis are translation surfaces obtained by gluing unit squares
 by translation.

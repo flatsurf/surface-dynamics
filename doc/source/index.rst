@@ -1,79 +1,95 @@
-Welcome to the surface-dynamics documentation!
-==============================================
+surface-dynamics: Dynamics with Surfaces
+========================================
+
+The surface-dynamics package for `SageMath <https://www.sagemath.org>`_
+provides functionality related to interval exchange transformations,
+translation surfaces, mapping classes and more. It is based on SageMath and
+relies heavily on:
+
+* `GMP <https://gmplib.org/>`_ for arbitrary precision arithmetic
+* `PARI/GP <https://pari.math.u-bordeaux.fr/>`_ for number field computations
+* `GAP <https://www.gap-system.org/>`_ for finite groups representation and permutation groups
+* `PPL <https://www.bugseng.com/ppl>`_ (Parma Polyhedra Library) and
+  `LattE <https://www.math.ucdavis.edu/~latte/>`_ (Lattice point Enumeration) for
+  polytope computations
+
+The development of surface-dynamics is coordinated on GitHub at https://github.com/flatsurf/surface-dynamics.
 
 Installation
 ------------
 
-The basic way to install the surface-dynamics package is via the pip
-Python installer that comes with your `SageMath <https://www.sagemath.org/>`_
-installation.
+The preferred way to install software should be to use your package manager
+(e.g. ``apt`` on Debian or Ubuntu, ``pacman`` on Arch Linux, ``brew`` on macOS,
+etc). However, as of this writing, surface-dynimacs has not been picked up by `any
+of the major distributions yet <https://repology.org/project/python:surface-dynamics/packages>`_.
 
-If you installed Sage from a downloaded binary (including the Cygwin version
-on Windows) or if you compiled Sage from source, then run::
+We therefore recommend to install the entire flatsurf suite from the
+sage-flatsurf `Releases Page
+<https://github.com/flatsurf/sage-flatsurf/releases>`_.
 
-    $ sage -pip install surface-dynamics
+Detailed installation instructions:
 
-You might want (or need) to provide the option ``--user`` to this command in order
-to install surface-dynamics in your home directory and keep intact your SageMath
-installation.
+* :external+sage-flatsurf:ref:`Install the flatsurf suite with the pixi tarball <installation-tarball>` for Linux and macOS (recommended)
+* :external+sage-flatsurf:ref:`Install the flatsurf suite with the installer <installation-installer>` for Windows (recommended)
+* :external+sage-flatsurf:ref:`Install with Conda <installation-conda>`
+* :ref:`Install into an existing SageMath source build <installation-sagemath>`
+* :ref:`Install with pip <installation-pip>`
 
-In case you use the sagemath package in a Debian or Ubuntu system you need to perform
-a two step installation::
-
-    $ source /usr/share/sagemath/bin/sage-env
-    $ sage -pip install surface-dynamics --user
-
-If you use the sagemath package from Archlinux, run::
-
-    $ pip3 install git+https://github.com/flatsurf/surface-dynamics --user
-
-Other sources of information:
-
-- short tutorial: https://www.labri.fr/perso/vdelecro/flatsurf.html
-
-- development webpage (including source code):
-  https://github.com/flatsurf/surface-dynamics
-
-Walk through
-------------
+If you are planning to work on the surface-dynamics source code, you can also
+build surface-dynamics from source. For this, please have a look at our
+:ref:`Developer's Guide <developers-guide>`.
 
 .. toctree::
-    :maxdepth: 1
+   :hidden:
 
-    examples/interval_exchanges
-    examples/square_tiled_surfaces
-    examples/rank2_genus3_classification
+   install
+   developer
 
-Module documentation
---------------------
+A Tour of surface-dynamics
+--------------------------
 
-.. toctree::
-    :maxdepth: 2
-
-    strata
-    surface_topology
-    origamis
-    interval_exchanges/index
-    database
-    topological_recursion/index
-    misc/index
-
-References
-----------
+Demos of some of the capabilities of surface-dynamics:
 
 .. toctree::
-    :maxdepth: 2
+   :maxdepth: 1
+   :class: bullet-toc
 
-    references
+   examples/interval_exchanges
+   examples/square_tiled_surfaces
+   examples/rank2_genus3_classification
+
+Module Reference
+----------------
+
+The surface-dynamics source code is split into several Python modules. The
+links below lead to the documentation for these modules with more usage
+examples and the source code for all the classes and functions implemented in
+surface-dynamics. (Note that you can also access this documentation from an
+interactive SageMath session with |help|_.
+
+.. |help| replace:: ``?`` and ``??``
+.. _help: https://ipython.readthedocs.io/en/stable/interactive/python-ipython-diff.html#accessing-help
+
+.. toctree::
+   :maxdepth: 1
+   :class: bullet-toc
+
+   databases/flat_surfaces
+   flat_surfaces
+   flat_surfaces/origamis
+   interval_exchanges
+   misc
+   topological_recursion
+   topology
 
 Citation
 --------
 
-To cite the library, follow the instructions on our `zenodo website <https://zenodo.org/badge/latestdoi/347440823>`_.
+To cite surface-dynamics, please follow the instructions on our `zenodo website <https://zenodo.org/badge/latestdoi/347440823>`_.
 
-Indices and tables
-------------------
+See our :doc:`references` for everything that is cited in this documentation.
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. toctree::
+   :hidden:
+
+   references

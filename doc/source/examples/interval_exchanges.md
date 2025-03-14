@@ -12,7 +12,7 @@ kernelspec:
   name: sagemath
 ---
 
-# Interval exchange transformations
+# Interval Exchange Transformations
 
 ## Introduction
 

@@ -1,4 +1,5 @@
-# TODO: Add sage task.
+# TODO: Make sure that the tasks from the developer's guide exist:
+# - sage, doctest, doctest-long, pytest, test, lint, doc
 
 [build-system]
 requires = ["setuptools>=42", "wheel", "Cython", "numpy", "cypari2"]
@@ -244,10 +245,10 @@ pycodestyle = "*"
 cython-lint = "*"
 
 [tool.pixi.feature.doc.dependencies]
-furo = "*"
 myst-nb = "*"
-sphinx = "*"
+sphinx = ">=7.4,<8"
 jupyter_sphinx = "*"
+sphinx-book-theme = "*"
 
 [tool.pixi.feature.doc.pypi-dependencies]
 sage-docbuild = "==10.3"
