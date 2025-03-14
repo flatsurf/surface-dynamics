@@ -1,6 +1,3 @@
-# TODO: Make sure that the tasks from the developer's guide exist:
-# - sage, doctest, doctest-long, pytest, test, lint, doc
-
 [build-system]
 requires = ["setuptools>=42", "wheel", "Cython", "numpy", "cypari2"]
 build-backend = "setuptools.build_meta"
@@ -132,6 +129,10 @@ inputs = ["pyproject.toml", "setup.py",
     "surface_dynamics/interval_exchanges/int_vector.c",
     "surface_dynamics/interval_exchanges/iet_family.pyx",
 ]
+
+[tool.pixi.feature.dev.tasks.sage]
+cmd = "sage"
+depends-on = ["build"]
 
 # "test" is a shortcut that should (together with its dependencies) run in the "dev" environment.
 # To achieve this, we need to split it into two tasks like this (otherwise,

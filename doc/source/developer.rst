@@ -30,9 +30,9 @@ You can also run SageMath directly with::
 To run the test suite, you can use ``sage -tp surface_dynamics`` and ``pytest``
 directly or just run::
 
-  pixi run -e dev doctest
+  pixi run -e dev test-doctest
   pixi run -e dev doctest-long  # to run the tests with the --long flag
-  pixi run -e dev pytest
+  pixi run -e dev test-pytest
 
 Or to just run all tests and doctests::
 
