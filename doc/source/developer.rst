@@ -3,7 +3,7 @@
 Developer's guide
 =================
 
-surface-dynamics is a Python/Cython module that depends on SageMath. We try to
+surface-dynamics is a Python/Cython package that depends on SageMath. We try to
 follow the `programming conventions of SageMath
 <https://doc.sagemath.org/html/en/developer/coding_basics.html>`_.
 
