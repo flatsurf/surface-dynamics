@@ -65,7 +65,7 @@ The surface-dynamics source code is split into several Python modules. The
 links below lead to the documentation for these modules with more usage
 examples and the source code for all the classes and functions implemented in
 surface-dynamics. (Note that you can also access this documentation from an
-interactive SageMath session with |help|_.
+interactive SageMath session with |help|_.)
 
 .. |help| replace:: ``?`` and ``??``
 .. _help: https://ipython.readthedocs.io/en/stable/interactive/python-ipython-diff.html#accessing-help

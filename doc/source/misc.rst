@@ -1,8 +1,6 @@
 The misc Package
 ****************
 
-.. automodule:: surface_dynamics.misc
-
 .. toctree::
    :maxdepth: 1
    :caption: Modules in the surface_dynamics.misc package

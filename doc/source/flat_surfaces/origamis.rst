@@ -1,8 +1,6 @@
 The origamis Package
 ********************
 
-.. automodule:: surface_dynamics.flat_surfaces.origamis
-
 .. toctree::
    :maxdepth: 1
    :caption: Modules in the surface_dynamics.flat_surfaces.origamis package

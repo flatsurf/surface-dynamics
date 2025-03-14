@@ -1,8 +1,6 @@
 The topological_recursion Package
 *********************************
 
-.. automodule:: surface_dynamics.topological_recursion
-
 .. toctree::
    :maxdepth: 1
    :caption: Modules in the surface_dynamics.topological_recursion package

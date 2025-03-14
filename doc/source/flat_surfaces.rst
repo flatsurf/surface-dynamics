@@ -1,8 +1,6 @@
 The flat_surfaces Package
 *************************
 
-.. automodule:: surface_dynamics.flat_surfaces
-
 .. toctree::
    :maxdepth: 1
    :caption: Modules in the surface_dynamics.flat_surfaces package
