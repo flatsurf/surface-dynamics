@@ -16,7 +16,7 @@ contribute a `pull request
 We recommend to work on surface-dynamics with a pixi environment which
 guarantees that you are using dependencies that are known to work.
 
-Once you intalled `pixi <https://pixi.sh>`_, you can enter a shell with your
+Once you installed `pixi <https://pixi.sh>`_, you can enter a shell with your
 version of surface-dynamics installed by typing::
 
   pixi shell -e dev
