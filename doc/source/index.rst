@@ -20,7 +20,7 @@ Installation
 
 The preferred way to install software should be to use your package manager
 (e.g. ``apt`` on Debian or Ubuntu, ``pacman`` on Arch Linux, ``brew`` on macOS,
-etc). However, as of this writing, surface-dynimacs has not been picked up by `any
+etc). However, as of this writing, surface-dynamics has not been picked up by `any
 of the major distributions yet <https://repology.org/project/python:surface-dynamics/packages>`_.
 
 We therefore recommend to install the entire flatsurf suite from the
