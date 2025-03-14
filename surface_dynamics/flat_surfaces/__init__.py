@@ -1,6 +1,3 @@
-r"""
-Flat surfaces
-"""
 #*****************************************************************************
 #       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
 #

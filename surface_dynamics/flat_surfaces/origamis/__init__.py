@@ -1,6 +1,3 @@
-r"""
-Library for origamis
-"""
 # ****************************************************************************
 #       Copyright (C) 2011-2019 Vincent Delecroix <20100.delecroix@gmail.com>
 #

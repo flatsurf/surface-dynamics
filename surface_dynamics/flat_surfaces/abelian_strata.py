@@ -1144,6 +1144,8 @@ class AbelianStratumComponent(StratumComponent):
         perm = self.permutation_representative(reduced=False)
         return perm.lyapunov_exponents_approx(**kargs)
 
+    lyapunov_exponents = lyapunov_exponents_approx
+
     # TODO
     # def sum_of_lyapunov_exponents(self)
     # TODO
@@ -1822,9 +1824,6 @@ class AbelianStratumComponent(StratumComponent):
         if primitive:
             return [tcurve for tcurve in tcurves if tcurve.origami().is_primitive()]
         return tcurves
-
-    def lyapunov_exponents(self, **kargs):
-        return(self.permutation_representative(reduced=False).lyapunov_exponents_H_plus(**kargs))
 
     def single_cylinder_representative(self, alphabet=None, reduced=True):
         r"""
