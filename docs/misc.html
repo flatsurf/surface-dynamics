@@ -1,0 +1,549 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>The misc Package &#8212; surface-dynamics 0.7.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/extra.css?v=0eb12c1b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=c62cc9a0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'misc';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="additive_multivariate_generating_series" href="misc/additive_multivariate_generating_series.html" />
+    <link rel="prev" title="template" href="interval_exchanges/template.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="https://github.com/flatsurf/surface-dynamics/raw/master/doc/source/static/logo.svg?sanitize=true" class="logo__image only-light" alt="surface-dynamics 0.7.0 documentation - Home"/>
+    <script>document.write(`<img src="https://github.com/flatsurf/surface-dynamics/raw/master/doc/source/static/logo.svg?sanitize=true" class="logo__image only-dark" alt="surface-dynamics 0.7.0 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://flatsurf.github.io" title="flatsurf" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="https://flatsurf.github.io/assets/logo.svg" class="icon-link-image" alt="flatsurf"/></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/flatsurf/surface-dynamics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://sagemath.zulipchat.com/#narrow/channel/271193-flatsurf" title="Zulip" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-regular fa-comments fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Zulip</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing surface-dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developer’s guide</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="examples/interval_exchanges.html">Interval Exchange Transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/square_tiled_surfaces.html">Square-tiled Surfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/rank2_genus3_classification.html">Filtering Possible <span class="math notranslate nohighlight">\(\mathcal M\)</span>-Parallel Classes</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="databases/flat_surfaces.html">The databases.flat_surfaces Module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="flat_surfaces.html">The flat_surfaces Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="flat_surfaces/abelian_strata.html"><code class="docutils literal notranslate"><span class="pre">abelian_strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="flat_surfaces/homology.html"><code class="docutils literal notranslate"><span class="pre">homology</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="flat_surfaces/masur_veech_volumes.html"><code class="docutils literal notranslate"><span class="pre">masur_veech_volumes</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="flat_surfaces/quadratic_strata.html"><code class="docutils literal notranslate"><span class="pre">quadratic_strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="flat_surfaces/separatrix_diagram.html"><code class="docutils literal notranslate"><span class="pre">separatrix_diagram</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="flat_surfaces/single_cylinder.html"><code class="docutils literal notranslate"><span class="pre">single_cylinder</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="flat_surfaces/strata.html"><code class="docutils literal notranslate"><span class="pre">strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="flat_surfaces/twist_space.html"><code class="docutils literal notranslate"><span class="pre">twist_space</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="flat_surfaces/origamis.html">The origamis Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="flat_surfaces/origamis/generators.html"><code class="docutils literal notranslate"><span class="pre">generators</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="flat_surfaces/origamis/origami.html"><code class="docutils literal notranslate"><span class="pre">origami</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="flat_surfaces/origamis/origami_database.html"><code class="docutils literal notranslate"><span class="pre">origami_database</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="flat_surfaces/origamis/pillowcase_cover.html"><code class="docutils literal notranslate"><span class="pre">pillowcase_cover</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="flat_surfaces/origamis/teichmueller_curve.html"><code class="docutils literal notranslate"><span class="pre">teichmueller_curve</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="interval_exchanges.html">The interval_exchanges Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="interval_exchanges/constructors.html"><code class="docutils literal notranslate"><span class="pre">constructors</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="interval_exchanges/conversion.html"><code class="docutils literal notranslate"><span class="pre">conversion</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="interval_exchanges/cover.html"><code class="docutils literal notranslate"><span class="pre">cover</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="interval_exchanges/flip_sequence.html"><code class="docutils literal notranslate"><span class="pre">flip_sequence</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="interval_exchanges/iet.html"><code class="docutils literal notranslate"><span class="pre">iet</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="interval_exchanges/labelled.html"><code class="docutils literal notranslate"><span class="pre">labelled</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="interval_exchanges/marked_partition.html"><code class="docutils literal notranslate"><span class="pre">marked_partition</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="interval_exchanges/rauzy_class_cardinality.html"><code class="docutils literal notranslate"><span class="pre">rauzy_class_cardinality</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="interval_exchanges/reduced.html"><code class="docutils literal notranslate"><span class="pre">reduced</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="interval_exchanges/template.html"><code class="docutils literal notranslate"><span class="pre">template</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">The misc Package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="misc/additive_multivariate_generating_series.html"><code class="docutils literal notranslate"><span class="pre">additive_multivariate_generating_series</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/constellation.html"><code class="docutils literal notranslate"><span class="pre">constellation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/even_permutation.html"><code class="docutils literal notranslate"><span class="pre">even_permutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/factored_denominator.html"><code class="docutils literal notranslate"><span class="pre">factored_denominator</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/generalized_multiple_zeta_values.html"><code class="docutils literal notranslate"><span class="pre">generalized_multiple_zeta_values</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/group_representation.html"><code class="docutils literal notranslate"><span class="pre">group_representation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/iscc.html"><code class="docutils literal notranslate"><span class="pre">iscc</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/latex.html"><code class="docutils literal notranslate"><span class="pre">latex</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/linalg.html"><code class="docutils literal notranslate"><span class="pre">linalg</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/multiplicative_multivariate_generating_series.html"><code class="docutils literal notranslate"><span class="pre">multiplicative_multivariate_generating_series</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/permutation.html"><code class="docutils literal notranslate"><span class="pre">permutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/plane_tree.html"><code class="docutils literal notranslate"><span class="pre">plane_tree</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/ppl_utils.html"><code class="docutils literal notranslate"><span class="pre">ppl_utils</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/sql_db.html"><code class="docutils literal notranslate"><span class="pre">sql_db</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="misc/statistics.html"><code class="docutils literal notranslate"><span class="pre">statistics</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="topological_recursion.html">The topological_recursion Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="topological_recursion/kontsevich.html"><code class="docutils literal notranslate"><span class="pre">kontsevich</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="topological_recursion/masur_veech.html"><code class="docutils literal notranslate"><span class="pre">masur_veech</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="topological_recursion/no_pi.html"><code class="docutils literal notranslate"><span class="pre">no_pi</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="topological_recursion/topological_recursion.html"><code class="docutils literal notranslate"><span class="pre">topological_recursion</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="topology.html">The topology Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="topology/fat_graph.html"><code class="docutils literal notranslate"><span class="pre">fat_graph</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="topology/fat_graph_exhaustive_generation.html"><code class="docutils literal notranslate"><span class="pre">fat_graph_exhaustive_generation</span></code></a></li>
+</ul>
+</details></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/flatsurf/surface-dynamics/edit/master/doc/source/misc.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button"
+   title="Suggest edit"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/misc.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The misc Package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="the-misc-package">
+<h1>The misc Package<a class="headerlink" href="#the-misc-package" title="Link to this heading">#</a></h1>
+<div class="toctree-wrapper bullet-toc compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modules in the surface_dynamics.misc package</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="misc/additive_multivariate_generating_series.html"><code class="docutils literal notranslate"><span class="pre">additive_multivariate_generating_series</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/constellation.html"><code class="docutils literal notranslate"><span class="pre">constellation</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/even_permutation.html"><code class="docutils literal notranslate"><span class="pre">even_permutation</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/factored_denominator.html"><code class="docutils literal notranslate"><span class="pre">factored_denominator</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/generalized_multiple_zeta_values.html"><code class="docutils literal notranslate"><span class="pre">generalized_multiple_zeta_values</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/group_representation.html"><code class="docutils literal notranslate"><span class="pre">group_representation</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/iscc.html"><code class="docutils literal notranslate"><span class="pre">iscc</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/latex.html"><code class="docutils literal notranslate"><span class="pre">latex</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/linalg.html"><code class="docutils literal notranslate"><span class="pre">linalg</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/multiplicative_multivariate_generating_series.html"><code class="docutils literal notranslate"><span class="pre">multiplicative_multivariate_generating_series</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/permutation.html"><code class="docutils literal notranslate"><span class="pre">permutation</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/plane_tree.html"><code class="docutils literal notranslate"><span class="pre">plane_tree</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/ppl_utils.html"><code class="docutils literal notranslate"><span class="pre">ppl_utils</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/sql_db.html"><code class="docutils literal notranslate"><span class="pre">sql_db</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/statistics.html"><code class="docutils literal notranslate"><span class="pre">statistics</span></code></a></li>
+</ul>
+</div>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="interval_exchanges/template.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">template</span></code></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="misc/additive_multivariate_generating_series.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">additive_multivariate_generating_series</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By the surface-dynamics authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-2025, the surface-dynamics authors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1867 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>sql_db &#8212; surface-dynamics 0.7.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/extra.css?v=0eb12c1b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=c62cc9a0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'misc/sql_db';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="statistics" href="statistics.html" />
+    <link rel="prev" title="ppl_utils" href="ppl_utils.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="https://github.com/flatsurf/surface-dynamics/raw/master/doc/source/static/logo.svg?sanitize=true" class="logo__image only-light" alt="surface-dynamics 0.7.0 documentation - Home"/>
+    <script>document.write(`<img src="https://github.com/flatsurf/surface-dynamics/raw/master/doc/source/static/logo.svg?sanitize=true" class="logo__image only-dark" alt="surface-dynamics 0.7.0 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://flatsurf.github.io" title="flatsurf" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="https://flatsurf.github.io/assets/logo.svg" class="icon-link-image" alt="flatsurf"/></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/flatsurf/surface-dynamics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://sagemath.zulipchat.com/#narrow/channel/271193-flatsurf" title="Zulip" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-regular fa-comments fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Zulip</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing surface-dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Developer’s guide</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/interval_exchanges.html">Interval Exchange Transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/square_tiled_surfaces.html">Square-tiled Surfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/rank2_genus3_classification.html">Filtering Possible <span class="math notranslate nohighlight">\(\mathcal M\)</span>-Parallel Classes</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../databases/flat_surfaces.html">The databases.flat_surfaces Module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../flat_surfaces.html">The flat_surfaces Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/abelian_strata.html"><code class="docutils literal notranslate"><span class="pre">abelian_strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/homology.html"><code class="docutils literal notranslate"><span class="pre">homology</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/masur_veech_volumes.html"><code class="docutils literal notranslate"><span class="pre">masur_veech_volumes</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/quadratic_strata.html"><code class="docutils literal notranslate"><span class="pre">quadratic_strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/separatrix_diagram.html"><code class="docutils literal notranslate"><span class="pre">separatrix_diagram</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/single_cylinder.html"><code class="docutils literal notranslate"><span class="pre">single_cylinder</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/strata.html"><code class="docutils literal notranslate"><span class="pre">strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/twist_space.html"><code class="docutils literal notranslate"><span class="pre">twist_space</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../flat_surfaces/origamis.html">The origamis Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/generators.html"><code class="docutils literal notranslate"><span class="pre">generators</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/origami.html"><code class="docutils literal notranslate"><span class="pre">origami</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/origami_database.html"><code class="docutils literal notranslate"><span class="pre">origami_database</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/pillowcase_cover.html"><code class="docutils literal notranslate"><span class="pre">pillowcase_cover</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/teichmueller_curve.html"><code class="docutils literal notranslate"><span class="pre">teichmueller_curve</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../interval_exchanges.html">The interval_exchanges Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/constructors.html"><code class="docutils literal notranslate"><span class="pre">constructors</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/conversion.html"><code class="docutils literal notranslate"><span class="pre">conversion</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/cover.html"><code class="docutils literal notranslate"><span class="pre">cover</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/flip_sequence.html"><code class="docutils literal notranslate"><span class="pre">flip_sequence</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/iet.html"><code class="docutils literal notranslate"><span class="pre">iet</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/labelled.html"><code class="docutils literal notranslate"><span class="pre">labelled</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/marked_partition.html"><code class="docutils literal notranslate"><span class="pre">marked_partition</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/rauzy_class_cardinality.html"><code class="docutils literal notranslate"><span class="pre">rauzy_class_cardinality</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/reduced.html"><code class="docutils literal notranslate"><span class="pre">reduced</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/template.html"><code class="docutils literal notranslate"><span class="pre">template</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../misc.html">The misc Package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="additive_multivariate_generating_series.html"><code class="docutils literal notranslate"><span class="pre">additive_multivariate_generating_series</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="constellation.html"><code class="docutils literal notranslate"><span class="pre">constellation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="even_permutation.html"><code class="docutils literal notranslate"><span class="pre">even_permutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="factored_denominator.html"><code class="docutils literal notranslate"><span class="pre">factored_denominator</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="generalized_multiple_zeta_values.html"><code class="docutils literal notranslate"><span class="pre">generalized_multiple_zeta_values</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="group_representation.html"><code class="docutils literal notranslate"><span class="pre">group_representation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="iscc.html"><code class="docutils literal notranslate"><span class="pre">iscc</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="latex.html"><code class="docutils literal notranslate"><span class="pre">latex</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="linalg.html"><code class="docutils literal notranslate"><span class="pre">linalg</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiplicative_multivariate_generating_series.html"><code class="docutils literal notranslate"><span class="pre">multiplicative_multivariate_generating_series</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="permutation.html"><code class="docutils literal notranslate"><span class="pre">permutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="plane_tree.html"><code class="docutils literal notranslate"><span class="pre">plane_tree</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ppl_utils.html"><code class="docutils literal notranslate"><span class="pre">ppl_utils</span></code></a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">sql_db</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistics.html"><code class="docutils literal notranslate"><span class="pre">statistics</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../topological_recursion.html">The topological_recursion Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/kontsevich.html"><code class="docutils literal notranslate"><span class="pre">kontsevich</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/masur_veech.html"><code class="docutils literal notranslate"><span class="pre">masur_veech</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/no_pi.html"><code class="docutils literal notranslate"><span class="pre">no_pi</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/topological_recursion.html"><code class="docutils literal notranslate"><span class="pre">topological_recursion</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../topology.html">The topology Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../topology/fat_graph.html"><code class="docutils literal notranslate"><span class="pre">fat_graph</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topology/fat_graph_exhaustive_generation.html"><code class="docutils literal notranslate"><span class="pre">fat_graph_exhaustive_generation</span></code></a></li>
+</ul>
+</details></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/flatsurf/surface-dynamics/edit/master/doc/source/misc/sql_db.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button"
+   title="Suggest edit"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/misc/sql_db.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>sql_db</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase"><code class="docutils literal notranslate"><span class="pre">SQLDatabase</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.add_column"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.add_column()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.add_data"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.add_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.add_row"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.add_row()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.add_rows"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.add_rows()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.commit"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.commit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.create_table"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.create_table()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.delete_rows"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.delete_rows()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_column"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.drop_column()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_data_from_table"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.drop_data_from_table()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_index"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.drop_index()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_primary_key"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.drop_primary_key()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_table"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.drop_table()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_unique"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.drop_unique()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.get_connection"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.get_connection()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.get_cursor"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.get_cursor()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.get_skeleton"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.get_skeleton()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.make_index"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.make_index()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.make_primary_key"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.make_primary_key()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.make_unique"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.make_unique()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.query"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.query()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.rename_table"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.rename_table()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.save"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.save()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.show"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.show()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.vacuum"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.vacuum()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLQuery"><code class="docutils literal notranslate"><span class="pre">SQLQuery</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLQuery.get_query_string"><code class="docutils literal notranslate"><span class="pre">SQLQuery.get_query_string()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLQuery.intersect"><code class="docutils literal notranslate"><span class="pre">SQLQuery.intersect()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLQuery.query_results"><code class="docutils literal notranslate"><span class="pre">SQLQuery.query_results()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLQuery.show"><code class="docutils literal notranslate"><span class="pre">SQLQuery.show()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLQuery.union"><code class="docutils literal notranslate"><span class="pre">SQLQuery.union()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.construct_skeleton"><code class="docutils literal notranslate"><span class="pre">construct_skeleton()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.regexp"><code class="docutils literal notranslate"><span class="pre">regexp()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.verify_column"><code class="docutils literal notranslate"><span class="pre">verify_column()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.verify_operator"><code class="docutils literal notranslate"><span class="pre">verify_operator()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.verify_type"><code class="docutils literal notranslate"><span class="pre">verify_type()</span></code></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-surface_dynamics.misc.sql_db">
+<span id="sql-db"></span><h1><code class="docutils literal notranslate"><span class="pre">sql_db</span></code><a class="headerlink" href="#module-surface_dynamics.misc.sql_db" title="Link to this heading">#</a></h1>
+<p>Relational (sqlite) Databases Module</p>
+<p>INFO:</p>
+<blockquote>
+<div><p>This module implements classes (SQLDatabase and SQLQuery (pythonic
+implementation for the user with little or no knowledge of sqlite))
+that wrap the basic functionality of sqlite.</p>
+<p>Databases are constructed via a triple indexed dictionary called a
+skeleton. A skeleton should be constructed to fit the following format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>| - skeleton -- a triple-indexed dictionary
+|     - outer key -- table name
+|         - inner key -- column name
+|             - inner inner key -- one of the following:
+|                 - ``primary_key`` -- boolean, whether column has been set as
+                    primary key
+|                 - ``index`` -- boolean, whether column has been set as index
+|                 - ``unique`` -- boolean, whether column has been set as unique
+|                 - ``sql`` -- one of ``&#39;TEXT&#39;``, ``&#39;BOOLEAN&#39;``, ``&#39;INTEGER&#39;``,
+                    ``&#39;REAL&#39;``, or other user defined type
+</pre></div>
+</div>
+<p>An example skeleton of a database with one table, that table with one
+column:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;table1&#39;</span><span class="p">:{</span><span class="s1">&#39;col1&#39;</span><span class="p">:{</span><span class="s1">&#39;primary_key&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;REAL&#39;</span><span class="p">}}}</span>
+</pre></div>
+</div>
+<p>SQLDatabases can also be constructed via the add, drop, and commit
+functions. The vacuum function is also useful for restoring hard disk space
+after a database has shrunk in size.</p>
+<p>A SQLQuery can be constructed by providing a query_dict, which is a
+dictionary with the following sample format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;table_name&#39;</span><span class="p">:</span> <span class="s1">&#39;tblname&#39;</span><span class="p">,</span> <span class="s1">&#39;display_cols&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;col1&#39;</span><span class="p">,</span> <span class="s1">&#39;col2&#39;</span><span class="p">,</span> <span class="s1">&#39;col3&#39;</span><span class="p">],</span> <span class="s1">&#39;expression&#39;</span><span class="p">:[</span><span class="n">col</span><span class="p">,</span> <span class="n">operator</span><span class="p">,</span> <span class="n">value</span><span class="p">]}</span>
+</pre></div>
+</div>
+<p>Finally a SQLQuery also allows the user to directly input the query
+string for a database, and also supports the ‘?’ syntax by allowing an
+argument for a tuple of parameters to query.</p>
+<p>For full details, please see the tutorial. sage.graphs.graph_database.py
+is an example of implementing a database class in Sage using this
+interface.</p>
+</div></blockquote>
+<p>AUTHORS:</p>
+<ul class="simple">
+<li><p>R. Andrew Ohana (2011-07-16):  refactored and rewrote most of the code;
+merged the Generic classes into the non-Generic versions; changed the
+skeleton format to include a boolean indicating whether the column stores
+unique keys; changed the index names so as to avoid potential ambiguity</p></li>
+<li><p>Emily A. Kirkman (2008-09-20): added functionality to generate plots and
+reformat output in show</p></li>
+<li><p>Emily A. Kirkman and Robert L. Miller (2007-06-17): initial version</p></li>
+</ul>
+<dl class="py class">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.sql_db.</span></span><span class="sig-name descname"><span class="pre">SQLDatabase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skeleton</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase" title="Link to this definition">#</a></dt>
+<dd><p>A SQL Database object corresponding to a database file.</p>
+<p>INPUT:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">filename</span></code> – a string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">skeleton</span></code> – a triple-indexed dictionary:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>| - outer key -- table name
+|   - inner key -- column name
+|     - inner inner key -- one of the following:
+|       - ``primary_key`` -- boolean, whether column has been set
+          as primary key
+|       - ``index`` -- boolean, whether column has been set as
+          index
+|       - ``unique`` -- boolean, whether column has been set as
+          unique
+|       - ``sql`` -- one of ``&#39;TEXT&#39;``, ``&#39;BOOLEAN&#39;``,
+          ``&#39;INTEGER&#39;``, ``&#39;REAL&#39;``, or other user defined type
+</pre></div>
+</div>
+</li>
+</ul>
+<p>TUTORIAL:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">SQLDatabase</span></code> class is for interactively building databases
+intended for queries. This may sound redundant, but it is important. If
+you want a database intended for quick lookup of entries in very large
+tables, much like a hash table (such as a Python dictionary), a
+<code class="docutils literal notranslate"><span class="pre">SQLDatabase</span></code> may not be what you are looking for. The strength of
+<code class="docutils literal notranslate"><span class="pre">SQLDatabases</span></code> is in queries, searches through the database with
+complicated criteria.</p>
+<p>For example, we create a new database for storing isomorphism classes
+of simple graphs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.sql_db</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLDatabase</span><span class="p">,</span> <span class="n">SQLQuery</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In order to generate representatives for the classes, we will import a
+function which generates all labeled graphs (noting that this is not
+the optimal way):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sage.groups.perm_gps.partn_ref.refinement_graphs</span><span class="w"> </span><span class="kn">import</span> <span class="n">all_labeled_graphs</span>
+</pre></div>
+</div>
+<p>We will need a table in the database in which to store the graphs, and
+we specify its structure with a Python dictionary, each of whose keys
+is the name of a column:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">table_skeleton</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([</span>
+<span class="o">....</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;graph6&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">}),</span>
+<span class="o">....</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;vertices&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">}),</span>
+<span class="o">....</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;edges&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">})])</span>
+</pre></div>
+</div>
+<p>Then we create the table:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="n">table_skeleton</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">)</span>
+<span class="n">graph6</span>  <span class="n">vertices</span>  <span class="n">edges</span>
+<span class="o">-----------------------</span>
+</pre></div>
+</div>
+<p>Now that we have the table, we will begin to populate the table with
+rows. First, add the graph on zero vertices.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sage: G = Graph()
+sage: D.add_row(&#39;simon&#39;, (G.graph6_string(), 0, 0))
+sage: D.show(&#39;simon&#39;)
+graph6  vertices  edges
+-----------------------
+?       0         0
+</pre></div>
+</div>
+<p>Next, add the graph on one vertex.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sage: G.add_vertex()
+0
+sage: D.add_row(&#39;simon&#39;, (G.graph6_string(), 1, 0))
+sage: D.show(&#39;simon&#39;)
+graph6  vertices  edges
+-----------------------
+?       0         0
+@       1         0
+</pre></div>
+</div>
+<p>Say we want a database of graphs on four or less vertices:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sage: labels = {}
+sage: for i in range(2, 5):
+....:     labels[i] = []
+....:     for g in all_labeled_graphs(i):
+....:         g = g.canonical_label()
+....:         if g not in labels[i]:
+....:             labels[i].append(g)
+....:             D.add_row(&#39;simon&#39;, (g.graph6_string(), g.num_verts(), g.num_edges()))
+sage: D.show(&#39;simon&#39;) # random
+graph6               vertices             edges
+------------------------------------------------------------
+?                    0                    0
+@                    1                    0
+A?                   2                    0
+A_                   2                    1
+B?                   3                    0
+BG                   3                    1
+BW                   3                    2
+Bw                   3                    3
+C?                   4                    0
+C@                   4                    1
+CB                   4                    2
+CF                   4                    3
+CJ                   4                    3
+C`                   4                    2
+CR                   4                    3
+CN                   4                    4
+Cr                   4                    4
+C^                   4                    5
+C~                   4                    6
+</pre></div>
+</div>
+<p>We can then query the database – let’s ask for all the graphs on four
+vertices with three edges. We do so by creating two queries and asking
+for rows that satisfy them both:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">SQLQuery</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;table_name&#39;</span><span class="p">:</span> <span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;display_cols&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;graph6&#39;</span><span class="p">],</span> <span class="s1">&#39;expression&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;vertices&#39;</span><span class="p">,</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">]})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">Q2</span> <span class="o">=</span> <span class="n">SQLQuery</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;table_name&#39;</span><span class="p">:</span> <span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;display_cols&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;graph6&#39;</span><span class="p">],</span> <span class="s1">&#39;expression&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;edges&#39;</span><span class="p">,</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">]})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">intersect</span><span class="p">(</span><span class="n">Q2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">query_results</span><span class="p">())</span>
+<span class="mi">3</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">query_results</span><span class="p">())</span>   <span class="c1"># random</span>
+<span class="p">[(</span><span class="s1">&#39;CF&#39;</span><span class="p">,</span> <span class="s1">&#39;CF&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;CJ&#39;</span><span class="p">,</span> <span class="s1">&#39;CJ&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;CR&#39;</span><span class="p">,</span> <span class="s1">&#39;CR&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>NOTE: The values of <code class="docutils literal notranslate"><span class="pre">display_cols</span></code> are always concatenated in
+intersections and unions.</p>
+<p>Of course, we can save the database to file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">replace_with_your_own_filepath</span> <span class="o">=</span> <span class="n">tmp_dir</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">replace_with_your_own_filepath</span> <span class="o">+</span> <span class="s1">&#39;simon.db&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now the database’s hard link is to this file, and not the temporary db
+file. For example, let’s say we open the same file with another class
+instance. We can load the file as an immutable database:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sage: E = SQLDatabase(replace_with_your_own_filepath + &#39;simon.db&#39;)
+sage: E.show(&#39;simon&#39;) # random
+edges                graph6               vertices
+------------------------------------------------------------
+0                    ?                    0
+0                    @                    1
+0                    A?                   2
+1                    A_                   2
+0                    B?                   3
+1                    BG                   3
+2                    BW                   3
+3                    Bw                   3
+0                    C?                   4
+1                    C@                   4
+2                    CB                   4
+3                    CF                   4
+3                    CJ                   4
+2                    CK                   4
+3                    CL                   4
+4                    CN                   4
+4                    C]                   4
+5                    C^                   4
+6                    C~                   4
+sage: E.drop_table(&#39;simon&#39;)
+Traceback (most recent call last):
+...
+RuntimeError: Cannot drop tables from a read only database.
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.add_column">
+<span class="sig-name descname"><span class="pre">add_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NULL'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.add_column" title="Link to this definition">#</a></dt>
+<dd><p>Add a column named <code class="docutils literal notranslate"><span class="pre">col_name</span></code> to table <code class="docutils literal notranslate"><span class="pre">table_name</span></code>, whose data
+types are described by <code class="docutils literal notranslate"><span class="pre">col_dict</span></code>. The format for this is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;col1&#39;</span><span class="p">:{</span><span class="s1">&#39;primary_key&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;REAL&#39;</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>INPUT:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">col_dict</span></code> – a dictionary:</p>
+<blockquote>
+<div><ul>
+<li><p>key – column name</p>
+<blockquote>
+<div><ul>
+<li><p>inner key – one of the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">primary_key</span></code> – boolean, whether column has been set
+as primary key</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index</span></code> – boolean, whether column has been set as
+index</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unique</span></code> – boolean, weather column has been set as
+unique</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sql</span></code> – one of <code class="docutils literal notranslate"><span class="pre">'TEXT'</span></code>, <code class="docutils literal notranslate"><span class="pre">'BOOLEAN'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'INTEGER'</span></code>, <code class="docutils literal notranslate"><span class="pre">'REAL'</span></code>, or other user defined type</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">})]))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;n_squared&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">},</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">)</span>
+<span class="n">n</span>                    <span class="n">n_squared</span>
+<span class="o">----------------------------------------</span>
+<span class="mi">0</span>                    <span class="mi">0</span>
+<span class="mi">1</span>                    <span class="mi">0</span>
+<span class="mi">2</span>                    <span class="mi">0</span>
+<span class="mi">3</span>                    <span class="mi">0</span>
+<span class="mi">4</span>                    <span class="mi">0</span>
+<span class="mi">5</span>                    <span class="mi">0</span>
+<span class="mi">6</span>                    <span class="mi">0</span>
+<span class="mi">7</span>                    <span class="mi">0</span>
+<span class="mi">8</span>                    <span class="mi">0</span>
+<span class="mi">9</span>                    <span class="mi">0</span>
+<span class="mi">10</span>                   <span class="mi">0</span>
+<span class="mi">11</span>                   <span class="mi">0</span>
+<span class="mi">12</span>                   <span class="mi">0</span>
+<span class="mi">13</span>                   <span class="mi">0</span>
+<span class="mi">14</span>                   <span class="mi">0</span>
+<span class="mi">15</span>                   <span class="mi">0</span>
+<span class="mi">16</span>                   <span class="mi">0</span>
+<span class="mi">17</span>                   <span class="mi">0</span>
+<span class="mi">18</span>                   <span class="mi">0</span>
+<span class="mi">19</span>                   <span class="mi">0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.add_data">
+<span class="sig-name descname"><span class="pre">add_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entry_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.add_data" title="Link to this definition">#</a></dt>
+<dd><p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rows</span></code> – a list of tuples that represent one row of data to add
+(types should match col types in order)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">entry_order</span></code> –  an ordered list or tuple overrides normal order
+with user defined order</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">DB</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,{</span><span class="s1">&#39;a1&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">},</span> <span class="s1">&#39;b2&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;int&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_rows</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_rows</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">)],</span> <span class="p">[</span><span class="s1">&#39;b2&#39;</span><span class="p">,</span><span class="s1">&#39;a1&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">DB</span><span class="o">.</span><span class="n">get_cursor</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;select * from simon&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+<span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.add_row">
+<span class="sig-name descname"><span class="pre">add_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entry_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.add_row" title="Link to this definition">#</a></dt>
+<dd><p>Add the row described by <code class="docutils literal notranslate"><span class="pre">values</span></code> to the table <code class="docutils literal notranslate"><span class="pre">table_name</span></code>. Values
+should be a tuple, of same length and order as columns in given table.</p>
+<p>NOTE:</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">values</span></code> is of length one, be sure to specify that it is a tuple of
+length one, by using a comma, e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span><span class="p">,)</span>
+</pre></div>
+</div>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">DB</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,{</span><span class="s1">&#39;a1&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">},</span> <span class="s1">&#39;b2&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;int&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">DB</span><span class="o">.</span><span class="n">get_cursor</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;select * from simon&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+<span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.add_rows">
+<span class="sig-name descname"><span class="pre">add_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entry_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.add_rows" title="Link to this definition">#</a></dt>
+<dd><p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rows</span></code> – a list of tuples that represent one row of data to add
+(types should match col types in order)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">entry_order</span></code> –  an ordered list or tuple overrides normal order
+with user defined order</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">DB</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,{</span><span class="s1">&#39;a1&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">},</span> <span class="s1">&#39;b2&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;int&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_rows</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_rows</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">)],</span> <span class="p">[</span><span class="s1">&#39;b2&#39;</span><span class="p">,</span><span class="s1">&#39;a1&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">DB</span><span class="o">.</span><span class="n">get_cursor</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;select * from simon&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+<span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.commit">
+<span class="sig-name descname"><span class="pre">commit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.commit" title="Link to this definition">#</a></dt>
+<dd><p>Commits changes to file.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">DB</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,{</span><span class="s1">&#39;a1&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">},</span> <span class="s1">&#39;b2&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;int&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_rows</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_rows</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">)],</span> <span class="p">[</span><span class="s1">&#39;b2&#39;</span><span class="p">,</span><span class="s1">&#39;a1&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">drop_column</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span><span class="s1">&#39;b2&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">vacuum</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.create_table">
+<span class="sig-name descname"><span class="pre">create_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_skeleton</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.create_table" title="Link to this definition">#</a></dt>
+<dd><p>Creates a new table in the database.</p>
+<p>To create a table, a column structure must be specified. The form for
+this is a Python dict, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;col1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;unique&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">},</span> <span class="o">...</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>INPUT:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">table_name</span></code> – a string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">table_skeleton</span></code> – a double-indexed dictionary</p>
+<blockquote>
+<div><ul>
+<li><p>outer key – column name</p>
+<blockquote>
+<div><ul>
+<li><p>inner key – one of the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">primary_key</span></code> – boolean, whether column has been set
+asprimary key</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index</span></code> – boolean, whether column has been set as
+index</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unique</span></code> – boolean, whether column has been set as
+unique</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sql</span></code> – one of <code class="docutils literal notranslate"><span class="pre">'TEXT'</span></code>, <code class="docutils literal notranslate"><span class="pre">'BOOLEAN'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'INTEGER'</span></code>, <code class="docutils literal notranslate"><span class="pre">'REAL'</span></code>, or other user defined type</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>NOTE:</p>
+<p>Some SQL features, such as automatically incrementing primary key,
+require the full word <code class="docutils literal notranslate"><span class="pre">'INTEGER'</span></code>, not just <code class="docutils literal notranslate"><span class="pre">'INT'</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">table_skeleton</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([</span>
+<span class="o">....</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;graph6&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">}),</span>
+<span class="o">....</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;vertices&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">}),</span>
+<span class="o">....</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;edges&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">})])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="n">table_skeleton</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">)</span>
+<span class="n">graph6</span>               <span class="n">vertices</span>             <span class="n">edges</span>
+<span class="o">------------------------------------------------------------</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.delete_rows">
+<span class="sig-name descname"><span class="pre">delete_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.delete_rows" title="Link to this definition">#</a></dt>
+<dd><p>Uses a <code class="docutils literal notranslate"><span class="pre">SQLQuery</span></code> instance to modify (delete rows from) the
+database.</p>
+<p><code class="docutils literal notranslate"><span class="pre">SQLQuery</span></code> must have no join statements.  (As of now, you can only
+delete from one table at a time – ideas and patches are welcome).</p>
+<p>To remove all data that satisfies a <code class="docutils literal notranslate"><span class="pre">SQLQuery</span></code>, send the query as an
+argument to <code class="docutils literal notranslate"><span class="pre">delete_rows</span></code>.  Be careful, test your query first.</p>
+<p>Recommended use:  have some kind of row identification primary
+key column that you use as a parameter in the query.  (See example
+below).</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">query</span></code> – a <code class="docutils literal notranslate"><span class="pre">SQLQuery</span></code> (Delete the rows returned when query is
+run).</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.sql_db</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLDatabase</span><span class="p">,</span> <span class="n">SQLQuery</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderedDict</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">skeleton</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span> <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">}),</span>
+<span class="o">....</span><span class="p">:</span>     <span class="p">(</span><span class="s1">&#39;a1&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">}),</span>
+<span class="o">....</span><span class="p">:</span>     <span class="p">(</span><span class="s1">&#39;b2&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;int&#39;</span><span class="p">})])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;lucy&#39;</span><span class="p">,</span> <span class="n">skeleton</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_rows</span><span class="p">(</span><span class="s1">&#39;lucy&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">),(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">384</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">978932</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;lucy&#39;</span><span class="p">)</span>
+<span class="nb">id</span>  <span class="n">a1</span>  <span class="n">b2</span>
+<span class="o">--------------</span>
+<span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">1</span>
+<span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">4</span>
+<span class="mi">2</span>   <span class="mi">0</span>   <span class="mi">7</span>
+<span class="mi">3</span>   <span class="mi">1</span>   <span class="mi">384</span>
+<span class="mi">4</span>   <span class="mi">1</span>   <span class="mi">978932</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">SQLQuery</span><span class="p">(</span><span class="n">DB</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;table_name&#39;</span><span class="p">:</span><span class="s1">&#39;lucy&#39;</span><span class="p">,</span> <span class="s1">&#39;display_cols&#39;</span><span class="p">:[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;a1&#39;</span><span class="p">,</span><span class="s1">&#39;b2&#39;</span><span class="p">],</span> <span class="s1">&#39;expression&#39;</span><span class="p">:[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;&gt;=&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">]})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">delete_rows</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;lucy&#39;</span><span class="p">)</span>
+<span class="nb">id</span>  <span class="n">a1</span>  <span class="n">b2</span>
+<span class="o">----------</span>
+<span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">1</span>
+<span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">4</span>
+<span class="mi">2</span>   <span class="mi">0</span>   <span class="mi">7</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.drop_column">
+<span class="sig-name descname"><span class="pre">drop_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_column" title="Link to this definition">#</a></dt>
+<dd><p>Drop the column <code class="docutils literal notranslate"><span class="pre">col_name</span></code> from table <code class="docutils literal notranslate"><span class="pre">table_name</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;n_squared&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">},</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">drop_column</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;n_squared&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">)</span>
+<span class="n">n</span>
+<span class="o">--------------------</span>
+<span class="mi">0</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+<span class="mi">3</span>
+<span class="mi">4</span>
+<span class="mi">5</span>
+<span class="mi">6</span>
+<span class="mi">7</span>
+<span class="mi">8</span>
+<span class="mi">9</span>
+<span class="mi">10</span>
+<span class="mi">11</span>
+<span class="mi">12</span>
+<span class="mi">13</span>
+<span class="mi">14</span>
+<span class="mi">15</span>
+<span class="mi">16</span>
+<span class="mi">17</span>
+<span class="mi">18</span>
+<span class="mi">19</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.drop_data_from_table">
+<span class="sig-name descname"><span class="pre">drop_data_from_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_data_from_table" title="Link to this definition">#</a></dt>
+<dd><p>Removes all rows from <code class="docutils literal notranslate"><span class="pre">table_name</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,{</span><span class="s1">&#39;col1&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,(</span><span class="mi">9</span><span class="p">,))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">)</span>
+<span class="n">col1</span>
+<span class="o">--------------------</span>
+<span class="mi">9</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">drop_data_from_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">)</span>
+<span class="n">col1</span>
+<span class="o">--------------------</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.drop_index">
+<span class="sig-name descname"><span class="pre">drop_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_index" title="Link to this definition">#</a></dt>
+<dd><p>Set the column <code class="docutils literal notranslate"><span class="pre">index_name</span></code> in table <code class="docutils literal notranslate"><span class="pre">table_name</span></code> to not be an
+index. See <code class="docutils literal notranslate"><span class="pre">make_index()</span></code></p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span> <span class="s1">&#39;n2&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">drop_index</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">get_skeleton</span><span class="p">()</span>
+<span class="p">{</span><span class="s1">&#39;simon&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;sql&#39;</span><span class="p">:</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+  <span class="s1">&#39;n2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;sql&#39;</span><span class="p">:</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.drop_primary_key">
+<span class="sig-name descname"><span class="pre">drop_primary_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_primary_key" title="Link to this definition">#</a></dt>
+<dd><p>Set the column <code class="docutils literal notranslate"><span class="pre">col_name</span></code> in table <code class="docutils literal notranslate"><span class="pre">table_name</span></code> not to be a primary
+key.</p>
+<p>A primary key is something like an index, but its main purpose is to
+link different tables together. This allows searches to be executed on
+multiple tables that represent maybe different data about the same
+objects.</p>
+<p>NOTE:</p>
+<p>This function only changes the column to be non-primary, it does not
+delete it.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span> <span class="s1">&#39;n2&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">make_primary_key</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;n2&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">drop_primary_key</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;n2&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">get_skeleton</span><span class="p">()</span>
+<span class="p">{</span><span class="s1">&#39;simon&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+   <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;sql&#39;</span><span class="p">:</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+  <span class="s1">&#39;n2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;sql&#39;</span><span class="p">:</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.drop_table">
+<span class="sig-name descname"><span class="pre">drop_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_table" title="Link to this definition">#</a></dt>
+<dd><p>Delete table <code class="docutils literal notranslate"><span class="pre">table_name</span></code> from database.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">table_name</span></code> – a string</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,{</span><span class="s1">&#39;col1&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">)</span>
+<span class="n">col1</span>
+<span class="o">--------------------</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">drop_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">get_skeleton</span><span class="p">()</span>
+<span class="p">{}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.drop_unique">
+<span class="sig-name descname"><span class="pre">drop_unique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_unique" title="Link to this definition">#</a></dt>
+<dd><p>Set the column <code class="docutils literal notranslate"><span class="pre">col_name</span></code> in table <code class="docutils literal notranslate"><span class="pre">table_name</span></code> not store unique
+values.</p>
+<p>NOTE:</p>
+<p>This function only removes the requirement for entries in <code class="docutils literal notranslate"><span class="pre">col_name</span></code>
+to be unique, it does not delete it.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span> <span class="s1">&#39;n2&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">make_unique</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;n2&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">drop_unique</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;n2&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">get_skeleton</span><span class="p">()</span>
+<span class="p">{</span><span class="s1">&#39;simon&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+   <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;sql&#39;</span><span class="p">:</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+  <span class="s1">&#39;n2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;sql&#39;</span><span class="p">:</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.get_connection">
+<span class="sig-name descname"><span class="pre">get_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ignore_warning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.get_connection" title="Link to this definition">#</a></dt>
+<dd><p>Returns a pysqlite connection to the database.</p>
+<p>You most likely want <code class="docutils literal notranslate"><span class="pre">get_cursor()</span></code> instead, which is used for
+executing sqlite commands on the database.</p>
+<p>Recommended for more advanced users only.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">(</span><span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">con</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">get_connection</span><span class="p">()</span>
+<span class="n">doctest</span><span class="p">:</span><span class="o">...</span><span class="p">:</span> <span class="ne">RuntimeWarning</span><span class="p">:</span> <span class="n">Database</span> <span class="ow">is</span> <span class="n">read</span> <span class="n">only</span><span class="p">,</span> <span class="n">using</span> <span class="n">the</span> <span class="n">connection</span> <span class="n">can</span> <span class="n">alter</span> <span class="n">the</span> <span class="n">stored</span> <span class="n">data</span><span class="o">.</span> <span class="n">Set</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_warnings</span> <span class="n">to</span> <span class="kc">True</span> <span class="ow">in</span> <span class="n">order</span> <span class="n">to</span> <span class="n">mute</span> <span class="n">future</span> <span class="n">warnings</span><span class="o">.</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">con</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">get_connection</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">ignore_warnings</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">con</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">get_connection</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;CREATE TABLE simon(n INTEGER, n2 INTEGER)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>   <span class="n">t</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;INSERT INTO simon VALUES(</span><span class="si">%d</span><span class="s1">,</span><span class="si">%d</span><span class="s1">)&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="o">^</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">)</span>
+<span class="n">n</span>                    <span class="n">n2</span>
+<span class="o">----------------------------------------</span>
+<span class="mi">0</span>                    <span class="mi">0</span>
+<span class="mi">1</span>                    <span class="mi">1</span>
+<span class="mi">2</span>                    <span class="mi">4</span>
+<span class="mi">3</span>                    <span class="mi">9</span>
+<span class="mi">4</span>                    <span class="mi">16</span>
+<span class="mi">5</span>                    <span class="mi">25</span>
+<span class="mi">6</span>                    <span class="mi">36</span>
+<span class="mi">7</span>                    <span class="mi">49</span>
+<span class="mi">8</span>                    <span class="mi">64</span>
+<span class="mi">9</span>                    <span class="mi">81</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.get_cursor">
+<span class="sig-name descname"><span class="pre">get_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ignore_warning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.get_cursor" title="Link to this definition">#</a></dt>
+<dd><p>Returns a pysqlite cursor for the database connection.</p>
+<p>A cursor is an input from which you can execute sqlite commands on the
+database.</p>
+<p>Recommended for more advanced users only.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">DB</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,{</span><span class="s1">&#39;a1&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">},</span> <span class="s1">&#39;b2&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;int&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_rows</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_rows</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">)],</span> <span class="p">[</span><span class="s1">&#39;b2&#39;</span><span class="p">,</span><span class="s1">&#39;a1&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">DB</span><span class="o">.</span><span class="n">get_cursor</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;select * from simon&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+<span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.get_skeleton">
+<span class="sig-name descname"><span class="pre">get_skeleton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.get_skeleton" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the hierarchical structure of the
+database, in the following format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>| - skeleton -- a triple-indexed dictionary
+|   - outer key -- table name
+|     - inner key -- column name
+|       - inner inner key -- one of the following:
+|         - ``primary_key`` -- boolean, whether column has been set as
+            primary key
+|         - ``index`` -- boolean, whether column has been set as index
+|         - ``unique`` -- boolean, whether column has been set as unique
+|         - ``sql`` -- one of ``&#39;TEXT&#39;``, ``&#39;BOOLEAN&#39;``, ``&#39;INTEGER&#39;``,
+            ``&#39;REAL&#39;``, or other user defined type
+</pre></div>
+</div>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;table1&#39;</span><span class="p">:{</span><span class="s1">&#39;col1&#39;</span><span class="p">:{</span><span class="s1">&#39;primary_key&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;REAL&#39;</span><span class="p">}}}</span>
+</pre></div>
+</div>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">check</span></code> – if True, checks to make sure the database’s actual
+structure matches the skeleton on record.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.make_index">
+<span class="sig-name descname"><span class="pre">make_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">col_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.make_index" title="Link to this definition">#</a></dt>
+<dd><p>Set the column <code class="docutils literal notranslate"><span class="pre">col_name</span></code> in table <code class="docutils literal notranslate"><span class="pre">table_name</span></code> to be an index,
+that is, a column set up to do quick searches on.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">col_name</span></code> – a string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">table_name</span></code> – a string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unique</span></code> – requires that there are no multiple entries in the
+column, makes searching faster</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span> <span class="s1">&#39;n2&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">make_index</span><span class="p">(</span><span class="s1">&#39;n2&#39;</span><span class="p">,</span><span class="s1">&#39;simon&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">get_skeleton</span><span class="p">()</span>
+<span class="p">{</span><span class="s1">&#39;simon&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+   <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;sql&#39;</span><span class="p">:</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+  <span class="s1">&#39;n2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+   <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;sql&#39;</span><span class="p">:</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.make_primary_key">
+<span class="sig-name descname"><span class="pre">make_primary_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.make_primary_key" title="Link to this definition">#</a></dt>
+<dd><p>Set the column <code class="docutils literal notranslate"><span class="pre">col_name</span></code> in table <code class="docutils literal notranslate"><span class="pre">table_name</span></code> to be a primary key.</p>
+<p>A primary key is something like an index, but its main purpose is to
+link different tables together. This allows searches to be executed on
+multiple tables that represent maybe different data about the same
+objects.</p>
+<p>NOTE:</p>
+<p>Some SQL features, such as automatically incrementing primary key,
+require the full word <code class="docutils literal notranslate"><span class="pre">'INTEGER'</span></code>, not just <code class="docutils literal notranslate"><span class="pre">'INT'</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span> <span class="s1">&#39;n2&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">make_primary_key</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;n2&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">get_skeleton</span><span class="p">()</span>
+<span class="p">{</span><span class="s1">&#39;simon&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+   <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;sql&#39;</span><span class="p">:</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+  <span class="s1">&#39;n2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+   <span class="s1">&#39;sql&#39;</span><span class="p">:</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.make_unique">
+<span class="sig-name descname"><span class="pre">make_unique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.make_unique" title="Link to this definition">#</a></dt>
+<dd><p>Set the column <code class="docutils literal notranslate"><span class="pre">col_name</span></code> in table <code class="docutils literal notranslate"><span class="pre">table_name</span></code> to store unique
+values.</p>
+<p>NOTE:</p>
+<p>This function only adds the requirement for entries in <code class="docutils literal notranslate"><span class="pre">col_name</span></code> to
+be unique, it does not change the values.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span> <span class="s1">&#39;n2&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">make_unique</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;n2&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">get_skeleton</span><span class="p">()</span>
+<span class="p">{</span><span class="s1">&#39;simon&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+   <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;sql&#39;</span><span class="p">:</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+  <span class="s1">&#39;n2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+   <span class="s1">&#39;sql&#39;</span><span class="p">:</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.query">
+<span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.query" title="Link to this definition">#</a></dt>
+<dd><p>Creates a <code class="docutils literal notranslate"><span class="pre">SQLQuery</span></code> on this database.  For full class details,
+type <code class="docutils literal notranslate"><span class="pre">SQLQuery?</span></code> and press shift+enter.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.sql_db</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLDatabase</span><span class="p">,</span> <span class="n">SQLQuery</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;wolf&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;BOOLEAN&#39;</span><span class="p">},</span> <span class="s1">&#39;tag&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">query</span><span class="p">({</span><span class="s1">&#39;table_name&#39;</span><span class="p">:</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;display_cols&#39;</span><span class="p">:[</span><span class="s1">&#39;tag&#39;</span><span class="p">],</span> <span class="s1">&#39;expression&#39;</span><span class="p">:[</span><span class="s1">&#39;wolf&#39;</span><span class="p">,</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">]})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span><span class="o">.</span><span class="n">get_query_string</span><span class="p">()</span>
+<span class="s1">&#39;SELECT simon.tag FROM simon WHERE simon.wolf = ?&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span><span class="o">.</span><span class="n">__param_tuple__</span>
+<span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query_string</span><span class="o">=</span><span class="s1">&#39;SELECT tag FROM simon WHERE wolf=?&#39;</span><span class="p">,</span><span class="n">param_tuple</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span><span class="o">.</span><span class="n">get_query_string</span><span class="p">()</span>
+<span class="s1">&#39;SELECT tag FROM simon WHERE wolf=?&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">q</span><span class="o">.</span><span class="n">__param_tuple__</span>
+<span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.rename_table">
+<span class="sig-name descname"><span class="pre">rename_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.rename_table" title="Link to this definition">#</a></dt>
+<dd><p>Renames the table <code class="docutils literal notranslate"><span class="pre">table_name</span></code> to <code class="docutils literal notranslate"><span class="pre">new_name</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;col1&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">)</span>
+<span class="n">col1</span>
+<span class="o">--------------------</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">rename_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;lucy&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">RuntimeError</span><span class="p">:</span> <span class="n">Failure</span> <span class="n">to</span> <span class="n">fetch</span> <span class="n">data</span><span class="o">.</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;lucy&#39;</span><span class="p">)</span>
+<span class="n">col1</span>
+<span class="o">--------------------</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.save" title="Link to this definition">#</a></dt>
+<dd><p>Save the database to the specified location.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp_dir</span><span class="p">()</span> <span class="c1"># replace with your own file path</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">MonicPolys</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">tmp</span><span class="o">+</span><span class="s1">&#39;sage.db&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">N</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">(</span><span class="n">tmp</span><span class="o">+</span><span class="s1">&#39;sage.db&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">N</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">)</span>
+<span class="n">n</span>
+<span class="o">--------------------</span>
+<span class="mi">0</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+<span class="mi">3</span>
+<span class="mi">4</span>
+<span class="mi">5</span>
+<span class="mi">6</span>
+<span class="mi">7</span>
+<span class="mi">8</span>
+<span class="mi">9</span>
+<span class="mi">10</span>
+<span class="mi">11</span>
+<span class="mi">12</span>
+<span class="mi">13</span>
+<span class="mi">14</span>
+<span class="mi">15</span>
+<span class="mi">16</span>
+<span class="mi">17</span>
+<span class="mi">18</span>
+<span class="mi">19</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.show" title="Link to this definition">#</a></dt>
+<dd><p>Show an entire table from the database.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">DB</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,{</span><span class="s1">&#39;a1&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">},</span> <span class="s1">&#39;b2&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;int&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_rows</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">)</span>
+<span class="n">a1</span>                   <span class="n">b2</span>
+<span class="o">----------------------------------------</span>
+<span class="mi">0</span>                    <span class="mi">0</span>
+<span class="mi">1</span>                    <span class="mi">1</span>
+<span class="mi">1</span>                    <span class="mi">2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLDatabase.vacuum">
+<span class="sig-name descname"><span class="pre">vacuum</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLDatabase.vacuum" title="Link to this definition">#</a></dt>
+<dd><p>Cleans the extra hard disk space used up by a database that has
+recently shrunk.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">DB</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,{</span><span class="s1">&#39;a1&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">},</span> <span class="s1">&#39;b2&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;int&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_rows</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_rows</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">)],</span> <span class="p">[</span><span class="s1">&#39;b2&#39;</span><span class="p">,</span><span class="s1">&#39;a1&#39;</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">drop_column</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span><span class="s1">&#39;b2&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">vacuum</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLQuery">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.sql_db.</span></span><span class="sig-name descname"><span class="pre">SQLQuery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLQuery" title="Link to this definition">#</a></dt>
+<dd><p>A query for a SQLite database.</p>
+<p>INPUT:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">database</span></code> – a SQLDatabase object</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">query_dict</span></code> – a dictionary specifying the query itself. The
+format is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;table_name&#39;</span><span class="p">:</span><span class="s1">&#39;tblname&#39;</span><span class="p">,</span> <span class="s1">&#39;display_cols&#39;</span><span class="p">:[</span><span class="s1">&#39;col1&#39;</span><span class="p">,</span> <span class="s1">&#39;col2&#39;</span><span class="p">,</span><span class="s1">&#39;col3&#39;</span><span class="p">],</span> <span class="s1">&#39;expression&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">col</span><span class="p">,</span> <span class="n">operator</span><span class="p">,</span> <span class="n">value</span><span class="p">]}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<dl class="simple">
+<dt>NOTE:</dt><dd><p>Every SQL type we are using is ultimately represented as a string,
+so if you wish to save actual strings to a database, you actually
+need to do something like: ‘“value”’.</p>
+</dd>
+</dl>
+<p>See the documentation of <code class="docutils literal notranslate"><span class="pre">SQLDatabase</span></code> for an introduction to using
+SQLite in Sage.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.sql_db</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLDatabase</span><span class="p">,</span> <span class="n">SQLQuery</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,{</span><span class="s1">&#39;a1&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span> <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">},</span> <span class="s1">&#39;b2&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;int&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">add_rows</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">SQLQuery</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;table_name&#39;</span><span class="p">:</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;display_cols&#39;</span><span class="p">:[</span><span class="s1">&#39;a1&#39;</span><span class="p">],</span> <span class="s1">&#39;expression&#39;</span><span class="p">:[</span><span class="s1">&#39;b2&#39;</span><span class="p">,</span><span class="s1">&#39;&lt;=&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">]})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">a1</span>
+<span class="o">--</span>
+<span class="mi">0</span>
+<span class="mi">1</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLQuery.get_query_string">
+<span class="sig-name descname"><span class="pre">get_query_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLQuery.get_query_string" title="Link to this definition">#</a></dt>
+<dd><p>Returns a copy of the query string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLQuery.intersect">
+<span class="sig-name descname"><span class="pre">intersect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLQuery.intersect" title="Link to this definition">#</a></dt>
+<dd><p>Returns a new <code class="docutils literal notranslate"><span class="pre">SQLQuery</span></code> that is the intersection of <code class="docutils literal notranslate"><span class="pre">self</span></code> and
+<code class="docutils literal notranslate"><span class="pre">other</span></code>. <code class="docutils literal notranslate"><span class="pre">join_table</span></code> and <code class="docutils literal notranslate"><span class="pre">join_dict</span></code> can be <code class="docutils literal notranslate"><span class="pre">None</span></code> iff the
+two queries only search one table in the database. All display columns
+will be concatenated in order: self display cols + other display cols.</p>
+<p>INPUT:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">other</span></code> – the <code class="docutils literal notranslate"><span class="pre">SQLQuery</span></code> to intersect with</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">join_table</span></code> – base table to join on (This table should have at
+least one column in each table to join on).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">join_dict</span></code> – a dictionary that represents the join structure for
+the new query. (Must include a mapping for all tables, including
+those previously joined in either query). Structure is given by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;join_table1&#39;</span><span class="p">:(</span><span class="s1">&#39;corr_base_col1&#39;</span><span class="p">,</span> <span class="s1">&#39;col1&#39;</span><span class="p">),</span> <span class="s1">&#39;join_table2&#39;</span><span class="p">:(</span><span class="s1">&#39;corr_base_col2&#39;</span><span class="p">,</span> <span class="s1">&#39;col2&#39;</span><span class="p">)}</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">join_table1</span></code> is to be joined with <code class="docutils literal notranslate"><span class="pre">join_table</span></code> on
+<code class="docutils literal notranslate"><span class="pre">join_table.corr_base_col1</span> <span class="pre">=</span> <span class="pre">join_table1.col1</span></code></p>
+</li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sage: from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
+sage: DB = SQLDatabase()
+sage: DB.create_table(&#39;simon&#39;,{&#39;a1&#39;:{&#39;sql&#39;:&#39;bool&#39;}, &#39;b2&#39;:{&#39;sql&#39;:&#39;int&#39;}})
+sage: DB.create_table(&#39;lucy&#39;,{&#39;a1&#39;:{&#39;sql&#39;:&#39;bool&#39;}, &#39;b2&#39;:{&#39;sql&#39;:&#39;int&#39;}})
+sage: DB.add_rows(&#39;simon&#39;, [(0,5),(1,4)])
+sage: DB.add_rows(&#39;lucy&#39;, [(1,1),(1,4)])
+sage: q = SQLQuery(DB, {&#39;table_name&#39;:&#39;lucy&#39;, &#39;display_cols&#39;:[&#39;b2&#39;], &#39;expression&#39;:[&#39;a1&#39;,&#39;=&#39;,1]})
+sage: r = SQLQuery(DB, {&#39;table_name&#39;:&#39;simon&#39;, &#39;display_cols&#39;:[&#39;a1&#39;], &#39;expression&#39;:[&#39;b2&#39;,&#39;&lt;=&#39;, 6]})
+sage: s = q.intersect(r, &#39;simon&#39;, {&#39;lucy&#39;:(&#39;a1&#39;,&#39;a1&#39;)})
+sage: s.get_query_string()
+&#39;SELECT lucy.b2,simon.a1 FROM simon INNER JOIN lucy ON
+simon.a1=lucy.a1 WHERE ( lucy.a1 = ? ) AND ( simon.b2 &lt;= ? )&#39;
+sage: s.query_results()
+[(1, 1), (4, 1)]
+sage: s = q.intersect(r)
+Traceback (most recent call last):
+...
+ValueError: Input queries query different tables but join
+    parameters are NoneType
+sage: s.__query_string__ == q.__query_string__
+False
+sage: q.intersect(r, &#39;simon&#39;, {&#39;lucy&#39;:(&#39;a1&#39;,&#39;a1&#39;)}, True)
+sage: q.__query_string__ == s.__query_string__
+True
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLQuery.query_results">
+<span class="sig-name descname"><span class="pre">query_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLQuery.query_results" title="Link to this definition">#</a></dt>
+<dd><p>Runs the query by executing the <code class="docutils literal notranslate"><span class="pre">__query_string__</span></code>. Returns the
+results of the query in a list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLQuery.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLQuery.show" title="Link to this definition">#</a></dt>
+<dd><p>Displays the result of the query in table format.</p>
+<p>KEYWORDS:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_field_size</span></code> – how wide each field can be</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">format_cols</span></code> – a dictionary that allows the user to specify the
+format of a column’s output by supplying a function. The format of
+the dictionary is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;column_name&#39;</span><span class="p">:(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">format_function</span><span class="p">(</span><span class="n">x</span><span class="p">))}</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_cols</span></code> – a dictionary that allows the user to specify that a
+plot should be drawn by the object generated by a data slice. Note
+that plot kwds are permitted. The dictionary format is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;column_name&#39;</span><span class="p">:((</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">plot_function</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span><span class="o">**</span><span class="n">kwds</span><span class="p">)}</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">relabel_cols</span></code> – a dictionary to specify a relabeling of column
+headers. The dictionary format is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;table_name&#39;</span><span class="p">:{</span><span class="s1">&#39;old_col_name&#39;</span><span class="p">:</span><span class="s1">&#39;new_col_name&#39;</span><span class="p">}}</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">id_col</span></code> – reference to a column that can be used as an object
+identifier for each row</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">col_spacing</span></code> – the number of spaces between each column</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">field_sizes</span></code> – a list of integers (width of each column)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">justification</span></code> – how to align the content in each row, either <code class="docutils literal notranslate"><span class="pre">'l'</span></code> for left, <code class="docutils literal notranslate"><span class="pre">'r'</span></code> for right
+or <code class="docutils literal notranslate"><span class="pre">'c'</span></code> for centered</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.sql_db</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLDatabase</span><span class="p">,</span> <span class="n">SQLQuery</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span> <span class="o">=</span> <span class="n">SQLDatabase</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,{</span><span class="s1">&#39;a1&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span> <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">},</span> <span class="s1">&#39;b1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span> <span class="s1">&#39;int&#39;</span><span class="p">},</span> <span class="s1">&#39;b2&#39;</span><span class="p">:{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;int&#39;</span><span class="p">}})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">DB</span><span class="o">.</span><span class="n">add_rows</span><span class="p">(</span><span class="s1">&#39;simon&#39;</span><span class="p">,[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">111</span><span class="p">,</span><span class="mi">182917</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">222222</span><span class="p">)])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">SQLQuery</span><span class="p">(</span><span class="n">DB</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;table_name&#39;</span><span class="p">:</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;display_cols&#39;</span><span class="p">:[</span><span class="s1">&#39;a1&#39;</span><span class="p">],</span> <span class="s1">&#39;expression&#39;</span><span class="p">:[</span><span class="s1">&#39;b2&#39;</span><span class="p">,</span><span class="s1">&#39;&lt;=&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">]})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">a1</span>
+<span class="o">---</span>
+<span class="mi">0</span>
+<span class="mi">111</span>
+<span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">SQLQuery</span><span class="p">(</span><span class="n">DB</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;table_name&#39;</span><span class="p">:</span><span class="s1">&#39;simon&#39;</span><span class="p">,</span> <span class="s1">&#39;display_cols&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a1&#39;</span><span class="p">,</span> <span class="s1">&#39;b1&#39;</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">],</span> <span class="s1">&#39;expression&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;b2&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;=&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">]})</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">col_spacing</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">justification</span><span class="o">=</span><span class="s1">&#39;lcr&#39;</span><span class="p">)</span>
+<span class="n">a1</span>      <span class="n">b1</span>          <span class="n">b2</span>
+<span class="o">----------------------</span>
+<span class="mi">0</span>       <span class="mi">0</span>            <span class="mi">0</span>
+<span class="mi">111</span>   <span class="mi">182917</span>         <span class="mi">1</span>
+<span class="mi">1</span>       <span class="mi">2</span>      <span class="o">-</span><span class="mi">222222</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">field_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="n">justification</span><span class="o">=</span><span class="s1">&#39;ccc&#39;</span><span class="p">)</span>
+    <span class="n">a1</span>         <span class="n">b1</span>         <span class="n">b2</span>
+<span class="o">-------------------------------</span>
+    <span class="mi">0</span>          <span class="mi">0</span>          <span class="mi">0</span>
+   <span class="mi">111</span>       <span class="mi">182917</span>       <span class="mi">1</span>
+    <span class="mi">1</span>          <span class="mi">2</span>       <span class="o">-</span><span class="mi">222222</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.SQLQuery.union">
+<span class="sig-name descname"><span class="pre">union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.SQLQuery.union" title="Link to this definition">#</a></dt>
+<dd><p>Returns a new <code class="docutils literal notranslate"><span class="pre">SQLQuery</span></code> that is the union of self and other.
+<code class="docutils literal notranslate"><span class="pre">join_table</span></code> and <code class="docutils literal notranslate"><span class="pre">join_dict</span></code> can be <code class="docutils literal notranslate"><span class="pre">None</span></code> iff the two queries
+only search one table in the database. All display columns will be
+concatenated in order: self display cols + other display cols.</p>
+<p>INPUT:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">other</span></code> – the <code class="docutils literal notranslate"><span class="pre">SQLQuery</span></code> to union with</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">join_table</span></code> – base table to join on (This table should have at
+least one column in each table to join on).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">join_dict</span></code> – a dictionary that represents the join structure for
+the new query. (Must include a mapping for all tables, including
+those previously joined in either query). Structure is given by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;join_table1&#39;</span><span class="p">:(</span><span class="s1">&#39;corr_base_col1&#39;</span><span class="p">,</span> <span class="s1">&#39;col1&#39;</span><span class="p">),</span> <span class="s1">&#39;join_table2&#39;</span><span class="p">:(</span><span class="s1">&#39;corr_base_col2&#39;</span><span class="p">,</span> <span class="s1">&#39;col2&#39;</span><span class="p">)}</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">join_table1`</span> <span class="pre">is</span> <span class="pre">to</span> <span class="pre">be</span> <span class="pre">joined</span> <span class="pre">with</span> <span class="pre">``join_table</span></code> on
+<code class="docutils literal notranslate"><span class="pre">join_table.corr_base_col1=join_table1.col1</span></code></p>
+</li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sage: from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
+sage: DB = SQLDatabase()
+sage: DB.create_table(&#39;simon&#39;,{&#39;a1&#39;:{&#39;sql&#39;:&#39;bool&#39;}, &#39;b2&#39;:{&#39;sql&#39;:&#39;int&#39;}})
+sage: DB.create_table(&#39;lucy&#39;,{&#39;a1&#39;:{&#39;sql&#39;:&#39;bool&#39;}, &#39;b2&#39;:{&#39;sql&#39;:&#39;int&#39;}})
+sage: DB.add_rows(&#39;simon&#39;, [(0,5),(1,4)])
+sage: DB.add_rows(&#39;lucy&#39;, [(1,1),(1,4)])
+sage: q = SQLQuery(DB, {&#39;table_name&#39;:&#39;lucy&#39;, &#39;display_cols&#39;:[&#39;b2&#39;], &#39;expression&#39;:[&#39;a1&#39;,&#39;=&#39;,1]})
+sage: r = SQLQuery(DB, {&#39;table_name&#39;:&#39;simon&#39;, &#39;display_cols&#39;:[&#39;a1&#39;], &#39;expression&#39;:[&#39;b2&#39;,&#39;&lt;=&#39;, 6]})
+sage: s = q.union(r, &#39;simon&#39;, {&#39;lucy&#39;:(&#39;a1&#39;,&#39;a1&#39;)})
+sage: s.get_query_string()
+&#39;SELECT lucy.b2,simon.a1 FROM simon INNER JOIN lucy ON
+simon.a1=lucy.a1 WHERE ( lucy.a1 = ? ) OR ( simon.b2 &lt;= ? )&#39;
+sage: s.query_results()
+[(1, 1), (4, 1)]
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.construct_skeleton">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.sql_db.</span></span><span class="sig-name descname"><span class="pre">construct_skeleton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.construct_skeleton" title="Link to this definition">#</a></dt>
+<dd><p>Constructs a database skeleton from the sql data.  The skeleton data
+structure is a triple indexed dictionary of the following format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>| - skeleton -- a triple-indexed dictionary
+|   - outer key -- table name
+|     - inner key -- column name
+|       - inner inner key -- one of the following:
+|         - ``primary_key`` -- boolean, whether column has been set as
+            primary key
+|         - ``index`` -- boolean, whether column has been set as index
+|         - ``unique`` -- boolean, whether column has been set as unique
+|         - ``sql`` -- one of ``&#39;TEXT&#39;``, ``&#39;BOOLEAN&#39;``, ``&#39;INTEGER&#39;``,
+            ``&#39;REAL&#39;``, or other user defined type
+</pre></div>
+</div>
+<p>An example skeleton of a database with one table, that table with one
+column:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;table1&#39;</span><span class="p">:{</span><span class="s1">&#39;col1&#39;</span><span class="p">:{</span><span class="s1">&#39;primary_key&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;REAL&#39;</span><span class="p">}}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.regexp">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.sql_db.</span></span><span class="sig-name descname"><span class="pre">regexp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.regexp" title="Link to this definition">#</a></dt>
+<dd><p>Function to define regular expressions in pysqlite.
+Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if parameter <code class="docutils literal notranslate"><span class="pre">item</span></code> matches the regular expression
+parameter <code class="docutils literal notranslate"><span class="pre">expr</span></code>.
+Returns <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise (i.e.: no match).</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sage.databases.sql_db</span><span class="w"> </span><span class="kn">import</span> <span class="n">regexp</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">regexp</span><span class="p">(</span><span class="s1">&#39;.s.*&#39;</span><span class="p">,</span><span class="s1">&#39;cs&#39;</span><span class="p">)</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">regexp</span><span class="p">(</span><span class="s1">&#39;.s.*&#39;</span><span class="p">,</span><span class="s1">&#39;ccs&#39;</span><span class="p">)</span>
+<span class="kc">False</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">regexp</span><span class="p">(</span><span class="s1">&#39;.s.*&#39;</span><span class="p">,</span><span class="s1">&#39;cscccc&#39;</span><span class="p">)</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.verify_column">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.sql_db.</span></span><span class="sig-name descname"><span class="pre">verify_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">col_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.verify_column" title="Link to this definition">#</a></dt>
+<dd><p>Verify that <code class="docutils literal notranslate"><span class="pre">col_dict</span></code> is in proper format, and return a dict with
+default values filled in. Proper format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;primary_key&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;REAL&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sage.databases.sql_db</span><span class="w"> </span><span class="kn">import</span> <span class="n">verify_column</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">col</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;BOOLEAN&#39;</span><span class="p">}</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">verify_column</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+<span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;sql&#39;</span><span class="p">:</span> <span class="s1">&#39;BOOLEAN&#39;</span><span class="p">,</span> <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">col</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;primary_key&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">}</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">verify_column</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+<span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;primary_key&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;sql&#39;</span><span class="p">:</span> <span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span> <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">verify_column</span><span class="p">({})</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">SQL</span> <span class="nb">type</span> <span class="n">must</span> <span class="n">be</span> <span class="n">declared</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span><span class="s1">&#39;REAL&#39;</span><span class="p">}</span><span class="o">.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.verify_operator">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.sql_db.</span></span><span class="sig-name descname"><span class="pre">verify_operator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.verify_operator" title="Link to this definition">#</a></dt>
+<dd><p>Checks that <code class="docutils literal notranslate"><span class="pre">operator</span></code> is one of the allowed strings.
+Legal operators include the following strings:</p>
+<ul class="simple">
+<li><p>‘=’</p></li>
+<li><p>‘&lt;=’</p></li>
+<li><p>‘&gt;=’</p></li>
+<li><p>‘&lt;’</p></li>
+<li><p>‘&gt;’</p></li>
+<li><p>‘&lt;&gt;’</p></li>
+<li><p>‘like’</p></li>
+<li><p>‘regexp’</p></li>
+<li><p>‘is null’</p></li>
+<li><p>‘is not null’</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sage.databases.sql_db</span><span class="w"> </span><span class="kn">import</span> <span class="n">verify_operator</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">verify_operator</span><span class="p">(</span><span class="s1">&#39;&lt;=&#39;</span><span class="p">)</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">verify_operator</span><span class="p">(</span><span class="s1">&#39;regexp&#39;</span><span class="p">)</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">verify_operator</span><span class="p">(</span><span class="s1">&#39;is null&#39;</span><span class="p">)</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">verify_operator</span><span class="p">(</span><span class="s1">&#39;not_an_operator&#39;</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">TypeError</span><span class="p">:</span> <span class="n">not_an_operator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">a</span> <span class="n">legal</span> <span class="n">operator</span><span class="o">.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.sql_db.verify_type">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.sql_db.</span></span><span class="sig-name descname"><span class="pre">verify_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.sql_db.verify_type" title="Link to this definition">#</a></dt>
+<dd><p>Verify that the specified <code class="docutils literal notranslate"><span class="pre">type</span></code> is one of the allowed strings.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sage.databases.sql_db</span><span class="w"> </span><span class="kn">import</span> <span class="n">verify_type</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">verify_type</span><span class="p">(</span><span class="s1">&#39;INT&#39;</span><span class="p">)</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">verify_type</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">verify_type</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">TypeError</span><span class="p">:</span> <span class="nb">float</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">a</span> <span class="n">legal</span> <span class="nb">type</span><span class="o">.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="ppl_utils.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">ppl_utils</span></code></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="statistics.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">statistics</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase"><code class="docutils literal notranslate"><span class="pre">SQLDatabase</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.add_column"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.add_column()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.add_data"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.add_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.add_row"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.add_row()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.add_rows"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.add_rows()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.commit"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.commit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.create_table"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.create_table()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.delete_rows"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.delete_rows()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_column"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.drop_column()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_data_from_table"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.drop_data_from_table()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_index"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.drop_index()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_primary_key"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.drop_primary_key()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_table"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.drop_table()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.drop_unique"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.drop_unique()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.get_connection"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.get_connection()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.get_cursor"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.get_cursor()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.get_skeleton"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.get_skeleton()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.make_index"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.make_index()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.make_primary_key"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.make_primary_key()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.make_unique"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.make_unique()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.query"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.query()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.rename_table"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.rename_table()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.save"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.save()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.show"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.show()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLDatabase.vacuum"><code class="docutils literal notranslate"><span class="pre">SQLDatabase.vacuum()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLQuery"><code class="docutils literal notranslate"><span class="pre">SQLQuery</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLQuery.get_query_string"><code class="docutils literal notranslate"><span class="pre">SQLQuery.get_query_string()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLQuery.intersect"><code class="docutils literal notranslate"><span class="pre">SQLQuery.intersect()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLQuery.query_results"><code class="docutils literal notranslate"><span class="pre">SQLQuery.query_results()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLQuery.show"><code class="docutils literal notranslate"><span class="pre">SQLQuery.show()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.SQLQuery.union"><code class="docutils literal notranslate"><span class="pre">SQLQuery.union()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.construct_skeleton"><code class="docutils literal notranslate"><span class="pre">construct_skeleton()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.regexp"><code class="docutils literal notranslate"><span class="pre">regexp()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.verify_column"><code class="docutils literal notranslate"><span class="pre">verify_column()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.verify_operator"><code class="docutils literal notranslate"><span class="pre">verify_operator()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.sql_db.verify_type"><code class="docutils literal notranslate"><span class="pre">verify_type()</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By the surface-dynamics authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-2025, the surface-dynamics authors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

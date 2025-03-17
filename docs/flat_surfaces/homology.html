@@ -1,0 +1,1454 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>homology &#8212; surface-dynamics 0.7.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/extra.css?v=0eb12c1b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=c62cc9a0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'flat_surfaces/homology';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="masur_veech_volumes" href="masur_veech_volumes.html" />
+    <link rel="prev" title="abelian_strata" href="abelian_strata.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="https://github.com/flatsurf/surface-dynamics/raw/master/doc/source/static/logo.svg?sanitize=true" class="logo__image only-light" alt="surface-dynamics 0.7.0 documentation - Home"/>
+    <script>document.write(`<img src="https://github.com/flatsurf/surface-dynamics/raw/master/doc/source/static/logo.svg?sanitize=true" class="logo__image only-dark" alt="surface-dynamics 0.7.0 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://flatsurf.github.io" title="flatsurf" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="https://flatsurf.github.io/assets/logo.svg" class="icon-link-image" alt="flatsurf"/></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/flatsurf/surface-dynamics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://sagemath.zulipchat.com/#narrow/channel/271193-flatsurf" title="Zulip" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-regular fa-comments fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Zulip</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing surface-dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Developer’s guide</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/interval_exchanges.html">Interval Exchange Transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/square_tiled_surfaces.html">Square-tiled Surfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/rank2_genus3_classification.html">Filtering Possible <span class="math notranslate nohighlight">\(\mathcal M\)</span>-Parallel Classes</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../databases/flat_surfaces.html">The databases.flat_surfaces Module</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../flat_surfaces.html">The flat_surfaces Package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="abelian_strata.html"><code class="docutils literal notranslate"><span class="pre">abelian_strata</span></code></a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">homology</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="masur_veech_volumes.html"><code class="docutils literal notranslate"><span class="pre">masur_veech_volumes</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="quadratic_strata.html"><code class="docutils literal notranslate"><span class="pre">quadratic_strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="separatrix_diagram.html"><code class="docutils literal notranslate"><span class="pre">separatrix_diagram</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="single_cylinder.html"><code class="docutils literal notranslate"><span class="pre">single_cylinder</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="strata.html"><code class="docutils literal notranslate"><span class="pre">strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="twist_space.html"><code class="docutils literal notranslate"><span class="pre">twist_space</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="origamis.html">The origamis Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="origamis/generators.html"><code class="docutils literal notranslate"><span class="pre">generators</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="origamis/origami.html"><code class="docutils literal notranslate"><span class="pre">origami</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="origamis/origami_database.html"><code class="docutils literal notranslate"><span class="pre">origami_database</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="origamis/pillowcase_cover.html"><code class="docutils literal notranslate"><span class="pre">pillowcase_cover</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="origamis/teichmueller_curve.html"><code class="docutils literal notranslate"><span class="pre">teichmueller_curve</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../interval_exchanges.html">The interval_exchanges Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/constructors.html"><code class="docutils literal notranslate"><span class="pre">constructors</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/conversion.html"><code class="docutils literal notranslate"><span class="pre">conversion</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/cover.html"><code class="docutils literal notranslate"><span class="pre">cover</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/flip_sequence.html"><code class="docutils literal notranslate"><span class="pre">flip_sequence</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/iet.html"><code class="docutils literal notranslate"><span class="pre">iet</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/labelled.html"><code class="docutils literal notranslate"><span class="pre">labelled</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/marked_partition.html"><code class="docutils literal notranslate"><span class="pre">marked_partition</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/rauzy_class_cardinality.html"><code class="docutils literal notranslate"><span class="pre">rauzy_class_cardinality</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/reduced.html"><code class="docutils literal notranslate"><span class="pre">reduced</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/template.html"><code class="docutils literal notranslate"><span class="pre">template</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../misc.html">The misc Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../misc/additive_multivariate_generating_series.html"><code class="docutils literal notranslate"><span class="pre">additive_multivariate_generating_series</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/constellation.html"><code class="docutils literal notranslate"><span class="pre">constellation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/even_permutation.html"><code class="docutils literal notranslate"><span class="pre">even_permutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/factored_denominator.html"><code class="docutils literal notranslate"><span class="pre">factored_denominator</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/generalized_multiple_zeta_values.html"><code class="docutils literal notranslate"><span class="pre">generalized_multiple_zeta_values</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/group_representation.html"><code class="docutils literal notranslate"><span class="pre">group_representation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/iscc.html"><code class="docutils literal notranslate"><span class="pre">iscc</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/latex.html"><code class="docutils literal notranslate"><span class="pre">latex</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/linalg.html"><code class="docutils literal notranslate"><span class="pre">linalg</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/multiplicative_multivariate_generating_series.html"><code class="docutils literal notranslate"><span class="pre">multiplicative_multivariate_generating_series</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/permutation.html"><code class="docutils literal notranslate"><span class="pre">permutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/plane_tree.html"><code class="docutils literal notranslate"><span class="pre">plane_tree</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/ppl_utils.html"><code class="docutils literal notranslate"><span class="pre">ppl_utils</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/sql_db.html"><code class="docutils literal notranslate"><span class="pre">sql_db</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/statistics.html"><code class="docutils literal notranslate"><span class="pre">statistics</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../topological_recursion.html">The topological_recursion Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/kontsevich.html"><code class="docutils literal notranslate"><span class="pre">kontsevich</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/masur_veech.html"><code class="docutils literal notranslate"><span class="pre">masur_veech</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/no_pi.html"><code class="docutils literal notranslate"><span class="pre">no_pi</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/topological_recursion.html"><code class="docutils literal notranslate"><span class="pre">topological_recursion</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../topology.html">The topology Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../topology/fat_graph.html"><code class="docutils literal notranslate"><span class="pre">fat_graph</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topology/fat_graph_exhaustive_generation.html"><code class="docutils literal notranslate"><span class="pre">fat_graph_exhaustive_generation</span></code></a></li>
+</ul>
+</details></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/flatsurf/surface-dynamics/edit/master/doc/source/flat_surfaces/homology.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button"
+   title="Suggest edit"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/flat_surfaces/homology.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>homology</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph"><code class="docutils literal notranslate"><span class="pre">RibbonGraph</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.add_extra_darts"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.add_extra_darts()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.automorphism_group"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.automorphism_group()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.boundaries"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.boundaries()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.collapse"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.collapse()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.cycle_basis"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.cycle_basis()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_edge"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.dart_to_edge()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_face"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.dart_to_face()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_vertex"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.dart_to_vertex()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.darts"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.darts()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.dual"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.dual()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.edge_orbit"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.edge_orbit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.edge_perm"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.edge_perm()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.edges"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.edges()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.euler_characteristic"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.euler_characteristic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.face_orbit"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.face_orbit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.face_perm"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.face_perm()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.faces"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.faces()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.genus"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.genus()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_connected"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.is_connected()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_cycle"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.is_cycle()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_plane"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.is_plane()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_plane_tree"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.is_plane_tree()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_triangulated"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.is_triangulated()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.length_rational_fraction"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.length_rational_fraction()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.monodromy_group"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.monodromy_group()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_darts"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.num_darts()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_edges"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.num_edges()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_faces"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.num_faces()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_vertices"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.num_vertices()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.relabel"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.relabel()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.spanning_tree"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.spanning_tree()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.vertex_orbit"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.vertex_orbit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.vertex_perm"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.vertex_perm()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.vertices"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.vertices()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithAngles</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_at_vertex"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithAngles.angle_at_vertex()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_at_vertices"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithAngles.angle_at_vertices()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_between_darts"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithAngles.angle_between_darts()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.has_trivial_holonomy"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithAngles.has_trivial_holonomy()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.holonomy_representation"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithAngles.holonomy_representation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.spin_parity"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithAngles.spin_parity()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.winding"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithAngles.winding()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithHolonomies"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithHolonomies</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.angle"><code class="docutils literal notranslate"><span class="pre">angle()</span></code></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-surface_dynamics.flat_surfaces.homology">
+<span id="homology"></span><h1><code class="docutils literal notranslate"><span class="pre">homology</span></code><a class="headerlink" href="#module-surface_dynamics.flat_surfaces.homology" title="Link to this heading">#</a></h1>
+<p>Simplicial complex, homology of surfaces and translation surfaces</p>
+<p>In this module are implemented simple homology computation for translation
+surfaces. There are three main classes:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph" title="surface_dynamics.flat_surfaces.homology.RibbonGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">RibbonGraph</span></code></a>: decomposition of a surface into polygons. The
+combinatorics is stored as a triple of permutations <cite>v</cite> (vertices), <cite>e</cite>
+(edges), <cite>f</cite> (faces) so that the product <cite>vef</cite> is the identity. The domain of
+the permutations correspond to the half edges or <em>darts</em>. The permutation <cite>e</cite>
+is an involution so that <cite>e(i)</cite> is the other half of the edge starting at
+<cite>i</cite>. The fixed points of <cite>e</cite> corresponds to edge glued to themselves. The
+permutation <cite>v</cite> is obtained by turning around a vertex, while <cite>f</cite> turning
+around a face.</p></li>
+<li><p><a class="reference internal" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles" title="surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles"><code class="xref py py-class docutils literal notranslate"><span class="pre">RibbonGraphWithAngles</span></code></a>: a ribbon graph with an additional angle
+structure.</p></li>
+<li><p><a class="reference internal" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithHolonomies" title="surface_dynamics.flat_surfaces.homology.RibbonGraphWithHolonomies"><code class="xref py py-class docutils literal notranslate"><span class="pre">RibbonGraphWithHolonomies</span></code></a>: a ribbon graph with an additional holonomy
+structure on its edges.</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>To create a ribbon graph you just need to fix two of the permutations <cite>v</cite>, <cite>e</cite>,
+<cite>f</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">R</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="s1">&#39;(0,1,4,3)(5,2)&#39;</span><span class="p">,</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(0,3)(1,2)(4,5)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span>
+<span class="n">Ribbon</span> <span class="n">graph</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">vertices</span><span class="p">,</span> <span class="mi">3</span> <span class="n">edges</span> <span class="ow">and</span> <span class="mi">3</span> <span class="n">faces</span>
+</pre></div>
+</div>
+<p>The vertices, edges and faces are by definition the cycles of the permutation.
+Calling the method <a class="reference internal" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.vertices" title="surface_dynamics.flat_surfaces.homology.RibbonGraph.vertices"><code class="xref py py-meth docutils literal notranslate"><span class="pre">vertices()</span></code></a>, <a class="reference internal" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.edges" title="surface_dynamics.flat_surfaces.homology.RibbonGraph.edges"><code class="xref py py-meth docutils literal notranslate"><span class="pre">edges()</span></code></a> or
+<a class="reference internal" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.faces" title="surface_dynamics.flat_surfaces.homology.RibbonGraph.faces"><code class="xref py py-meth docutils literal notranslate"><span class="pre">faces()</span></code></a> gives you access to these cycles:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">R</span><span class="o">.</span><span class="n">vertices</span><span class="p">()</span>
+<span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span><span class="o">.</span><span class="n">edges</span><span class="p">()</span>
+<span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span><span class="o">.</span><span class="n">faces</span><span class="p">()</span>
+<span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>Given a half edge (i.e. a dart), you can get the index of the vertex, edge or
+face it belongs with the methods <a class="reference internal" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_vertex" title="surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_vertex"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dart_to_vertex()</span></code></a>,
+<a class="reference internal" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_edge" title="surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_edge"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dart_to_edge()</span></code></a> and <a class="reference internal" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_edge" title="surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_edge"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dart_to_edge()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">R</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="mi">0</span>
+<span class="n">sage</span><span class="p">:</span> <span class="mi">1</span> <span class="ow">in</span> <span class="n">R</span><span class="o">.</span><span class="n">vertices</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span><span class="o">.</span><span class="n">dart_to_vertex</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="mi">2</span> <span class="ow">in</span> <span class="n">R</span><span class="o">.</span><span class="n">vertices</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span><span class="o">.</span><span class="n">dart_to_edge</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="mi">0</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span><span class="o">.</span><span class="n">dart_to_edge</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="mi">2</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span><span class="o">.</span><span class="n">dart_to_face</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="mi">0</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span><span class="o">.</span><span class="n">dart_to_face</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="mi">2</span>
+</pre></div>
+</div>
+<p>To initialize a ribbon graph with angles, you have to input the standard data to
+initialize a ribbon graph plus a list of positive rational numbers which
+corresponds to the angles between darts (more precisely, the number at position
+i is the angle between i and v(i)):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">e</span> <span class="o">=</span> <span class="s1">&#39;(0,1)(2,3)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;(0,2,1,3)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">spin_parity</span><span class="p">()</span>
+<span class="mi">1</span>
+</pre></div>
+</div>
+<p>TODO:</p>
+<ul class="simple">
+<li><p>Oriented ribbon graphs are <em>exactly</em> separatrix diagrams. An orientation on a Ribbon
+graphs is a choice of orientation for each vertex so that each face has all of its
+edges oriented in the same direction as we go along the boundaries.</p></li>
+</ul>
+<dl class="py class">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.flat_surfaces.homology.</span></span><span class="sig-name descname"><span class="pre">RibbonGraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">faces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph" title="Link to this definition">#</a></dt>
+<dd><p>Generic class for Ribbon graph.</p>
+<p>A Ribbon graph (or fat graph or combinatorial map) is a graph embedded in a
+surface. This class uses representation as a triple <code class="docutils literal notranslate"><span class="pre">(v,e,f)</span></code> of
+permutations such that <cite>vef = 1</cite> and the action of the group generated by
+<cite>v,e,f</cite> acts transitively in the domain. The cycles of <code class="docutils literal notranslate"><span class="pre">v</span></code> are
+considered as vertices, the ones of <code class="docutils literal notranslate"><span class="pre">e</span></code> are considered as edges and the
+ones of <code class="docutils literal notranslate"><span class="pre">f</span></code> as the faces. Each element of the domain is a half-edge which
+is called a <em>dart</em>. A dart is also associated to an oriented edge.</p>
+<p>The domain of the permutations must be a subset of [0, …, N-1] for some N.
+The edges are always considered to be (i, ~i) where i is the bit complement
+of the integer i (~0 = -1, ~-3 = 2). So that an edge always has a canonical
+representative number given by the non-negative version.</p>
+<p>A dense ribbon graph has the following attributes</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>total_darts - non negative integer - the total number darts</p></li>
+<li><p>num_darts - non negative integer - the number of active darts</p></li>
+<li><p>active_darts - bitset - list of lengths _total_darts with True or
+False. The position i is True if i is an active dart.</p></li>
+<li><p>vertices, vertices_inv - list - partial permutations of [0,N] which are
+inverse of each other</p></li>
+<li><p>vertex_cycles - the cycles of the partial permutation vertices</p></li>
+<li><p>dart_to_vertex_index</p></li>
+<li><p>edges, edges_inv - list - partial permutations of [0,N] which are
+inverse of each other</p></li>
+<li><p>edge_cycles - the cycles of the partial permutation edge</p></li>
+<li><p>dart_to_edge_index</p></li>
+<li><p>faces, faces_inv - list - partial permutations of [0,N] which are
+inverse of each other</p></li>
+<li><p>face_cycles - the cycles of the partial permutation faces</p></li>
+<li><p>dart_to_face_index</p></li>
+</ul>
+</div></blockquote>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">RibbonGraph</span><span class="p">([],[],[])</span>
+<span class="n">Ribbon</span> <span class="n">graph</span> <span class="k">with</span> <span class="mi">1</span> <span class="n">vertex</span><span class="p">,</span> <span class="mi">0</span> <span class="n">edge</span> <span class="ow">and</span> <span class="mi">1</span> <span class="n">face</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="s1">&#39;()&#39;</span><span class="p">,</span><span class="s1">&#39;(0,1)&#39;</span><span class="p">,</span><span class="s1">&#39;(0,1)&#39;</span><span class="p">)</span>
+<span class="n">Ribbon</span> <span class="n">graph</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">vertices</span><span class="p">,</span> <span class="mi">1</span> <span class="n">edge</span> <span class="ow">and</span> <span class="mi">1</span> <span class="n">face</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="s1">&#39;(0,3)(1,2)&#39;</span><span class="p">,</span><span class="s1">&#39;(0,1)(2,3)&#39;</span><span class="p">,</span><span class="s1">&#39;(0,2)(1,3)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span>
+<span class="n">Ribbon</span> <span class="n">graph</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">vertices</span><span class="p">,</span> <span class="mi">2</span> <span class="n">edges</span> <span class="ow">and</span> <span class="mi">2</span> <span class="n">faces</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span><span class="o">.</span><span class="n">darts</span><span class="p">()</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span>
+<span class="mi">0</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(0,2)(1,3)(4,6)(5,7)&#39;</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="s1">&#39;(0,1,2,3,4,5,6,7)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span>
+<span class="n">Ribbon</span> <span class="n">graph</span> <span class="k">with</span> <span class="mi">1</span> <span class="n">vertex</span><span class="p">,</span> <span class="mi">4</span> <span class="n">edges</span> <span class="ow">and</span> <span class="mi">1</span> <span class="n">face</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span><span class="o">.</span><span class="n">darts</span><span class="p">()</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span>
+<span class="mi">2</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="s1">&#39;(0,2,3,6)(1,4,5,7)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span>
+<span class="n">Ribbon</span> <span class="n">graph</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">vertices</span><span class="p">,</span> <span class="mi">4</span> <span class="n">edges</span> <span class="ow">and</span> <span class="mi">4</span> <span class="n">faces</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">()</span>
+<span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span>
+<span class="mi">0</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.add_extra_darts">
+<span class="sig-name descname"><span class="pre">add_extra_darts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.add_extra_darts" title="Link to this definition">#</a></dt>
+<dd><p>Add extra darts to support a total of <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">n</span></code> darts.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.automorphism_group">
+<span class="sig-name descname"><span class="pre">automorphism_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fix_vertices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fix_edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fix_faces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.automorphism_group" title="Link to this definition">#</a></dt>
+<dd><p>Return the automorphism group of this ribbon graph.</p>
+<p>The automorphism is simply the intersection of the centralizers
+of the defining permutations.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="s1">&#39;(1,6,5)(2,3,4)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)(3,4)(5,6)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,4,2,5)(3)(6)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">()</span><span class="o">.</span><span class="n">cardinality</span><span class="p">()</span>
+<span class="mi">2</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">(</span><span class="n">fix_faces</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">cardinality</span><span class="p">()</span>
+<span class="mi">1</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="s1">&#39;(1,4,5)(2,6,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)(3,4)(5,6)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,3)(2,5)(4,6)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">()</span><span class="o">.</span><span class="n">cardinality</span><span class="p">()</span>
+<span class="mi">6</span>
+</pre></div>
+</div>
+<p>Examples in genus 1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="s1">&#39;(1,5,4)(6,3,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)(3,4)(5,6)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,3,5,2,4,6)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">A</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">A</span>
+<span class="n">Subgroup</span> <span class="o">...</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">A</span><span class="o">.</span><span class="n">cardinality</span><span class="p">()</span>
+<span class="mi">6</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">(</span><span class="n">fix_faces</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">==</span> <span class="n">A</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="s1">&#39;(1,3,2,4)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,2)(3,4)&#39;</span><span class="p">,</span> <span class="s1">&#39;(1,3,2,4)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">automorphism_group</span><span class="p">()</span><span class="o">.</span><span class="n">cardinality</span><span class="p">()</span>
+<span class="mi">4</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.boundaries">
+<span class="sig-name descname"><span class="pre">boundaries</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.boundaries" title="Link to this definition">#</a></dt>
+<dd><p>Return the list of cycles which are boundaries.</p>
+<p>A cycle is a <em>boundary</em> if it bounds a face.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="s1">&#39;(1,2,3)(4,5,6)&#39;</span><span class="p">,</span><span class="s1">&#39;(1,2)(3,4)(5,6)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">boundaries</span><span class="p">()</span>
+<span class="p">[[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>  <span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)],</span> <span class="p">[(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="s1">&#39;(1,2,3)(4,5)(6,7,8)&#39;</span><span class="p">,</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(1,2)(3,4)(5,6)(7,8)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">boundaries</span><span class="p">()</span>
+<span class="p">[[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>  <span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)],</span> <span class="p">[(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">)]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.collapse">
+<span class="sig-name descname"><span class="pre">collapse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spanning_tree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.collapse" title="Link to this definition">#</a></dt>
+<dd><p>Return a ribbon graph callapsed along a spanning tree.</p>
+<p>The resulting graph is on the same surface as the preceding but has only
+one vertex. It could be used twice to provide a polygonal representation
+with one vertex and one face.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="s1">&#39;(0,1,2,5)(3,7)(4,10,9)(6,11,12)(8,13)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span>
+<span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span><span class="o">.</span><span class="n">num_vertices</span><span class="p">()</span>
+<span class="mi">5</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span><span class="o">.</span><span class="n">num_edges</span><span class="p">()</span>
+<span class="mi">7</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span><span class="o">.</span><span class="n">num_faces</span><span class="p">()</span>
+<span class="mi">2</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R2</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">collapse</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R2</span>
+<span class="n">Ribbon</span> <span class="n">graph</span> <span class="k">with</span> <span class="mi">1</span> <span class="n">vertex</span><span class="p">,</span> <span class="mi">3</span> <span class="n">edges</span> <span class="ow">and</span> <span class="mi">2</span> <span class="n">faces</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span>
+<span class="n">Ribbon</span> <span class="n">graph</span> <span class="k">with</span> <span class="mi">5</span> <span class="n">vertices</span><span class="p">,</span> <span class="mi">7</span> <span class="n">edges</span> <span class="ow">and</span> <span class="mi">2</span> <span class="n">faces</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R3</span> <span class="o">=</span> <span class="n">R2</span><span class="o">.</span><span class="n">dual</span><span class="p">()</span><span class="o">.</span><span class="n">collapse</span><span class="p">()</span><span class="o">.</span><span class="n">dual</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R3</span>
+<span class="n">Ribbon</span> <span class="n">graph</span> <span class="k">with</span> <span class="mi">1</span> <span class="n">vertex</span><span class="p">,</span> <span class="mi">2</span> <span class="n">edges</span> <span class="ow">and</span> <span class="mi">1</span> <span class="n">face</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.cycle_basis">
+<span class="sig-name descname"><span class="pre">cycle_basis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intersection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.cycle_basis" title="Link to this definition">#</a></dt>
+<dd><p>Returns a base of oriented cycles of the Ribbon graph modulo boundaries.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">intersection</span></code> is set to True then the method also returns the
+intersection matrix of the cycles.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="s1">&#39;(1,2,3)(4,5,6)&#39;</span><span class="p">,</span><span class="s1">&#39;(1,2)(3,4)(5,6)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">cycle_basis</span><span class="p">()</span>
+<span class="p">[]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="s1">&#39;(1,2,3)(4,5)(6,7,8)&#39;</span><span class="p">,</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(1,2)(3,4)(5,6)(7,8)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">cycle_basis</span><span class="p">()</span>
+<span class="p">[]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="s1">&#39;(1,4,5)(2,3)(6,7,8)&#39;</span><span class="p">,</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(1,2)(3,4)(5,6)(7,8)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">cycle_basis</span><span class="p">()</span>
+<span class="p">[]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">e</span> <span class="o">=</span> <span class="s1">&#39;(1,3)(2,4)(5,7)(6,8)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;(1,2,3,4,5,6,7,8)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">cycle_basis</span><span class="p">()</span>
+<span class="p">[[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]],</span> <span class="p">[[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">]],</span> <span class="p">[[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]]]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;(0,10,13)(6,17,11)(2,14,7)(15,12,3)(16,20,19)(18,1,9)(4,22,21)(23,8,5)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">e</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">((</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">);</span> <span class="n">r</span>
+<span class="n">Ribbon</span> <span class="n">graph</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">vertices</span><span class="p">,</span> <span class="mi">12</span> <span class="n">edges</span> <span class="ow">and</span> <span class="mi">8</span> <span class="n">faces</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="p">,</span><span class="n">m</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">cycle_basis</span><span class="p">(</span><span class="n">intersection</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span>
+<span class="p">[[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]],</span> <span class="p">[[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]],</span> <span class="p">[[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">]],</span> <span class="p">[[</span><span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">m</span>
+<span class="p">[</span> <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span><span class="o">-</span><span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span> <span class="mi">0</span>  <span class="mi">0</span> <span class="o">-</span><span class="mi">1</span>  <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_edge">
+<span class="sig-name descname"><span class="pre">dart_to_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_edge" title="Link to this definition">#</a></dt>
+<dd><p>Returns the edge the darts <code class="docutils literal notranslate"><span class="pre">i</span></code> belongs to.</p>
+<p>If orientation is set to <code class="docutils literal notranslate"><span class="pre">True</span></code> then the output is a <cite>2</cite>-tuple
+<code class="docutils literal notranslate"><span class="pre">(e,o)</span></code> where <code class="docutils literal notranslate"><span class="pre">e</span></code> is the index of the edge and <code class="docutils literal notranslate"><span class="pre">o</span></code> is its
+orientation as <code class="docutils literal notranslate"><span class="pre">+1</span></code> or <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_face">
+<span class="sig-name descname"><span class="pre">dart_to_face</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_face" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_vertex">
+<span class="sig-name descname"><span class="pre">dart_to_vertex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_vertex" title="Link to this definition">#</a></dt>
+<dd><p>Return the vertex on which the dart <code class="docutils literal notranslate"><span class="pre">i</span></code> is attached.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.darts">
+<span class="sig-name descname"><span class="pre">darts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.darts" title="Link to this definition">#</a></dt>
+<dd><p>Return the list of darts</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.dual">
+<span class="sig-name descname"><span class="pre">dual</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.dual" title="Link to this definition">#</a></dt>
+<dd><p>Returns the dual Ribbon graph.</p>
+<p>The <em>dual</em> ribbon graph of <cite>(v,e,f)</cite> is <cite>(f^{-1}, e, v^{-1})</cite>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(0,1)&#39;</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="s1">&#39;(0)(1)&#39;</span><span class="p">);</span> <span class="n">r</span>
+<span class="n">Ribbon</span> <span class="n">graph</span> <span class="k">with</span> <span class="mi">1</span> <span class="n">vertex</span><span class="p">,</span> <span class="mi">1</span> <span class="n">edge</span> <span class="ow">and</span> <span class="mi">2</span> <span class="n">faces</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">dual</span><span class="p">()</span>
+<span class="n">Ribbon</span> <span class="n">graph</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">vertices</span><span class="p">,</span> <span class="mi">1</span> <span class="n">edge</span> <span class="ow">and</span> <span class="mi">1</span> <span class="n">face</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.edge_orbit">
+<span class="sig-name descname"><span class="pre">edge_orbit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.edge_orbit" title="Link to this definition">#</a></dt>
+<dd><p>Return the orbit of the dart <code class="docutils literal notranslate"><span class="pre">i</span></code> under the permutation that defines
+the edges.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.edge_perm">
+<span class="sig-name descname"><span class="pre">edge_perm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.edge_perm" title="Link to this definition">#</a></dt>
+<dd><p>Return the permutation that define the edges.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.edges">
+<span class="sig-name descname"><span class="pre">edges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.edges" title="Link to this definition">#</a></dt>
+<dd><p>Return the set of edges.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.euler_characteristic">
+<span class="sig-name descname"><span class="pre">euler_characteristic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.euler_characteristic" title="Link to this definition">#</a></dt>
+<dd><p>Returns the Euler characteristic of the embedded surface.</p>
+<p>The <em>Euler characteristic</em> of a surface complex is <cite>V - E + F</cite>, where
+<cite>V</cite> is the number of vertices, <cite>E</cite> the number of edges and <cite>F</cite> the
+number of faces.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(0,1)(2,3)(4,5)&#39;</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="s1">&#39;(0,2,4)(1)(3,5)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">euler_characteristic</span><span class="p">()</span>
+<span class="mi">2</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(0,1)(2,3)&#39;</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="s1">&#39;(0,2,1,3)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">euler_characteristic</span><span class="p">()</span>
+<span class="mi">0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.face_orbit">
+<span class="sig-name descname"><span class="pre">face_orbit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.face_orbit" title="Link to this definition">#</a></dt>
+<dd><p>Return the orbit of <code class="docutils literal notranslate"><span class="pre">i</span></code> under the permutation associated to faces.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.face_perm">
+<span class="sig-name descname"><span class="pre">face_perm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.face_perm" title="Link to this definition">#</a></dt>
+<dd><p>Return the permutation that defines the face.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.faces">
+<span class="sig-name descname"><span class="pre">faces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.faces" title="Link to this definition">#</a></dt>
+<dd><p>Return the list of faces.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.genus">
+<span class="sig-name descname"><span class="pre">genus</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.genus" title="Link to this definition">#</a></dt>
+<dd><p>Return the genus of the surface associated to this Ribbon graph.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="s1">&#39;(1)(2)&#39;</span><span class="p">,</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(1,2)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span>
+<span class="mi">0</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">e</span><span class="o">=</span><span class="s1">&#39;(1,3)(2,4)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">=</span><span class="s1">&#39;(1,2,3,4)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span>
+<span class="mi">1</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">e</span><span class="o">=</span><span class="s1">&#39;(1,3)(2,4)(5,7)(6,8)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">=</span><span class="s1">&#39;(1,2,3,4,5,6,7,8)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span>
+<span class="mi">2</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">e</span><span class="o">=</span><span class="s1">&#39;(1,3)(2,4)(5,7)(6,8)(9,11)(10,12)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span><span class="o">=</span><span class="s1">&#39;(1,2,3,4,5,6,7,8,9,10,11,12)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">genus</span><span class="p">()</span>
+<span class="mi">3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.is_connected">
+<span class="sig-name descname"><span class="pre">is_connected</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force_computation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_connected" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.is_cycle">
+<span class="sig-name descname"><span class="pre">is_cycle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_cycle" title="Link to this definition">#</a></dt>
+<dd><p>Test whether <code class="docutils literal notranslate"><span class="pre">c</span></code> is a cycle.</p>
+<p>A <em>path</em> is a sequence of oriented edges such that each edge starts
+where the preceding one ends. A <em>cycle</em> is a path which starts where it
+ends.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.is_plane">
+<span class="sig-name descname"><span class="pre">is_plane</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_plane" title="Link to this definition">#</a></dt>
+<dd><p>Returns true if and only if the ribbon graph belongs in a sphere. In
+other words if it has genus 0.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="s1">&#39;(0)(1)&#39;</span><span class="p">,</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(0,1)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">is_plane</span><span class="p">()</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="s1">&#39;(0,1)&#39;</span><span class="p">,</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(0,1)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">is_plane</span><span class="p">()</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(0,1)(2,3)&#39;</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="s1">&#39;(0,2)(1,3)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">is_plane</span><span class="p">()</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(0,1)(2,3)&#39;</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="s1">&#39;(0,2,1,3)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">is_plane</span><span class="p">()</span>
+<span class="kc">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.is_plane_tree">
+<span class="sig-name descname"><span class="pre">is_plane_tree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_plane_tree" title="Link to this definition">#</a></dt>
+<dd><p>Returns True if and only if the ribbon graph is a planar tree. In other
+words, it has genus 0 and only one face.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="s1">&#39;(0)(1)&#39;</span><span class="p">,</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(0,1)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">is_plane_tree</span><span class="p">()</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="s1">&#39;(0)(1,2,4)(3)(5)&#39;</span><span class="p">,</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(0,1)(2,3)(4,5)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">is_plane_tree</span><span class="p">()</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="s1">&#39;(0,1)&#39;</span><span class="p">,</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(0,1)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">is_plane_tree</span><span class="p">()</span>
+<span class="kc">False</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">is_plane</span><span class="p">()</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.is_triangulated">
+<span class="sig-name descname"><span class="pre">is_triangulated</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_triangulated" title="Link to this definition">#</a></dt>
+<dd><p>Returns True if the surface is triangulated. In other words, faces
+consist only of the product of 3-cycles.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(0,1)(2,3)(4,5)&#39;</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="s1">&#39;(0,2,4)(1,5,3)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">is_triangulated</span><span class="p">()</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(0,1)(2,3)&#39;</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="s1">&#39;(0,2,1,3)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">is_triangulated</span><span class="p">()</span>
+<span class="kc">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.length_rational_fraction">
+<span class="sig-name descname"><span class="pre">length_rational_fraction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'b'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.length_rational_fraction" title="Link to this definition">#</a></dt>
+<dd><p>Return the generating series for the number of lengths with the given boundaries</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.monodromy_group">
+<span class="sig-name descname"><span class="pre">monodromy_group</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.monodromy_group" title="Link to this definition">#</a></dt>
+<dd><p>Return the group generated by the three defining permutations.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">RibbonGraph</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="s1">&#39;(0)(2)(1,3,4,5)&#39;</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(0,1)(2,3)(4,5)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G1</span> <span class="o">=</span> <span class="n">r1</span><span class="o">.</span><span class="n">monodromy_group</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G1</span>
+<span class="n">Subgroup</span> <span class="o">...</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G1</span><span class="o">.</span><span class="n">is_isomorphic</span><span class="p">(</span><span class="n">SymmetricGroup</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r2</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="s1">&#39;(0)(2)(1,3,4)(5,6,7)&#39;</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(0,1)(2,3)(4,5)(6,7)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G2</span> <span class="o">=</span> <span class="n">r2</span><span class="o">.</span><span class="n">monodromy_group</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G2</span>
+<span class="n">Subgroup</span> <span class="o">...</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G2</span><span class="o">.</span><span class="n">is_isomorphic</span><span class="p">(</span><span class="n">PSL</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">r3</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="s1">&#39;(1)(5)&#39;</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="s1">&#39;(1,5)&#39;</span><span class="p">,</span> <span class="n">faces</span><span class="o">=</span><span class="s1">&#39;(1,5)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r3</span><span class="o">.</span><span class="n">monodromy_group</span><span class="p">()</span>
+<span class="n">Subgroup</span> <span class="o">...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.num_darts">
+<span class="sig-name descname"><span class="pre">num_darts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_darts" title="Link to this definition">#</a></dt>
+<dd><p>Returns the number of darts.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.num_edges">
+<span class="sig-name descname"><span class="pre">num_edges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_edges" title="Link to this definition">#</a></dt>
+<dd><p>Returns the number of edges.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.num_faces">
+<span class="sig-name descname"><span class="pre">num_faces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_faces" title="Link to this definition">#</a></dt>
+<dd><p>Return the number of faces.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.num_vertices">
+<span class="sig-name descname"><span class="pre">num_vertices</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_vertices" title="Link to this definition">#</a></dt>
+<dd><p>Returns the number of vertices.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.relabel">
+<span class="sig-name descname"><span class="pre">relabel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">perm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.relabel" title="Link to this definition">#</a></dt>
+<dd><p>perm is a of range(0,N)</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">perm</span></code> is None, relabel the darts on 0,2M keeping the relative
+order of the darts.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.spanning_tree">
+<span class="sig-name descname"><span class="pre">spanning_tree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.spanning_tree" title="Link to this definition">#</a></dt>
+<dd><p>Return a spanning tree</p>
+<p>OUTPUT:</p>
+<ul class="simple">
+<li><p>spanning tree as a DiGraph</p></li>
+<li><p>remaining edges as 2-tuples <code class="docutils literal notranslate"><span class="pre">(i,e[i])</span></code></p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="s1">&#39;(1,2,3)&#39;</span><span class="p">,</span><span class="s1">&#39;(1,2)(3,4)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span>
+<span class="n">Ribbon</span> <span class="n">graph</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">vertices</span><span class="p">,</span> <span class="mi">2</span> <span class="n">edges</span> <span class="ow">and</span> <span class="mi">2</span> <span class="n">faces</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span><span class="n">o</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">spanning_tree</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span>
+<span class="n">Digraph</span> <span class="n">on</span> <span class="mi">2</span> <span class="n">vertices</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">o</span>
+<span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="s1">&#39;(1,2,3)(4,5,6)&#39;</span><span class="p">,</span><span class="s1">&#39;(1,2)(3,4)(5,6)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span>
+<span class="n">Ribbon</span> <span class="n">graph</span> <span class="k">with</span> <span class="mi">2</span> <span class="n">vertices</span><span class="p">,</span> <span class="mi">3</span> <span class="n">edges</span> <span class="ow">and</span> <span class="mi">3</span> <span class="n">faces</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span><span class="n">o</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">spanning_tree</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span>
+<span class="n">Digraph</span> <span class="n">on</span> <span class="mi">2</span> <span class="n">vertices</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">o</span>
+<span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">e</span> <span class="o">=</span> <span class="s1">&#39;(1,3)(5,7)(2,4)(6,8)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;(1,2,3,4,5,6,7,8)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">R</span> <span class="o">=</span> <span class="n">RibbonGraph</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span><span class="n">o</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">spanning_tree</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">T</span>
+<span class="n">Digraph</span> <span class="n">on</span> <span class="mi">1</span> <span class="n">vertex</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">o</span>
+<span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.vertex_orbit">
+<span class="sig-name descname"><span class="pre">vertex_orbit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.vertex_orbit" title="Link to this definition">#</a></dt>
+<dd><p>Return the orbit of <code class="docutils literal notranslate"><span class="pre">i</span></code> under the permutation that define the
+vertices.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.vertex_perm">
+<span class="sig-name descname"><span class="pre">vertex_perm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.vertex_perm" title="Link to this definition">#</a></dt>
+<dd><p>Returns the permutation that define the vertices.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraph.vertices">
+<span class="sig-name descname"><span class="pre">vertices</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.vertices" title="Link to this definition">#</a></dt>
+<dd><p>Return the list of vertices as cycles decomposition of the vertex
+permutation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.flat_surfaces.homology.</span></span><span class="sig-name descname"><span class="pre">RibbonGraphWithAngles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">faces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles" title="Link to this definition">#</a></dt>
+<dd><p>A Ribbon graph with angles between edges</p>
+<p>Currently angles can only be <em>rational</em> multiples of pi.</p>
+<p>TODO:</p>
+<ul class="simple">
+<li><p>allows any kind of angles by providing a sum for the total and considering
+each angle as a (projective) portion of the total angle.</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_at_vertex">
+<span class="sig-name descname"><span class="pre">angle_at_vertex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_at_vertex" title="Link to this definition">#</a></dt>
+<dd><p>Angle at a vertex (coefficient of pi)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_at_vertices">
+<span class="sig-name descname"><span class="pre">angle_at_vertices</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_at_vertices" title="Link to this definition">#</a></dt>
+<dd><p>Return the list of angles at a vertex.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_between_darts">
+<span class="sig-name descname"><span class="pre">angle_between_darts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_between_darts" title="Link to this definition">#</a></dt>
+<dd><p>Return the angle between the darts <code class="docutils literal notranslate"><span class="pre">d1</span></code> and <code class="docutils literal notranslate"><span class="pre">d2</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.has_trivial_holonomy">
+<span class="sig-name descname"><span class="pre">has_trivial_holonomy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.has_trivial_holonomy" title="Link to this definition">#</a></dt>
+<dd><p>Test whether self has trivial holonomy representation</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">e</span> <span class="o">=</span> <span class="s1">&#39;(0,1)(2,3)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;(0,2,1,3)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">has_trivial_holonomy</span><span class="p">()</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">e</span> <span class="o">=</span> <span class="s1">&#39;(0,1)(2,3)(4,5)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;(0,2,4)(1,5,3)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="o">/</span><span class="mi">15</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="o">/</span><span class="mi">15</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">has_trivial_holonomy</span><span class="p">()</span>
+<span class="kc">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.holonomy_representation">
+<span class="sig-name descname"><span class="pre">holonomy_representation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.holonomy_representation" title="Link to this definition">#</a></dt>
+<dd><p>Return the holonomy representation in <cite>SO(2)</cite> as two lists.</p>
+<p>The first list correspond to cycles around vertices, while the second
+correspond to a cycle basis that generate homology.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">e</span> <span class="o">=</span> <span class="s1">&#39;(0,1)(2,3)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;(0,2,1,3)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">holonomy_representation</span><span class="p">()</span>
+<span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The standard cube:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">e</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">((</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;(0,20,7,10)(16,22,19,21)(2,9,5,23)(14,3,17,1)(12,8,15,11)(18,4,13,6)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">24</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">holonomy_representation</span><span class="p">()</span>
+<span class="p">([</span><span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">],</span> <span class="p">[])</span>
+</pre></div>
+</div>
+<p>Two copies of a triangle:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">e</span> <span class="o">=</span> <span class="s1">&#39;(0,1)(2,3)(4,5)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;(0,2,4)(1,5,3)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">holonomy_representation</span><span class="p">()</span>
+<span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">],</span> <span class="p">[])</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="o">/</span><span class="mi">15</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="o">/</span><span class="mi">15</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">holonomy_representation</span><span class="p">()</span>
+<span class="p">([</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">],</span> <span class="p">[])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.spin_parity">
+<span class="sig-name descname"><span class="pre">spin_parity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.spin_parity" title="Link to this definition">#</a></dt>
+<dd><p>Return the spin parity of the Ribbon graph with angles.</p>
+<p>The surface should be holonomy free and with odd multiple of 2 pi
+angles. Implements the formula of <a class="reference internal" href="../references.html#joh80" id="id1"><span>[Joh80]</span></a>.</p>
+<p>EXAMPLES:</p>
+<blockquote>
+<div><p>sage: from surface_dynamics import *</p>
+</div></blockquote>
+<p>We first consider the case of the torus:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">e</span> <span class="o">=</span> <span class="s1">&#39;(0,1)(2,3)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;(0,2,1,3)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">spin_parity</span><span class="p">()</span>
+<span class="mi">1</span>
+</pre></div>
+</div>
+<p>Then the case of genus 2 surface (with an angle of 6pi):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">e</span> <span class="o">=</span> <span class="s1">&#39;(0,1)(2,3)(4,5)(6,7)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;(0,2,4,3,6,1,7,5)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">spin_parity</span><span class="p">()</span>
+<span class="mi">1</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">e</span> <span class="o">=</span> <span class="s1">&#39;(0,1)(2,3)(4,5)(6,7)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;(0,2,4,6,1,3,5,7)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">spin_parity</span><span class="p">()</span>
+<span class="mi">1</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">e</span> <span class="o">=</span> <span class="s1">&#39;(0,1)(2,3)(4,5)(6,7)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;(0,2,4,6,1,3,5,7)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="o">/</span><span class="mi">4</span><span class="p">]</span><span class="o">*</span><span class="mi">8</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">spin_parity</span><span class="p">()</span>
+<span class="mi">1</span>
+</pre></div>
+</div>
+<p>In genus 3 two spin parities occur for one conical angle 10pi:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">e</span> <span class="o">=</span> <span class="s1">&#39;(0,1)(2,3)(4,5)(6,7)(8,9)(10,11)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f1</span> <span class="o">=</span> <span class="s1">&#39;(0,4,6,8,10,2,1,9,11,5,7,3)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">f2</span> <span class="o">=</span> <span class="s1">&#39;(0,4,6,8,10,2,1,5,7,9,11,3)&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">8</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f1</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r1</span><span class="o">.</span><span class="n">spin_parity</span><span class="p">()</span>
+<span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r2</span> <span class="o">=</span> <span class="n">RibbonGraphWithAngles</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">e</span><span class="p">,</span><span class="n">faces</span><span class="o">=</span><span class="n">f2</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r2</span><span class="o">.</span><span class="n">spin_parity</span><span class="p">()</span>
+<span class="mi">0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.winding">
+<span class="sig-name descname"><span class="pre">winding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.winding" title="Link to this definition">#</a></dt>
+<dd><p>Return winding number along the cycle <code class="docutils literal notranslate"><span class="pre">c</span></code>.</p>
+<p>This is NOT well defined because it depends on the way we choose to pass
+on the left or on the right at singularity.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.RibbonGraphWithHolonomies">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.flat_surfaces.homology.</span></span><span class="sig-name descname"><span class="pre">RibbonGraphWithHolonomies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">faces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">holonomies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithHolonomies" title="Link to this definition">#</a></dt>
+<dd><p>A Ribbon graph with holonomies.</p>
+<p>For now</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.homology.angle">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.flat_surfaces.homology.</span></span><span class="sig-name descname"><span class="pre">angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.homology.angle" title="Link to this definition">#</a></dt>
+<dd><p>Return the argument of the vector <code class="docutils literal notranslate"><span class="pre">v</span></code>.</p>
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="abelian_strata.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">abelian_strata</span></code></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="masur_veech_volumes.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">masur_veech_volumes</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph"><code class="docutils literal notranslate"><span class="pre">RibbonGraph</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.add_extra_darts"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.add_extra_darts()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.automorphism_group"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.automorphism_group()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.boundaries"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.boundaries()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.collapse"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.collapse()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.cycle_basis"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.cycle_basis()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_edge"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.dart_to_edge()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_face"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.dart_to_face()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.dart_to_vertex"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.dart_to_vertex()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.darts"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.darts()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.dual"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.dual()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.edge_orbit"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.edge_orbit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.edge_perm"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.edge_perm()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.edges"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.edges()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.euler_characteristic"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.euler_characteristic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.face_orbit"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.face_orbit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.face_perm"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.face_perm()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.faces"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.faces()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.genus"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.genus()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_connected"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.is_connected()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_cycle"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.is_cycle()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_plane"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.is_plane()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_plane_tree"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.is_plane_tree()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.is_triangulated"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.is_triangulated()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.length_rational_fraction"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.length_rational_fraction()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.monodromy_group"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.monodromy_group()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_darts"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.num_darts()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_edges"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.num_edges()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_faces"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.num_faces()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.num_vertices"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.num_vertices()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.relabel"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.relabel()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.spanning_tree"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.spanning_tree()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.vertex_orbit"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.vertex_orbit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.vertex_perm"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.vertex_perm()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraph.vertices"><code class="docutils literal notranslate"><span class="pre">RibbonGraph.vertices()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithAngles</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_at_vertex"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithAngles.angle_at_vertex()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_at_vertices"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithAngles.angle_at_vertices()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.angle_between_darts"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithAngles.angle_between_darts()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.has_trivial_holonomy"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithAngles.has_trivial_holonomy()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.holonomy_representation"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithAngles.holonomy_representation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.spin_parity"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithAngles.spin_parity()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithAngles.winding"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithAngles.winding()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.RibbonGraphWithHolonomies"><code class="docutils literal notranslate"><span class="pre">RibbonGraphWithHolonomies</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.homology.angle"><code class="docutils literal notranslate"><span class="pre">angle()</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By the surface-dynamics authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-2025, the surface-dynamics authors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,980 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>The databases.flat_surfaces Module &#8212; surface-dynamics 0.7.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/extra.css?v=0eb12c1b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=c62cc9a0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'databases/flat_surfaces';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The flat_surfaces Package" href="../flat_surfaces.html" />
+    <link rel="prev" title="Filtering Possible \(\mathcal M\)-Parallel Classes" href="../examples/rank2_genus3_classification.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="https://github.com/flatsurf/surface-dynamics/raw/master/doc/source/static/logo.svg?sanitize=true" class="logo__image only-light" alt="surface-dynamics 0.7.0 documentation - Home"/>
+    <script>document.write(`<img src="https://github.com/flatsurf/surface-dynamics/raw/master/doc/source/static/logo.svg?sanitize=true" class="logo__image only-dark" alt="surface-dynamics 0.7.0 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://flatsurf.github.io" title="flatsurf" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="https://flatsurf.github.io/assets/logo.svg" class="icon-link-image" alt="flatsurf"/></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/flatsurf/surface-dynamics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://sagemath.zulipchat.com/#narrow/channel/271193-flatsurf" title="Zulip" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-regular fa-comments fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Zulip</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing surface-dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Developer’s guide</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/interval_exchanges.html">Interval Exchange Transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/square_tiled_surfaces.html">Square-tiled Surfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/rank2_genus3_classification.html">Filtering Possible <span class="math notranslate nohighlight">\(\mathcal M\)</span>-Parallel Classes</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">The databases.flat_surfaces Module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../flat_surfaces.html">The flat_surfaces Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/abelian_strata.html"><code class="docutils literal notranslate"><span class="pre">abelian_strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/homology.html"><code class="docutils literal notranslate"><span class="pre">homology</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/masur_veech_volumes.html"><code class="docutils literal notranslate"><span class="pre">masur_veech_volumes</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/quadratic_strata.html"><code class="docutils literal notranslate"><span class="pre">quadratic_strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/separatrix_diagram.html"><code class="docutils literal notranslate"><span class="pre">separatrix_diagram</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/single_cylinder.html"><code class="docutils literal notranslate"><span class="pre">single_cylinder</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/strata.html"><code class="docutils literal notranslate"><span class="pre">strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/twist_space.html"><code class="docutils literal notranslate"><span class="pre">twist_space</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../flat_surfaces/origamis.html">The origamis Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/generators.html"><code class="docutils literal notranslate"><span class="pre">generators</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/origami.html"><code class="docutils literal notranslate"><span class="pre">origami</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/origami_database.html"><code class="docutils literal notranslate"><span class="pre">origami_database</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/pillowcase_cover.html"><code class="docutils literal notranslate"><span class="pre">pillowcase_cover</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/teichmueller_curve.html"><code class="docutils literal notranslate"><span class="pre">teichmueller_curve</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../interval_exchanges.html">The interval_exchanges Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/constructors.html"><code class="docutils literal notranslate"><span class="pre">constructors</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/conversion.html"><code class="docutils literal notranslate"><span class="pre">conversion</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/cover.html"><code class="docutils literal notranslate"><span class="pre">cover</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/flip_sequence.html"><code class="docutils literal notranslate"><span class="pre">flip_sequence</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/iet.html"><code class="docutils literal notranslate"><span class="pre">iet</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/labelled.html"><code class="docutils literal notranslate"><span class="pre">labelled</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/marked_partition.html"><code class="docutils literal notranslate"><span class="pre">marked_partition</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/rauzy_class_cardinality.html"><code class="docutils literal notranslate"><span class="pre">rauzy_class_cardinality</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/reduced.html"><code class="docutils literal notranslate"><span class="pre">reduced</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/template.html"><code class="docutils literal notranslate"><span class="pre">template</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../misc.html">The misc Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../misc/additive_multivariate_generating_series.html"><code class="docutils literal notranslate"><span class="pre">additive_multivariate_generating_series</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/constellation.html"><code class="docutils literal notranslate"><span class="pre">constellation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/even_permutation.html"><code class="docutils literal notranslate"><span class="pre">even_permutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/factored_denominator.html"><code class="docutils literal notranslate"><span class="pre">factored_denominator</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/generalized_multiple_zeta_values.html"><code class="docutils literal notranslate"><span class="pre">generalized_multiple_zeta_values</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/group_representation.html"><code class="docutils literal notranslate"><span class="pre">group_representation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/iscc.html"><code class="docutils literal notranslate"><span class="pre">iscc</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/latex.html"><code class="docutils literal notranslate"><span class="pre">latex</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/linalg.html"><code class="docutils literal notranslate"><span class="pre">linalg</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/multiplicative_multivariate_generating_series.html"><code class="docutils literal notranslate"><span class="pre">multiplicative_multivariate_generating_series</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/permutation.html"><code class="docutils literal notranslate"><span class="pre">permutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/plane_tree.html"><code class="docutils literal notranslate"><span class="pre">plane_tree</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/ppl_utils.html"><code class="docutils literal notranslate"><span class="pre">ppl_utils</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/sql_db.html"><code class="docutils literal notranslate"><span class="pre">sql_db</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/statistics.html"><code class="docutils literal notranslate"><span class="pre">statistics</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../topological_recursion.html">The topological_recursion Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/kontsevich.html"><code class="docutils literal notranslate"><span class="pre">kontsevich</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/masur_veech.html"><code class="docutils literal notranslate"><span class="pre">masur_veech</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/no_pi.html"><code class="docutils literal notranslate"><span class="pre">no_pi</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/topological_recursion.html"><code class="docutils literal notranslate"><span class="pre">topological_recursion</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../topology.html">The topology Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../topology/fat_graph.html"><code class="docutils literal notranslate"><span class="pre">fat_graph</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topology/fat_graph_exhaustive_generation.html"><code class="docutils literal notranslate"><span class="pre">fat_graph_exhaustive_generation</span></code></a></li>
+</ul>
+</details></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/flatsurf/surface-dynamics/edit/master/doc/source/databases/flat_surfaces.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button"
+   title="Suggest edit"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/databases/flat_surfaces.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The databases.flat_surfaces Module</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.count"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams.count()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.default_path"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams.default_path</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.filename"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams.filename()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.get_iterator"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams.get_iterator()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_component"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams.has_component()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_stratum"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams.has_stratum()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.list_strata"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams.list_strata()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.update"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase"><code class="docutils literal notranslate"><span class="pre">GenericRepertoryDatabase</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.clean"><code class="docutils literal notranslate"><span class="pre">GenericRepertoryDatabase.clean()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.default_name"><code class="docutils literal notranslate"><span class="pre">GenericRepertoryDatabase.default_name</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins"><code class="docutils literal notranslate"><span class="pre">IrregularComponentTwins</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.count"><code class="docutils literal notranslate"><span class="pre">IrregularComponentTwins.count()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.default_path"><code class="docutils literal notranslate"><span class="pre">IrregularComponentTwins.default_path</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.filename"><code class="docutils literal notranslate"><span class="pre">IrregularComponentTwins.filename()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.get"><code class="docutils literal notranslate"><span class="pre">IrregularComponentTwins.get()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.has_stratum"><code class="docutils literal notranslate"><span class="pre">IrregularComponentTwins.has_stratum()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.list_strata"><code class="docutils literal notranslate"><span class="pre">IrregularComponentTwins.list_strata()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.update"><code class="docutils literal notranslate"><span class="pre">IrregularComponentTwins.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.line_count"><code class="docutils literal notranslate"><span class="pre">line_count()</span></code></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-surface_dynamics.databases.flat_surfaces">
+<span id="the-databases-flat-surfaces-module"></span><h1>The databases.flat_surfaces Module<a class="headerlink" href="#module-surface_dynamics.databases.flat_surfaces" title="Link to this heading">#</a></h1>
+<p>Databases for translation surfaces.</p>
+<p>This file contain different databases (with different implementations) for
+algorithms related to translation surfaces:</p>
+<ul class="simple">
+<li><p>structure of Strebel differentials for quadratic differentials in order to
+differentiate</p></li>
+<li><p>database of separatrix and cylinder diagrams up to isomorphism</p></li>
+<li><p>database of volume of connected components of Abelian strata</p></li>
+</ul>
+<dl class="py class">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.databases.flat_surfaces.</span></span><span class="sig-name descname"><span class="pre">CylinderDiagrams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams" title="Link to this definition">#</a></dt>
+<dd><p>Database of cylinder diagrams.</p>
+<p>The database consists of several files with the following name convention:
+“stratum-component-ncyls”. As an example, the list of 3-cylinder diagrams in
+the odd component of H(2,2) is named “2_2-odd-3”.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Stratum</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="s1">&#39;cyl_diags-3_1_1_1-c-2&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">C</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">get_iterator</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ncyls</span><span class="p">()</span>
+<span class="mi">2</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">stratum</span><span class="p">()</span>
+<span class="n">H_4</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="o">^</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams.count">
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncyls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.count" title="Link to this definition">#</a></dt>
+<dd><p>Returns the number of cylinder diagrams for a stratum or a component of
+stratum with given number of cylinders.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams.default_path">
+<span class="sig-name descname"><span class="pre">default_path</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/home/runner/work/surface-dynamics/surface-dynamics/surface_dynamics/databases/cylinder_diagrams'</span></em><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.default_path" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncyls</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.filename" title="Link to this definition">#</a></dt>
+<dd><p>Returns the name of the file for the given component <code class="docutils literal notranslate"><span class="pre">comp</span></code> and the
+given of number of cylinders <code class="docutils literal notranslate"><span class="pre">ncyls</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)</span>
+<span class="s1">&#39;cyl_diags-4-odd-3&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">hyperelliptic_component</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="s1">&#39;cyl_diags-3_3-hyp-2&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams.get_iterator">
+<span class="sig-name descname"><span class="pre">get_iterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncyls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.get_iterator" title="Link to this definition">#</a></dt>
+<dd><p>Returns an iterator over the list of cylinder diagrams for the component
+<code class="docutils literal notranslate"><span class="pre">comp</span></code> read from the database.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">comp</span></code> - a component of stratum</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ncyls</span></code> - number of cylinders</p></li>
+</ul>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">(),</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">A</span> <span class="o">=</span> <span class="n">Stratum</span><span class="p">([</span><span class="mi">2</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">get_iterator</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="o">==</span> <span class="n">A</span><span class="o">.</span><span class="n">cylinder_diagrams</span><span class="p">()</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">get_iterator</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">database</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_component">
+<span class="sig-name descname"><span class="pre">has_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_component" title="Link to this definition">#</a></dt>
+<dd><p>Test whether the database has the component <code class="docutils literal notranslate"><span class="pre">comp</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">(</span><span class="n">tmp_dir</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">a1</span> <span class="o">=</span> <span class="n">Stratum</span><span class="p">([</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">odd_component</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a2</span> <span class="o">=</span> <span class="n">Stratum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unique_component</span><span class="p">()</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">has_component</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
+<span class="kc">False</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">has_component</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
+<span class="kc">False</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">has_component</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">has_component</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
+<span class="kc">False</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">has_component</span><span class="p">(</span><span class="o">-</span><span class="mi">19</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">AssertionError</span><span class="p">:</span> <span class="n">the</span> <span class="n">argument</span> <span class="n">must</span> <span class="n">be</span> <span class="n">a</span> <span class="n">component</span> <span class="n">of</span> <span class="n">stratum</span> <span class="n">of</span> <span class="n">Abelian</span> <span class="n">differentials</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_stratum">
+<span class="sig-name descname"><span class="pre">has_stratum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_stratum" title="Link to this definition">#</a></dt>
+<dd><p>Test whether the database contains the data for a given stratum.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">(),</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">a1</span> <span class="o">=</span> <span class="n">Stratum</span><span class="p">([</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">a2</span> <span class="o">=</span> <span class="n">Stratum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">has_stratum</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
+<span class="kc">False</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">has_stratum</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
+<span class="kc">False</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">has_stratum</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
+<span class="kc">True</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">has_stratum</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
+<span class="kc">False</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">has_stratum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">AssertionError</span><span class="p">:</span> <span class="n">the</span> <span class="n">argument</span> <span class="n">must</span> <span class="n">be</span> <span class="n">a</span> <span class="n">stratum</span> <span class="n">of</span> <span class="n">Abelian</span> <span class="n">differential</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams.list_strata">
+<span class="sig-name descname"><span class="pre">list_strata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.list_strata" title="Link to this definition">#</a></dt>
+<dd><p>List available strata in that database.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">(),</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">list_strata</span><span class="p">()</span>
+<span class="p">[]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">list_strata</span><span class="p">()</span>
+<span class="p">[</span><span class="n">H_2</span><span class="p">(</span><span class="mi">1</span><span class="o">^</span><span class="mi">2</span><span class="p">)]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">2</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">list_strata</span><span class="p">()</span>
+<span class="p">[</span><span class="n">H_2</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">H_2</span><span class="p">(</span><span class="mi">1</span><span class="o">^</span><span class="mi">2</span><span class="p">)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.CylinderDiagrams.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.update" title="Link to this definition">#</a></dt>
+<dd><p>Compute once for all the given cylinder diagrams of the given
+<code class="docutils literal notranslate"><span class="pre">stratum</span></code>.</p>
+<p>Warning:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Depending on the dimension of the stratum, it may be very long!
+</pre></div>
+</div>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">(),</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># random</span>
+<span class="n">computation</span> <span class="k">for</span> <span class="n">H_3</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+ <span class="n">ncyls</span> <span class="o">=</span> <span class="mi">1</span>
+ <span class="mi">1</span> <span class="n">cyl</span><span class="o">.</span> <span class="n">diags</span> <span class="k">for</span> <span class="n">H_3</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">^</span><span class="n">hyp</span>
+ <span class="mi">2</span> <span class="n">cyl</span><span class="o">.</span> <span class="n">diags</span> <span class="k">for</span> <span class="n">H_3</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">^</span><span class="n">odd</span>
+ <span class="n">ncyls</span> <span class="o">=</span> <span class="mi">2</span>
+ <span class="mi">2</span> <span class="n">cyl</span><span class="o">.</span> <span class="n">diags</span> <span class="k">for</span> <span class="n">H_3</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">^</span><span class="n">hyp</span>
+ <span class="mi">4</span> <span class="n">cyl</span><span class="o">.</span> <span class="n">diags</span> <span class="k">for</span> <span class="n">H_3</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">^</span><span class="n">odd</span>
+ <span class="n">ncyls</span> <span class="o">=</span> <span class="mi">3</span>
+ <span class="mi">2</span> <span class="n">cyl</span><span class="o">.</span> <span class="n">diags</span> <span class="k">for</span> <span class="n">H_3</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">^</span><span class="n">hyp</span>
+ <span class="mi">4</span> <span class="n">cyl</span><span class="o">.</span> <span class="n">diags</span> <span class="k">for</span> <span class="n">H_3</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">^</span><span class="n">odd</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
+<span class="p">[</span><span class="s1">&#39;cyl_diags-4-hyp-1&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;cyl_diags-4-hyp-2&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;cyl_diags-4-hyp-3&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;cyl_diags-4-odd-1&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;cyl_diags-4-odd-2&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;cyl_diags-4-odd-3&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.databases.flat_surfaces.</span></span><span class="sig-name descname"><span class="pre">GenericRepertoryDatabase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase" title="Link to this definition">#</a></dt>
+<dd><p>Database that consists of a list of files in a repertory.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.clean" title="Link to this definition">#</a></dt>
+<dd><p>Clean the database.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stratum</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylinderDiagrams</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">CylinderDiagrams</span><span class="p">(</span><span class="n">tmp_dir</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
+<span class="p">[</span><span class="s1">&#39;cyl_diags-4-hyp-1&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;cyl_diags-4-hyp-2&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;cyl_diags-4-hyp-3&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;cyl_diags-4-odd-1&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;cyl_diags-4-odd-2&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;cyl_diags-4-odd-3&#39;</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+<span class="p">[]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.default_name">
+<span class="sig-name descname"><span class="pre">default_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'generic_db'</span></em><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.default_name" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.IrregularComponentTwins">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.databases.flat_surfaces.</span></span><span class="sig-name descname"><span class="pre">IrregularComponentTwins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins" title="Link to this definition">#</a></dt>
+<dd><p>Twin data of generalized permutation of irregular components of strata of
+Abelian differentials.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.count">
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.count" title="Link to this definition">#</a></dt>
+<dd><p>Returns the number of twins for that stratum.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">IrregularComponentTwins</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">IrregularComponentTwins</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">Stratum</span><span class="p">([</span><span class="mi">12</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Q</span><span class="p">))</span>
+<span class="mi">82</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+<span class="mi">82</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.default_path">
+<span class="sig-name descname"><span class="pre">default_path</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/home/runner/work/surface-dynamics/surface-dynamics/surface_dynamics/databases/generalized_permutation_twins'</span></em><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.default_path" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.filename" title="Link to this definition">#</a></dt>
+<dd><p>Returns the name of the file for the given component.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">IrregularComponentTwins</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">IrregularComponentTwins</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">12</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="s1">&#39;twins-12-irr&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="s1">&#39;twins-3_3_3_p-irr&#39;</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">AssertionError</span><span class="p">:</span> <span class="n">the</span> <span class="n">stratum</span> <span class="n">has</span> <span class="n">no</span> <span class="n">irregular</span> <span class="n">component</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.get" title="Link to this definition">#</a></dt>
+<dd><p>Get the list of twins for the stratum of quadratic differentials <code class="docutils literal notranslate"><span class="pre">stratum</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">IrregularComponentTwins</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">IrregularComponentTwins</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">l</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">),)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="mi">32</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.has_stratum">
+<span class="sig-name descname"><span class="pre">has_stratum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.has_stratum" title="Link to this definition">#</a></dt>
+<dd><p>Test whether the component is in the database.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">IrregularComponentTwins</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span> <span class="o">=</span> <span class="n">IrregularComponentTwins</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">has_stratum</span><span class="p">(</span><span class="n">Stratum</span><span class="p">([</span><span class="mi">12</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.list_strata">
+<span class="sig-name descname"><span class="pre">list_strata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.list_strata" title="Link to this definition">#</a></dt>
+<dd><p>Returns the list of components for which the list of twins is stored.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.databases.flat_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">IrregularComponentTwins</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span> <span class="o">=</span> <span class="n">IrregularComponentTwins</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">G</span><span class="o">.</span><span class="n">list_strata</span><span class="p">()</span>
+<span class="p">[</span><span class="n">Q_3</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">Q_3</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">Q_4</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span> <span class="n">Q_3</span><span class="p">(</span><span class="mi">3</span><span class="o">^</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">Q_4</span><span class="p">(</span><span class="mi">6</span><span class="o">^</span><span class="mi">2</span><span class="p">),</span> <span class="n">Q_4</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">Q_4</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="o">^</span><span class="mi">2</span><span class="p">),</span> <span class="n">Q_4</span><span class="p">(</span><span class="mi">3</span><span class="o">^</span><span class="mi">4</span><span class="p">)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stratum</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.update" title="Link to this definition">#</a></dt>
+<dd><p>Update the database with the irregular component of the given stratum.</p>
+<p>The database should not be in read only mode.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.databases.flat_surfaces.line_count">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.databases.flat_surfaces.</span></span><span class="sig-name descname"><span class="pre">line_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.databases.flat_surfaces.line_count" title="Link to this definition">#</a></dt>
+<dd><p>Returns the number of lines in the file whose name is filename.</p>
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../examples/rank2_genus3_classification.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Filtering Possible <span class="math notranslate nohighlight">\(\mathcal M\)</span>-Parallel Classes</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../flat_surfaces.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The flat_surfaces Package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.count"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams.count()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.default_path"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams.default_path</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.filename"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams.filename()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.get_iterator"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams.get_iterator()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_component"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams.has_component()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.has_stratum"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams.has_stratum()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.list_strata"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams.list_strata()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.CylinderDiagrams.update"><code class="docutils literal notranslate"><span class="pre">CylinderDiagrams.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase"><code class="docutils literal notranslate"><span class="pre">GenericRepertoryDatabase</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.clean"><code class="docutils literal notranslate"><span class="pre">GenericRepertoryDatabase.clean()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.GenericRepertoryDatabase.default_name"><code class="docutils literal notranslate"><span class="pre">GenericRepertoryDatabase.default_name</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins"><code class="docutils literal notranslate"><span class="pre">IrregularComponentTwins</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.count"><code class="docutils literal notranslate"><span class="pre">IrregularComponentTwins.count()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.default_path"><code class="docutils literal notranslate"><span class="pre">IrregularComponentTwins.default_path</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.filename"><code class="docutils literal notranslate"><span class="pre">IrregularComponentTwins.filename()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.get"><code class="docutils literal notranslate"><span class="pre">IrregularComponentTwins.get()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.has_stratum"><code class="docutils literal notranslate"><span class="pre">IrregularComponentTwins.has_stratum()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.list_strata"><code class="docutils literal notranslate"><span class="pre">IrregularComponentTwins.list_strata()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.IrregularComponentTwins.update"><code class="docutils literal notranslate"><span class="pre">IrregularComponentTwins.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.databases.flat_surfaces.line_count"><code class="docutils literal notranslate"><span class="pre">line_count()</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By the surface-dynamics authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-2025, the surface-dynamics authors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

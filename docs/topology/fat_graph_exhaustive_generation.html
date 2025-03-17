@@ -1,0 +1,953 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>fat_graph_exhaustive_generation &#8212; surface-dynamics 0.7.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/extra.css?v=0eb12c1b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=c62cc9a0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'topology/fat_graph_exhaustive_generation';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="References" href="../references.html" />
+    <link rel="prev" title="fat_graph" href="fat_graph.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="https://github.com/flatsurf/surface-dynamics/raw/master/doc/source/static/logo.svg?sanitize=true" class="logo__image only-light" alt="surface-dynamics 0.7.0 documentation - Home"/>
+    <script>document.write(`<img src="https://github.com/flatsurf/surface-dynamics/raw/master/doc/source/static/logo.svg?sanitize=true" class="logo__image only-dark" alt="surface-dynamics 0.7.0 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://flatsurf.github.io" title="flatsurf" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="https://flatsurf.github.io/assets/logo.svg" class="icon-link-image" alt="flatsurf"/></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/flatsurf/surface-dynamics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://sagemath.zulipchat.com/#narrow/channel/271193-flatsurf" title="Zulip" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-regular fa-comments fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Zulip</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing surface-dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Developer’s guide</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/interval_exchanges.html">Interval Exchange Transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/square_tiled_surfaces.html">Square-tiled Surfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/rank2_genus3_classification.html">Filtering Possible <span class="math notranslate nohighlight">\(\mathcal M\)</span>-Parallel Classes</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../databases/flat_surfaces.html">The databases.flat_surfaces Module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../flat_surfaces.html">The flat_surfaces Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/abelian_strata.html"><code class="docutils literal notranslate"><span class="pre">abelian_strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/homology.html"><code class="docutils literal notranslate"><span class="pre">homology</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/masur_veech_volumes.html"><code class="docutils literal notranslate"><span class="pre">masur_veech_volumes</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/quadratic_strata.html"><code class="docutils literal notranslate"><span class="pre">quadratic_strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/separatrix_diagram.html"><code class="docutils literal notranslate"><span class="pre">separatrix_diagram</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/single_cylinder.html"><code class="docutils literal notranslate"><span class="pre">single_cylinder</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/strata.html"><code class="docutils literal notranslate"><span class="pre">strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/twist_space.html"><code class="docutils literal notranslate"><span class="pre">twist_space</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../flat_surfaces/origamis.html">The origamis Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/generators.html"><code class="docutils literal notranslate"><span class="pre">generators</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/origami.html"><code class="docutils literal notranslate"><span class="pre">origami</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/origami_database.html"><code class="docutils literal notranslate"><span class="pre">origami_database</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/pillowcase_cover.html"><code class="docutils literal notranslate"><span class="pre">pillowcase_cover</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/teichmueller_curve.html"><code class="docutils literal notranslate"><span class="pre">teichmueller_curve</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../interval_exchanges.html">The interval_exchanges Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/constructors.html"><code class="docutils literal notranslate"><span class="pre">constructors</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/conversion.html"><code class="docutils literal notranslate"><span class="pre">conversion</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/cover.html"><code class="docutils literal notranslate"><span class="pre">cover</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/flip_sequence.html"><code class="docutils literal notranslate"><span class="pre">flip_sequence</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/iet.html"><code class="docutils literal notranslate"><span class="pre">iet</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/labelled.html"><code class="docutils literal notranslate"><span class="pre">labelled</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/marked_partition.html"><code class="docutils literal notranslate"><span class="pre">marked_partition</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/rauzy_class_cardinality.html"><code class="docutils literal notranslate"><span class="pre">rauzy_class_cardinality</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/reduced.html"><code class="docutils literal notranslate"><span class="pre">reduced</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/template.html"><code class="docutils literal notranslate"><span class="pre">template</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../misc.html">The misc Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../misc/additive_multivariate_generating_series.html"><code class="docutils literal notranslate"><span class="pre">additive_multivariate_generating_series</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/constellation.html"><code class="docutils literal notranslate"><span class="pre">constellation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/even_permutation.html"><code class="docutils literal notranslate"><span class="pre">even_permutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/factored_denominator.html"><code class="docutils literal notranslate"><span class="pre">factored_denominator</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/generalized_multiple_zeta_values.html"><code class="docutils literal notranslate"><span class="pre">generalized_multiple_zeta_values</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/group_representation.html"><code class="docutils literal notranslate"><span class="pre">group_representation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/iscc.html"><code class="docutils literal notranslate"><span class="pre">iscc</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/latex.html"><code class="docutils literal notranslate"><span class="pre">latex</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/linalg.html"><code class="docutils literal notranslate"><span class="pre">linalg</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/multiplicative_multivariate_generating_series.html"><code class="docutils literal notranslate"><span class="pre">multiplicative_multivariate_generating_series</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/permutation.html"><code class="docutils literal notranslate"><span class="pre">permutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/plane_tree.html"><code class="docutils literal notranslate"><span class="pre">plane_tree</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/ppl_utils.html"><code class="docutils literal notranslate"><span class="pre">ppl_utils</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/sql_db.html"><code class="docutils literal notranslate"><span class="pre">sql_db</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../misc/statistics.html"><code class="docutils literal notranslate"><span class="pre">statistics</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../topological_recursion.html">The topological_recursion Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/kontsevich.html"><code class="docutils literal notranslate"><span class="pre">kontsevich</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/masur_veech.html"><code class="docutils literal notranslate"><span class="pre">masur_veech</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/no_pi.html"><code class="docutils literal notranslate"><span class="pre">no_pi</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/topological_recursion.html"><code class="docutils literal notranslate"><span class="pre">topological_recursion</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../topology.html">The topology Package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="fat_graph.html"><code class="docutils literal notranslate"><span class="pre">fat_graph</span></code></a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">fat_graph_exhaustive_generation</span></code></a></li>
+</ul>
+</details></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/flatsurf/surface-dynamics/edit/master/doc/source/topology/fat_graph_exhaustive_generation.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button"
+   title="Suggest edit"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/topology/fat_graph_exhaustive_generation.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>fat_graph_exhaustive_generation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.CountAndWeightedCount"><code class="docutils literal notranslate"><span class="pre">CountAndWeightedCount</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs"><code class="docutils literal notranslate"><span class="pre">FatGraphs</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.cardinality_and_weighted_cardinality"><code class="docutils literal notranslate"><span class="pre">FatGraphs.cardinality_and_weighted_cardinality()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.list"><code class="docutils literal notranslate"><span class="pre">FatGraphs.list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.map_reduce"><code class="docutils literal notranslate"><span class="pre">FatGraphs.map_reduce()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.weighted_cardinality"><code class="docutils literal notranslate"><span class="pre">FatGraphs.weighted_cardinality()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace"><code class="docutils literal notranslate"><span class="pre">FatGraphsTrace</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.add_edge"><code class="docutils literal notranslate"><span class="pre">FatGraphsTrace.add_edge()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.add_vertex"><code class="docutils literal notranslate"><span class="pre">FatGraphsTrace.add_vertex()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.canonical_edge"><code class="docutils literal notranslate"><span class="pre">FatGraphsTrace.canonical_edge()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.graphviz_tree"><code class="docutils literal notranslate"><span class="pre">FatGraphsTrace.graphviz_tree()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.non_canonical_edge"><code class="docutils literal notranslate"><span class="pre">FatGraphsTrace.non_canonical_edge()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.root"><code class="docutils literal notranslate"><span class="pre">FatGraphsTrace.root()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.summary"><code class="docutils literal notranslate"><span class="pre">FatGraphsTrace.summary()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs_g_nf_nv"><code class="docutils literal notranslate"><span class="pre">FatGraphs_g_nf_nv()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.ListCallback"><code class="docutils literal notranslate"><span class="pre">ListCallback</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.ListCallback.list"><code class="docutils literal notranslate"><span class="pre">ListCallback.list()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.StackCallback"><code class="docutils literal notranslate"><span class="pre">StackCallback</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.StackCallback.run"><code class="docutils literal notranslate"><span class="pre">StackCallback.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.augment1"><code class="docutils literal notranslate"><span class="pre">augment1()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.augment2"><code class="docutils literal notranslate"><span class="pre">augment2()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.augment3"><code class="docutils literal notranslate"><span class="pre">augment3()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.minmax"><code class="docutils literal notranslate"><span class="pre">minmax()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.num_and_weighted_num"><code class="docutils literal notranslate"><span class="pre">num_and_weighted_num()</span></code></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-surface_dynamics.topology.fat_graph_exhaustive_generation">
+<span id="fat-graph-exhaustive-generation"></span><h1><code class="docutils literal notranslate"><span class="pre">fat_graph_exhaustive_generation</span></code><a class="headerlink" href="#module-surface_dynamics.topology.fat_graph_exhaustive_generation" title="Link to this heading">#</a></h1>
+<p>Exhaustive generation of fat graphs.</p>
+<p>This is done following the McKay canonical augmentation. This module
+is experimental.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.CountAndWeightedCount">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.topology.fat_graph_exhaustive_generation.</span></span><span class="sig-name descname"><span class="pre">CountAndWeightedCount</span></span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.CountAndWeightedCount" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.topology.fat_graph_exhaustive_generation.</span></span><span class="sig-name descname"><span class="pre">FatGraphs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ne</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_min_degree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nf_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nf_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ne_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ne_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nv_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nv_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs" title="Link to this definition">#</a></dt>
+<dd><p>Isomorphism classes of fat graphs with topological constraints.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">FatGraphs</span>
+</pre></div>
+</div>
+<p>Trees and their dual (maps with single vertex) in genus zero are counted by
+Catalan numbers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">ntrees1</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">weighted_cardinality</span><span class="p">()</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">ntrees2</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">weighted_cardinality</span><span class="p">()</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">assert</span> <span class="n">catalan_number</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">ntrees1</span> <span class="o">==</span> <span class="n">ntrees2</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">ntrees1</span><span class="p">,</span> <span class="n">ntrees2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Tutte formulas in genus 0 (combinatorial maps counted by number of edges):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">R</span><span class="o">.&lt;</span><span class="n">t</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">QQ</span><span class="p">[]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span> <span class="o">=</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ne_max</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">poly</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">zero</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">aut</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">global</span> <span class="n">poly</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">cm</span><span class="o">.</span><span class="n">face_degrees</span><span class="p">()]</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">aut_card</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">aut</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">aut</span><span class="o">.</span><span class="n">group_cardinality</span><span class="p">()</span>
+<span class="o">....</span><span class="p">:</span>     <span class="n">poly</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span><span class="n">cm</span><span class="o">.</span><span class="n">num_edges</span><span class="p">()</span> <span class="o">//</span> <span class="n">aut_card</span> <span class="o">*</span> <span class="n">t</span><span class="o">**</span><span class="n">cm</span><span class="o">.</span><span class="n">num_edges</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span><span class="o">.</span><span class="n">map_reduce</span><span class="p">(</span><span class="n">update</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">poly</span>
+<span class="mi">208494</span><span class="o">*</span><span class="n">t</span><span class="o">^</span><span class="mi">7</span> <span class="o">+</span> <span class="mi">24057</span><span class="o">*</span><span class="n">t</span><span class="o">^</span><span class="mi">6</span> <span class="o">+</span> <span class="mi">2916</span><span class="o">*</span><span class="n">t</span><span class="o">^</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">378</span><span class="o">*</span><span class="n">t</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">54</span><span class="o">*</span><span class="n">t</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">9</span><span class="o">*</span><span class="n">t</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">t</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">3</span><span class="o">**</span><span class="n">n</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">binomial</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span><span class="n">t</span><span class="o">**</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="mi">208494</span><span class="o">*</span><span class="n">t</span><span class="o">^</span><span class="mi">7</span> <span class="o">+</span> <span class="mi">24057</span><span class="o">*</span><span class="n">t</span><span class="o">^</span><span class="mi">6</span> <span class="o">+</span> <span class="mi">2916</span><span class="o">*</span><span class="n">t</span><span class="o">^</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">378</span><span class="o">*</span><span class="n">t</span><span class="o">^</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">54</span><span class="o">*</span><span class="n">t</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">9</span><span class="o">*</span><span class="n">t</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">t</span>
+</pre></div>
+</div>
+<p>Genus zero with same number of vertices and faces:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">cardinality_and_weighted_cardinality</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">cardinality_and_weighted_cardinality</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">23</span><span class="p">,</span> <span class="mi">41</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">cardinality_and_weighted_cardinality</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">761</span><span class="p">,</span> <span class="mi">8885</span><span class="o">/</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Duality checks</p>
+<blockquote>
+<div><p>sage: for g,nf,nv in [(0,2,3), (0,2,4), (0,3,4),
+….:                 (1,1,2), (1,1,3), (1,1,4), (1,1,5), (1,2,3), (1,2,4), (1,3,4),
+….:                 (2,1,2), (2,1,3)]:
+….:     n1 = FatGraphs(g=g, nf=nf, nv=nv).cardinality_and_weighted_cardinality()
+….:     n2 = FatGraphs(g=g, nf=nv, nv=nf).cardinality_and_weighted_cardinality()
+….:     assert n1 == n2
+….:     print(g, nf, nv, n1)
+0 2 3 (5, 11/3)
+0 2 4 (14, 93/8)
+0 3 4 (108, 103)
+1 1 2 (3, 5/3)
+1 1 3 (11, 35/4)
+1 1 4 (46, 42)
+1 1 5 (204, 385/2)
+1 2 3 (180, 172)
+1 2 4 (1198, 14065/12)
+1 3 4 (18396, 18294)
+2 1 2 (53, 483/10)
+2 1 3 (553, 539)</p>
+</div></blockquote>
+<p>Unicellular map with one vertex in genus 3:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">cardinality_and_weighted_cardinality</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">131</span><span class="p">,</span> <span class="mi">495</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Minimum vertex degree bounds:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>    <span class="n">F</span> <span class="o">=</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>    <span class="n">c1</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">cardinality_and_weighted_cardinality</span><span class="p">(</span><span class="k">lambda</span> <span class="n">cm</span><span class="p">,</span><span class="n">_</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">vertex_min_degree</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">k</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>    <span class="n">G</span> <span class="o">=</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>    <span class="n">c2</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">cardinality_and_weighted_cardinality</span><span class="p">()</span>
+<span class="o">....</span><span class="p">:</span>    <span class="k">assert</span> <span class="n">c1</span> <span class="o">==</span> <span class="n">c2</span>
+<span class="o">....</span><span class="p">:</span>    <span class="nb">print</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">87</span><span class="o">/</span><span class="mi">8</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">47</span><span class="o">/</span><span class="mi">8</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">15</span><span class="o">/</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>    <span class="n">F</span> <span class="o">=</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>    <span class="n">c1</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">cardinality_and_weighted_cardinality</span><span class="p">(</span><span class="k">lambda</span> <span class="n">cm</span><span class="p">,</span><span class="n">_</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">vertex_min_degree</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">k</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>    <span class="n">G</span> <span class="o">=</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>    <span class="n">c2</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">cardinality_and_weighted_cardinality</span><span class="p">()</span>
+<span class="o">....</span><span class="p">:</span>    <span class="k">assert</span> <span class="n">c1</span> <span class="o">==</span> <span class="n">c2</span>
+<span class="o">....</span><span class="p">:</span>    <span class="nb">print</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">123</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">88</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">48</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">18</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using ranges for vertex and face numbers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">F</span> <span class="o">=</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nv_min</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nv_max</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">nf_min</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nf_max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span><span class="n">aut</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>    <span class="k">if</span> <span class="n">cm</span><span class="o">.</span><span class="n">num_vertices</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> \
+<span class="o">....</span><span class="p">:</span>       <span class="n">cm</span><span class="o">.</span><span class="n">num_vertices</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">4</span> <span class="ow">or</span> \
+<span class="o">....</span><span class="p">:</span>       <span class="n">cm</span><span class="o">.</span><span class="n">num_faces</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> \
+<span class="o">....</span><span class="p">:</span>       <span class="n">cm</span><span class="o">.</span><span class="n">num_faces</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">:</span>
+<span class="o">....</span><span class="p">:</span>           <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cm</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span><span class="o">.</span><span class="n">map_reduce</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">nf</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]:</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">for</span> <span class="n">nv</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]:</span>
+<span class="o">....</span><span class="p">:</span>         <span class="n">c1</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">cardinality_and_weighted_cardinality</span><span class="p">(</span><span class="k">lambda</span> <span class="n">cm</span><span class="p">,</span><span class="n">_</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">num_vertices</span><span class="p">()</span> <span class="o">==</span> <span class="n">nv</span> <span class="ow">and</span> <span class="n">cm</span><span class="o">.</span><span class="n">num_faces</span><span class="p">()</span> <span class="o">==</span> <span class="n">nf</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>         <span class="n">c2</span> <span class="o">=</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="n">nf</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="n">nv</span><span class="p">)</span><span class="o">.</span><span class="n">cardinality_and_weighted_cardinality</span><span class="p">()</span>
+<span class="o">....</span><span class="p">:</span>         <span class="k">assert</span> <span class="n">c1</span> <span class="o">==</span> <span class="n">c2</span>
+<span class="o">....</span><span class="p">:</span>         <span class="nb">print</span><span class="p">(</span><span class="n">nf</span><span class="p">,</span> <span class="n">nv</span><span class="p">,</span> <span class="n">c1</span><span class="p">)</span>
+<span class="mi">2</span> <span class="mi">2</span> <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">167</span><span class="o">/</span><span class="mi">8</span><span class="p">)</span>
+<span class="mi">2</span> <span class="mi">3</span> <span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="mi">172</span><span class="p">)</span>
+<span class="mi">3</span> <span class="mi">2</span> <span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="mi">172</span><span class="p">)</span>
+<span class="mi">3</span> <span class="mi">3</span> <span class="p">(</span><span class="mi">2048</span><span class="p">,</span> <span class="mi">6041</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>TESTS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.topology.fat_graph_exhaustive_generation</span><span class="w"> </span><span class="kn">import</span> <span class="n">FatGraphs</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="p">[</span><span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;()&#39;</span><span class="p">,</span> <span class="s1">&#39;()&#39;</span><span class="p">)]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="p">[</span><span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,2,1,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,3)&#39;</span><span class="p">)]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="p">[</span><span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,1)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0)(1)&#39;</span><span class="p">)]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="p">[</span><span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0)(1)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,1)&#39;</span><span class="p">)]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ne</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="p">[</span><span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,1)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0)(1)&#39;</span><span class="p">),</span> <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0)(1)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,1)&#39;</span><span class="p">)]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">F3</span> <span class="o">=</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nf_max</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">fg</span> <span class="ow">in</span> <span class="n">F3</span><span class="o">.</span><span class="n">list</span><span class="p">():</span> <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">d</span> <span class="o">&gt;=</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">fg</span><span class="o">.</span><span class="n">vertex_degrees</span><span class="p">()),</span> <span class="n">fg</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F3</span><span class="o">.</span><span class="n">cardinality_and_weighted_cardinality</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F4</span> <span class="o">=</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nf_max</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">vertex_min_degree</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">fg</span> <span class="ow">in</span> <span class="n">F4</span><span class="o">.</span><span class="n">list</span><span class="p">():</span> <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">d</span> <span class="o">&gt;=</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">fg</span><span class="o">.</span><span class="n">vertex_degrees</span><span class="p">()),</span> <span class="n">fg</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F4</span><span class="o">.</span><span class="n">cardinality_and_weighted_cardinality</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ne</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="p">[</span><span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,4,2,1,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,3,4)(5)&#39;</span><span class="p">),</span>
+ <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,2,1,4,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,4)(1,3,5)&#39;</span><span class="p">),</span>
+ <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,2,1,3,4)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,4)(3,5)&#39;</span><span class="p">),</span>
+ <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,4,2,1,3)(5)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,3,4,5)&#39;</span><span class="p">),</span>
+ <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,4,1,3)(2,5)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,4,2,1,3,5)&#39;</span><span class="p">),</span>
+ <span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,4,3)(1,5,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,4,1,3,5)&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.cardinality_and_weighted_cardinality">
+<span class="sig-name descname"><span class="pre">cardinality_and_weighted_cardinality</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.cardinality_and_weighted_cardinality" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.list">
+<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.list" title="Link to this definition">#</a></dt>
+<dd><p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">FatGraphs</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">L21</span> <span class="o">=</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">L21</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">num_faces</span><span class="p">()</span>
+<span class="mi">2</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">L21</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">num_vertices</span><span class="p">()</span>
+<span class="mi">1</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">L12</span> <span class="o">=</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">L12</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">num_faces</span><span class="p">()</span>
+<span class="mi">1</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">L12</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">num_vertices</span><span class="p">()</span>
+<span class="mi">2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.map_reduce">
+<span class="sig-name descname"><span class="pre">map_reduce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.map_reduce" title="Link to this definition">#</a></dt>
+<dd><p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">FatGraphs</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">FatGraphs</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">map_reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,6,5,4,2,1,3)(7)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,3,4,6,7)(5)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,6,2,1,3)(4,7,5)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,3,6,4,7)(5)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,4,2,1,6,3)(7)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,6,7,1,3,4)(5)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,7,3)(1,6,5,4,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,7,1,3,4,6)(5)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,4,2,6,1,3)(7)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,6,7,2,1,3,4)(5)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,7,1,3)(2,6,5,4)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,7,2,1,3,4,6)(5)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,4,2,1,3,6)(7)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,6,7,3,4)(5)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,7)(1,3,6,5,4,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,7,3,4,6)(5)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,4,6,2,1,3)(7)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,3,6,7,4)(5)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,4,6,1,3)(2,7)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,6,2,1,3,7,4)(5)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,6,4,2,1,3)(7)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,3,4)(5,6,7)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,6,2,1,3)(4,7)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,3,6,4)(5,7)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,6,1,3)(2,7,4)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,6,2,1,3,4)(5,7)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,6,3)(1,7,4,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,6,1,3,4)(5,7)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,6,5,2,1,4,3)(7)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,4,6,7)(1,3,5)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,6,2,1,4,3)(5,7)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,4,7)(1,3,6,5)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,6,4,3)(1,7,5,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,4,7)(1,3,5,6)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,6,5,2,1,3,4)(7)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,4,6,7)(3,5)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,2,6,1,3,4)(7)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,6,7,2,1,4)(3,5)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,2,6,3,4)(1,7)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,7,2,6,1,4)(3,5)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,2,1,3,6,4)(7)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,4)(3,5,6,7)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,2,1,3,6)(4,7)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,6,4)(3,5,7)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,7,4)(1,3,6,5,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,4,6)(3,5,7)&#39;</span><span class="p">)</span>
+<span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,5,7,4)(1,3,6,2)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,4)(3,6,5,7)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.weighted_cardinality">
+<span class="sig-name descname"><span class="pre">weighted_cardinality</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.weighted_cardinality" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.topology.fat_graph_exhaustive_generation.</span></span><span class="sig-name descname"><span class="pre">FatGraphsTrace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace" title="Link to this definition">#</a></dt>
+<dd><p>A class to trace the execution of the fat graphs generation.</p>
+<p>It is mostly used for debugging/profiling/illustration purposes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.add_edge">
+<span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.add_edge" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.add_vertex">
+<span class="sig-name descname"><span class="pre">add_vertex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aut_grp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.add_vertex" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.canonical_edge">
+<span class="sig-name descname"><span class="pre">canonical_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aut_grp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">caller</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.canonical_edge" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.graphviz_tree">
+<span class="sig-name descname"><span class="pre">graphviz_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.graphviz_tree" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.non_canonical_edge">
+<span class="sig-name descname"><span class="pre">non_canonical_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">caller</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.non_canonical_edge" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.root">
+<span class="sig-name descname"><span class="pre">root</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aut_grp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.root" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.summary">
+<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.summary" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs_g_nf_nv">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.topology.fat_graph_exhaustive_generation.</span></span><span class="sig-name descname"><span class="pre">FatGraphs_g_nf_nv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_min_degree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nf_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nf_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nv_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nv_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs_g_nf_nv" title="Link to this definition">#</a></dt>
+<dd><p>TESTS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.topology.fat_graph_exhaustive_generation</span><span class="w"> </span><span class="kn">import</span> <span class="n">FatGraphs_g_nf_nv</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span> <span class="o">=</span> <span class="n">FatGraphs_g_nf_nv</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">doctest</span><span class="p">:</span><span class="n">warning</span>
+<span class="o">...</span>
+<span class="ne">DeprecationWarning</span><span class="p">:</span> <span class="n">FatGraphs_g_nf_nv</span> <span class="ow">is</span> <span class="n">deprecated</span><span class="o">.</span> <span class="n">Use</span> <span class="n">FatGraphs</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="p">[</span><span class="n">FatGraph</span><span class="p">(</span><span class="s1">&#39;(0,2,1,3)&#39;</span><span class="p">,</span> <span class="s1">&#39;(0,2,1,3)&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.ListCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.topology.fat_graph_exhaustive_generation.</span></span><span class="sig-name descname"><span class="pre">ListCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mutable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.ListCallback" title="Link to this definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.ListCallback.list">
+<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.ListCallback.list" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.StackCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.topology.fat_graph_exhaustive_generation.</span></span><span class="sig-name descname"><span class="pre">StackCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_min_degree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.StackCallback" title="Link to this definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.StackCallback.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.StackCallback.run" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.augment1">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.topology.fat_graph_exhaustive_generation.</span></span><span class="sig-name descname"><span class="pre">augment1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aut_grp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.augment1" title="Link to this definition">#</a></dt>
+<dd><p>Given a unicellular map <code class="docutils literal notranslate"><span class="pre">cm</span></code> with a single vertex and automorphism group
+<code class="docutils literal notranslate"><span class="pre">aut_grp</span></code>, iterate through all its canonical extensions that are
+uniface-univertex maps of greater genus.</p>
+<p>This operation inserts two edges.</p>
+<p>This augmentation function is sufficient to iterate through unicellular map.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.augment2">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.topology.fat_graph_exhaustive_generation.</span></span><span class="sig-name descname"><span class="pre">augment2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aut_grp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.augment2" title="Link to this definition">#</a></dt>
+<dd><p>Given a map <code class="docutils literal notranslate"><span class="pre">cm</span></code> with a single vertex and automorphism group <code class="docutils literal notranslate"><span class="pre">aut_grp</span></code>
+iterate through all its canonical extensions that are obtained by splitting
+one of its faces (by adding a single edge).</p>
+<p>Because of the chosen canonical labellings, we only need to consider the
+faces with maximal degree and split in such way that the secondly created
+face is still at least as big as the second biggest.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.augment3">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.topology.fat_graph_exhaustive_generation.</span></span><span class="sig-name descname"><span class="pre">augment3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aut_grp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_degree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.augment3" title="Link to this definition">#</a></dt>
+<dd><p>Given a map <code class="docutils literal notranslate"><span class="pre">cm</span></code>, its automorphism group <code class="docutils literal notranslate"><span class="pre">aut_grp</span></code> and a minimum
+degree <code class="docutils literal notranslate"><span class="pre">min_degree</span></code>, iterate through all the canonical extensions of
+<code class="docutils literal notranslate"><span class="pre">cm</span></code> that are obtained by splitting <code class="docutils literal notranslate"><span class="pre">depth</span></code> times a vertices into
+two vertices.</p>
+<p>This augmentation add <code class="docutils literal notranslate"><span class="pre">depth</span></code> edges to the fat graph.</p>
+<p>In principle, because of the chosen canonical labellings, we only need to
+consider the vertices with maximal degree.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.minmax">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.topology.fat_graph_exhaustive_generation.</span></span><span class="sig-name descname"><span class="pre">minmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.minmax" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.topology.fat_graph_exhaustive_generation.num_and_weighted_num">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.topology.fat_graph_exhaustive_generation.</span></span><span class="sig-name descname"><span class="pre">num_and_weighted_num</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">it</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.num_and_weighted_num" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="fat_graph.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">fat_graph</span></code></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../references.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">References</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.CountAndWeightedCount"><code class="docutils literal notranslate"><span class="pre">CountAndWeightedCount</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs"><code class="docutils literal notranslate"><span class="pre">FatGraphs</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.cardinality_and_weighted_cardinality"><code class="docutils literal notranslate"><span class="pre">FatGraphs.cardinality_and_weighted_cardinality()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.list"><code class="docutils literal notranslate"><span class="pre">FatGraphs.list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.map_reduce"><code class="docutils literal notranslate"><span class="pre">FatGraphs.map_reduce()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs.weighted_cardinality"><code class="docutils literal notranslate"><span class="pre">FatGraphs.weighted_cardinality()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace"><code class="docutils literal notranslate"><span class="pre">FatGraphsTrace</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.add_edge"><code class="docutils literal notranslate"><span class="pre">FatGraphsTrace.add_edge()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.add_vertex"><code class="docutils literal notranslate"><span class="pre">FatGraphsTrace.add_vertex()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.canonical_edge"><code class="docutils literal notranslate"><span class="pre">FatGraphsTrace.canonical_edge()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.graphviz_tree"><code class="docutils literal notranslate"><span class="pre">FatGraphsTrace.graphviz_tree()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.non_canonical_edge"><code class="docutils literal notranslate"><span class="pre">FatGraphsTrace.non_canonical_edge()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.root"><code class="docutils literal notranslate"><span class="pre">FatGraphsTrace.root()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphsTrace.summary"><code class="docutils literal notranslate"><span class="pre">FatGraphsTrace.summary()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.FatGraphs_g_nf_nv"><code class="docutils literal notranslate"><span class="pre">FatGraphs_g_nf_nv()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.ListCallback"><code class="docutils literal notranslate"><span class="pre">ListCallback</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.ListCallback.list"><code class="docutils literal notranslate"><span class="pre">ListCallback.list()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.StackCallback"><code class="docutils literal notranslate"><span class="pre">StackCallback</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.StackCallback.run"><code class="docutils literal notranslate"><span class="pre">StackCallback.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.augment1"><code class="docutils literal notranslate"><span class="pre">augment1()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.augment2"><code class="docutils literal notranslate"><span class="pre">augment2()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.augment3"><code class="docutils literal notranslate"><span class="pre">augment3()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.minmax"><code class="docutils literal notranslate"><span class="pre">minmax()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.topology.fat_graph_exhaustive_generation.num_and_weighted_num"><code class="docutils literal notranslate"><span class="pre">num_and_weighted_num()</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By the surface-dynamics authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-2025, the surface-dynamics authors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

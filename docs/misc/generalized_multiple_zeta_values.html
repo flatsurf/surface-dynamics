@@ -1,0 +1,1022 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>generalized_multiple_zeta_values &#8212; surface-dynamics 0.7.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/extra.css?v=0eb12c1b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=c62cc9a0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'misc/generalized_multiple_zeta_values';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="group_representation" href="group_representation.html" />
+    <link rel="prev" title="factored_denominator" href="factored_denominator.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="https://github.com/flatsurf/surface-dynamics/raw/master/doc/source/static/logo.svg?sanitize=true" class="logo__image only-light" alt="surface-dynamics 0.7.0 documentation - Home"/>
+    <script>document.write(`<img src="https://github.com/flatsurf/surface-dynamics/raw/master/doc/source/static/logo.svg?sanitize=true" class="logo__image only-dark" alt="surface-dynamics 0.7.0 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://flatsurf.github.io" title="flatsurf" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="https://flatsurf.github.io/assets/logo.svg" class="icon-link-image" alt="flatsurf"/></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/flatsurf/surface-dynamics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://sagemath.zulipchat.com/#narrow/channel/271193-flatsurf" title="Zulip" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-regular fa-comments fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Zulip</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing surface-dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Developer’s guide</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/interval_exchanges.html">Interval Exchange Transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/square_tiled_surfaces.html">Square-tiled Surfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/rank2_genus3_classification.html">Filtering Possible <span class="math notranslate nohighlight">\(\mathcal M\)</span>-Parallel Classes</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../databases/flat_surfaces.html">The databases.flat_surfaces Module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../flat_surfaces.html">The flat_surfaces Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/abelian_strata.html"><code class="docutils literal notranslate"><span class="pre">abelian_strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/homology.html"><code class="docutils literal notranslate"><span class="pre">homology</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/masur_veech_volumes.html"><code class="docutils literal notranslate"><span class="pre">masur_veech_volumes</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/quadratic_strata.html"><code class="docutils literal notranslate"><span class="pre">quadratic_strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/separatrix_diagram.html"><code class="docutils literal notranslate"><span class="pre">separatrix_diagram</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/single_cylinder.html"><code class="docutils literal notranslate"><span class="pre">single_cylinder</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/strata.html"><code class="docutils literal notranslate"><span class="pre">strata</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/twist_space.html"><code class="docutils literal notranslate"><span class="pre">twist_space</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../flat_surfaces/origamis.html">The origamis Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/generators.html"><code class="docutils literal notranslate"><span class="pre">generators</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/origami.html"><code class="docutils literal notranslate"><span class="pre">origami</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/origami_database.html"><code class="docutils literal notranslate"><span class="pre">origami_database</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/pillowcase_cover.html"><code class="docutils literal notranslate"><span class="pre">pillowcase_cover</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flat_surfaces/origamis/teichmueller_curve.html"><code class="docutils literal notranslate"><span class="pre">teichmueller_curve</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../interval_exchanges.html">The interval_exchanges Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/constructors.html"><code class="docutils literal notranslate"><span class="pre">constructors</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/conversion.html"><code class="docutils literal notranslate"><span class="pre">conversion</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/cover.html"><code class="docutils literal notranslate"><span class="pre">cover</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/flip_sequence.html"><code class="docutils literal notranslate"><span class="pre">flip_sequence</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/iet.html"><code class="docutils literal notranslate"><span class="pre">iet</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/labelled.html"><code class="docutils literal notranslate"><span class="pre">labelled</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/marked_partition.html"><code class="docutils literal notranslate"><span class="pre">marked_partition</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/rauzy_class_cardinality.html"><code class="docutils literal notranslate"><span class="pre">rauzy_class_cardinality</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/reduced.html"><code class="docutils literal notranslate"><span class="pre">reduced</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interval_exchanges/template.html"><code class="docutils literal notranslate"><span class="pre">template</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../misc.html">The misc Package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="additive_multivariate_generating_series.html"><code class="docutils literal notranslate"><span class="pre">additive_multivariate_generating_series</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="constellation.html"><code class="docutils literal notranslate"><span class="pre">constellation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="even_permutation.html"><code class="docutils literal notranslate"><span class="pre">even_permutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="factored_denominator.html"><code class="docutils literal notranslate"><span class="pre">factored_denominator</span></code></a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">generalized_multiple_zeta_values</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="group_representation.html"><code class="docutils literal notranslate"><span class="pre">group_representation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="iscc.html"><code class="docutils literal notranslate"><span class="pre">iscc</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="latex.html"><code class="docutils literal notranslate"><span class="pre">latex</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="linalg.html"><code class="docutils literal notranslate"><span class="pre">linalg</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiplicative_multivariate_generating_series.html"><code class="docutils literal notranslate"><span class="pre">multiplicative_multivariate_generating_series</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="permutation.html"><code class="docutils literal notranslate"><span class="pre">permutation</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="plane_tree.html"><code class="docutils literal notranslate"><span class="pre">plane_tree</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ppl_utils.html"><code class="docutils literal notranslate"><span class="pre">ppl_utils</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sql_db.html"><code class="docutils literal notranslate"><span class="pre">sql_db</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistics.html"><code class="docutils literal notranslate"><span class="pre">statistics</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../topological_recursion.html">The topological_recursion Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/kontsevich.html"><code class="docutils literal notranslate"><span class="pre">kontsevich</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/masur_veech.html"><code class="docutils literal notranslate"><span class="pre">masur_veech</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/no_pi.html"><code class="docutils literal notranslate"><span class="pre">no_pi</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topological_recursion/topological_recursion.html"><code class="docutils literal notranslate"><span class="pre">topological_recursion</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../topology.html">The topology Package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../topology/fat_graph.html"><code class="docutils literal notranslate"><span class="pre">fat_graph</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../topology/fat_graph_exhaustive_generation.html"><code class="docutils literal notranslate"><span class="pre">fat_graph_exhaustive_generation</span></code></a></li>
+</ul>
+</details></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/flatsurf/surface-dynamics/edit/master/doc/source/misc/generalized_multiple_zeta_values.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button"
+   title="Suggest edit"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/misc/generalized_multiple_zeta_values.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>generalized_multiple_zeta_values</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.DivergentZetaError"><code class="docutils literal notranslate"><span class="pre">DivergentZetaError</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.Z2"><code class="docutils literal notranslate"><span class="pre">Z2()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.Z3"><code class="docutils literal notranslate"><span class="pre">Z3()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.Z3_sort_abc"><code class="docutils literal notranslate"><span class="pre">Z3_sort_abc()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.apply_relation"><code class="docutils literal notranslate"><span class="pre">apply_relation()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.clean_term"><code class="docutils literal notranslate"><span class="pre">clean_term()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.convergent_multizeta"><code class="docutils literal notranslate"><span class="pre">convergent_multizeta()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.handle_term"><code class="docutils literal notranslate"><span class="pre">handle_term()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.has_term_sum_of_smaller_terms"><code class="docutils literal notranslate"><span class="pre">has_term_sum_of_smaller_terms()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_Z2_convergent"><code class="docutils literal notranslate"><span class="pre">is_Z2_convergent()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_Z3_convergent"><code class="docutils literal notranslate"><span class="pre">is_Z3_convergent()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_convergent"><code class="docutils literal notranslate"><span class="pre">is_convergent()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_multizeta"><code class="docutils literal notranslate"><span class="pre">is_multizeta()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_product"><code class="docutils literal notranslate"><span class="pre">is_product()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_reducible"><code class="docutils literal notranslate"><span class="pre">is_reducible()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_stufflisable"><code class="docutils literal notranslate"><span class="pre">is_stufflisable()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.kill_relation"><code class="docutils literal notranslate"><span class="pre">kill_relation()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.linear_form"><code class="docutils literal notranslate"><span class="pre">linear_form()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.linear_forms"><code class="docutils literal notranslate"><span class="pre">linear_forms()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.negative_rays"><code class="docutils literal notranslate"><span class="pre">negative_rays()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.stuffle"><code class="docutils literal notranslate"><span class="pre">stuffle()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.to_Z2"><code class="docutils literal notranslate"><span class="pre">to_Z2()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.to_Z3"><code class="docutils literal notranslate"><span class="pre">to_Z3()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.write_array"><code class="docutils literal notranslate"><span class="pre">write_array()</span></code></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-surface_dynamics.misc.generalized_multiple_zeta_values">
+<span id="generalized-multiple-zeta-values"></span><h1><code class="docutils literal notranslate"><span class="pre">generalized_multiple_zeta_values</span></code><a class="headerlink" href="#module-surface_dynamics.misc.generalized_multiple_zeta_values" title="Link to this heading">#</a></h1>
+<p>Generalized multiple zeta values</p>
+<p>TODO:</p>
+<ul class="simple">
+<li><p>turns warning for convergence check (ie off/warning/error)</p></li>
+<li><p>introduce linear combinations of <em>divergent</em> multiple zeta values
+that we possibly simplify at the end.</p></li>
+</ul>
+<dl class="py exception">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.DivergentZetaError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">DivergentZetaError</span></span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.DivergentZetaError" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.Z2">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">Z2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_convergence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.Z2" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.Z3">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">Z3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_convergence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.Z3" title="Link to this definition">#</a></dt>
+<dd><p>The function <code class="docutils literal notranslate"><span class="pre">Z3(a,b,c,d,e,f,g)</span></code>.</p>
+<div class="math notranslate nohighlight">
+\[\sum_{x,y,z \geq 1} x^{-a} y^{-b} z^{-c} (x+y)^{-d} (x+z)^{-e} (y+z)^{-f} (x+y+z)^{-g}\]</div>
+<p>The reduction algorithm was designed by Bill Allombert.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.generalized_multiple_zeta_values</span><span class="w"> </span><span class="kn">import</span> <span class="n">Z3</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">M</span> <span class="o">=</span> <span class="n">Multizetas</span><span class="p">(</span><span class="n">QQ</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">Z3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="mi">21</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">9</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">9</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">Z3</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="mi">6</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span> <span class="o">-</span> <span class="mi">12</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mi">6</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">ζ</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">Z3</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="n">M</span><span class="p">((</span><span class="mi">2</span><span class="p">,))</span> <span class="o">*</span> <span class="n">M</span><span class="p">((</span><span class="mi">3</span><span class="p">,))</span> <span class="o">*</span> <span class="n">M</span><span class="p">((</span><span class="mi">4</span><span class="p">,))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">Z3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="n">M</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">Z3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">M</span><span class="p">((</span><span class="mi">4</span><span class="p">,))</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">Z3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">M</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">Z3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">M</span><span class="p">((</span><span class="mi">2</span><span class="p">,))</span> <span class="o">-</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">M</span><span class="p">((</span><span class="mi">3</span><span class="p">,))</span> <span class="o">+</span> <span class="n">M</span><span class="p">((</span><span class="mi">4</span><span class="p">,))</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">Z3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">M</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span> <span class="o">-</span> <span class="n">M</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span><span class="n">M</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.Z3_sort_abc">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">Z3_sort_abc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.Z3_sort_abc" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.apply_relation">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">apply_relation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den_tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relation</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.apply_relation" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.clean_term">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">clean_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den_tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.clean_term" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.convergent_multizeta">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">convergent_multizeta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.convergent_multizeta" title="Link to this definition">#</a></dt>
+<dd><p>Multizeta value at a convergent index <code class="docutils literal notranslate"><span class="pre">t</span></code>.</p>
+<p>TESTS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.generalized_multiple_zeta_values</span><span class="w"> </span><span class="kn">import</span> <span class="n">convergent_multizeta</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">convergent_multizeta</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="n">Multizeta</span><span class="p">(</span><span class="o">*</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,),(</span><span class="mi">3</span><span class="p">,),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)])</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">ζ</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">ζ</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">ζ</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">ζ</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">ζ</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">ζ</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="n">ζ</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">ζ</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="o">-</span><span class="n">ζ</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">ζ</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">ζ</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ζ</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="n">ζ</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">8</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">-</span> <span class="mi">5</span><span class="o">/</span><span class="mi">12</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">3</span><span class="o">/</span><span class="mi">8</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">12</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">18</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span><span class="o">/</span><span class="mi">15</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">31</span><span class="o">/</span><span class="mi">72</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">72</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">60</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">10</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span><span class="o">/</span><span class="mi">8</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5</span><span class="o">/</span><span class="mi">12</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">8</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">60</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">30</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">30</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">10</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="o">/</span><span class="mi">5</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">ζ</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">ζ</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Divergent cases:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="n">DivergentZetaError</span><span class="p">:</span> <span class="n">divergent</span> <span class="n">multizeta</span> <span class="n">value</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="n">DivergentZetaError</span><span class="p">:</span> <span class="n">divergent</span> <span class="n">multizeta</span> <span class="n">value</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="n">DivergentZetaError</span><span class="p">:</span> <span class="n">divergent</span> <span class="n">multizeta</span> <span class="n">value</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">convergent_multizeta</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="n">DivergentZetaError</span><span class="p">:</span> <span class="n">divergent</span> <span class="n">multizeta</span> <span class="n">value</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.handle_term">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">handle_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den_tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.handle_term" title="Link to this definition">#</a></dt>
+<dd><p>Entry point for reduction of generalized multiple zeta values into standard
+multiple zeta values.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.generalized_multiple_zeta_values</span><span class="w"> </span><span class="kn">import</span> <span class="n">handle_term</span><span class="p">,</span> <span class="n">is_convergent</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">M</span> <span class="o">=</span> <span class="n">Multizetas</span><span class="p">(</span><span class="n">QQ</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">V1</span> <span class="o">=</span> <span class="n">FreeModule</span><span class="p">(</span><span class="n">ZZ</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">v</span> <span class="o">=</span> <span class="n">V1</span><span class="p">((</span><span class="mi">1</span><span class="p">,));</span> <span class="n">v</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">dt</span> <span class="o">=</span> <span class="p">((</span><span class="n">v</span><span class="p">,</span><span class="mi">3</span><span class="p">),)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">is_convergent</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span> <span class="ow">and</span> <span class="n">handle_term</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span> <span class="o">==</span> <span class="n">M</span><span class="p">((</span><span class="mi">3</span><span class="p">,))</span>
+
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">V2</span> <span class="o">=</span> <span class="n">FreeModule</span><span class="p">(</span><span class="n">ZZ</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">va</span> <span class="o">=</span> <span class="n">V2</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">));</span> <span class="n">va</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">vb</span> <span class="o">=</span> <span class="n">V2</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span> <span class="n">vb</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">vc</span> <span class="o">=</span> <span class="n">V2</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span> <span class="n">vc</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">dt</span> <span class="o">=</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">vc</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">is_convergent</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span> <span class="ow">and</span> <span class="n">handle_term</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span> <span class="o">==</span> <span class="n">M</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">dt1</span> <span class="o">=</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">2</span><span class="p">),(</span><span class="n">vb</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">dt2</span> <span class="o">=</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">3</span><span class="p">),(</span><span class="n">vb</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">is_convergent</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">dt1</span><span class="p">)</span> <span class="ow">and</span> <span class="n">is_convergent</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">dt2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">handle_term</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">vb</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span> <span class="o">==</span> <span class="n">handle_term</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="n">vb</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span> <span class="o">==</span> <span class="n">M</span><span class="p">((</span><span class="mi">2</span><span class="p">,))</span> <span class="o">*</span> <span class="n">M</span><span class="p">((</span><span class="mi">3</span><span class="p">,))</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">V3</span> <span class="o">=</span> <span class="n">FreeModule</span><span class="p">(</span><span class="n">ZZ</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">va</span> <span class="o">=</span> <span class="n">V3</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">));</span> <span class="n">va</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">vb</span> <span class="o">=</span> <span class="n">V3</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">));</span> <span class="n">vb</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">vc</span> <span class="o">=</span> <span class="n">V3</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span> <span class="n">vc</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">vd</span> <span class="o">=</span> <span class="n">V3</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">));</span> <span class="n">vd</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">ve</span> <span class="o">=</span> <span class="n">V3</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span> <span class="n">ve</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">vf</span> <span class="o">=</span> <span class="n">V3</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span> <span class="n">vf</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">vg</span> <span class="o">=</span> <span class="n">V3</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span> <span class="n">vg</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">handle_term</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">vd</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="n">vg</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span> <span class="o">==</span> <span class="n">M</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">handle_term</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">vb</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="n">vc</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span> <span class="o">==</span> <span class="n">handle_term</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="n">vb</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">vc</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>  <span class="c1"># optional mzv</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">handle_term</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">vb</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="n">vc</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span> <span class="o">==</span> <span class="n">M</span><span class="p">((</span><span class="mi">2</span><span class="p">,))</span> <span class="o">*</span> <span class="n">M</span><span class="p">((</span><span class="mi">3</span><span class="p">,))</span> <span class="o">*</span> <span class="n">M</span><span class="p">((</span><span class="mi">4</span><span class="p">,))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">handle_term</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="n">vc</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">vd</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span> <span class="o">==</span> <span class="n">handle_term</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="n">vb</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">ve</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">handle_term</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="n">vc</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">vd</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span> <span class="o">==</span> <span class="n">handle_term</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">vb</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="n">vf</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">handle_term</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="n">vc</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">vd</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span> <span class="o">==</span>  <span class="n">M</span><span class="p">((</span><span class="mi">2</span><span class="p">,))</span> <span class="o">*</span> <span class="n">M</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.has_term_sum_of_smaller_terms">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">has_term_sum_of_smaller_terms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den_tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.has_term_sum_of_smaller_terms" title="Link to this definition">#</a></dt>
+<dd><p>Look for a vector v_i and {v_j} with sum(v_j) = v_i</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.generalized_multiple_zeta_values</span><span class="w"> </span><span class="kn">import</span> <span class="n">linear_forms</span><span class="p">,</span> <span class="n">has_term_sum_of_smaller_terms</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">va</span><span class="p">,</span><span class="n">vb</span><span class="p">,</span><span class="n">vc</span> <span class="o">=</span> <span class="n">linear_forms</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">has_term_sum_of_smaller_terms</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">vb</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">vc</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">has_term_sum_of_smaller_terms</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">vc</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span> <span class="ow">is</span> <span class="kc">None</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">has_term_sum_of_smaller_terms</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">((</span><span class="n">vb</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">vc</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span> <span class="ow">is</span> <span class="kc">None</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">has_term_sum_of_smaller_terms</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">vb</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span> <span class="ow">is</span> <span class="kc">None</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">va</span><span class="p">,</span> <span class="n">vb</span><span class="p">,</span> <span class="n">vd</span><span class="p">,</span> <span class="n">vc</span><span class="p">,</span> <span class="n">ve</span><span class="p">,</span> <span class="n">vf</span><span class="p">,</span> <span class="n">vg</span> <span class="o">=</span> <span class="n">linear_forms</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">has_term_sum_of_smaller_terms</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">vb</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">vc</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">vg</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+<span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">has_term_sum_of_smaller_terms</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">vb</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">ve</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">vf</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">vg</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+<span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">has_term_sum_of_smaller_terms</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">vd</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">ve</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">vf</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">vg</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+<span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">has_term_sum_of_smaller_terms</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">vd</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">ve</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="n">vg</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+<span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.is_Z2_convergent">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">is_Z2_convergent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_Z2_convergent" title="Link to this definition">#</a></dt>
+<dd><p>TESTS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.generalized_multiple_zeta_values</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_Z2_convergent</span>
+</pre></div>
+</div>
+<p>Convergent examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">is_Z2_convergent</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">is_Z2_convergent</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">is_Z2_convergent</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Divergent examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="ow">not</span> <span class="n">is_Z2_convergent</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="ow">not</span> <span class="n">is_Z2_convergent</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.is_Z3_convergent">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">is_Z3_convergent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_Z3_convergent" title="Link to this definition">#</a></dt>
+<dd><p>TESTS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.generalized_multiple_zeta_values</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_Z3_convergent</span>
+</pre></div>
+</div>
+<p>Convergent examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">is_Z3_convergent</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">is_Z3_convergent</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">is_Z3_convergent</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">is_Z3_convergent</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">is_Z3_convergent</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Divergent examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="ow">not</span> <span class="n">is_Z3_convergent</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="ow">not</span> <span class="n">is_Z3_convergent</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.is_convergent">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">is_convergent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_convergent" title="Link to this definition">#</a></dt>
+<dd><p>TESTS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.generalized_multiple_zeta_values</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_convergent</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">V</span> <span class="o">=</span> <span class="n">FreeModule</span><span class="p">(</span><span class="n">ZZ</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">va</span> <span class="o">=</span> <span class="n">V</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">));</span> <span class="n">va</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">vb</span> <span class="o">=</span> <span class="n">V</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">));</span> <span class="n">vb</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">vc</span> <span class="o">=</span> <span class="n">V</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span> <span class="n">vc</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">vd</span> <span class="o">=</span> <span class="n">V</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">));</span> <span class="n">vd</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">ve</span> <span class="o">=</span> <span class="n">V</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span> <span class="n">ve</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">vf</span> <span class="o">=</span> <span class="n">V</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span> <span class="n">vf</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">vg</span> <span class="o">=</span> <span class="n">V</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span> <span class="n">vg</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">gens</span> <span class="o">=</span> <span class="p">[</span><span class="n">va</span><span class="p">,</span><span class="n">vb</span><span class="p">,</span><span class="n">vc</span><span class="p">,</span><span class="n">vd</span><span class="p">,</span><span class="n">ve</span><span class="p">,</span><span class="n">vf</span><span class="p">,</span><span class="n">vg</span><span class="p">]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">7</span><span class="p">):</span>
+<span class="o">....</span><span class="p">:</span>     <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span><span class="n">p</span><span class="p">))</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">is_convergent</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">gens</span><span class="p">,</span><span class="n">p</span><span class="p">))):</span>
+<span class="o">....</span><span class="p">:</span>         <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="o">....</span><span class="p">:</span>         <span class="n">N</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="mi">125</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.is_multizeta">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">is_multizeta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den_tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_multizeta" title="Link to this definition">#</a></dt>
+<dd><p>Return the corresponding zeta values if it is one.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.generalized_multiple_zeta_values</span><span class="w"> </span><span class="kn">import</span> <span class="n">linear_forms</span><span class="p">,</span> <span class="n">is_multizeta</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">va</span><span class="p">,</span> <span class="n">vb</span><span class="p">,</span> <span class="n">vd</span><span class="p">,</span> <span class="n">vc</span><span class="p">,</span> <span class="n">ve</span><span class="p">,</span> <span class="n">vf</span><span class="p">,</span> <span class="n">vg</span> <span class="o">=</span> <span class="n">linear_forms</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">is_multizeta</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">vb</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">vf</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="n">vg</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="n">ζ</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">is_multizeta</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">[(</span><span class="n">vg</span><span class="p">,</span> <span class="mi">5</span><span class="p">)])</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ζ</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">ζ</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">is_multizeta</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="n">vb</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="n">vc</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span> <span class="ow">is</span> <span class="kc">None</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">is_multizeta</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">vb</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">ve</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="n">vg</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span> <span class="ow">is</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.is_product">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">is_product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den_tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_product" title="Link to this definition">#</a></dt>
+<dd><p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code> - number of variables</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">den_tuple</span></code> - tuple of pairs <code class="docutils literal notranslate"><span class="pre">(vector,</span> <span class="pre">power)</span></code></p></li>
+</ul>
+<p>TESTS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.generalized_multiple_zeta_values</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_product</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">is_product</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">[((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="mi">2</span><span class="p">),</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="mi">5</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="mi">1</span><span class="p">),</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">3</span><span class="p">)])</span>
+<span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">5</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">))),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(((</span><span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">),))]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">is_product</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">[((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="mi">2</span><span class="p">),</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="mi">3</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">),</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">5</span><span class="p">)])</span>
+<span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">5</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">))),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(((</span><span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">),))]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">is_product</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">[((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">3</span><span class="p">)])</span> <span class="ow">is</span> <span class="kc">None</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.is_reducible">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">is_reducible</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den_tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_reducible" title="Link to this definition">#</a></dt>
+<dd><p>If (x1+x2+…+xd) is not present, use a linear relation to create it. Then
+try to kill using other forms. Then try to write as P(x1,x2,…,x_{d-1}) (x1+x2+…+xd) and recurse.</p>
+<p>Should solve all Tonrheim</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.generalized_multiple_zeta_values</span><span class="w"> </span><span class="kn">import</span> <span class="n">linear_forms</span><span class="p">,</span> <span class="n">is_reducible</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">va</span><span class="p">,</span> <span class="n">vb</span><span class="p">,</span> <span class="n">vd</span><span class="p">,</span> <span class="n">vc</span><span class="p">,</span> <span class="n">ve</span><span class="p">,</span> <span class="n">vf</span><span class="p">,</span> <span class="n">vg</span> <span class="o">=</span> <span class="n">linear_forms</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">is_reducible</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">3</span><span class="p">),(</span><span class="n">vb</span><span class="p">,</span><span class="mi">3</span><span class="p">),(</span><span class="n">vc</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span>
+<span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">))),</span>
+ <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">))),</span>
+ <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">(((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">))),</span>
+ <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">(((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">))),</span>
+<span class="o">...</span>
+ <span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="p">(((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">7</span><span class="p">))),</span>
+ <span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="p">(((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">7</span><span class="p">))),</span>
+ <span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="p">(((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">7</span><span class="p">)))]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.is_stufflisable">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">is_stufflisable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den_tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_stufflisable" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.kill_relation">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">kill_relation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den_tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relation</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.kill_relation" title="Link to this definition">#</a></dt>
+<dd><p>Make calls to <cite>apply_relation</cite> until we get rid of term</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.generalized_multiple_zeta_values</span><span class="w"> </span><span class="kn">import</span> <span class="n">kill_relation</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">V</span> <span class="o">=</span> <span class="n">FreeModule</span><span class="p">(</span><span class="n">ZZ</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">va</span> <span class="o">=</span> <span class="n">V</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">));</span> <span class="n">va</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">vb</span> <span class="o">=</span> <span class="n">V</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span> <span class="n">vb</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">vc</span> <span class="o">=</span> <span class="n">V</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span> <span class="n">vc</span><span class="o">.</span><span class="n">set_immutable</span><span class="p">()</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">den_tuple</span> <span class="o">=</span> <span class="p">((</span><span class="n">va</span><span class="p">,</span><span class="mi">2</span><span class="p">),(</span><span class="n">vb</span><span class="p">,</span><span class="mi">3</span><span class="p">),(</span><span class="n">vc</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">kill_relation</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">den_tuple</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">6</span><span class="p">))),</span>
+ <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">7</span><span class="p">))),</span>
+ <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">7</span><span class="p">))),</span>
+ <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">(((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">8</span><span class="p">))),</span>
+ <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">(((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">8</span><span class="p">)))]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.linear_form">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">linear_form</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.linear_form" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.linear_forms">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">linear_forms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.linear_forms" title="Link to this definition">#</a></dt>
+<dd><p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics.misc.generalized_multiple_zeta_values</span><span class="w"> </span><span class="kn">import</span> <span class="n">linear_forms</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">linear_forms</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="p">[(</span><span class="mi">1</span><span class="p">)]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">linear_forms</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+ <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">L1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">linear_forms</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">L2</span> <span class="o">=</span> <span class="n">L1</span><span class="p">[:]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">L2</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="k">assert</span> <span class="n">L1</span> <span class="o">==</span> <span class="n">L2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.negative_rays">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">negative_rays</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.negative_rays" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.stuffle">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">stuffle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den_tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.stuffle" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.to_Z2">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">to_Z2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">den_tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.to_Z2" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.to_Z3">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">to_Z3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">den_tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.to_Z3" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surface_dynamics.misc.generalized_multiple_zeta_values.write_array">
+<span class="sig-prename descclassname"><span class="pre">surface_dynamics.misc.generalized_multiple_zeta_values.</span></span><span class="sig-name descname"><span class="pre">write_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explanations</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.misc.generalized_multiple_zeta_values.write_array" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="factored_denominator.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">factored_denominator</span></code></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="group_representation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">group_representation</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.DivergentZetaError"><code class="docutils literal notranslate"><span class="pre">DivergentZetaError</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.Z2"><code class="docutils literal notranslate"><span class="pre">Z2()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.Z3"><code class="docutils literal notranslate"><span class="pre">Z3()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.Z3_sort_abc"><code class="docutils literal notranslate"><span class="pre">Z3_sort_abc()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.apply_relation"><code class="docutils literal notranslate"><span class="pre">apply_relation()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.clean_term"><code class="docutils literal notranslate"><span class="pre">clean_term()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.convergent_multizeta"><code class="docutils literal notranslate"><span class="pre">convergent_multizeta()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.handle_term"><code class="docutils literal notranslate"><span class="pre">handle_term()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.has_term_sum_of_smaller_terms"><code class="docutils literal notranslate"><span class="pre">has_term_sum_of_smaller_terms()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_Z2_convergent"><code class="docutils literal notranslate"><span class="pre">is_Z2_convergent()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_Z3_convergent"><code class="docutils literal notranslate"><span class="pre">is_Z3_convergent()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_convergent"><code class="docutils literal notranslate"><span class="pre">is_convergent()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_multizeta"><code class="docutils literal notranslate"><span class="pre">is_multizeta()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_product"><code class="docutils literal notranslate"><span class="pre">is_product()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_reducible"><code class="docutils literal notranslate"><span class="pre">is_reducible()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.is_stufflisable"><code class="docutils literal notranslate"><span class="pre">is_stufflisable()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.kill_relation"><code class="docutils literal notranslate"><span class="pre">kill_relation()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.linear_form"><code class="docutils literal notranslate"><span class="pre">linear_form()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.linear_forms"><code class="docutils literal notranslate"><span class="pre">linear_forms()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.negative_rays"><code class="docutils literal notranslate"><span class="pre">negative_rays()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.stuffle"><code class="docutils literal notranslate"><span class="pre">stuffle()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.to_Z2"><code class="docutils literal notranslate"><span class="pre">to_Z2()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.to_Z3"><code class="docutils literal notranslate"><span class="pre">to_Z3()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.misc.generalized_multiple_zeta_values.write_array"><code class="docutils literal notranslate"><span class="pre">write_array()</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By the surface-dynamics authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021-2025, the surface-dynamics authors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
