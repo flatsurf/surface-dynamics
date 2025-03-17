@@ -73,3 +73,10 @@ html_css_files = ['extra.css']
 
 nb_execution_show_tb = True
 nb_execution_raise_on_error = True
+
+linkcheck_ignore = [
+    # GMP rate limits requests by GitHub runners so this URL incorrectly is reported as broken in the CI.
+    r'https://gmplib.org/',
+    # repology limits requests by GitHub runners so this URL incorrectly is reported as broken in the CI.
+    r'https://repology.org/project/python:surface-dynamics/packages',
+]
