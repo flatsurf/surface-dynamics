@@ -130,18 +130,18 @@ inputs = ["pyproject.toml", "setup.py",
     "surface_dynamics/interval_exchanges/iet_family.pyx",
 ]
 
-[tool.pixi.feature.dev.tasks.sage]
-cmd = "sage"
-depends-on = ["build"]
+[tool.pixi.feature.dev.tasks]
+# "sage" is a shortcut that should (together with its dependencies) run in the "dev" environment.
+# To achieve this, we need to split it into two tasks like this (otherwise,
+# pixi is going to ask which environment the dependencies should run in.)
+sage = { cmd = "pixi run dev-sage" }
+dev-sage = { cmd = "sage" , depends-on = ["build"] }
 
 # "test" is a shortcut that should (together with its dependencies) run in the "dev" environment.
 # To achieve this, we need to split it into two tasks like this (otherwise,
 # pixi is going to ask which environment the dependencies should run in.)
-[tool.pixi.feature.dev.tasks.test]
-cmd = "pixi run dev-test"
-
-[tool.pixi.tasks.dev-test]
-depends-on = ["test-doctest", "test-pytest"]
+test = { cmd = "pixi run dev-test" }
+dev-test = { depends-on = ["test-doctest", "test-pytest"] }
 
 [tool.pixi.tasks.test-doctest]
 cmd = "PYTHONPATH=$(pwd)/.github/workflows/disable-pytest sage -tp --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
