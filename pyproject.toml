@@ -141,7 +141,7 @@ dev-sage = { cmd = "sage" , depends-on = ["build"] }
 # To achieve this, we need to split it into two tasks like this (otherwise,
 # pixi is going to ask which environment the dependencies should run in.)
 test = { cmd = "pixi run dev-test" }
-dev-test = { depends-on = ["test-doctest", "test-pytest"] }
+dev-test = { depends-on = ["test-doctest-long", "test-pytest"] }
 
 [tool.pixi.tasks.test-doctest]
 cmd = "PYTHONPATH=$(pwd)/.github/workflows/disable-pytest sage -tp --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
