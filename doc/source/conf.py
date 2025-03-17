@@ -1,27 +1,26 @@
-import sage_docbuild.conf
+# Configuration file for the Sphinx documentation builder.
 
-# -- Project information -----------------------------------------------------
+import os
+from pathlib import Path
+
+BUILDDIR = Path(os.environ.get('ABS_BUILDDIR', '.')).absolute()
 
 project = 'surface-dynamics'
-copyright = "2021-2024, the surface-dynamics authors"
+copyright = '2021-2025, the surface-dynamics authors'
 author = 'the surface-dynamics authors'
 
-# The full version, including alpha/beta/rc tags
-release = '0.6.0'
-
-# -- General configuration ---------------------------------------------------
+release = '0.7.0'
 
 extensions = [
-    'sphinx.ext.autodoc',
+    # Sphinx's own autodoc does not pick up cached functions so we use the one from SageMath.
+    'sage_docbuild.ext.sage_autodoc',
     'sphinx.ext.intersphinx',
-    'sphinx.ext.todo',
     'sphinx.ext.mathjax',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.extlinks',
-    'myst_nb'
+    'sphinx.ext.todo',
+    'sphinx_book_theme',
+    'myst_nb',
 ]
 
-# Extensions when rendering .ipynb/.md notebooks
 myst_enable_extensions = [
     "dollarmath",
     "amsmath",
@@ -30,77 +29,54 @@ myst_enable_extensions = [
 autodoc_default_options = {
     'members': True,
     'undoc-members': True,
-    'show-inheritance': True
 }
 
-# Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
-# This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
-# Allow linking to external projects, e.g., SageMath
-intersphinx_mapping = {"sage": ("https://doc.sagemath.org/html/en/reference", None)}
+html_theme = 'sphinx_book_theme'
 
-# Show tracebacks on mystnb execution errors.
+html_logo = 'https://github.com/flatsurf/surface-dynamics/raw/master/doc/source/static/logo.svg?sanitize=true'
+
+html_theme_options = {
+    "repository_url": "https://github.com/flatsurf/surface-dynamics",
+    "icon_links": [{
+        "name": "flatsurf",
+        "url": "https://flatsurf.github.io",
+        "icon": "https://flatsurf.github.io/assets/logo.svg",
+        "type": "url",
+    }, {
+        "name": "GitHub",
+        "url": "https://github.com/flatsurf/surface-dynamics",
+        "icon": "fa-brands fa-square-github",
+        "type": "fontawesome",
+    }, {
+        "name": "Zulip",
+        "url": "https://sagemath.zulipchat.com/#narrow/channel/271193-flatsurf",
+        "icon": "fa-regular fa-comments",
+        "type": "fontawesome",
+    },
+    ],
+    "use_edit_page_button": True,
+    "repository_branch": "master",
+    "path_to_docs": "doc/source",
+}
+
+intersphinx_mapping = {
+    "sage": ("https://doc.sagemath.org/html/en/reference", None),
+    "sage-flatsurf": ("https://flatsurf.github.io/sage-flatsurf/", None),
+}
+
+html_static_path = ["static"]
+html_css_files = ['extra.css']
+
 nb_execution_show_tb = True
-
-# Raise an exception on any failed executing in notebook.
 nb_execution_raise_on_error = True
 
-# -- Options for HTML output ----------------------------------------------
-
-# Imitate the look of the SageMath documentation.
-html_theme = sage_docbuild.conf.html_theme
-html_theme_options = sage_docbuild.conf.html_theme_options
-pygments_style = sage_docbuild.conf.pygments_style
-pygments_dark_style = sage_docbuild.conf.pygments_dark_style
-html_css_files = sage_docbuild.conf.html_css_files
-
-if html_css_files != ["custom-furo.css", "custom-jupyter-sphinx.css", "custom-codemirror-monokai.css"]:
-    raise NotImplementedError(
-        "CSS customization has changed in SageMath. The configuration of surface-dynamics documentation build needs to be updated."
-    )
-
-html_css_files = [
-    "https://doc.sagemath.org/html/en/reference/_static/custom-furo.css",
-    "https://doc.sagemath.org/html/en/reference/_static/custom-jupyter-sphinx.css",
-    "https://doc.sagemath.org/html/en/reference/_static/custom-codemirror-monokai.css",
+linkcheck_ignore = [
+    # GMP rate limits requests by GitHub runners so this URL incorrectly is reported as broken in the CI.
+    r'https://gmplib.org/',
+    # repology limits requests by GitHub runners so this URL incorrectly is reported as broken in the CI.
+    r'https://repology.org/project/python:surface-dynamics/packages',
 ]
-
-# There is no surface-dynamics logo yet.
-html_theme_options["light_logo"] = html_theme_options["dark_logo"] = "logo.svg"
-
-# Output file base name for HTML help builder.
-htmlhelp_basename = "sage-surfacedynamicsdoc"
-
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["static"]
-
-# Shortcuts for external links
-from sage.misc.sagedoc import extlinks
-
-nitpick_ignore = [
-        # Something is complaining when rendering a class that's inheriting in
-        # certain ways, probably when SageObject is involved.
-        # Let's ignore these warnings:
-        # WARNING: py:class reference target not found: sage.structure.sage_object.SageObject
-        ('py:class', 'sage.structure.sage_object.SageObject'),
-        # WARNING: py:class reference target not found: sage.structure.parent.Parent
-        ('py:class', 'sage.structure.parent.Parent'),
-        # WARNING: py:class reference target not found: sage.structure.element.Element
-        ('py:class', 'sage.structure.element.Element'),
-        # WARNING: py:class reference target not found: sage.structure.unique_representation.UniqueRepresentation
-        ('py:class', 'sage.structure.unique_representation.UniqueRepresentation'),
-        # WARNING: py:class reference target not found: surface_dynamics.misc.sql_db.SQLQuery
-        ('py:class', 'surface_dynamics.misc.sql_db.SQLQuery'),
-        # WARNING: py:class reference target not found: surface_dynamics.misc.sql_db.SQLDatabase
-        ('py:class', 'surface_dynamics.misc.sql_db.SQLDatabase'),
-]
-
-def setup(app):
-    app.connect('autodoc-process-docstring', sage_docbuild.conf.skip_TESTS_block)

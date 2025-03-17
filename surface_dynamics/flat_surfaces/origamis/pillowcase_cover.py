@@ -24,13 +24,13 @@ def PillowcaseCover(g0, g1, g2, g3=None,
     r"""
     Pillowcase cover constructor.
 
-    The chosen flat structure is as follows
+    The chosen flat structure is as follows::
 
-       3-----2-----3
-       |     .     |
-       |     .     |
-       |     .     |
-       0-----1-----0
+        3-----2-----3
+        |     .     |
+        |     .     |
+        |     .     |
+        0-----1-----0
     """
     if not as_tuple:
         g0 = PermutationGroupElement(g0, check=check)

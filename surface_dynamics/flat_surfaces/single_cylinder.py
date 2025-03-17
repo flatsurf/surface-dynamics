@@ -2,11 +2,11 @@ r"""
 Single cylinder permutation representatives.
 
 This file gathers the functions necessary for
-:meth:`~AbelianStratum.single_cylinder_representative`,
-:meth:`~AbelianStratumComponent.single_cylinder_representative`,
-:meth:`~HypAbelianStratumComponent.single_cylinder_representative`,
-:meth:`~EvenAbelianStratumComponent.single_cylinder_representative`, and
-:meth:`~OddAbelianStratumComponent.single_cylinder_representative` in
+:meth:`.AbelianStratum.single_cylinder_representative`,
+:meth:`.AbelianStratumComponent.single_cylinder_representative`,
+:meth:`.HypAbelianStratumComponent.single_cylinder_representative`,
+:meth:`.EvenAbelianStratumComponent.single_cylinder_representative`, and
+:meth:`.OddAbelianStratumComponent.single_cylinder_representative` in
 :mod:`~surface_dynamics.flat_surfaces.abelian_strata`.
 
 TESTS:
