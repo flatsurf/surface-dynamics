@@ -3340,7 +3340,6 @@ class PermutationLI(Permutation):
         """
         p = self.erase_marked_points()
         s = p.stratum()
-        s.signature()
 
         if not s.has_hyperelliptic_component():
             return False
