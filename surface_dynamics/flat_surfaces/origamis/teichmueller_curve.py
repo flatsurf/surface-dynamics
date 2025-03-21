@@ -16,6 +16,7 @@ from six.moves import range
 from sage.structure.sage_object import SageObject
 
 from sage.rings.integer import Integer
+from sage.rings.rational import Rational
 
 from sage.modular.arithgroup.arithgroup_perm import (EvenArithmeticSubgroup_Permutation, OddArithmeticSubgroup_Permutation)
 from copy import copy
@@ -373,10 +374,10 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
 
         Kontsevich-Zorich formula
         """
-        K = Integer(1)/Integer(12) * sum(m*(m+2)/(m+1) for m in self.stratum().zeros())
+        K = Integer(1)/Integer(12) * sum(Integer(m)*Integer(m+2)/Integer(m+1) for m in self.stratum().signature())
         KK = 0
         for o in self._mapping:
-            KK += sum(w/h for (h,w) in o.widths_and_heights())
+            KK += sum(Rational((w,h)) for (h,w) in o.widths_and_heights())
         return K + Integer(1)/Integer(len(self._mapping)) * KK
 
     # TODO: mysterious signs and interversion problems...

@@ -83,7 +83,7 @@ Now, we do some simple counting of the number of primitive arithmetic
 Teichmueller curves. Let us first check the classification of arithmetic
 Teichmueller curves in H(2) from Hubert-Lelievre and McMullen::
 
-    sage: A = AbelianStratum(2)
+    sage: A = Stratum([2], k=1)
     sage: for n in range(3, 17):
     ....:     q = D.query(stratum=A, nb_squares=n)
     ....:     print("%2d %d"%(n, q.number_of()))
@@ -104,7 +104,7 @@ Teichmueller curves in H(2) from Hubert-Lelievre and McMullen::
 
 And look at the conjecture of Delecroix-Lelievre in the stratum H(1,1)::
 
-    sage: A = AbelianStratum(1,1)
+    sage: A = Stratum([1,1], k=1)
     sage: for n in range(4,20):
     ....:     q = D.query(stratum=A, nb_squares=n, primitive=True)
     ....:     print("%2d %d"%(n, q.number_of()))
@@ -190,8 +190,7 @@ from six import iteritems, string_types
 from sage.rings.real_mpfr import RealField
 from sage.rings.all import QQ, Integer
 from surface_dynamics.flat_surfaces.origamis.origami import Origami_dense_pyx
-from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum
-from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
+from surface_dynamics.flat_surfaces.abelian_strata import Stratum
 from surface_dynamics.flat_surfaces.abelian_strata import ASC, HypASC, NonHypASC, EvenASC, OddASC
 from surface_dynamics.misc.sql_db import SQLDatabase, SQLQuery
 
@@ -670,14 +669,14 @@ def stratum_to_data(h):
         sage: from surface_dynamics import *
 
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
-        sage: h = AbelianStratum(2,0)
+        sage: h = Stratum([2,0], k=1)
         sage: s = odb.stratum_to_data(h)
         sage: isinstance(s,str)
         True
         sage: h == odb.data_to_stratum(s)
         True
     """
-    return integer_tuple_to_data(h.zeros())
+    return integer_tuple_to_data(h.signature())
 
 
 def data_to_stratum(s):
@@ -692,7 +691,7 @@ def data_to_stratum(s):
         sage: odb.data_to_stratum('f f 2')
         H_17(15^2, 2)
     """
-    return AbelianStratum(data_to_integer_tuple(s))
+    return Stratum(data_to_integer_tuple(s), k=1)
 
 
 L_exp_approx_to_data = real_tuple_to_data
@@ -747,7 +746,7 @@ def orientation_stratum_to_data(q):
 
         sage: from surface_dynamics import *
         sage: import surface_dynamics.flat_surfaces.origamis.origami_database as odb
-        sage: q = QuadraticStratum(2,2,0,-1,-1,-1,-1)
+        sage: q = Stratum([2,2,0,-1,-1,-1,-1], k=2)
         sage: s = odb.orientation_stratum_to_data(q)
         sage: isinstance(s,str)
         True
@@ -756,12 +755,12 @@ def orientation_stratum_to_data(q):
     """
     if q is None:
         return ''
-    return integer_tuple_to_data(q.zeros())
+    return integer_tuple_to_data(q.signature())
 
 
 def data_to_orientation_stratum(s):
     if s:
-        return QuadraticStratum(data_to_integer_tuple(s))
+        return Stratum(data_to_integer_tuple(s), k=2)
     return None
 
 
@@ -852,7 +851,7 @@ class OrigamiQuery:
             sage: from surface_dynamics import *
 
             sage: D = OrigamiDatabase()
-            sage: q = D.query(stratum=AbelianStratum(6))
+            sage: q = D.query(stratum=Stratum([6], k=1))
             sage: q.database()
             Database of origamis
             sage: q.database() is D
@@ -944,7 +943,7 @@ class OrigamiQuery:
             sage: from surface_dynamics import *
 
             sage: D = OrigamiDatabase()
-            sage: q = D.query(('stratum','=',AbelianStratum(1,1)), ('nb_squares','<', 13))
+            sage: q = D.query(('stratum','=',Stratum([1,1], k=1)), ('nb_squares','<', 13))
             sage: q.get_query_string()
             "SELECT representative FROM origamis WHERE stratum='1 1' AND nb_squares<13 ORDER BY nb_squares ASC"
             sage: q.order(("nb_squares",1),("pole_partition",-1))
@@ -1002,7 +1001,7 @@ class OrigamiQuery:
             sage: from surface_dynamics import *
 
             sage: S = OrigamiDatabase(read_only=False)
-            sage: q = S.query(('stratum','=',AbelianStratum(1,1)),('nb_squares','=',6))
+            sage: q = S.query(('stratum','=',Stratum([1,1],k=1)),('nb_squares','=',6))
             sage: q.list()
             [(1)(2)(3,4,5,6)
             (1,2,3)(4,5,6), (1)(2)(3)(4,5,6)
@@ -1022,7 +1021,7 @@ class OrigamiQuery:
             sage: from surface_dynamics import *
 
             sage: D = OrigamiDatabase()
-            sage: q = D.query(stratum=AbelianStratum(1,1), nb_squares=8)
+            sage: q = D.query(stratum=Stratum([1,1],k=1), nb_squares=8)
             sage: q.cols('teich_curve_genus')
             sage: q.dict()
             [{'teich_curve_genus': 1},
@@ -1134,8 +1133,8 @@ def build_local_data(o):
             assert len(d) == 1
             d = d[0]
             data['orientation_stratum'] = d[0]
-            data['orientation_genus'] = d[0].genus()
-            data['hyperelliptic'] = (d[0].genus() == 0)
+            data['orientation_genus'] = d[0].surface_genus()
+            data['hyperelliptic'] = (d[0].surface_genus() == 0)
             p0 = d[1].count(0)
             p1 = sorted(d[2])
             data['pole_partition'] = (p0,p1[0],p1[1],p1[2])
@@ -1184,8 +1183,8 @@ def build_local_data(o):
         elif A.order() == 1:
             data['orientation_cover'] = True
             data['orientation_stratum'] = d[0][0]
-            data['orientation_genus'] = d[0][0].genus()
-            data['hyperelliptic'] = (d[0][0].genus() == 0)
+            data['orientation_genus'] = d[0][0].surface_genus()
+            data['hyperelliptic'] = (d[0][0].surface_genus() == 0)
             data['minus_identity_invariant'] = True
             p0 = d[0][1].count(0)
             p1 = sorted(d[0][2])
@@ -1194,9 +1193,9 @@ def build_local_data(o):
         else:
             data['orientation_cover'] = True
             data['orientation_stratum'] = data['orientation_genus'] = data['pole_partition'] = None
-            data['hyperelliptic'] = any(x[0].genus() == 0 for x in d)
+            data['hyperelliptic'] = any(x[0].surface_genus() == 0 for x in d)
             if data['hyperelliptic']:
-                dd = list(filter(lambda x: x[0].genus() == 0, d))
+                dd = list(filter(lambda x: x[0].surface_genus() == 0, d))
                 assert len(dd) == 1
                 dd = dd[0]
                 p0 = dd[1].count(0)
@@ -1307,7 +1306,7 @@ def build_global_data(o, c=None):
             s += l * Integer(h[j]) / Integer(ww)
 
     s /= V.index()
-    s += Integer(1)/Integer(12) * sum(m*(m+2)/(m+1) for m in o.stratum().zeros())
+    s += Integer(1)/Integer(12) * sum(Integer(m)*Integer(m+2)/Integer(m+1) for m in o.stratum().signature())
 
     data['sum_of_L_exp'] = s
     data['min_nb_of_cyls'] = m_ncyls
@@ -1344,7 +1343,7 @@ class OrigamiDatabase(SQLDatabase):
     Wollmilchsau in the database from its property of complete degenerate
     spectrum::
 
-        sage: q = D.query(sum_of_L_exp=1, stratum=AbelianStratum(1,1,1,1))
+        sage: q = D.query(sum_of_L_exp=1, stratum=Stratum([1,1,1,1],k=1))
         sage: len(q)
         1
         sage: o = q.list()[0]
@@ -1354,7 +1353,7 @@ class OrigamiDatabase(SQLDatabase):
     We check the classification of arithmetic Teichmueller curves in H(2) from
     Hubert-Lelievre and McMullen::
 
-        sage: A = AbelianStratum(2)
+        sage: A = Stratum([2], k=1)
         sage: for n in range(3, 15):
         ....:     q = D.query(stratum=A, nb_squares=n)
         ....:     print("%2d %d"%(n, q.number_of()))
@@ -1514,7 +1513,7 @@ class OrigamiDatabase(SQLDatabase):
             sage: with tempfile.TemporaryDirectory() as tmpdir:
             ....:     db_name = os.path.join(tmpdir, 'my_db.db')
             ....:     D = OrigamiDatabase(db_name, read_only=False)
-            ....:     D.build(AbelianStratum(4).odd_component(), 8)  # optional: gap_packages
+            ....:     D.build(Stratum([4],k=1).odd_component(), 8)  # optional: gap_packages
             ....:     D.info()                                       # optional: gap_packages
             genus 2
             =======
@@ -1712,8 +1711,8 @@ class OrigamiDatabase(SQLDatabase):
             ....:     db2_name = os.path.join(tmpdir, 'the_second_one.db')
             ....:     D1 = OrigamiDatabase(db1_name, read_only=False)
             ....:     D2 = OrigamiDatabase(db2_name, read_only=False)
-            ....:     D1.build(AbelianStratum(1,1).unique_component(), 7)  # optional: gap_packages
-            ....:     D2.build(AbelianStratum(2).unique_component(), 5)    # optional: gap_packages
+            ....:     D1.build(Stratum([1,1],k=1).unique_component(), 7)  # optional: gap_packages
+            ....:     D2.build(Stratum([2],k=1).unique_component(), 5)    # optional: gap_packages
             ....:     D2.update(D1)                                        # optional: gap_packages
             ....:     D2.info()                                            # optional: gap_packages
             genus 2
@@ -1928,16 +1927,16 @@ class OrigamiDatabase(SQLDatabase):
             sage: from surface_dynamics import *
 
             sage: O = OrigamiDatabase()
-            sage: O.max_nb_squares(AbelianStratum(2))
+            sage: O.max_nb_squares(Stratum([2],k=1))
             139
             sage: O.max_nb_squares()
             11
         """
         from surface_dynamics.flat_surfaces.abelian_strata import \
-            AbelianStratum, AbelianStratumComponent, AbelianStrata
+        Stratum, AbelianStratum, AbelianStratumComponent, AbelianStrata
 
         if comp is None:
-            m = self.max_nb_squares(AbelianStratum(2))
+            m = self.max_nb_squares(Stratum([2], k=1))
             d = 5
             while True:
                 # at each step we test strata of dimension d and we have m >= d-1
@@ -2000,7 +1999,7 @@ class OrigamiDatabase(SQLDatabase):
             sage: from surface_dynamics import *
 
             sage: D = OrigamiDatabase()
-            sage: for o in D.query(stratum=AbelianStratum(1,1), nb_squares=6):
+            sage: for o in D.query(stratum=Stratum([1,1], k=1), nb_squares=6):
             ....:     print("%s\n---------------" % o)
             (1)(2)(3,4,5,6)
             (1,2,3)(4,5,6)

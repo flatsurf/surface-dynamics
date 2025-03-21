@@ -2,198 +2,206 @@
     <img alt="logo" src="https://user-images.githubusercontent.com/373765/255104540-451305f4-42e4-4c16-aee1-b38a0e6d41ad.svg">
 </p>
 
-<h1><p align="center">Surface dynamics</p></h1>
+<h1><p align="center">surface-dynamics</p></h1>
 
-The ``surface-dynamics`` package for SageMath adds functionality related to
-interval exchange transformations, translation surfaces, mapping classes
-and more. It is based on `SageMath <https://www.sagemath.org>`_ and relies
-heavily on:
+<p align="center">
+  <img src="https://img.shields.io/badge/License-GPL_2.0_or_later-blue.svg" alt="License: GPL 2.0 or later">
+  <a href="https://github.com/flatsurf/surface-dynamics/actions/workflows/test.yml"><img src="https://github.com/flatsurf/surface-dynamics/actions/workflows/test.yml/badge.svg" alt="Test"></a>
+  <a href="https://doi.org/10.5281/zenodo.13356803"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.13356803.svg" alt="DOI 10.5281/zenodo.13356803"></a>
+</p>
 
-* gmp or mpir for arbitrary precision arithmetic
-* PARI/GP for number field computations
-* GAP for finite groups representation and permutation groups
-* PPL (Parma Polyhedra Library) and LattE (Lattice point Enumeration)
-  for polytope computations
+<p align="center">Dynamics with Surfaces</p>
+<hr>
 
-## Prerequisites
+The ``surface-dynamics`` package for [SageMath](https://www.sagemath.org)
+provides functionality related to interval exchange transformations,
+translation surfaces, mapping classes and more. It is based on SageMath and
+relies heavily on:
 
-Installing ``surface-dynamics`` requires a working Sage installation (with
-Cython and gcc). Installing the optional SageMath packages ``gap_packages``,
-and ``latte_int`` is recommended and will improve or extend the functionality
-in ``surface-dynamics``. The optional package ``database_gap`` is also
-recommended if using SageMath < 8.6 (in SageMath 8.6 it was merged partly
-into the ``gap`` and partly into the ``gap_packages`` packages).
+* [GMP](https://gmplib.org/) for arbitrary precision arithmetic
+* [PARI/GP](https://pari.math.u-bordeaux.fr/) for number field computations
+* [GAP](https://www.gap-system.org/) for finite groups representation and permutation groups
+* [PPL](https://www.bugseng.com/ppl) (Parma Polyhedra Library) and
+  [LattE](https://www.math.ucdavis.edu/~latte/) (Lattice point Enumeration) for
+  polytope computations
+
+## Usage
+
+Here is an example session showcasing some of the computations that are
+possible with surface-dynamics. For further examples, please consult [our
+documentation](https://flatsurf.github.io/surface-dynamics/).
+
+```python
+sage: from surface_dynamics.all import *
+sage: o = Origami('(1,2)', '(1,3)')
+sage: o
+(1,2)(3)
+(1,3)(2)
+sage: o.sum_of_lyapunov_exponents()
+4/3
+sage: o.lyapunov_exponents_approx()    # abs tol 0.05
+[0.33441823619678734]
+sage: o.veech_group()
+Arithmetic subgroup with permutations of right cosets
+ S2=(2,3)
+ S3=(1,2,3)
+ L=(1,2)
+ R=(1,3)
+sage: q = QuadraticStratum(1, 1, 1, 1)
+sage: q.orientation_cover()
+H_5(2^4)
+sage: q.components()
+[Q_2(1^4)^hyp]
+sage: c = q.components()[0]
+sage: c
+Q_2(1^4)^hyp
+sage: c.orientation_cover_component()
+H_5(2^4)^odd
+
+sage: AbelianStrata(genus=3).list()
+[H_3(4), H_3(3, 1), H_3(2^2), H_3(2, 1^2), H_3(1^4)]
+
+sage: O = OrigamiDatabase()
+sage: q = O.query(("stratum", "=", AbelianStratum(2)), ("nb_squares", "=", 5))
+sage: q.number_of()
+2
+sage: for o in q:
+....:     print("%s\n- - - - - - - -" % o)
+(1)(2)(3)(4,5)
+(1,2,3,4)(5)
+- - - - - - - -
+(1)(2)(3,4,5)
+(1,2,3)(4)(5)
+- - - - - - - -
+sage: Q12_reg = QuadraticStratum(12).regular_component()
+sage: Q12_reg.lyapunov_exponents_H_plus(nb_iterations=2**20)   # abs tol 0.05
+[0.6634, 0.4496, 0.2305, 0.0871]
+sage: Q12_reg.lyapunov_exponents_H_minus(nb_iterations=2**20)  # abs tol 0.05
+[1.0000, 0.3087, 0.1192]
+```
 
 ## Installation
 
-The module is distributed on PyPI and is easily installed through the
-Python package manager ``pip``. If you downloaded a binary from the SageMath
-website (including the Cygwin version running on Windows) or compiled
-from source, run the following command::
+The easiest and recommended way to install surface-dynamics is to install
+sage-flatsurf which includes surface-dynamics. Please follow the [instructions
+for Linux and
+macOS](https://flatsurf.github.io/sage-flatsurf/install.html#install-with-the-pixi-tarball)
+or the [instructions for
+Windows](https://flatsurf.github.io/sage-flatsurf/install.html#install-with-the-windows-installer).
 
-    $ sage -pip install surface-dynamics [--user]
+If you have a working copy of SageMath already you can also try to install
+surface-dynamics from PyPI using `pip`.
 
-The ``--user`` option is optional and allows to install the module in your
-user space (and does not require administrator rights).
+    $ sage -pip install surface-dynamics
 
-If you use Debian or Ubuntu and you installed Sage through the operating
-system's package manager (that is, the package ``sagemath``), run these
-two commands::
+## Build and Develop surface-dynamics with pixi
 
-    $ source /usr/share/sagemath/bin/sage-env
-    $ pip install surface-dynamics --user
+While surface-dynamics can be built and developed with `pip` like any other
+Python package, we strongly recommend that you install [pixi](https://pixi.sh)
+to get all the dependencies right.
 
-If you use Arch Linux, you need to install from source (see next section).
+Once you have cloned this source repository, you can use the following commands:
 
-## Install and use source version
+* `pixi run test` to build surface-dynamics and run its test suites
+* `pixi run sage` to build surface-dynamics and spawn SageMath with the local surface-dynamics available
+* `pixi run doc` to build and preview the documentation
 
-This section provides detailed instructions on how to download, modify
-and install the development version of ``surface-dynamics``. In all commands,
+<details>
+<summary>What is pixi?</summary>
 
-* ``PIP`` has to be replaced by either ``pip``, ``pip2``, or ``sage -pip``
-* ``PYTHON`` has to be replaced by either ``python``, ``python2`` or ``sage -python``
+pixi is a tool for developers based on
+[conda](https://en.wikipedia.org/wiki/Conda_(package_manager)) &
+[conda-forge](https://conda-forge.org) so that we can all use the same
+workflows in the same defined environments.
 
-If you are an Arch Linux user with the ``sagemath`` package installed, use
-``PIP=pip2`` and ``PYTHON=python2``. If you downloaded SageMath as a tarball
-or installed it from source use ``PIP='sage -pip'`` and ``PYTHON='sage -python'``.
+pixi allows us to ship a very opinionated setup to developers, namely a number
+of opinionated scripts with corresponding tested (and opinionated)
+dependencies.
 
-You can install the latest development version in one line with::
+This makes the whole development experience much more reliable and
+reproducible, e.g., the CI on GitHub Pull Requests runs with the exact same
+setup, so if something fails there, you can just run the CI command to
+hopefully get exactly the same behavior locally.
+</details>
 
-    $ PIP install git+https://github.com/flatsurf/surface-dynamics [--user]
+<details>
+<summary>How do I use pixi?</summary>
 
-As before, the ``--user`` option is optional and when specified will
-install the module in your user space.
+If you have not used pixi before, the most relevant pixi command is:
 
-You can also perform a two stage installation that will allow you to
-modify the source code. The first step is to clone the repository::
+```sh
+pixi run TASK
+```
 
-    $ git clone https://github.com/flatsurf/surface-dynamics
+Run `pixi task list` to see the available tasks.
 
-The above command creates a repository ``surface-dynamics`` with the source code,
-documentation and miscellaneous files. You can then change to the directory
-thus created and install the surface dynamics module with::
+All tasks are defined in the `pyproject.toml` file and most are used somewhere in
+our GitHub Continuous Integration setup, see .github/workflows/.
+</details>
 
-    $ cd surface-dynamics
-    $ PIP install . [--user]
+<details>
+<summary>Why don't we add all these dependencies normally to pyproject.toml?</summary>
 
-Do not forget the ``.`` that refers to the current directory.
+The dependency handling that Python provides when it comes to binary
+dependencies is not very robust. At the moment, pixi/conda solve this problem
+in a much better way.
+</details>
 
-When you don't want to install the package or you are testing some
-modifications to the source code, a more convenient way of using
-surface dynamics is to do everything locally. To do so, you need
-to compile the module in place via::
+<details>
+<summary>Can I use pip and other tools with pixi?</summary>
 
-    $ PYTHON setup.py build_ext --inplace
+More experienced developers may not want to use the provided tasks. You can
+also just use the curated list of dependencies that pixi provides and drop into
+a shell with these dependencies installed. For example, to run the doctests
+directly, you could:
 
-Once done, you can import the ``surface_dynamics`` module. To check that you
-are actually using the right module (i.e. the local one) you can do in a
-SageMath session::
+```sh
+pixi shell -e dev
+pip install -e .
+sage -tp surface_dynamics
+```
+</details>
 
-    sage: import surface_dynamics
-    sage: surface_dynamics.__path__        # random
-    ['/home/you/surface-dynamics/surface_dynamics/']
+## Feedback and Contributions
 
-The result of the command must correspond to the path of the repository
-created by the command ``git clone`` given above. The compilation step
-``PYTHON setup.py build_ext`` has to be redone each time you modify
-a C or Cython source file (i.e. with ``.c``, ``.h``, ``.pxd`` or ``.pyx``
-extension). In other words, it is not needed if you only
-modify or create Python files (i.e. ``.py`` files).
+If you have tried out surface-dynamics, we are thrilled to learn about your
+experiences. If you ran into any problems or have suggestions for improvement,
+please [create an issue](https://github.com/flatsurf/surface-dynamics/issues).
 
-If you wish to install your custom version of ``surface-dynamics``
-just use ``PIP`` as indicated before.
+If you want to contribute to surface-dynamics, [pull
+requests](https://github.com/flatsurf/surface-dynamics/pulls) are always
+welcome :heart:
 
-## Documentation
-
-* short tutorial: https://www.labri.fr/perso/vdelecro/flatsurf.html
-* complete module documentation: https://flatsurf.github.io/surface-dynamics/
-
-## Check
-
-After installing ``surface-dynamics``, check that it works by launching Sage
-and typing the following commands. You should get the same
-output as below. ::
-
-    sage: from surface_dynamics.all import *
-    sage: o = Origami('(1,2)', '(1,3)')
-    sage: o
-    (1,2)(3)
-    (1,3)(2)
-    sage: o.sum_of_lyapunov_exponents()
-    4/3
-    sage: o.lyapunov_exponents_approx()    # abs tol 0.05
-    [0.33441823619678734]
-    sage: o.veech_group()
-    Arithmetic subgroup with permutations of right cosets
-     S2=(2,3)
-     S3=(1,2,3)
-     L=(1,2)
-     R=(1,3)
-    sage: q = QuadraticStratum(1, 1, 1, 1)
-    sage: q.orientation_cover()
-    H_5(2^4)
-    sage: q.components()
-    [Q_2(1^4)^hyp]
-    sage: c = q.components()[0]
-    sage: c
-    Q_2(1^4)^hyp
-    sage: c.orientation_cover_component()
-    H_5(2^4)^odd
-
-    sage: AbelianStrata(genus=3).list()
-    [H_3(4), H_3(3, 1), H_3(2^2), H_3(2, 1^2), H_3(1^4)]
-
-    sage: O = OrigamiDatabase()
-    sage: q = O.query(("stratum", "=", AbelianStratum(2)), ("nb_squares", "=", 5))
-    sage: q.number_of()
-    2
-    sage: for o in q:
-    ....:     print("%s\n- - - - - - - -" % o)
-    (1)(2)(3)(4,5)
-    (1,2,3,4)(5)
-    - - - - - - - -
-    (1)(2)(3,4,5)
-    (1,2,3)(4)(5)
-    - - - - - - - -
-    sage: Q12_reg = QuadraticStratum(12).regular_component()
-    sage: Q12_reg.lyapunov_exponents_H_plus(nb_iterations=2**20)   # abs tol 0.05
-    [0.6634, 0.4496, 0.2305, 0.0871]
-    sage: Q12_reg.lyapunov_exponents_H_minus(nb_iterations=2**20)  # abs tol 0.05
-    [1.0000, 0.3087, 0.1192]
-
-## Installing development version - source code
-
-The development webpage is
-
-* https://github.com/flatsurf/surface-dynamics
-
-Assuming you have the program ``git`` on your computer, you can install the
-development version with the command::
-
-    $ sage -pip install git+https://github.com/flatsurf/surface-dynamics [--user]
-
-## Contact
-
-Your comments and help are welcome: vincent.delecroix@labri.fr
-
-For problems with macOS: samuel.lelievre@gmail.com
+We are also happy to walk you through the process personally if you are unsure
+how to get started. Feel free to reach out in the [#flatsurf stream on
+Zulip](https://sagemath.zulipchat.com/#narrow/channel/271193-flatsurf) in any
+case.
 
 ## Authors
 
-* Vincent Delecroix: maintainer
-* Samuel Lelièvre: origami and permutation representatives for quadratic strata
-* Charles Fougeron: Lyapunov exponents for strata coverings
-* Luke Jeffreys: single cylinder representatives for strata of Abelian
-  differentials
-* Ivan Yakovlev: Masur-Veech volumes of connected components of minimal strata
-  of Abelian differentials
+See [AUTHORS](./AUTHORS) for a list of authors or visit [our zenodo
+page](https://zenodo.org/badge/latestdoi/347440823).
+
+## License
+
+surface-dynamics is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License (GPL) as published by the
+Free Software Foundation; either version 2.0 of the License, or (at your
+option) any later version. See https://www.gnu.org/licenses/.
 
 ## How to cite this project
 
-If you have used this project for please cite us
-as described [on our zenodo site](https://zenodo.org/badge/latestdoi/347440823).
+If you have used this project to prepare a publication please cite us as
+described [on our zenodo page](https://zenodo.org/badge/latestdoi/347440823).
 
 ## Versions
 
-The first release of ``surface-dynamics`` as a sagemath spkg happened on the
-30th of july 2015. Versions are now track on [zenodo](https://zenodo.org/badge/latestdoi/347440823).
+The first release of ``surface-dynamics`` as a SageMath SPKG happened on the
+30th of July 2015. Refer to our [Releases
+Page](https://github.com/flatsurf/surface-dynamics/releases) for the latest
+releases.
+
+## Acknowledgements
+
+* Julian Rüth's contributions to this project have been supported by the Simons
+  Foundation Investigator grant of Alex Eskin.

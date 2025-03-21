@@ -1038,12 +1038,12 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
         EXAMPLES::
 
             sage: from surface_dynamics import *
-            sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()
+            sage: Q = Stratum([1,1,-1,-1], k=2).unique_component()
             sage: p = Q.permutation_representative(reduced=False)
             sage: p.lyapunov_exponents_H_plus(nb_iterations=2**20)  # abs tol .1
             [0.6666]
 
-            sage: Q_reg = QuadraticStratum([12]).regular_component()
+            sage: Q_reg = Stratum([12], k=2).regular_component()
             sage: p_reg = Q_reg.permutation_representative(reduced=False)
             sage: lexp = p_reg.lyapunov_exponents_H_plus(nb_iterations=2**20)
             sage: lexp  # random
@@ -1053,7 +1053,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
             sage: sum(lexp)  # abs tol .1
             1.428
 
-            sage: Q_irr = QuadraticStratum([12]).irregular_component()
+            sage: Q_irr = Stratum([12], k=2).irregular_component()
             sage: p_irr = Q_irr.permutation_representative(reduced=False)
             sage: lexp = p_irr.lyapunov_exponents_H_plus(nb_iterations=2**20)
             sage: lexp  # random
@@ -1106,7 +1106,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
         EXAMPLES::
 
             sage: from surface_dynamics import *
-            sage: Q = QuadraticStratum([1,1,-1,-1]).unique_component()
+            sage: Q = Stratum([1,1,-1,-1], k=2).unique_component()
             sage: p = Q.permutation_representative(reduced=False)
             sage: lexp = p.lyapunov_exponents_H_minus(nb_iterations=2**20)
             sage: lexp  # random
@@ -1116,7 +1116,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
             sage: sum(lexp)  # abs tol .1
             1.333
 
-            sage: Q_reg = QuadraticStratum([12]).regular_component()
+            sage: Q_reg = Stratum([12], k=2).regular_component()
             sage: p_reg = Q_reg.permutation_representative(reduced=False)
             sage: lexp = p_reg.lyapunov_exponents_H_minus(nb_iterations=2**19)
             sage: lexp  # random
@@ -1126,7 +1126,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
             sage: sum(lexp)  # abs tol .1
             1.428
 
-            sage: Q_irr = QuadraticStratum([12]).irregular_component()
+            sage: Q_irr = Stratum([12], k=2).irregular_component()
             sage: p_irr = Q_irr.permutation_representative(reduced=False)
             sage: lexp = p_irr.lyapunov_exponents_H_minus(nb_iterations=2**19)
             sage: lexp  # random

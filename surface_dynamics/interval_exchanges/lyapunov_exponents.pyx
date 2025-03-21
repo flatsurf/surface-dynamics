@@ -88,12 +88,12 @@ def lyapunov_exponents_H_plus_cover(
     - ``verbose`` -- if ``True`` print additional information concerning the
       mean and standard deviation
     """
-    cdef int n
+    cdef int i, n
     cdef int *p   # permutation
     cdef int *t   # twin
     cdef size_t **s   # sigma
     cdef size_t nc
-    cdef size_t degree, i, j, nn
+    cdef size_t degree, j, nn
     cdef size_t *dim
     cdef generalized_permutation *gp_c
     cdef quad_cover *qcc
@@ -128,7 +128,7 @@ def lyapunov_exponents_H_plus_cover(
     else:
         degree = len(sigma[0])
         sd = set(range(degree))
-        if not all(len(l) == degree and set(l) == sd for l in sigma):
+        if not all(len(l) == <int> degree and set(l) == sd for l in sigma):
             raise ValueError("sigma should be a list of lists of length d that are permutations of {0, 1, ..., d}")
 
     p = <int *> malloc(2*n * sizeof(int))
@@ -160,7 +160,7 @@ def lyapunov_exponents_H_plus_cover(
         set_random_lengths_quad_cover(qcc)
     else:
         l = <long double *> malloc(n * sizeof(long double))
-        for i from 0 <= i < n:
+        for i in range(n):
             l[i] = <long double> lengths[i]
         set_lengths(qcc, l)
         free(l)
@@ -184,13 +184,13 @@ def lyapunov_exponents_H_plus_cover(
 
         if projections is not None:
             dim = <size_t *> malloc(nc * sizeof(size_t))
-            for i from 0 <= i < nc:
-                dim[i] = int(dimensions[i])
+            for j in range(nc):
+                dim[j] = int(dimensions[j])
 
             proj = <double *> malloc((n * degree)**2 * nc * sizeof(double))
             flat_projections = projections.flatten()
-            for i from 0 <= i < (n * degree)**2 * nc:
-                proj[i] = flat_projections[i]
+            for j in range((n * degree)**2 * nc):
+                proj[j] = flat_projections[j]
 
             i = 0
             while i < nb_experiments:

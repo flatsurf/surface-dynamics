@@ -34,7 +34,7 @@ free_generalized_permutation(generalized_permutation ** gp)
 void
 print_generalized_permutation(generalized_permutation * gp)
 {
-    size_t i;
+    int i;
     for (i = 0; i < gp->k; ++i)
         printf(" %2d", (gp->perm)[i]);
     printf("\n");

@@ -65,7 +65,7 @@ static inline size_t lcm(size_t a, size_t b)
 {
 	size_t aa = a, r=b, bb;
 
-	while(bb = r)
+	while((bb = r))
 	{
 		r = aa%bb;
 		aa = bb;
@@ -74,25 +74,25 @@ static inline size_t lcm(size_t a, size_t b)
 	return (a/aa)*b;
 }
 
-void invariant_projection(double **v, size_t DEGREE, size_t NB_VECTORS, int *s)
-/* put the vector v[i] for i=0,...,NB_VECTORS in the invariant subspace of s */
+void invariant_projection(double **v, int DEGREE, int NB_VECTORS, int *s)
+/* put the vector v[i] for i=0,...,NB_VECTORS in the invariant subspace of the involution s */
 {
-	size_t i,j;
+	int i, j;
 
 #if _VERBOSE_ > 10
-	printf("Projection on E+ of the %d vectors at %x ",NB_VECTORS,v);
+	printf("Projection on E+ of the %d vectors at %x ", NB_VECTORS, v);
 	printf("with respect to the involution:");
-	for(i=0;i<DEGREE;++i) printf("%d ",s[i]);
+	for(i = 0; i < DEGREE; ++i) printf("%d ",s[i]);
 	printf("\n");
 #endif
 
-	for(j=0; j<DEGREE; ++j)
+	for(j = 0; j < DEGREE; ++j)
 		if(j < s[j])
 		{
 #if _VERBOSE_ > 10
-				printf(" project (j,s[j]) = (%d,%d)\n",j,s[j]);
+				printf(" project (j,s[j]) = (%d,%d)\n", j, s[j]);
 #endif
-			for(i=0; i<NB_VECTORS; ++i)
+			for(i = 0; i < NB_VECTORS; ++i)
 			{
 				v[i][j] = (v[i][j] + v[i][s[j]]) / 2.0;
 				v[i][s[j]] = v[i][j];
@@ -101,10 +101,10 @@ void invariant_projection(double **v, size_t DEGREE, size_t NB_VECTORS, int *s)
 		}
 }
 
-void anti_invariant_projection(double **v, size_t DEGREE, size_t NB_VECTORS, int *s)
-/* put the vector v[i] for i=0,...,NB_VECTORS in the anti-invariant subspace of s */
+void anti_invariant_projection(double **v, int DEGREE, int NB_VECTORS, int *s)
+/* put the vector v[i] for i=0,...,NB_VECTORS in the anti-invariant subspace of the involution s */
 {
-	size_t i,j;
+	int i, j;
 
 #if _VERBOSE_ > 10
 	printf("Projection on E- of the %d vectors at %x ",NB_VECTORS,v);

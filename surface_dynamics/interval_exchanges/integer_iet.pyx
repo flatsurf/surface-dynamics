@@ -516,7 +516,7 @@ def interval_exchange_statistics_sample(top, bot, uint64_t L, uint64_t sample_si
     cdef int k = len(top)
     cdef int n = (len(top) + len(bot)) // 2
     cdef int i
-    cdef int count
+    cdef uint64_t count
     cdef int_iet_t t
 
     if flat:

@@ -12,7 +12,7 @@ import pytest
 import itertools
 import random
 
-from surface_dynamics import AbelianStratum, OrigamiDatabase
+from surface_dynamics import Stratum, OrigamiDatabase
 
 def representative(cd):
     return min([cd.canonical_label(), cd.horizontal_symmetry().canonical_label(), cd.vertical_symmetry().canonical_label(), cd.inverse().canonical_label()])
@@ -73,36 +73,36 @@ def origami_check(C, sample_size, repeat):
             assert representative(o.cylinder_diagram()) in cyl_diags, o
 
 def test_H2():
-    A = AbelianStratum(2)
+    A = Stratum([2], k=1)
     cylinder_diagrams_testing(A)
     origami_check(A.unique_component(), 10, 10)
 
 def test_H11():
-    A = AbelianStratum(1,1)
+    A = Stratum([1,1], k=1)
     cylinder_diagrams_testing(A)
     origami_check(A.unique_component(), 10, 10)
 
 def test_H4():
-    A = AbelianStratum(4)
+    A = Stratum([4], k=1)
     cylinder_diagrams_testing(A)
     origami_check(A.hyperelliptic_component(), 10, 10)
     origami_check(A.odd_component(), 10, 10)
 
 @pytest.mark.slow
 def test_H22():
-    A = AbelianStratum(2,2)
+    A = Stratum([2,2], k=1)
     cylinder_diagrams_testing(A)
     origami_check(A.hyperelliptic_component(), 10, 10)
     origami_check(A.odd_component(), 10, 10)
 
 def test_H31():
-    A = AbelianStratum(3,1)
+    A = Stratum([3,1], k=1)
     cylinder_diagrams_testing(A)
     origami_check(A.unique_component(), 10, 10)
 
 @pytest.mark.slow
 def test_H6():
-    A = AbelianStratum(6)
+    A = Stratum([6], k=1)
     cylinder_diagrams_testing(A)
     origami_check(A.hyperelliptic_component(), 10, 10)
     origami_check(A.odd_component(), 10, 10)
@@ -110,6 +110,6 @@ def test_H6():
 
 @pytest.mark.slow
 def test_H211():
-    A = AbelianStratum(2,1,1)
+    A = Stratum([2,1,1], k=1)
     cylinder_diagrams_testing(A)
     origami_check(A.unique_component(), 5, 10)
