@@ -9,26 +9,26 @@ algorithms related to translation surfaces:
 - database of separatrix and cylinder diagrams up to isomorphism
 - database of volume of connected components of Abelian strata
 """
-#*****************************************************************************
+# ****************************************************************************
 #       Copyright (C) 2009 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
+# ****************************************************************************
 
 from __future__ import print_function, absolute_import
 
-import os
-import sage.misc.misc
+from pathlib import Path
 
 from sage.env import SAGE_SHARE
 
 from . import __path__ as SURFACE_DYNAMICS_DB_PATH
 if len(SURFACE_DYNAMICS_DB_PATH) != 1:
     raise RuntimeError("problem with setting paths")
-SURFACE_DYNAMICS_DB_PATH = os.path.abspath(SURFACE_DYNAMICS_DB_PATH[0])
+SURFACE_DYNAMICS_DB_PATH = Path(SURFACE_DYNAMICS_DB_PATH[0]).absolute()
+
 
 def line_count(filename):
     r"""
@@ -37,7 +37,7 @@ def line_count(filename):
     from sage.rings.integer import Integer
     f = open(filename)
     lines = 0
-    read_f = f.read # loop optimization
+    read_f = f.read  # loop optimization
 
     buf = read_f(0X100000)
     while buf:
@@ -47,6 +47,7 @@ def line_count(filename):
     f.close()
 
     return Integer(lines)
+
 
 class GenericRepertoryDatabase:
     r"""
@@ -71,13 +72,15 @@ class GenericRepertoryDatabase:
                 path = tempfile.TemporaryDirectory()
         elif not isinstance(path, str):
             raise TypeError('path must be a string')
-        elif not os.path.isdir(path):
+
+        path = Path(path)
+        if not path.is_dir():
             if read_only:
                 raise ValueError("you must set read_only to `False` if the database does not already exist")
             try:
-                os.makedirs(path)
+                path.mkdir(parents=True)
             except OSError:
-                raise ValueError("not able to create the database at {}".format(path))
+                raise ValueError(f"not able to create the database at {path}")
 
         self.path = path
         self.read_only = read_only
@@ -137,8 +140,7 @@ class GenericRepertoryDatabase:
             sage: tmp_dir = tempfile.TemporaryDirectory()
             sage: C = CylinderDiagrams(tmp_dir.name, read_only=False)
             sage: C.update(Stratum([4], k=1))
-            sage: import os
-            sage: sorted(os.listdir(C.path))
+            sage: sorted(f.name for f in C.path.iterdir())
             ['cyl_diags-4-hyp-1',
              'cyl_diags-4-hyp-2',
              'cyl_diags-4-hyp-3',
@@ -146,19 +148,20 @@ class GenericRepertoryDatabase:
              'cyl_diags-4-odd-2',
              'cyl_diags-4-odd-3']
             sage: C.clean()
-            sage: os.listdir(C.path)
+            sage: list(C.path.iterdir())
             []
         """
         assert not self.read_only
-        for filename in os.listdir(self.path):
-            os.remove(os.path.join(self.path,filename))
+        for filename in self.path.iterdir():
+            filename.unlink()
+
 
 class IrregularComponentTwins(GenericRepertoryDatabase):
     r"""
     Twin data of generalized permutation of irregular components of strata of
     Abelian differentials.
     """
-    default_path = os.path.join(SURFACE_DYNAMICS_DB_PATH, "generalized_permutation_twins")
+    default_path = SURFACE_DYNAMICS_DB_PATH / "generalized_permutation_twins"
 
     def __repr__(self):
         r"""
@@ -214,7 +217,7 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
             sage: D.has_stratum(Stratum([12], k=2))
             True
         """
-        return os.path.isfile(os.path.join(self.path, self.filename(stratum)))
+        return (self.path / self.filename(stratum)).is_file()
 
     def update(self, stratum):
         r"""
@@ -232,8 +235,8 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
                 res.add(cylindric_canonical(q))
         res = sorted(res)
 
-        filename = os.path.join(self.path, self.filename(stratum))
-        with open(filename, 'w') as output:
+        filename = self.path / self.filename(stratum)
+        with filename.open('w') as output:
             for can in res:
                 output.write(str(can))
                 output.write("\n")
@@ -252,11 +255,11 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
         from surface_dynamics.flat_surfaces.quadratic_strata import Stratum
         from sage.rings.integer import Integer
         s = set()
-        for f in os.listdir(self.path):
-            if f.startswith('twins-'):
-                g = f[6:]
+        for f in self.path.iterdir():
+            if f.name.startswith('twins-'):
+                g = f.name[6:]
                 i = g.index('-')
-                comp = g[:i].replace('p','-1')
+                comp = g[:i].replace('p', '-1')
                 s.add(comp)
 
         return sorted(Stratum(list(map(Integer,g.split('_'))), k=2) for g in s)
@@ -278,7 +281,7 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
             32
         """
         assert self.has_stratum(stratum)
-        f = open(os.path.join(self.path, self.filename(stratum)))
+        f = (self.path / self.filename(stratum)).open()
 
         res = []
         s = f.readline()
@@ -303,7 +306,8 @@ class IrregularComponentTwins(GenericRepertoryDatabase):
             sage: D.count(Q)
             82
         """
-        return line_count(os.path.join(self.path, self.filename(stratum)))
+        return line_count(self.path / self.filename(stratum))
+
 
 class CylinderDiagrams(GenericRepertoryDatabase):
     r"""
@@ -317,13 +321,12 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
         sage: from surface_dynamics import Stratum
         sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
-        sage: import os
 
         sage: C = CylinderDiagrams()
         sage: a = Stratum([3,1,1,1], k=1).unique_component()
         sage: C.filename(a, 2)
         'cyl_diags-3_1_1_1-c-2'
-        sage: os.path.isfile(os.path.join(C.path, C.filename(a, 2)))
+        sage: (C.path / C.filename(a, 2)).is_file()
         True
         sage: l = list(C.get_iterator(a, 2))
         sage: l[0]
@@ -333,7 +336,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
         sage: l[0].stratum()
         H_4(3, 1^3)
     """
-    default_path = os.path.join(SURFACE_DYNAMICS_DB_PATH, "cylinder_diagrams")
+    default_path = SURFACE_DYNAMICS_DB_PATH / "cylinder_diagrams"
 
     def __repr__(self):
         r"""
@@ -346,7 +349,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             sage: C    # indirect doctest
             Database of cylinder diagrams at ...
         """
-        return "Database of cylinder diagrams at %s"%self.path
+        return "Database of cylinder diagrams at %s" % self.path
 
     def filename(self, comp, ncyls):
         r"""
@@ -404,7 +407,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
         from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratumComponent
 
         assert isinstance(comp, AbelianStratumComponent), "the argument must be a component of stratum of Abelian differentials"
-        return os.path.isfile(os.path.join(self.path,self.filename(comp, 1)))
+        return (self.path / self.filename(comp, 1)).is_file()
 
     def has_stratum(self, stratum):
         r"""
@@ -414,8 +417,6 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
             sage: from surface_dynamics import Stratum
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
-
-            sage: import os
 
             sage: C = CylinderDiagrams(tmp_dir(), read_only=False)
             sage: C.clean()
@@ -460,9 +461,9 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             sage: next(it)  # random
             'cyl_diags-...'
         """
-        for f in os.listdir(self.path):
-            if f.startswith('cyl_diags-'):
-                yield f
+        for f in self.path.iterdir():
+            if f.name.startswith('cyl_diags-'):
+                yield f.name
 
     def list_strata(self):
         r"""
@@ -472,7 +473,6 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
             sage: from surface_dynamics import Stratum
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
-            sage: import os
 
             sage: C = CylinderDiagrams(tmp_dir(), read_only=False)
             sage: C.clean()
@@ -510,7 +510,6 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
             sage: from surface_dynamics import Stratum
             sage: from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
-            sage: import os
 
             sage: C = CylinderDiagrams(tmp_dir(), read_only=False)
 
@@ -526,7 +525,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             ...
             ValueError: not in the database
         """
-        from surface_dynamics.flat_surfaces.strata import Stratum, StratumComponent
+        from surface_dynamics.flat_surfaces.strata import StratumComponent
 
         if not isinstance(comp, StratumComponent):
             raise TypeError("comp should be a component of stratum")
@@ -535,10 +534,10 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             from itertools import chain
             g = comp.stratum().surface_genus()
             s = len(comp.stratum().signature())
-            return chain(*(self.get_iterator(comp,i) for i in range(1,g+s)))
+            return chain(*(self.get_iterator(comp, i) for i in range(1, g + s)))
 
-        filename = os.path.join(self.path, self.filename(comp,ncyls))
-        if not os.path.isfile(filename):
+        filename = self.path / self.filename(comp, ncyls)
+        if not filename.is_file():
             raise ValueError("not in the database")
         return self._one_file_iterator(filename)
 
@@ -561,7 +560,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             sage: for filename in C._files():          # not tested -- very long time, ~1h
             ....:     C._check_symmetries(filename)    # not tested -- very long time, ~1h
         """
-        filename = os.path.join(self.path, filename)
+        filename = self.path / filename
         for c in self._one_file_iterator(filename):
             if c != c.canonical_label(inplace=False):
                 raise ValueError("in file {}, {} does not have canonical labels".format(
@@ -570,24 +569,24 @@ class CylinderDiagrams(GenericRepertoryDatabase):
             c1.canonical_label(inplace=True)
             if c1 < c:
                 raise ValueError("in file {}, {} is not minimal... {} is the good one!".format(
-                    filename, c,c1))
+                    filename, c, c1))
             c1 = c.vertical_symmetry()
             c1.canonical_label(inplace=True)
             if c1 < c:
                 raise ValueError("in file {}, {} is not minimal... {} is the good one!".format(
-                    filename, c,c1))
+                    filename, c, c1))
             c1 = c.inverse()
             c1.canonical_label(inplace=True)
             if c1 < c:
                 raise ValueError("in file {}, {} is not minimal... {} is the good one!".format(
-                    filename,c,c1))
+                    filename, c, c1))
 
     def _remove_symmetries(self, filename):
         r"""
         Use this at your own risk! It modifies the file of the database
         inplace!!!
         """
-        filename = os.path.join(self.path, filename)
+        filename = self.path / filename
         n = 0
         s = set()
         garbage = set()
@@ -615,7 +614,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
 
         print("old cardinality:", n)
         print("new cardinality:", len(s))
-        print("gain           :", n-len(s))
+        print("gain           :", n - len(s))
 
         f = open(filename, "w")
         for c in sorted(s):
@@ -648,7 +647,7 @@ class CylinderDiagrams(GenericRepertoryDatabase):
              ncyls = 3
              2 cyl. diags for H_3(4)^hyp
              4 cyl. diags for H_3(4)^odd
-            sage: sorted(os.listdir(C.path))
+            sage: sorted(f.name for f in C.path.iterdir())
             ['cyl_diags-4-hyp-1',
              'cyl_diags-4-hyp-2',
              'cyl_diags-4-hyp-3',
@@ -659,18 +658,18 @@ class CylinderDiagrams(GenericRepertoryDatabase):
         import sys
 
         if verbose:
-            print("computation for %s"%stratum)
+            print("computation for %s" % stratum)
             sys.stdout.flush()
 
         for ncyls in range(1, stratum.surface_genus() + len(stratum.signature())):
             if verbose:
-                print(" ncyls = %d"%ncyls)
+                print(" ncyls = %d" % ncyls)
                 sys.stdout.flush()
-            d = stratum.cylinder_diagrams_by_component(ncyls, force_computation = True)
+            d = stratum.cylinder_diagrams_by_component(ncyls, force_computation=True)
             for c in d:
                 if verbose:
-                    print(" %d cyl. diags for %s"%(len(d[c]),c))
-                f = open(os.path.join(self.path,self.filename(c,ncyls)), "w")
+                    print(" %d cyl. diags for %s" % (len(d[c]), c))
+                f = (self.path / self.filename(c, ncyls)).open("w")
                 for cyl in sorted(d[c]):
                     f.write(str(cyl) + "\n")
                 f.close()
@@ -688,6 +687,6 @@ class CylinderDiagrams(GenericRepertoryDatabase):
         if ncyls is None:
             g = comp.stratum().surface_genus()
             s = len(comp.stratum().signature())
-            return sum((self.count(comp,i) for i in range(1,g+s)))
+            return sum((self.count(comp, i) for i in range(1, g + s)))
 
-        return line_count(os.path.join(self.path, self.filename(comp, ncyls)))
+        return line_count(self.path / self.filename(comp, ncyls))
