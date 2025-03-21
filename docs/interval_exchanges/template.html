@@ -1242,7 +1242,7 @@ some marked points.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.interval_exchanges.template.OrientablePermutationIET.is_identity">
 <span class="sig-name descname"><span class="pre">is_identity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.interval_exchanges.template.OrientablePermutationIET.is_identity" title="Link to this definition">#</a></dt>
-<dd><p>Returns True if self is the identity.</p>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">self</span></code> is the identity.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 
@@ -3983,7 +3983,7 @@ loops and multiedges allowed.</p>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="n">r</span> <span class="o">=</span> <span class="n">iet</span><span class="o">.</span><span class="n">RauzyDiagram</span><span class="p">(</span><span class="s1">&#39;a b c d&#39;</span><span class="p">,</span><span class="s1">&#39;d c b a&#39;</span><span class="p">)</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">r_1n</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">(),</span> <span class="n">r</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">r_1n</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">r</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">is_standard</span><span class="p">())</span>
 <span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">r_1n</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
 <span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="n">d</span>
 <span class="n">d</span> <span class="n">c</span> <span class="n">b</span> <span class="n">a</span>
