@@ -4,6 +4,27 @@ surface-dynamics Change Log
 
 .. current developments
 
+v0.6.0
+====================
+
+**Added:**
+
+* more configurable sql query printing
+* stratum of meromorphic and higher order differentials
+
+**Deprecated:**
+
+* methods of Stratum (and subclasses AbelianStratum, QuadraticStratum):
+  zeros(), genus(), nb_zeros(), nb_fake_zeros(), nb_poles()
+
+**Fixed:**
+
+* Fixed building with e-antic version 2.
+
+* Fixed compatibility issues with SageMath 10.1.
+
+
+
 v0.5.0
 ====================
 

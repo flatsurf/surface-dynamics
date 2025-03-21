@@ -126,16 +126,16 @@ def cylindric_canonical(p):
     r"""
     TESTS::
 
-        sage: from surface_dynamics import QuadraticStratum
+        sage: from surface_dynamics import Stratum
         sage: from surface_dynamics.interval_exchanges.template import cylindric_canonical
 
-        sage: C = QuadraticStratum(1,genus=0).unique_component()
+        sage: C = Stratum({1:1, -1:5}, k=2).unique_component()
         sage: R = C.permutation_representative().rauzy_diagram()
         sage: K = [p for p in R if p.is_cylindric()]
         sage: Kcan = set(cylindric_canonical(p) for p in K)
         sage: Kcan
         {((1, 0), (1, 2, 3, 4, 5, 0))}
-        sage: C = QuadraticStratum(1,1,genus=0).unique_component()
+        sage: C = Stratum({1: 2, -1: 6}, k=2).unique_component()
         sage: R = C.permutation_representative().rauzy_diagram()
         sage: K = [p for p in R if p.is_cylindric()]
         sage: Kcan = set(cylindric_canonical(p) for p in K)
@@ -489,10 +489,10 @@ class Permutation(SageObject):
 
             sage: from surface_dynamics import *
 
-            sage: p1 = iet.Permutation('a b','a b',reduced=True,alphabet='ab')
-            sage: p2 = iet.Permutation('a b','a b',reduced=True,alphabet='ba')
-            sage: q1 = iet.Permutation('a b','b a',reduced=True,alphabet='ab')
-            sage: q2 = iet.Permutation('a b','b a',reduced=True,alphabet='ba')
+            sage: p1 = iet.Permutation('a b', 'a b', reduced=True, alphabet='ab')
+            sage: p2 = iet.Permutation('a b', 'a b', reduced=True, alphabet='ba')
+            sage: q1 = iet.Permutation('a b', 'b a', reduced=True, alphabet='ab')
+            sage: q2 = iet.Permutation('a b', 'b a', reduced=True, alphabet='ba')
             sage: p1 == p2 and p2 == p1 and q1 == q2 and q2 == q1
             True
             sage: p1 == q1 or p2 == q1 or q1 == p1 or q1 == p2
@@ -502,8 +502,8 @@ class Permutation(SageObject):
             sage: p2 = iet.Permutation('a b', 'b a', alphabet='ba')
             sage: q1 = iet.Permutation('b a', 'a b', alphabet='ab')
             sage: q2 = iet.Permutation('b a', 'a b', alphabet='ba')
-            sage: p1 == p2 or p2 == p1
-            False
+            sage: p1 == p2 and p2 == p1
+            True
             sage: p1 == q1 or q1 == p1
             False
             sage: p1 == q2 or q2 == p1
@@ -513,16 +513,16 @@ class Permutation(SageObject):
             sage: p2 == q2 or q2 == p2
             False
             sage: q1 == q2 or q2 == q1
-            False
+            True
 
         ::
 
-            sage: p1 = iet.GeneralizedPermutation('a a','b b',alphabet='ab')
-            sage: p2 = iet.GeneralizedPermutation('a a','b b',alphabet='ba')
-            sage: q1 = iet.GeneralizedPermutation('b b','a a',alphabet='ab')
-            sage: q2 = iet.GeneralizedPermutation('b b','a a',alphabet='ba')
-            sage: p1 == p2 or p2 == p1
-            False
+            sage: p1 = iet.GeneralizedPermutation('a a', 'b b', alphabet='ab')
+            sage: p2 = iet.GeneralizedPermutation('a a', 'b b', alphabet='ba')
+            sage: q1 = iet.GeneralizedPermutation('b b', 'a a', alphabet='ab')
+            sage: q2 = iet.GeneralizedPermutation('b b', 'a a', alphabet='ba')
+            sage: p1 == p2 and p2 == p1
+            True
             sage: p1 == q1 or q1 == p1
             False
             sage: p1 == q2 or q2 == p1
@@ -531,14 +531,14 @@ class Permutation(SageObject):
             False
             sage: p2 == q2 or q2 == p2
             False
-            sage: q1 == q2 or q2 == q1
-            False
+            sage: q1 == q2 and q2 == q1
+            True
 
         ::
 
-            sage: p = iet.GeneralizedPermutation('a b b', 'c c a', reduced = True)
-            sage: q = iet.GeneralizedPermutation('b a a', 'c c b', reduced = True)
-            sage: r = iet.GeneralizedPermutation('t s s', 'w w t', reduced = True)
+            sage: p = iet.GeneralizedPermutation('a b b', 'c c a', reduced=True)
+            sage: q = iet.GeneralizedPermutation('b a a', 'c c b', reduced=True)
+            sage: r = iet.GeneralizedPermutation('t s s', 'w w t', reduced=True)
             sage: p == q
             True
             sage: p == r
@@ -546,7 +546,7 @@ class Permutation(SageObject):
 
         ::
 
-            sage: p = iet.Permutation('a b','a b',reduced=True,flips='a')
+            sage: p = iet.Permutation('a b', 'a b', reduced=True, flips='a')
             sage: q = copy(p)
             sage: q.alphabet([0,1])
             sage: p == q
@@ -570,14 +570,14 @@ class Permutation(SageObject):
 
             sage: a0 = [0,0,1]
             sage: a1 = [1,2,2]
-            sage: p = iet.GeneralizedPermutation(a0,a1,reduced=True,flips=[0])
+            sage: p = iet.GeneralizedPermutation(a0, a1, reduced=True, flips=[0])
             sage: q = copy(p)
             sage: q.alphabet("abc")
             sage: p == q
             True
             sage: b0 = [1,0,0]
             sage: b1 = [2,2,1]
-            sage: r = iet.GeneralizedPermutation(b0,b1,reduced=True,flips=[0])
+            sage: r = iet.GeneralizedPermutation(b0, b1, reduced=True, flips=[0])
             sage: p == r or q == r
             False
 
@@ -608,8 +608,8 @@ class Permutation(SageObject):
             sage: p2 = iet.Permutation('a b', 'b a', alphabet='ba')
             sage: q1 = iet.Permutation('b a', 'a b', alphabet='ab')
             sage: q2 = iet.Permutation('b a', 'a b', alphabet='ba')
-            sage: p1 != p2 and p2 != p1
-            True
+            sage: p1 != p2 or p2 != p1
+            False
             sage: p1 != q1 and q1 != p1
             True
             sage: p1 != q2 and q2 != p1
@@ -618,33 +618,33 @@ class Permutation(SageObject):
             True
             sage: p2 != q2 and q2 != p2
             True
-            sage: q1 != q2 and q2 != q1
-            True
+            sage: q1 != q2 or q2 != q1
+            False
 
         ::
 
-            sage: p1 = iet.GeneralizedPermutation('a a','b b',alphabet='ab')
-            sage: p2 = iet.GeneralizedPermutation('a a','b b',alphabet='ba')
-            sage: q1 = iet.GeneralizedPermutation('b b','a a',alphabet='ab')
-            sage: q2 = iet.GeneralizedPermutation('b b','a a',alphabet='ba')
+            sage: p1 = iet.GeneralizedPermutation('a a', 'b b', alphabet='ab')
+            sage: p2 = iet.GeneralizedPermutation('a a', 'b b', alphabet='ba')
+            sage: q1 = iet.GeneralizedPermutation('b b', 'a a', alphabet='ab')
+            sage: q2 = iet.GeneralizedPermutation('b b', 'a a', alphabet='ba')
             sage: p1 != p2 or p2 != p1
+            False
+            sage: p1 != q1 and q1 != p1
             True
-            sage: p1 != q1 or q1 != p1
+            sage: p1 != q2 and q2 != p1
             True
-            sage: p1 != q2 or q2 != p1
+            sage: p2 != q1 and q1 != p2
             True
-            sage: p2 != q1 or q1 != p2
-            True
-            sage: p2 != q2 or q2 != p2
+            sage: p2 != q2 and q2 != p2
             True
             sage: q1 != q2 or q2 != q1
-            True
+            False
 
         ::
 
-            sage: p = iet.GeneralizedPermutation('a b b', 'c c a', reduced = True)
-            sage: q = iet.GeneralizedPermutation('b b a', 'c c a', reduced = True)
-            sage: r = iet.GeneralizedPermutation('i j j', 'k k i', reduced = True)
+            sage: p = iet.GeneralizedPermutation('a b b', 'c c a', reduced=True)
+            sage: q = iet.GeneralizedPermutation('b b a', 'c c a', reduced=True)
+            sage: r = iet.GeneralizedPermutation('i j j', 'k k i', reduced=True)
             sage: p != q
             True
             sage: p != r
@@ -701,11 +701,19 @@ class Permutation(SageObject):
             sage: p1.reduced() != p3.reduced()
             False
         """
-        return type(self) == type(other) and \
-            self._twin == other._twin and \
-            self._labels == other._labels and \
-            self._flips == other._flips and \
-            (self._labels is None or self._alphabet == other._alphabet)
+        if (type(self) != type(other) or
+            self._twin != other._twin or
+            self._flips != other._flips):
+            return False
+
+        if self._labels is not None and other._alphabet is not None:
+            if self._alphabet is other._alphabet:
+                return self._labels == other._labels
+            else:
+                # (slower) comparison over different alphabets using letters
+                return self.list() == other.list()
+
+        return True
 
     def __lt__(self, other):
         r"""
@@ -724,12 +732,12 @@ class Permutation(SageObject):
             sage: p1 = iet.GeneralizedPermutation('a b', 'b a', reduced=True)
             sage: p0 < p1 and p1 > p0
             True
-            sage: q0 = iet.GeneralizedPermutation('a b c','a b c',reduced=True)
-            sage: q1 = iet.GeneralizedPermutation('a b c','a c b',reduced=True)
-            sage: q2 = iet.GeneralizedPermutation('a b c','b a c',reduced=True)
-            sage: q3 = iet.GeneralizedPermutation('a b c','c a b',reduced=True)
-            sage: q4 = iet.GeneralizedPermutation('a b c','b c a',reduced=True)
-            sage: q5 = iet.GeneralizedPermutation('a b c','c b a',reduced=True)
+            sage: q0 = iet.GeneralizedPermutation('a b c', 'a b c', reduced=True)
+            sage: q1 = iet.GeneralizedPermutation('a b c', 'a c b', reduced=True)
+            sage: q2 = iet.GeneralizedPermutation('a b c', 'b a c', reduced=True)
+            sage: q3 = iet.GeneralizedPermutation('a b c', 'c a b', reduced=True)
+            sage: q4 = iet.GeneralizedPermutation('a b c', 'b c a', reduced=True)
+            sage: q5 = iet.GeneralizedPermutation('a b c', 'c b a', reduced=True)
             sage: p0 < q0 and q0 > p0 and p1 < q0 and q0 > p1
             True
             sage: q0 < q1 and q1 > q0
@@ -752,13 +760,13 @@ class Permutation(SageObject):
             sage: (p1 > p0) and (p1 == p1)
             True
 
-            sage: p0 = iet.GeneralizedPermutation('0 0','1 1 2 2')
-            sage: p1 = iet.GeneralizedPermutation('0 0','1 2 1 2')
-            sage: p2 = iet.GeneralizedPermutation('0 0','1 2 2 1')
-            sage: p3 = iet.GeneralizedPermutation('0 0 1 1','2 2')
-            sage: p4 = iet.GeneralizedPermutation('0 0 1','1 2 2')
-            sage: p5 = iet.GeneralizedPermutation('0 1 0 1','2 2')
-            sage: p6 = iet.GeneralizedPermutation('0 1 1 0','2 2')
+            sage: p0 = iet.GeneralizedPermutation('0 0', '1 1 2 2')
+            sage: p1 = iet.GeneralizedPermutation('0 0', '1 2 1 2')
+            sage: p2 = iet.GeneralizedPermutation('0 0', '1 2 2 1')
+            sage: p3 = iet.GeneralizedPermutation('0 0 1 1', '2 2')
+            sage: p4 = iet.GeneralizedPermutation('0 0 1', '1 2 2')
+            sage: p5 = iet.GeneralizedPermutation('0 1 0 1', '2 2')
+            sage: p6 = iet.GeneralizedPermutation('0 1 1 0', '2 2')
             sage: p0 == p0 and p0 < p1 and p0 < p2 and p0 < p3 and p0 < p4
             True
             sage: p0 < p5 and p0 < p6 and p1 < p2 and p1 < p3 and p1 < p4
@@ -772,16 +780,16 @@ class Permutation(SageObject):
             sage: p3 == p3 and p4 == p4 and p5 == p5 and p6 == p6
             True
 
-            sage: p = iet.Permutation('a b','a b',reduced=True,flips='a')
+            sage: p = iet.Permutation('a b', 'a b', reduced=True, flips='a')
             sage: q = copy(p)
             sage: q.alphabet([0,1])
             sage: p == q
             True
             sage: l0 = ['a b','a b']
             sage: l1 = ['a b','b a']
-            sage: p1 = iet.Permutation(l1,reduced=True, flips='b')
-            sage: p2 = iet.Permutation(l1,reduced=True, flips='a')
-            sage: p3 = iet.Permutation(l1,reduced=True, flips='ab')
+            sage: p1 = iet.Permutation(l1, reduced=True, flips='b')
+            sage: p2 = iet.Permutation(l1, reduced=True, flips='a')
+            sage: p3 = iet.Permutation(l1, reduced=True, flips='ab')
             sage: p2 > p3 and p3 < p2
             True
             sage: p1 > p2 and p2 < p1
@@ -797,14 +805,25 @@ class Permutation(SageObject):
             True
             sage: q3 < q1
             True
-            sage: r = iet.Permutation('a b c','a b c', reduced=True, flips='a')
+            sage: r = iet.Permutation('a b c', 'a b c', reduced=True, flips='a')
             sage: r > p1 and r > p2 and r > p3
             True
             sage: p1 < r and p2 < r and p3 < r
             True
+
+            sage: p1 = iet.Permutation('a b', 'b a', alphabet='ab')
+            sage: p2 = iet.Permutation('a b', 'b a', alphabet='ba')
+            sage: p1 < p2
+            Traceback (most recent call last):
+            ...
+            ValueError: comparison of permutations over different alphabets
         """
         if type(self) != type(other):
             raise TypeError("Permutations must be of the same type")
+
+        if self._labels is not None and other._labels is not None:
+            if self._alphabet is not other._alphabet:
+                raise ValueError('comparison of permutations over different alphabets')
 
         if len(self) < len(other):
             return True
@@ -816,7 +835,7 @@ class Permutation(SageObject):
         elif self._twin > other._twin:
             return False
 
-        if self._labels is not None:
+        if self._labels is not None and other._labels is not None:
             if self._labels < other._labels:
                 return True
             elif self._labels > other._labels:
@@ -3249,7 +3268,7 @@ class PermutationLI(Permutation):
             ...
             NotImplementedError: not yet implemented! Do it!
         """
-        if self.stratum().nb_fake_zeros():
+        if 0 in self.stratum().signature():
             raise NotImplementedError("not yet implemented! Do it!")
         else:
             return self
@@ -3270,7 +3289,7 @@ class PermutationLI(Permutation):
 
         Check for the correspondence::
 
-            sage: q = QuadraticStratum(6,6)
+            sage: q = Stratum([6,6], k=2)
             sage: c_hyp, c_reg, c_irr = q.components()
 
             sage: p_hyp = c_hyp.permutation_representative()
@@ -3294,7 +3313,7 @@ class PermutationLI(Permutation):
             sage: p_irr.is_hyperelliptic()
             False
 
-            sage: q = QuadraticStratum(3,3,2)
+            sage: q = Stratum([3,3,2], k=2)
             sage: c_hyp, c_non_hyp = q.components()
             sage: p_hyp = c_hyp.permutation_representative()
             sage: p_hyp.is_hyperelliptic()
@@ -3302,7 +3321,7 @@ class PermutationLI(Permutation):
             sage: p_non_hyp = c_non_hyp.permutation_representative()
             sage: p_non_hyp.is_hyperelliptic()
             False
-            sage: q = QuadraticStratum(5,5,2)
+            sage: q = Stratum([5,5,2], k=2)
             sage: c_hyp, c_non_hyp = q.components()
             sage: p_hyp = c_hyp.permutation_representative()
             sage: p_hyp.is_hyperelliptic()
@@ -3310,7 +3329,7 @@ class PermutationLI(Permutation):
             sage: p_non_hyp = c_non_hyp.permutation_representative()
             sage: p_non_hyp.is_hyperelliptic()
             False
-            sage: q = QuadraticStratum(3,3,1,1)
+            sage: q = Stratum([3,3,1,1], k=2)
             sage: c_hyp, c_non_hyp = q.components()
             sage: p_hyp = c_hyp.permutation_representative()
             sage: p_hyp.is_hyperelliptic()
@@ -3321,7 +3340,7 @@ class PermutationLI(Permutation):
         """
         p = self.erase_marked_points()
         s = p.stratum()
-        s.zeros()
+        s.signature()
 
         if not s.has_hyperelliptic_component():
             return False
@@ -3415,7 +3434,7 @@ class PermutationLI(Permutation):
 
         Test the exceptional strata in genus 3::
 
-            sage: Q = QuadraticStratum(9,-1)
+            sage: Q = Stratum([9,-1], k=2)
             sage: p = Q.regular_component().permutation_representative()
             sage: p.stratum_component()
             Q_3(9, -1)^reg
@@ -3423,7 +3442,7 @@ class PermutationLI(Permutation):
             sage: p.stratum_component()
             Q_3(9, -1)^irr
 
-            sage: Q = QuadraticStratum(6,3,-1)
+            sage: Q = Stratum([6,3,-1], k=2)
             sage: p = Q.regular_component().permutation_representative()
             sage: p.stratum_component()
             Q_3(6, 3, -1)^reg
@@ -3431,7 +3450,7 @@ class PermutationLI(Permutation):
             sage: p.stratum_component()
             Q_3(6, 3, -1)^irr
 
-            sage: Q = QuadraticStratum(3,3,3,-1)
+            sage: Q = Stratum([3,3,3,-1], k=2)
             sage: p = Q.regular_component().permutation_representative()
             sage: p.stratum_component()
             Q_3(3^3, -1)^reg
@@ -3441,7 +3460,7 @@ class PermutationLI(Permutation):
 
         Test the exceptional strata in genus 4::
 
-            sage: Q = QuadraticStratum(12)
+            sage: Q = Stratum([12], k=2)
             sage: p = Q.regular_component().permutation_representative()
             sage: p.stratum_component()
             Q_4(12)^reg
@@ -3449,7 +3468,7 @@ class PermutationLI(Permutation):
             sage: p.stratum_component()
             Q_4(12)^irr
 
-            sage: Q = QuadraticStratum(9,3)
+            sage: Q = Stratum([9,3], k=2)
             sage: p = Q.regular_component().permutation_representative()
             sage: p.stratum_component()
             Q_4(9, 3)^reg
@@ -3457,7 +3476,7 @@ class PermutationLI(Permutation):
             sage: p.stratum_component()
             Q_4(9, 3)^irr
 
-            sage: Q = QuadraticStratum(6,6)
+            sage: Q = Stratum([6,6], k=2)
             sage: p = Q.hyperelliptic_component().permutation_representative()
             sage: p.stratum_component()
             Q_4(6^2)^hyp
@@ -3468,7 +3487,7 @@ class PermutationLI(Permutation):
             sage: p.stratum_component()
             Q_4(6^2)^irr
 
-            sage: Q = QuadraticStratum(6,3,3)
+            sage: Q = Stratum([6,3,3], k=2)
             sage: p = Q.regular_component().permutation_representative()
             sage: p.stratum_component()
             Q_4(6, 3^2)^reg
@@ -3476,7 +3495,7 @@ class PermutationLI(Permutation):
             sage: p.stratum_component()
             Q_4(6, 3^2)^irr
 
-            sage: Q = QuadraticStratum(3,3,3,3)
+            sage: Q = Stratum([3,3,3,3], k=2)
             sage: p = Q.hyperelliptic_component().permutation_representative()
             sage: p.stratum_component()
             Q_4(3^4)^hyp
@@ -3626,7 +3645,7 @@ class PermutationLI(Permutation):
             sage: c.stratum()
             H_1(0^4)
 
-            sage: C = QuadraticStratum(3,2,2,1).unique_component()
+            sage: C = Stratum([3,2,2,1], k=2).unique_component()
             sage: p = C.permutation_representative()
             sage: c = p.orientation_cover()
             sage: c.stratum()
@@ -3994,17 +4013,17 @@ class OrientablePermutationIET(PermutationIET):
 
         - Vincent Delecroix (2008-12-20)
         """
-        from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum
+        from surface_dynamics.flat_surfaces.abelian_strata import Stratum
 
         if not self.is_irreducible():
             return list(map(lambda x: x.stratum(), self.decompose()))
 
         if len(self) == 1:
-            return AbelianStratum([])
+            return Stratum([], k=1)
 
         singularities = [x - 1 for x in self.profile()]
 
-        return AbelianStratum(singularities)
+        return Stratum(singularities, k=1)
 
     def genus(self) :
         r"""
@@ -4150,15 +4169,15 @@ class OrientablePermutationIET(PermutationIET):
             sage: p_hyp = iet.Permutation(a,b_hyp)
             sage: p_odd = iet.Permutation(a,b_odd)
             sage: p_even = iet.Permutation(a,b_even)
-            sage: p_hyp.stratum() == AbelianStratum(4,4)
+            sage: p_hyp.stratum() == Stratum([4,4], k=1)
             True
             sage: p_hyp.stratum_component()
             H_5(4^2)^hyp
-            sage: p_odd.stratum() == AbelianStratum(4,4)
+            sage: p_odd.stratum() == Stratum([4,4], k=1)
             True
             sage: p_odd.stratum_component()
             H_5(4^2)^odd
-            sage: p_even.stratum() == AbelianStratum(4,4)
+            sage: p_even.stratum() == Stratum([4,4], k=1)
             True
             sage: p_even.stratum_component()
             H_5(4^2)^even
@@ -4176,32 +4195,29 @@ class OrientablePermutationIET(PermutationIET):
             sage: p_even.stratum_component()
             H_4(4, 2)^even
         """
-        from surface_dynamics.flat_surfaces.abelian_strata import (HypASC, OddASC, EvenASC)
-
+        # TODO: we reimplement the very same logic in flat_surfaces.separatrix_diagram.stratum_component()
         if not self.is_irreducible():
             return list(map(lambda x: x.stratum_component(), self.decompose()))
 
         stratum = self.stratum()
-        cc = stratum._cc
 
-        if len(cc) == 1:
-            return stratum.components()[0]
+        if stratum.is_connected():
+            return stratum.unique_component()
 
-        if HypASC in cc:
+        if stratum.has_hyperelliptic_component():
             if self.is_hyperelliptic():
-                return HypASC(stratum)
-            else:
-                cc = cc[1:]
+                return stratum.hyperelliptic_component()
+            # TODO: we assume that the first entry is the hyperelliptic one
+            cc = stratum.connected_components()
+            if len(cc) == 2:
+                return cc[1]
 
-        if len(cc) == 1:
-            return cc[0](stratum)
-
+        # if we still have several components, they must be spin
+        spin = self.arf_invariant()
+        if spin == 0:
+            return stratum.even_component()
         else:
-            spin = self.arf_invariant()
-            if spin == 0:
-                return EvenASC(stratum)
-            else:
-                return OddASC(stratum)
+            return stratum.odd_component()
 
     def order_of_rauzy_action(self, winner, side=None):
         r"""
@@ -5031,10 +5047,11 @@ class OrientablePermutationIET(PermutationIET):
 
             sage: p = iet.Permutation('a b c', 'c b a')
             sage: S = p.masur_polygon([1,4,2], [2,0,-1])  # optional: sage_flatsurf
+            sage: stratum = S.stratum()                   # optional: sage_flatsurf # random
+            sage: stratum                                 # optional: sage_flatsurf
+            H_1(0^2)
             sage: S                                       # optional: sage_flatsurf
             Translation Surface in H_1(0^2) built from 2 isosceles triangles and 2 triangles
-            sage: S.stratum()                             # optional: sage_flatsurf
-            H_1(0^2)
 
         Generic construction using suspension cone::
 
@@ -5232,8 +5249,8 @@ class OrientablePermutationLI(PermutationLI):
             Q_0(-1^4)
         """
         if self.is_irreducible():
-            from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
-            return QuadraticStratum([x-2 for x in self.profile()])
+            from surface_dynamics.flat_surfaces.quadratic_strata import Stratum
+            return Stratum([x-2 for x in self.profile()], k=2)
         raise ValueError("stratum is well defined only for irreducible permutations")
 
 

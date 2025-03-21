@@ -24,13 +24,13 @@ def PillowcaseCover(g0, g1, g2, g3=None,
     r"""
     Pillowcase cover constructor.
 
-    The chosen flat structure is as follows
+    The chosen flat structure is as follows::
 
-       3-----2-----3
-       |     .     |
-       |     .     |
-       |     .     |
-       0-----1-----0
+        3-----2-----3
+        |     .     |
+        |     .     |
+        |     .     |
+        0-----1-----0
     """
     if not as_tuple:
         g0 = PermutationGroupElement(g0, check=check)
@@ -193,22 +193,22 @@ class PillowcaseCover_dense(PillowcaseCover_dense_pyx):
         """
         p = sum(self.profile(),[])
         if self.is_orientable():
-            from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum
+            from surface_dynamics.flat_surfaces.abelian_strata import Stratum
             if fake_zeros:
                 zeros = [(i-2)//2 for i in p]
             else:
                 zeros = [(i-2)//2 for i in p if i != 2]
             if not zeros:
-                return AbelianStratum([0])
-            return AbelianStratum(zeros)
+                return Stratum([0], k=1)
+            return Stratum(zeros, k=1)
 
         else:
-            from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
+            from surface_dynamics.flat_surfaces.quadratic_strata import Stratum
             if fake_zeros:
                 zeros = [i-2 for i in p]
             else:
                 zeros = [i-2 for i in p if i != 2]
-            return QuadraticStratum(zeros)
+            return Stratum(zeros, k=2)
 
     def is_primitive(self, return_base=False):
         r"""

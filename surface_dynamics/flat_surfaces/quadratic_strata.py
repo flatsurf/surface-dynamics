@@ -69,26 +69,26 @@ EXAMPLES::
 
 Construction of a stratum from a list of singularity degrees::
 
-    sage: a = QuadraticStratum(2,2)
+    sage: a = Stratum([2,2], k=2)
     sage: a
     Q_2(2^2)
-    sage: a.genus()
+    sage: a.surface_genus()
     2
 
 ::
 
-    sage: a = QuadraticStratum(4,3,2,2,1)
+    sage: a = Stratum([4,3,2,2,1], k=2)
     sage: a
     Q_4(4, 3, 2^2, 1)
-    sage: a.genus()
+    sage: a.surface_genus()
     4
 
 By convention, the degrees are always written in decreasing order::
 
-    sage: a1 = QuadraticStratum(7,5,3,1)
+    sage: a1 = Stratum([7,5,3,1], k=2)
     sage: a1
     Q_5(7, 5, 3, 1)
-    sage: a2 = QuadraticStratum(3,1,7,5)
+    sage: a2 = Stratum([3,1,7,5], k=2)
     sage: a2
     Q_5(7, 5, 3, 1)
     sage: a1 == a2
@@ -96,16 +96,16 @@ By convention, the degrees are always written in decreasing order::
 
 List the connected components of a stratum::
 
-    sage: a = QuadraticStratum(6,2)
+    sage: a = Stratum([6,2], k=2)
     sage: a.components()
-    [Q_3(6, 2)^hyp, Q_3(6, 2)^nonhyp]
+    (Q_3(6, 2)^hyp, Q_3(6, 2)^nonhyp)
 
 ::
 
-    sage: a = QuadraticStratum(12)
+    sage: a = Stratum([12], k=2)
     sage: cc = a.components()
     sage: cc
-    [Q_4(12)^reg, Q_4(12)^irr]
+    (Q_4(12)^reg, Q_4(12)^irr)
     sage: for c in cc:
     ....:     print(c)
     ....:     print(c.permutation_representative())
@@ -118,9 +118,9 @@ List the connected components of a stratum::
 
 ::
 
-    sage: a = QuadraticStratum(1, 1, 1, 1)
+    sage: a = Stratum([1, 1, 1, 1], k=2)
     sage: a.components()
-    [Q_2(1^4)^hyp]
+    (Q_2(1^4)^hyp,)
     sage: c = a.components()[0]
     sage: p = c.permutation_representative(); p
     0 1 2 3 1 4 5
@@ -156,36 +156,24 @@ from sage.rings.rational import Rational
 
 from surface_dynamics.flat_surfaces.strata import Stratum, StratumComponent,Strata
 
-class QuadraticStratum(Stratum):
-    r"""
-    Stratum of quadratic differentials.
 
-    EXAMPLES::
-
-        sage: from surface_dynamics import *
-
-        sage: Q = QuadraticStratum(15,-1,-1,-1); Q
-        Q_4(15, -1^3)
-        sage: Q.components()
-        [Q_4(15, -1^3)^c]
-
-        sage: Q = QuadraticStratum(6,6); Q
-        Q_4(6^2)
-        sage: Q.components()
-        [Q_4(6^2)^hyp, Q_4(6^2)^reg, Q_4(6^2)^irr]
-    """
-    _name = "Q"
-    _latex_name = "\\mathcal{Q}"
-
-    @staticmethod
-    def __classcall_private__(self, *l, **kwds):
+def DeprecatedQuadraticStratumConstructor(*l, **kwds):
         r"""
         TESTS::
 
             sage: from surface_dynamics import *
             sage: QuadraticStratum(-1,-1,-1,-1) is QuadraticStratum({-1:4})
+            doctest:warning
+            ...
+            UserWarning: QuadraticStratum has changed its arguments in order to handle meromorphic and higher-order differentials; use Stratum instead
+            True
+            sage: QuadraticStratum(-1,-1,-1,-1) is Stratum((-1,-1,-1,-1), 2)
             True
         """
+        import warnings
+
+        warnings.warn('QuadraticStratum has changed its arguments in order to handle meromorphic and higher-order differentials; use Stratum instead')
+
         genus = kwds.pop('genus', None)
         if kwds:
             raise ValueError('unsupported keyword arguments')
@@ -200,208 +188,42 @@ class QuadraticStratum(Stratum):
         if not l:
             raise ValueError("the list must be nonempty")
         if isinstance(l, dict):
-            l = sum(([v]*e for v,e in iteritems(l)),[])
-
-        allzeros = sorted(map(Integer, l), reverse=True)
-        nb_poles = allzeros.count(-1)
-        nb_fake_zeros = allzeros.count(0)
-        zeros = tuple(allzeros[:len(allzeros)-nb_fake_zeros-nb_poles])
+            l = sum(([v]*e for v,e in iteritems(l)), [])
 
         if genus is not None:
-            g = sum(zeros) + 4 - nb_poles
+            g = sum(l) + 4
             if 4 * genus > g:
                 raise ValueError
             elif 4 * genus < g:
-                nb_poles += g - 4*genus
+                l += (-1,) * (g - 4*genus)
 
-        return UniqueRepresentation.__classcall__(QuadraticStratum, zeros, nb_poles, nb_fake_zeros)
+        l = tuple(sorted(map(Integer, l), reverse=True))
+        return Stratum(l, 2)
 
-    def __init__(self, zeros, nb_poles, nb_fake_zeros):
-        """
-        TESTS::
 
-            sage: from surface_dynamics import *
+class QuadraticStratum(Stratum):
+    r"""
+    Stratum of quadratic differentials.
 
-            sage: a = QuadraticStratum(4,-1,-1,-1,-1,0)
-            sage: loads(dumps(a)) == a
-            True
-            sage: QuadraticStratum([])
-            Traceback (most recent call last):
-            ...
-            ValueError: the list must be nonempty
-        """
-        self._zeros = zeros
-        self._nb_poles = nb_poles
-        self._nb_fake_zeros = nb_fake_zeros
+    EXAMPLES::
 
-        # nfz (for "non fake zeros")
-        nfz = self._zeros + (-1,) * self._nb_poles
+        sage: from surface_dynamics import *
 
-        genus = sum(nfz) + 4
-        if genus%4:
-            raise ValueError("the sum of the zeros should sum up to an integer congruent to 0 mod 4")
-        genus //= 4
+        sage: Q = Stratum([15,-1,-1,-1], k=2)
+        sage: Q
+        Q_4(15, -1^3)
+        sage: Q.components()
+        (Q_4(15, -1^3)^c,)
 
-        # Lanneau classification of connected components
+        sage: Q = Stratum([6,6], k=2)
+        sage: Q
+        Q_4(6^2)
+        sage: Q.components()
+        (Q_4(6^2)^hyp, Q_4(6^2)^reg, Q_4(6^2)^irr)
+    """
+    _name = "Q"
+    _latex_name = "\\mathcal{Q}"
 
-        #TODO: check genus 2 components
-        #TODO: in genus 2, decide between GTHQSC/GTNQSC and HQSC/NQSC
-        if genus == 0:
-            self._cc = (GZQSC,)
-
-        #TODO: all genus 1 strata are connected, but two are hyperelliptic; give the component a different name then?
-        elif genus == 1:
-            if self._zeros == ():
-                # print "The stratum Q(0) is empty!"
-                self._cc = ()
-            elif self._zeros == (1,):
-                # print "The stratum Q(1,-1) is empty!"
-                self._cc = ()
-            else:
-                self._cc = (GOQSC,)
-
-        elif genus == 2:
-            if self._zeros == (4,):
-                # print "The stratum Q(4) is empty!"
-                self._cc = ()
-            elif self._zeros == (3,1):
-                # print "The stratum Q(3,1) is empty!"
-                self._cc = ()
-            elif self._zeros == (6,): self._cc = (HQSC,GTNQSC)
-            elif self._zeros == (3,3): self._cc = (HQSC,GTNQSC)
-            elif self._zeros == (2,2): self._cc = (GTHQSC,)
-            elif self._zeros == (2,1,1): self._cc = (GTHQSC,)
-            elif self._zeros == (1,1,1,1): self._cc = (GTHQSC,)
-            else: self._cc = (GTNQSC,)
-
-        elif genus == 3 and self._nb_poles == 1 and all((z == -1 or z%3 == 0) for z in self._zeros):
-                self._cc = (REQSC, IEQSC)
-
-        elif genus == 4 and self._nb_poles == 0 and all(z%3 == 0 for z in self._zeros):
-            if self._zeros in [(12,),(9,3)]:
-                self._cc = (REQSC, IEQSC)
-            elif self._zeros in [(6,6),(6,3,3),(3,3,3,3)]:
-                self._cc = (HQSC, REQSC, IEQSC)
-        else:
-            if len(nfz) == 2 and nfz[0]%4 == 2 and nfz[1]%4 == 2:
-                self._cc = (HQSC,NQSC)
-            elif len(nfz) == 4 and nfz[0] == nfz[1] and nfz[2] == nfz[3] and nfz[0]%2 and nfz[2]%2:
-                self._cc = (HQSC,NQSC)
-            elif len(nfz) == 3 and nfz[0] == nfz[1] and nfz[0]%2 and nfz[2]%4 == 2:
-                self._cc = (HQSC,NQSC)
-            elif len(nfz) == 3 and nfz[1] == nfz[2] and nfz[1]%2 and nfz[0]%4 == 2:
-                self._cc = (HQSC,NQSC)
-            else:
-                self._cc = (CQSC,)
-
-    def zeros(self, poles=True, fake_zeros=True):
-        r"""
-        Returns the list of zeros of self.
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import *
-
-            sage: QuadraticStratum({-1:4}).zeros()
-            (-1, -1, -1, -1)
-            sage: QuadraticStratum({1:8}).zeros()
-            (1, 1, 1, 1, 1, 1, 1, 1)
-
-            sage: QuadraticStratum({-1:4}).zeros(poles=False)
-            ()
-        """
-        z = self._zeros
-        if fake_zeros:
-            z += (0,) * self._nb_fake_zeros
-        if poles:
-            z += (-1,) * self._nb_poles
-        return z
-
-    def nb_zeros(self, poles=True, fake_zeros=True):
-        r"""
-        EXAMPLES::
-
-            sage: from surface_dynamics import *
-
-            sage: QuadraticStratum({-1:4}).nb_zeros()
-            4
-            sage: QuadraticStratum({-1:4,1:4}).nb_zeros()
-            8
-        """
-        n = Integer(len(self._zeros))
-        if poles:
-            n += self._nb_poles
-        if fake_zeros:
-            n += self._nb_fake_zeros
-        return n
-
-    def nb_poles(self):
-        r"""
-        Return the number of poles of this quadratic stratum.
-        """
-        return self._nb_poles
-
-    def nb_fake_zeros(self):
-        r"""
-        Return the number of fake zeros of this quadratic stratum.
-        """
-        return self._nb_fake_zeros
-
-    def genus(self):
-        r"""
-        Returns the genus.
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import *
-
-            sage: QuadraticStratum(-1,-1,-1,-1).genus()
-            0
-        """
-        return Integer(sum(self.zeros(poles=True,fake_zeros=False))//4 + 1)
-
-    def dimension(self):
-        r"""
-        Returns the complex dimension of this stratum.
-
-        The complex dimension is the number of intervals minus one of any linear
-        involution associated to this stratum.
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import *
-
-            sage: QuadraticStratum({-1:4}).dimension()
-            2
-        """
-        return 2 * self.genus() + self.nb_zeros() - 2
-
-    def rank(self):
-        r"""
-        Return the rank of this GL(2,R)-invariant manifold (half dimension of the
-        absolute part of the tangent space).
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import QuadraticStratum, QuadraticStrata
-
-            sage: QuadraticStratum({-1: 4}).rank()
-            1
-            sage: QuadraticStratum({-1:4, 0:5}).rank()
-            1
-
-        Complete list of rank 2 quadratic strata listed by dimension::
-
-            sage: for dim in range(4, 9):
-            ....:     quad = [Q for Q in QuadraticStrata(dimension=dim) if Q.rank() == 2]
-            ....:     print("%d: %s" % (dim, ", ".join(map(str, quad))))
-            4: Q_2(5, -1), Q_1(1^2, -1^2), Q_1(3, -1^3), Q_0(1, -1^5)
-            5: Q_3(8), Q_2(2, 1^2), Q_2(4, 1, -1), Q_2(3, 2, -1), Q_2(6, -1^2), Q_1(2, 1, -1^3), Q_1(4, -1^4), Q_0(2, -1^6)
-            6: Q_3(6, 2), Q_3(4^2), Q_2(2^2, 1, -1), Q_2(4, 2, -1^2), Q_1(2^2, -1^4)
-            7: Q_3(4, 2^2), Q_2(2^3, -1^2)
-            8: Q_3(2^4)
-        """
-        return self.genus() + sum(z % 2 for z in self.zeros(poles=True))//2 - 1
 
     def orientation_cover(self, fake_zeros=False):
         r"""
@@ -417,7 +239,8 @@ class QuadraticStratum(Stratum):
 
             sage: from surface_dynamics import *
 
-            sage: q = QuadraticStratum({4:1,-1:4}); q
+            sage: q = Stratum({4:1,-1:4}, k=2)
+            sage: q
             Q_1(4, -1^4)
             sage: a1 = q.orientation_cover(); a1
             H_3(2^2)
@@ -428,14 +251,16 @@ class QuadraticStratum(Stratum):
         form `Q(n,-1^{n+4})`) the dimension coincide. From [Lan08] we know that
         it only happens for those ones::
 
-            sage: q = QuadraticStratum(4,genus=0); q
+            sage: q = Stratum({4:1, -1:8}, k=2)
+            sage: q
             Q_0(4, -1^8)
             sage: q.dimension()
             7
             sage: q.orientation_cover().dimension()
             7
 
-            sage: q = QuadraticStratum(3,1,genus=0); q
+            sage: q = Stratum({3:1, 1:1, -1:8}, k=2)
+            sage: q
             Q_0(3, 1, -1^8)
             sage: q.dimension()
             8
@@ -446,25 +271,23 @@ class QuadraticStratum(Stratum):
 
         TESTS::
 
-            sage: QuadraticStratum({-1:4}).orientation_cover()
+            sage: Stratum({-1:4}, k=2).orientation_cover()
             H_1(0)
         """
-        from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum
-
         l = []
-        for z in self.zeros():
+        for z in self.signature():
             if z == -1:
                 if fake_zeros:
                     l.append(0)
             elif z % 2:
-                l.append(z+1)
+                l.append(z + 1)
             else:
-                l.append(z//2)
-                l.append(z//2)
+                l.append(z // 2)
+                l.append(z // 2)
 
         if not l:
             l = [0]
-        return AbelianStratum(l)
+        return Stratum(l, k=1)
 
     def spin(self):
         r"""
@@ -489,22 +312,23 @@ class QuadraticStratum(Stratum):
 
             sage: from surface_dynamics import *
 
-            sage: QuadraticStratum(1,3).spin()
+            sage: Stratum([1,3], k=2).spin()
             0
-            sage: QuadraticStratum(1,3,genus=1).spin()
+            sage: Stratum({1:1,3:1,-1:4}, k=2).spin()
             1
-            sage: QuadraticStratum(2,2).spin() is None
+            sage: Stratum([2,2], k=2).spin() is None
             True
         """
         k = [0,0,0,0]
-        for z in self.zeros():
-            zz = z%4
+        for z in self.signature():
+            zz = z % 4
             if zz == 2:
                 return None
             k[zz] += 1
 
-        return (abs(k[1]-k[3])//4) % 2
+        return (abs(k[1] - k[3]) // 4) % 2
 
+    # TODO: redesign this
     def has_hyperelliptic_component(self):
         r"""
         Returns True if and only if self has a connected component which
@@ -514,12 +338,12 @@ class QuadraticStratum(Stratum):
 
             sage: from surface_dynamics import *
 
-            sage: QuadraticStratum(2,2).has_hyperelliptic_component()
+            sage: Stratum([2,2], k=2).has_hyperelliptic_component()
             True
-            sage: QuadraticStratum(3,1).has_hyperelliptic_component()
+            sage: Stratum([3,1], k=2).has_hyperelliptic_component()
             False
         """
-        return HQSC in self._cc or GTHQSC in self._cc
+        return HQSC(self) in self.connected_components() or GTHQSC(self) in self.connected_components()
 
     def hyperelliptic_component(self):
         r"""
@@ -529,17 +353,17 @@ class QuadraticStratum(Stratum):
 
             sage: from surface_dynamics import *
 
-            sage: QuadraticStratum(2,2).hyperelliptic_component()
+            sage: Stratum([2,2], k=2).hyperelliptic_component()
             Q_2(2^2)^hyp
 
-            sage: QuadraticStratum(3,1).hyperelliptic_component()
+            sage: Stratum([3,1], k=2).hyperelliptic_component()
             Traceback (most recent call last):
             ...
             ValueError: the stratum has no hyperelliptic component
         """
-        if HQSC in self._cc:
+        if HQSC(self) in self.connected_components():
             return HQSC(self)
-        if GTHQSC in self._cc:
+        if GTHQSC(self) in self.connected_components():
             return GTHQSC(self)
         raise ValueError("the stratum has no hyperelliptic component")
 
@@ -551,12 +375,12 @@ class QuadraticStratum(Stratum):
 
             sage: from surface_dynamics import *
 
-            sage: QuadraticStratum(10,10).has_non_hyperelliptic_component()
+            sage: Stratum([10,10], k=2).has_non_hyperelliptic_component()
             True
-            sage: QuadraticStratum(6,6).has_non_hyperelliptic_component()
+            sage: Stratum([6,6], k=2).has_non_hyperelliptic_component()
             False
         """
-        return NQSC in self._cc or GTNQSC in self._cc
+        return NQSC(self) in self.connected_components() or GTNQSC(self) in self.connected_components()
 
     def non_hyperelliptic_component(self):
         r"""
@@ -567,16 +391,17 @@ class QuadraticStratum(Stratum):
 
             sage: from surface_dynamics import *
 
-            sage: QuadraticStratum(10,10).non_hyperelliptic_component()
+            sage: Stratum([10,10], k=2).non_hyperelliptic_component()
             Q_6(10^2)^nonhyp
-            sage: QuadraticStratum(2,2).non_hyperelliptic_component()
+            sage: Stratum([2,2], k=2).non_hyperelliptic_component()
             Traceback (most recent call last):
             ...
             ValueError: no non hyperelliptic component
         """
-        if NQSC in self._cc:
+        ccs = self.connected_components()
+        if NQSC(self) in ccs:
             return NQSC(self)
-        elif GTNQSC in self._cc:
+        elif GTNQSC(self) in ccs:
             return GTNQSC(self)
         raise ValueError("no non hyperelliptic component")
 
@@ -594,12 +419,12 @@ class QuadraticStratum(Stratum):
 
            sage: from surface_dynamics import *
 
-            sage: QuadraticStratum(9,-1).has_regular_and_irregular_components()
+            sage: Stratum([9,-1], k=2).has_regular_and_irregular_components()
             True
-            sage: QuadraticStratum(11,1).has_regular_and_irregular_components()
+            sage: Stratum([11,1], k=2).has_regular_and_irregular_components()
             False
         """
-        return REQSC in self._cc
+        return REQSC(self) in self.connected_components()
 
     def regular_component(self):
         r"""
@@ -609,14 +434,14 @@ class QuadraticStratum(Stratum):
 
            sage: from surface_dynamics import *
 
-            sage: QuadraticStratum(12).regular_component()
+            sage: Stratum([12], k=2).regular_component()
             Q_4(12)^reg
-            sage: QuadraticStratum(2,2,2,2).regular_component()
+            sage: Stratum([2,2,2,2], k=2).regular_component()
             Traceback (most recent call last):
             ...
             ValueError: no regular component for this stratum
         """
-        if REQSC in self._cc:
+        if REQSC(self) in self.connected_components():
             return REQSC(self)
         raise ValueError("no regular component for this stratum")
 
@@ -628,14 +453,14 @@ class QuadraticStratum(Stratum):
 
            sage: from surface_dynamics import *
 
-            sage: QuadraticStratum(3,3,3,-1).irregular_component()
+            sage: Stratum([3,3,3,-1], k=2).irregular_component()
             Q_3(3^3, -1)^irr
-            sage: QuadraticStratum(2,2).irregular_component()
+            sage: Stratum([2,2], k=2).irregular_component()
             Traceback (most recent call last):
             ...
             ValueError: no irregular component for this stratum
         """
-        if IEQSC in self._cc:
+        if IEQSC(self) in self.connected_components():
             return IEQSC(self)
         raise ValueError("no irregular component for this stratum")
 
@@ -647,7 +472,7 @@ class QuadraticStratum(Stratum):
 
            sage: from surface_dynamics import *
 
-            sage: Q = QuadraticStratum(4,4)
+            sage: Q = Stratum([4,4], k=2)
             sage: Q.random_cylindric_permutation()  # random
             0 1 2 3 4 5 1 5
             2 6 3 6 4 0
@@ -682,32 +507,32 @@ class QuadraticStratumComponent(StratumComponent):
 
            sage: from surface_dynamics import *
 
-            sage: cc = QuadraticStratum(5,genus=0).unique_component()
+            sage: cc = Stratum({5:1, -1:9}, k=2).unique_component()
             sage: cc.orientation_cover_component()
             H_4(6)^hyp
 
-            sage: cc = QuadraticStratum(5,genus=1).unique_component()
+            sage: cc = Stratum({5:1, -1:5}, k=2).unique_component()
             sage: cc.orientation_cover_component()
             H_4(6)^odd
 
-            sage: cc = QuadraticStratum(5,genus=2).unique_component()
+            sage: cc = Stratum({5:1, -1:1}, k=2).unique_component()
             sage: cc.orientation_cover_component()
             H_4(6)^even
 
-            sage: cc = QuadraticStratum(1,1,genus=0).unique_component()
+            sage: cc = Stratum({1: 2, -1: 6}, k=2).unique_component()
             sage: cc.orientation_cover_component()
             H_3(2^2)^odd
 
-            sage: cc = QuadraticStratum(4,genus=0).unique_component()
+            sage: cc = Stratum({4:1, -1:8}, k=2).unique_component()
             sage: cc.orientation_cover_component()
             H_3(2^2)^hyp
 
-            sage: cc = QuadraticStratum(1,1,genus=1).unique_component()
+            sage: cc = Stratum({1:2, -1:2}, k=2).unique_component()
             sage: cc.orientation_cover_component()
             H_3(2^2)^hyp
         """
         stratum = self.stratum()
-        zeros = stratum.zeros(poles=False, fake_zeros=False)
+        zeros = [d for d in stratum.signature() if d > 0]
         astratum = stratum.orientation_cover(fake_zeros=fake_zeros)
 
         # 0) easy case: the stratum is connected
@@ -715,12 +540,13 @@ class QuadraticStratumComponent(StratumComponent):
             return astratum.unique_component()
 
         # 1) canonical construction of Abelian hyperelliptic components
-        if len(zeros) == 1 and stratum.genus() == 0:
+        if len(zeros) == 1 and stratum.surface_genus() == 0:
                 return astratum.hyperelliptic_component()
 
         # 2) other possibility for the hyperelliptic components (low genus
         # special case for Q(1,1,-1,-1))
-        if zeros == (1,1) and stratum.nb_poles() == 2:
+        nb_poles = self._stratum.signature().count(-1)
+        if zeros == [1,1] and nb_poles == 2:
             return astratum.hyperelliptic_component()
 
         # 3) composant with spin
@@ -743,14 +569,15 @@ class QuadraticStratumComponent(StratumComponent):
 
            sage: from surface_dynamics import *
 
-            sage: Q = QuadraticStratum({4:1,-1:4}); Q
+            sage: Q = Stratum({4:1,-1:4}, k=2)
+            sage: Q
             Q_1(4, -1^4)
             sage: c = Q.unique_component()
             sage: p = c.random_cylindric_permutation()
             sage: p.stratum_component()
             Q_1(4, -1^4)^c
 
-            sage: Q = QuadraticStratum(6,6)
+            sage: Q = Stratum([6,6], k=2)
             sage: c_hyp, c_reg, c_irr = Q.components()
             sage: (c_hyp, c_reg, c_irr)
             (Q_4(6^2)^hyp, Q_4(6^2)^reg, Q_4(6^2)^irr)
@@ -806,23 +633,23 @@ class QuadraticStratumComponent(StratumComponent):
 
             sage: from surface_dynamics import *
 
-            sage: Q = QuadraticStratum({1:1,-1:5})
+            sage: Q = Stratum({1:1,-1:5}, k=2)
             sage: c = Q.unique_component().one_cylinder_diagram()
             sage: c
             (0,0,1,1,2,2)-(3,3)
             sage: c.stratum() == Q
             True
 
-            sage: Q = QuadraticStratum(5,-1)
+            sage: Q = Stratum([5,-1], k=2)
             sage: c = Q.unique_component().one_cylinder_diagram()
             sage: c
             (0,1,1,2)-(3,0,3,2)
             sage: c.stratum() == Q
             True
 
-            sage: QuadraticStratum({-1:4}).unique_component().one_cylinder_diagram()
+            sage: Stratum({-1:4}, k=2).unique_component().one_cylinder_diagram()
             (0,0)-(1,1)
-            sage: QuadraticStratum({-1:4,0:1}).unique_component().one_cylinder_diagram()
+            sage: Stratum({-1:4,0:1}, k=2).unique_component().one_cylinder_diagram()
             (0,0)-(1,1,2,2)
         """
         from surface_dynamics.flat_surfaces.separatrix_diagram import QuadraticCylinderDiagram
@@ -843,7 +670,7 @@ class QuadraticStratumComponent(StratumComponent):
 #        """
 #        from separatrix_diagram import CylinderDiagram
 #        p = self.permutation_representative()
-#        g = self.stratum().genus()
+#        g = self.stratum().surface_genus()
 #        n = len(p)-1
 #        p.alphabet(range(n+1))
 #        assert p[0][0] == p[1][-1]
@@ -979,16 +806,16 @@ class QuadraticStratumComponent(StratumComponent):
 
             sage: from surface_dynamics import *
 
-            sage: R = QuadraticStratum([3,3,3,-1]).regular_component()
-            sage: R.lyapunov_exponents_H_plus(nb_iterations=2**21) # abs tol .05
+            sage: R = Stratum([3,3,3,-1], k=2).regular_component()
+            sage: R.lyapunov_exponents_H_plus(nb_iterations=2**21) # long time # abs tol .05
             [0.596, 0.405, 0.202]
-            sage: sum(_) # abs tol .05
+            sage: sum(_) # long time # abs tol .05
             1.2
 
-            sage: R = QuadraticStratum([2,2,2,2]).unique_component()
-            sage: R.lyapunov_exponents_H_plus(nb_iterations=2**21) # abs tol .05
+            sage: R = Stratum([2,2,2,2], k=2).unique_component()
+            sage: R.lyapunov_exponents_H_plus(nb_iterations=2**21) # long time # abs tol .05
             [0.651, 0.469, 0.243]
-            sage: sum(_) # abs tol .05
+            sage: sum(_) # long time # abs tol .05
             1.3636
         """
         return self.permutation_representative(reduced=False).lyapunov_exponents_H_plus(*args, **kargs)
@@ -1001,12 +828,12 @@ class QuadraticStratumComponent(StratumComponent):
 
             sage: from surface_dynamics import *
 
-            sage: Q = QuadraticStratum({1:3, -1:3}).unique_component()
-            sage: Q.lyapunov_exponents_H_minus(nb_iterations=2**21) # abs tol .05
+            sage: Q = Stratum({1:3, -1:3}, k=2).unique_component()
+            sage: Q.lyapunov_exponents_H_minus(nb_iterations=2**21) # long time # abs tol .05
             [1.000, 0.369, 0.176]
 
-            sage: R = QuadraticStratum([3,3,3,-1]).regular_component()
-            sage: R.lyapunov_exponents_H_minus(nb_iterations=2**21) # abs tol .05
+            sage: R = Stratum([3,3,3,-1], k=2).regular_component()
+            sage: R.lyapunov_exponents_H_minus(nb_iterations=2**21) # long time # abs tol .05
             [1.000, 0.328, 0.1899, 0.0820]
         """
         perm = self.permutation_representative(reduced=False).orientation_cover()
@@ -1030,25 +857,25 @@ class GenusZeroQuadraticStratumComponent(QSC):
 
             sage: from surface_dynamics import *
 
-            sage: QuadraticStratum(-1,-1,-1,-1).permutation_representative()
+            sage: Stratum([-1,-1,-1,-1], k=2).permutation_representative()
             0 1 1
             2 2 0
-            sage: QuadraticStratum(1,genus=0).permutation_representative()
+            sage: Stratum({1:1, -1:5}, k=2).permutation_representative()
             0 1 1
             2 2 3 3 4 4 0
-            sage: QuadraticStratum(2,genus=0).permutation_representative()
+            sage: Stratum({2:1, -1:6}, k=2).permutation_representative()
             0 1 1
             2 2 3 3 4 4 5 5 0
-            sage: QuadraticStratum([1,1],genus=0).permutation_representative()
+            sage: Stratum({1:2, -1:6}, k=2).permutation_representative()
             0 1 1
             2 2 3 4 4 5 5 3 6 6 0
-            sage: QuadraticStratum([2,1],genus=0).permutation_representative()
+            sage: Stratum({2:1, 1:1, -1:7}, k=2).permutation_representative()
             0 1 1
             2 2 3 3 4 5 5 6 6 4 7 7 0
         """
-        p = self._stratum.nb_poles()
-        f = self._stratum.nb_fake_zeros()
-        z = self._stratum.zeros(fake_zeros=False,poles=False)
+        p = self._stratum.signature().count(-1)
+        f = self._stratum.signature().count(0)
+        z = tuple(m for m in self._stratum.signature() if m > 0)
 
         ll = [0]
         if f: ll = list(map(lambda x:'0'+str(x),range(f+1)))
@@ -1091,16 +918,16 @@ class GenusOneQuadraticStratumComponent(QSC):
 
             sage: from surface_dynamics import *
 
-            sage: QuadraticStratum([2],genus=1).permutation_representative()
+            sage: Stratum({2: 1, -1: 2}, k=2).permutation_representative()
             0 1 2 2
             1 3 3 0
-            sage: QuadraticStratum([3],genus=1).permutation_representative()
+            sage: Stratum({3: 1, -1: 3}, k=2).permutation_representative()
             0 1 2 2 3 3
             1 4 4 0
-            sage: QuadraticStratum([1,1],genus=1).permutation_representative()
+            sage: Stratum({1: 2, -1: 2}, k=2).permutation_representative()
             0 1 2 3 3
             2 1 4 4 0
-            sage: Q = QuadraticStratum([2,1],genus=1)
+            sage: Q = Stratum({2: 1, 1: 1, -1: 3}, k=2)
             sage: Q.permutation_representative(alphabet='abcdef')
             a b c c d e e
             d b f f a
@@ -1109,12 +936,12 @@ class GenusOneQuadraticStratumComponent(QSC):
 
             sage: from surface_dynamics import *
 
-            sage: QuadraticStratum([1],genus=1).permutation_representative()
+            sage: Stratum({1: 1, -1: 1}, k=2).permutation_representative()
             Traceback (most recent call last):
             ...
             EmptySetError: The stratum is empty
 
-            sage: Q = QuadraticStratum(2,-1,-1,0)
+            sage: Q = Stratum([2,-1,-1,0], k=2)
             sage: p = Q.permutation_representative()
             sage: p
             0 1 2 3 3
@@ -1122,9 +949,9 @@ class GenusOneQuadraticStratumComponent(QSC):
             sage: p.stratum() == Q
             True
         """
-        p = self._stratum.nb_poles()
-        f = self._stratum.nb_fake_zeros()
-        z = self._stratum.zeros(fake_zeros=False, poles=False)
+        p = self._stratum.signature().count(-1)
+        f = self._stratum.signature().count(0)
+        z = tuple(m for m in self._stratum.signature() if m > 0)
 
         l0 = [0,1]
         for k in range(1,p):
@@ -1169,28 +996,28 @@ class GenusTwoHyperellipticQuadraticStratumComponent(QSC):
 
             sage: from surface_dynamics import *
 
-            sage: Q = QuadraticStratum([1,1,1,1],genus=2)
+            sage: Q = Stratum({1: 4}, k=2)
             sage: H = Q.hyperelliptic_component()
             sage: H.permutation_representative()
             0 1 2 3 1 4 5
             2 6 5 4 6 3 0
 
-            sage: Q = QuadraticStratum([2,1,1],genus=2)
+            sage: Q = Stratum([2,1,1], k=2)
             sage: H = Q.hyperelliptic_component()
             sage: H.permutation_representative(alphabet='abcdef')
             a b c b d e
             f e d f c a
 
 
-            sage: Q = QuadraticStratum([2,2],genus=2)
+            sage: Q = Stratum([2,2], k=2)
             sage: H = Q.hyperelliptic_component()
             sage: H.permutation_representative()
             0 1 2 1 3
             4 3 4 2 0
         """
-        p = self._stratum.nb_poles()
-        f = self._stratum.nb_fake_zeros()
-        z = self._stratum.zeros(fake_zeros=False,poles=False)
+        p = self._stratum.signature().count(-1)
+        f = self._stratum.signature().count(0)
+        z = tuple(m for m in self._stratum.signature() if m > 0)
 
         if f: ll = list(map(lambda x:'0'+str(x),range(f+1)))
         else: ll = [0]
@@ -1239,20 +1066,20 @@ class GenusTwoNonhyperellipticQuadraticStratumComponent(QSC):
 
             sage: from surface_dynamics import *
 
-            sage: Q = QuadraticStratum([6],genus=2)
+            sage: Q = Stratum({6: 1, -1: 2}, k=2)
             sage: N = Q.non_hyperelliptic_component()
             sage: N.permutation_representative()
             0 1 2 1 3
             3 4 4 5 5 2 0
-            sage: Q = QuadraticStratum([3,3],genus=2)
+            sage: Q = Stratum({3: 2, -1: 2}, k=2)
             sage: N = Q.non_hyperelliptic_component()
             sage: N.permutation_representative()
             0 1 2 1 3
             4 3 5 5 4 6 6 2 0
         """
-        p = self._stratum.nb_poles()
-        f = self._stratum.nb_fake_zeros()
-        z = self._stratum.zeros(fake_zeros=False,poles=False)
+        p = self._stratum.signature().count(-1)
+        f = self._stratum.signature().count(0)
+        z = tuple(m for m in self._stratum.signature() if m > 0)
 
         if z == (4,):
             raise ValueError("The stratum Q(4) is empty!")
@@ -1307,22 +1134,22 @@ class HyperellipticQuadraticStratumComponent(QSC):
 
             sage: from surface_dynamics import *
 
-            sage: cc = QuadraticStratum([6],genus=2).hyperelliptic_component()
+            sage: cc = Stratum({6:1, -1:2}, k=2).hyperelliptic_component()
             sage: cc.permutation_representative()
             0 1 2 3 4 1
             5 4 3 2 5 0
-            sage: cc = QuadraticStratum([3,3],genus=2).hyperelliptic_component()
+            sage: cc = Stratum({3: 2, -1: 2}, k=2).hyperelliptic_component()
             sage: cc.permutation_representative()
             0 1 2 3 4 5 1
             6 5 4 3 2 6 0
-            sage: cc = QuadraticStratum(10,10).hyperelliptic_component()
+            sage: cc = Stratum([10,10], k=2).hyperelliptic_component()
             sage: cc.permutation_representative()
             0 1 2 3 4 5 6 1 7 8 9 10 11
             11 10 9 8 7 12 6 5 4 3 2 12 0
         """
-        p = self._stratum.nb_poles()
-        f = self._stratum.nb_fake_zeros()
-        z = self._stratum.zeros(fake_zeros=False,poles=True)
+        p = self._stratum.signature().count(-1)
+        f = self._stratum.signature().count(0)
+        z = tuple(m for m in self._stratum.signature() if m != 0)
 
         if f:
             ll = ['0' + str(x) for x in range(f + 1)]
@@ -1335,7 +1162,7 @@ class HyperellipticQuadraticStratumComponent(QSC):
         elif len(z) == 4:
             r = z[0]+1
             s = z[2]+1
-        elif len(z) == 3 and z[0]%2:
+        elif len(z) == 3 and z[0] % 2:
             r = z[0]+1
             s = z[2]//2
         elif len(z) == 3:
@@ -1395,35 +1222,35 @@ class ConnectedQuadraticStratumComponent(QSC):
 
             sage: from surface_dynamics import *
 
-            sage: cc = QuadraticStratum(6,-1,-1).non_hyperelliptic_component()
+            sage: cc = Stratum([6,-1,-1], k=2).non_hyperelliptic_component()
             sage: p = cc.permutation_representative(); p
             0 1 2 1 3
             3 4 4 5 5 2 0
             sage: p.stratum_component()
             Q_2(6, -1^2)^nonhyp
 
-            sage: cc = QuadraticStratum([3,3],genus=2).non_hyperelliptic_component()
+            sage: cc = Stratum({3: 2, -1: 2}, k=2).non_hyperelliptic_component()
             sage: p = cc.permutation_representative(); p
             0 1 2 1 3
             4 3 5 5 4 6 6 2 0
             sage: p.stratum_component()
             Q_2(3^2, -1^2)^nonhyp
 
-            sage: cc = QuadraticStratum(8).unique_component()
+            sage: cc = Stratum([8], k=2).unique_component()
             sage: p = cc.permutation_representative(); p
             0 1 2 1 2 3
             4 5 4 5 3 0
             sage: p.stratum_component()
             Q_3(8)^c
 
-            sage: Q = QuadraticStratum(4,4).unique_component()
+            sage: Q = Stratum([4,4], k=2).unique_component()
             sage: p = Q.permutation_representative(); p
             0 1 2 3 2 3 4
             5 6 5 6 1 4 0
             sage: p.stratum_component()
             Q_3(4^2)^c
 
-            sage: Q = QuadraticStratum({12:1,-1:4}).unique_component()
+            sage: Q = Stratum({12:1,-1:4}, k=2).unique_component()
             sage: p = Q.permutation_representative()
             sage: p
             0 1 2 1 2 3 3 4 4 5 5 6 6 7
@@ -1431,10 +1258,11 @@ class ConnectedQuadraticStratumComponent(QSC):
             sage: p.stratum()
             Q_3(12, -1^4)
         """
-        p = self._stratum.nb_poles()
-        f = self._stratum.nb_fake_zeros()
-        z = self._stratum.zeros(fake_zeros=False,poles=False)
-        g = (sum(z)-p)//4+1
+        p = self._stratum.signature().count(-1)
+        f = self._stratum.signature().count(0)
+        z = tuple(m for m in self._stratum.signature() if m > 0)
+
+        g = (sum(z) - p) //4 + 1
 
         if f: ll = list(map(lambda x:'0'+str(x),range(f+1)))
         else: ll = [0]
@@ -1490,56 +1318,56 @@ class RegularExceptionalQuadraticStratumComponent(QSC):
 
             sage: from surface_dynamics import *
 
-            sage: cc = QuadraticStratum(9,-1).regular_component()
+            sage: cc = Stratum([9,-1], k=2).regular_component()
             sage: p = cc.permutation_representative(); p
             0 1 2 1 2 3 3 4
             5 6 5 6 4 0
             sage: p.stratum_component()
             Q_3(9, -1)^reg
 
-            sage: cc = QuadraticStratum(6,3,-1).regular_component()
+            sage: cc = Stratum([6,3,-1], k=2).regular_component()
             sage: p = cc.permutation_representative(); p
             0 1 2 3 1 2 4 4 5
             6 7 6 7 3 5 0
             sage: p.stratum_component()
             Q_3(6, 3, -1)^reg
 
-            sage: cc = QuadraticStratum(12).regular_component()
+            sage: cc = Stratum([12], k=2).regular_component()
             sage: p = cc.permutation_representative(); p
             0 1 2 1 2 3 4 3 4 5
             5 6 7 6 7 0
             sage: p.stratum_component()
             Q_4(12)^reg
         """
-        p = self._stratum.nb_poles()
-        f = self._stratum.nb_fake_zeros()
-        z = self._stratum.zeros(fake_zeros=False,poles=True)
+        p = sum(d < 0 for d in self._stratum.signature())
+        f = sum(d == 0 for d in self._stratum.signature())
+        z = [d for d in self._stratum.signature() if d]
 
         if f: ll = list(map(lambda x: '0' + str(x), range(f+1)))
         else: ll = [0]
 
-        if z == (12,):
+        if z == [12]:
             l0 = ll + [1, 2, 1, 2, 3, 4, 3, 4, 5]
             l1 = [5, 6, 7, 6, 7]
-        elif z == (9, 3):
+        elif z == [9, 3]:
             l0 = ll + [1, 2, 3, 4, 2, 'A', 5, 6]
             l1 = [1, 4, 5, 7, 6, 7, 'A', 3]
-        elif z == (6, 6):
+        elif z == [6, 6]:
             l0 = ll +[1, 2, 3, 4, 'A', 2, 5, 6, 'A']
             l1 = [1, 4, 5, 7, 6, 7, 3]
-        elif z == (6, 3, 3):
+        elif z == [6, 3, 3]:
             l0 = ll + [1, 2, 3, 'B', 4, 2, 'A', 5, 6]
             l1 = [1, 4, 5, 7, 6, 7, 'B', 'A', 3]
-        elif z == (3, 3, 3, 3):
+        elif z == [3, 3, 3, 3]:
             l0 = ll + [1, 2, 3, 'B', 4, 2, 'A', 5, 6]
             l1 = [1, 4, 5, 7, 6, 'C', 7, 'C', 'B', 'A', 3]
-        elif z == (9, -1):
+        elif z == [9, -1]:
             l0 = ll + [1, 2, 1, 2, 3, 3, 4]
             l1 = [5, 6, 5, 6, 4]
-        elif z == (6, 3, -1):
+        elif z == [6, 3, -1]:
             l0 = ll + [1, 2, 3, 1, 2, 4, 4, 5]
             l1 = [6, 7, 6, 7, 3, 5]
-        elif z == (3, 3, 3, -1):
+        elif z == [3, 3, 3, -1]:
             l0 = ll + [1, 2, 3, 4, 2, 3, 5, 5, 6]
             l1 = [7, 1, 8, 7, 8, 4, 6]
         else:
@@ -1575,57 +1403,56 @@ class IrregularExceptionalQuadraticStratumComponent(QSC):
 
             sage: from surface_dynamics import *
 
-            sage: cc = QuadraticStratum(9,-1).irregular_component()
+            sage: cc = Stratum([9,-1], k=2).irregular_component()
             sage: p = cc.permutation_representative(); p
             0 1 2 3 4 1 2 3 4 5
             5 6 6 0
             sage: p.stratum_component()  # optional
             Q_3(9, -1)^irr
 
-            sage: cc = QuadraticStratum(6,3,-1).irregular_component()
+            sage: cc = Stratum([6,3,-1], k=2).irregular_component()
             sage: p = cc.permutation_representative(); p
             0 1 2 3 4 5 1 2 3 4 5 6
             6 7 7 0
             sage: p.stratum_component()
             Q_3(6, 3, -1)^irr
 
-            sage: cc = QuadraticStratum(12).irregular_component()
+            sage: cc = Stratum([12], k=2).irregular_component()
             sage: p = cc.permutation_representative(); p
             0 1 2 3 4 5 6 5
             7 6 4 7 3 2 1 0
             sage: p.stratum_component()
             Q_4(12)^irr
         """
-
-        p = self._stratum.nb_poles()
-        f = self._stratum.nb_fake_zeros()
-        z = self._stratum.zeros(fake_zeros=False,poles=True)
+        p = sum(d < 0 for d in self._stratum.signature())
+        f = sum(d == 0 for d in self._stratum.signature())
+        z = [d for d in self._stratum.signature() if d]
 
         if f: ll = list(map(lambda x:'0'+str(x),range(f+1)))
         else: ll = [0]
 
-        if z == (12,):
+        if z == [12]:
             l0 = ll + [1, 2, 3, 4, 5, 6, 5]
             l1 = [7, 6, 4, 7, 3, 2, 1]
-        elif z == (9, 3):
+        elif z == [9, 3]:
             l0 = ll + [1, 2, 3, 4, 'A', 3, 'A', 5, 6]
             l1 = [1, 5, 7, 4, 2, 6, 7]
-        elif z == (6, 6):
+        elif z == [6, 6]:
             l0 = ll + [1, 2, 3, 4, 3, 'A', 5, 6]
             l1 = [1, 5, 7, 4, 2, 6, 'A', 7]
-        elif z == (6, 3, 3):
+        elif z == [6, 3, 3]:
             l0 = ll + [1, 2, 'B', 3, 4, 'A', 3, 'A', 5, 6]
             l1 = [1, 5, 7, 'B', 4, 2, 6, 7]
-        elif z == (3, 3, 3, 3):
+        elif z == [3, 3, 3, 3]:
             l0 = ll + [1, 2, 'B', 3, 4, 'A', 3, 'A', 5, 'C', 6]
             l1 = [1, 5, 7, 'B', 4, 2, 6, 'C', 7]
-        elif z == (9, -1):
+        elif z == [9, -1]:
             l0 = ll + [1, 2, 3, 4, 1, 2, 3, 4, 5]
             l1 = [5, 6, 6]
-        elif z == (6, 3, -1):
+        elif z == [6, 3, -1]:
             l0 = ll + [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6]
             l1 = [6, 7, 7]
-        elif z == (3, 3, 3, -1):
+        elif z == [3, 3, 3, -1]:
             l0 = ll + [1, 2, 3, 4, 5, 1, 6, 2, 3, 4, 5, 6, 7]
             l1 = [7, 8, 8]
         else:
@@ -1923,9 +1750,11 @@ class QuadraticStrata_g(QuadraticStrata_class):
         if not isinstance(c, QuadraticStratum):
             return False
 
-        return (c.genus() == self._genus and
-                c.nb_poles() >= self._min_nb_poles and
-                c.nb_poles() <= self._max_nb_poles)
+        p = sum(z < 0 for z in c.signature())
+
+        return (c.surface_genus() == self._genus and
+                p >= self._min_nb_poles and
+                p <= self._max_nb_poles)
 
     def _repr_base_(self):
         r"""
@@ -1961,11 +1790,11 @@ class QuadraticStrata_g(QuadraticStrata_class):
             s = 4*g-4+nb_poles
             if s == 0:
                 if g == 0:
-                    yield QuadraticStratum({-1:4})
+                    yield Stratum({-1:4}, k=2)
                 nb_poles += 1
                 continue
             for p in Partitions(s):
-                Q = QuadraticStratum(list(p)+[-1]*nb_poles)
+                Q = Stratum(list(p)+[-1]*nb_poles, k=2)
                 if not Q.is_empty():
                     yield Q
             nb_poles += 1
@@ -1999,8 +1828,8 @@ class QuadraticStrata_g(QuadraticStrata_class):
             if p == 0 or p == 1:
                 raise NotImplementedError("empty list")
         elif g == 2 and p == 0:  # Q(4) and Q(3,1) are empty
-            return QuadraticStratum(2,2)
-        return QuadraticStratum([4*g-4+p]+[-1]*p)
+            return Stratum([2,2], k=2)
+        return Stratum([4*g-4+p]+[-1]*p, k=2)
 
     an_element_ = first
 
@@ -2050,7 +1879,7 @@ class QuadraticStrata_g(QuadraticStrata_class):
         if g == 1: # Q(0) and Q(1,-1) are empty
             if p == 0 or p == 1:
                 raise NotImplementedError("empty list")
-        return QuadraticStratum([1]*(4*g-4+p) + [-1]*p)
+        return Stratum([1]*(4*g-4+p) + [-1]*p, k=2)
 
 class QuadraticStrata_d(QuadraticStrata_class):
     r"""
@@ -2152,24 +1981,25 @@ class QuadraticStrata_d(QuadraticStrata_class):
             sage: from surface_dynamics import *
 
             sage: q = QuadraticStrata(dimension=7, fake_zeros=False)
-            sage: QuadraticStratum(5, 2, 1) in q
+            sage: Stratum([5, 2, 1], k=2) in q
             True
-            sage: QuadraticStratum(7, 1, 0) in q
+            sage: Stratum([7, 1, 0], k=2) in q
             False
 
             sage: q = QuadraticStrata(dimension=7, fake_zeros=True)
-            sage: QuadraticStratum(5, 2, 1) in q
+            sage: Stratum([5, 2, 1], k=2) in q
             True
-            sage: QuadraticStratum(7, 1, 0) in q
+            sage: Stratum([7, 1, 0], k=2) in q
             True
         """
-        return (isinstance(c, QuadraticStratum) and
-                c.dimension() == self._dimension and
-                c.nb_poles() >= self._min_nb_poles and
-                c.nb_poles() <= self._max_nb_poles and
-                (self._fake_zeros or not c.nb_fake_zeros()))
-
-        z = c.zeros()
+        if not isinstance(c, Stratum) or c._k != 2:
+            return False
+        p = sum(d < 0 for d in c.signature())
+        f = sum(d == 0 for d in c.signature())
+        return (c.dimension() == self._dimension and
+                p >= self._min_nb_poles and
+                p <= self._max_nb_poles and
+                (self._fake_zeros or not f))
 
     def _repr_base_(self):
         r"""
@@ -2226,14 +2056,14 @@ class QuadraticStrata_d(QuadraticStrata_class):
             for nb_fake_zeros in range(self._dimension - 1):
                 d = self._dimension - nb_fake_zeros
                 for Q in QuadraticStrata_d(d, self._min_nb_poles, self._max_nb_poles, False):
-                    yield QuadraticStratum(Q.zeros() + (0,) * nb_fake_zeros)
+                    yield Stratum(Q.signature() + (0,) * nb_fake_zeros, k=2)
             return
 
         from sage.combinat.partition import Partitions
 
         d = self._dimension
         if d == 2:
-            yield QuadraticStratum(-1,-1,-1,-1)
+            yield Stratum([-1,-1,-1,-1], k=2)
         else:
             m = max(0, self._min_nb_poles)
             M = min(2*d-2, self._max_nb_poles+1)
@@ -2242,7 +2072,7 @@ class QuadraticStrata_d(QuadraticStrata_class):
                     # d+z+p is 0 mod 2
                     # 2d-2z-2p >= -4 (or z <= d+2-p)
                     for Z in Partitions(2*d-2*z-p, length=z):
-                        Q = QuadraticStratum(Z+[-1]*p)
+                        Q = Stratum(Z+[-1]*p, k=2)
                         if not Q.is_empty():
                             yield Q
 
@@ -2315,7 +2145,7 @@ class QuadraticStrata_gd(QuadraticStrata_class):
 
         TESTS::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum, QuadraticStrata
 
             sage: Q1 = QuadraticStrata(dimension=7, genus=2, fake_zeros=True)
             sage: Q2 = QuadraticStrata(dimension=7, genus=2, fake_zeros=False)
@@ -2327,13 +2157,13 @@ class QuadraticStrata_gd(QuadraticStrata_class):
             sage: all(s in Q2 for s in Q1)
             False
 
-            sage: q = QuadraticStratum({-1:4})
+            sage: q = Stratum({-1:4}, k=2)
             sage: q in QuadraticStrata(genus=0, dimension=2, fake_zeros=False)
             True
             sage: q in QuadraticStrata(genus=0, dimension=2, fake_zeros=True)
             True
 
-            sage: q = QuadraticStratum({-1:4,0:1})
+            sage: q = Stratum({-1:4,0:1}, k=2)
             sage: q in QuadraticStrata(genus=0, dimension=3, fake_zeros=False)
             False
             sage: q in QuadraticStrata(genus=0, dimension=3, fake_zeros=True)
@@ -2343,12 +2173,15 @@ class QuadraticStrata_gd(QuadraticStrata_class):
             sage: all(s in Q for s in Q)
             True
         """
-        return (isinstance(c, QuadraticStratum) and
-                c.dimension() == self._dimension and
-                c.genus() == self._genus and
-                c.nb_poles() >= self._min_nb_poles and
-                c.nb_poles() <= self._max_nb_poles and
-                (self._fake_zeros or not c.nb_fake_zeros()))
+        if not isinstance(c, Stratum) or c._k != 2:
+            return False
+        np = sum(z < 0 for z in c.signature())
+        nf = sum(z == 0 for z in c.signature())
+        return (c.dimension() == self._dimension and
+                c.surface_genus() == self._genus and
+                np >= self._min_nb_poles and
+                np <= self._max_nb_poles and
+                (self._fake_zeros or not nf))
 
     def _repr_base_(self):
         r"""
@@ -2367,7 +2200,7 @@ class QuadraticStrata_gd(QuadraticStrata_class):
 
         TESTS::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import QuadraticStrata
 
             sage: for q in QuadraticStrata(genus=1, dimension=6): print(q)
             Q_1(1^3, -1^3)
@@ -2387,7 +2220,7 @@ class QuadraticStrata_gd(QuadraticStrata_class):
             for n in range(self._dimension - 1):
                 for q in QuadraticStrata_gd(self._genus, self._dimension - n,
                         self._min_nb_poles, self._max_nb_poles, False):
-                    yield QuadraticStratum(q.zeros() + (0,)*n)
+                    yield Stratum(q.signature() + (0,)*n, k=2)
             return
 
         from sage.combinat.partition import Partitions
@@ -2395,13 +2228,13 @@ class QuadraticStrata_gd(QuadraticStrata_class):
         g = self._genus
         if d == 2:
             if g == 0 and self._min_nb_poles <= 4 <= self._max_nb_poles:
-                yield QuadraticStratum(-1,-1,-1,-1)
+                yield Stratum((-1,-1,-1,-1), k=2)
         else:
             m = max(0,self._min_nb_poles)
             M = min(2*d-2,self._max_nb_poles+1)
             for p in range(m,M):
                 z = d - p - 2*g + 2
                 for Z in Partitions(2*d-2*z-p,length=z):
-                    Q = QuadraticStratum(Z+[-1]*p)
+                    Q = Stratum(Z+[-1]*p, k=2)
                     if not Q.is_empty():
                         yield Q

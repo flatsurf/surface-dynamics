@@ -11,6 +11,7 @@ Masur-Veech volumes of Abelian strata and their connected components
 from sage.all import ZZ, QQ, zeta, pi
 from sage.arith.misc import bernoulli, factorial
 
+from .strata import Stratum
 from .abelian_strata import AbelianStratum, AbelianStratumComponent
 from .quadratic_strata import QuadraticStratum, QuadraticStratumComponent
 
@@ -19,55 +20,57 @@ from .quadratic_strata import QuadraticStratum, QuadraticStratumComponent
 # - Eskin-Masur-Zorich "principal boundary ..."
 abelian_volumes_table = {
     # dim 2
-    AbelianStratum(0).hyperelliptic_component(): QQ((2,1)),
+    Stratum((0,), 1).hyperelliptic_component(): QQ((2,1)),
     # dim 4
-    AbelianStratum(2).hyperelliptic_component(): QQ((3,4)),
+    Stratum((2,), 1).hyperelliptic_component(): QQ((3,4)),
     # dim 5
-    AbelianStratum(1,1).hyperelliptic_component(): QQ((2,3)),
+    Stratum((1,1), 1).hyperelliptic_component(): QQ((2,3)),
     # dim 6
-    AbelianStratum(4).hyperelliptic_component(): QQ((9,64)),
-    AbelianStratum(4).odd_component(): QQ((7,18)),
+    Stratum((4,), 1).hyperelliptic_component(): QQ((9,64)),
+    Stratum((4,), 1).odd_component(): QQ((7,18)),
     # dim 7
-    AbelianStratum(3,1).unique_component(): QQ((16,45)),
-    AbelianStratum(2,2).hyperelliptic_component(): QQ((1,10)),
-    AbelianStratum(2,2).odd_component(): QQ((7,32)),
+    Stratum((3,1), 1).unique_component(): QQ((16,45)),
+    Stratum((2,2), 1).hyperelliptic_component(): QQ((1,10)),
+    Stratum((2,2), 1).odd_component(): QQ((7,32)),
     # dim 8
-    AbelianStratum(6).hyperelliptic_component(): QQ((25, 1536)),
-    AbelianStratum(6).odd_component(): QQ((1,4)),
-    AbelianStratum(6).even_component(): QQ((64,405)),
-    AbelianStratum(2,1,1).unique_component(): QQ((1,4)),
+    Stratum((6,), 1).hyperelliptic_component(): QQ((25, 1536)),
+    Stratum((6,), 1).odd_component(): QQ((1,4)),
+    Stratum((6,), 1).even_component(): QQ((64,405)),
+    Stratum((2,1,1), 1).unique_component(): QQ((1,4)),
     # dim 9
-    AbelianStratum(5,1).unique_component(): QQ((9,35)),
-    AbelianStratum(4,2).odd_component(): QQ((5,42)),
-    AbelianStratum(4,2).even_component(): QQ((45,512)),
-    AbelianStratum(3,3).non_hyperelliptic_component(): QQ((5,27)),
-    AbelianStratum(3,3).hyperelliptic_component(): QQ((1,105)),
-    AbelianStratum(1,1,1,1).unique_component(): QQ((7,36)),
+    Stratum((5,1), 1).unique_component(): QQ((9,35)),
+    Stratum((4,2), 1).odd_component(): QQ((5,42)),
+    Stratum((4,2), 1).even_component(): QQ((45,512)),
+    Stratum((3,3), 1).non_hyperelliptic_component(): QQ((5,27)),
+    Stratum((3,3), 1).hyperelliptic_component(): QQ((1,105)),
+    Stratum((1,1,1,1), 1).unique_component(): QQ((7,36)),
     # dim 10
-    # AbelianStratum(8).hyperelliptic_component()
-    # AbelianStratum(8).odd_component()
-    # AbelianStratum(8).even_component()
-    AbelianStratum(4,1,1).unique_component(): QQ((275,1728)),
-    AbelianStratum(3,2,1).unique_component(): QQ((2,15)),
-    AbelianStratum(2,2,2).odd_component(): QQ((155,2304)),
-    AbelianStratum(2,2,2).even_component(): QQ((37,720)),
+    # Stratum((8,), k=1).hyperelliptic_component()
+    # Stratum((8,), k=1).odd_component()
+    # Stratum((8,), k=1).even_component()
+    Stratum((4,1,1), 1).unique_component(): QQ((275,1728)),
+    Stratum((3,2,1), 1).unique_component(): QQ((2,15)),
+    Stratum((2,2,2), 1).odd_component(): QQ((155,2304)),
+    Stratum((2,2,2), 1).even_component(): QQ((37,720)),
     # dim 11
-    # AbelianStratum(7, 1)^c
-    # AbelianStratum(6, 2)^odd
-    # AbelianStratum(6, 2)^even
-    # AbelianStratum(5, 3)^c
-    # AbelianStratum(4^2)^hyp
-    # AbelianStratum(4^2)^odd
-    # AbelianStratum(4^2)^even
-    AbelianStratum(3,1,1,1).unique_component(): QQ((124,1215)),
-    AbelianStratum(2,2,1,1).unique_component(): QQ((131,1440))
+    # Stratum((7, 1), k=1).unique_component()
+    # Stratum((6, 2), k=1).odd_component()
+    # Stratum((6, 2), k=1).even_component()
+    # Stratum((5, 3), k=1).unique_component()
+    # Stratum((4, 4), k=1).hyperelliptic_component()
+    # Stratum((4, 4), k=1).odd_component()
+    # Stratum((4, 4), k=1).even_component()
+    Stratum((3,1,1,1), 1).unique_component(): QQ((124,1215)),
+    Stratum((2,2,1,1), 1).unique_component(): QQ((131,1440))
 }
 
-def masur_veech_volume(C, rational, method):
+def masur_veech_volume(C, rational=False, method=None):
     r"""
     Return the Masur-Veech volume of the stratum or component of stratum ``C``.
 
     INPUT:
+
+    - ``C`` -- a stratum or a connected component of stratum
 
     - ``rational`` (boolean) - if ``False`` (default) return the Masur-Veech volume
       and if ``True`` return the Masur-Veech volume divided by `\zeta(2g)`.
@@ -82,10 +85,10 @@ def masur_veech_volume(C, rational, method):
 
     TESTS::
 
-        sage: from surface_dynamics import AbelianStratum
+        sage: from surface_dynamics import Stratum
         sage: from surface_dynamics.flat_surfaces.masur_veech_volumes import masur_veech_volume
 
-        sage: H4 = AbelianStratum(4)
+        sage: H4 = Stratum([4], k=1)
         sage: masur_veech_volume(H4, False, 'table')
         61/108864*pi^6
         sage: masur_veech_volume(H4, False, 'CMSZ')
@@ -99,13 +102,30 @@ def masur_veech_volume(C, rational, method):
         sage: masur_veech_volume(H4.odd_component(), False, 'CMSZ')
         1/2430*pi^6
 
-        sage: H6 = AbelianStratum(6)
+        sage: H6 = Stratum([6], k=1)
         sage: all(masur_veech_volume(C, True, 'table') == masur_veech_volume(C, True, 'CMSZ') for C in H6.components())
         True
+
+    TESTS::
+
+
+            sage: masur_veech_volume(Stratum([1,1,-2], k=1))
+            Traceback (most recent call last):
+            ...
+            ValueError: meromorphic differentials with higher order poles
+            sage: masur_veech_volume(Stratum([1]*6, k=3))
+            Traceback (most recent call last):
+            ...
+            NotImplementedError: higher order differentials
     """
+    if not C.surface_has_finite_area():
+        raise ValueError('meromorphic differentials with higher order poles')
+    if C.surface_differential_order() > 2:
+        raise NotImplementedError('higher order differentials')
+
     if method is None:
-        if (isinstance(C, AbelianStratum) and len(C.zeros()) == 1) or \
-           (isinstance(C, AbelianStratumComponent) and len(C.stratum().zeros()) == 1):
+        if (isinstance(C, AbelianStratum) and len(C.signature()) == 1) or \
+           (isinstance(C, AbelianStratumComponent) and len(C.stratum().signature()) == 1):
             method = 'CMSZ'
         else:
             method = 'table'
@@ -118,26 +138,26 @@ def masur_veech_volume(C, rational, method):
             vol = sum(abelian_volumes_table[CC] for CC in C.components())
             S = C
         elif isinstance(C, QuadraticStratumComponent):
-            raise NotImplementedError
+            raise NotImplementedError('quadratic differentials')
         elif isinstance(C, QuadraticStratum):
-            raise NotImplementedError
+            raise NotImplementedError('quadratic differentials')
         else:
             raise ValueError('invalid input')
 
-        return vol if rational else vol * zeta(2 * S.genus())
+        return vol if rational else vol * zeta(2 * S.surface_genus())
 
     elif method == 'CMSZ':
         if isinstance(C, AbelianStratum):
-            if len(C.zeros()) != 1:
+            if len(C.signature()) != 1:
                 raise NotImplementedError
-            g = C.genus()
+            g = C.surface_genus()
             # be careful, the output starts in genus g=1
             return minimal_strata_CMSZ(g+1, rational=rational)[g-1]
         elif isinstance(C, AbelianStratumComponent):
             S = C.stratum()
-            if len(S.zeros()) != 1:
+            if len(S.signature()) != 1:
                 raise NotImplementedError
-            g = S.genus()
+            g = S.surface_genus()
             if C._name == 'hyp':
                 return minimal_strata_hyp(g, rational)
 
@@ -174,17 +194,17 @@ def minimal_strata_CMSZ(gmax, rational=False):
          12569/279936000*pi^8,
          12587/3311616000*pi^10]
 
-        sage: from surface_dynamics import AbelianStratum
+        sage: from surface_dynamics import Stratum
         sage: from surface_dynamics.flat_surfaces.masur_veech_volumes import masur_veech_volume
         sage: for rat in [True, False]:
         ....:     V0, V2, V4, V6 = minimal_strata_CMSZ(5, rational=rat)
-        ....:     MV0 = masur_veech_volume(AbelianStratum(0), rat, 'table')
+        ....:     MV0 = masur_veech_volume(Stratum([0], k=1), rat, 'table')
         ....:     assert V0 == MV0, (V0, MV0, rat)
-        ....:     MV2 = masur_veech_volume(AbelianStratum(2), rat, 'table')
+        ....:     MV2 = masur_veech_volume(Stratum([2], k=1), rat, 'table')
         ....:     assert V2 == MV2, (V2, MV2, rat)
-        ....:     MV4 = masur_veech_volume(AbelianStratum(4), rat, 'table')
+        ....:     MV4 = masur_veech_volume(Stratum([4], k=1), rat, 'table')
         ....:     assert V4 == MV4, (V4, MV4, rat)
-        ....:     MV6 = masur_veech_volume(AbelianStratum(6), rat, 'table')
+        ....:     MV6 = masur_veech_volume(Stratum([6], k=1), rat, 'table')
         ....:     assert V6 == MV6, (V6, MV6, rat)
     """
     n = 2 * gmax - 1

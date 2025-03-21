@@ -281,7 +281,7 @@ class PermutationCover(object):
 
             sage: from surface_dynamics import *
 
-            sage: p = QuadraticStratum([1,1,-1,-1]).components()[0].permutation_representative()
+            sage: p = Stratum([1,1,-1,-1], k=2).components()[0].permutation_representative()
             sage: pc = p.orientation_cover()
             sage: pc
             Covering of degree 2 of the permutation:
@@ -306,7 +306,7 @@ class PermutationCover(object):
 
             sage: from surface_dynamics import *
 
-            sage: p = QuadraticStratum([1,1,-1,-1]).components()[0].permutation_representative()
+            sage: p = Stratum([1,1,-1,-1], k=2).components()[0].permutation_representative()
             sage: pc = p.orientation_cover()
             sage: pc
             Covering of degree 2 of the permutation:
@@ -688,12 +688,12 @@ class PermutationCover(object):
         Z = [x-2 for x in self.profile() if fake_zeros or x != 2]
         if not Z:
             Z = [0]
+
+        from surface_dynamics.flat_surfaces.abelian_strata import Stratum
         if self.is_orientable():
-            from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratum
-            return AbelianStratum([z//2 for z in Z])
+            return Stratum([z//2 for z in Z], k=1)
         else:
-            from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratum
-            return QuadraticStratum(Z)
+            return Stratum(Z, k=2)
 
     def genus(self):
         r"""
@@ -711,11 +711,11 @@ class PermutationCover(object):
         TESTS::
 
             sage: from surface_dynamics import *
-            sage: o = AbelianStratum([1,2,3,4]).one_component().one_origami()
-            sage: assert(o.genus() == AbelianStratum([1,2,3,4]).genus())
-            sage: qc = QuadraticStratum([1,2,3,4,-1,-1]).one_component()
+            sage: o = Stratum([1,2,3,4], k=1).one_component().one_origami()
+            sage: assert(o.genus() == Stratum([1,2,3,4], k=1).surface_genus())
+            sage: qc = Stratum([1,2,3,4,-1,-1], k=2).one_component()
             sage: p = qc.permutation_representative()
-            sage: assert(p.orientation_cover().genus() == qc.orientation_cover_component().genus())
+            sage: assert(p.orientation_cover().genus() == qc.orientation_cover_component().surface_genus())
         """
         p = self.profile()
         return Integer((sum(p)-2*len(p))/4+1)
@@ -939,10 +939,10 @@ class PermutationCover(object):
             ....:                    ((8,1,2,4), [0,0,1,2,2])]:
             ....:     c1 = cyclic_cover(*dat)
             ....:     c2 = cyclic_cover_regular(*dat)
-            ....:     assert c1.isotypic_projectors(floating_point=True)[1] == ans
-            ....:     assert c1.isotypic_projectors(floating_point=False)[1] == ans
-            ....:     assert c2.isotypic_projectors(floating_point=True)[1] == ans
-            ....:     assert c2.isotypic_projectors(floating_point=False)[1] == ans
+            ....:     assert sorted(c1.isotypic_projectors(floating_point=True)[1]) == ans
+            ....:     assert sorted(c1.isotypic_projectors(floating_point=False)[1]) == ans
+            ....:     assert sorted(c2.isotypic_projectors(floating_point=True)[1]) == ans
+            ....:     assert sorted(c2.isotypic_projectors(floating_point=False)[1]) == ans
             ....:     assert c1.genus() == sum(ans)
         """
         if characters is None or characters is True:
@@ -1048,7 +1048,7 @@ class PermutationCover(object):
 
             sage: from surface_dynamics import *
 
-            sage: q = QuadraticStratum([1,1,-1,-1]).one_component()
+            sage: q = Stratum([1,1,-1,-1], k=2).one_component()
             sage: q.lyapunov_exponents_H_plus(nb_iterations=2**19)  # abs tol 0.1
             [0.666666]
             sage: p = q.permutation_representative(reduced=False).orientation_cover()
@@ -1227,9 +1227,11 @@ class PermutationCover(object):
 
             sage: p = iet.Permutation('a b c', 'c b a').cover(['(1,2)','(1,3)','(1,4)'])
             sage: S = p.masur_polygon([1,4,2], [2,0,-1])  # optional: sage_flatsurf
-            sage: S.stratum()                             # optional: sage_flatsurf
+            sage: stratum = S.stratum()                   # optional: sage_flatsurf # random
+            sage: stratum                                 # optional: sage_flatsurf
             H_4(3^2)
-            sage: p.stratum()                             # optional: sage_flatsurf
+            sage: stratum = p.stratum()                   # optional: sage_flatsurf # random
+            sage: stratum                                 # optional: sage_flatsurf
             H_4(3^2)
         """
         base_ring, triangles, tops, bots, mids = self._base._masur_polygon_helper(lengths, heights)
@@ -1389,7 +1391,8 @@ class RegularCover(PermutationCover):
 
     def degree(self):
         try:
-            d = self._grp.cardinality()
+            from sage.rings.integer_ring import ZZ
+            d = ZZ(self._grp.cardinality())
         except AttributeError:
             # cardinality not implemented yet on GroupLibGAP
             d = self._grp._libgap.Size().sage()

@@ -20,11 +20,11 @@ except ImportError:
 except cypari2.handle_error.PariError:
     pytestmark = pytest.mark.skip(reason="sage.modular.multiple_zeta not functional")
 
-from surface_dynamics import AbelianStratum
+from surface_dynamics import Stratum
 from surface_dynamics.flat_surfaces.masur_veech_volumes import masur_veech_volume
 
 def test_H2_cylinder_diagram_contributions():
-    A = AbelianStratum(2).unique_component()
+    A = Stratum([2], k=1).unique_component()
     c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).integral_sum_as_mzv()
     c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).integral_sum_as_mzv()
     assert c1 == M(4)/3
@@ -34,7 +34,7 @@ def test_H2_cylinder_diagram_contributions():
     assert vol == A.masur_veech_volume(rational=True) * M(2*A.stratum().genus())
 
 def test_H11_cylinder_diagram_contributions():
-    A = AbelianStratum(1,1).hyperelliptic_component()
+    A = Stratum([1,1], k=1).hyperelliptic_component()
     c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).integral_sum_as_mzv()
     c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).integral_sum_as_mzv()
     c3 = sum(c.volume_contribution() for c in A.cylinder_diagrams(3)).integral_sum_as_mzv()
@@ -47,7 +47,7 @@ def test_H11_cylinder_diagram_contributions():
     assert vol == A.masur_veech_volume(rational=True) * M(2*A.stratum().genus())
 
 def test_H4hyp_cylinder_diagram_contributions():
-    A = AbelianStratum(4).hyperelliptic_component()
+    A = Stratum([4], k=1).hyperelliptic_component()
     c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).integral_sum_as_mzv()
     c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).integral_sum_as_mzv()
     c3 = sum(c.volume_contribution() for c in A.cylinder_diagrams(3)).integral_sum_as_mzv()
@@ -56,7 +56,7 @@ def test_H4hyp_cylinder_diagram_contributions():
     assert vol == A.masur_veech_volume(rational=True) * M(2*A.stratum().genus())
 
 def test_H4odd_cylinder_diagram_contributions():
-    A = AbelianStratum(4).odd_component()
+    A = Stratum([4], k=1).odd_component()
     c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).integral_sum_as_mzv()
     c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).integral_sum_as_mzv()
     c3 = sum(c.volume_contribution() for c in A.cylinder_diagrams(3)).integral_sum_as_mzv()
@@ -68,7 +68,7 @@ def test_H31_cylinder_diagram_contributions():
     # values from Table 3 of A. Zorich "Square tiled surfaces
     # and Teichmueller volumes of the moduli spaces of Abelian
     # differentials" (2002)
-    A = AbelianStratum(3,1).unique_component()
+    A = Stratum([3,1], k=1).unique_component()
     c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).integral_sum_as_mzv()
     c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).integral_sum_as_mzv()
     c3 = sum(c.volume_contribution() for c in A.cylinder_diagrams(3)).integral_sum_as_mzv()
@@ -79,7 +79,7 @@ def test_H31_cylinder_diagram_contributions():
     vol = 16 * M(6) / 45
 
 def test_H211_cylinder_diagram_contributions():
-    A = AbelianStratum(2,1,1).unique_component()
+    A = Stratum([2,1,1], k=1).unique_component()
     c1 = sum(c.volume_contribution() for c in A.cylinder_diagrams(1)).integral_sum_as_mzv()
     c2 = sum(c.volume_contribution() for c in A.cylinder_diagrams(2)).integral_sum_as_mzv()
     c3 = sum(c.volume_contribution() for c in A.cylinder_diagrams(3)).integral_sum_as_mzv()
@@ -90,6 +90,6 @@ def test_H211_cylinder_diagram_contributions():
 
 def test_minimal_stratum_components():
     for g in range(2, 6):
-        A = AbelianStratum(2*g - 2)
+        A = Stratum([2*g - 2], k=1)
         assert sum(C.masur_veech_volume(rational=True) for C in A.components()) == A.masur_veech_volume(rational=True)
         assert sum(C.masur_veech_volume(rational=False) for C in A.components()) == A.masur_veech_volume(rational=False)

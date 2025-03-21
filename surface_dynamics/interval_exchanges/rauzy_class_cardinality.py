@@ -370,22 +370,22 @@ def gamma_std(profile, marking=None):
 
     The Rauzy classes associated to connected strata in genus 3::
 
-        sage: from surface_dynamics import AbelianStratum
-        sage: cc = AbelianStratum(1,1,1,1).unique_component()
+        sage: from surface_dynamics import Stratum
+        sage: cc = Stratum([1,1,1,1], k=1).unique_component()
         sage: d = cc.rauzy_diagram()
         sage: d
         Rauzy diagram with 1255 permutations
         sage: sum(1 for _ in filter(lambda x: x.is_standard(), d)) == rcc.gamma_std([2,2,2,2])
         True
 
-        sage: cc = AbelianStratum(2,1,1).unique_component()
+        sage: cc = Stratum([2,1,1], k=1).unique_component()
         sage: d = cc.rauzy_diagram()
         sage: d
         Rauzy diagram with 2177 permutations
         sage: sum(1 for _ in filter(lambda x: x.is_standard(), d)) == rcc.gamma_std([3,2,2])
         True
 
-        sage: cc = AbelianStratum(3,1).unique_component()
+        sage: cc = Stratum([3,1], k=1).unique_component()
         sage: d = cc.rauzy_diagram()
         sage: d
         Rauzy diagram with 770 permutations
@@ -394,8 +394,8 @@ def gamma_std(profile, marking=None):
 
     The non connected strata in genus 3::
 
-        sage: cc_odd = AbelianStratum(2,2).odd_component()
-        sage: cc_hyp = AbelianStratum(2,2).hyperelliptic_component()
+        sage: cc_odd = Stratum([2,2], k=1).odd_component()
+        sage: cc_hyp = Stratum([2,2], k=1).hyperelliptic_component()
         sage: d_odd = cc_odd.rauzy_diagram()
         sage: d_hyp = cc_hyp.rauzy_diagram()
         sage: d_odd
@@ -407,8 +407,8 @@ def gamma_std(profile, marking=None):
         sage: n_odd + n_hyp == rcc.gamma_std([3,3])
         True
 
-        sage: cc_odd = AbelianStratum(4).odd_component()
-        sage: cc_hyp = AbelianStratum(4).hyperelliptic_component()
+        sage: cc_odd = Stratum([4], k=1).odd_component()
+        sage: cc_hyp = Stratum([4], k=1).hyperelliptic_component()
         sage: d_odd = cc_odd.rauzy_diagram()
         sage: d_hyp = cc_hyp.rauzy_diagram()
         sage: d_odd
@@ -516,9 +516,9 @@ def delta_std(profile, marking=None):
     Non connected strata in genus 3 has two connected components distinguished
     by their spin parity::
 
-        sage: from surface_dynamics import AbelianStratum
-        sage: cc_odd = AbelianStratum(2,2).odd_component()
-        sage: cc_hyp = AbelianStratum(2,2).hyperelliptic_component()
+        sage: from surface_dynamics import Stratum
+        sage: cc_odd = Stratum([2,2], k=1).odd_component()
+        sage: cc_hyp = Stratum([2,2], k=1).hyperelliptic_component()
         sage: d_odd = cc_odd.rauzy_diagram()
         sage: d_hyp = cc_hyp.rauzy_diagram()
         sage: d_odd
@@ -530,8 +530,8 @@ def delta_std(profile, marking=None):
         sage: n_odd - n_hyp == rcc.delta_std([3,3])
         True
 
-        sage: cc_odd = AbelianStratum(4).odd_component()
-        sage: cc_hyp = AbelianStratum(4).hyperelliptic_component()
+        sage: cc_odd = Stratum([4], k=1).odd_component()
+        sage: cc_hyp = Stratum([4], k=1).hyperelliptic_component()
         sage: d_odd = cc_odd.rauzy_diagram()
         sage: d_hyp = cc_hyp.rauzy_diagram()
         sage: d_odd
@@ -672,21 +672,21 @@ def gamma_irr(profile=None, marking=None):
 
     The connected strata in genus 3::
 
-        sage: from surface_dynamics import AbelianStratum
+        sage: from surface_dynamics import Stratum
 
-        sage: c = AbelianStratum(1,1,1,1).unique_component()
+        sage: c = Stratum([1,1,1,1], k=1).unique_component()
         sage: c.rauzy_diagram()
         Rauzy diagram with 1255 permutations
         sage: rcc.gamma_irr([2,2,2,2])
         1255
 
-        sage: c = AbelianStratum(2,1,1).unique_component()
+        sage: c = Stratum([2,1,1], k=1).unique_component()
         sage: c.rauzy_diagram()
         Rauzy diagram with 2177 permutations
         sage: rcc.gamma_irr([3,2,2])
         2177
 
-        sage: c = AbelianStratum(3,1).unique_component()
+        sage: c = Stratum([3,1], k=1).unique_component()
         sage: c.rauzy_diagram()
         Rauzy diagram with 770 permutations
         sage: rcc.gamma_irr([4,2])
@@ -694,8 +694,8 @@ def gamma_irr(profile=None, marking=None):
 
     The non connected strata in genus 3::
 
-        sage: c_odd = AbelianStratum(2,2).odd_component()
-        sage: c_hyp = AbelianStratum(2,2).hyperelliptic_component()
+        sage: c_odd = Stratum([2,2], k=1).odd_component()
+        sage: c_hyp = Stratum([2,2], k=1).hyperelliptic_component()
         sage: c_odd.rauzy_diagram()
         Rauzy diagram with 294 permutations
         sage: c_hyp.rauzy_diagram()
@@ -703,8 +703,8 @@ def gamma_irr(profile=None, marking=None):
         sage: rcc.gamma_irr([3,3]) == 294 + 63
         True
 
-        sage: c_odd = AbelianStratum(4).odd_component()
-        sage: c_hyp = AbelianStratum(4).hyperelliptic_component()
+        sage: c_odd = Stratum([4], k=1).odd_component()
+        sage: c_hyp = Stratum([4], k=1).hyperelliptic_component()
         sage: c_odd.rauzy_diagram()
         Rauzy diagram with 134 permutations
         sage: c_hyp.rauzy_diagram()
@@ -805,10 +805,10 @@ def delta_irr(profile, marking=None):
 
     The non connected strata in genus 3::
 
-        sage: from surface_dynamics import AbelianStratum
+        sage: from surface_dynamics import Stratum
 
-        sage: c_odd = AbelianStratum(2,2).odd_component()
-        sage: c_hyp = AbelianStratum(2,2).hyperelliptic_component()
+        sage: c_odd = Stratum([2,2], k=1).odd_component()
+        sage: c_hyp = Stratum([2,2], k=1).hyperelliptic_component()
         sage: c_odd.rauzy_diagram()
         Rauzy diagram with 294 permutations
         sage: c_hyp.rauzy_diagram()
@@ -816,8 +816,8 @@ def delta_irr(profile, marking=None):
         sage: rcc.delta_irr([3,3]) == 294 - 63
         True
 
-        sage: c_odd = AbelianStratum(4).odd_component()
-        sage: c_hyp = AbelianStratum(4).hyperelliptic_component()
+        sage: c_odd = Stratum([4], k=1).odd_component()
+        sage: c_hyp = Stratum([4], k=1).hyperelliptic_component()
         sage: c_odd.rauzy_diagram()
         Rauzy diagram with 134 permutations
         sage: c_hyp.rauzy_diagram()
@@ -828,7 +828,7 @@ def delta_irr(profile, marking=None):
     A non connected strata in genus 4::
 
         sage: import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
-        sage: a = AbelianStratum(6)
+        sage: a = Stratum([6], k=1)
         sage: c_hyp = a.hyperelliptic_component()
         sage: c_odd = a.odd_component()
         sage: c_even = a.even_component()
@@ -852,7 +852,7 @@ def delta_irr(profile, marking=None):
 
     An example with a very big Rauzy class::
 
-        sage: c = AbelianStratum(6,6).odd_component()
+        sage: c = Stratum([6,6], k=1).odd_component()
         sage: c.rauzy_class_cardinality()
         11609364656
     """

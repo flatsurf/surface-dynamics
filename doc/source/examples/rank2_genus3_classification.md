@@ -24,7 +24,7 @@ Assume $\mathcal M$ is an invariant subvariety in a stratum $\mathcal H$. We
 will start with a horizontally periodic translation surface $M\in \mathcal M$.
 A database for the possible cylinder diagrams for $M$ can be found in
 `surface-dynamics`: see
-[here](https://flatsurf.github.io/surface-dynamics/database.html). Here is an
+[here](../../databases/flat_surfaces). Here is an
 example:
 
 ```{code-cell}
@@ -558,7 +558,7 @@ many partitions as possible.
 
 
 ```{code-cell}
-from surface_dynamics import AbelianStratum
+from surface_dynamics import Stratum
 from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
 
 def filter_partitions(cyl_diag_list, num_classes):
@@ -583,7 +583,7 @@ two of the four cylinder diagrams. For the remaining ones, we only need to
 consider one partition each.
 
 ```{code-cell}
-H = AbelianStratum(3, 1).components()[0]
+H = Stratum([3, 1], k=1).components()[0]
 C = CylinderDiagrams()
 
 # Check the partitions with 2 classes
@@ -651,10 +651,10 @@ def list_cylinder_classes(H, num_cylinders, num_classes):
 
 
 ```{code-cell}
-# H = AbelianStratum(3, 1).components()[0]
-# H = AbelianStratum(2, 2).components()[1]         ## This is H^odd(2,2)
-H = AbelianStratum(2, 1, 1).components()[0]
-# H = AbelianStratum(1, 1, 1, 1).components()[0]
+# H = Stratum([3, 1], k=1).components()[0]
+# H = Stratum([2, 2], k=1).components()[1]         ## This is H^odd(2,2)
+H = Stratum([2, 1, 1], k=1).components()[0]
+# H = Stratum([1, 1, 1, 1], k=1).components()[0]
 
 # Cylinder diagrams with 4 or more cylinders.
 for num_cylinders in range(4, 7):

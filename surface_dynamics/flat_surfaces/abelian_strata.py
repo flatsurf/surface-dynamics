@@ -58,30 +58,30 @@ EXAMPLES:
 
 Construction of a stratum from a list of singularity degrees::
 
-    sage: a = AbelianStratum(1,1)
+    sage: a = Stratum([1,1], k=1)
     sage: a
     H_2(1^2)
-    sage: a.genus()
+    sage: a.surface_genus()
     2
     sage: a.dimension()
     5
 
 ::
 
-    sage: a = AbelianStratum(4,3,2,1)
+    sage: a = Stratum([4,3,2,1], k=1)
     sage: a
     H_6(4, 3, 2, 1)
-    sage: a.genus()
+    sage: a.surface_genus()
     6
     sage: a.dimension()
     15
 
 By convention, the degrees are always written in decreasing order::
 
-    sage: a1 = AbelianStratum(4,3,2,1)
+    sage: a1 = Stratum([4,3,2,1], k=1)
     sage: a1
     H_6(4, 3, 2, 1)
-    sage: a2 = AbelianStratum(2,3,1,4)
+    sage: a2 = Stratum([2,3,1,4], k=1)
     sage: a2
     H_6(4, 3, 2, 1)
     sage: a1 == a2
@@ -89,8 +89,8 @@ By convention, the degrees are always written in decreasing order::
 
 It is possible to lis strata and their connected components::
 
-    sage: AbelianStratum(10).components()
-    [H_6(10)^hyp, H_6(10)^odd, H_6(10)^even]
+    sage: Stratum([10], k=1).components()
+    (H_6(10)^hyp, H_6(10)^odd, H_6(10)^even)
 
 Get a list of strata with constraints on genus or on the number of intervals
 of a representative::
@@ -100,9 +100,9 @@ of a representative::
 
 Obtains the connected components of a stratum::
 
-    sage: a = AbelianStratum(0)
+    sage: a = Stratum([0], k=1)
     sage: a.components()
-    [H_1(0)^hyp]
+    (H_1(0)^hyp,)
 
 ::
 
@@ -119,7 +119,7 @@ Obtains the connected components of a stratum::
     sage: N = 0
     sage: for a in A:
     ....:    for cc in a.components():
-    ....:       for z in set(a.zeros()):
+    ....:       for z in set(a.signature()):
     ....:           p = cc.permutation_representative(left_degree=z)
     ....:           n = p.rauzy_diagram().cardinality()
     ....:           print("%13s, %d  :  %d"%(cc, z, n))
@@ -214,6 +214,43 @@ def _cylinder_diagrams_with_symmetric(iterator):
         else:
             raise RuntimeError
 
+
+def DeprecatedAbelianStratumConstructor(*l):
+    """
+    TESTS::
+
+        sage: from surface_dynamics import AbelianStratum, Stratum
+
+        sage: s = AbelianStratum(0)
+        doctest:warning
+        ...
+        UserWarning: AbelianStratum has changed its arguments in order to handle meromorphic and higher-order differentials; use Stratum instead
+        sage: s is loads(dumps(s))
+        True
+
+        sage: AbelianStratum(1,1,1,1) is AbelianStratum(1,1,1,1)
+        True
+        sage: AbelianStratum(1,1,1,1) is Stratum((1, 1, 1, 1), 1)
+        True
+    """
+    import warnings
+
+    warnings.warn('AbelianStratum has changed its arguments in order to handle meromorphic and higher-order differentials; use Stratum instead')
+
+    if len(l) == 1:
+        try:
+            Integer(l[0])
+        except TypeError:
+            l = l[0]
+    elif len(l) == 2 and isinstance(l[0], (tuple,list)) and isinstance(1, numbers.Integral):
+        l = tuple(l[0]) + (0,) * l[1]
+    if isinstance(l, dict):
+        l = sum(([i] * mult for i, mult in l.items()), [])
+
+    l = tuple(sorted(map(Integer, l), reverse=True))
+    return Stratum(l, 1)
+
+
 class AbelianStratum(Stratum):
     """
     Stratum of Abelian differentials.
@@ -240,15 +277,15 @@ class AbelianStratum(Stratum):
 
     Creation of an Abelian stratum and get its connected components::
 
-        sage: a = AbelianStratum(2, 2)
+        sage: a = Stratum((2, 2), k=1)
         sage: a
         H_3(2^2)
         sage: a.components()
-        [H_3(2^2)^hyp, H_3(2^2)^odd]
+        (H_3(2^2)^hyp, H_3(2^2)^odd)
 
     Get a permutation representative of a connected component::
 
-        sage: a = AbelianStratum(2,2)
+        sage: a = Stratum((2,2), k=1)
         sage: a_hyp, a_odd = a.components()
         sage: a_hyp.permutation_representative()
         0 1 2 3 4 5 6
@@ -266,229 +303,27 @@ class AbelianStratum(Stratum):
     _name = 'H'
     _latex_name = '\\mathcal{H}'
 
-    @staticmethod
-    def __classcall_private__(self, *l):
-        if len(l) == 1:
-            try:
-                Integer(l[0])
-            except TypeError:
-                l = l[0]
-        elif len(l) == 2 and isinstance(l[0], (tuple,list)) and isinstance(1, numbers.Integral):
-            l = tuple(l[0]) + (0,) * l[1]
-
-        if isinstance(l, dict):
-            l = sum(([v]*e for v,e in iteritems(l)), [])
-
-        zeros = list(map(Integer, filter(lambda x: x, l)))
-        if any(z < 0 for z in zeros):
-            raise ValueError("the degrees must be non negative")
-        nb_fake_zeros = sum(1 for x in l if not x)
-        zeros.sort(reverse=True)
-        zeros = tuple(zeros)
-
-        s = sum(zeros)
-        if s%2:
-            raise ValueError("the sum of the degrees must be even")
-
-        if not zeros and not nb_fake_zeros:
-            raise ValueError("there must be at least one zero")
-
-        return UniqueRepresentation.__classcall__(AbelianStratum, zeros, nb_fake_zeros)
-
-    def __init__(self, zeros, nb_fake_zeros):
-        """
-        TESTS::
-
-            sage: from surface_dynamics import *
-
-            sage: s = AbelianStratum(0)
-            sage: s == loads(dumps(s))
-            True
-            sage: s = AbelianStratum(1,1,1,1)
-            sage: s == loads(dumps(s))
-            True
-        """
-        self._zeros = zeros
-        self._nb_fake_zeros = nb_fake_zeros
-
-        s = sum(self._zeros)
-        if s%2:
-            raise ValueError("the sum of the degrees must be even")
-        genus = s//2 + 1
-
-        if genus == 1:
-            self._cc = (HypASC,)
-
-        elif genus == 2:
-            self._cc = (HypASC,)
-
-        elif genus == 3:
-            if zeros == (2, 2) or zeros == (4,):
-                self._cc = (HypASC, OddASC)
-            else:
-                self._cc = (ASC,)
-
-        elif len(zeros) == 1:
-            # just one zeros [2g-2]
-            self._cc = (HypASC, OddASC, EvenASC)
-
-        elif zeros == (genus-1, genus-1):
-            # two similar zeros [g-1, g-1]
-            if genus % 2 == 0:
-                self._cc = (HypASC, NonHypASC)
-
-            else:
-                self._cc = (HypASC, OddASC, EvenASC)
-
-        elif all(x%2 == 0 for x in zeros):
-            # even zeroes [2 l_1, 2 l_2, ..., 2 l_n]
-            self._cc = (OddASC, EvenASC)
-
-        else:
-            # connected
-            self._cc = (ASC, )
-
-    def zeros(self, fake_zeros=True):
-        r"""
-        Return the multiplicities of the zeros.
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import *
-
-            sage: AbelianStratum([1,2,3]).zeros()
-            (3, 2, 1)
-            sage: AbelianStratum({2:4}).zeros()
-            (2, 2, 2, 2)
-        """
-        if fake_zeros:
-            return self._zeros + (0,)*self._nb_fake_zeros
-        return self._zeros
-
-    def nb_zeros(self, fake_zeros=True):
-        r"""
-        Returns the number of zeros of self.
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import *
-
-            sage: AbelianStratum(0).nb_zeros()
-            1
-            sage: AbelianStratum({2:4,3:2}).nb_zeros()
-            6
-        """
-        if fake_zeros:
-            return len(self._zeros) + self._nb_fake_zeros
-        return len(self._zeros)
-
-    def nb_fake_zeros(self):
-        r"""
-        Return the number of fake zeros.
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import *
-
-            sage: AbelianStratum(0).nb_fake_zeros()
-            1
-            sage: AbelianStratum(1,1,0,0).nb_fake_zeros()
-            2
-
-            sage: QuadraticStratum(0,4,2,2).nb_fake_zeros()
-            1
-        """
-        return self._nb_fake_zeros
-
-    def genus(self):
-        r"""
-        Return the genus of the stratum.
-
-        OUTPUT:
-
-        integer -- the genus
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import *
-
-            sage: AbelianStratum(0).genus()
-            1
-            sage: AbelianStratum(1,1).genus()
-            2
-            sage: AbelianStratum(3,2,1).genus()
-            4
-        """
-        return Integer(sum(self._zeros)//2+1)
-
-    def dimension(self):
-        r"""
-        Return the complex dimension of this stratum.
-
-        The dimension is `2g-2+s+1` where `g` is the genus of surfaces in the
-        stratum, `s` the number of singularities. The complex dimension of a
-        stratum is also the number of intervals of any interval exchange
-        transformations associated to the strata.
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import *
-
-            sage: AbelianStratum(0).dimension()
-            2
-            sage: AbelianStratum(0,0).dimension()
-            3
-            sage: AbelianStratum(2).dimension()
-            4
-            sage: AbelianStratum(1,1).dimension()
-            5
-
-        ::
-
-            sage: a = AbelianStratum(4,3,2,1,0)
-            sage: p = a.permutation_representative()
-            sage: len(p) == a.dimension()
-            True
-        """
-        return 2 * self.genus() + self.nb_zeros() - 1
-
-    def rank(self):
-        r"""
-        Return the rank of this manifold (half dimension of the absolute part of the tangent space).
-
-        EXAMPLES::
-
-            sage: from surface_dynamics import AbelianStratum
-
-            sage: AbelianStratum(0,0).rank()
-            1
-            sage: AbelianStratum(2).rank()
-            2
-            sage: AbelianStratum(2,0,0).rank()
-            2
-        """
-        return self.genus()
-
-    #
-    # Connected component
-    #
-
     def has_odd_component(self):
         r"""
         Test whether this stratum has an odd spin component.
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: AbelianStratum(2).has_odd_component()
+            sage: Stratum((2,), k=1).has_odd_component()
             False
-            sage: AbelianStratum(4).has_odd_component()
+            sage: Stratum((4,), k=1).has_odd_component()
             True
-            sage: AbelianStratum(4).odd_component()
+            sage: Stratum((4,), k=1).odd_component()
             H_3(4)^odd
+
+            sage: Stratum((0,), k=1).has_odd_component()
+            False
         """
-        return all(z%2 == 0 for z in self.zeros()) and self.genus() != 2
+        if any(z < 0 for z in self.signature()):
+            raise NotImplementedError('meromorphic stratum')
+        return all(z % 2 == 0 for z in self.signature()) and self.surface_genus() >= 3
 
     def has_even_component(self):
         r"""
@@ -496,16 +331,21 @@ class AbelianStratum(Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: AbelianStratum(2,2).has_even_component()
+            sage: Stratum((2,2), k=1).has_even_component()
             False
-            sage: AbelianStratum(6).has_even_component()
+            sage: Stratum((6,), k=1).has_even_component()
             True
-            sage: AbelianStratum(6).even_component()
+            sage: Stratum((6,), k=1).even_component()
             H_4(6)^even
+
+            sage: Stratum((0,), k=1).has_even_component()
+            False
         """
-        return all(z%2 == 0 for z in self.zeros()) and self.genus() >= 4
+        if any(z < 0 for z in self.signature()):
+            raise NotImplementedError('meromorphic stratum')
+        return all(z % 2 == 0 for z in self.signature()) and self.surface_genus() >= 4
 
     def has_hyperelliptic_component(self):
         r"""
@@ -513,17 +353,23 @@ class AbelianStratum(Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: AbelianStratum(2,1,1).has_hyperelliptic_component()
+            sage: Stratum((2,1,1), k=1).has_hyperelliptic_component()
             False
-            sage: AbelianStratum(2,2).has_hyperelliptic_component()
+            sage: Stratum((2,2), k=1).has_hyperelliptic_component()
             True
-            sage: AbelianStratum(2,2).hyperelliptic_component()
+            sage: Stratum((0,0,0), k=1).has_hyperelliptic_component()
+            True
+            sage: Stratum((2,0), k=1).has_hyperelliptic_component()
+            True
+            sage: Stratum((2,2), k=1).hyperelliptic_component()
             H_3(2^2)^hyp
         """
-        z = self.zeros()
-        return len(z) == 1 or (len(z) == 2 and z[0] == z[1])
+        if any(z < 0 for z in self.signature()):
+            raise NotImplementedError('meromorphic stratum')
+        z = [z for z in self.signature() if z > 0]
+        return len(z) <= 1 or (len(z) == 2 and z[0] == z[1])
 
     def has_non_hyperelliptic_component(self):
         r"""
@@ -531,33 +377,41 @@ class AbelianStratum(Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: AbelianStratum(1,1).has_non_hyperelliptic_component()
+            sage: Stratum((1,1), k=1).has_non_hyperelliptic_component()
             False
-            sage: AbelianStratum(3,3).has_non_hyperelliptic_component()
+            sage: Stratum((3,3), k=1).has_non_hyperelliptic_component()
             True
-            sage: AbelianStratum(3,3).non_hyperelliptic_component()
+            sage: Stratum((3,3,0), k=1).has_non_hyperelliptic_component()
+            True
+
+            sage: Stratum((3,3), k=1).non_hyperelliptic_component()
             H_4(3^2)^nonhyp
         """
-        z = self.zeros()
-        return len(z) == 2 and z[0] == z[1] and z[0]%2 == 1 and z[0] > 1
+        if any(z < 0 for z in self.signature()):
+            raise NotImplementedError('meromorphic stratum')
+        z = [z for z in self.signature() if z > 0]
+        return len(z) == 2 and z[0] == z[1] and z[0] % 2 == 1 and z[0] > 1
 
+    # TODO: redesign this!!!
     def odd_component(self):
         r"""
         Return the odd component of self (if any).
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: a = AbelianStratum([2,2]); a
+            sage: a = Stratum([2,2], k=1)
+            sage: a
             H_3(2^2)
             sage: a.odd_component()
             H_3(2^2)^odd
         """
-        if OddASC in self._cc: return OddASC(self)
-        raise ValueError("No odd spin component in this stratum")
+        if not self.has_odd_component():
+            raise ValueError("No odd spin component in this stratum")
+        return OddASC(self)
 
     def even_component(self):
         r"""
@@ -565,15 +419,17 @@ class AbelianStratum(Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: a = AbelianStratum({2:4}); a
+            sage: a = Stratum({2:4}, k=1)
+            sage: a
             H_5(2^4)
             sage: a.even_component()
             H_5(2^4)^even
         """
-        if EvenASC in self._cc: return EvenASC(self)
-        raise ValueError("No even spin component in this stratum")
+        if not self.has_even_component():
+            raise ValueError("No even spin component in this stratum")
+        return EvenASC(self)
 
     def hyperelliptic_component(self):
         r"""
@@ -581,15 +437,17 @@ class AbelianStratum(Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: a = AbelianStratum(10); a
+            sage: a = Stratum([10], k=1)
+            sage: a
             H_6(10)
             sage: a.hyperelliptic_component()
             H_6(10)^hyp
         """
-        if HypASC in self._cc: return HypASC(self)
-        raise ValueError("No hyperelliptic component in this stratum")
+        if not self.has_hyperelliptic_component():
+            raise ValueError("No hyperelliptic component in this stratum")
+        return HypASC(self)
 
     def non_hyperelliptic_component(self):
         r"""
@@ -597,20 +455,23 @@ class AbelianStratum(Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: a = AbelianStratum(3,3); a
+            sage: a = Stratum((3,3), k=1)
+            sage: a
             H_4(3^2)
             sage: a.non_hyperelliptic_component()
             H_4(3^2)^nonhyp
         """
-        if NonHypASC in self._cc: return NonHypASC(self)
-        raise ValueError("No non hyperelliptic component in this stratum")
+        if not self.has_non_hyperelliptic_component():
+            raise ValueError("No non hyperelliptic component in this stratum")
+        return NonHypASC(self)
 
     #
     # Quadratic cover
     #
 
+    # TODO: this should also be done for higher order differentials
     def orientation_quotients(self, fake_zeros=False):
         r"""
         Return the list of quadratic strata such that their orientation cover
@@ -621,7 +482,7 @@ class AbelianStratum(Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
         The stratum H(2g-2) has one conic singularities of angle `2(2g-1)pi`. The
         only way a surface in H(2g-2) covers a quadratic differential is that
@@ -629,30 +490,31 @@ class AbelianStratum(Stratum):
         angle `(2g-1) \pi`. The number of poles may vary and give a collection
         of possibilities::
 
-            sage: AbelianStratum(2).orientation_quotients()
+            sage: Stratum([2], k=1).orientation_quotients()
             [Q_0(1, -1^5)]
-            sage: AbelianStratum(4).orientation_quotients()
+            sage: Stratum([4], k=1).orientation_quotients()
             [Q_1(3, -1^3), Q_0(3, -1^7)]
-            sage: AbelianStratum(6).orientation_quotients()
+            sage: Stratum([6], k=1).orientation_quotients()
             [Q_2(5, -1), Q_1(5, -1^5), Q_0(5, -1^9)]
 
         A stratum with two zeros may or may not have orientation quotients::
 
-            sage: AbelianStratum(1,1).orientation_quotients()
+            sage: Stratum([1,1], k=1).orientation_quotients()
             [Q_1(2, -1^2), Q_0(2, -1^6)]
-            sage: AbelianStratum(2,2).orientation_quotients()
+            sage: Stratum([2,2], k=1).orientation_quotients()
             [Q_1(1^2, -1^2), Q_0(1^2, -1^6), Q_1(4, -1^4), Q_0(4, -1^8)]
-            sage: AbelianStratum(3,1).orientation_quotients()
+            sage: Stratum([3,1], k=1).orientation_quotients()
             []
 
         To impose that covering of poles are fake zeros, switch option
         ``fake_zeros`` to ``True``::
 
-            sage: AbelianStratum(2,2,0,0).orientation_quotients(fake_zeros=True)
+            sage: Stratum([2,2,0,0], k=1).orientation_quotients(fake_zeros=True)
             [Q_1(1^2, -1^2)]
         """
         e = {}
-        for i in self.zeros(fake_zeros=False):
+        z = tuple(m for m in self.signature() if m)
+        for i in z:
             if i not in e: e[i] = 0
             e[i] += 1
 
@@ -662,30 +524,31 @@ class AbelianStratum(Stratum):
             return []
 
         pairings = []
-        for d,m in iteritems(e):
-            if d%2: # if the degree is odd it is necessarily non ramified
-                pairings.append([(d,m//2)])
+        for d, m in iteritems(e):
+            if d % 2: # if the degree is odd it is necessarily non ramified
+                pairings.append([(d, m//2)])
             else: # if the degree is even ramified and non ramified are possible
-                pairings.append([(d,k) for k in range(m//2+1)])
+                pairings.append([(d, k) for k in range(m//2 + 1)])
 
         import itertools
-        from .quadratic_strata import QuadraticStratum
         res = []
 
         for p in itertools.product(*pairings):
-            ee = dict((d-1,0) for d in e)
-            ee.update((2*d,0) for d in e)
+            ee = dict((d - 1, 0) for d in e)
+            ee.update((2 * d, 0) for d in e)
             for d,m in p:
-                ee[d-1] += e[d]-2*m
-                ee[2*d] += m
+                ee[d - 1] += e[d] - 2 * m
+                ee[2 * d] += m
 
             degrees = []
-            for d in ee: degrees.extend([d]*ee[d])
+            for d in ee: degrees.extend([d] * ee[d])
 
             s = sum(degrees)
-            for nb_poles in range(s%4,s+5,4):
-                q = QuadraticStratum(degrees + [-1]*nb_poles)
-                if not q.is_empty() and (not fake_zeros or q.nb_poles() <= self.nb_fake_zeros()):
+            self_nb_fake_zeros = self.signature().count(0)
+            for nb_poles in range(s % 4, s + 5, 4):
+                q = Stratum(degrees + [-1] * nb_poles, k=2)
+                q_nb_poles = q.signature().count(-1)
+                if not q.is_empty() and (not fake_zeros or q_nb_poles <= self_nb_fake_zeros):
                     res.append(q)
 
         return res
@@ -694,6 +557,7 @@ class AbelianStratum(Stratum):
     # Separatrix and cylinder diagrams
     #
 
+    # TODO: to be removed. Make separatrix_diagrams an iterator.
     def separatrix_diagram_iterator(self, ncyls=None):
         r"""
         Return an iterator over the separatrix diagrams of this stratum.
@@ -706,7 +570,7 @@ class AbelianStratum(Stratum):
         - ``ncyls`` -- an optional number of cylinders
         """
         from .separatrix_diagram import separatrix_diagram_iterator
-        return separatrix_diagram_iterator([m+1 for m in self.zeros()],ncyls)
+        return separatrix_diagram_iterator([m+1 for m in self.signature()],ncyls)
 
     def separatrix_diagrams(self, ncyls=None):
         r"""
@@ -719,9 +583,10 @@ class AbelianStratum(Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: a = AbelianStratum(2); a
+            sage: a = Stratum([2], k=1)
+            sage: a
             H_2(2)
             sage: for s in a.separatrix_diagrams(): print(s)
             (0,1,2)-(0,1,2)
@@ -729,10 +594,10 @@ class AbelianStratum(Stratum):
 
         TESTS::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
             sage: for (zeros, ncyl) in [((4,), 3), ((2,2), 4)]:
-            ....:     S = AbelianStratum(4).separatrix_diagrams(3)
+            ....:     S = Stratum(zeros, k=1).separatrix_diagrams(3)
             ....:     for i in range(len(S)):
             ....:         for j in range(i):
             ....:              assert not S[i].is_isomorphic(S[j])
@@ -758,9 +623,9 @@ class AbelianStratum(Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum, CylinderDiagram
 
-            sage: A = AbelianStratum(4)
+            sage: A = Stratum([4], k=1)
             sage: C1 = [CylinderDiagram('(0,2,1)-(0,3,4) (3)-(2) (4)-(1)'),
             ....:       CylinderDiagram('(0,2,1)-(0,3,4) (3)-(1) (4)-(2)'),
             ....:       CylinderDiagram('(0,1)-(0,3,4) (2,3)-(1) (4)-(2)'),
@@ -787,7 +652,7 @@ class AbelianStratum(Stratum):
         if ncyls is not None:
             if not isinstance(ncyls, numbers.Integral):
                 raise TypeError("ncyls should be None or an integer")
-            if ncyls < 0 or ncyls > self.genus() + self.nb_zeros() - 1:
+            if ncyls < 0 or ncyls > self.surface_genus() + len(self.signature()) - 1:
                 raise ValueError("ncyls is not valid")
 
         if not force_computation:
@@ -816,9 +681,9 @@ class AbelianStratum(Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum, CylinderDiagram
 
-            sage: A = AbelianStratum(2,2)
+            sage: A = Stratum([2,2], k=1)
             sage: C1 = [CylinderDiagram('(0,1)-(0,5) (2)-(4) (3,4)-(1) (5)-(2,3)'),
             ....:       CylinderDiagram('(0,2,1)-(3,4,5) (3)-(1) (4)-(2) (5)-(0)'),
             ....:       CylinderDiagram('(0,2,1)-(3,5,4) (3)-(1) (4)-(2) (5)-(0)'),
@@ -849,16 +714,16 @@ class AbelianStratum(Stratum):
         Recovering the multiplicity of the symmetric versions::
 
             sage: total = 0
-            sage: for c in AbelianStratum(2,1,1).cylinder_diagrams(2):
+            sage: for c in Stratum([2,1,1], k=1).cylinder_diagrams(2):
             ....:     total += 4 // (1 + sum(c.symmetries()))
             sage: total
             61
-            sage: len(AbelianStratum(2, 1, 1).cylinder_diagrams(2, up_to_symmetry=False))
+            sage: len(Stratum([2, 1, 1], k=1).cylinder_diagrams(2, up_to_symmetry=False))
             61
 
         You obtain the same number directly::
 
-            sage: AbelianStratum(2, 1, 1).cylinder_diagrams_number(2, up_to_symmetry=False)
+            sage: Stratum([2, 1, 1], k=1).cylinder_diagrams_number(2, up_to_symmetry=False)
             61
         """
         return sorted(self.cylinder_diagram_iterator(ncyls, up_to_symmetry, force_computation))
@@ -879,9 +744,9 @@ class AbelianStratum(Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: A = AbelianStratum(4)
+            sage: A = Stratum([4], k=1)
             sage: cyls = A.cylinder_diagrams_by_component(ncyls=2, force_computation=True)
             sage: A_hyp = A.hyperelliptic_component()
             sage: A_odd = A.odd_component()
@@ -910,7 +775,7 @@ class AbelianStratum(Stratum):
         if ncyls is not None:
             if not isinstance(ncyls, (int,Integer)):
                 raise TypeError("ncyls should be None or an integer")
-            if ncyls < 0 or ncyls > self.genus() + self.nb_zeros()-1:
+            if ncyls < 0 or ncyls > self.surface_genus() + len(self.signature()) - 1:
                 raise ValueError
 
         if not force_computation:
@@ -938,9 +803,10 @@ class AbelianStratum(Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: a = AbelianStratum(3,2,1); a
+            sage: a = Stratum([3,2,1], k=1)
+            sage: a
             H_4(3, 2, 1)
             sage: c = a.one_cylinder_diagram();c
             (0,8,3,2,1,6,5,4,7)-(0,8,7,6,5,4,3,2,1)
@@ -971,9 +837,9 @@ class AbelianStratum(Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: H22 = AbelianStratum(2,2)
+            sage: H22 = Stratum([2,2], k=1)
             sage: H22.cylinder_diagrams_number(3)
             18
             sage: H22.cylinder_diagrams_number(4)
@@ -987,7 +853,7 @@ class AbelianStratum(Stratum):
             sage: H22.cylinder_diagrams_number(4, force_computation=True)
             7
 
-            sage: H31 = AbelianStratum(3,1)
+            sage: H31 = Stratum([3,1], k=1)
             sage: for d in range(1,5):
             ....:     print("%d %d" %(H31.cylinder_diagrams_number(d, True, False),
             ....:                     H31.cylinder_diagrams_number(d, True, True)))
@@ -996,7 +862,7 @@ class AbelianStratum(Stratum):
             16 16
             4 4
 
-            sage: H211 = AbelianStratum(2,1,1)
+            sage: H211 = Stratum([2,1,1], k=1)
             sage: for d in range(1,6):
             ....:     print("%d %d" % (H211.cylinder_diagrams_number(d, True, False),
             ....:               H211.cylinder_diagrams_number(d, True, True)))
@@ -1006,7 +872,7 @@ class AbelianStratum(Stratum):
             27 27
             8 8
         """
-        if ncyls is not None and ncyls > self.genus() + self.nb_zeros() - 1:
+        if ncyls is not None and ncyls > self.surface_genus() + len(self.signature()) - 1:
             return 0
         if not force_computation:
             from surface_dynamics.databases.flat_surfaces import CylinderDiagrams
@@ -1041,9 +907,9 @@ class AbelianStratum(Stratum):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: C = AbelianStratum(2,0)
+            sage: C = Stratum([2,0], k=1)
             sage: p = C.single_cylinder_representative()
             sage: p
             0 1 2 3 4
@@ -1051,7 +917,7 @@ class AbelianStratum(Stratum):
             sage: p.stratum() == C
             True
 
-            sage: C = AbelianStratum(3,1)
+            sage: C = Stratum([3,1], k=1)
             sage: p = C.single_cylinder_representative(alphabet=Alphabet(name='lower'))
             sage: p
             a b c d e f g
@@ -1059,23 +925,24 @@ class AbelianStratum(Stratum):
             sage: p.stratum() == C
             True
 
-            sage: C = AbelianStratum(2)
+            sage: C = Stratum([2], k=1)
             sage: C.single_cylinder_representative()
             Traceback (most recent call last):
             ...
             ValueError: no 1,1-square-tiled surfaces in this stratum try again with H_2(2, 0)
-            sage: C = AbelianStratum(1,1)
+            sage: C = Stratum([1,1], k=1)
             sage: C.single_cylinder_representative()
             Traceback (most recent call last):
             ...
             ValueError: no 1,1-square-tiled surfaces in this stratum try again with H_2(1^2, 0^2)
         """
-        genus = self.genus()
-        nb_real_zeros = self.nb_zeros()-self.nb_fake_zeros()
+        genus = self.surface_genus()
+        nb_real_zeros = sum(map(bool, self.signature()), 0)
+        nb_fake_zeros = self.signature().count(0)
 
-        if genus == 2 and nb_real_zeros == 1 and self.nb_fake_zeros() < 1:
+        if genus == 2 and nb_real_zeros == 1 and nb_fake_zeros < 1:
             raise ValueError("no 1,1-square-tiled surfaces in this stratum try again with H_2(2, 0)")
-        elif genus == 2 and nb_real_zeros == 2 and self.nb_fake_zeros() < 2:
+        elif genus == 2 and nb_real_zeros == 2 and nb_fake_zeros < 2:
             raise ValueError("no 1,1-square-tiled surfaces in this stratum try again with H_2(1^2, 0^2)")
 
         return self.one_component().single_cylinder_representative(alphabet, reduced)
@@ -1089,24 +956,25 @@ class AbelianStratum(Stratum):
 
         Examples::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: C = AbelianStratum(4)
+            sage: C = Stratum([4], k=1)
             sage: O = C.single_cylinder_origami()
             sage: O
             (1,2,3,4,5)
             (1,4,3,5,2)
-            sage: O.stratum() == AbelianStratum(4)
+            sage: O.stratum() == Stratum([4], k=1)
             True
-            sage: C = AbelianStratum(2,0)
+            sage: C = Stratum([2,0], k=1)
             sage: O = C.single_cylinder_origami()
             sage: O
             (1,2,3,4)
             (1,3,2,4)
-            sage: O.stratum() == AbelianStratum(2)
+            sage: O.stratum() == Stratum([2], k=1)
             True
         """
         return self.single_cylinder_representative(reduced=False).to_origami()
+
 
 class AbelianStratumComponent(StratumComponent):
     r"""
@@ -1124,9 +992,9 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: c = AbelianStratum([1,1,1,1]).unique_component(); c
+            sage: c = Stratum([1,1,1,1], k=1).unique_component(); c
             H_3(1^4)^c
             sage: c.spin() is None
             True
@@ -1157,9 +1025,9 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: c = AbelianStratum(1,1,1,1).unique_component()
+            sage: c = Stratum([1,1,1,1], k=1).unique_component()
             sage: p = c.permutation_representative(alphabet="abcdefghi")
             sage: p
             a b c d e f g h i
@@ -1167,7 +1035,7 @@ class AbelianStratumComponent(StratumComponent):
             sage: p.stratum_component()
             H_3(1^4)^c
 
-            sage: cc = AbelianStratum(3,2,1,0).unique_component()
+            sage: cc = Stratum([3,2,1,0], k=1).unique_component()
             sage: p = cc.permutation_representative(left_degree=3); p
             0 1 2 3 4 5 6 7 8 9 10
             4 3 7 6 5 10 9 8 2 0 1
@@ -1210,9 +1078,9 @@ class AbelianStratumComponent(StratumComponent):
         """
         stratum = self.stratum()
 
-        g = stratum.genus()
-        zeros = list(stratum.zeros(fake_zeros=False))
-        n = stratum.nb_fake_zeros()
+        g = stratum.surface_genus()
+        zeros = list(m for m in stratum.signature() if m)
+        n = stratum.signature().count(0)
 
         if left_degree is not None and left_degree != 0:
             i = zeros.index(left_degree)
@@ -1262,12 +1130,12 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: AbelianStratum(2).unique_component().lyapunov_exponents_approx(nb_iterations=2**21)  # abs tol .05
+            sage: Stratum([2], k=1).unique_component().lyapunov_exponents_approx(nb_iterations=2**21)  # abs tol .05
             [1.000, 0.333]
 
-            sage: H4hyp, H4odd = AbelianStratum(4).components()
+            sage: H4hyp, H4odd = Stratum([4], k=1).components()
             sage: H4hyp.lyapunov_exponents_approx(nb_iterations=2**21) # abs tol .05
             [1.000, 0.616, 0.184]
             sage: H4odd.lyapunov_exponents_approx(nb_iterations=2**21) # abs tol .05
@@ -1275,6 +1143,8 @@ class AbelianStratumComponent(StratumComponent):
         """
         perm = self.permutation_representative(reduced=False)
         return perm.lyapunov_exponents_approx(**kargs)
+
+    lyapunov_exponents = lyapunov_exponents_approx
 
     # TODO
     # def sum_of_lyapunov_exponents(self)
@@ -1303,16 +1173,16 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES:
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: C = AbelianStratum(10).hyperelliptic_component()
+            sage: C = Stratum([10], k=1).hyperelliptic_component()
             sage: p = C.random_standard_permutation(); p   # random
             0 1 2 3 4 5 6 7 8 9 10 11
             11 10 9 8 7 6 5 4 3 2 1 0
             sage: p.stratum_component()
             H_6(10)^hyp
 
-            sage: C = AbelianStratum(6,4,2).odd_component(); C
+            sage: C = Stratum([6,4,2], k=1).odd_component(); C
             H_7(6, 4, 2)^odd
             sage: p = C.random_standard_permutation(); p  # random
             0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
@@ -1320,7 +1190,7 @@ class AbelianStratumComponent(StratumComponent):
             sage: p.stratum_component()
             H_7(6, 4, 2)^odd
 
-            sage: C = AbelianStratum(2,2,2,2).even_component(); C
+            sage: C = Stratum([2,2,2,2], k=1).even_component(); C
             H_5(2^4)^even
             sage: p = C.random_standard_permutation(); p  # random
             0 1 2 3 4 5 6 7 8 9 10 11 12
@@ -1328,7 +1198,7 @@ class AbelianStratumComponent(StratumComponent):
             sage: p.stratum_component()
             H_5(2^4)^even
 
-            sage: C = AbelianStratum(32).odd_component(); C
+            sage: C = Stratum([32], k=1).odd_component(); C
             H_17(32)^odd
             sage: p = C.random_standard_permutation(); p  # random
             0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33
@@ -1375,9 +1245,9 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: c = AbelianStratum(0).components()[0]
+            sage: c = Stratum([0], k=1).components()[0]
             sage: r = c.rauzy_diagram()
         """
         if kwds.get("left_degree",None) is not None:
@@ -1407,14 +1277,15 @@ class AbelianStratumComponent(StratumComponent):
 
             sage: from surface_dynamics import *
 
-            sage: a = AbelianStratum({1:4}).unique_component(); a
+            sage: a = Stratum({1:4}, k=1).unique_component()
+            sage: a
             H_3(1^4)^c
             sage: a.rauzy_diagram()
             Rauzy diagram with 1255 permutations
             sage: a.rauzy_class_cardinality()
             1255
 
-            sage: cc = AbelianStratum(3,2,1).unique_component()
+            sage: cc = Stratum([3,2,1], k=1).unique_component()
             sage: cc.rauzy_diagram(left_degree=3)   # long time
             Rauzy diagram with 96434 permutations
             sage: cc.rauzy_class_cardinality(left_degree=3)
@@ -1430,43 +1301,44 @@ class AbelianStratumComponent(StratumComponent):
             sage: cc.rauzy_class_cardinality(left_degree=1)
             48954
 
-            sage: a = AbelianStratum({1:8}).unique_component(); a
+            sage: a = Stratum({1:8}, k=1).unique_component()
+            sage: a
             H_5(1^8)^c
             sage: a.rauzy_class_cardinality()
             55184875
 
         Cardinalities for labeled Rauzy classes instead of reduced::
 
-            sage: cc=AbelianStratum(2,1,1).unique_component()
-            sage: cc.rauzy_diagram(left_degree=2,reduced=False)
+            sage: cc = Stratum([2,1,1], k=1).unique_component()
+            sage: cc.rauzy_diagram(left_degree=2, reduced=False)
             Rauzy diagram with 3676 permutations
-            sage: cc.rauzy_class_cardinality(left_degree=2,reduced=False)
+            sage: cc.rauzy_class_cardinality(left_degree=2, reduced=False)
             3676
 
-            sage: cc.rauzy_diagram(left_degree=1,reduced=False)
+            sage: cc.rauzy_diagram(left_degree=1, reduced=False)
             Rauzy diagram with 3774 permutations
             sage: cc.rauzy_class_cardinality(left_degree=1,reduced=False)
             3774
 
-            sage: cc=AbelianStratum(2,1,1,0).unique_component()
-            sage: cc.rauzy_diagram(left_degree=2,reduced=False) # long time
+            sage: cc = Stratum([2,1,1,0], k=1).unique_component()
+            sage: cc.rauzy_diagram(left_degree=2, reduced=False) # long time
             Rauzy diagram with 33084 permutations
-            sage: cc.rauzy_diagram(left_degree=1,reduced=False) # long time
+            sage: cc.rauzy_diagram(left_degree=1, reduced=False) # long time
             Rauzy diagram with 33966 permutations
-            sage: cc.rauzy_diagram(left_degree=0,reduced=False) # long time
+            sage: cc.rauzy_diagram(left_degree=0, reduced=False) # long time
             Rauzy diagram with 30828 permutations
 
-            sage: cc.rauzy_class_cardinality(left_degree=2,reduced=False)
+            sage: cc.rauzy_class_cardinality(left_degree=2, reduced=False)
             33084
-            sage: cc.rauzy_class_cardinality(left_degree=1,reduced=False)
+            sage: cc.rauzy_class_cardinality(left_degree=1, reduced=False)
             33966
-            sage: cc.rauzy_class_cardinality(left_degree=0,reduced=False)
+            sage: cc.rauzy_class_cardinality(left_degree=0, reduced=False)
             30828
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = list(map(lambda x: x+1, self.stratum().zeros()))
-        s = self.stratum().nb_zeros()
+        profile = list(map(lambda x: x+1, self.stratum().signature()))
+        s = len(self.stratum().signature())
 
         if left_degree is not None:
             assert isinstance(left_degree, (int,Integer)), "if not None, left_degree should be an integer"
@@ -1491,9 +1363,9 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: cc = AbelianStratum(3,1).unique_component()
+            sage: cc = Stratum([3,1], k=1).unique_component()
             sage: sum(1 for p in cc.rauzy_diagram() if p.is_standard())
             24
             sage: cc.standard_permutations_number()
@@ -1509,14 +1381,15 @@ class AbelianStratumComponent(StratumComponent):
             sage: cc.standard_permutations_number(left_degree=1)
             8
 
-            sage: cc = AbelianStratum({1:10}).unique_component(); cc
+            sage: cc = Stratum({1:10}, k=1).unique_component()
+            sage: cc
             H_6(1^10)^c
             sage: cc.standard_permutations_number()
             59520825
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = [x+1 for x in self.stratum().zeros()]
+        profile = [x+1 for x in self.stratum().signature()]
 
         if left_degree is not None:
             assert isinstance(left_degree, (int,Integer)), "if not None, left_degree should be an integer"
@@ -1532,9 +1405,9 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: C = AbelianStratum(4).odd_component()
+            sage: C = Stratum([4], k=1).odd_component()
             sage: C
             H_3(4)^odd
             sage: for p in C.standard_permutations(): print("%s\n***********" % p)
@@ -1572,16 +1445,18 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: A = AbelianStratum(2,2).odd_component()
-            sage: c = A.one_cylinder_diagram(); c
+            sage: A = Stratum([2,2], k=1).odd_component()
+            sage: c = A.one_cylinder_diagram()
+            sage: c
             (0,5,1,3,2,4)-(0,5,4,3,2,1)
             sage: c.stratum_component()
             H_3(2^2)^odd
 
-            sage: A = AbelianStratum(3,3).non_hyperelliptic_component()
-            sage: c = A.one_cylinder_diagram(); c
+            sage: A = Stratum([3,3], k=1).non_hyperelliptic_component()
+            sage: c = A.one_cylinder_diagram()
+            sage: c
             (0,7,3,2,1,5,4,6)-(0,7,6,5,4,3,2,1)
             sage: c.stratum_component()
             H_4(3^2)^nonhyp
@@ -1606,9 +1481,9 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: A = AbelianStratum(1,1,1,1)
+            sage: A = Stratum([1,1,1,1], k=1)
             sage: cc = A.unique_component()
             sage: it = cc.cylinder_diagram_iterator(3)
             sage: cyl = next(it); cyl
@@ -1622,11 +1497,12 @@ class AbelianStratumComponent(StratumComponent):
         iteration might be different and you might obtain cylinder diagram with some
         symmetries applied::
 
-            sage: C1 = list(cc.cylinder_diagram_iterator(3, force_computation=False))  # long time
-            sage: C2 = list(cc.cylinder_diagram_iterator(3, force_computation=True))   # long time
-            sage: assert len(C1) == len(C2)                                            # long time
-            sage: isoms = []                                                           # long time
-            sage: for c in C1:                                                         # long time
+            sage: # long time
+            sage: C1 = list(cc.cylinder_diagram_iterator(3, force_computation=False))
+            sage: C2 = list(cc.cylinder_diagram_iterator(3, force_computation=True))
+            sage: assert len(C1) == len(C2)
+            sage: isoms = []
+            sage: for c in C1:
             ....:     isom = []
             ....:     for i,cc in enumerate(C2):
             ....:         if c.is_isomorphic(cc) or \
@@ -1636,12 +1512,12 @@ class AbelianStratumComponent(StratumComponent):
             ....:              isom.append(i)
             ....:     assert len(isom) == 1, isom
             ....:     isoms.extend(isom)
-            sage: assert sorted(isoms) == list(range(len(C1)))                         # long time
+            sage: assert sorted(isoms) == list(range(len(C1)))
         """
         if ncyls is not None:
             if not isinstance(ncyls, (int,Integer)):
                 raise TypeError("ncyls should be None or an integer")
-            if ncyls < 0 or ncyls > self.stratum().genus() + self.stratum().nb_zeros()-1:
+            if ncyls < 0 or ncyls > self.stratum().surface_genus() + len(self.stratum().signature()) - 1:
                 raise ValueError("ncyls is not valid")
 
         if not force_computation:
@@ -1683,9 +1559,9 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: C = AbelianStratum(1,1,1,1).unique_component(); C
+            sage: C = Stratum([1,1,1,1], k=1).unique_component(); C
             H_3(1^4)^c
             sage: for c in C.cylinder_diagrams(6): print(c)
             (0,1)-(7) (2)-(0) (3)-(4) (4,7)-(5,6) (5)-(1) (6)-(2,3)
@@ -1712,9 +1588,9 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: C = AbelianStratum(3,1).unique_component()
+            sage: C = Stratum([3,1], k=1).unique_component()
             sage: C.cylinder_diagrams_number(1)
             2
             sage: C.cylinder_diagrams_number(2)
@@ -1734,7 +1610,7 @@ class AbelianStratumComponent(StratumComponent):
             16
             4
 
-            sage: C = AbelianStratum(6)
+            sage: C = Stratum([6], k=1)
             sage: C_hyp = C.hyperelliptic_component()
             sage: C_odd = C.odd_component()
             sage: C_even = C.even_component()
@@ -1767,7 +1643,7 @@ class AbelianStratumComponent(StratumComponent):
             42
             21
         """
-        if ncyls is not None and ncyls > self.stratum().genus() + self.stratum().nb_zeros() - 1:
+        if ncyls is not None and ncyls > self.stratum().surface_genus() + len(self.stratum().signature()) - 1:
             return 0
 
         if not force_computation:
@@ -1794,13 +1670,13 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: a = AbelianStratum(2,2).one_component()
+            sage: a = Stratum([2,2], k=1).one_component()
             sage: a.one_origami().stratum()
             H_3(2^2)
 
-            sage: AbelianStratum(3,2,1).unique_component().one_origami().stratum()
+            sage: Stratum([3,2,1], k=1).unique_component().one_origami().stratum()
             H_4(3, 2, 1)
         """
         from surface_dynamics.flat_surfaces.origamis.origami_dense import Origami_dense_pyx
@@ -1827,9 +1703,9 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: cc = AbelianStratum(6).even_component()
+            sage: cc = Stratum([6], k=1).even_component()
             sage: it = cc.origami_iterator(13)
             sage: o = next(it)
             sage: o
@@ -1879,9 +1755,9 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: H11_hyp = AbelianStratum(1,1).hyperelliptic_component()
+            sage: H11_hyp = Stratum([1,1], k=1).hyperelliptic_component()
             sage: len(H11_hyp.origamis(6))
             88
 
@@ -1891,7 +1767,7 @@ class AbelianStratumComponent(StratumComponent):
             sage: sum(t.veech_group().index() for t in T6)
             88
 
-            sage: H4_odd = AbelianStratum(4).odd_component()
+            sage: H4_odd = Stratum([4], k=1).odd_component()
             sage: len(H4_odd.origamis(6))
             155
             sage: T6 = H4_odd.arithmetic_teichmueller_curves(6)
@@ -1906,9 +1782,9 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: A = AbelianStratum(2).hyperelliptic_component(); A
+            sage: A = Stratum([2], k=1).hyperelliptic_component(); A
             H_2(2)^hyp
             sage: for i in range(3,10):
             ....:     print("%d %d" % (i,len(A.arithmetic_teichmueller_curves(i))))
@@ -1920,7 +1796,7 @@ class AbelianStratumComponent(StratumComponent):
             8 1
             9 2
 
-            sage: A = AbelianStratum(1,1).hyperelliptic_component(); A
+            sage: A = Stratum([1,1], k=1).hyperelliptic_component(); A
             H_2(1^2)^hyp
             sage: for i in range(4,10):
             ....:    T = A.arithmetic_teichmueller_curves(i)
@@ -1933,7 +1809,7 @@ class AbelianStratumComponent(StratumComponent):
             8 4 2
             9 4 2
 
-            sage: A = AbelianStratum(4).hyperelliptic_component(); A
+            sage: A = Stratum([4], k=1).hyperelliptic_component(); A
             H_3(4)^hyp
             sage: for i in range(5,10):
             ....:    print("%d %d" % (i,len(A.arithmetic_teichmueller_curves(i))))
@@ -1948,9 +1824,6 @@ class AbelianStratumComponent(StratumComponent):
         if primitive:
             return [tcurve for tcurve in tcurves if tcurve.origami().is_primitive()]
         return tcurves
-
-    def lyapunov_exponents(self, **kargs):
-        return(self.permutation_representative(reduced=False).lyapunov_exponents_H_plus(**kargs))
 
     def single_cylinder_representative(self, alphabet=None, reduced=True):
         r"""
@@ -1973,9 +1846,9 @@ class AbelianStratumComponent(StratumComponent):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: cc = AbelianStratum(1,1,1,1).unique_component()
+            sage: cc = Stratum([1,1,1,1], k=1).unique_component()
             sage: p = cc.single_cylinder_representative()
             sage: p
             0 1 2 3 4 5 6 7 8
@@ -1983,7 +1856,7 @@ class AbelianStratumComponent(StratumComponent):
             sage: p.stratum_component() == cc
             True
 
-            sage: cc = AbelianStratum(2,1,1).unique_component()
+            sage: cc = Stratum([2,1,1], k=1).unique_component()
             sage: p = cc.single_cylinder_representative()
             sage: p
             0 1 2 3 4 5 6 7
@@ -1991,7 +1864,7 @@ class AbelianStratumComponent(StratumComponent):
             sage: p.stratum_component() == cc
             True
 
-            sage: cc = AbelianStratum(3,3).non_hyperelliptic_component()
+            sage: cc = Stratum([3,3], k=1).non_hyperelliptic_component()
             sage: p = cc.single_cylinder_representative(alphabet=Alphabet(name='lower'))
             sage: p
             a b c d e f g h i
@@ -2003,15 +1876,16 @@ class AbelianStratumComponent(StratumComponent):
                 only_even_2, only_odds_11, odd_zeros_one_one)
         from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
 
-        zeros = self.stratum().zeros()
+        zeros = self.stratum().signature()
         real_zeros = [z for z in zeros if z != 0]
-        odd_zeros = [z for z in real_zeros if z%2 == 1]
-        even_zeros = [z for z in real_zeros if z%2 == 0]
+        nb_fake_zeros = len(zeros) - len(real_zeros)
+        odd_zeros = [z for z in real_zeros if z % 2 == 1]
+        even_zeros = [z for z in real_zeros if z % 2 == 0]
 
         fk_zeros_perm = GeneralizedPermutation([0],[0])
         mk_pt_perm = GeneralizedPermutation([0,1],[1,0])
-        for i in range(self.stratum().nb_fake_zeros()):
-            fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)
+        for i in range(nb_fake_zeros):
+            fk_zeros_perm = cylinder_concatenation(fk_zeros_perm, mk_pt_perm)
 
         if even_zeros == [2]:
             perm = only_even_2(odd_zeros)
@@ -2019,7 +1893,7 @@ class AbelianStratumComponent(StratumComponent):
             perm = only_odds_11(even_zeros)
         else:
             if even_zeros:
-                even_perm = AbelianStratum(even_zeros).odd_component().single_cylinder_representative()
+                even_perm = Stratum(even_zeros, k=1).odd_component().single_cylinder_representative()
             else:
                 even_perm = GeneralizedPermutation([0],[0])
             odd_perm = odd_zeros_one_one(odd_zeros)
@@ -2044,23 +1918,23 @@ class AbelianStratumComponent(StratumComponent):
 
         Examples::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: cc = AbelianStratum(4).odd_component()
+            sage: cc = Stratum([4], k=1).odd_component()
             sage: O = cc.single_cylinder_origami()
             sage: O
             (1,2,3,4,5)
             (1,4,3,5,2)
             sage: O.stratum_component() == cc
             True
-            sage: cc = AbelianStratum(5,3).unique_component()
+            sage: cc = Stratum([5,3], k=1).unique_component()
             sage: O = cc.single_cylinder_origami()
             sage: O
             (1,2,3,4,5,6,7,8,9,10)
             (1,9,8,10,6,7,4,3,5,2)
             sage: O.stratum_component() == cc
             True
-            sage: cc = AbelianStratum(4,2).even_component()
+            sage: cc = Stratum([4,2], k=1).even_component()
             sage: O = cc.single_cylinder_origami()
             sage: O
             (1,2,3,4,5,6,7,8)
@@ -2084,25 +1958,25 @@ class HypAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
         For the strata `H(2g-2)`::
 
-            sage: c = AbelianStratum(0).hyperelliptic_component()
+            sage: c = Stratum([0], k=1).hyperelliptic_component()
             sage: c.spin()
             1
             sage: p = c.permutation_representative()
             sage: p.arf_invariant()
             1
 
-            sage: c = AbelianStratum(2).hyperelliptic_component()
+            sage: c = Stratum([2], k=1).hyperelliptic_component()
             sage: c.spin()
             1
             sage: p = c.permutation_representative()
             sage: p.arf_invariant()
             1
 
-            sage: c = AbelianStratum(4).hyperelliptic_component()
+            sage: c = Stratum([4], k=1).hyperelliptic_component()
             sage: c.spin()
             0
             sage: p = c.permutation_representative()
@@ -2111,29 +1985,29 @@ class HypAbelianStratumComponent(ASC):
 
         For the strata `H(g-1,g-1)`::
 
-            sage: c = AbelianStratum(2,2).hyperelliptic_component()
+            sage: c = Stratum([2,2], k=1).hyperelliptic_component()
             sage: c.spin()
             0
             sage: p = c.permutation_representative()
             sage: p.arf_invariant()
             0
 
-            sage: c = AbelianStratum(4,4).hyperelliptic_component()
+            sage: c = Stratum([4,4], k=1).hyperelliptic_component()
             sage: c.spin()
             1
             sage: p = c.permutation_representative()
             sage: p.arf_invariant()
             1
         """
-        z = self.stratum().zeros(fake_zeros=False)
+        z = tuple(m for m in self.stratum().signature() if m > 0)
         if not z:
             return Integer(1)
         elif len(z) == 1:
-            return Integer(((self.stratum().genus()+1)//2) % 2)
+            return Integer(((self.stratum().surface_genus()+1)//2) % 2)
         elif len(z) == 2:
             if z[0] % 2:
                 return None
-            return Integer(((self.stratum().genus()+1)//2) %2)
+            return Integer(((self.stratum().surface_genus()+1)//2) %2)
 
     def permutation_representative(self, left_degree=None, reduced=True, alphabet=None, relabel=True):
         r"""
@@ -2153,9 +2027,9 @@ class HypAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: c = AbelianStratum(0).hyperelliptic_component()
+            sage: c = Stratum([0], k=1).hyperelliptic_component()
             sage: p = c.permutation_representative()
             sage: p
             0 1
@@ -2163,7 +2037,7 @@ class HypAbelianStratumComponent(ASC):
             sage: p.stratum_component()
             H_1(0)^hyp
 
-            sage: c = AbelianStratum(0,0).hyperelliptic_component()
+            sage: c = Stratum([0,0], k=1).hyperelliptic_component()
             sage: p = c.permutation_representative(alphabet="abc")
             sage: p
             a b c
@@ -2171,12 +2045,12 @@ class HypAbelianStratumComponent(ASC):
             sage: p.stratum_component()
             H_1(0^2)^hyp
 
-            sage: c = AbelianStratum(2,2).hyperelliptic_component()
+            sage: c = Stratum([2,2], k=1).hyperelliptic_component()
             sage: p = c.permutation_representative(alphabet="ABCDEFGHIJKL")
             sage: p
             A B C D E F G
             G F E D C B A
-            sage: c = AbelianStratum(1,1,0).hyperelliptic_component()
+            sage: c = Stratum([1,1,0], k=1).hyperelliptic_component()
             sage: p = c.permutation_representative(left_degree=1); p
             0 1 2 3 4 5
             5 1 4 3 2 0
@@ -2193,12 +2067,12 @@ class HypAbelianStratumComponent(ASC):
             sage: p.rauzy_diagram()
             Rauzy diagram with 20 permutations
         """
-        g = self._stratum.genus()
-        n = self._stratum.nb_fake_zeros()
-        m = len(self._stratum.zeros(fake_zeros=False))
+        g = self._stratum.surface_genus()
+        n = self._stratum.signature().count(0)
+        m = sum(x != 0 for x in self._stratum.signature())
 
         if left_degree is not None:
-            if not isinstance(left_degree, (int,Integer)) or left_degree not in self.stratum().zeros():
+            if not isinstance(left_degree, (int,Integer)) or left_degree not in self.stratum().signature():
                 raise ValueError("left_degree (=%d) should be one of the degree"%left_degree)
 
         if m == 0:  # on the torus
@@ -2274,16 +2148,16 @@ class HypAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
         The case of the torus is a little bit different::
 
-            sage: c = AbelianStratum(0).hyperelliptic_component()
+            sage: c = Stratum([0], k=1).hyperelliptic_component()
             sage: c.rauzy_diagram()
             Rauzy diagram with 1 permutation
             sage: c.rauzy_class_cardinality()
             1
-            sage: c = AbelianStratum(0,0).hyperelliptic_component()
+            sage: c = Stratum([0,0], k=1).hyperelliptic_component()
             sage: c.rauzy_diagram()
             Rauzy diagram with 3 permutations
             sage: c.rauzy_class_cardinality()
@@ -2291,7 +2165,7 @@ class HypAbelianStratumComponent(ASC):
 
         Examples in genus 2::
 
-            sage: c = AbelianStratum(2,0).hyperelliptic_component()
+            sage: c = Stratum([2,0], k=1).hyperelliptic_component()
             sage: c.rauzy_diagram()
             Rauzy diagram with 46 permutations
             sage: c.rauzy_class_cardinality()
@@ -2311,7 +2185,7 @@ class HypAbelianStratumComponent(ASC):
             sage: c.rauzy_class_cardinality(left_degree=0, reduced=False)
             33
 
-            sage: c = AbelianStratum(1,1,0,0).hyperelliptic_component()
+            sage: c = Stratum([1,1,0,0], k=1).hyperelliptic_component()
             sage: c.rauzy_diagram()
             Rauzy diagram with 455 permutations
             sage: c.rauzy_class_cardinality()
@@ -2337,13 +2211,13 @@ class HypAbelianStratumComponent(ASC):
 
         Other examples in higher genus::
 
-            sage: c = AbelianStratum(12,0,0).hyperelliptic_component()
+            sage: c = Stratum([12,0,0], k=1).hyperelliptic_component()
             sage: c.rauzy_class_cardinality()
             1114200
             sage: c.rauzy_class_cardinality(left_degree=12, reduced=False)
             1965840
 
-            sage: c = AbelianStratum(14).hyperelliptic_component()
+            sage: c = Stratum([14], k=1).hyperelliptic_component()
             sage: c.rauzy_class_cardinality()
             32767
         """
@@ -2351,26 +2225,26 @@ class HypAbelianStratumComponent(ASC):
 
         if left_degree is not None:
             assert isinstance(left_degree, (int,Integer)), "if not None, left_degree should be an integer"
-            assert left_degree in self.stratum().zeros(), "if not None, the degree should be one of the degree of the stratum"
+            assert left_degree in self.stratum().signature(), "if not None, the degree should be one of the degree of the stratum"
 
         if reduced is False:
             if left_degree is None:
                 raise NotImplementedError("no formula known for cardinality of labeled extended Rauzy classes")
-            zeros = self.stratum().zeros()
+            zeros = self.stratum().signature()
             profile = Partition([x+1 for x in zeros])
-            if self.stratum().nb_zeros(fake_zeros=False) == 1:
+            if sum(bool(z) for z in self.stratum().signature()) == 1:
                 epsilon = 1
             else:
-                epsilon = Rational((1,self.stratum().genus()))
+                epsilon = Rational((1,self.stratum().surface_genus()))
             return epsilon * (profile.centralizer_size() /
                     ((left_degree+1) * zeros.count(left_degree)) *
                     self.rauzy_class_cardinality(left_degree=left_degree,reduced=True))
 
-        k = self.stratum().nb_fake_zeros()
+        k = self.stratum().signature().count(0)
         dd = self.stratum().dimension()  # it is d+k
         d = dd-k
 
-        if self.stratum().genus() == 1:
+        if self.stratum().surface_genus() == 1:
             if k == 0: return 1
             return binomial(dd,2)
 
@@ -2386,7 +2260,7 @@ class HypAbelianStratumComponent(ASC):
         r"""
         In hyperelliptic component there is only one standard permutation.
         """
-        if not self.stratum().nb_fake_zeros():
+        if 0 not in self.stratum().signature():
             return self.permutation_representative()
 
         raise NotImplementedError("not implemented when there are fake zeros")
@@ -2397,13 +2271,13 @@ class HypAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: AbelianStratum(6).hyperelliptic_component().standard_permutations()
+            sage: Stratum([6], k=1).hyperelliptic_component().standard_permutations()
             [0 1 2 3 4 5 6 7
              7 6 5 4 3 2 1 0]
         """
-        if not self.stratum().nb_fake_zeros():
+        if 0 not in self.stratum().signature():
             d = self.stratum().dimension()
             l0 = list(range(d))
             l1 = list(range(d-1,-1,-1))
@@ -2424,7 +2298,7 @@ class HypAbelianStratumComponent(ASC):
         Return the number of standard permutations in this hyperelliptic
         component.
         """
-        if not self.stratum().nb_fake_zeros():
+        if 0 not in self.stratum().signature():
             return Integer(1)
 
         raise NotImplementedError("not implemented when there are fake zeros")
@@ -2440,16 +2314,16 @@ class HypAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum, CylinderDiagram
 
-            sage: C = AbelianStratum(2,2).hyperelliptic_component()
+            sage: C = Stratum([2,2], k=1).hyperelliptic_component()
             sage: [sum(1 for c in C.cylinder_diagram_iterator(n)) for n in range(1,5)]
             [1, 3, 5, 2]
 
         When ``ncyls`` is set to ``None``, the iterator can reasonably be used
         with very large data::
 
-            sage: C = AbelianStratum(10,10).hyperelliptic_component()
+            sage: C = Stratum([10,10], k=1).hyperelliptic_component()
             sage: it = C.cylinder_diagram_iterator()
             sage: c = next(it)
             sage: c.is_isomorphic(CylinderDiagram('(0,2,5,1)-(0,2,21,1) (3,4)-(3,6) (6,19)-(4,20) (7,9)-(8,10) (8,12)-(7,11) (10,14)-(9,13) (11,15)-(12,16) (13,17)-(14,18) (16,20)-(15,19) (18,21)-(5,17)'))
@@ -2467,10 +2341,10 @@ class HypAbelianStratumComponent(ASC):
 
         stratum = self.stratum()
 
-        if stratum.nb_fake_zeros():
+        if 0 in stratum.signature():
             raise ValueError("the stratum has fake zeros")
 
-        z = stratum.zeros()
+        z = stratum.signature()
 
         return hyperelliptic_cylinder_diagram_iterator(len(z)+sum(z))
 
@@ -2493,9 +2367,9 @@ class HypAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: cc = AbelianStratum(2,0).hyperelliptic_component()
+            sage: cc = Stratum([2,0], k=1).hyperelliptic_component()
             sage: p = cc.single_cylinder_representative(alphabet=Alphabet(name='upper'))
             sage: p
             A B C D E
@@ -2503,7 +2377,7 @@ class HypAbelianStratumComponent(ASC):
             sage: p.stratum_component() == cc
             True
 
-            sage: cc = AbelianStratum({3:2,0:6}).hyperelliptic_component()
+            sage: cc = Stratum({3:2,0:6}, k=1).hyperelliptic_component()
             sage: p = cc.single_cylinder_representative()
             sage: p
             0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
@@ -2511,29 +2385,29 @@ class HypAbelianStratumComponent(ASC):
             sage: p.stratum_component() == cc
             True
 
-            sage: cc = AbelianStratum(2).hyperelliptic_component()
+            sage: cc = Stratum([2], k=1).hyperelliptic_component()
             sage: cc.single_cylinder_representative()
             Traceback (most recent call last):
             ...
             ValueError: no 1,1-square-tiled surfaces in this connected component try again with H_2(2, 0)^hyp
-            sage: cc = AbelianStratum({3:2,0:5}).hyperelliptic_component()
+            sage: cc = Stratum({3:2,0:5}, k=1).hyperelliptic_component()
             sage: cc.single_cylinder_representative()
             Traceback (most recent call last):
             ...
             ValueError: no 1,1-square-tiled surfaces in this connected component try again with H_4(3^2, 0^6)^hyp
         """
         stratum = self.stratum()
-        genus = stratum.genus()
-        nb_fk_zeros = stratum.nb_fake_zeros()
-        nb_real_zeros = stratum.nb_zeros()-nb_fk_zeros
-        add_fk_zeros = nb_fk_zeros - 2*genus+4-nb_real_zeros
+        genus = stratum.surface_genus()
+        nb_fk_zeros = sum(m == 0 for m in stratum.signature())
+        nb_real_zeros = sum(m != 0 for m in stratum.signature())
+        add_fk_zeros = nb_fk_zeros - 2 * genus + 4 - nb_real_zeros
 
         from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
 
         if nb_real_zeros == 1 and add_fk_zeros < 0:
-            raise ValueError("no 1,1-square-tiled surfaces in this connected component try again with %s^hyp" %(str(AbelianStratum({2*genus-2:1,0:2*genus-3}))))
+            raise ValueError("no 1,1-square-tiled surfaces in this connected component try again with %s^hyp" %(str(Stratum({2*genus-2:1,0:2*genus-3}, k=1))))
         elif nb_real_zeros == 2 and add_fk_zeros < 0:
-            raise ValueError("no 1,1-square-tiled surfaces in this connected component try again with %s^hyp" %(str(AbelianStratum({genus-1:2,0:2*genus-2}))))
+            raise ValueError("no 1,1-square-tiled surfaces in this connected component try again with %s^hyp" %(str(Stratum({genus-1:2,0:2*genus-2}, k=1))))
         elif not nb_real_zeros:
             from surface_dynamics.flat_surfaces.single_cylinder import cylinder_concatenation
             fk_zeros_perm = GeneralizedPermutation([0],[0])
@@ -2584,15 +2458,15 @@ class NonHypAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
         Examples in genus 3::
 
-            sage: c = AbelianStratum(3,3).non_hyperelliptic_component()
+            sage: c = Stratum([3,3], k=1).non_hyperelliptic_component()
             sage: c.rauzy_class_cardinality()
             15568
 
-            sage: c = AbelianStratum(3,3,0).non_hyperelliptic_component()
+            sage: c = Stratum([3,3,0], k=1).non_hyperelliptic_component()
             sage: c.rauzy_class_cardinality()
             173723
 
@@ -2616,11 +2490,11 @@ class NonHypAbelianStratumComponent(ASC):
 
         When genus growths, the size of the Rauzy diagram becomes very big::
 
-            sage: c = AbelianStratum(5,5).non_hyperelliptic_component()
+            sage: c = Stratum([5,5], k=1).non_hyperelliptic_component()
             sage: c.rauzy_class_cardinality()
             136116680
 
-            sage: c = AbelianStratum(7,7,0).non_hyperelliptic_component()
+            sage: c = Stratum([7,7,0], k=1).non_hyperelliptic_component()
             sage: c.rauzy_class_cardinality()
             88484743236111
             sage: c.rauzy_class_cardinality(left_degree=7, reduced=False)
@@ -2628,7 +2502,7 @@ class NonHypAbelianStratumComponent(ASC):
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = list(map(lambda x: x+1,self.stratum().zeros()))
+        profile = list(map(lambda x: x+1,self.stratum().signature()))
         hyp = self.stratum().hyperelliptic_component()
 
         if left_degree is not None:
@@ -2658,25 +2532,25 @@ class NonHypAbelianStratumComponent(ASC):
         r"""
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: C = AbelianStratum(3,3).non_hyperelliptic_component()
+            sage: C = Stratum([3,3], k=1).non_hyperelliptic_component()
             sage: len(C.standard_permutations())  # long time
             275
             sage: C.standard_permutations_number()
             275
 
-            sage: C = AbelianStratum(5,5).non_hyperelliptic_component()
+            sage: C = Stratum([5,5], k=1).non_hyperelliptic_component()
             sage: C.standard_permutations_number()
             1022399
 
-            sage: C = AbelianStratum(7,7).non_hyperelliptic_component()
+            sage: C = Stratum([7,7], k=1).non_hyperelliptic_component()
             sage: C.standard_permutations_number()
             19229011199
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = list(map(lambda x: x+1, self.stratum().zeros()))
+        profile = list(map(lambda x: x+1, self.stratum().signature()))
         return rdc.number_of_standard_permutations(profile) - self.stratum().hyperelliptic_component().standard_permutations_number()
 
     def _cylinder_diagram_iterator(self, ncyls=None):
@@ -2686,9 +2560,9 @@ class NonHypAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: cc = AbelianStratum(3,3).non_hyperelliptic_component()
+            sage: cc = Stratum([3,3], k=1).non_hyperelliptic_component()
             sage: it = cc.cylinder_diagram_iterator()
             sage: c0 = next(it); c0
             (0,1,4,6,2,5,3,7)-(0,1,4,5,3,6,2,7)
@@ -2728,9 +2602,9 @@ class EvenAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: c = AbelianStratum(4,2).even_component(); c
+            sage: c = Stratum([4,2], k=1).even_component(); c
             H_4(4, 2)^even
             sage: c.spin()
             0
@@ -2760,9 +2634,9 @@ class EvenAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: c = AbelianStratum(6).even_component()
+            sage: c = Stratum([6], k=1).even_component()
             sage: c
             H_4(6)^even
             sage: p = c.permutation_representative(alphabet=range(8))
@@ -2774,7 +2648,7 @@ class EvenAbelianStratumComponent(ASC):
 
         ::
 
-            sage: c = AbelianStratum(4,4).even_component()
+            sage: c = Stratum([4,4], k=1).even_component()
             sage: c
             H_5(4^2)^even
             sage: p = c.permutation_representative(alphabet=range(11))
@@ -2786,7 +2660,7 @@ class EvenAbelianStratumComponent(ASC):
 
         Different markings lead to different Rauzy diagrams::
 
-            sage: c = AbelianStratum(4,2,0).even_component()
+            sage: c = Stratum([4,2,0], k=1).even_component()
             sage: p = c.permutation_representative(left_degree=4); p
             0 1 2 3 4 5 6 7 8 9
             6 5 4 3 7 9 8 2 0 1
@@ -2817,9 +2691,9 @@ class EvenAbelianStratumComponent(ASC):
             sage: p.rauzy_diagram()   # long time
             Rauzy diagram with 11792 permutations
         """
-        z = list(self._stratum.zeros(fake_zeros=False))
-        n = self._stratum.nb_fake_zeros()
-        g = self._stratum.genus()
+        z = list(m for m in self._stratum.signature() if m)
+        n = self._stratum.signature().count(0)
+        g = self._stratum.surface_genus()
 
         if left_degree is not None:
             if not isinstance(left_degree, (int,Integer)):
@@ -2841,7 +2715,7 @@ class EvenAbelianStratumComponent(ASC):
 
         k = 4
         for d in z:
-            for i in range(d/2-1):
+            for i in range(d//2 - 1):
                 del l0[l0.index(k)]
                 del l1[l1.index(k)]
                 k += 3
@@ -2886,15 +2760,15 @@ class EvenAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: c = AbelianStratum(6).even_component()
+            sage: c = Stratum([6], k=1).even_component()
             sage: c.rauzy_diagram()
             Rauzy diagram with 2327 permutations
             sage: c.rauzy_class_cardinality()
             2327
 
-            sage: c = AbelianStratum(4,2,0).even_component()
+            sage: c = Stratum([4,2,0], k=1).even_component()
             sage: c.rauzy_class_cardinality()
             117472
 
@@ -2927,7 +2801,7 @@ class EvenAbelianStratumComponent(ASC):
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = list(map(lambda x: x+1, self.stratum().zeros()))
+        profile = list(map(lambda x: x+1, self.stratum().signature()))
         if left_degree is not None:
             assert isinstance(left_degree, (int,Integer)), "if not None, left_degree should be an integer"
             left_degree = int(left_degree) + 1
@@ -2960,24 +2834,24 @@ class EvenAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
         For strata in genus 3, the number of standard permutations is reasonably
         small and the whole set can be computed::
 
-            sage: C = AbelianStratum(6).even_component()
+            sage: C = Stratum([6], k=1).even_component()
             sage: len(C.standard_permutations())  # long time
             44
             sage: C.standard_permutations_number()
             44
 
-            sage: C = AbelianStratum(4,2).even_component()
+            sage: C = Stratum([4,2], k=1).even_component()
             sage: len(C.standard_permutations())   # long time
             136
             sage: C.standard_permutations_number()
             136
 
-            sage: C = AbelianStratum(2,2,2).even_component()
+            sage: C = Stratum([2,2,2], k=1).even_component()
             sage: len(C.standard_permutations())   # long time
             92
             sage: C.standard_permutations_number()
@@ -2985,13 +2859,13 @@ class EvenAbelianStratumComponent(ASC):
 
         For higher genera, this number can be very big::
 
-            sage: C = AbelianStratum(20).even_component()
+            sage: C = Stratum([20], k=1).even_component()
             sage: C.standard_permutations_number()
             109398514483439999
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = [x+1 for x in self.stratum().zeros()]
+        profile = [x+1 for x in self.stratum().signature()]
         N = Integer(rdc.gamma_std(profile) - rdc.delta_std(profile)) / 2
 
         if (self.stratum().number_of_components() == 3 and
@@ -3006,9 +2880,9 @@ class EvenAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: cc = AbelianStratum(4,2).even_component()
+            sage: cc = Stratum([4,2], k=1).even_component()
             sage: it = cc.cylinder_diagram_iterator(4)
             sage: next(it).stratum_component()
             H_4(4, 2)^even
@@ -3044,9 +2918,9 @@ class EvenAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: cc = AbelianStratum(6).even_component()
+            sage: cc = Stratum([6], k=1).even_component()
             sage: p = cc.single_cylinder_representative(alphabet=Alphabet(name='lower'))
             sage: p
             a b c d e f g h
@@ -3054,7 +2928,7 @@ class EvenAbelianStratumComponent(ASC):
             sage: p.stratum_component() == cc
             True
 
-            sage: cc = AbelianStratum(4,4).even_component()
+            sage: cc = Stratum([4,4], k=1).even_component()
             sage: p = cc.single_cylinder_representative()
             sage: p
             0 1 2 3 4 5 6 7 8 9 10
@@ -3067,12 +2941,12 @@ class EvenAbelianStratumComponent(ASC):
                 one_two_even, two_twos_even, even_twos_even, odd_twos_even)
         from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
 
-        zeros = self.stratum().zeros()
+        zeros = self.stratum().signature()
         real_zeros = [z for z in zeros if z != 0]
 
         fk_zeros_perm = GeneralizedPermutation([0],[0])
         mk_pt_perm = GeneralizedPermutation([0,1],[1,0])
-        for i in range(self.stratum().nb_fake_zeros()):
+        for i in range(self.stratum().signature().count(0)):
             fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)
 
         two_count = real_zeros.count(2)
@@ -3106,9 +2980,9 @@ class OddAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: c = AbelianStratum(4).odd_component(); c
+            sage: c = Stratum([4], k=1).odd_component(); c
             H_3(4)^odd
             sage: c.spin()
             1
@@ -3124,9 +2998,9 @@ class OddAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: a = AbelianStratum(6).odd_component()
+            sage: a = Stratum([6], k=1).odd_component()
             sage: p = a.permutation_representative()
             sage: p
             0 1 2 3 4 5 6 7
@@ -3136,7 +3010,7 @@ class OddAbelianStratumComponent(ASC):
 
         ::
 
-            sage: a = AbelianStratum(4,4).odd_component()
+            sage: a = Stratum([4,4], k=1).odd_component()
             sage: p = a.permutation_representative()
             sage: p
             0 1 2 3 4 5 6 7 8 9 10
@@ -3146,7 +3020,7 @@ class OddAbelianStratumComponent(ASC):
 
         Different markings lead to different Rauzy diagrams::
 
-            sage: c = AbelianStratum(4,2,0).odd_component()
+            sage: c = Stratum([4,2,0], k=1).odd_component()
             sage: p = c.permutation_representative(left_degree=4); p
             0 1 2 3 4 5 6 7 8 9
             4 3 6 5 7 9 8 2 0 1
@@ -3177,9 +3051,9 @@ class OddAbelianStratumComponent(ASC):
             sage: p.rauzy_diagram()   # long time
             Rauzy diagram with 27754 permutations
         """
-        zeros = list(self.stratum().zeros(fake_zeros=False))
-        n = self._stratum.nb_fake_zeros()
-        g = self._stratum.genus()
+        zeros = list(m for m in self.stratum().signature() if m)
+        n = self.stratum().signature().count(0)
+        g = self.stratum().surface_genus()
 
         if left_degree is not None:
             if not isinstance(left_degree, (int,Integer)):
@@ -3247,28 +3121,28 @@ class OddAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
         The genus must be at least 3 to have an odd component::
 
-            sage: c = AbelianStratum(4).odd_component()
+            sage: c = Stratum([4], k=1).odd_component()
             sage: c.rauzy_diagram()
             Rauzy diagram with 134 permutations
             sage: c.rauzy_class_cardinality()
             134
-            sage: c = AbelianStratum(4,0).odd_component()
+            sage: c = Stratum([4,0], k=1).odd_component()
             sage: c.rauzy_diagram()
             Rauzy diagram with 1114 permutations
             sage: c.rauzy_class_cardinality()
             1114
 
-            sage: c = AbelianStratum(2,2).odd_component()
+            sage: c = Stratum([2,2], k=1).odd_component()
             sage: c.rauzy_diagram()
             Rauzy diagram with 294 permutations
             sage: c.rauzy_class_cardinality()
             294
 
-            sage: c = AbelianStratum(2,2,0).odd_component()
+            sage: c = Stratum([2,2,0], k=1).odd_component()
             sage: c.rauzy_class_cardinality()
             2723
 
@@ -3294,10 +3168,10 @@ class OddAbelianStratumComponent(ASC):
         Example in higher genus for which an explicit computation of the Rauzy
         diagram would be very long::
 
-            sage: c = AbelianStratum(4,2,0).odd_component()
+            sage: c = Stratum([4,2,0], k=1).odd_component()
             sage: c.rauzy_class_cardinality()
             262814
-            sage: c = AbelianStratum(4,4,4).odd_component()
+            sage: c = Stratum([4,4,4], k=1).odd_component()
             sage: c.rauzy_class_cardinality()
             24691288838
             sage: c.rauzy_class_cardinality(left_degree=4, reduced=False)
@@ -3305,7 +3179,7 @@ class OddAbelianStratumComponent(ASC):
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = list(map(lambda x: x+1, self.stratum().zeros()))
+        profile = list(map(lambda x: x+1, self.stratum().signature()))
         if left_degree is not None:
             assert isinstance(left_degree, (int,Integer)), "if not None, left_degree should be an integer"
             left_degree = int(left_degree) + 1
@@ -3334,17 +3208,17 @@ class OddAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
         In genus 2, there are two strata which contains an odd component::
 
-            sage: C = AbelianStratum(4).odd_component()
+            sage: C = Stratum([4], k=1).odd_component()
             sage: len(C.standard_permutations())
             7
             sage: C.standard_permutations_number()
             7
 
-            sage: C = AbelianStratum(2,2).odd_component()
+            sage: C = Stratum([2,2], k=1).odd_component()
             sage: len(C.standard_permutations())
             11
             sage: C.standard_permutations_number()
@@ -3353,19 +3227,19 @@ class OddAbelianStratumComponent(ASC):
         In genus 3, the number of standard permutations is reasonably small and
         the whole set can be computed::
 
-            sage: C = AbelianStratum(6).odd_component()
+            sage: C = Stratum([6], k=1).odd_component()
             sage: len(C.standard_permutations())   # long time
             135
             sage: C.standard_permutations_number()
             135
 
-            sage: C = AbelianStratum(4,2).odd_component()
+            sage: C = Stratum([4,2], k=1).odd_component()
             sage: len(C.standard_permutations())   # long time
             472
             sage: C.standard_permutations_number()
             472
 
-            sage: C = AbelianStratum(2,2,2).odd_component()
+            sage: C = Stratum([2,2,2], k=1).odd_component()
             sage: len(C.standard_permutations())   # long time
             372
             sage: C.standard_permutations_number()
@@ -3373,13 +3247,13 @@ class OddAbelianStratumComponent(ASC):
 
         For higher genera, this number can be very big::
 
-            sage: C = AbelianStratum(8,6,4,2).odd_component()
+            sage: C = Stratum([8,6,4,2], k=1).odd_component()
             sage: C.standard_permutations_number()
             26596699869748377600
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = [x+1 for x in self.stratum().zeros()]
+        profile = [x+1 for x in self.stratum().signature()]
         N = Integer(rdc.gamma_std(profile) + rdc.delta_std(profile)) / 2
 
         if (self.stratum().number_of_components() == 3 and
@@ -3395,9 +3269,9 @@ class OddAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: C = AbelianStratum(4).odd_component()
+            sage: C = Stratum([4], k=1).odd_component()
             sage: for c in C.cylinder_diagrams(1): print(c)
             (0,2,1,4,3)-(0,4,2,1,3)
             (0,4,1,2,3)-(0,1,3,4,2)
@@ -3439,9 +3313,9 @@ class OddAbelianStratumComponent(ASC):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum
 
-            sage: cc = AbelianStratum(4).odd_component()
+            sage: cc = Stratum([4], k=1).odd_component()
             sage: p = cc.single_cylinder_representative(alphabet=Alphabet(name='upper'))
             sage: p
             A B C D E F
@@ -3449,7 +3323,7 @@ class OddAbelianStratumComponent(ASC):
             sage: p.stratum_component() == cc
             True
 
-            sage: cc = AbelianStratum(6,2).odd_component()
+            sage: cc = Stratum([6,2], k=1).odd_component()
             sage: p = cc.single_cylinder_representative()
             sage: p
             0 1 2 3 4 5 6 7 8 9 10
@@ -3461,12 +3335,12 @@ class OddAbelianStratumComponent(ASC):
                 no_two_odd, one_two_odd, even_twos_odd, odd_twos_odd)
         from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
 
-        zeros = self.stratum().zeros()
+        zeros = self.stratum().signature()
         real_zeros = [z for z in zeros if z != 0]
 
         fk_zeros_perm = GeneralizedPermutation([0],[0])
         mk_pt_perm = GeneralizedPermutation([0,1],[1,0])
-        for i in range(self.stratum().nb_fake_zeros()):
+        for i in range(self.stratum().signature().count(0)):
             fk_zeros_perm = cylinder_concatenation(fk_zeros_perm,mk_pt_perm)
 
         two_count = real_zeros.count(2)
@@ -3665,7 +3539,7 @@ class AbelianStrata(Strata):
 
         TESTS::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import Stratum, AbelianStrata
 
             sage: a = AbelianStrata(genus=3)
             sage: all(s in a for s in a)
@@ -3678,21 +3552,21 @@ class AbelianStrata(Strata):
             sage: a = AbelianStrata(dimension=7,fake_zeros=True)
             sage: all(s in a for s in a)
             True
-            sage: AbelianStratum(2,0,0) in a
+            sage: Stratum([2,0,0], k=1) in a
             False
 
             sage: a = AbelianStrata(dimension=7,fake_zeros=False)
             sage: all(s in a for s in a)
             True
-            sage: AbelianStratum(4,0) in a
+            sage: Stratum([4,0], k=1) in a
             False
         """
         if not isinstance(c, AbelianStratum):
             return False
 
-        return ((self._genus is None or c.genus() == self._genus) and
+        return ((self._genus is None or c.surface_genus() == self._genus) and
                 (self._dimension is None or c.dimension() == self._dimension) and
-                (self._fake_zeros is None or self._fake_zeros or not c.nb_fake_zeros()))
+                (self._fake_zeros is None or self._fake_zeros or not c.signature().count(0)))
 
 
 class AbelianStrata_g(AbelianStrata):
@@ -3749,10 +3623,10 @@ class AbelianStrata_g(AbelianStrata):
         if self._genus == 0:
             pass
         elif self._genus == 1:
-            yield AbelianStratum([0])
+            yield Stratum([0], k=1)
         else:
             for p in Partitions(2*self._genus-2):
-                yield AbelianStratum(p._list)
+                yield Stratum(p._list, k=1)
 
     def random_element(self):
         r"""
@@ -3761,8 +3635,8 @@ class AbelianStrata_g(AbelianStrata):
         if self._genus == 0:
             raise ValueError("No stratum with that genus")
         if self._genus == 1:
-            return AbelianStratum([0])
-        return AbelianStratum(Partitions(2*self._genus - 2).random_element())
+            return Stratum([0], k=1)
+        return Stratum(Partitions(2*self._genus - 2).random_element(), k=1)
 
     def first(self):
         r"""
@@ -3770,14 +3644,14 @@ class AbelianStrata_g(AbelianStrata):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import AbelianStrata
 
             sage: AbelianStrata(genus=3).first()
             H_3(4)
             sage: AbelianStrata(genus=4).first()
             H_4(6)
         """
-        return AbelianStratum([2*self._genus-2])
+        return Stratum([2*self._genus-2], k=1)
 
     an_element_ = first
 
@@ -3794,7 +3668,7 @@ class AbelianStrata_g(AbelianStrata):
             sage: AbelianStrata(genus=5).last()
             H_5(1^8)
         """
-        return AbelianStratum({1:2*self._genus-2})
+        return Stratum({1:2*self._genus-2}, k=1)
 
 
 class AbelianStrata_d(AbelianStrata):
@@ -3830,7 +3704,7 @@ class AbelianStrata_d(AbelianStrata):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import AbelianStrata
 
             sage: AbelianStrata(dimension=2).first()
             H_1(0)
@@ -3841,8 +3715,8 @@ class AbelianStrata_d(AbelianStrata):
         """
         n = self._dimension
         if n%2:
-            return AbelianStratum([(n-3)//2,(n-3)//2])
-        return AbelianStratum([n-2])
+            return Stratum([(n-3)//2,(n-3)//2], k=1)
+        return Stratum([n-2], k=1)
 
     an_element = first
 
@@ -3852,7 +3726,7 @@ class AbelianStrata_d(AbelianStrata):
 
         EXAMPLES::
 
-            sage: from surface_dynamics import *
+            sage: from surface_dynamics import AbelianStrata
 
             sage: AbelianStrata(dimension=9,fake_zeros=True).last()
             H_1(0^8)
@@ -3866,17 +3740,17 @@ class AbelianStrata_d(AbelianStrata):
         """
         n = self._dimension
         if self._fake_zeros:
-            return AbelianStratum({0:n-1})
+            return Stratum({0:n-1}, k=1)
         else:
             if n == 4:
-                return AbelianStratum([2])
+                return Stratum([2], k=1)
             if n == 5:
-                return AbelianStratum([1,1])
+                return Stratum([1,1], k=1)
             elif n == 6:
-                return AbelianStratum([4])
+                return Stratum([4], k=1)
             else:
                 nn = (n-2)%4
-                return AbelianStratum({2:3-nn,1:2*((n-10)//4)+2*nn})
+                return Stratum({2:3-nn,1:2*((n-10)//4)+2*nn}, k=1)
 
     def __iter__(self):
         r"""
@@ -3896,14 +3770,14 @@ class AbelianStrata_d(AbelianStrata):
         elif self._fake_zeros:
             for s in range(1+n%2, n, 2):
                 for p in Partitions(n-1, length=s):
-                    yield AbelianStratum([k-1 for k in p])
+                    yield Stratum([k-1 for k in p], k=1)
         else:
             if n == 2:
-                yield AbelianStratum([0])
+                yield Stratum([0], k=1)
             else:
                 for s in range(1+n%2, n, 2):
                     for p in Partitions(n-1,length=s,min_part=2):
-                        yield AbelianStratum([k-1 for k in p])
+                        yield Stratum([k-1 for k in p], k=1)
 
     def cardinality(self):
         r"""
@@ -3984,15 +3858,15 @@ class AbelianStrata_gd(AbelianStrata):
             pass
         elif self._genus == 1:
             if self._dimension >= 2 and self._fake_zeros:
-                yield AbelianStratum([0]*(self._dimension-1))
+                yield Stratum([0]*(self._dimension-1), k=1)
         else:
             s = self._dimension - 2*self._genus + 1
             if self._fake_zeros:
                 for p in Partitions(2*self._genus - 2 + s, length=s):
-                    yield AbelianStratum([k-1 for k in p])
+                    yield Stratum([k-1 for k in p], k=1)
             else:
                 for p in Partitions(2*self._genus - 2, length=s):
-                    yield AbelianStratum(p)
+                    yield Stratum(p, k=1)
 
 class AbelianStrata_all(AbelianStrata):
     r"""

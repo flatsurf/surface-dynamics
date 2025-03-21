@@ -265,7 +265,8 @@ orthogonalize_iso(quad_cover * qcc, double *theta, size_t nb_char,
 /* warning: it is 2*log(entry) and not log(entry)                                              */
 /* element at position (i,j,k): (qcc->labels)[j].v[i + nb_vectors*k];                          */
 {
-    int i, ii, j, k, i_char, sum_dimensions = 0;
+    int sum_dimensions = 0;
+    size_t i, ii, i_char, j, k;
 
     double norm, sqnorm, c;
     double *tmp = NULL;
