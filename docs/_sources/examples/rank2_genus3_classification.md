@@ -24,7 +24,7 @@ Assume $\mathcal M$ is an invariant subvariety in a stratum $\mathcal H$. We
 will start with a horizontally periodic translation surface $M\in \mathcal M$.
 A database for the possible cylinder diagrams for $M$ can be found in
 `surface-dynamics`: see
-[here](https://flatsurf.github.io/surface-dynamics/database.html). Here is an
+[here](../../databases/flat_surfaces). Here is an
 example:
 
 ```{code-cell}
