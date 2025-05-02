@@ -143,22 +143,16 @@ Obtains the connected components of a stratum::
     71
 
 """
-#*****************************************************************************
+# ***************************************************************************
 #       Copyright (C) 2009-2019 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
-
-from __future__ import print_function, absolute_import, division
-from six.moves import range, map, filter, zip
-from six import iteritems
-
+# ***************************************************************************
 import numbers
 
-from sage.structure.unique_representation import UniqueRepresentation
 from sage.structure.parent import Parent
 from sage.categories.finite_enumerated_sets import FiniteEnumeratedSets
 from sage.categories.infinite_enumerated_sets import InfiniteEnumeratedSets
@@ -166,9 +160,9 @@ from sage.categories.infinite_enumerated_sets import InfiniteEnumeratedSets
 from sage.combinat.partition import Partitions, Partition
 from sage.rings.integer import Integer
 from sage.rings.rational import Rational
-from sage.rings.infinity import Infinity
 
 from surface_dynamics.flat_surfaces.strata import Stratum, StratumComponent, Strata
+
 
 def _cylinder_diagrams_with_symmetric(iterator):
     r"""
@@ -247,7 +241,7 @@ def DeprecatedAbelianStratumConstructor(*l):
     if isinstance(l, dict):
         l = sum(([i] * mult for i, mult in l.items()), [])
 
-    l = tuple(sorted(map(Integer, l), reverse=True))
+    l = tuple(sorted((Integer(i) for i in l), reverse=True))
     return Stratum(l, 1)
 
 
@@ -515,16 +509,17 @@ class AbelianStratum(Stratum):
         e = {}
         z = tuple(m for m in self.signature() if m)
         for i in z:
-            if i not in e: e[i] = 0
+            if i not in e:
+                e[i] = 0
             e[i] += 1
 
         # the odd degrees (corresponding to angles 2((2m+1)+1) times pi should
         # be non ramified and hence come by pair.
-        if any(e[i]%2 for i in e if i%2):
+        if any(e[i] % 2 for i in e if i % 2):
             return []
 
         pairings = []
-        for d, m in iteritems(e):
+        for d, m in e.items():
             if d % 2: # if the degree is odd it is necessarily non ramified
                 pairings.append([(d, m//2)])
             else: # if the degree is even ramified and non ramified are possible
@@ -541,7 +536,8 @@ class AbelianStratum(Stratum):
                 ee[2 * d] += m
 
             degrees = []
-            for d in ee: degrees.extend([d] * ee[d])
+            for d in ee:
+                degrees.extend([d] * ee[d])
 
             s = sum(degrees)
             self_nb_fake_zeros = self.signature().count(0)
@@ -937,7 +933,7 @@ class AbelianStratum(Stratum):
             ValueError: no 1,1-square-tiled surfaces in this stratum try again with H_2(1^2, 0^2)
         """
         genus = self.surface_genus()
-        nb_real_zeros = sum(map(bool, self.signature()), 0)
+        nb_real_zeros = sum((bool(x) for x in self.signature()), 0)
         nb_fake_zeros = self.signature().count(0)
 
         if genus == 2 and nb_real_zeros == 1 and nb_fake_zeros < 1:
@@ -1211,7 +1207,6 @@ class AbelianStratumComponent(StratumComponent):
         p = self.permutation_representative()
         if nsteps is None:
             nsteps = 64 * self.stratum().dimension()
-        d = len(p)-1
 
         for _ in range(nsteps):
             rd = prandom.random()
@@ -1337,8 +1332,7 @@ class AbelianStratumComponent(StratumComponent):
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = list(map(lambda x: x+1, self.stratum().signature()))
-        s = len(self.stratum().signature())
+        profile = [x + 1 for x in self.stratum().signature()]
 
         if left_degree is not None:
             assert isinstance(left_degree, (int,Integer)), "if not None, left_degree should be an integer"
@@ -1944,7 +1938,9 @@ class AbelianStratumComponent(StratumComponent):
         """
         return self.single_cylinder_representative(reduced=False).to_origami()
 
+
 ASC = AbelianStratumComponent
+
 
 class HypAbelianStratumComponent(ASC):
     """
@@ -2007,7 +2003,7 @@ class HypAbelianStratumComponent(ASC):
         elif len(z) == 2:
             if z[0] % 2:
                 return None
-            return Integer(((self.stratum().surface_genus()+1)//2) %2)
+            return Integer(((self.stratum().surface_genus()+1)//2) % 2)
 
     def permutation_representative(self, left_degree=None, reduced=True, alphabet=None, relabel=True):
         r"""
@@ -2073,7 +2069,7 @@ class HypAbelianStratumComponent(ASC):
 
         if left_degree is not None:
             if not isinstance(left_degree, (int,Integer)) or left_degree not in self.stratum().signature():
-                raise ValueError("left_degree (=%d) should be one of the degree"%left_degree)
+                raise ValueError("left_degree (=%d) should be one of the degree" % left_degree)
 
         if m == 0:  # on the torus
             if n == 1:
@@ -2245,7 +2241,8 @@ class HypAbelianStratumComponent(ASC):
         d = dd-k
 
         if self.stratum().surface_genus() == 1:
-            if k == 0: return 1
+            if k == 0:
+                return 1
             return binomial(dd,2)
 
         if left_degree is None:
@@ -2405,9 +2402,9 @@ class HypAbelianStratumComponent(ASC):
         from surface_dynamics.interval_exchanges.constructors import GeneralizedPermutation
 
         if nb_real_zeros == 1 and add_fk_zeros < 0:
-            raise ValueError("no 1,1-square-tiled surfaces in this connected component try again with %s^hyp" %(str(Stratum({2*genus-2:1,0:2*genus-3}, k=1))))
+            raise ValueError("no 1,1-square-tiled surfaces in this connected component try again with %s^hyp" % (str(Stratum({2*genus-2:1,0:2*genus-3}, k=1))))
         elif nb_real_zeros == 2 and add_fk_zeros < 0:
-            raise ValueError("no 1,1-square-tiled surfaces in this connected component try again with %s^hyp" %(str(Stratum({genus-1:2,0:2*genus-2}, k=1))))
+            raise ValueError("no 1,1-square-tiled surfaces in this connected component try again with %s^hyp" % (str(Stratum({genus-1:2,0:2*genus-2}, k=1))))
         elif not nb_real_zeros:
             from surface_dynamics.flat_surfaces.single_cylinder import cylinder_concatenation
             fk_zeros_perm = GeneralizedPermutation([0],[0])
@@ -2438,6 +2435,7 @@ class HypAbelianStratumComponent(ASC):
 
 
 HypASC = HypAbelianStratumComponent
+
 
 class NonHypAbelianStratumComponent(ASC):
     """
@@ -2502,7 +2500,7 @@ class NonHypAbelianStratumComponent(ASC):
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = list(map(lambda x: x+1,self.stratum().signature()))
+        profile = [x + 1 for x in self.stratum().signature()]
         hyp = self.stratum().hyperelliptic_component()
 
         if left_degree is not None:
@@ -2550,7 +2548,7 @@ class NonHypAbelianStratumComponent(ASC):
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = list(map(lambda x: x+1, self.stratum().signature()))
+        profile = [x + 1 for x in self.stratum().signature()]
         return rdc.number_of_standard_permutations(profile) - self.stratum().hyperelliptic_component().standard_permutations_number()
 
     def _cylinder_diagram_iterator(self, ncyls=None):
@@ -2584,7 +2582,9 @@ class NonHypAbelianStratumComponent(ASC):
         return filter(lambda c: not c.is_hyperelliptic(),
                 self.stratum().cylinder_diagram_iterator(ncyls, True, True))
 
+
 NonHypASC = NonHypAbelianStratumComponent
+
 
 class EvenAbelianStratumComponent(ASC):
     """
@@ -2697,7 +2697,7 @@ class EvenAbelianStratumComponent(ASC):
 
         if left_degree is not None:
             if not isinstance(left_degree, (int,Integer)):
-                raise ValueError("left_degree (=%d) should be one of the degree"%left_degree)
+                raise ValueError("left_degree (=%d) should be one of the degree" % left_degree)
             if left_degree == 0:
                 if n == 0:
                     raise ValueError("left_degree (=%d) should be one of the degree" % left_degree)
@@ -2801,7 +2801,7 @@ class EvenAbelianStratumComponent(ASC):
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = list(map(lambda x: x+1, self.stratum().signature()))
+        profile = [x + 1 for x in self.stratum().signature()]
         if left_degree is not None:
             assert isinstance(left_degree, (int,Integer)), "if not None, left_degree should be an integer"
             left_degree = int(left_degree) + 1
@@ -3179,7 +3179,7 @@ class OddAbelianStratumComponent(ASC):
         """
         import surface_dynamics.interval_exchanges.rauzy_class_cardinality as rdc
 
-        profile = list(map(lambda x: x+1, self.stratum().signature()))
+        profile = [x + 1 for x in self.stratum().signature()]
         if left_degree is not None:
             assert isinstance(left_degree, (int,Integer)), "if not None, left_degree should be an integer"
             left_degree = int(left_degree) + 1
@@ -3514,8 +3514,6 @@ class AbelianStrata(Strata):
             sage: AbelianStrata(genus=2, dimension=4)    # indirect doctest
             Abelian strata of genus 2 surfaces and dimension 4
         """
-        s = "Abelian strata"
-
         l = []
         if self._genus is not None:
             l.append("genus {} surfaces".format(self._genus))
@@ -3820,10 +3818,11 @@ class AbelianStrata_d(AbelianStrata):
             return Integer(0)
 
         if self._fake_zeros:
-            return sum(Partitions(n-1,length=s).cardinality() for s in range(1+n%2,n,2))
+            return sum(Partitions(n-1,length=s).cardinality() for s in range(1+n % 2,n,2))
         if n == 2:
             return Integer(1)
-        return sum(Partitions(n-1,length=s,min_part=2).cardinality() for s in range(1+n%2,n,2))
+        return sum(Partitions(n-1,length=s,min_part=2).cardinality() for s in range(1+n % 2,n,2))
+
 
 class AbelianStrata_gd(AbelianStrata):
     r"""
@@ -3867,6 +3866,7 @@ class AbelianStrata_gd(AbelianStrata):
             else:
                 for p in Partitions(2*self._genus - 2, length=s):
                     yield Stratum(p, k=1)
+
 
 class AbelianStrata_all(AbelianStrata):
     r"""
