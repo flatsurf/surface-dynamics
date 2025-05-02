@@ -22,9 +22,6 @@ is computed by an independent C program in ``normal_form.c``.
 #from sage.ext.interrupt.interrupt cimport sig_on, sig_off
 #from sage.ext.memory cimport sage_malloc, sage_free
 
-from __future__ import print_function, absolute_import, division
-from six import iteritems, iterkeys
-
 from cpython.list cimport *
 from cpython.tuple cimport *
 
@@ -264,7 +261,7 @@ cdef tuple projectivize_edges(l):
     cdef dict ll
     cdef set waiting
 
-    o1 = next(iterkeys(l[0])) # pick a random element in l[0] !!!!
+    o1 = next(iter(l[0]))  # pick a random element in l[0] !!!!
     oo1 = o1.inverse()
     oo1._set_standard_form()
 
@@ -3036,7 +3033,7 @@ cdef class Origami_dense_pyx:
             'text_square':{},
             'text_frontier':{}
             }
-        for key, value in iteritems(args):
+        for key, value in args.items():
             for k in d.keys():
                 if key.startswith(k + '_'):
                     d[k][key[len(k)+1:]] = value
@@ -3825,7 +3822,7 @@ cpdef sl2z_orbits(origamis, int n, int limit):
     glorbits = gl2z_orbits(origamis, n, limit)
 
     for L, I in glorbits:
-        o = next(iterkeys(L))
+        o = next(iter(L))
         l, r, s = sl_orbit_from_gl_orbit(o, L, I)
         slorbits.append((l, r, s))
         if len(l) != len(L):

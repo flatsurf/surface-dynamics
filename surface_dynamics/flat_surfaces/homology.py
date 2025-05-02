@@ -91,9 +91,6 @@ TODO:
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import print_function, absolute_import
-from six.moves import range, map, filter, zip
-
 from surface_dynamics.misc.permutation import (perm_init, constellation_init, perm_cycles, perm_invert,
         perm_check, perm_compose, equalize_perms, perm_orbit)
 
