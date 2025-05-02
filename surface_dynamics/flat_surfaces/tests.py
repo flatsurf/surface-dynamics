@@ -10,9 +10,6 @@ Testing abelian strata and related combinatorics
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import print_function, absolute_import
-from six.moves import range, map, filter, zip
-
 import sage.misc.prandom as prandom
 from sage.misc.misc import cputime
 

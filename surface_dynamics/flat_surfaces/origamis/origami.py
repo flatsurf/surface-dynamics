@@ -43,8 +43,6 @@ EXAMPLES::
 # ****************************************************************************
 
 from __future__ import print_function, absolute_import
-from six.moves import range, map
-from six import iteritems
 
 from surface_dynamics.flat_surfaces.origamis.origami_dense import Origami_dense_pyx
 from surface_dynamics.misc.permutation import perm_init, perm_check
@@ -352,7 +350,7 @@ class OrigamiEdges(OrigamiObjects):
         """
         c_in = {}
         c_out = {}
-        for i,j in iteritems(c.dict()):
+        for i, j in c.dict().items():
             if j == 1:
                 c_in[self.start(i)] = i
                 c_out[self.end(i)] = i
