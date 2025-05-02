@@ -73,9 +73,7 @@ AUTHORS:
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
 # ****************************************************************************
-from __future__ import print_function, absolute_import, division
 from six import string_types
-from six.moves import range, zip, filter
 from pathlib import Path
 
 import sqlite3 as sqlite

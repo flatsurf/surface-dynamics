@@ -29,9 +29,6 @@ TODO:
 #                  https://www.gnu.org/licenses/
 # ****************************************************************************
 
-from __future__ import print_function, absolute_import
-from six import iterkeys, iteritems
-
 from functools import total_ordering
 
 from sage.structure.sage_object import SageObject
@@ -3197,7 +3194,7 @@ class PermutationLI(Permutation):
 
         g = self.interval_diagram(glue_ends=True,sign=True)
         signs = self._canonical_signs()[1]
-        p = sorted(map(lambda x: len(x), g),reverse=True)
+        p = sorted((len(x) for x in g), reverse=True)
 
         left1 = ((self[1][0], -signs[1][0]), (self[0][0], signs[0][0]))
         left2 = (left1[1], left1[0])
@@ -4015,7 +4012,7 @@ class OrientablePermutationIET(PermutationIET):
         from surface_dynamics.flat_surfaces.abelian_strata import Stratum
 
         if not self.is_irreducible():
-            return list(map(lambda x: x.stratum(), self.decompose()))
+            return [x.stratum() for x in self.decompose()]
 
         if len(self) == 1:
             return Stratum([], k=1)
@@ -4196,7 +4193,7 @@ class OrientablePermutationIET(PermutationIET):
         """
         # TODO: we reimplement the very same logic in flat_surfaces.separatrix_diagram.stratum_component()
         if not self.is_irreducible():
-            return list(map(lambda x: x.stratum_component(), self.decompose()))
+            return [x.stratum_component() for x in self.decompose()]
 
         stratum = self.stratum()
 
@@ -4753,7 +4750,7 @@ class OrientablePermutationIET(PermutationIET):
             True
         """
         from sage.combinat.permutation import Permutation
-        return Permutation(list(map(lambda x: x+1,self._twin[1])))
+        return Permutation([x+1 for x in self._twin[1]])
 
     def suspension_cone(self, winner=None):
         r"""
@@ -6376,7 +6373,7 @@ class RauzyDiagram(SageObject):
         """
         return type(self) == type(other) and \
                self._edge_types == other._edge_types and \
-               next(iterkeys(self._succ)) in other._succ
+               next(iter(self._succ)) in other._succ
 
     def __ne__(self, other):
         r"""
@@ -6413,9 +6410,7 @@ class RauzyDiagram(SageObject):
             a b
             b a
         """
-        return list(map(
-            lambda x: self._vertex_to_permutation(x),
-            self._succ.keys()))
+        return [self._vertex_to_permutation(x) for x in self._succ]
 
     def vertex_iterator(self):
         r"""
@@ -6438,9 +6433,7 @@ class RauzyDiagram(SageObject):
             a b c d
             d c b a
         """
-        return map(
-            lambda x: self._vertex_to_permutation(x),
-            self._succ.keys())
+        return [self._vertex_to_permutation(x) for x in self._succ]
 
     def edges(self,labels=True):
         r"""
@@ -6471,8 +6464,8 @@ class RauzyDiagram(SageObject):
             a b/b a --> a b/b a
             a b/b a --> a b/b a
         """
-        for x in self._succ.keys():
-            for i, y in enumerate(self._succ[x]):
+        for x, succ_x in self._succ.items():
+            for i, y in enumerate(succ_x):
                 if y is not None:
                     yield ((self._vertex_to_permutation(x),
                             self._vertex_to_permutation(y),
@@ -6975,7 +6968,7 @@ class RauzyDiagram(SageObject):
             H_1(0^2)
             H_1(0^2)
         """
-        for data in iterkeys(self._succ):
+        for data in self._succ:
             yield self._vertex_to_permutation(data)
 
     def __contains__(self, element):
@@ -6999,7 +6992,7 @@ class RauzyDiagram(SageObject):
             sage: q in s
             True
         """
-        for p in iterkeys(self._succ):
+        for p in self._succ:
             if self._vertex_to_permutation(p) == element:
                 return True
 
@@ -7055,8 +7048,7 @@ class RauzyDiagram(SageObject):
             raise ValueError("Your element does not have the good type")
 
         perm = self._permutation_to_vertex(p)
-        return list(map(lambda x: self._vertex_to_permutation(x),
-            self._succ[perm]))
+        return [self._vertex_to_permutation(x) for x in self._succ[perm]]
 
     def __len__(self):
         r"""
@@ -7204,7 +7196,7 @@ class RauzyDiagram(SageObject):
         else:
             G = DiGraph(loops=True,multiedges=True)
 
-        for p,neighbours in iteritems(self._succ):
+        for p,neighbours in self._succ.items():
             p = self._vertex_to_permutation(p)
             for i,n in enumerate(neighbours):
                 if n is not None:

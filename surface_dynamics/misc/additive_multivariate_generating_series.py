@@ -24,14 +24,10 @@ where the `L_i` are linear forms (ie homogeneous degree one) and `d_i` are posit
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
-from six.moves import range, map, filter, zip
-from six import iteritems
-
 from .factored_denominator import FactoredDenominator, AbstractMSum, AbstractMSumRing, laurent_monomial
 
 import numbers
 
-from sage.misc.cachefunc import cached_method
 from sage.rings.integer_ring import ZZ
 from sage.rings.rational_field import QQ
 from sage.matrix.constructor import matrix

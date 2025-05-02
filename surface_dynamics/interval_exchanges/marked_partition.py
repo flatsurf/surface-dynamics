@@ -18,9 +18,6 @@ and the marking is of type two.
 #                  https://www.gnu.org/licenses/
 # ****************************************************************************
 
-from __future__ import print_function, absolute_import
-from six.moves import range, map
-
 from sage.structure.sage_object import SageObject
 from sage.combinat.partition import Partition
 from sage.rings.integer import Integer

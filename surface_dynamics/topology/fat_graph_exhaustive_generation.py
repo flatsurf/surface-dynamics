@@ -13,9 +13,6 @@ is experimental.
 #                  https://www.gnu.org/licenses/
 # ****************************************************************************
 
-from __future__ import absolute_import, print_function
-from six.moves import range
-
 import numbers
 from collections import defaultdict
 

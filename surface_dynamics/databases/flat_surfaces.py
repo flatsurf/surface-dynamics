@@ -17,9 +17,6 @@ algorithms related to translation surfaces:
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
 # ****************************************************************************
-
-from __future__ import print_function, absolute_import
-
 from pathlib import Path
 
 from sage.env import SAGE_SHARE

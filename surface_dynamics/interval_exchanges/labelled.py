@@ -92,13 +92,9 @@ TESTS::
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
-
-from __future__ import print_function, absolute_import
-from six.moves import range, map, filter, zip
+from copy import copy
 
 from sage.structure.sage_object import SageObject
-
-from copy import copy
 
 from surface_dynamics.misc.permutation import perm_check, perm_init
 import surface_dynamics.interval_exchanges.lyapunov_exponents as lyapunov_exponents  # the cython bindings
@@ -489,10 +485,11 @@ def LabelledPermutationsIET_iterator(
             g = lambda x: [alphabet.unrank(k-1) for k in x]
             P = map(g, Permutations(nintervals))
             return map(f,product(P,repeat=2))
-    else:
-        return filter(
-            lambda x: x.is_irreducible(),
-            LabelledPermutationsIET_iterator(nintervals,False,alphabet))
+
+    return (x for x in LabelledPermutationsIET_iterator(nintervals,
+                                                        False, alphabet)
+            if x.is_irreducible())
+
 
 class LabelledPermutationIET(LabelledPermutation, OrientablePermutationIET):
     """
@@ -1727,11 +1724,10 @@ class LabelledRauzyDiagram(RauzyDiagram):
         """
         g = self.path(start)
 
-        ifull = filter(
-            lambda x: x.is_loop() and x.is_full(),
-            self._all_path_extension(g,max_length))
+        ifull = (x for x in self._all_path_extension(g, max_length)
+                 if x.is_loop() and x.is_full())
 
-        return map(copy,ifull)
+        return map(copy, ifull)
 
     def full_nloop_iterator(self, start=None, length=1):
         r"""
@@ -1764,9 +1760,8 @@ class LabelledRauzyDiagram(RauzyDiagram):
         """
         g = self.path(start)
 
-        ifull = filter(
-            lambda x: x.is_loop() and x.is_full(),
-            self._all_npath_extension(g,length))
+        ifull = (x for x in self._all_npath_extension(g, length)
+                 if x.is_loop() and x.is_full())
 
         return map(copy, ifull)
 

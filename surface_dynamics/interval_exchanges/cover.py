@@ -20,11 +20,7 @@ feature is to be able to compute Lyapunov exponents.
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
 # *************************************************************************
-from __future__ import print_function, absolute_import
-
 import numpy as np
-
-from six.moves import range, map, filter, zip
 
 from sage.misc.misc_c import prod
 
@@ -1117,7 +1113,6 @@ class PermutationCover(object):
         import surface_dynamics.interval_exchanges.lyapunov_exponents as lyapunov_exponents
         import time
         from surface_dynamics.misc.statistics import mean_and_std_dev
-        from sage.matrix.special import zero_matrix
 
         n = len(self)
 
