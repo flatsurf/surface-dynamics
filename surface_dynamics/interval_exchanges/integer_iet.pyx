@@ -759,7 +759,7 @@ def cylinder_widths_and_heights(top, bot, lengths):
     heights = <uint64_t *> check_malloc((len(bot) + len(top)) // 2 * sizeof(uint64_t))
     cdef int res = int_iet_num_cylinders(widths, heights, t)
     int_iet_clear(t)
-    output =  [(widths[i], heights[i]) for i in range(res)]
+    output = [(widths[i], heights[i]) for i in range(res)]
     sig_free(widths)
     sig_free(heights)
     output.sort()
@@ -827,7 +827,7 @@ def cylinder_widths(top, bot, lengths):
     widths = <uint64_t *> check_malloc((len(bot) + len(top)) // 2 * sizeof(uint64_t))
     cdef int res = int_iet_num_cylinders(widths, NULL, t)
     int_iet_clear(t)
-    output =  [widths[i] for i in range(res)]
+    output = [widths[i] for i in range(res)]
     sig_free(widths)
     output.sort()
     return output

@@ -163,7 +163,7 @@ codespell = "codespell $(git ls-files '*.py' '*.c' '*.h' '*.pyx' '*.md' '*.rst')
 # We ignore warnings in pycodestyle that are incompatible with black's formatting rules
 pycodestyle = "pycodestyle --select W2,W3 --max-line-length=256 surface_dynamics/ tests/"
 ruff = "ruff check --select D207,D208 surface_dynamics/ tests/"
-cython-lint = "cython-lint --ignore=E501,E261,E222,E265,E266,E127,E128,E231,E741 surface_dynamics"
+cython-lint = "cython-lint --ignore=E128,E231,E261,E265,E501,E741 surface_dynamics"
 lint = { depends-on = ["codespell", "pycodestyle", "ruff", "cython-lint"] }
 
 # "test" is a shortcut that should (together with its dependencies) run in the "dev" environment.
