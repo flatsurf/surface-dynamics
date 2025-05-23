@@ -73,7 +73,6 @@ AUTHORS:
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
 # ****************************************************************************
-from six import string_types
 from pathlib import Path
 
 import sqlite3 as sqlite
@@ -465,7 +464,7 @@ class SQLQuery(SageObject):
             if isinstance(x, dict):
                 if 'query_dict' not in kwds:
                     kwds['query_dict'] = x
-            elif isinstance(x, string_types):
+            elif isinstance(x, str):
                 if 'query_string' not in kwds:
                     kwds['query_string'] = x
             elif isinstance(x, tuple):
