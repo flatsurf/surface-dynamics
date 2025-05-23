@@ -80,10 +80,6 @@ They can also be built from separatrix diagram::
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import print_function, absolute_import
-from six.moves import range, map, filter, zip
-from six import iteritems
-
 from functools import total_ordering
 
 import collections
@@ -365,7 +361,7 @@ class SeparatrixDiagram(SageObject):
             m = 360. / (2*n)
             d = dict([i,(v.index(i),v.index(-i))] for i in range(1,self._n+1))
             s = "\\begin{tikzpicture}\n"
-            for i,(vout,vin) in iteritems(d):
+            for i, (vout, vin) in d.items():
                 s += "    \\draw [-triangle 45] (0,0) -- (%f:0.8cm);\n" %(vout*m)
                 s += "    \\draw (%f:0.8cm) -- (%f:1cm);\n" %(vout*m,vout*m)
                 s += "    \\draw (%f:1cm) \n" %(vout*m)

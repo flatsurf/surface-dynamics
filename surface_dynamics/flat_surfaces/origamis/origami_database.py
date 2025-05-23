@@ -182,10 +182,8 @@ AUTHOR:
 #                  https://www.gnu.org/licenses/
 # ****************************************************************************
 
-from __future__ import print_function, absolute_import
 from pathlib import Path
-from six.moves import range, map, filter, zip
-from six import iteritems, string_types
+from six import string_types
 
 from sage.rings.real_mpfr import RealField
 from sage.rings.all import QQ, Integer
@@ -2033,7 +2031,7 @@ class OrigamiDatabase(SQLDatabase):
             cols = [cols]
 
         query_list = list(query_list)
-        query_list.extend((entry,'=',value) for entry,value in iteritems(kwds))
+        query_list.extend((entry, '=', value) for entry, value in kwds.items())
 
         qq = []
         for entry,sign,value in query_list:
