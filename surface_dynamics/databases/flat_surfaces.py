@@ -684,6 +684,6 @@ class CylinderDiagrams(GenericRepertoryDatabase):
         if ncyls is None:
             g = comp.stratum().surface_genus()
             s = len(comp.stratum().signature())
-            return sum((self.count(comp, i) for i in range(1, g + s)))
+            return sum(self.count(comp, i) for i in range(1, g + s))
 
         return line_count(self.path / self.filename(comp, ncyls))

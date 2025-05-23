@@ -68,7 +68,7 @@ from sage.structure.element import Element
 from sage.structure.unique_representation import UniqueRepresentation
 
 
-def flatten_word(w):
+def flatten_word(w) -> str:
     """
     EXAMPLES::
 
@@ -76,10 +76,7 @@ def flatten_word(w):
         sage: flatten_word([('l', 4), ('r', 6)])
         'llllrrrrrr'
     """
-    l = []
-    for i, j in w:
-        l.append(i * j)
-    return ''.join(l)
+    return ''.join(i * j for i, j in w)
 
 
 def permutation_simplicial_action(r, u, n, w):
@@ -99,7 +96,7 @@ def permutation_simplicial_action(r, u, n, w):
     """
     if w is None:
         w = []
-    elif isinstance(w,list):
+    elif isinstance(w, list):
         w = flatten_word(w)
 
     res = identity_matrix(2*n)
