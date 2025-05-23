@@ -10,11 +10,6 @@ Factored denominators and associated free modules
 #                  https://www.gnu.org/licenses/
 # ****************************************************************************
 
-from __future__ import absolute_import, print_function
-from six.moves import range, zip
-
-from six import iteritems
-
 from sage.misc.cachefunc import cached_method
 from sage.structure.element import Element
 from sage.structure.parent import Parent
@@ -785,7 +780,7 @@ class AbstractMSum(Element):
         """
         if len(self._data) != 1:
             return False
-        (den, num) = next(iteritems(self._data))
+        den, num = next(iter(self._data.items()))
         return num.is_one() and den.is_one()
 
     def _add_(self, other):

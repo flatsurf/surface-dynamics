@@ -54,9 +54,6 @@ TESTS::
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import print_function, absolute_import, division
-from six.moves import range, map, filter, zip
-
 from sage.structure.sage_object import SageObject
 
 from copy import copy
@@ -142,9 +139,11 @@ def ReducedPermutationsIET_iterator(
                 return ReducedPermutationIET([a0, list(x)],
                                              alphabet=alphabet, reduced=True)
             return map(f, Permutations(nintervals))
-    else:
-        return filter(lambda x: x.is_irreducible(),
-        ReducedPermutationsIET_iterator(nintervals,False,alphabet))
+
+    return (x for x in ReducedPermutationsIET_iterator(nintervals,
+                                                       False, alphabet)
+            if x.is_irreducible())
+
 
 class ReducedPermutationIET(ReducedPermutation, OrientablePermutationIET):
     """

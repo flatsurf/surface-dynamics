@@ -151,9 +151,6 @@ AUTHORS:
 #                  https://www.gnu.org/licenses/
 # ****************************************************************************
 
-from __future__ import print_function, absolute_import
-from six.moves import range
-
 from sage.combinat.words.alphabet import Alphabet
 from sage.rings.infinity import Infinity
 from sage.misc.decorators import rename_keyword
