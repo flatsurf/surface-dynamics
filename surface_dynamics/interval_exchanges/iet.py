@@ -53,10 +53,8 @@ There are two plotting methods for iet::
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import print_function, absolute_import
-from six.moves import range, map, filter, zip
-
 from copy import copy
+
 from sage.modules.free_module_element import free_module_element
 from sage.rings.all import ZZ, QQ
 
@@ -453,10 +451,10 @@ class IntervalExchangeTransformation:
         try:
             y = float(total)
         except ValueError:
-            raise TypeError("unable to convert x (='%s') into a real number"  %(str(x)))
+            raise TypeError(f"unable to convert x (='{total}') into a real number")
 
         if total <= 0:
-            raise ValueError("the total length must be positive, got {}".format(total))
+            raise ValueError(f"the total length must be positive, got {total}")
 
         if inplace:
             res = self

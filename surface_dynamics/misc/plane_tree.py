@@ -22,8 +22,6 @@ See [BeyHed80]_, [RichOdlMcKWri86]_ and [Nak02]_ for algorithms.
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import print_function
-
 from sage.rings.integer import Integer
 
 ###################################
