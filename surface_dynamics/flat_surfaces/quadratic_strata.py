@@ -137,8 +137,6 @@ List the connected components of a stratum::
 #*****************************************************************************
 
 from __future__ import print_function, absolute_import
-from six.moves import range, map, filter, zip
-from six import iteritems
 
 import numbers
 
@@ -188,7 +186,7 @@ def DeprecatedQuadraticStratumConstructor(*l, **kwds):
         if not l:
             raise ValueError("the list must be nonempty")
         if isinstance(l, dict):
-            l = sum(([v]*e for v,e in iteritems(l)), [])
+            l = sum(([v] * e for v, e in l.items()), [])
 
         if genus is not None:
             g = sum(l) + 4
