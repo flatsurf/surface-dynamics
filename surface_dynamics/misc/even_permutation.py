@@ -420,7 +420,7 @@ def even_perm_canonical_label_from(p, i):
     waiting = [i, ~i]
     mapping[i] = 0
     mapping[~i] = -1
-    k = int(1)
+    k = 1
 
     while waiting:
         i = waiting.pop(0)
