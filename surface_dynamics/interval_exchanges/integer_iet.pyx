@@ -8,8 +8,6 @@
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import print_function
-
 from cysignals.memory cimport check_malloc, sig_free
 from libc.string cimport memcpy
 

@@ -38,9 +38,6 @@ Cambridge Studies in Advanced Mathematics 49 (1997)
 #                  https://www.gnu.org/licenses/
 #*****************************************************************************
 
-from __future__ import print_function, absolute_import
-from six.moves import range, map, filter, zip
-
 from .factored_denominator import FactoredDenominator, AbstractMSum, AbstractMSumRing, laurent_monomial
 
 import numbers
