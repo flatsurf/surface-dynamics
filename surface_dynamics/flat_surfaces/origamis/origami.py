@@ -42,8 +42,6 @@ EXAMPLES::
 #                  https://www.gnu.org/licenses/
 # ****************************************************************************
 
-from __future__ import print_function, absolute_import
-
 from surface_dynamics.flat_surfaces.origamis.origami_dense import Origami_dense_pyx
 from surface_dynamics.misc.permutation import perm_init, perm_check
 

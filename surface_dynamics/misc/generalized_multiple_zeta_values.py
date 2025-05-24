@@ -8,8 +8,6 @@ TODO:
 - introduce linear combinations of *divergent* multiple zeta values
   that we possibly simplify at the end.
 """
-from __future__ import absolute_import
-
 import itertools
 from collections import defaultdict
 import cypari2
