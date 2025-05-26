@@ -34,7 +34,7 @@ from sage.rings.integer import Integer
 from sage.rings.integer_ring import ZZ
 
 
-class OrigamiGenerators():
+class OrigamiGenerators:
     r"""
     Examples of origamis.
     """

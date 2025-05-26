@@ -126,7 +126,7 @@ def vector_to_linear_form_string(u, var_names):
 
 
 # NOTE: should this be an instance of Factorization?
-class FactoredDenominator(object):
+class FactoredDenominator:
     r"""
     Factored denominator
 

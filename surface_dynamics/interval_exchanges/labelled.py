@@ -803,7 +803,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
 
         # the loser letters is the only letter repeated in the loser
         # interval (False)
-        for i,c in enumerate((self._labels[1-winner])):
+        for i, c in enumerate(self._labels[1-winner]):
             if c != loser and c in self._labels[1-winner][i+1:]:
                 return True
 

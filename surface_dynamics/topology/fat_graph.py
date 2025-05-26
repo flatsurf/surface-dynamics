@@ -62,7 +62,7 @@ def list_extrems(l, n):
     return (vdmin, vdmax)
 
 
-class FatGraph(object):
+class FatGraph:
     r"""
     Fat graph or graph embedded in an orientable surface.
 

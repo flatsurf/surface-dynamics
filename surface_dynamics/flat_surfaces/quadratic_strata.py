@@ -126,7 +126,7 @@ List the connected components of a stratum::
     0 1 2 3 1 4 5
     2 6 5 4 6 3 0
 """
-#*****************************************************************************
+# ***************************************************************************
 #       Copyright (C) 2010 Vincent Delecroix <20100.delecroix@gmail.com>
 #       Copyright (C) 2010 Samuel Lelievre <samuel.lelievre@gmail.com>
 #
@@ -134,9 +134,7 @@ List the connected components of a stratum::
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
-
-from __future__ import print_function, absolute_import
+# ***************************************************************************
 
 import numbers
 

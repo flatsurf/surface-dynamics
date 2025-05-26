@@ -6904,7 +6904,7 @@ class RauzyDiagram(SageObject):
             for i in range(len(self._edge_types)):
                 if self._succ[g._end][i] is not None:
                     g._fast_append(i)
-                    for h in self._all_npath_extension(g,length-1): yield h
+                    yield from self._all_npath_extension(g, length - 1)
                     g.pop()
 
     def _all_path_extension(self, g, length=0):
@@ -6947,7 +6947,7 @@ class RauzyDiagram(SageObject):
             for i in range(len(self._edge_types)):
                 if self._succ[g._end][i] is not None:
                     g._fast_append(i)
-                    for h in self._all_path_extension(g,length-1): yield h
+                    yield from self._all_path_extension(g, length - 1)
                     g.pop()
 
     def __iter__(self):

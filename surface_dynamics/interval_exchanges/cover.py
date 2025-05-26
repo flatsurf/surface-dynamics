@@ -57,7 +57,8 @@ def to_gap(g):
             raise
         return g
 
-class PermutationCover(object):
+
+class PermutationCover:
     r"""
     An interval exchange permutation together with covering data.
 

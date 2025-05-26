@@ -7,13 +7,9 @@
 #                  https://www.gnu.org/licenses/
 # ****************************************************************************
 
-from __future__ import absolute_import
-
 from .strata import Stratum
 from .abelian_strata import AbelianStrata, DeprecatedAbelianStratumConstructor as AbelianStratum
 from .quadratic_strata import QuadraticStrata, DeprecatedQuadraticStratumConstructor as QuadraticStratum
 from .homology import RibbonGraph, RibbonGraphWithAngles
 from .separatrix_diagram import SeparatrixDiagram, CylinderDiagram, QuadraticCylinderDiagram
 from .origamis.all import *
-
-del absolute_import
