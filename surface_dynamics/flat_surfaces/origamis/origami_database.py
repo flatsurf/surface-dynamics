@@ -183,7 +183,6 @@ AUTHOR:
 # ****************************************************************************
 
 from pathlib import Path
-from six import string_types
 
 from sage.rings.real_mpfr import RealField
 from sage.rings.all import QQ, Integer
@@ -1728,7 +1727,7 @@ class OrigamiDatabase(SQLDatabase):
             q.cols(ORIGAMI_DB_cols)
             q = q.sql_query()
         else:
-            if isinstance(other, string_types):
+            if isinstance(other, str):
                 other = OrigamiDatabase(other)
             assert isinstance(other, OrigamiDatabase)
             q = SQLQuery(other, 'SELECT ' + ','.join(ORIGAMI_DB_cols) + ' FROM origamis')
@@ -1931,7 +1930,7 @@ class OrigamiDatabase(SQLDatabase):
             11
         """
         from surface_dynamics.flat_surfaces.abelian_strata import \
-        Stratum, AbelianStratum, AbelianStratumComponent, AbelianStrata
+            Stratum, AbelianStratum, AbelianStratumComponent, AbelianStrata
 
         if comp is None:
             m = self.max_nb_squares(Stratum([2], k=1))
@@ -2016,7 +2015,7 @@ class OrigamiDatabase(SQLDatabase):
             ---------------
         """
         if self._old_version:
-            skeleton,columns = OLDS[self._old_version]
+            skeleton, columns = OLDS[self._old_version]
         else:
             skeleton = ORIGAMI_DB_skeleton
             columns = ORIGAMI_DB_cols
@@ -2027,14 +2026,14 @@ class OrigamiDatabase(SQLDatabase):
         else:
             cols = ['representative']
 
-        if isinstance(cols, string_types):
+        if isinstance(cols, str):
             cols = [cols]
 
         query_list = list(query_list)
         query_list.extend((entry, '=', value) for entry, value in kwds.items())
 
         qq = []
-        for entry,sign,value in query_list:
+        for entry, sign, value in query_list:
             if entry not in columns:
                 raise ValueError("{} is not a valid column name".format(entry))
             if entry in self._entry_to_data:
@@ -2044,11 +2043,11 @@ class OrigamiDatabase(SQLDatabase):
                 qq.append("%s%s'%s'" % (entry, sign, str(value)))
             elif typ == 'BOOLEAN':
                 if value:
-                    qq.append("%s%s'True'" % (entry,sign))
+                    qq.append("%s%s'True'" % (entry, sign))
                 else:
-                    qq.append("%s%s'False'" % (entry,sign))
+                    qq.append("%s%s'False'" % (entry, sign))
             else:
-                qq.append("%s%s%s" % (entry,sign,str(value)))
+                qq.append("%s%s%s" % (entry, sign, str(value)))
 
         if qq:
             query_string = ' AND '.join(qq)
