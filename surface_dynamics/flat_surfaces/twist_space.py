@@ -1,4 +1,3 @@
-# encoding=utf-8
 r"""
 Homology of cylinder decomposition.
 """

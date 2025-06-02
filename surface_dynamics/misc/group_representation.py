@@ -1,4 +1,3 @@
-# coding: utf-8
 r"""
 Some utility function for representations of finite groups
 
