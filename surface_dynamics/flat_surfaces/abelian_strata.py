@@ -592,7 +592,7 @@ class AbelianStratum(Stratum):
 
             sage: from surface_dynamics import Stratum
 
-            sage: for (zeros, ncyl) in [((4,), 3), ((2,2), 4)]:
+            sage: for zeros, ncyl in [((4,), 3), ((2,2), 4)]:
             ....:     S = Stratum(zeros, k=1).separatrix_diagrams(3)
             ....:     for i in range(len(S)):
             ....:         for j in range(i):
@@ -630,7 +630,7 @@ class AbelianStratum(Stratum):
             ....:       CylinderDiagram('(0,1)-(0,3) (2,3)-(1,4) (4)-(2)')]
             sage: C2 = list(A.cylinder_diagram_iterator(3, force_computation=True))
             sage: assert len(C1) == len(C2)
-            sage: for (c1, c2) in zip(C1, C2):
+            sage: for c1, c2 in zip(C1, C2):
             ....:     assert c1.is_isomorphic(c2) or \
             ....:            c1.is_isomorphic(c2.horizontal_symmetry()) or \
             ....:            c1.is_isomorphic(c2.vertical_symmetry()) or \

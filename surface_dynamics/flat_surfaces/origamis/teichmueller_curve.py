@@ -374,7 +374,7 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
         K = Integer(1)/Integer(12) * sum(Integer(m)*Integer(m+2)/Integer(m+1) for m in self.stratum().signature())
         KK = 0
         for o in self._mapping:
-            KK += sum(Rational((w,h)) for (h,w) in o.widths_and_heights())
+            KK += sum(Rational((w, h)) for h, w in o.widths_and_heights())
         return K + Integer(1)/Integer(len(self._mapping)) * KK
 
     # TODO: mysterious signs and interversion problems...
@@ -401,7 +401,7 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
 
         while waiting:
             x = waiting.pop()
-            for (e0,e1,label) in tree.outgoing_edges(x):
+            for e0, e1, label in tree.outgoing_edges(x):
                 waiting.append(e1)
                 o = reps_o[e0]
                 if label == 's':
@@ -426,7 +426,7 @@ class TeichmuellerCurveOfOrigami_class(TeichmuellerCurve):
 
         m_gens = []
 
-        for (e0,e1,label) in gens:
+        for e0, e1, label in gens:
             o = reps_o[e0]
             if label == 's':
                 oo = o.S_action()

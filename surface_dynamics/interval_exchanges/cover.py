@@ -931,9 +931,9 @@ class PermutationCover:
             sage: def cyclic_cover_regular(n, a, b, c):
             ....:     return p.regular_cover(Zmod(n), [c, a, b])
 
-            sage: for (dat, ans) in [((7,1,1,2), [0,2,2,2]),
-            ....:                    ((7,1,3,3), [0,1,1,1]),
-            ....:                    ((8,1,2,4), [0,0,1,2,2])]:
+            sage: for dat, ans in [((7,1,1,2), [0,2,2,2]),
+            ....:                  ((7,1,3,3), [0,1,1,1]),
+            ....:                  ((8,1,2,4), [0,0,1,2,2])]:
             ....:     c1 = cyclic_cover(*dat)
             ....:     c2 = cyclic_cover_regular(*dat)
             ....:     assert sorted(c1.isotypic_projectors(floating_point=True)[1]) == ans

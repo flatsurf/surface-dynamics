@@ -40,7 +40,7 @@ def laurent_monomial(R, arg):
         raise TypeError("tuple key must have same length as ngens")
 
     from sage.misc.misc_c import prod
-    return prod(x**int(i) for (x, i) in zip(R.gens(), arg))
+    return prod(x**int(i) for x, i in zip(R.gens(), arg))
 
 
 def vector_to_monomial_string(u, var_names):

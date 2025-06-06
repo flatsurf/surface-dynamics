@@ -225,7 +225,7 @@ subbundle
 p = iet.GeneralizedPermutation("a a", "b b c c d d e e")
 c = p.cover(["(1,2,3,4)", "(1,4,3,2)", "(1,2,3,4)", "()", "()"])
 print(c.stratum())
-for (lexp, char) in c.lyapunov_exponents_H_plus(isotypic_decomposition=True, return_char=True):
+for lexp, char in c.lyapunov_exponents_H_plus(isotypic_decomposition=True, return_char=True):
     print("{:15}: {}".format(str(char), lexp))
 ```
 
