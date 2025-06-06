@@ -152,7 +152,7 @@ class TopologicalRecursion:
             J = tuple(J)
 
             s = sum(J)  # = i + j
-            for (a, value) in B(g, n - s - 1, I[0], im):
+            for a, value in B(g, n - s - 1, I[0], im):
                 if verbose:
                     print("[S1] B({}, {}, {}) F({}, {}, {})".format(I[0], im, a, g, n - 1, (a,) + J))
                 S1 += fac * value * F(g, n - 1, (a,) + J)
@@ -167,7 +167,7 @@ class TopologicalRecursion:
             # is (a, b) + I[1:].
             I1 = I[1:]
             abbound = 3 * (g - 1) - 3 + (n + 1) - sum(I1)
-            for (a, b, value) in C(I[0], abbound, abbound, abbound):
+            for a, b, value in C(I[0], abbound, abbound, abbound):
                 if verbose:
                     print("[S2] C({}, {}, {}) F({}, {}, {})".format(I[0], a, b, g - 1, n + 1, (a, b) + I1))
                 S2 += value * F(g - 1, n + 1, (a, b) + I1)
@@ -207,7 +207,7 @@ class TopologicalRecursion:
                     g2 = g - g1
                     a1bound = 3 * g1 - 3 + (n1 + 1) - s1
                     a2bound = 3 * g2 - 3 + (n2 + 1) - s2
-                    for (a1, a2, value) in C(I[0], a1bound, a2bound, a1bound + a2bound):
+                    for a1, a2, value in C(I[0], a1bound, a2bound, a1bound + a2bound):
                         f1 = F(g1, n1 + 1, (a1,) + I1)
                         f2 = F(g2, n2 + 1, (a2,) + I2)
                         if verbose:

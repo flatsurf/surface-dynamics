@@ -197,7 +197,7 @@ def lattice(vectors):
         raise ValueError("all input vectors are collinear")
 
     # Now proceed through a simple reduction algorithm
-    w = sorted(set((h, t % a) if h >= 0 else (-h, (-t) % a) for (t, h) in w))
+    w = sorted(set((h, t % a) if h >= 0 else (-h, (-t) % a) for t, h in w))
     while len(w) > 1:
         while w[0][0] == zero:
             a = a.gcd(w[0][1])

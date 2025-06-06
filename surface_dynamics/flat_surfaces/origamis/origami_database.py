@@ -1286,8 +1286,8 @@ def build_global_data(o, c=None):
     M_ncyls = 0              # max. nb cyls
     m_hd = 4*o.genus()+4     # min. Hom. dim
     M_hd = 0                 # max. Hom. dim
-    for (oo, l) in c.cusp_representative_iterator():
-        cc,w,h,_ = oo.cylinder_diagram(data=True)
+    for oo, l in c.cusp_representative_iterator():
+        cc, w, h, _ = oo.cylinder_diagram(data=True)
         nc = cc.ncyls()
         if nc < m_ncyls:
             m_ncyls = nc
@@ -1298,7 +1298,7 @@ def build_global_data(o, c=None):
             m_hd = hd
         if hd > M_hd:
             M_hd = hd
-        for j,bot in enumerate(cc.bot_cycle_tuples()):
+        for j, bot in enumerate(cc.bot_cycle_tuples()):
             ww = sum(w[i] for i in bot)
             s += l * Integer(h[j]) / Integer(ww)
 

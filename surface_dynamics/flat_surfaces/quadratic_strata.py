@@ -678,10 +678,10 @@ class QuadraticStratumComponent(StratumComponent):
 #        t0 = map(f,t0[1:])
 #        t1 = map(f,t1[:-1])
 #
-#        s0   = set(j for (i,j) in t1 if i == 0)
-#        s0_p = set(j for (i,j) in t0 if i == 0 and abs(t0[j][1]-j) == 1)
-#        s1   = set(j for (i,j) in t0 if i == 1)
-#        s1_p = set(j for (i,j) in t1 if i == 1 and abs(t1[j][1]-j) == 1)
+#        s0   = set(j for i, j in t1 if i == 0)
+#        s0_p = set(j for i, j in t0 if i == 0 and abs(t0[j][1]-j) == 1)
+#        s1   = set(j for i, j in t0 if i == 1)
+#        s1_p = set(j for i, j in t1 if i == 1 and abs(t1[j][1]-j) == 1)
 #
 #        p0,p1 = p
 #        p0 = [i-1 for i in p0[1:]]
@@ -716,7 +716,7 @@ class QuadraticStratumComponent(StratumComponent):
 #                    print("c0 =",c0_bot,c0_top)
 #                    print("c1 =",c1_bot,c1_top)
 #
-#            dom = dict((j,i-1) for (i,j) in enumerate(sorted(set(bot+top))))
+#            dom = dict((j,i-1) for i, j in enumerate(sorted(set(bot+top))))
 #            if verbose:
 #                print(dom)
 #
@@ -780,7 +780,7 @@ class QuadraticStratumComponent(StratumComponent):
 #
 #            if verbose: print((c0_bot,c0_top),(c1_bot,c1_top))
 #
-#            dom = dict((j,i-1) for (i,j) in enumerate(sorted(set(c0_bot+c0_top+c1_bot+c1_top))))
+#            dom = dict((j,i-1) for i, j in enumerate(sorted(set(c0_bot+c0_top+c1_bot+c1_top))))
 #            if verbose:
 #                print(dom)
 #
