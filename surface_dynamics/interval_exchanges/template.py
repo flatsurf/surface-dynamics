@@ -3410,11 +3410,7 @@ class PermutationLI(Permutation):
                     return False
 
             j = len(l1) // 2
-            for i in range(j):
-                if l1[i][1] != j+i:
-                    return False
-
-            return True
+            return all(l1[i][1] == j + i for i in range(j))
 
     def stratum_component(self):
         r"""
@@ -6992,11 +6988,7 @@ class RauzyDiagram(SageObject):
             sage: q in s
             True
         """
-        for p in self._succ:
-            if self._vertex_to_permutation(p) == element:
-                return True
-
-        return False
+        return any(self._vertex_to_permutation(p) == element for p in self._succ)
 
     def _repr_(self):
         r"""

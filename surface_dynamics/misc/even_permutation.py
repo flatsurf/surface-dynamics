@@ -25,10 +25,7 @@ def is_signed_perm(p):
     if len(p) % 2:
         return False
     n = len(p)//2
-    for i in range(-n, n):
-        if p[i] != ~p[~i]:
-            return False
-    return True
+    return all(p[i] == ~p[~i] for i in range(-n, n))
 
 
 def signed_permutations(n):
@@ -145,10 +142,7 @@ def even_perm_is_orientable(p):
         False
     """
     n = len(p) // 2
-    for i in range(n):
-        if p[i] < 0:
-            return False
-    return True
+    return all(p[i] >= 0 for i in range(n))
 
 def even_perm_cycles(p):
     r"""
