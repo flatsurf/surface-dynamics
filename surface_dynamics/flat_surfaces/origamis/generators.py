@@ -1,4 +1,3 @@
-# encoding=utf8
 r"""
 List of common origamis
 
