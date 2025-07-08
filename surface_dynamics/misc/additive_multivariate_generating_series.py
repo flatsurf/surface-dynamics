@@ -1,4 +1,3 @@
-# coding: utf8
 r"""
 Additive rational multivariate functions
 
