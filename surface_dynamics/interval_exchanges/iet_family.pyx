@@ -4,14 +4,14 @@
 r"""
 Linear families of interval exchange transformations
 """
-#*****************************************************************************
+# ***************************************************************************
 #       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
+# ***************************************************************************
 
 ##########################
 # C declarations
@@ -58,8 +58,8 @@ from ppl.polyhedron cimport C_Polyhedron
 from sage.ext.stdsage cimport PY_NEW
 from sage.rings.integer cimport Integer
 
-#from gmpy2 cimport import_gmpy2, MPZ_Object, MPZ, GMPy_MPZ_New
-#import_gmpy2()
+# from gmpy2 cimport import_gmpy2, MPZ_Object, MPZ, GMPy_MPZ_New
+# import_gmpy2()
 
 
 ########################
@@ -217,9 +217,9 @@ cdef class IETFamily:
         self.perm = <int *> check_malloc(2 * self.dim * sizeof(int))
         cdef size_t i
         cdef int j
-        for i,j in enumerate(p._labels[0]):
+        for i, j in enumerate(p._labels[0]):
             self.perm[i] = j
-        for i,j in enumerate(p._labels[1]):
+        for i, j in enumerate(p._labels[1]):
             self.perm[self.dim + i] = j
 
         self.poly = <C_Polyhedron> C
@@ -428,7 +428,7 @@ cdef class IETFamily:
         if self.dim != other.dim or self.length != other.length:
             return op == Py_NE
 
-        cdef size_t i,j
+        cdef size_t i, j
         for i in range(2 * self.dim):
             if self.perm[i] != other.perm[i]:
                 return op == Py_NE
@@ -620,7 +620,7 @@ cdef class IETFamily:
         while True:
             if verbose:
                 print("branch:")
-                for ss,ff in branch[-1]:
+                for ss, ff in branch[-1]:
                     print(ss)
                     print(ff)
                     print()
@@ -691,7 +691,7 @@ cdef class IETFamily:
         from .constructors import Permutation, IET
 
         top = [self.perm[i] for i in range(self.dim)]
-        bot = [self.perm[i] for i in range(self.dim,2*self.dim)]
+        bot = [self.perm[i] for i in range(self.dim, 2*self.dim)]
         p = Permutation(top, bot, alphabet=range(self.dim))
 
         coeffs = []

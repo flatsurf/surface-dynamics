@@ -1,4 +1,4 @@
-#*****************************************************************************
+# ***************************************************************************
 #       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
 #                     2022 Julian Rüth <julian.rueth@fsfe.org>
 #
@@ -6,7 +6,7 @@
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
+# ***************************************************************************
 
 from cysignals.memory cimport check_malloc, sig_free
 from libc.string cimport memcpy
@@ -152,7 +152,7 @@ cdef set_int_iet(int_iet_t t, top, bot, lengths):
     cdef uint64_t * clengths
     cdef int k = len(top)
     cdef int n = (len(top) + len(bot)) // 2
-    cdef int i,j
+    cdef int i, j
 
     # checks and twin construction
     lengths = list(map(int, lengths))

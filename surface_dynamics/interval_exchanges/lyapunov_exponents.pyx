@@ -1,20 +1,20 @@
 r"""
 Python bindings for various computation of Lyapunov exponents.
 """
-#*****************************************************************************
+# ***************************************************************************
 #       Copyright (C) 2019 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
+# ***************************************************************************
 
 cimport numpy as np
 
 from builtins import range
 
-from libc.stdlib cimport malloc,free
+from libc.stdlib cimport malloc, free
 from math import isnan, isinf
 
 cdef extern from "lyapunov_exponents.h":
@@ -31,24 +31,24 @@ cdef extern from "lyapunov_exponents.h":
     void set_random_vectors(quad_cover * qcc)
     void renormalize_length_quad_cover(quad_cover *qcc)
 
-    #int check_generalized_permutation(generalized_permutation *p)
-    #int check_quad_cover(quad_cover * qcc)
+    # int check_generalized_permutation(generalized_permutation *p)
+    # int check_quad_cover(quad_cover * qcc)
 
     void free_generalized_permutation(generalized_permutation ** gp)
     void free_quad_cover(quad_cover ** qcc)
     # print
-    #void print_generalized_permutation(generalized_permutation * p)
+    # void print_generalized_permutation(generalized_permutation * p)
     void print_quad_cover(quad_cover * qcc)
     void print_vectors(quad_cover * qcc)
     void print_permutation(size_t *perm, size_t degree)
 
     # algorithms
-    #void renormalize_length_quad_cover(quad_cover * qcc)
-    #void rauzy_induction_H_plus_quad_cover(quad_cover *qcc)
+    # void renormalize_length_quad_cover(quad_cover * qcc)
+    # void rauzy_induction_H_plus_quad_cover(quad_cover *qcc)
 
     int init_GS(size_t dim)
     void free_GS()
-    #void orthogonalize_GS(quad_cover * qcc, double * theta)
+    # void orthogonalize_GS(quad_cover * qcc, double * theta)
 
     void lyapunov_exponents_H_plus(quad_cover *qcc, double *theta, size_t nb_induction)
     void lyapunov_exponents_isotypic(quad_cover *qcc, double *theta, size_t nb_induction, size_t nb_char, size_t *dimensions, double *proj)
@@ -105,7 +105,7 @@ def lyapunov_exponents_H_plus_cover(
         raise ValueError("dimensions without projections")
     nc = len(dimensions)
 
-    if not isinstance(gp, (tuple, list)) or not isinstance(twin, (tuple,list)):
+    if not isinstance(gp, (tuple, list)) or not isinstance(twin, (tuple, list)):
         raise ValueError("gp and twin should be lists")
     if len(gp) % 2 or len(gp) != len(twin):
         raise ValueError("gp and twin should have the same even length")
@@ -119,11 +119,11 @@ def lyapunov_exponents_H_plus_cover(
     if sigma is None:
         sigma = [[0]]*n
         degree = 1
-    elif not isinstance(sigma, (tuple,list)):
+    elif not isinstance(sigma, (tuple, list)):
         raise ValueError("sigma should be either a tuple or a list")
     elif len(sigma) != n:
         raise ValueError("the length of sigma (={}) should be n={}".format(len(sigma), n))
-    elif not all(isinstance(l, (tuple,list)) for l in sigma):
+    elif not all(isinstance(l, (tuple, list)) for l in sigma):
         raise ValueError("sigma should be a list of lists")
     else:
         degree = len(sigma[0])
@@ -140,7 +140,7 @@ def lyapunov_exponents_H_plus_cover(
 
     s = <size_t **> malloc(n * sizeof(size_t*))
     s[0] = <size_t *> malloc(degree * n * sizeof(size_t))
-    for i in range(1,n):
+    for i in range(1, n):
         s[i] = s[0] + i * degree
     for i in range(n):
         for j in range(degree):
@@ -149,7 +149,8 @@ def lyapunov_exponents_H_plus_cover(
     if dimensions is not None :
         nb_vectors = sum(dimensions)
 
-    nn = int(nb_vectors) + 1 # We add one to keep track of the length of the geodesic
+    nn = int(nb_vectors) + 1
+    # We add one to keep track of the length of the geodesic
 
     theta = <double *> malloc(nn * sizeof(double))
 
