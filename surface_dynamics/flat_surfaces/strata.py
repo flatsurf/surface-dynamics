@@ -511,7 +511,8 @@ class Stratum(UniqueRepresentation, SageObject):
             sage: a._exp_zero_str()
             '2^3'
         """
-        return ', '.join('%d^%d' %(i,e) if e != 1 else '%d' %i for (i,e) in list_to_exp_list(self.signature()))
+        return ', '.join('%d^%d' % (i, e) if e != 1 else '%d' % i
+                         for i, e in list_to_exp_list(self.signature()))
 
     # this attribute can be switched between _flat_zero_str and _exp_zero_str
     _zero_str = _exp_zero_str

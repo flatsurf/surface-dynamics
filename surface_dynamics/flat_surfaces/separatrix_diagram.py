@@ -1412,7 +1412,7 @@ class SeparatrixDiagram(SageObject):
             ....:       CylinderDiagram('(0,1)-(0,4) (2,3,4)-(5,6) (5)-(2) (6)-(1,3)')]
             sage: C2 = s.cylinder_diagrams()
             sage: assert len(C1) == len(C2)
-            sage: for (c1, c2) in zip(C1, C2): assert c1.is_isomorphic(c2)
+            sage: for c1, c2 in zip(C1, C2): assert c1.is_isomorphic(c2)
 
         TESTS::
 
@@ -1499,7 +1499,7 @@ class SeparatrixDiagram(SageObject):
             sage: C1 = [CylinderDiagram('(0,1)-(0,2) (2)-(1)')]
             sage: C2 = s.cylinder_diagrams()
             sage: assert len(C1) == len(C2)
-            sage: for (c1, c2) in zip(C1, C2): assert c1.is_isomorphic(c2)
+            sage: for c1, c2 in zip(C1, C2): assert c1.is_isomorphic(c2)
 
         In the example below, there is no isomorphism problem for the cylinder
         diagram generation as the separatrix diagram admit no automorphism::
@@ -1513,7 +1513,7 @@ class SeparatrixDiagram(SageObject):
             sage: C2 = s.cylinder_diagrams()
             sage: C3 = s.cylinder_diagrams(up_to_symmetry=False)
             sage: assert len(C1) == len(C2) == len(C3)
-            sage: for (c1, c2, c3) in zip(C1, C2, C3): assert c1.is_isomorphic(c2) and c1.is_isomorphic(c3)
+            sage: for c1, c2, c3 in zip(C1, C2, C3): assert c1.is_isomorphic(c2) and c1.is_isomorphic(c3)
 
         TESTS::
 
@@ -2912,7 +2912,7 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: all(cc.inverse().inverse() == cc for cc in Stratum([4], k=1).cylinder_diagrams()) # long time
             True
         """
-        return CylinderDiagram([(t,b) for (b,t) in self.cylinders()])
+        return CylinderDiagram([(t, b) for b, t in self.cylinders()])
 
     def vertical_symmetry(self):
         r"""
@@ -3543,7 +3543,7 @@ class CylinderDiagram(SeparatrixDiagram):
 #        V = FreeModule(ring, n)
 #
 #        l = []
-#        for (b,t) in self.cylinders():
+#        for b, t in self.cylinders():
 #            v = copy(V.zero())
 #            for i in b:
 #                v[g.dart_to_edge(i,orientation=True)] = 1
@@ -4026,7 +4026,7 @@ class CylinderDiagram(SeparatrixDiagram):
             edges[u, v] += 1
 
         G = DiGraph(self.ncyls(), loops=True, multiedges=False, weighted=True)
-        G.add_edges([(u, v, m) for ((u, v), m) in edges.items()])
+        G.add_edges([(u, v, m) for (u, v), m in edges.items()])
         return G
 
     #TODO
@@ -4927,7 +4927,7 @@ class QuadraticCylinderDiagram(SageObject):
         elif len(twists) != len(widths):
             raise ValueError("the 'twists' vector has wrong length")
         else:
-            twists = [ZZ.coerce(t) % w for (t,w) in zip(twists, widths)]
+            twists = [ZZ.coerce(t) % w for t, w in zip(twists, widths)]
 
         # now glue the boundaries
         # (distance with respect to the minimum dart in the face)
