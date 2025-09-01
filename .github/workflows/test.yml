@@ -39,9 +39,9 @@ jobs:
           - { environment: "sagemath-105-minimal", on: "ubuntu-24.04" }
           - { environment: "sagemath-105-all", on: "ubuntu-24.04" }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with: { submodules: recursive }
-      - uses: prefix-dev/setup-pixi@v0.8.10
+      - uses: prefix-dev/setup-pixi@v0.9.0
         with: { pixi-version: v0.39.0 }
       - run: pixi run -e ${{ matrix.environment }} test-doctest-long
       - run: pixi run -e ${{ matrix.environment }} test-pytest
