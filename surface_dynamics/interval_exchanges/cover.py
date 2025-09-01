@@ -45,6 +45,7 @@ except AttributeError:
     # broken in old SageMath
     libgap_fail = libgap.eval("fail")
 
+
 def to_gap(g):
     try:
         return libgap(g)
@@ -86,7 +87,7 @@ class PermutationCover:
 
     - ``_inv_permut_cover`` -- list of inverses of ``_permut_cover``
     """
-    def __init__(self, base, degree, perms):
+    def __init__(self, base, degree, perms) -> None:
         r"""
         TESTS::
 
@@ -132,7 +133,7 @@ class PermutationCover:
     def degree(self):
         return self._degree_cover
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         r"""
         A representation of the generalized permutation cover.
 
@@ -143,7 +144,6 @@ class PermutationCover:
         OUTPUT:
 
         string -- the string that represents the permutation
-
 
         EXAMPLES::
 
@@ -158,7 +158,7 @@ class PermutationCover:
         s += str(self._base)
         return s
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         r"""
         TESTS::
 
@@ -181,11 +181,11 @@ class PermutationCover:
             False
         """
         return type(self) == type(other) and \
-               self._base == other._base and \
-               self.degree() == other.degree() and \
-               self._permut_cover == other._permut_cover
+            self._base == other._base and \
+            self.degree() == other.degree() and \
+            self._permut_cover == other._permut_cover
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         r"""
         TESTS::
 
@@ -208,9 +208,9 @@ class PermutationCover:
             True
         """
         return type(self) != type(other) or \
-               self._base != other._base or \
-               self.degree() != other.degree() or \
-               self._permut_cover != other._permut_cover
+            self._base != other._base or \
+            self.degree() != other.degree() or \
+            self._permut_cover != other._permut_cover
 
     def __len__(self):
         r"""
@@ -224,7 +224,7 @@ class PermutationCover:
         """
         return len(self._base)
 
-    def __getitem__(self,i):
+    def __getitem__(self, i):
         r"""
         TESTS::
 
@@ -240,7 +240,7 @@ class PermutationCover:
 
     def base(self):
         r"""
-        Return the combinatorial data corresponding to the base of this cover
+        Return the combinatorial data corresponding to the base of this cover.
 
         EXAMPLES::
 
@@ -271,7 +271,7 @@ class PermutationCover:
 
     def covering_data(self, label):
         r"""
-        Returns the permutation associated to the given ``label``.
+        Return the permutation associated to the given ``label``.
 
         EXAMPLES::
 
@@ -291,11 +291,11 @@ class PermutationCover:
         """
         from sage.groups.perm_gps.permgroup_named import SymmetricGroup
         S = SymmetricGroup(self.degree())
-        return S([i+1 for i in self.covering_data_tuple(label)])
+        return S([i + 1 for i in self.covering_data_tuple(label)])
 
     def covering_data_tuple(self, label):
         r"""
-        Returns the permutation associated to the given ``label`` as a tuple on
+        Return the permutation associated to the given ``label`` as a tuple on
         `\{0, 1, \ldots, d-1\}` where `d` is the degree of the cover.
 
         EXAMPLES::
@@ -316,7 +316,7 @@ class PermutationCover:
         """
         return self._permut_cover[self._base.alphabet().rank(label)]
 
-    def interval_diagram(self, sign=False):
+    def interval_diagram(self, sign=False) -> list:
         r"""
         Return the interval diagram.
 
@@ -379,11 +379,12 @@ class PermutationCover:
                     for base_singularity in orbit:
                         label, s = base_singularity
                         if s == -1:
-                            dd = perm(s,label)[d]
+                            dd = perm(s, label)[d]
                         else:
                             dd = d
-                        singularity.append((label,dd,s) if sign else (label,dd))
-                        d = perm(s,label)[d]
+                        singularity.append((label, dd, s) if sign
+                                           else (label, dd))
+                        d = perm(s, label)[d]
 
                     # if it closes, break the loop
                     if d == d_init:
@@ -417,8 +418,9 @@ class PermutationCover:
             [ 0 -1  0  0  0  0  0  1  0  0  0  0]
             [ 0  0 -1  0  0  0  0  0  0  0  0  1]
         """
-        gens = [(i,a) for i in range(self.degree()) for a in self._base.letters()]
-        gen_indices = {g:i for i,g in enumerate(gens)}
+        gens = [(i, a) for i in range(self.degree())
+                for a in self._base.letters()]
+        gen_indices = {g: i for i, g in enumerate(gens)}
         B = []
         p = self._base
         signs = p._canonical_signs()[1]
@@ -428,9 +430,9 @@ class PermutationCover:
                 for j in range(len(p[i])):
                     if signs[i][j] == -1:
                         perm_cover = self.covering_data_tuple(p[i][j])
-                        border[gen_indices[(perm_cover.index(k),p[i][j])]] += -1
+                        border[gen_indices[(perm_cover.index(k), p[i][j])]] += -1
                     elif signs[i][j] == 1:
-                        border[gen_indices[(k,p[i][j])]] += 1
+                        border[gen_indices[(k, p[i][j])]] += 1
                     else:
                         RuntimeError
             B.append(border)
@@ -484,21 +486,22 @@ class PermutationCover:
             True
         """
         singularities = self.interval_diagram(sign=True)
-        sing_to_index = {s:i for i,sing in enumerate(singularities) for s in sing}
+        sing_to_index = {s: i for i, sing in enumerate(singularities)
+                         for s in sing}
         nb_sing = len(singularities)
         borders = []
         for d in range(self.degree()):
             for a in self._base.alphabet():
                 border_side = [0] * nb_sing
-                border_side[sing_to_index[(a,d,+1)]] += 1
-                border_side[sing_to_index[(a,d,-1)]] += -1
+                border_side[sing_to_index[(a, d, +1)]] += 1
+                border_side[sing_to_index[(a, d, -1)]] += -1
                 borders.append(border_side)
 
         from sage.matrix.constructor import matrix
         from sage.rings.integer_ring import ZZ
         return matrix(ZZ, borders)
 
-    def profile(self):
+    def profile(self) -> list:
         r"""
         Return the profile of the surface.
 
@@ -537,14 +540,15 @@ class PermutationCover:
             p = p_id
             for lab, sign in flat_orbit:
                 q = self.covering_data(lab)
-                if sign == -1: q = q.inverse()
+                if sign == -1:
+                    q = q.inverse()
                 p = p*q
             for c in p.cycle_type():
                 s.append(len(orbit)*c)
 
-        return Partition(sorted(s,reverse=True))
+        return Partition(sorted(s, reverse=True))
 
-    def is_orientable(self):
+    def is_orientable(self) -> bool:
         r"""
         Test whether this permutation cover has an orientable foliation.
 
@@ -571,29 +575,29 @@ class PermutationCover:
         from surface_dynamics.interval_exchanges.template import PermutationIET
         if isinstance(self._base, PermutationIET):
             return True
-        elif any(x%2 for x in self.profile()):
+        if any(x % 2 for x in self.profile()):
             return False
-        else:
-            # here we unfold the holonomy, i.e. try to orient each copy with +1
-            # or -1
-            signs = [+1] + [None] * (self.degree() - 1)
-            todo = [0]
-            A = self._base.alphabet()
-            p0 = set(map(A.rank, self._base[0]))
-            p1 = set(map(A.rank, self._base[1]))
-            inv_letters = p0.symmetric_difference(p1)
-            while todo:
-                i = todo.pop()
-                s = signs[i]
-                assert s is not None
-                for j in inv_letters:
-                    ii = self._permut_cover[j][i]
-                    if signs[ii] is None:
-                        signs[ii] = -s
-                        todo.append(ii)
-                    elif signs[ii] != -s:
-                        return False
-            return True
+
+        # here we unfold the holonomy, i.e. try to orient each copy with +1
+        # or -1
+        signs = [+1] + [None] * (self.degree() - 1)
+        todo = [0]
+        A = self._base.alphabet()
+        p0 = set(map(A.rank, self._base[0]))
+        p1 = set(map(A.rank, self._base[1]))
+        inv_letters = p0.symmetric_difference(p1)
+        while todo:
+            i = todo.pop()
+            s = signs[i]
+            assert s is not None
+            for j in inv_letters:
+                ii = self._permut_cover[j][i]
+                if signs[ii] is None:
+                    signs[ii] = -s
+                    todo.append(ii)
+                elif signs[ii] != -s:
+                    return False
+        return True
 
     @cached_method
     def monodromy(self):
@@ -612,7 +616,9 @@ class PermutationCover:
             sage: p.cover(['(1,2)', '(1,3)', '']).monodromy()
             Permutation Group with generators [(1,2), (1,3), ()]
         """
-        return PermutationGroup([self.covering_data(a) for a in self._base.letters()], canonicalize=False)
+        return PermutationGroup([self.covering_data(a)
+                                 for a in self._base.letters()],
+                                canonicalize=False)
 
     @cached_method
     def automorphism_group(self):
@@ -693,7 +699,7 @@ class PermutationCover:
 
     def genus(self):
         r"""
-        Genus of the covering translation surface
+        Return the genus of the covering translation surface.
 
         EXAMPLES::
 
@@ -785,7 +791,6 @@ class PermutationCover:
                    self._real_characters()[1][i],
                    self._cc_mats(),
                    True)
-            k = len(self._base) ** 2
             return np.hstack(np.hstack(np.tensordot(m, np.identity(len(self._base)), 0)))
         else:
             m = isotypic_projection_matrix(
@@ -834,7 +839,7 @@ class PermutationCover:
             )
         """
         from surface_dynamics.misc.group_representation import conjugacy_class_matrix, \
-                regular_conjugacy_class_matrix
+            regular_conjugacy_class_matrix
 
         G = self.group()
         if G is self.automorphism_group():
@@ -845,7 +850,6 @@ class PermutationCover:
                 mats.append(m)
         else:
             G = self._gap_grp
-            Glist = G.AsList()
             mats = []
             for cl in G.ConjugacyClasses():
                 m = regular_conjugacy_class_matrix(cl, G)
@@ -854,7 +858,7 @@ class PermutationCover:
         return tuple(mats)
 
     @cached_method
-    def _real_characters(self):
+    def _real_characters(self) -> tuple:
         r"""
         The real characters of the automorphism group
 
@@ -943,17 +947,16 @@ class PermutationCover:
         """
         if characters is None or characters is True:
             characters = self._real_characters()[0]
-        elif isinstance(characters, (tuple,list)):
-            if isinstance(characters[0], (tuple,list)):
+        elif isinstance(characters, (tuple, list)):
+            if isinstance(characters[0], (tuple, list)):
                 characters = map(tuple, characters)
             else:
                 characters = [tuple(characters)]
-                flatten = True
 
         all_characters = self._real_characters()[0]
         for c in characters:
             if c not in all_characters:
-                raise ValueError("{} is an invalid character".format(c))
+                raise ValueError(f"{c} is an invalid character")
 
         nc = len(characters)
         na = len(all_characters)
@@ -971,15 +974,15 @@ class PermutationCover:
             if floating_point:
                 M = self.isotypic_projection_matrix(i_char, floating_point=True)
                 dimension = np.linalg.matrix_rank(np.matmul(H.numpy(), M)) - \
-                            np.linalg.matrix_rank(np.matmul(B.numpy(), M))
+                    np.linalg.matrix_rank(np.matmul(B.numpy(), M))
             else:
                 M = self.isotypic_projection_matrix(i_char, floating_point=False)
                 dimension = (H*M).rank() - (B*M).rank()
 
-            if dimension%2:
+            if dimension % 2:
                 raise RuntimeError("get a subspace of odd dimension\n" +
-                        "  i_char = {}\n".format(i_char) +
-                        "  dim    = {}".format(dimension))
+                                   "  i_char = {}\n".format(i_char) +
+                                   "  dim    = {}".format(dimension))
             dimensions[ii] = dimension//2
 
             if floating_point:
@@ -987,7 +990,7 @@ class PermutationCover:
             else:
                 for i in range(dim):
                     for j in range(dim):
-                        projections[ii,i,j] = float(M[j][i])
+                        projections[ii, i, j] = float(M[j][i])
 
             ii += 1
 
@@ -995,8 +998,10 @@ class PermutationCover:
 
     def lyapunov_exponents_H_plus(self, nb_vectors=None, nb_experiments=10,
                                   nb_iterations=65536, output_file=None,
-                                  return_speed=False, isotypic_decomposition=False,
-                                  return_char=False, verbose=False, floating_point=True):
+                                  return_speed=False,
+                                  isotypic_decomposition=False,
+                                  return_char=False, verbose=False,
+                                  floating_point=True):
         r"""
         Compute the H^+ Lyapunov exponents in  the covering locus.
 
@@ -1147,9 +1152,9 @@ class PermutationCover:
         base_twin = self._base.twin_list()
         rank = self._base.alphabet().rank
         for i in range(2):
-            for j,a in enumerate(self._base[i]):
+            for j, a in enumerate(self._base[i]):
                 gp[i*k+j] = rank(a)
-                ii,jj = base_twin[i][j]
+                ii, jj = base_twin[i][j]
                 twin[i*k+j] = ii*k+jj
 
         flatten = False
@@ -1168,18 +1173,18 @@ class PermutationCover:
 
         res_final = []
 
-        m,d = mean_and_std_dev(res[0])
+        m, d = mean_and_std_dev(res[0])
         lexp = m
 
         if verbose:
             from math import log, floor, sqrt
-            output_file.write("sample of %d experiments\n"%nb_experiments)
-            output_file.write("%d iterations (~2^%d)\n"%(
+            output_file.write("sample of %d experiments\n" % nb_experiments)
+            output_file.write("%d iterations (~2^%d)\n" % (
                     nb_iterations,
                     floor(log(nb_iterations) / log(2))))
-            output_file.write("elapsed time %s\n"%time.strftime("%H:%M:%S",time.gmtime(t1-t0)))
-            output_file.write("Lexp Rauzy-Zorich: %f (std. dev. = %f, conf. rad. 0.01 = %f)\n"%(
-                    m,d, 2.576*d/sqrt(nb_experiments)))
+            output_file.write("elapsed time %s\n" % time.strftime("%H:%M:%S", time.gmtime(t1-t0)))
+            output_file.write("Lexp Rauzy-Zorich: %f (std. dev. = %f, conf. rad. 0.01 = %f)\n" % (
+                    m, d, 2.576*d/sqrt(nb_experiments)))
 
         if isotypic_decomposition:
             i_0 = 1
@@ -1191,19 +1196,20 @@ class PermutationCover:
                     output_file.write("chi = {}\n".format(self._real_characters()[0][i_char]))
                     output_file.write("dim = {}\n".format(dimensions[i_char]))
                 for i in range(i_0, i_0 + dimensions[i_char]):
-                    m,d = mean_and_std_dev(res[i])
+                    m, d = mean_and_std_dev(res[i])
                     res_int.append(m)
                     if verbose:
-                        output_file.write("theta_%d          : %f (std. dev. = %f, conf. rad. 0.01 = %f)\n"%(
-                            i,m,d, 2.576*d/sqrt(nb_experiments)))
-                res_final.append((res_int, self._real_characters()[0][i_char]) if return_char else res_int)
+                        output_file.write("theta_%d          : %f (std. dev. = %f, conf. rad. 0.01 = %f)\n" % (
+                            i, m, d, 2.576*d/sqrt(nb_experiments)))
+                res_final.append((res_int, self._real_characters()[0][i_char])
+                                 if return_char else res_int)
                 i_0 += dimensions[i_char]
 
         else:
-            for i in range(1,nb_vectors+1):
-                m,d = mean_and_std_dev(res[i])
+            for i in range(1, nb_vectors+1):
+                m, d = mean_and_std_dev(res[i])
                 if verbose:
-                    output_file.write("theta%d           : %f (std. dev. = %f, conf. rad. 0.01 = %f)\n"%(i,m,d, 2.576*d/sqrt(nb_experiments)))
+                    output_file.write("theta%d           : %f (std. dev. = %f, conf. rad. 0.01 = %f)\n" % (i, m, d, 2.576*d/sqrt(nb_experiments)))
                 res_final.append(m)
 
         res_final = res_final[0] if flatten else res_final
@@ -1246,13 +1252,14 @@ class PermutationCover:
             for j in range(d):
                 jj = perm[j]
                 S.glue((p1 + nt*j, e1), (p2 + nt*jj, e2))
-        for i in range(0,len(mids),2):
+        for i in range(0, len(mids), 2):
             p1, e1 = mids[i]
             p2, e2 = mids[i+1]
             for j in range(d):
                 S.glue((p1 + nt*j, e1), (p2 + nt*j, e2))
         S.set_immutable()
         return S
+
 
 class RegularCover(PermutationCover):
     r"""
@@ -1350,7 +1357,8 @@ class RegularCover(PermutationCover):
                 gap_grp = libgap.AbelianGroup(grp.gens_orders())
                 gens = gap_grp.GeneratorsOfGroup()
                 elts = [grp(x) for x in elts]
-                gap_elts = [prod(g**int(i) for g,i in zip(gens, x.exponents())) for x in elts]
+                gap_elts = [prod(g**int(i) for g, i in zip(gens, x.exponents()))
+                            for x in elts]
         else:
             raise RuntimeError("only multiplicative groups are supported")
 
@@ -1378,7 +1386,7 @@ class RegularCover(PermutationCover):
     def group(self):
         return self._grp
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return 'Regular cover of degree {} with group {} of the permutation:\n{}'.format(self.degree(), self.group(), str(self._base))
 
     def monodromy(self):
@@ -1455,7 +1463,7 @@ class RegularCover(PermutationCover):
 
         return Partition(sorted(p, reverse=True))
 
-    def is_orientable(self):
+    def is_orientable(self) -> bool:
         r"""
         EXAMPLES::
 
