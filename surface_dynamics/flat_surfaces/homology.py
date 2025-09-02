@@ -1080,7 +1080,7 @@ class RibbonGraph(SageObject):
             return cycles, m
         return cycles
 
-    def is_cycle(self,c):
+    def is_cycle(self,c) -> bool:
         r"""
         Test whether ``c`` is a cycle.
 
@@ -1091,9 +1091,8 @@ class RibbonGraph(SageObject):
         for i in range(len(c)-1):
             if self.dart_to_vertex(c[i][1]) != self.dart_to_vertex(c[i+1][0]):
                 return False
-        if self.dart_to_vertex(c[-1][1]) != self.dart_to_vertex(c[0][0]):
-            return False
-        return True
+        return self.dart_to_vertex(c[-1][1]) == self.dart_to_vertex(c[0][0]):
+
 
 class RibbonGraphWithAngles(RibbonGraph):
     r"""

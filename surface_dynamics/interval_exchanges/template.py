@@ -3594,31 +3594,29 @@ class PermutationLI(Permutation):
                 return False
 
             # winner or loser letter is repeated on the other interval (True)
-            if self._twin[0][-1][0] == 1: return True
-            if self._twin[1][-1][0] == 0: return True
+            if self._twin[0][-1][0] == 1:
+                return True
+            if self._twin[1][-1][0] == 0:
+                return True
 
             # the loser letter is the only letter repeated in
             # the loser interval (False)
-            if [i for i,_ in self._twin[loser]].count(loser) == 2:
-                return False
-
-            return True
+            return [i for i,_ in self._twin[loser]].count(loser) != 2
 
         elif side == 0:
             # the same letter at the left-end (False)
-            if (self._twin[0][0] == (1,0)):
+            if self._twin[0][0] == (1, 0):
                 return False
 
             # winner or loser repeated on the other interval (True)
-            if self._twin[0][0][0] == 1: return True
-            if self._twin[1][0][0] == 0: return True
+            if self._twin[0][0][0] == 1:
+                return True
+            if self._twin[1][0][0] == 0:
+                return True
 
             # the loser letter is the only letter repeated in
             # the loser interval (False)
-            if [i for i,_ in self._twin[loser]].count(loser) == 2:
-                return False
-
-            return True
+            return [i for i,_ in self._twin[loser]].count(loser) != 2
 
     def orientation_cover(self):
         r"""
