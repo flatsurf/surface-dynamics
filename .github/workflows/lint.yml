@@ -11,28 +11,28 @@ jobs:
   codespell:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
-      - uses: prefix-dev/setup-pixi@v0.9.0
+      - uses: actions/checkout@v4
+      - uses: prefix-dev/setup-pixi@v0.8.10
         with: { pixi-version: v0.39.0 }
       - run: pixi run codespell
   pycodestyle:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
-      - uses: prefix-dev/setup-pixi@v0.9.0
+      - uses: actions/checkout@v4
+      - uses: prefix-dev/setup-pixi@v0.8.10
         with: { pixi-version: v0.39.0 }
       - run: pixi run pycodestyle
   ruff:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
-      - uses: prefix-dev/setup-pixi@v0.9.0
+      - uses: actions/checkout@v4
+      - uses: prefix-dev/setup-pixi@v0.8.10
         with: { pixi-version: v0.39.0 }
       - run: pixi run ruff
   cython-lint:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
-      - uses: prefix-dev/setup-pixi@v0.9.0
+      - uses: actions/checkout@v4
+      - uses: prefix-dev/setup-pixi@v0.8.10
         with: { pixi-version: v0.39.0 }
       - run: pixi run cython-lint
