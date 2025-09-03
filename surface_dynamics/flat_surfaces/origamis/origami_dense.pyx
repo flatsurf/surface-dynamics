@@ -19,8 +19,8 @@ is computed by an independent C program in ``normal_form.c``.
 #                  https://www.gnu.org/licenses/
 # ****************************************************************************
 
-#from sage.ext.interrupt.interrupt cimport sig_on, sig_off
-#from sage.ext.memory cimport sage_malloc, sage_free
+# from sage.ext.interrupt.interrupt cimport sig_on, sig_off
+# from sage.ext.memory cimport sage_malloc, sage_free
 
 from cpython.list cimport *
 from cpython.tuple cimport *
@@ -384,7 +384,7 @@ def sl_orbit_from_gl_orbit(o, L, I):
         else:
             break
 
-    for o in l: # ~s = l ~r l
+    for o in l:  # ~s = l ~r l
         s[l[ri[l[o]]]] = o
 
     return l, r, s
@@ -584,7 +584,7 @@ cdef class Origami_dense_pyx:
         # Find first index where they differ and take the difference
         test = origami_diff(s._r, o._r, s._n)
 
-        if test == 0: # equality
+        if test == 0:  # equality
             return i != 0 and i != 3 and i != 4
         # different
         if i < 2:
@@ -1608,7 +1608,7 @@ cdef class Origami_dense_pyx:
                     r[i] = uu[i]
                     u[i] = rr[i]
                 origami_normal_form(r, u, renum, n)
-                if origami_diff(r, rr, n): # not symmetric under r <-> u
+                if origami_diff(r, rr, n):  # not symmetric under r <-> u
                     o = self._new_c(r)
                     if VERBOSE:
                         print("find new guy %s %s" % (str(o.r_tuple()), str(o.u_tuple())))
@@ -1616,15 +1616,15 @@ cdef class Origami_dense_pyx:
                     uu = rr+n
                     i_edges[o] = oo
                     i_edges[oo] = o
-                    if o in waiting: # we find a fake new guy
+                    if o in waiting:  # we find a fake new guy
                         if VERBOSE:
                             print("he was there before")
                         waiting.remove(o)
                         r = rr
                         u = uu
-                    else: # we find a real new guy
+                    else:  # we find a real new guy
                         break
-                else: # symmetric under r <-> u
+                else:  # symmetric under r <-> u
                     if VERBOSE:
                         print("symmetric one")
                     i_edges[oo] = oo
@@ -1671,7 +1671,7 @@ cdef class Origami_dense_pyx:
             sage: i is ii
             True
         """
-        if not self._l_edges: # empty dictionary means not computed yet
+        if not self._l_edges:  # empty dictionary means not computed yet
             self._compute_gl2z_edges()
 
         return self._l_edges, self._i_edges
@@ -1772,7 +1772,8 @@ cdef class Origami_dense_pyx:
     # Lyapunov exponents
     #
 
-    def lyapunov_exponents_approx(self,
+    def lyapunov_exponents_approx(
+            self,
             nb_iterations=0X5000, nb_experiments=4, only_mean=True,
             seed=None,
             nb_vectors=None, nb_vectors_p=None, nb_vectors_m=None,
@@ -1833,7 +1834,7 @@ cdef class Origami_dense_pyx:
             sage: print(len(lexp[0]), len(lexp[1]))
             2 2
         """
-        #TODO: use the seed to init.
+        # TODO: use the seed to init.
 
         if involution is None:
             if nb_vectors is None:
@@ -1842,7 +1843,8 @@ cdef class Origami_dense_pyx:
             assert nb_vectors >= 0, "nb_vectors should be >= 0"
 
             return self.pyx_lyapunov_exponents_approx(nb_iterations,
-                    nb_experiments, nb_vectors, only_mean)
+                                                      nb_experiments,
+                                                      nb_vectors, only_mean)
 
         else:
             if involution is True:
@@ -1879,10 +1881,11 @@ cdef class Origami_dense_pyx:
                     only_mean)
 
     cdef pyx_lyapunov_exponents_approx_with_involution(self, involution,
-            nb_iterations, nb_experiments,
-            nb_vectors_p, nb_vectors_m,
-            only_mean):
-        import sys
+                                                       nb_iterations,
+                                                       nb_experiments,
+                                                       nb_vectors_p,
+                                                       nb_vectors_m,
+                                                       only_mean):
         cdef origami_with_involution_data * o
         cdef double * theta
         cdef int i
@@ -1904,12 +1907,12 @@ cdef class Origami_dense_pyx:
             s[i] = involution[i]
 
         o = new_origami_with_involution_data(
-                self.nb_squares(), # degree
-                n_p,               # nb_vectors_p
-                n_m,               # nb_vectors_m
-                self._r,           # r
-                self._u,           # u
-                s)                 # involution
+            self.nb_squares(),  # degree
+            n_p,                # nb_vectors_p
+            n_m,                # nb_vectors_m
+            self._r,            # r
+            self._u,            # u
+            s)                  # involution
 
         # TODO: use Gauss measure for the random angles and not simply Lebesgue
         # would be better to feed the function with the angles
@@ -1936,9 +1939,8 @@ cdef class Origami_dense_pyx:
         return res[:nb_vectors_p], res[n_p:n_p+nb_vectors_m]
 
     cdef pyx_lyapunov_exponents_approx(self,
-            nb_iterations, nb_experiments,
-            nb_vectors, only_mean):
-        import sys
+                                       nb_iterations, nb_experiments,
+                                       nb_vectors, only_mean):
         cdef origami_data * o
         cdef double * theta
         cdef size_t i, n
@@ -2266,7 +2268,7 @@ cdef class Origami_dense_pyx:
             print("m  = %s" % m)
         r = self.r()
         u = self.u()
-        assert(m*r*~m == ~r and m*u*~m == ~u) # check
+        assert(m*r*~m == ~r and m*u*~m == ~u)  # check
 
         rot_pi = r*u
         rot_2pi = r*u*~r*~u
@@ -2285,7 +2287,7 @@ cdef class Origami_dense_pyx:
         # Consider all orientation reversing involutions
         G = self.automorphism_group()
         for g in G:
-            mm = m * g # an automorphism which reverses the orientation
+            mm = m * g  # an automorphism which reverses the orientation
             if mm.order() > 2:
                 continue
 
@@ -2409,7 +2411,7 @@ cdef class Origami_dense_pyx:
             (1,2,3)
         """
         N = self.nb_squares()
-        w, t, h = self.lattice_of_periods() # ((w, 0), (t, h))
+        w, t, h = self.lattice_of_periods()  # ((w, 0), (t, h))
         vol = h*w
         NN = N//vol
 
@@ -2430,7 +2432,7 @@ cdef class Origami_dense_pyx:
 
         n = 1
         test = [v[0][0]]
-        relabel = {v[0][0]:0}
+        relabel = {v[0][0]: 0}
         uu = [None] * NN
         rr = [None] * NN
 
@@ -2508,7 +2510,7 @@ cdef class Origami_dense_pyx:
         if is_prime(self._n):
             return True
 
-        #TODO: this is *very* stupid
+        # TODO: this is *very* stupid
         # there should be something more direct in gap
         return self.is_reduced() and all(o == self or o.genus() == 1 for o in self.lattice_of_quotients())
 
@@ -2655,14 +2657,14 @@ cdef class Origami_dense_pyx:
         """
         return self.quotient().genus() == 1
         # other method from Gap
-        #G = self.monodromy()
-        #A = self.automorphism_group()
-        #r = self.r(); u = self.u()
-        #C = G.subgroup([r*u*~r*~u])
-        #NC = gap.NormalClosure(G, C)
-        #return gap.IsSubgroup(A, NC)
+        # G = self.monodromy()
+        # A = self.automorphism_group()
+        # r = self.r(); u = self.u()
+        # C = G.subgroup([r*u*~r*~u])
+        # NC = gap.NormalClosure(G, C)
+        # return gap.IsSubgroup(A, NC)
 
-    def is_normal(self):
+    def is_normal(self) -> bool:
         r"""
         Tests if this origami is a normal cover of the torus
 
@@ -2729,10 +2731,10 @@ cdef class Origami_dense_pyx:
             sr = [[i-1 for i in x.domain()] for x in sr]
             su = [[i-1 for i in x.domain()] for x in su]
 
-            #the more direct
+            # the more direct
             #    sr = [[i-1 for i in PermutationConstructor(x, check=check).domain()] for x in sr]
             #    su = [[i-1 for i in PermutationConstructor(x, check=check).domain()] for x in su]
-            #does not work
+            # does not work
 
             d = max(max(len(x) for x in sr), max(len(x) for x in su))
 
@@ -3028,10 +3030,10 @@ cdef class Origami_dense_pyx:
 
         d = {
             'side': {},
-            'frontier':{},
-            'square':{},
-            'text_square':{},
-            'text_frontier':{}
+            'frontier': {},
+            'square': {},
+            'text_square': {},
+            'text_frontier': {}
             }
         for key, value in args.items():
             for k in d.keys():
@@ -3155,11 +3157,11 @@ cdef class Origami_dense_pyx:
         u = o.u()
         ui = ~u
 
-        udr_sq = [] # (up-right, down-right) pairs adjacent to singularities
+        udr_sq = []  # (up-right, down-right) pairs adjacent to singularities
         for v in (ui*ri*u*r).cycle_tuples():
             udr_sq.extend((j, ui(j)) for j in v)
 
-        if not udr_sq: # torus
+        if not udr_sq:  # torus
             udr_sq = [(1, ui(1))]
 
         udr_sq.sort()
@@ -3189,7 +3191,7 @@ cdef class Origami_dense_pyx:
 
             top_twist = min(t[1] for t in top) - (jj+(h-1)*w)
 
-            #top.reverse()
+            # top.reverse()
             cyls.append((bot, top, w, h, bot_twist, top_twist))
 
             udr_tot = udr_tot.difference(top)
@@ -3730,7 +3732,7 @@ cdef gl2z_orbits(origamis, int n, int limit):
             # at this point rr is memory allocated
 
             l_edges[o] = ooo
-            if limit > 0 and len(l_edges) > limit: # test the size
+            if limit > 0 and len(l_edges) > limit:  # test the size
                 if VERBOSE:
                     print("oversize")
                 l_edges.clear()
@@ -3756,25 +3758,25 @@ cdef gl2z_orbits(origamis, int n, int limit):
                     r[i] = uu[i]
                     u[i] = rr[i]
                 origami_normal_form(r, u, renum, n)
-                if origami_diff(r, rr, n): # not symmetric under r <-> u
+                if origami_diff(r, rr, n):  # not symmetric under r <-> u
                     o = o._new_c(r)
                     rr = <int *>malloc(N)
                     uu = rr+n
                     i_edges[o] = oo
                     i_edges[oo] = o
-                    if o in waiting: # we find a fake new guy
+                    if o in waiting:  # we find a fake new guy
                         if VERBOSE:
                             print(" ...was already there")
                         waiting.remove(o)
                         r = rr
                         u = uu
-                    else: # we find a real new guy
+                    else:  # we find a real new guy
                         if VERBOSE:
                             print("go elsewhere")
                         if o in origamis:
                             origamis.remove(o)
                         break
-                else: # symmetric under r <-> u
+                else:  # symmetric under r <-> u
                     if VERBOSE:
                         print(" ...symmetric guy")
                     i_edges[oo] = oo
@@ -3783,7 +3785,7 @@ cdef gl2z_orbits(origamis, int n, int limit):
             else:
                 break
 
-        if l_edges: # append if we do not quit because of oversize
+        if l_edges:  # append if we do not quit because of oversize
             orbits.append((l_edges, i_edges))
             if VERBOSE:
                 print("new orbit of size %d" % (len(l_edges)))
