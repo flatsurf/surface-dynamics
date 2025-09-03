@@ -3137,23 +3137,27 @@ class CylinderDiagram(SeparatrixDiagram):
             for cy in self.cylinders():
                 for k in cy[0]:
                     # check that p(k) is on the top of the cyl that has k on its bottom
-                    if p[k] not in cy[1]: return False
+                    if p[k] not in cy[1]:
+                        return False
                     # check that if k is on bot and top of cyl, then p(k) = k
                     if k in cy[1]:
-                        if k != p[k]: return False
+                        if k != p[k]:
+                            return False
                         wsep += 1
             if verbose: print("wsep", wsep)
             # check number of w pts
-            if wsep + 2*self.ncyls() != z[0] + 3: return False
-            # check that cylinders are stable under involution
-            if self != CylinderDiagram(
-                [(cy[0],tuple(map(lambda x: p[x],cy[0]))) for cy in self.cylinders()]):
+            if wsep + 2*self.ncyls() != z[0] + 3:
                 return False
-            return True
+            # check that cylinders are stable under involution
+            return self == CylinderDiagram(
+                [(cy[0], tuple(map(lambda x: p[x], cy[0])))
+                 for cy in self.cylinders()])
         elif len(z) == 2: # should be stratum H(g-1,g-1)
-            if z[0] != z[1]: return False
+            if z[0] != z[1]:
+                return False
             for cy in self.cylinders():
-                if len(cy[0]) != len(cy[1]): return False
+                if len(cy[0]) != len(cy[1]):
+                    return False
             b = self.bot()
             t = self.top()
             # build list of seps in cyclic order around first zero, starting by outgoing sep 0
