@@ -242,10 +242,8 @@ def perm_is_one(l, n=None):
     """
     if n is None:
         n = len(l)
-    for i in range(n):
-        if l[i] != -1 and l[i] != i:
-            return False
-    return True
+    return all(not (l[i] != -1 and l[i] != i) for i in range(n))
+
 
 def perm_is_regular(p, k=None, n=None):
     r"""

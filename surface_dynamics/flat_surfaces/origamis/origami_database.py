@@ -1594,7 +1594,7 @@ class OrigamiDatabase(SQLDatabase):
                     if key in self._data_to_entry:
                         data[key] = self._entry_to_data[key](data[key])
 
-                value = [data.get(e,None) for e in columns]
+                value = [data.get(e) for e in columns]
                 self.add_row('origamis', value, columns)
 
                 if verbose:
