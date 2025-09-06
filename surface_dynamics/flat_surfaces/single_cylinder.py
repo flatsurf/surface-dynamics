@@ -1755,7 +1755,7 @@ def cylinder_concatenation(perm_1, perm_2, alphabet=None):
         if bot_row1[i] == 1:
             bot_row1[i] += length_1
     for j in range(length_2):
-        if not bot_row2[j] == 1:
+        if bot_row2[j] != 1:
             bot_row2[j] += length_1
     bot_row = bot_row1 + bot_row2 + [0]
     perm = GeneralizedPermutation(top_row,bot_row)

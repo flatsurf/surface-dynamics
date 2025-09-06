@@ -137,9 +137,7 @@ def masur_veech_volume(C, rational=False, method=None):
         elif isinstance(C, AbelianStratum):
             vol = sum(abelian_volumes_table[CC] for CC in C.components())
             S = C
-        elif isinstance(C, QuadraticStratumComponent):
-            raise NotImplementedError('quadratic differentials')
-        elif isinstance(C, QuadraticStratum):
+        elif isinstance(C, (QuadraticStratumComponent, QuadraticStratum)):
             raise NotImplementedError('quadratic differentials')
         else:
             raise ValueError('invalid input')

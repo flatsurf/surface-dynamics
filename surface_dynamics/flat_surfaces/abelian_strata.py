@@ -201,9 +201,7 @@ def _cylinder_diagrams_with_symmetric(iterator):
             yield cd.inverse()
         elif sym == (True, False, False):
             yield cd.vertical_symmetry()
-        elif sym == (False, True, False):
-            yield cd.horizontal_symmetry()
-        elif sym == (False, False, True):
+        elif sym == (False, True, False) or sym == (False, False, True):
             yield cd.horizontal_symmetry()
         else:
             raise RuntimeError
