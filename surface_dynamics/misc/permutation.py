@@ -216,7 +216,7 @@ def perm_check(l, n=None):
     return ra_seen == im_seen
 
 
-def perm_is_one(l, n=None):
+def perm_is_one(l, n=None) -> bool:
     r"""
     Test whether ``l`` is the identity on its domain.
 
@@ -242,10 +242,10 @@ def perm_is_one(l, n=None):
     """
     if n is None:
         n = len(l)
-    return all(not (l[i] != -1 and l[i] != i) for i in range(n))
+    return all(l[i] == -1 or l[i] == i for i in range(n))
 
 
-def perm_is_regular(p, k=None, n=None):
+def perm_is_regular(p, k=None, n=None) -> bool:
     r"""
     Return whether the cycle decomposition of ``p`` is only made of cycles
     of identical lengths.
