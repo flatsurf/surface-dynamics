@@ -84,14 +84,14 @@ TESTS::
     sage: s1.incidence_matrix() == s2.incidence_matrix().transpose()
     True
 """
-#*****************************************************************************
+# ***************************************************************************
 #       Copyright (C) 2008 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
+# ***************************************************************************
 from copy import copy
 
 from sage.structure.sage_object import SageObject

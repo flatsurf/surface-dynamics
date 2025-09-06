@@ -295,10 +295,9 @@ class IntervalExchangeTransformation:
         p = self._permutation._labels
         top_twin = self._permutation._twin[0]
         top = p[0]
-        bot = p[1]
 
         translations = self.vector_space()()
-        for i0,j in enumerate(top):
+        for i0, j in enumerate(top):
             i1 = top_twin[i0]
             translations[j] = im_sg[i1] - dom_sg[i0]
 
@@ -449,7 +448,7 @@ class IntervalExchangeTransformation:
             (1/2, 3/2)
         """
         try:
-            y = float(total)
+            float(total)
         except ValueError:
             raise TypeError(f"unable to convert x (='{total}') into a real number")
 
@@ -1060,7 +1059,6 @@ class IntervalExchangeTransformation:
             aba abd abc dbc ccb cba bab bdb bcc bcb
             cba aba abd abc dbc bcc bcb ccb bab bdb
         """
-        length = len(self._permutation)
         lengths = self._lengths
         A = self.permutation().alphabet()
         unrank = A.unrank
@@ -1072,14 +1070,11 @@ class IntervalExchangeTransformation:
         sg_top = self.domain_singularities()[1:-1]  # iterates of the top singularities
         cuts = [[[i], lengths[i]] for i in bot]     # the refined bottom interval
 
-        translations = self.translations()
-
         for step in range(n-1):
             i = 0
             y = self.base_ring().zero()
-            new_sg_top = []
             limits = [0]
-            for j,x in enumerate(sg_top):
+            for j, x in enumerate(sg_top):
                 while y < x:
                     cuts[i][0].append(top[j])
                     y += cuts[i][1]

@@ -663,8 +663,6 @@ class IETFlipSequence(SageObject):
         for p, winner, side in reversed(self):
             winner_letter = p._labels[winner][side]
             loser_letter = p._labels[1-winner][side]
-            top_letter = p._labels[0][side]
-            bottom_letter = p._labels[1][side]
             if side == 0:
                 words[winner_letter] = words[loser_letter] + words[winner_letter]
             else:
