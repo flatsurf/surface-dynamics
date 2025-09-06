@@ -1591,13 +1591,11 @@ class IntervalExchangeTransformation:
         length_bot = self._lengths[bot]
 
         if length_top > length_bot:
-            winner = 0 # TODO: this value is ignored
             winner_interval = top
             loser_interval = bot
             abc = (bot_letter, bot_letter, top_letter)
             winner = 't'
         elif length_top < length_bot:
-            winner = 1 # TODO: this value is ignored
             winner_interval = bot
             loser_interval = top
             abc = (top_letter, bot_letter, top_letter)
@@ -1612,7 +1610,7 @@ class IntervalExchangeTransformation:
             bot = p._labels[1][side]
             p._identify_intervals(side)
             self._lengths[top] = 0
-            return None, (bot_letter,bot_letter,top_letter)
+            return None, (bot_letter, bot_letter, top_letter)
 
         self._permutation = self._permutation.rauzy_move(winner=winner, side=side, inplace=True)
         self._lengths[winner_interval] -= self._lengths[loser_interval]
