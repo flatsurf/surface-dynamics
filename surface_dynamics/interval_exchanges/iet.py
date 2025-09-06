@@ -295,10 +295,9 @@ class IntervalExchangeTransformation:
         p = self._permutation._labels
         top_twin = self._permutation._twin[0]
         top = p[0]
-        bot = p[1]
 
         translations = self.vector_space()()
-        for i0,j in enumerate(top):
+        for i0, j in enumerate(top):
             i1 = top_twin[i0]
             translations[j] = im_sg[i1] - dom_sg[i0]
 
@@ -449,7 +448,7 @@ class IntervalExchangeTransformation:
             (1/2, 3/2)
         """
         try:
-            y = float(total)
+            float(total)
         except ValueError:
             raise TypeError(f"unable to convert x (='{total}') into a real number")
 
@@ -465,7 +464,7 @@ class IntervalExchangeTransformation:
         if not inplace:
             return res
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         r"""
         A representation string.
 
@@ -479,12 +478,12 @@ class IntervalExchangeTransformation:
             a
             a
         """
-        interval = "[0, %s["%self.length()
-        s = "Interval exchange transformation of %s "%interval
-        s += "with permutation\n%s"%self._permutation
+        interval = "[0, %s[" % self.length()
+        s = "Interval exchange transformation of %s " % interval
+        s += "with permutation\n%s" % self._permutation
         return s
 
-    def is_identity(self):
+    def is_identity(self) -> bool:
         r"""
         Returns True if self is the identity.
 
@@ -1007,7 +1006,7 @@ class IntervalExchangeTransformation:
         p = LabelledPermutationIET((top_interval,bottom_interval))
         return IntervalExchangeTransformation(p,l_lengths)
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         r"""
         Tests equality
 
@@ -1024,7 +1023,7 @@ class IntervalExchangeTransformation:
             self._permutation == other._permutation and
             self._lengths == other._lengths)
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         r"""
         Tests difference
 
@@ -1060,7 +1059,6 @@ class IntervalExchangeTransformation:
             aba abd abc dbc ccb cba bab bdb bcc bcb
             cba aba abd abc dbc bcc bcb ccb bab bdb
         """
-        length = len(self._permutation)
         lengths = self._lengths
         A = self.permutation().alphabet()
         unrank = A.unrank
@@ -1072,14 +1070,11 @@ class IntervalExchangeTransformation:
         sg_top = self.domain_singularities()[1:-1]  # iterates of the top singularities
         cuts = [[[i], lengths[i]] for i in bot]     # the refined bottom interval
 
-        translations = self.translations()
-
         for step in range(n-1):
             i = 0
             y = self.base_ring().zero()
-            new_sg_top = []
             limits = [0]
-            for j,x in enumerate(sg_top):
+            for j, x in enumerate(sg_top):
                 while y < x:
                     cuts[i][0].append(top[j])
                     y += cuts[i][1]
@@ -1591,13 +1586,11 @@ class IntervalExchangeTransformation:
         length_bot = self._lengths[bot]
 
         if length_top > length_bot:
-            winner = 0 # TODO: this value is ignored
             winner_interval = top
             loser_interval = bot
             abc = (bot_letter, bot_letter, top_letter)
             winner = 't'
         elif length_top < length_bot:
-            winner = 1 # TODO: this value is ignored
             winner_interval = bot
             loser_interval = top
             abc = (top_letter, bot_letter, top_letter)
@@ -1612,7 +1605,7 @@ class IntervalExchangeTransformation:
             bot = p._labels[1][side]
             p._identify_intervals(side)
             self._lengths[top] = 0
-            return None, (bot_letter,bot_letter,top_letter)
+            return None, (bot_letter, bot_letter, top_letter)
 
         self._permutation = self._permutation.rauzy_move(winner=winner, side=side, inplace=True)
         self._lengths[winner_interval] -= self._lengths[loser_interval]

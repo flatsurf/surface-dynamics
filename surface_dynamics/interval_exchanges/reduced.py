@@ -45,21 +45,17 @@ TESTS::
     sage: p = ReducedPermutationIET([[1,2,3],[3,2,1]])
     sage: d = ReducedRauzyDiagram(p)
 """
-#*****************************************************************************
+# ***************************************************************************
 #       Copyright (C) 2008 Vincent Delecroix <20100.delecroix@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  https://www.gnu.org/licenses/
-#*****************************************************************************
+# ***************************************************************************
 
-from sage.structure.sage_object import SageObject
-
-from copy import copy
-
-from sage.combinat.words.alphabet import Alphabet
 from sage.rings.integer import Integer
+from sage.structure.sage_object import SageObject
 
 from .template import OrientablePermutationIET, OrientablePermutationLI   # permutations
 from .template import FlippedPermutationIET, FlippedPermutationLI         # flipped permutations

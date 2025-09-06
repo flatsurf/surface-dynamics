@@ -272,7 +272,7 @@ cdef class IETFamily:
         F = FreeModule(QQ, self.dim)
         return [F([self.ray_coefficient(i, j) for j in range(self.dim)]) for i in range(self.length)]
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         r"""
         TESTS::
 
@@ -441,7 +441,7 @@ cdef class IETFamily:
 
     # this is completely useless and checks many times the same thing
     # we should just look at left/right Rauzy induction
-    def has_connection(self):
+    def has_connection(self) -> bool:
         r"""
         Check whether this family has a connection.
 

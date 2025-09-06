@@ -1,9 +1,8 @@
 r"""
 Conversion to and from pyintervalxt
 """
-
-from sage.all import NumberField, QQ, ZZ
-from sage.rings.number_field.number_field_base import is_NumberField
+from sage.all import QQ, ZZ
+from sage.categories.number_fields import NumberFields
 
 from . import constructors as iet
 from .iet import IntervalExchangeTransformation
@@ -59,7 +58,7 @@ def iet_to_pyintervalxt(T):
     elif K == QQ:
         from gmpxxyy import mpq
         lengths = tuple(mpq(x.numerator(), x.denominator()) for x in T._lengths)
-    elif is_NumberField(K):
+    elif K in NumberFields():
         from pyeantic.real_embedded_number_field import RealEmbeddedNumberField
         L = RealEmbeddedNumberField(K)
         lengths = tuple(L(x).renf_elem for x in T._lengths)
