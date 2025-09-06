@@ -87,7 +87,7 @@ class Marking(SageObject):
         """
         return hash(self.t) + hash(self.data)
 
-    def _repr_(self):
+    def _repr_(self) -> str:
         r"""
         String representation.
 
@@ -104,7 +104,7 @@ class Marking(SageObject):
         else:
             return "%do%d" % self.data
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         r"""
         TESTS::
 
@@ -118,7 +118,7 @@ class Marking(SageObject):
             return False
         return self.t == other.t and self.data == other.data
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         r"""
         TESTS::
 
@@ -273,7 +273,7 @@ class MarkedPartition(SageObject):
                   (self.m.data[0] == self.m.data[1] and list(self.p).count(self.m.data[0]) < 2)):
                 raise ValueError("parts do not contains (m_l,m_r) = (%d,%d)" % (self.m.data[0], self.m.data[1]))
 
-    def _repr_(self):
+    def _repr_(self) -> str:
         r"""
         String representation.
 
@@ -287,7 +287,7 @@ class MarkedPartition(SageObject):
         """
         return "%s %s" % (self.m, self.p)
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         r"""
         Equality test.
 
@@ -304,7 +304,7 @@ class MarkedPartition(SageObject):
 
         return self.m == other.m and self.p == other.p
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         r"""
         Difference test.
 
@@ -385,7 +385,7 @@ class MarkedPartition(SageObject):
         """
         return self.m
 
-    def is_odd(self):
+    def is_odd(self) -> bool:
         r"""
         Return ``True`` if all terms of p are odd.
 

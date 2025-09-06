@@ -465,7 +465,7 @@ class IntervalExchangeTransformation:
         if not inplace:
             return res
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         r"""
         A representation string.
 
@@ -479,12 +479,12 @@ class IntervalExchangeTransformation:
             a
             a
         """
-        interval = "[0, %s["%self.length()
-        s = "Interval exchange transformation of %s "%interval
-        s += "with permutation\n%s"%self._permutation
+        interval = "[0, %s[" % self.length()
+        s = "Interval exchange transformation of %s " % interval
+        s += "with permutation\n%s" % self._permutation
         return s
 
-    def is_identity(self):
+    def is_identity(self) -> bool:
         r"""
         Returns True if self is the identity.
 
@@ -1007,7 +1007,7 @@ class IntervalExchangeTransformation:
         p = LabelledPermutationIET((top_interval,bottom_interval))
         return IntervalExchangeTransformation(p,l_lengths)
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         r"""
         Tests equality
 
@@ -1024,7 +1024,7 @@ class IntervalExchangeTransformation:
             self._permutation == other._permutation and
             self._lengths == other._lengths)
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         r"""
         Tests difference
 

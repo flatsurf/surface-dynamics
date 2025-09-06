@@ -237,7 +237,7 @@ class IETFlipSequence(SageObject):
         """
         return self._end.__copy__()
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         if type(self) != type(other):
             raise TypeError('incomparable')
 
@@ -247,7 +247,7 @@ class IETFlipSequence(SageObject):
                self._left_right_inverse == other._left_right_inverse and \
                self._relabelling == other._relabelling
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         return not (self == other)
 
     def _check(self):
@@ -357,7 +357,7 @@ class IETFlipSequence(SageObject):
                 l.append(winner.upper())
         return ''.join(l)
 
-    def _repr_(self):
+    def _repr_(self) -> str:
         args = [repr(self._start.str()), repr(self._simplified_flip_sequence())]
         if self._top_bottom_inverse:
             args.append('top_bottom_inverse=True')
@@ -458,7 +458,7 @@ class IETFlipSequence(SageObject):
         self._end.relabel(p)
         self._relabelling = perm_compose(self._relabelling, p)
 
-    def is_closed(self):
+    def is_closed(self) -> bool:
         r"""
         Return whether the path is closed, that is whether its start and end coincide.
 
@@ -521,7 +521,7 @@ class IETFlipSequence(SageObject):
         """
         return self.winners_losers()[1]
 
-    def is_complete(self):
+    def is_complete(self) -> bool:
         r"""
         Return whether that all winners appear.
 

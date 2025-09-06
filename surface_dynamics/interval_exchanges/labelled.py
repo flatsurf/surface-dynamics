@@ -740,7 +740,7 @@ class LabelledPermutationLI(LabelledPermutation, OrientablePermutationLI):
         sage: p in r
         True
     """
-    def has_right_rauzy_move(self, winner):
+    def has_right_rauzy_move(self, winner) -> bool:
         r"""
         Test of Rauzy movability with a specified winner)
 
@@ -1534,7 +1534,7 @@ class LabelledRauzyDiagram(RauzyDiagram):
         substitution = orbit_substitution  # standard name
         dual_substitution = interval_substitution  # standard name
 
-        def is_full(self):
+        def is_full(self) -> bool:
             r"""
             Tests the fullness.
 
