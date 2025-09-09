@@ -1325,7 +1325,7 @@ class Constellations_ld(UniqueRepresentation, Parent):
 
         g = [SymmetricGroup(d).random_element() for _ in range(l-1)]
         G = PermutationGroup(g)
-        while not G.degree() == d or (self._connected and not G.is_transitive()):
+        while G.degree() != d or (self._connected and not G.is_transitive()):
             g = [SymmetricGroup(d).random_element() for _ in range(l-1)]
             G = PermutationGroup(g)
 

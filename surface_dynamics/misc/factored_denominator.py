@@ -122,7 +122,7 @@ def vector_to_linear_form_string(u, var_names):
                 s += ' + %d*%s' % (j, var)
             first = False
 
-    return '0' if not s else s
+    return s if s else '0'
 
 
 # NOTE: should this be an instance of Factorization?

@@ -402,9 +402,7 @@ class Stratum(UniqueRepresentation, SageObject):
             s = sum(zeros)
             genus = s // 2 + 1
 
-            if genus == 1:
-                return (HypASC(self),)
-            elif genus == 2:
+            if genus == 1 or genus == 2:
                 return (HypASC(self),)
             elif genus == 3:
                 if zeros == (2, 2) or zeros == (4,):
@@ -450,9 +448,7 @@ class Stratum(UniqueRepresentation, SageObject):
                 if zeros == (4,) or zeros == (3, 1):
                     # empty!
                     return ()
-                elif zeros == (6, -1, -1):
-                    return (HQSC(self), GTNQSC(self))
-                elif zeros == (3, 3, -1, -1):
+                elif zeros == (6, -1, -1) or zeros == (3, 3, -1, -1):
                     return (HQSC(self), GTNQSC(self))
                 elif zeros == (2, 2) or zeros == (2, 1, 1) or zeros == (1, 1, 1, 1):
                     return (GTHQSC(self),)
@@ -468,13 +464,7 @@ class Stratum(UniqueRepresentation, SageObject):
                 elif zeros == (6, 6) or zeros == (6, 3, 3) or zeros == (3, 3, 3, 3):
                     return (HQSC(self), REQSC(self), IEQSC(self))
             else:
-                if len(zeros) == 2 and zeros[0] % 4 == 2 and zeros[1] % 4 == 2:
-                    return (HQSC(self), NQSC(self))
-                elif len(zeros) == 4 and zeros[0] == zeros[1] and zeros[2] == zeros[3] and zeros[0] % 2 and zeros[2] % 2:
-                    return (HQSC(self), NQSC(self))
-                elif len(zeros) == 3 and zeros[0] == zeros[1] and zeros[0] % 2 and zeros[2] % 4 == 2:
-                    return (HQSC(self), NQSC(self))
-                elif len(zeros) == 3 and zeros[1] == zeros[2] and zeros[1] % 2 and zeros[0] % 4 == 2:
+                if len(zeros) == 2 and zeros[0] % 4 == 2 and zeros[1] % 4 == 2 or len(zeros) == 4 and zeros[0] == zeros[1] and zeros[2] == zeros[3] and zeros[0] % 2 and zeros[2] % 2 or (len(zeros) == 3 and zeros[0] == zeros[1] and zeros[0] % 2 and zeros[2] % 4 == 2 or len(zeros) == 3 and zeros[1] == zeros[2] and zeros[1] % 2 and zeros[0] % 4 == 2):
                     return (HQSC(self), NQSC(self))
                 else:
                     return (CQSC(self),)
