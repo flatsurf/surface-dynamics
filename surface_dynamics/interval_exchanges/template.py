@@ -478,7 +478,7 @@ class Permutation(SageObject):
                 if letter in flips:
                     self._flips[interval][i] = -1
 
-    def __eq__(self,other):
+    def __eq__(self, other) -> bool:
         r"""
         Tests equality
 
@@ -925,7 +925,7 @@ class Permutation(SageObject):
         else:
             return [unrank(i) for i in range(len(self))]
 
-    def _repr_(self):
+    def _repr_(self) -> str:
         r"""
         Representation method of self.
 
@@ -2427,7 +2427,7 @@ class PermutationIET(Permutation):
                     position_to,
                     self._twin[interval].pop(position))
 
-    def has_rauzy_move(self, winner, side='right'):
+    def has_rauzy_move(self, winner, side='right') -> bool:
         r"""
         Test if a Rauzy move can be performed on this permutation.
 
@@ -2464,7 +2464,7 @@ class PermutationIET(Permutation):
 
         return self._twin[winner][side] % len(self) != side % len(self)
 
-    def is_irreducible(self, return_decomposition=False) :
+    def is_irreducible(self, return_decomposition=False) -> bool:
         r"""
         Test irreducibility.
 
@@ -2814,7 +2814,7 @@ class PermutationLI(Permutation):
         """
         return [self._twin[0][:],self._twin[1][:]]
 
-    def is_irreducible(self, return_decomposition=False):
+    def is_irreducible(self, return_decomposition=False) -> bool:
         r"""
         Test of reducibility
 
@@ -3033,7 +3033,7 @@ class PermutationLI(Permutation):
 
         raise RuntimeError("no cylindric permutation in the extended Rauzy class")
 
-    def is_cylindric(self):
+    def is_cylindric(self) -> bool:
         r"""
         Test if the permutation is cylindric
 
@@ -3270,7 +3270,7 @@ class PermutationLI(Permutation):
         else:
             return self
 
-    def is_hyperelliptic(self, verbose=False):
+    def is_hyperelliptic(self, verbose=False) -> bool:
         r"""
         Test if this permutation is in an hyperelliptic connected component.
 
@@ -3521,7 +3521,7 @@ class PermutationLI(Permutation):
             return stratum.irregular_component()
         return stratum.regular_component()
 
-    def has_rauzy_move(self, winner, side='right'):
+    def has_rauzy_move(self, winner, side='right') -> bool:
         r"""
         Test of Rauzy movability (with an eventual specified choice of winner)
 
@@ -3662,7 +3662,7 @@ class OrientablePermutationIET(PermutationIET):
     - Vincent Delecroix (2008-12-20): initial version
 
     """
-    def is_identity(self):
+    def is_identity(self) -> bool:
         r"""
         Returns ``True`` if ``self`` is the identity.
 
@@ -4575,7 +4575,7 @@ class OrientablePermutationIET(PermutationIET):
 
         return self.__class__((top,bot))
 
-    def is_hyperelliptic(self):
+    def is_hyperelliptic(self) -> bool:
         r"""
         Returns True if the permutation is in the class of the symmetric
         permutations (with eventual marked points).
@@ -4647,7 +4647,7 @@ class OrientablePermutationIET(PermutationIET):
 
         return tmp
 
-    def is_cylindric(self):
+    def is_cylindric(self) -> bool:
         r"""
         Returns True if the permutation is cylindric
 
@@ -4705,7 +4705,7 @@ class OrientablePermutationIET(PermutationIET):
 
         return tmp
 
-    def is_standard(self):
+    def is_standard(self) -> bool:
         r"""
         Test if the permutation is standard
 
@@ -5643,7 +5643,7 @@ class RauzyDiagram(SageObject):
 
             self._end = cur_vertex
 
-        def _repr_(self):
+        def _repr_(self) -> str:
             r"""
             Returns a representation of the path.
 
@@ -5713,7 +5713,7 @@ class RauzyDiagram(SageObject):
             """
             return copy(self._edge_types)
 
-        def __eq__(self, other):
+        def __eq__(self, other) -> bool:
             r"""
             Tests equality
 
@@ -5738,7 +5738,7 @@ class RauzyDiagram(SageObject):
                 self._start == other._start and
                 self._edge_types == other._edge_types)
 
-        def __ne__(self,other):
+        def __ne__(self, other) -> bool:
             r"""
             Tests inequality
 
@@ -6036,7 +6036,7 @@ class RauzyDiagram(SageObject):
                 res += self
             return res
 
-        def is_loop(self):
+        def is_loop(self) -> bool:
             r"""
             Tests whether the path is a loop (start point = end point).
 
@@ -6332,7 +6332,7 @@ class RauzyDiagram(SageObject):
 
         self.complete(p)
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         r"""
         Tests equality.
 
@@ -6369,7 +6369,7 @@ class RauzyDiagram(SageObject):
                self._edge_types == other._edge_types and \
                next(iter(self._succ)) in other._succ
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         r"""
         Tests difference.
 
@@ -6988,7 +6988,7 @@ class RauzyDiagram(SageObject):
         """
         return any(self._vertex_to_permutation(p) == element for p in self._succ)
 
-    def _repr_(self):
+    def _repr_(self) -> str:
         r"""
         Returns a representation of self
 
