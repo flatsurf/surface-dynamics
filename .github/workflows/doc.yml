@@ -22,7 +22,7 @@ jobs:
       - name: detect broken links
         run: pixi run -e dev doc-linkcheck
       - name: provide documentation as artifact for netlify workflow
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: doc
           path: doc/build/html
