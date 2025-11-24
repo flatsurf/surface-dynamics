@@ -39,7 +39,7 @@ jobs:
           - { environment: "sagemath-105-minimal", on: "ubuntu-24.04" }
           - { environment: "sagemath-105-all", on: "ubuntu-24.04" }
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with: { submodules: recursive }
       - uses: prefix-dev/setup-pixi@v0.9.3
         with: { pixi-version: v0.39.0 }
