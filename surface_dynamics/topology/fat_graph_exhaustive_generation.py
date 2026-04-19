@@ -19,13 +19,17 @@ from collections import defaultdict
 from sage.rings.integer_ring import ZZ
 from sage.rings.rational_field import QQ
 
-from .fat_graph import FatGraph, list_extrems
+from .fat_graph import FatGraph
+
 
 ###########################
 # Miscellaneous functions #
 ###########################
 
 def minmax(l):
+    """
+    Compute both the min and the max of a list.
+    """
     m = M = l[0]
     for i in range(1, len(l)):
         if l[i] < m:
@@ -36,6 +40,9 @@ def minmax(l):
 
 
 def num_and_weighted_num(it):
+    """
+    Compute both the number of terms and weighted sum of an iterable of pairs.
+    """
     from sage.rings.integer_ring import ZZ
     from sage.rings.rational_field import QQ
     s = QQ.zero()
@@ -62,7 +69,8 @@ def augment1(cm, aut_grp, g, callback):
 
     This operation inserts two edges.
 
-    This augmentation function is sufficient to iterate through unicellular map.
+    This augmentation function is sufficient to iterate through
+    unicellular map.
     """
     n = cm._n
     fd = cm._fd
@@ -258,8 +266,8 @@ def augment3(cm, aut_grp, depth, min_degree, callback):
 # callback to count elements (behaves somehow as a 2-tuple)
 class CountAndWeightedCount:
     def __init__(self):
-        self.count = ZZ(0)
-        self.weighted_count = QQ(0)
+        self.count = ZZ.zero()
+        self.weighted_count = QQ.zero()
 
     def __repr__(self):
         return "(%s, %s)" % (self.count, self.weighted_count)
@@ -279,18 +287,19 @@ class CountAndWeightedCount:
             raise IndexError("index out of range")
 
     def __eq__(self, other):
-        if type(self) is not type(other):
+        if not isinstance(other, CountAndWeightedCount):
             raise TypeError
         return self.count == other.count and self.weighted_count == other.weighted_count
 
     def __ne__(self, other):
-        if type(self) is not type(other):
+        if not isinstance(other, CountAndWeightedCount):
             raise TypeError
         return self.count != other.count or self.weighted_count != other.weighted_count
 
     def __call__(self, cm, aut):
-        self.count += ZZ(1)
+        self.count += ZZ.one()
         self.weighted_count += QQ((1, (1 if aut is None else aut.group_cardinality())))
+
 
 # callback to list elements
 class ListCallback:
@@ -322,6 +331,7 @@ graphviz_header = """/**********************************************************
                                                                 */
 /****************************************************************/
 """
+
 
 class FatGraphsTrace:
     """
@@ -480,6 +490,7 @@ class FatGraphsTrace:
                         f.write("""   %s -> %s [color="%s"];\n""" % (s2, s3, col3))
                     yield cm3, a3
 
+
 #################
 # Main iterator #
 #################
@@ -569,6 +580,7 @@ class StackCallback:
             assert cm._n == 0, cm
             augment3(cm, None, self._vmax - 2, max(1, self._vertex_min_degree), self)
 
+
 ##############
 # Main class #
 ##############
@@ -576,6 +588,10 @@ class StackCallback:
 class FatGraphs:
     r"""
     Isomorphism classes of fat graphs with topological constraints.
+
+    One can specify an exact value or lower and upper bounds for
+    several parameters. Not that lower bounds are inclusive and
+    upper bounds are exclusive, i.e. strict upper bounds.
 
     EXAMPLES::
 
@@ -718,7 +734,9 @@ class FatGraphs:
          FatGraph('(0,4,1,3)(2,5)', '(0,4,2,1,3,5)'),
          FatGraph('(0,4,3)(1,5,2)', '(0,2,4,1,3,5)')]
     """
-    def __init__(self, g=None, nf=None, ne=None, nv=None, vertex_min_degree=0, g_min=None, g_max=None, nf_min=None, nf_max=None, ne_min=None, ne_max=None, nv_min=None, nv_max=None):
+    def __init__(self, g=None, nf=None, ne=None, nv=None, vertex_min_degree=0,
+                 g_min=None, g_max=None, nf_min=None, nf_max=None,
+                 ne_min=None, ne_max=None, nv_min=None, nv_max=None):
         r"""
         INPUT:
 
@@ -731,6 +749,9 @@ class FatGraphs:
         - ``nv``, ``nv_min``, ``nv_max`` - number of vertices
 
         - ``vertex_min_degree`` - minimal degree of vertices (default to ``1``)
+
+        Note that all parameters for upper bounds will be interpreted
+        as strict upper bounds.
         """
         self._gmin, self._gmax = self._get_interval(g, g_min, g_max, 0, 'g')
         self._fmin, self._fmax = self._get_interval(nf, nf_min, nf_max, 1, 'nf')
@@ -800,20 +821,20 @@ class FatGraphs:
         """
         # variable order: v, e, f, g
         from sage.geometry.polyhedron.constructor import Polyhedron
-        eqns = [(-2, 1, -1, 1, 2)] # -2 + v - e + f + 2g = 0
-        ieqs = [(-self._vmin,  1, 0, 0, 0), # -vim + v >= 0
-                (-self._emin,  0, 1, 0, 0), # -emin + e >= 0
-                (-self._fmin,  0, 0, 1, 0), # -fmin + f >= 0
-                (-self._gmin,  0, 0, 0, 1), # -gmin + g >= 0
+        eqns = [(-2, 1, -1, 1, 2)]  # -2 + v - e + f + 2g = 0
+        ieqs = [(-self._vmin,  1, 0, 0, 0),  # -vmin + v >= 0
+                (-self._emin,  0, 1, 0, 0),  # -emin + e >= 0
+                (-self._fmin,  0, 0, 1, 0),  # -fmin + f >= 0
+                (-self._gmin,  0, 0, 0, 1),  # -gmin + g >= 0
                 (0, -self._vertex_min_degree, 2, 0, 0)]  # -v_min_degree*v + 2e >= 0
         if self._vmax is not None:
-            ieqs.append((self._vmax-1, -1, 0, 0, 0)) # v < vmax
+            ieqs.append((self._vmax-1, -1, 0, 0, 0))  # v < vmax
         if self._emax is not None:
-            ieqs.append((self._emax-1, 0, -1, 0, 0)) # e < emax
+            ieqs.append((self._emax-1, 0, -1, 0, 0))  # e < emax
         if self._fmax is not None:
-            ieqs.append((self._fmax-1, 0, 0, -1, 0)) # f < fmax
+            ieqs.append((self._fmax-1, 0, 0, -1, 0))  # f < fmax
         if self._gmax is not None:
-            ieqs.append((self._gmax-1, 0, 0, 0, -1)) # g < gmax
+            ieqs.append((self._gmax-1, 0, 0, 0, -1))  # g < gmax
         P = Polyhedron(ieqs=ieqs, eqns=eqns, ambient_dim=4, base_ring=QQ)
         if P.is_empty():
             self._vmin = self._vmax = 1
@@ -825,7 +846,7 @@ class FatGraphs:
         if not P.is_compact():
             raise ValueError('infinitely many fat graphs')
 
-        half = QQ((1,2))
+        half = QQ((1, 2))
         self._vmin, self._vmax = minmax([v[0] for v in P.vertices_list()])
         self._vmin = self._vmin.floor()
         self._vmax = (self._vmax + half).ceil()
@@ -950,6 +971,7 @@ class FatGraphs:
         L = ListCallback()
         self.map_reduce(L)
         return L.list()
+
 
 ###################
 # Deprecated code #
