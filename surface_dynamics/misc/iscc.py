@@ -7,6 +7,9 @@
 #                  https://www.gnu.org/licenses/
 # ****************************************************************************
 from sage.cpython.string import bytes_to_str, str_to_bytes
+from sage.misc.sage_eval import sage_eval
+from sage.rings.polynomial.polynomial_ring_constructor import PolynomialRing
+from sage.rings.rational_field import QQ
 
 
 def iscc_rg_string(r):
@@ -19,23 +22,23 @@ def iscc_rg_string(r):
         sage: iscc_rg_string(r)
         '[b0, b1] -> { [l0, l1, l2, l3, l4, l5, l6, l7, l8, l9] : l0 >= 0 and l1 >= 0 and l2 >= 0 and l3 >= 0 and l4 >= 0 and l5 >= 0 and l6 >= 0 and l7 >= 0 and l8 >= 0 and l9 >= 0 and l0 = l1 and l2 = l3 and l4 = l5 and l6 = l7 and l8 = l9 and b0 = l0 + l2 + l4 + l6 + l7 and b1 = l1 + l8 + l9 + l5 + l3 }'
     """
-    boundary_vars = ', '.join('b%d'%i for i in range(r.num_faces()))
-    lengths_vars = ', '.join('l%d'%i for i in r.darts())
+    boundary_vars = ', '.join('b%d' % i for i in range(r.num_faces()))
+    lengths_vars = ', '.join('l%d' % i for i in r.darts())
 
     ieqs = ' and '.join('l%d >= 0' % i for i in r.darts())
-    edges = ' and '.join('l%d = l%d' %(i,j) for i,j in r.edges())
+    edges = ' and '.join('l%d = l%d' % (i, j) for i, j in r.edges())
 
     eqns = []
-    for i,f in enumerate(r.faces()):
-        eqns.append('b%d = %s' % (i, ' + '.join('l%d' %j for j in f)))
+    for i, f in enumerate(r.faces()):
+        eqns.append('b%d = %s' % (i, ' + '.join('l%d' % j for j in f)))
     eqns = ' and '.join(eqns)
 
     return "[{boundary_vars}] -> {{ [{lengths_vars}] : {ieqs} and {edges} and {eqns} }}".format(
-               boundary_vars=boundary_vars,
-               lengths_vars=lengths_vars,
-               edges=edges,
-               ieqs=ieqs,
-               eqns=eqns)
+        boundary_vars=boundary_vars,
+        lengths_vars=lengths_vars,
+        edges=edges,
+        ieqs=ieqs,
+        eqns=eqns)
 
 
 def iscc_cd_string(cd):
@@ -51,8 +54,8 @@ def iscc_cd_string(cd):
         sage: iscc_cd_string(cd)
         '[w0, w1] -> { [l0, l1, l2] : l0 >= 0 and l1 >= 0 and l2 >= 0 and w0 = l0 + l1 = l0 + l2 and w1 = l2 = l1 }'
     """
-    widths_vars = ', '.join('w%d'%i for i in range(cd.ncyls()))
-    lengths_vars = ', '.join('l%d'%i for i in range(cd.num_edges()))
+    widths_vars = ', '.join('w%d' % i for i in range(cd.ncyls()))
+    lengths_vars = ', '.join('l%d' % i for i in range(cd.num_edges()))
 
     ieqs = []
     for i in range(cd.num_edges()):
@@ -60,17 +63,17 @@ def iscc_cd_string(cd):
     ieqs = ' and '.join(ieqs)
 
     eqns = []
-    for i,(top,bot) in enumerate(cd.cylinders()):
+    for i, (top, bot) in enumerate(cd.cylinders()):
         eqns.append('w%d = %s = %s' % (i,
-                        ' + '.join('l%d' %j for j in top),
-                        ' + '.join('l%d' %j for j in bot)))
+                                       ' + '.join('l%d' % j for j in top),
+                                       ' + '.join('l%d' % j for j in bot)))
     eqns = ' and '.join(eqns)
 
     return "[{widths_vars}] -> {{ [{lengths_vars}] : {ieqs} and {eqns} }}".format(
-               widths_vars = widths_vars,
-               lengths_vars=lengths_vars,
-               ieqs=ieqs,
-               eqns=eqns)
+        widths_vars=widths_vars,
+        lengths_vars=lengths_vars,
+        ieqs=ieqs,
+        eqns=eqns)
 
 
 def iscc_card(arg):
