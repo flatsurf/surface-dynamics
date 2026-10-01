@@ -443,6 +443,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylinder_graph"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.cylinder_graph()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylinders"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.cylinders()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.dual_graph"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.dual_graph()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.has_positive_lengths"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.has_positive_lengths()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.horizontal_symmetry"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.horizontal_symmetry()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.inverse"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.inverse()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.is_connected"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.is_connected()</span></code></a></li>
@@ -832,7 +833,7 @@ is raised:</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylinder_graph">
-<span class="sig-name descname"><span class="pre">cylinder_graph</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylinder_graph" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">cylinder_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">multigraph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylinder_graph" title="Link to this definition">#</a></dt>
 <dd><p>Return the cylinder graph.</p>
 <p>The cylinder graph is the graph whose vertex set are the cylinders
 and for each saddle connection there is a directed edge from the
@@ -849,6 +850,8 @@ adjacent cylinders. The multiplicities are encoded in the labels.</p>
 <span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,1,3,5)-(2,5,3) (2,4)-(0,4,1)&#39;</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">cylinder_graph</span><span class="p">()</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">cylinder_graph</span><span class="p">(</span><span class="n">multigraph</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -898,6 +901,23 @@ edges are the circumferences.</p>
 <span class="n">H_2</span><span class="p">(</span><span class="mi">1</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">c3</span><span class="o">.</span><span class="n">dual_graph</span><span class="p">()</span>
 <span class="n">Looped</span> <span class="n">multi</span><span class="o">-</span><span class="n">graph</span> <span class="n">on</span> <span class="mi">2</span> <span class="n">vertices</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.has_positive_lengths">
+<span class="sig-name descname"><span class="pre">has_positive_lengths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.has_positive_lengths" title="Link to this definition">#</a></dt>
+<dd><p>Return whether this cylinder diagram admits a positive length solution.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sage</span><span class="p">:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">surface_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,1)-(0,2) (2,3)-(1,3)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">has_positive_lengths</span><span class="p">()</span>
+<span class="kc">True</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">CylinderDiagram</span><span class="p">(</span><span class="s1">&#39;(0,1,2)-(3) (3)-(0) (4)-(1,2,4)&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">has_positive_lengths</span><span class="p">()</span>
+<span class="kc">False</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1241,9 +1261,8 @@ volume of this polytope (up to the ignored twists parameters)!</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.smallest_integer_lengths">
-<span class="sig-name descname"><span class="pre">smallest_integer_lengths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.smallest_integer_lengths" title="Link to this definition">#</a></dt>
-<dd><p>Check if there is a integer solution that satisfy the cylinder
-conditions.</p>
+<span class="sig-name descname"><span class="pre">smallest_integer_lengths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mip'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.smallest_integer_lengths" title="Link to this definition">#</a></dt>
+<dd><p>Return an integral solution to the length equations.</p>
 <p>If there is a solution, the function returns a list a pair
 <code class="docutils literal notranslate"><span class="pre">(total_length,</span> <span class="pre">list_of_lengths)</span></code> that consists of the sum of the
 length of the separatrices together with the list of lengths. Otherwise,
@@ -3122,6 +3141,7 @@ separatrix_diagram_fast_iterator instead.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylinder_graph"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.cylinder_graph()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.cylinders"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.cylinders()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.dual_graph"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.dual_graph()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.has_positive_lengths"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.has_positive_lengths()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.horizontal_symmetry"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.horizontal_symmetry()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.inverse"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.inverse()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface_dynamics.flat_surfaces.separatrix_diagram.CylinderDiagram.is_connected"><code class="docutils literal notranslate"><span class="pre">CylinderDiagram.is_connected()</span></code></a></li>
