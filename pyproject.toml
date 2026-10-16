@@ -7,14 +7,14 @@ name = "surface-dynamics"
 version = "0.6.0"
 description = "Dynamics on surfaces"
 readme = "README.md"
-license = { text = "GPL-2.0-or-later" }
+license = "GPL-2.0-or-later"
+license-files = ["COPYING"]
 authors = [
     { name = "Vincent Delecroix", email = "vincent.delecroix@u-bordeaux.fr" }
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
     "Operating System :: OS Independent",
     "Programming Language :: C",
     "Programming Language :: C++",
@@ -34,7 +34,6 @@ keywords = [
 
 [tool.setuptools]
 include-package-data = true
-license-files = ["COPYING"]
 
 [tool.setuptools.packages.find]
 include = ["surface_dynamics", "surface_dynamics.*"]
