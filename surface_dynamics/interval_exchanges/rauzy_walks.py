@@ -1,14 +1,14 @@
 r"""
 Closed walks of reduced Rauzy diagrams
 
-The reduced Rauzy diagram of an Abelian permutation has one vertex per reduced
-permutation of its Rauzy class and two edges out of each vertex, the right
-Rauzy moves ``t`` (top winner) and ``b`` (bottom winner). A *closed walk* is a
-path of this diagram whose end is its start, taken up to rotation. It is a
-*primitive closed walk* when it is not a proper power of a shorter closed walk
-(read on the sequence of pairs (vertex, move), not on the word of moves
-alone). It is *complete* when every letter is the winner of some move, up to
-the orbits of the relabelling that closes it.
+The reduced Rauzy diagram of an Abelian permutation has one vertex per
+permutation of its Rauzy class up to relabelling. Two edges reach out
+of each vertex, the right Rauzy moves ``t`` (top winner) and ``b`` (bottom
+winner). A *closed walk* is a path in this diagram whose end is its start,
+taken up to relabelling. It is a *primitive closed walk* when it is not a proper
+power of a shorter closed walk (read on the sequence of pairs (vertex, move),
+not on the word of moves alone). It is *complete* when every letter is the
+winner of some move, up to the orbits of the relabelling that closes it.
 
 A reduced vertex is represented by its *canonical labelling*: the labelled
 permutation, relabelled so that its top row is `0 1 \dots d-1`. Its *key* is
