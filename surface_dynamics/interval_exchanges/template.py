@@ -4262,9 +4262,10 @@ class OrientablePermutationIET(PermutationIET):
           you are doing)
 
         - ``check`` - (default ``True``) whether ``winner`` and ``side`` are
-          converted; with ``False``, ``winner`` must already be ``0`` (top) or
-          ``1`` (bottom) and ``side`` must be ``-1`` (right) or ``0`` (left),
-          and the conversion is skipped
+          converted and the move is checked to be defined; with ``False``,
+          ``winner`` must already be ``0`` (top) or ``1`` (bottom), ``side``
+          must be ``-1`` (right) or ``0`` (left), the move must be defined
+          (see :meth:`has_rauzy_move`), and nothing is checked
 
         OUTPUT:
 
@@ -4339,10 +4340,9 @@ class OrientablePermutationIET(PermutationIET):
         if check:
             winner = interval_conversion(winner)
             side = side_conversion(side)
+            if self._twin[0][side] == side or self._twin[0][side] == len(self)+side:
+                raise ValueError("Rauzy induction is not well defined")
         loser = 1 - winner
-
-        if self._twin[0][side] == side or self._twin[0][side] == len(self)+side:
-            raise ValueError("Rauzy induction is not well defined")
 
         if inplace:
             res = self
@@ -5134,9 +5134,29 @@ class OrientablePermutationLI(PermutationLI):
           performed inplace
 
         - ``check`` - (default ``True``) whether ``winner`` and ``side`` are
-          converted; with ``False``, ``winner`` must already be ``0`` (top) or
-          ``1`` (bottom) and ``side`` must be ``-1`` (right) or ``0`` (left),
-          and the conversion is skipped
+          converted and the move is checked to be defined; with ``False``,
+          ``winner`` must already be ``0`` (top) or ``1`` (bottom), ``side``
+          must be ``-1`` (right) or ``0`` (left), the move must be defined
+          (see :meth:`has_rauzy_move`), and nothing is checked
+
+        EXAMPLES:
+
+        A move may be undefined for a generalized permutation, whatever the
+        lengths of the intervals (Example 2.9 of [BoiLan09]_, where the
+        lengths satisfy `2 \lambda_A + \lambda_B = \lambda_B + 2 \lambda_C + 2 \lambda_D`,
+        so the top right interval always wins)::
+
+            sage: from surface_dynamics import iet
+            sage: p = iet.GeneralizedPermutation('A B A', 'B D C C D')
+            sage: p.rauzy_move('t')
+            D A B A
+            B D C C
+            sage: p.has_rauzy_move('b')
+            False
+            sage: p.rauzy_move('b')
+            Traceback (most recent call last):
+            ...
+            ValueError: Rauzy induction is not well defined
 
         TESTS::
 
@@ -5173,6 +5193,8 @@ class OrientablePermutationLI(PermutationLI):
         if check:
             winner = interval_conversion(winner)
             side = side_conversion(side)
+            if not self.has_rauzy_move(winner, side):
+                raise ValueError("Rauzy induction is not well defined")
         loser = 1 - winner
 
         if inplace:
