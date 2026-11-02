@@ -237,6 +237,9 @@ class IETFlipSequence(SageObject):
         """
         return self._end.__copy__()
 
+    def __hash__(self):
+        return hash((self._start, tuple(self._rauzy_moves), self._top_bottom_inverse, self._left_right_inverse, tuple(self._relabelling)))
+
     def __eq__(self, other) -> bool:
         if type(self) != type(other):
             raise TypeError('incomparable')
@@ -365,7 +368,7 @@ class IETFlipSequence(SageObject):
             args.append('left_right_inverse=True')
         if not perm_is_one(self._relabelling):
             args.append('relabelling={}'.format(perm_cycle_string(self._relabelling, singletons=False)))
-        return "FlipSequence({})".format(', '.join(arg for arg in args))
+        return "IETFlipSequence({})".format(', '.join(arg for arg in args))
 
     def rauzy_move(self, winner, side='right', iterations=1):
         r"""
@@ -448,7 +451,7 @@ class IETFlipSequence(SageObject):
             ....:                      left_right_inverse=True)
             sage: f.close()
             sage: f
-            FlipSequence('a b f c d e\nf a e b d c', 'ttbbbtbt', top_bottom_inverse=True, left_right_inverse=True, relabelling=(0,2,1,3)(4,5))
+            IETFlipSequence('a b f c d e\nf a e b d c', 'ttbbbtbt', top_bottom_inverse=True, left_right_inverse=True, relabelling=(0,2,1,3)(4,5))
         """
         if self._start == self._end:
             return

@@ -21,13 +21,13 @@ EXAMPLES::
     sage: C = Stratum([2]).unique_component()
     sage: for f in iet.rauzy_closed_walks(C, 9):
     ....:     print(f)
-    FlipSequence('0 1 2 3\n1 3 0 2', 'tbtbtttbt')
-    FlipSequence('0 1 2 3\n1 3 0 2', 'tbbtttbtb')
-    FlipSequence('0 1 2 3\n1 3 2 0', 'bttbttbtb')
-    FlipSequence('0 1 2 3\n1 3 2 0', 'btbttbtb')
-    FlipSequence('0 1 2 3\n1 3 2 0', 'btbttbbtb')
-    FlipSequence('0 1 2 3\n1 3 2 0', 'bbtbtbttb')
-    FlipSequence('0 1 2 3\n1 3 2 0', 'bbtbbtbtb')
+    IETFlipSequence('0 1 2 3\n1 3 0 2', 'tbtbtttbt')
+    IETFlipSequence('0 1 2 3\n1 3 0 2', 'tbbtttbtb')
+    IETFlipSequence('0 1 2 3\n1 3 2 0', 'bttbttbtb')
+    IETFlipSequence('0 1 2 3\n1 3 2 0', 'btbttbtb')
+    IETFlipSequence('0 1 2 3\n1 3 2 0', 'btbttbbtb')
+    IETFlipSequence('0 1 2 3\n1 3 2 0', 'bbtbtbttb')
+    IETFlipSequence('0 1 2 3\n1 3 2 0', 'bbtbbtbtb')
 """
 # ***************************************************************************
 #       Copyright (C) 2026 Vincent Delecroix <20100.delecroix@gmail.com>
@@ -555,7 +555,7 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
         0 1 2 3
         1 3 2 0
         sage: f
-        FlipSequence('0 1 2 3\n1 3 2 0', 'btbttbtb')
+        IETFlipSequence('0 1 2 3\n1 3 2 0', 'btbttbtb')
         sage: f.is_complete()
         True
         sage: f.matrix().charpoly()
