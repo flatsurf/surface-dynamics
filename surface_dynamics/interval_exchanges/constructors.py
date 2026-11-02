@@ -919,3 +919,22 @@ def FlipSequence(*args, **kwds):
     """
     from .flip_sequence import IETFlipSequence
     return IETFlipSequence(*args, **kwds)
+
+
+def rauzy_closed_walks(*args, **kwds):
+    r"""
+    Iterate over the primitive complete closed walks of a reduced Rauzy diagram.
+
+    For the arguments and the algorithm, see
+    :func:`~surface_dynamics.interval_exchanges.rauzy_walks.rauzy_closed_walks`.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics import Stratum, iet
+        sage: C = Stratum([2]).unique_component()
+        sage: walks = list(iet.rauzy_closed_walks(C, 8, min_length=8))
+        sage: walks
+        [FlipSequence('0 1 2 3\n1 3 2 0', 'btbttbtb')]
+    """
+    from .rauzy_walks import rauzy_closed_walks
+    return rauzy_closed_walks(*args, **kwds)

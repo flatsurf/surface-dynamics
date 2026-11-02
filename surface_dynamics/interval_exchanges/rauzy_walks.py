@@ -17,18 +17,17 @@ compared by key.
 
 EXAMPLES::
 
-    sage: from surface_dynamics import Stratum
-    sage: from surface_dynamics.interval_exchanges.rauzy_walks import rauzy_closed_walks
+    sage: from surface_dynamics import Stratum, iet
     sage: C = Stratum([2]).unique_component()
-    sage: for f in rauzy_closed_walks(C, 9):
-    ....:     print(f.start().str(sep=' / '), f._simplified_flip_sequence())
-    0 1 2 3 / 1 3 0 2 tbtbtttbt
-    0 1 2 3 / 1 3 0 2 tbbtttbtb
-    0 1 2 3 / 1 3 2 0 bttbttbtb
-    0 1 2 3 / 1 3 2 0 btbttbtb
-    0 1 2 3 / 1 3 2 0 btbttbbtb
-    0 1 2 3 / 1 3 2 0 bbtbtbttb
-    0 1 2 3 / 1 3 2 0 bbtbbtbtb
+    sage: for f in iet.rauzy_closed_walks(C, 9):
+    ....:     print(f)
+    FlipSequence('0 1 2 3\n1 3 0 2', 'tbtbtttbt')
+    FlipSequence('0 1 2 3\n1 3 0 2', 'tbbtttbtb')
+    FlipSequence('0 1 2 3\n1 3 2 0', 'bttbttbtb')
+    FlipSequence('0 1 2 3\n1 3 2 0', 'btbttbtb')
+    FlipSequence('0 1 2 3\n1 3 2 0', 'btbttbbtb')
+    FlipSequence('0 1 2 3\n1 3 2 0', 'bbtbtbttb')
+    FlipSequence('0 1 2 3\n1 3 2 0', 'bbtbbtbtb')
 """
 # ***************************************************************************
 #       Copyright (C) 2026 Vincent Delecroix <20100.delecroix@gmail.com>
@@ -555,12 +554,23 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
         sage: f.start()
         0 1 2 3
         1 3 2 0
-        sage: f._simplified_flip_sequence()
-        'btbttbtb'
+        sage: f
+        FlipSequence('0 1 2 3\n1 3 2 0', 'btbttbtb')
         sage: f.is_complete()
         True
         sage: f.matrix().charpoly()
         x^4 - 7*x^3 + 13*x^2 - 7*x + 1
+
+    In genus `3`, complete closed walks are long: the components `H_3(4)^{hyp}`,
+    `H_3(4)^{odd}`, `H_3(2^2)^{hyp}` and `H_3(3, 1)^c` have none of length at
+    most `14`. The odd component of `H(2, 2)` has `8` of length at most `13`::
+
+        sage: C3 = Stratum([2, 2]).odd_component()
+        sage: walks3 = list(rauzy_closed_walks(C3, 13))
+        sage: len(walks3)
+        8
+        sage: sorted(f.matrix().charpoly().number_of_real_roots() for f in walks3)
+        [3, 3, 5, 5, 5, 5, 5, 5]
 
     All the primitive closed walks of `H(2)` of length at most `3`::
 
