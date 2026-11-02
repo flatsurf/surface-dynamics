@@ -297,6 +297,64 @@ class IETFlipSequence(SageObject):
         res._relabelling = self._relabelling
         return res
 
+    @classmethod
+    def _from_data(cls, start, end, rauzy_moves, relabelling):
+        r"""
+        Return the flip sequence from ``start`` to ``end`` with the given Rauzy
+        moves and final relabelling, without replaying the moves.
+
+        Nothing is checked and nothing is copied: the caller passes objects it
+        owns, consistent with each other (see :meth:`_check`).
+
+        INPUT:
+
+        - ``start``, ``end`` -- labelled permutations, stored as given
+
+        - ``rauzy_moves`` -- a list of pairs ``(winner, side)`` with ``winner``
+          either ``0`` or ``1`` and ``side`` either ``-1`` or ``0``, stored as
+          given
+
+        - ``relabelling`` -- a list, the relabelling performed at the end of
+          the flip sequence, stored as given
+
+        The flip sequence has neither top-bottom nor left-right inverse.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import iet
+            sage: from surface_dynamics.interval_exchanges.flip_sequence import IETFlipSequence
+            sage: p = iet.Permutation('a b c d', 'd c b a')
+            sage: g = iet.FlipSequence(p, 'ttbtbbtb')
+            sage: g.close()
+            sage: f = IETFlipSequence._from_data(p.__copy__(), p.__copy__(),
+            ....:                                [(0, -1), (0, -1), (1, -1), (0, -1), (1, -1), (1, -1), (0, -1), (1, -1)],
+            ....:                                g._relabelling[:])
+            sage: f == g
+            True
+            sage: f._check()
+
+        A closed walk with a nontrivial relabelling::
+
+            sage: q = iet.Permutation([0, 1, 2, 3, 4, 5, 6], [2, 0, 3, 5, 4, 6, 1])
+            sage: g = iet.FlipSequence(q, 'bbtbtbb')
+            sage: g.close()
+            sage: g
+            IETFlipSequence('0 1 2 3 4 5 6\n2 0 3 5 4 6 1', 'bbtbtbb', relabelling=(4,6,5))
+            sage: moves = [(1, -1), (1, -1), (0, -1), (1, -1), (0, -1), (1, -1), (1, -1)]
+            sage: f = IETFlipSequence._from_data(q.__copy__(), q.__copy__(), moves, [0, 1, 2, 3, 6, 4, 5])
+            sage: f == g and f.is_closed()
+            True
+            sage: f._check()
+        """
+        res = cls.__new__(cls)
+        res._start = start
+        res._end = end
+        res._rauzy_moves = rauzy_moves
+        res._top_bottom_inverse = False
+        res._left_right_inverse = False
+        res._relabelling = relabelling
+        return res
+
     def __mul__(self, other):
         if type(self) != type(other):
             raise TypeError('incompatible types for multiplication')
