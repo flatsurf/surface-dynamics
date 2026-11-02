@@ -124,6 +124,20 @@ def test_counts_complete_slow(name):
     assert counts(rauzy_walks.rauzy_closed_walks(C, N, left_degree=k), N) == expected
 
 
+def _walk_list(walks):
+    return [(str(f.start()), f._simplified_flip_sequence()) for f in walks]
+
+
+# (diagram, max_length): the walks of complete=False number 828, 20622, 11927
+# and 17032, of which 146, 6, 36 and 24 are complete; the relabelling group is
+# trivial for H2 and H4hyp, of order 3 for H22odd and 2 for H31left1
+@pytest.mark.parametrize('name, N', [('H2', 12), ('H4hyp', 16), ('H22odd', 14), ('H31left1', 14)])
+def test_complete_against_filter(name, N):
+    C, k = diagram(name)
+    filtered = [f for f in rauzy_walks.rauzy_closed_walks(C, N, complete=False, left_degree=k) if f.is_complete()]
+    assert _walk_list(rauzy_walks.rauzy_closed_walks(C, N, left_degree=k)) == _walk_list(filtered)
+
+
 def test_h2_visits():
     # counts of the labelled Rauzy diagram iterator over the closed loops
     # through the representative, summed over the complete loops of each length

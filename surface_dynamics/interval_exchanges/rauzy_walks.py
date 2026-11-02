@@ -58,6 +58,14 @@ class LazyReducedRauzyDiagram:
     representative of left degree 3 of `H_3(3, 1)`). It is the graph a search
     walks through, not a store of results.
 
+    Once :meth:`relabelling_generators` or :meth:`relabelling_orbits` has
+    been called, the diagram also holds the relabelling group of the class:
+    one labelling per reduced vertex (along a spanning tree from the start)
+    and one list of generators at the start, at most one per edge of the
+    diagram. Both are computed once for the whole class.
+
+    :meth:`clear` drops all of it but the start.
+
     INPUT:
 
     - ``p`` -- an irreducible labelled permutation of interval exchange
@@ -139,7 +147,7 @@ class LazyReducedRauzyDiagram:
 
     def clear(self):
         r"""
-        Forget every vertex but the start.
+        Forget every vertex but the start, and the relabelling group.
 
         EXAMPLES::
 
@@ -148,13 +156,19 @@ class LazyReducedRauzyDiagram:
             sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a'))
             sage: len(G.vertices())
             7
+            sage: G.relabelling_generators(G.start())
+            []
             sage: G.clear()
             sage: len(G)
             1
+            sage: G._tree_labellings is None
+            True
         """
         self._labellings = {self._start: self._canonical(self._start)}
         self._successors = {self._start: [None, None]}
         self._explored = False
+        self._tree_labellings = None
+        self._root_generators = None
 
     def __len__(self):
         r"""
@@ -285,6 +299,150 @@ class LazyReducedRauzyDiagram:
             self._explored = True
         return sorted(self._labellings)
 
+    def _relabelling_group(self):
+        r"""
+        Compute, once for the class, the labelling of each vertex along a
+        spanning tree from the start and the generators of the relabelling
+        group at the start.
+
+        The tree labelling of a vertex ``u`` is stored as the top row ``t_u``
+        of the labelled permutation reached from the canonical labelling of
+        the start along the tree: that permutation is the canonical labelling
+        of ``u`` with each letter ``a`` replaced by ``t_u[a]``. For each edge
+        ``u -> w``, the move applied to the tree labelling of ``u`` gives the
+        tree labelling of ``w`` relabelled by some ``g``; these Schreier
+        generators ``g`` generate the group at the start.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import iet
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
+            sage: G._relabelling_group()
+            sage: sorted(G._tree_labellings.items())
+            [((1, 2, 0), (0, 2, 1)), ((2, 0, 1), (0, 1, 2)), ((2, 1, 0), (0, 1, 2))]
+            sage: G._root_generators
+            []
+        """
+        if self._root_generators is not None:
+            return
+        self.vertices()
+        d = self._d
+        identity = tuple(range(d))
+        tree = {self._start: identity}
+        generators = []
+        seen = {identity}
+        frontier = [self._start]
+        while frontier:
+            new = []
+            for u in frontier:
+                tu = tree[u]
+                for move in (0, 1):
+                    w = self.successor(u, move)
+                    # the move from the canonical labelling of u ends at the
+                    # canonical labelling of w relabelled by its top row
+                    mu = self._labellings[u].rauzy_move(move)._labels[0]
+                    x = tuple(tu[a] for a in mu)
+                    if w not in tree:
+                        tree[w] = x
+                        new.append(w)
+                        continue
+                    y = tree[w]
+                    g = [None] * d
+                    for a, b in zip(y, x):
+                        g[a] = b
+                    g = tuple(g)
+                    if g not in seen:
+                        seen.add(g)
+                        generators.append(g)
+            frontier = new
+        self._tree_labellings = tree
+        self._root_generators = generators
+
+    def relabelling_generators(self, key):
+        r"""
+        Return a list of generators of the relabelling group at the vertex
+        ``key``.
+
+        Each closed walk from the canonical labelling of ``key`` ends at this
+        labelling up to a relabelling, a permutation of the letters; these
+        relabellings form a group, the *relabelling group* at ``key``. The
+        relabellings are tuples ``g`` of the integers ``0, ..., d-1``, the
+        letter ``i`` being sent to ``g[i]``, as the relabelling of an
+        :class:`IETFlipSequence`. The groups at two vertices are conjugate.
+
+        The generators are the Schreier generators along a spanning tree,
+        without the identity and without repetition.
+
+        EXAMPLES:
+
+        The relabelling group is trivial for `H(2)`, of order `3` for
+        `H_3(2^2)^{odd}` and of order `2` for the representative of left
+        degree `1` of `H_3(3, 1)`::
+
+            sage: from surface_dynamics import Stratum
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+            sage: def order(G, k):
+            ....:     return PermutationGroup([[i + 1 for i in g] for g in G.relabelling_generators(k)]).order()
+            sage: G = LazyReducedRauzyDiagram(Stratum([2]).unique_component().permutation_representative(reduced=False))
+            sage: G.relabelling_generators(G.start())
+            []
+            sage: G = LazyReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
+            sage: k = G.start()
+            sage: order(G, k), order(G, G.vertices()[0])
+            (3, 3)
+            sage: C = Stratum([3, 1]).unique_component()
+            sage: G = LazyReducedRauzyDiagram(C.permutation_representative(left_degree=1, reduced=False))
+            sage: order(G, G.start()), order(G, G.vertices()[0])
+            (2, 2)
+            sage: all(sorted(g) == list(range(7)) for g in G.relabelling_generators(G.start()))
+            True
+        """
+        self._relabelling_group()
+        t = self._tree_labellings[key]
+        tinv = [None] * self._d
+        for a, b in enumerate(t):
+            tinv[b] = a
+        # conjugation by the tree labelling of key, a bijection: no identity
+        # nor repetition appears
+        return [tuple(tinv[g[t[a]]] for a in range(self._d)) for g in self._root_generators]
+
+    def relabelling_orbits(self, key):
+        r"""
+        Return the orbits of the relabelling group at the vertex ``key`` on
+        the letters, as a sorted list of sorted tuples.
+
+        See :meth:`relabelling_generators`.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import Stratum
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+            sage: G = LazyReducedRauzyDiagram(Stratum([2]).unique_component().permutation_representative(reduced=False))
+            sage: G.relabelling_orbits(G.start())
+            [(0,), (1,), (2,), (3,)]
+            sage: G = LazyReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
+            sage: G.relabelling_orbits(G.start())
+            [(0,), (1, 5, 6), (2,), (3,), (4,)]
+        """
+        generators = self.relabelling_generators(key)
+        orbit_of = [None] * self._d
+        orbits = []
+        for a in range(self._d):
+            if orbit_of[a] is not None:
+                continue
+            orbit = [a]
+            orbit_of[a] = a
+            for b in orbit:
+                for g in generators:
+                    c = g[b]
+                    if orbit_of[c] is None:
+                        orbit_of[c] = a
+                        orbit.append(c)
+            orbits.append(tuple(sorted(orbit)))
+        orbits.sort()
+        return orbits
+
 
 def _labelled_permutation(x, left_degree):
     r"""
@@ -370,6 +528,18 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
     Fredricksen, Kessler and Maiorana, with the total length bounded by
     ``max_length``; the loops themselves are found by a depth-first search
     pruned by the distance back to `v`.
+
+    With ``complete``, completeness is tracked along the backtracking. The
+    relabelling that closes a walk at `v` lies in the relabelling group at
+    `v` (see :meth:`LazyReducedRauzyDiagram.relabelling_generators`),
+    computed once from Schreier generators along a spanning tree. The
+    orbits of this group hit by the winners of a loop do not depend on the
+    labelling the loop is run from, so a subtree is cut when more orbits
+    contain no winner than moves are left. When the group is trivial, this
+    is exact pruning by the letters still missing; otherwise the winners
+    and the relabelling are combined loop by loop and completeness is
+    decided exactly on each walk. A flip sequence is built for the walks
+    yielded only.
 
     EXAMPLES:
 
@@ -529,7 +699,84 @@ def _first_return_loops(G, v, dist, max_length):
     return loops
 
 
-def _loop_necklaces(lengths, max_length, min_length, primitive):
+def _loop_data(G, v, loops, orbits, label_maps):
+    r"""
+    Return the winners of the ``loops`` at ``v``, and the orbits and label
+    maps they give.
+
+    Each loop is run once from the canonical labelling of ``v``. ``orbits``
+    is a list of disjoint tuples of letters covering the letters, those of
+    the relabelling group at ``v``.
+
+    OUTPUT: a triple ``(winner_masks, orbit_masks, maps)``, lists indexed by
+    the loops:
+
+    - ``winner_masks[j]`` -- the bitmask of the letters of the canonical
+      labelling of ``v`` that are winners of the loop ``j``
+
+    - ``orbit_masks[j]`` -- the bitmask of the indices in ``orbits`` of the
+      orbits containing a winner of the loop ``j``
+
+    - ``maps[j]`` -- if ``label_maps`` is set, the top row of the labelled
+      permutation at which the loop ``j`` ends, a tuple ``m`` such that this
+      permutation is the canonical labelling of ``v`` with each letter ``a``
+      replaced by ``m[a]``; otherwise ``maps`` is ``None``
+
+    EXAMPLES::
+
+        sage: from surface_dynamics import iet, Stratum
+        sage: from surface_dynamics.interval_exchanges.flip_sequence import IETFlipSequence
+        sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram, _distances_to, _first_return_loops, _loop_data
+        sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a'))
+        sage: V = G.vertices()
+        sage: pred = {k: [] for k in V}
+        sage: for k in V:
+        ....:     for move in (0, 1):
+        ....:         pred[G.successor(k, move)].append(k)
+        sage: v = V[0]
+        sage: loops = _first_return_loops(G, v, _distances_to(v, pred, 8), 8)
+        sage: orbits = G.relabelling_orbits(v)
+        sage: winner_masks, orbit_masks, maps = _loop_data(G, v, loops, orbits, True)
+        sage: loops[0], bin(winner_masks[0]), maps[0]
+        ((0, 0), '0b1000', (0, 1, 2, 3))
+        sage: winner_masks == orbit_masks
+        True
+
+    The winners agree with those of the flip sequence of the loop::
+
+        sage: all(winner_masks[j] == sum(1 << a for a in set(IETFlipSequence(G.canonical_labelling(v), loop).winners()))
+        ....:     for j, loop in enumerate(loops))
+        True
+    """
+    orbit_of = [None] * G._d
+    for i, orbit in enumerate(orbits):
+        for a in orbit:
+            orbit_of[a] = i
+    winner_masks = []
+    orbit_masks = []
+    maps = [] if label_maps else None
+    for loop in loops:
+        q = G.canonical_labelling(v)
+        winners = 0
+        for move in loop:
+            winners |= 1 << q._labels[move][-1]
+            q.rauzy_move(move, inplace=True)
+        hit = 0
+        a = 0
+        w = winners
+        while w:
+            if w & 1:
+                hit |= 1 << orbit_of[a]
+            w >>= 1
+            a += 1
+        winner_masks.append(winners)
+        orbit_masks.append(hit)
+        if label_maps:
+            maps.append(tuple(q._labels[0]))
+    return winner_masks, orbit_masks, maps
+
+
+def _loop_necklaces(lengths, max_length, min_length, primitive, orbit_masks=None, num_orbits=0, winner_masks=None, label_maps=None):
     r"""
     Iterate over the necklaces (Lyndon words if ``primitive``) over the
     alphabet ``0, 1, ..., len(lengths) - 1`` whose weight is between
@@ -540,6 +787,18 @@ def _loop_necklaces(lengths, max_length, min_length, primitive):
     Kessler and Maiorana, the subtrees of weight greater than ``max_length``
     being cut. The list yielded is modified afterwards: copy it to keep it.
 
+    If ``orbit_masks`` is given, only the complete words are yielded: the
+    letter ``i`` is a loop whose winners hit the orbits of the bitmask
+    ``orbit_masks[i]`` among the ``num_orbits`` orbits of the relabelling
+    group, and a word is kept when the union of these bitmasks is full. A
+    subtree is cut when more orbits are missing than moves are left, each
+    move having one winner. If moreover ``label_maps`` is given (the
+    relabelling group is nontrivial), the completeness of a word is decided
+    exactly from ``winner_masks`` and ``label_maps`` (see
+    :func:`_loop_data`): the winners of the letter ``j`` of the word are
+    transported by the product of the label maps of the letters before it,
+    and they must hit every orbit of the product of all the label maps.
+
     EXAMPLES::
 
         sage: from surface_dynamics.interval_exchanges.rauzy_walks import _loop_necklaces
@@ -549,27 +808,119 @@ def _loop_necklaces(lengths, max_length, min_length, primitive):
         [(0, 0, 0, 0), (0, 0, 0, 1), (0, 0, 1, 1), (0, 1, 0, 1), (0, 1, 1, 1), (1, 1, 1, 1)]
         sage: [tuple(w) for w in _loop_necklaces([2, 1], 4, 1, True)]
         [(0,), (0, 1), (0, 1, 1), (1,)]
+
+    With two orbits, each loop hitting one of them::
+
+        sage: [tuple(w) for w in _loop_necklaces([1, 1], 4, 1, True, [0b01, 0b10], 2)]
+        [(0, 0, 0, 1), (0, 0, 1), (0, 0, 1, 1), (0, 1), (0, 1, 1), (0, 1, 1, 1)]
+
+    A relabelling group of order `2` exchanging the letters ``0`` and
+    ``1``. The first loop has winner ``1`` and ends with the letters
+    exchanged, the second one has winner ``0`` and ends with the identity.
+    The word ``(1,)`` hits the only orbit of the group but closes with the
+    identity and misses the letter ``1``; the word ``(0, 0)``, not
+    primitive, has winners ``1`` then ``0``::
+
+        sage: [tuple(w) for w in _loop_necklaces([1, 1], 3, 1, True, [0b1, 0b1], 1, [0b10, 0b01], [(1, 0), (0, 1)])]
+        [(0,), (0, 0, 1), (0, 1), (0, 1, 1)]
+        sage: [tuple(w) for w in _loop_necklaces([1, 1], 2, 2, False, [0b1, 0b1], 1, [0b10, 0b01], [(1, 0), (0, 1)])]
+        [(0, 0), (0, 1)]
     """
     n = len(lengths)
+    if not n:
+        return
     seq = []
 
-    def extend(p, total):
-        # seq is a prenecklace of length m with period p (the length of its
-        # longest Lyndon prefix)
+    if orbit_masks is None:
+        def extend(p, total):
+            # seq is a prenecklace of length m with period p (the length of
+            # its longest Lyndon prefix)
+            m = len(seq)
+            if m and total >= min_length and (p == m if primitive else m % p == 0):
+                yield seq
+            first = seq[m - p] if m else 0
+            for i in range(first, n):
+                t = total + lengths[i]
+                if t > max_length:
+                    # the letters are not sorted by weight: a later one may fit
+                    continue
+                seq.append(i)
+                yield from extend(p if m and i == first else m + 1, t)
+                seq.pop()
+
+        yield from extend(0, 0)
+        return
+
+    # Python integers for int.bit_count, whatever the input (Sage Integer)
+    orbit_masks = [int(h) for h in orbit_masks]
+    full = (1 << int(num_orbits)) - 1
+
+    if label_maps is None:
+        # trivial relabelling group: the orbits are the letters and every
+        # walk closes with the identity, so a full mask is completeness
+        def extend(p, total, hit):
+            m = len(seq)
+            if m and hit == full and total >= min_length and (p == m if primitive else m % p == 0):
+                yield seq
+            first = seq[m - p] if m else 0
+            for i in range(first, n):
+                t = total + lengths[i]
+                if t > max_length:
+                    continue
+                h = hit | orbit_masks[i]
+                if (full ^ h).bit_count() > max_length - t:
+                    continue
+                seq.append(i)
+                yield from extend(p if m and i == first else m + 1, t, h)
+                seq.pop()
+
+        yield from extend(0, 0, 0)
+        return
+
+    d = len(label_maps[0])
+    winner_letters = [[a for a in range(d) if (w >> a) & 1] for w in winner_masks]
+
+    def is_complete(winners, relabelling):
+        # every cycle of the relabelling contains a winner
+        seen = 0
+        for a in range(d):
+            if (seen >> a) & 1:
+                continue
+            cycle = 0
+            b = a
+            while not (cycle >> b) & 1:
+                cycle |= 1 << b
+                b = relabelling[b]
+            if not cycle & winners:
+                return False
+            seen |= cycle
+        return True
+
+    def extend(p, total, hit, winners, relabelling):
+        # winners: the letters of the canonical labelling of v that are
+        # winners of the walk seq run from this labelling; relabelling: the
+        # top row of the labelled permutation where it ends
         m = len(seq)
-        if m and total >= min_length and (p == m if primitive else m % p == 0):
+        if (m and hit == full and total >= min_length and (p == m if primitive else m % p == 0)
+                and is_complete(winners, relabelling)):
             yield seq
         first = seq[m - p] if m else 0
         for i in range(first, n):
             t = total + lengths[i]
             if t > max_length:
-                # the letters are not sorted by weight: a later one may fit
                 continue
+            h = hit | orbit_masks[i]
+            if (full ^ h).bit_count() > max_length - t:
+                continue
+            w = winners
+            for a in winner_letters[i]:
+                w |= 1 << relabelling[a]
             seq.append(i)
-            yield from extend(p if m and i == first else m + 1, t)
+            yield from extend(p if m and i == first else m + 1, t, h, w,
+                              tuple(relabelling[a] for a in label_maps[i]))
             seq.pop()
 
-    yield from extend(0, 0)
+    yield from extend(0, 0, 0, 0, tuple(range(d)))
 
 
 def _closed_walks(G, max_length, min_length, complete, primitive):
@@ -601,11 +952,17 @@ def _closed_walks(G, max_length, min_length, complete, primitive):
         dist = _distances_to(v, predecessors, max_length)
         loops = _first_return_loops(G, v, dist, max_length)
         lengths = [len(loop) for loop in loops]
-        for seq in _loop_necklaces(lengths, max_length, min_length, primitive):
+        if complete:
+            orbits = G.relabelling_orbits(v)
+            # the group is trivial exactly when its orbits are singletons
+            nontrivial = len(orbits) < G._d
+            winner_masks, orbit_masks, label_maps = _loop_data(G, v, loops, orbits, nontrivial)
+            necklaces = _loop_necklaces(lengths, max_length, min_length, primitive,
+                                        orbit_masks, len(orbits), winner_masks, label_maps)
+        else:
+            necklaces = _loop_necklaces(lengths, max_length, min_length, primitive)
+        for seq in necklaces:
             word = [move for i in seq for move in loops[i]]
             f = IETFlipSequence(G.canonical_labelling(v), word)
             f.close()
-            # completeness is checked on the walk built, replaying its moves
-            if complete and not f.is_complete():
-                continue
             yield f
