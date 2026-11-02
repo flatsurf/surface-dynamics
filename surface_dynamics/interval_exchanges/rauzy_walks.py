@@ -818,8 +818,8 @@ def _loop_necklaces(lengths, max_length, min_length, primitive, orbit_masks=None
     ``1``. The first loop has winner ``1`` and ends with the letters
     exchanged, the second one has winner ``0`` and ends with the identity.
     The word ``(1,)`` hits the only orbit of the group but closes with the
-    identity and misses the letter ``1``; the word ``(0, 0)``, not
-    primitive, has winners ``1`` then ``0``::
+    identity and misses the letter ``1``; the word ``(0, 0)``, not a
+    Lyndon word, has winners ``1`` then ``0``::
 
         sage: [tuple(w) for w in _loop_necklaces([1, 1], 3, 1, True, [0b1, 0b1], 1, [0b10, 0b01], [(1, 0), (0, 1)])]
         [(0,), (0, 0, 1), (0, 1), (0, 1, 1)]
