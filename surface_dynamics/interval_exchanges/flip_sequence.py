@@ -144,7 +144,7 @@ class IETFlipSequence(SageObject):
         [      1       1       1       1       1       1       1       1       2       1]
         [4*s + 2 4*s + 6      10  r + 13  r + 12       8       4       2       3       3]
     """
-    def __init__(self, p, rauzy_moves=None, top_bottom_inverse=False, left_right_inverse=False, relabelling=None):
+    def __init__(self, p, rauzy_moves=None, top_bottom_inverse=False, left_right_inverse=False, relabelling=None, check=True):
         r"""
         INPUT:
 
@@ -163,6 +163,12 @@ class IETFlipSequence(SageObject):
 
         - ``relabelling`` - (optional; default identity permutation) the
           relabelling to be performed at the end of the flip sequence
+
+        - ``check`` - (optional; default ``True``) when ``rauzy_moves`` is a
+          list, whether its moves are converted; with ``False``, each move is
+          either a winner ``0`` (top) or ``1`` (bottom) for a right move, or a
+          pair ``(winner, side)`` with ``side`` either ``-1`` (right) or ``0``
+          (left), and the conversion is skipped (see :meth:`rauzy_move`)
 
         TESTS::
 
@@ -214,9 +220,9 @@ class IETFlipSequence(SageObject):
             else:
                 for r in rauzy_moves:
                     if isinstance(r, numbers.Integral):
-                        self.rauzy_move(r)
+                        self.rauzy_move(r, check=check)
                     else:
-                        self.rauzy_move(*r)
+                        self.rauzy_move(*r, check=check)
 
         if top_bottom_inverse:
             self.top_bottom_inverse()
@@ -347,7 +353,7 @@ class IETFlipSequence(SageObject):
             p.left_right_inverse(inplace=True)
         p.relabel(perm_invert(self._relabelling))
         for winner, side in reversed(self._rauzy_moves):
-            p.backward_rauzy_move(winner, side, inplace=True)
+            p.backward_rauzy_move(winner, side, inplace=True, check=False)
             yield (p, winner, side)
 
     def _simplified_flip_sequence(self):
@@ -370,15 +376,38 @@ class IETFlipSequence(SageObject):
             args.append('relabelling={}'.format(perm_cycle_string(self._relabelling, singletons=False)))
         return "IETFlipSequence({})".format(', '.join(arg for arg in args))
 
-    def rauzy_move(self, winner, side='right', iterations=1):
+    def rauzy_move(self, winner, side=-1, iterations=1, check=True):
         r"""
         Add a Rauzy move to this flip sequence.
+
+        INPUT:
+
+        - ``winner`` -- either ``'t'`` (or ``0``) for top induction or ``'b'`` (or
+          ``1``) for bottom induction
+        - ``side`` -- either ``'l'`` (or ``0``) for left or ``'r'`` (or ``-1``) for right
+        - ``iterations`` -- the number of times the induction is applied
+        - ``check`` -- boolean (default ``True``) whether ``winner`` and ``side``
+          are converted; with ``False``, ``winner`` must already be ``0`` or ``1``
+          and ``side`` must be ``-1`` or ``0``, and the conversion is skipped
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import iet
+            sage: p = iet.Permutation('a b c d', 'd c b a')
+            sage: f = iet.FlipSequence(p)
+            sage: f.rauzy_move('t')
+            sage: f.rauzy_move(1, -1, check=False)
+            sage: f
+            IETFlipSequence('a b c d\nd c b a', 'tb')
+            sage: f == iet.FlipSequence(p, [0, 1], check=False)
+            True
         """
-        winner = interval_conversion(winner)
-        side = side_conversion(side)
+        if check:
+            winner = interval_conversion(winner)
+            side = side_conversion(side)
 
         for _ in range(iterations):
-            self._end.rauzy_move(winner, side, inplace=True)
+            self._end.rauzy_move(winner, side, inplace=True, check=False)
 
         if self._top_bottom_inverse:
             winner = 1 - winner

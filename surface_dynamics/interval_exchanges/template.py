@@ -4245,7 +4245,7 @@ class OrientablePermutationIET(PermutationIET):
         elif side == 0:
             return self._twin[winner][0]
 
-    def rauzy_move(self, winner, side='right', inplace=False):
+    def rauzy_move(self, winner, side='right', inplace=False, check=True):
         r"""
         Returns the permutation after a Rauzy move.
 
@@ -4260,6 +4260,11 @@ class OrientablePermutationIET(PermutationIET):
           performed inplace (to be used with care since permutations
           are hashable, set to ``True`` if you are sure to know what
           you are doing)
+
+        - ``check`` - (default ``True``) whether ``winner`` and ``side`` are
+          converted; with ``False``, ``winner`` must already be ``0`` (top) or
+          ``1`` (bottom) and ``side`` must be ``-1`` (right) or ``0`` (left),
+          and the conversion is skipped
 
         OUTPUT:
 
@@ -4322,9 +4327,18 @@ class OrientablePermutationIET(PermutationIET):
             d a c b
             sage: q = p.rauzy_move('b', inplace=True)
             sage: assert q is p
+
+        With ``check=False``, the winner and the side are given as integers::
+
+            sage: p = iet.Permutation('a b c d', 'd c b a')
+            sage: p.rauzy_move(0, -1, check=False) == p.rauzy_move('t', 'r')
+            True
+            sage: p.rauzy_move(1, 0, check=False) == p.rauzy_move('b', 'l')
+            True
         """
-        winner = interval_conversion(winner)
-        side = side_conversion(side)
+        if check:
+            winner = interval_conversion(winner)
+            side = side_conversion(side)
         loser = 1 - winner
 
         if self._twin[0][side] == side or self._twin[0][side] == len(self)+side:
@@ -4345,7 +4359,7 @@ class OrientablePermutationIET(PermutationIET):
 
         return res
 
-    def backward_rauzy_move(self, winner, side='right', inplace=False):
+    def backward_rauzy_move(self, winner, side='right', inplace=False, check=True):
         r"""
         Returns the permutation before a Rauzy move.
 
@@ -4360,6 +4374,11 @@ class OrientablePermutationIET(PermutationIET):
           performed inplace (to be used with care since permutations
           are hashable, set to ``True`` if you are sure to know what
           you are doing)
+
+        - ``check`` - (default ``True``) whether ``winner`` and ``side`` are
+          converted; with ``False``, ``winner`` must already be ``0`` (top) or
+          ``1`` (bottom) and ``side`` must be ``-1`` (right) or ``0`` (left),
+          and the conversion is skipped
 
         OUTPUT:
 
@@ -4421,8 +4440,9 @@ class OrientablePermutationIET(PermutationIET):
             a b c d
             d c b a
         """
-        winner = interval_conversion(winner)
-        side = side_conversion(side)
+        if check:
+            winner = interval_conversion(winner)
+            side = side_conversion(side)
 
         loser = 1 - winner
         winner_twin = self._twin[winner][side]
@@ -5099,9 +5119,24 @@ class OrientablePermutationLI(PermutationLI):
     - Vincent Delecroix (2008-12-20): initial version
 
     """
-    def rauzy_move(self, winner, side='right', inplace=False):
+    def rauzy_move(self, winner, side='right', inplace=False, check=True):
         r"""
         Returns the permutation after a Rauzy move.
+
+        INPUT:
+
+        - ``winner`` - 'top' or 'bottom' interval
+
+        - ``side`` - 'right' or 'left' (default: 'right') corresponding
+          to the side on which the Rauzy move must be performed.
+
+        - ``inplace`` - (default ``False``) whether the Rauzy move is
+          performed inplace
+
+        - ``check`` - (default ``True``) whether ``winner`` and ``side`` are
+          converted; with ``False``, ``winner`` must already be ``0`` (top) or
+          ``1`` (bottom) and ``side`` must be ``-1`` (right) or ``0`` (left),
+          and the conversion is skipped
 
         TESTS::
 
@@ -5135,8 +5170,9 @@ class OrientablePermutationLI(PermutationLI):
             sage: pp is p
             True
         """
-        winner = interval_conversion(winner)
-        side = side_conversion(side)
+        if check:
+            winner = interval_conversion(winner)
+            side = side_conversion(side)
         loser = 1 - winner
 
         if inplace:
@@ -5161,9 +5197,21 @@ class OrientablePermutationLI(PermutationLI):
 
         return res
 
-    def backward_rauzy_move(self, winner, side='top'):
+    def backward_rauzy_move(self, winner, side='top', check=True):
         r"""
         Return the permutation before the Rauzy move.
+
+        INPUT:
+
+        - ``winner`` - 'top' or 'bottom' interval
+
+        - ``side`` - 'right' or 'left' corresponding to the side on which
+          the Rauzy move must be performed.
+
+        - ``check`` - (default ``True``) whether ``winner`` and ``side`` are
+          converted; with ``False``, ``winner`` must already be ``0`` (top) or
+          ``1`` (bottom) and ``side`` must be ``-1`` (right) or ``0`` (left),
+          and the conversion is skipped
 
         TESTS::
 
@@ -5203,8 +5251,9 @@ class OrientablePermutationLI(PermutationLI):
             True
             True
         """
-        winner = interval_conversion(winner)
-        side = side_conversion(side)
+        if check:
+            winner = interval_conversion(winner)
+            side = side_conversion(side)
         loser = 1 - winner
 
         res = copy(self)
@@ -5255,9 +5304,24 @@ class FlippedPermutationIET(PermutationIET):
 
         Internal class! Do not use directly!
     """
-    def rauzy_move(self, winner, side='right', inplace=False):
+    def rauzy_move(self, winner, side='right', inplace=False, check=True):
         r"""
         Returns the permutation after a Rauzy move.
+
+        INPUT:
+
+        - ``winner`` - 'top' or 'bottom' interval
+
+        - ``side`` - 'right' or 'left' (default: 'right') corresponding
+          to the side on which the Rauzy move must be performed.
+
+        - ``inplace`` - (default ``False``) whether the Rauzy move is
+          performed inplace
+
+        - ``check`` - (default ``True``) whether ``winner`` and ``side`` are
+          converted; with ``False``, ``winner`` must already be ``0`` (top) or
+          ``1`` (bottom) and ``side`` must be ``-1`` (right) or ``0`` (left),
+          and the conversion is skipped
 
         TESTS::
 
@@ -5302,8 +5366,9 @@ class FlippedPermutationIET(PermutationIET):
             -a -b  c -d
              c -d -a -b
         """
-        winner = interval_conversion(winner)
-        side = side_conversion(side)
+        if check:
+            winner = interval_conversion(winner)
+            side = side_conversion(side)
         loser = 1 - winner
 
         if inplace:
@@ -5329,9 +5394,21 @@ class FlippedPermutationIET(PermutationIET):
 
         return res
 
-    def backward_rauzy_move(self, winner, side=-1):
+    def backward_rauzy_move(self, winner, side=-1, check=True):
         r"""
         Returns the permutation before a Rauzy move.
+
+        INPUT:
+
+        - ``winner`` - 'top' or 'bottom' interval
+
+        - ``side`` - 'right' or 'left' (default: 'right') corresponding
+          to the side on which the Rauzy move must be performed.
+
+        - ``check`` - (default ``True``) whether ``winner`` and ``side`` are
+          converted; with ``False``, ``winner`` must already be ``0`` (top) or
+          ``1`` (bottom) and ``side`` must be ``-1`` (right) or ``0`` (left),
+          and the conversion is skipped
 
         TESTS::
 
@@ -5369,8 +5446,9 @@ class FlippedPermutationIET(PermutationIET):
             True
             True
         """
-        winner = interval_conversion(winner)
-        side = side_conversion(side)
+        if check:
+            winner = interval_conversion(winner)
+            side = side_conversion(side)
         loser = 1 - winner
 
         res = copy(self)
@@ -5412,9 +5490,24 @@ class FlippedPermutationLI(PermutationLI):
     - Vincent Delecroix (2008-12-20): initial version
 
     """
-    def rauzy_move(self, winner, side='right', inplace=False):
+    def rauzy_move(self, winner, side='right', inplace=False, check=True):
         r"""
         Rauzy move
+
+        INPUT:
+
+        - ``winner`` - 'top' or 'bottom' interval
+
+        - ``side`` - 'right' or 'left' (default: 'right') corresponding
+          to the side on which the Rauzy move must be performed.
+
+        - ``inplace`` - (default ``False``) whether the Rauzy move is
+          performed inplace
+
+        - ``check`` - (default ``True``) whether ``winner`` and ``side`` are
+          converted; with ``False``, ``winner`` must already be ``0`` (top) or
+          ``1`` (bottom) and ``side`` must be ``-1`` (right) or ``0`` (left),
+          and the conversion is skipped
 
         TESTS::
 
@@ -5445,8 +5538,9 @@ class FlippedPermutationLI(PermutationLI):
             sage: pp is p
             True
         """
-        winner = interval_conversion(winner)
-        side = side_conversion(side)
+        if check:
+            winner = interval_conversion(winner)
+            side = side_conversion(side)
         loser = 1 - winner
 
         if inplace:
@@ -5479,9 +5573,21 @@ class FlippedPermutationLI(PermutationLI):
 
         return res
 
-    def backward_rauzy_move(self, winner, side=-1):
+    def backward_rauzy_move(self, winner, side=-1, check=True):
         r"""
         Rauzy move
+
+        INPUT:
+
+        - ``winner`` - 'top' or 'bottom' interval
+
+        - ``side`` - 'right' or 'left' (default: 'right') corresponding
+          to the side on which the Rauzy move must be performed.
+
+        - ``check`` - (default ``True``) whether ``winner`` and ``side`` are
+          converted; with ``False``, ``winner`` must already be ``0`` (top) or
+          ``1`` (bottom) and ``side`` must be ``-1`` (right) or ``0`` (left),
+          and the conversion is skipped
 
         TESTS::
 
@@ -5519,8 +5625,9 @@ class FlippedPermutationLI(PermutationLI):
             True
             True
         """
-        winner = interval_conversion(winner)
-        side = side_conversion(side)
+        if check:
+            winner = interval_conversion(winner)
+            side = side_conversion(side)
         loser = 1 - winner
 
         res = copy(self)

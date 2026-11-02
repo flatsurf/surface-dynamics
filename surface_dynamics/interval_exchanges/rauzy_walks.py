@@ -973,6 +973,6 @@ def _closed_walks(G, max_length, min_length, complete, primitive):
             necklaces = _loop_necklaces(lengths, max_length, min_length, primitive)
         for seq in necklaces:
             word = [move for i in seq for move in loops[i]]
-            f = IETFlipSequence(G.canonical_labelling(v), word)
+            f = IETFlipSequence(G.canonical_labelling(v), word, check=False)
             f.close()
             yield f
