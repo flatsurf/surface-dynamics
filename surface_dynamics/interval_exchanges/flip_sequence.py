@@ -317,7 +317,8 @@ class IETFlipSequence(SageObject):
         - ``relabelling`` -- a list, the relabelling performed at the end of
           the flip sequence, stored as given
 
-        The flip sequence has neither top-bottom nor left-right inverse.
+        OUTPUT: an ``IETFlipSequence`` with neither top-bottom nor left-right
+        inverse
 
         EXAMPLES::
 

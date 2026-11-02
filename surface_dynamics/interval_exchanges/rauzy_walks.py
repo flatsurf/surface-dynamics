@@ -69,7 +69,7 @@ class LazyReducedRauzyDiagram:
     INPUT:
 
     - ``p`` -- an irreducible labelled permutation of interval exchange
-      transformation (not flipped)
+      transformation (not flipped) on at least two letters
 
     EXAMPLES::
 
@@ -103,15 +103,17 @@ class LazyReducedRauzyDiagram:
             sage: LazyReducedRauzyDiagram(iet.Permutation('a', 'a'))
             Traceback (most recent call last):
             ...
-            ValueError: Rauzy induction is not well defined
+            ValueError: p must have at least two letters
         """
         if not isinstance(p, LabelledPermutationIET) or isinstance(p, FlippedPermutationIET):
             raise ValueError('p must be a labelled permutation of interval exchange transformation')
         if not p.is_irreducible():
             raise ValueError('p must be irreducible')
-        # the moves are applied without check: one letter has none
+        # a permutation of one letter has no Rauzy move, hence no Rauzy
+        # diagram; the moves below are applied without check, and the edge
+        # data (itemgetter of a row) assumes at least two letters
         if len(p) < 2:
-            raise ValueError('Rauzy induction is not well defined')
+            raise ValueError('p must have at least two letters')
         self._d = len(p)
         self._start = self._key(p)
         self.clear()
@@ -768,8 +770,7 @@ def _first_return_loops(d, v, successors, edges, dist, max_length, label_maps):
     The first-return loops at ``v`` are the words of moves from ``v`` back
     to ``v`` whose intermediate vertices are all greater than ``v``. ``d``
     is the number of letters, ``successors`` and ``edges`` are as in
-    :func:`_diagram_data`, and
-    ``dist`` is the output of :func:`_distances_to`.
+    :func:`_diagram_data`, and ``dist`` is the output of :func:`_distances_to`.
 
     The loops are found by a depth-first search, which also accumulates
     along the current prefix its winners and the relabelling at which it
