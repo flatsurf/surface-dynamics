@@ -1,19 +1,24 @@
 r"""
-Closed walks of reduced Rauzy diagrams
+Closed walks in Rauzy diagrams and associated flip sequences
 
-The reduced Rauzy diagram of an Abelian permutation has one vertex per
+The reduced Rauzy diagram of a permutation (Abelian differential)
+or generalized permutation (quadratic differential) has one vertex per
 permutation of its Rauzy class up to relabelling. Two edges reach out
 of each vertex, the right Rauzy moves ``t`` (top winner) and ``b`` (bottom
-winner). A *closed walk* is a path in this diagram whose end is its start,
-taken up to relabelling. It is a *primitive closed walk* when it is not a proper
-power of a shorter closed walk (read on the sequence of pairs (vertex, move),
-not on the word of moves alone). It is *complete* when every letter is the
-winner of some move, up to the orbits of the relabelling that closes it.
+winner). A *closed walk* is a path in this diagram whose end is its start.
+It is a *primitive closed walk* when it is not a proper power of a shorter
+closed walk (read on the sequence of pairs (vertex, move), not on the word of
+moves alone). It is *complete* when every letter is the winner of some move, up
+to the orbits of the relabelling that closes it.
 
 A reduced vertex is represented by its *canonical labelling*: the labelled
 permutation, relabelled so that its top row is `0 1 \dots d-1`. Its *key* is
 the tuple of the bottom row of its canonical labelling, and vertices are
 compared by key.
+
+The main function in this module is :func:`rauzy_closed_walks` which is
+available via the ``iet`` constructor (see example below). It relies on
+a custom class :class:`LazyReducedRauzyDiagram`.
 
 EXAMPLES::
 
@@ -68,8 +73,8 @@ class LazyReducedRauzyDiagram:
 
     INPUT:
 
-    - ``p`` -- an irreducible labelled permutation of interval exchange
-      transformation (not flipped) on at least two letters
+    - ``p`` -- an irreducible labelled permutation of Abelian or quadratic
+      differential
 
     EXAMPLES::
 
@@ -81,10 +86,17 @@ class LazyReducedRauzyDiagram:
         Lazy reduced Rauzy diagram on 4 letters (1 vertex held)
         sage: G.start()
         (3, 2, 1, 0)
+        sage: len(G)
+        1
+
+    Calling some methods such as ``vertices()`` will compute the whole Rauzy diagram::
+
         sage: len(G.vertices())
         7
         sage: len(G)
         7
+        sage: G
+        Lazy reduced Rauzy diagram on 4 letters (7 vertices held)
     """
     def __init__(self, p):
         r"""
@@ -109,9 +121,6 @@ class LazyReducedRauzyDiagram:
             raise ValueError('p must be a labelled permutation of interval exchange transformation')
         if not p.is_irreducible():
             raise ValueError('p must be irreducible')
-        # a permutation of one letter has no Rauzy move, hence no Rauzy
-        # diagram; the moves below are applied without check, and the edge
-        # data (itemgetter of a row) assumes at least two letters
         if len(p) < 2:
             raise ValueError('p must have at least two letters')
         self._d = len(p)
