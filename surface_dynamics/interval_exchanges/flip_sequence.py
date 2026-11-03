@@ -464,7 +464,7 @@ class RauzyFlipSequence(SageObject):
         - ``relabelling`` -- a list, the relabelling performed at the end of
           the flip sequence, stored as given
 
-        OUTPUT: an ``RauzyFlipSequence`` with neither top-bottom nor left-right
+        OUTPUT: a ``RauzyFlipSequence`` with neither top-bottom nor left-right
         inverse
 
         EXAMPLES::
