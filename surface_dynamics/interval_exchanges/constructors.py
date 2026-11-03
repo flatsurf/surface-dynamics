@@ -1058,6 +1058,10 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
         Traceback (most recent call last):
         ...
         ValueError: x must be an Abelian permutation or a component of an Abelian stratum
+        sage: iet.rauzy_closed_walks(iet.Permutation('a b c', 'c b a', flips='a'), 3)
+        Traceback (most recent call last):
+        ...
+        ValueError: x must be an Abelian permutation or a component of an Abelian stratum
     """
     from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratumComponent
     from .template import OrientablePermutationIET, FlippedPermutationIET

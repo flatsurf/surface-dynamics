@@ -70,12 +70,12 @@ class LazyReducedRauzyDiagram:
 
     :meth:`clear` drops all of it but the start.
 
+    The canonical labellings use the alphabet of ``p``, in its order.
+
     INPUT:
 
     - ``p`` -- an irreducible permutation of Abelian differential, labelled
       or reduced
-
-    The canonical labellings use the alphabet of ``p``, in its order.
 
     EXAMPLES::
 
@@ -612,6 +612,105 @@ class LazyReducedRauzyDiagram:
             raise ValueError('max_length and min_length must be non-negative')
         return self._closed_walks(max_length, max(min_length, 1), bool(complete), bool(primitive))
 
+    def _diagram_data(self):
+        r"""
+        Return the whole reduced Rauzy diagram on integer vertices, with the
+        data of its edges, as flat lists.
+
+        The vertex ``u`` is the ``u``-th key of :meth:`vertices`, so that the
+        integers compare as the keys. The canonical labelling of each vertex is
+        moved once per edge here, instead of once per edge of each walk or loop
+        found later. The lists hold Python integers only, which index faster
+        than nested containers in the search.
+
+        OUTPUT: a tuple ``(vertices, top_successors, bot_successors,
+        bot_winners, top_predecessors, bot_predecessors, top_maps, bot_maps)``,
+        where ``d`` is the number of letters and ``n`` the number of vertices:
+
+        - ``vertices`` -- the sorted list of the keys of the vertices
+
+        - ``top_successors[u]``, ``bot_successors[u]`` -- the vertex reached
+          from ``u`` by the top move (``0``) and by the bottom move (``1``)
+
+        - ``bot_winners[u]`` -- the winner of the bottom move in the canonical
+          labelling of ``u``, as an index in ``0, ..., d-1`` (the last entry of
+          the key). There is no list for the top move: the top winner of a
+          canonical labelling is always ``d - 1``
+
+        - ``top_predecessors[w]``, ``bot_predecessors[w]`` -- the vertex with
+          a top (bottom) edge to ``w``. It is unique: a Rauzy move is invertible
+          on labelled permutations and the relabelling group acts freely
+
+        - ``top_maps[d*u + b]``, ``bot_maps[d*u + b]`` -- the entry ``b`` of the
+          top row ``m`` of the labelled permutation reached by the top (bottom)
+          move from the canonical labelling of ``u``. This permutation is the
+          canonical labelling of the successor with each letter ``b`` replaced
+          by ``m[b]``; so from the canonical labelling of ``u`` relabelled by
+          ``lab`` (each letter ``c`` replaced by ``lab[c]``), the move leads to
+          the canonical labelling of the successor relabelled by the tuple
+          ``operator.itemgetter(*m)(lab)``
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import iet
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
+            sage: vertices, top_succ, bot_succ, bot_winners, top_pred, bot_pred, top_maps, bot_maps = G._diagram_data()
+            sage: vertices
+            [(1, 2, 0), (2, 0, 1), (2, 1, 0)]
+            sage: top_succ, bot_succ
+            ([0, 2, 1], [2, 1, 0])
+            sage: bot_winners
+            [0, 1, 0]
+            sage: top_pred, bot_pred
+            ([0, 2, 1], [2, 1, 0])
+            sage: bot_maps[0:3]
+            [0, 2, 1]
+
+        The winners and the top rows agree with the moves of the canonical
+        labellings::
+
+            sage: d = 3
+            sage: all(bot_winners[u] == G.canonical_labelling(k)._labels[1][-1]
+            ....:     and top_maps[d*u:d*u + d] == list(G.canonical_labelling(k).rauzy_move(0)._labels[0])
+            ....:     and bot_maps[d*u:d*u + d] == list(G.canonical_labelling(k).rauzy_move(1)._labels[0])
+            ....:     for u, k in enumerate(vertices))
+            True
+
+        Each vertex is the successor of its predecessors::
+
+            sage: from surface_dynamics import Stratum
+            sage: G = LazyReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
+            sage: vertices, top_succ, bot_succ, _, top_pred, bot_pred, _, _ = G._diagram_data()
+            sage: all(top_succ[top_pred[w]] == w and bot_succ[bot_pred[w]] == w for w in range(len(vertices)))
+            True
+        """
+        vertices = self.vertices()
+        index = {k: j for j, k in enumerate(vertices)}
+        n = len(vertices)
+        top_successors = []
+        bot_successors = []
+        bot_winners = []
+        top_predecessors = [None] * n
+        bot_predecessors = [None] * n
+        top_maps = []
+        bot_maps = []
+        for u, k in enumerate(vertices):
+            t = index[self.successor(k, 0)]
+            b = index[self.successor(k, 1)]
+            top_successors.append(t)
+            bot_successors.append(b)
+            top_predecessors[t] = u
+            bot_predecessors[b] = u
+            q = self._labellings[k]
+            # the top row of the canonical labelling is 0, 1, ..., d-1 and its
+            # bottom row is the key: the bottom winner is its last letter
+            bot_winners.append(k[-1])
+            top_maps.extend(q.rauzy_move(0, -1, check=False)._labels[0])
+            bot_maps.extend(q.rauzy_move(1, -1, check=False)._labels[0])
+        return (vertices, top_successors, bot_successors, bot_winners,
+                top_predecessors, bot_predecessors, top_maps, bot_maps)
+
     def _closed_walks(self, max_length, min_length, complete, primitive):
         r"""
         Iterate over the closed walks, the arguments being checked as in
@@ -625,17 +724,24 @@ class LazyReducedRauzyDiagram:
             sage: len(list(G._closed_walks(3, 1, False, True)))
             6
         """
-        vertices, successors, predecessors, edges = _diagram_data(self)
+        (vertices, top_successors, bot_successors, bot_winners,
+         top_predecessors, bot_predecessors, top_maps, bot_maps) = self._diagram_data()
         d = self._d
+        n = len(vertices)
         identity = list(range(d))
+        # built once for the whole search: the loops of each vertex share them
+        top_getters = [operator.itemgetter(*top_maps[d*u:d*u + d]) for u in range(n)]
+        bot_getters = [operator.itemgetter(*bot_maps[d*u:d*u + d]) for u in range(n)]
 
         for v, key in enumerate(vertices):
-            dist = _distances_to(v, predecessors, max_length)
+            dist = _distances_to(v, top_predecessors, bot_predecessors, max_length)
             orbits = self.relabelling_orbits(key)
             # the group is trivial exactly when its orbits are singletons; then
             # every walk at v closes with the identity, and no label map is needed
             nontrivial = len(orbits) < d
-            loops, winner_masks, label_maps = _first_return_loops(d, v, successors, edges, dist, max_length, nontrivial)
+            loops, winner_masks, label_maps = _first_return_loops(
+                d, v, top_successors, bot_successors, bot_winners, top_getters, bot_getters,
+                dist, max_length, nontrivial)
             lengths = [len(loop) for loop in loops]
             if complete:
                 orbit_of = [None] * d
@@ -670,126 +776,106 @@ class LazyReducedRauzyDiagram:
                                                  moves, relabelling)
 
 
-def _diagram_data(G):
+def _distances_to(v, top_predecessors, bot_predecessors, max_length):
     r"""
-    Return the reduced Rauzy diagram ``G`` on integer vertices, with the data
-    of its edges.
+    Return the distances to the vertex ``v``, in the graph below, along the
+    paths whose vertices but ``v`` are all greater than ``v``.
 
-    The vertex ``j`` is the ``j``-th key of ``G.vertices()``, so that the
-    integers compare as the keys. The canonical labelling of each vertex is
-    moved once per edge here, instead of once per edge of each walk or loop
-    found later.
+    The graph has the vertices ``0, ..., n-1``, where ``n`` is the length of
+    ``top_predecessors`` and of ``bot_predecessors``, and the ``2n`` edges
+    ``u -> top_successors[u]``, labelled by the move ``0``, and
+    ``u -> bot_successors[u]``, labelled by the move ``1``. The two
+    arguments are the same graph read backwards: ``top_predecessors[w]`` is
+    the vertex ``u`` with ``top_successors[u] == w`` and
+    ``bot_predecessors[w]`` the vertex ``u`` with ``bot_successors[u] == w``
+    (each vertex has one edge of each label coming in).
 
-    OUTPUT: a tuple ``(vertices, successors, predecessors, edges)``:
+    The distance from ``u`` to ``v`` is the least number of edges of a path
+    from ``u`` to ``v`` all of whose vertices but the last (``v``) are
+    greater than ``v``, found by a breadth-first search from ``v`` along the
+    edges backwards. ``max_length`` bounds the distances sought.
 
-    - ``vertices`` -- the sorted list of the keys of the vertices
+    OUTPUT: the list ``dist`` of length ``n``: ``dist[u]`` is the distance
+    from ``u`` to ``v`` if ``u > v`` and it is at most ``max_length``, and
+    ``None`` otherwise (in particular for ``u <= v``).
 
-    - ``successors[u]`` -- the pair of the vertices reached from ``u`` by the
-      top and by the bottom move
+    EXAMPLES:
 
-    - ``predecessors[u]`` -- the list of the vertices with an edge to ``u``,
-      once per edge
-
-    - ``edges[u][move]`` -- a pair ``(a, g)``: ``a`` is the winner of the
-      move in the canonical labelling of ``u``, and ``g`` the
-      :func:`operator.itemgetter` of the top row ``m`` of the labelled
-      permutation reached by the move from this labelling. This permutation
-      is the canonical labelling of the successor with each letter ``b``
-      replaced by ``m[b]``; so from the canonical labelling of ``u`` relabelled
-      by ``lab`` (each letter ``c`` replaced by ``lab[c]``), the move leads to
-      the canonical labelling of the successor relabelled by ``g(lab)``.
-
-    EXAMPLES::
-
-        sage: from surface_dynamics import iet
-        sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram, _diagram_data
-        sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
-        sage: vertices, successors, predecessors, edges = _diagram_data(G)
-        sage: vertices
-        [(1, 2, 0), (2, 0, 1), (2, 1, 0)]
-        sage: successors
-        [(0, 2), (2, 1), (1, 0)]
-        sage: predecessors
-        [[0, 2], [1, 2], [0, 1]]
-        sage: a, g = edges[0][1]
-        sage: a, g((0, 1, 2))
-        (0, (0, 2, 1))
-
-    The winners and the top rows agree with the moves of the canonical
-    labellings::
-
-        sage: all(edges[u][move][0] == G.canonical_labelling(k)._labels[move][-1]
-        ....:     and edges[u][move][1](tuple(range(3))) == tuple(G.canonical_labelling(k).rauzy_move(move)._labels[0])
-        ....:     for u, k in enumerate(vertices) for move in (0, 1))
-        True
-    """
-    vertices = G.vertices()
-    index = {k: j for j, k in enumerate(vertices)}
-    d = G._d
-    successors = []
-    predecessors = [[] for _ in vertices]
-    edges = []
-    for u, k in enumerate(vertices):
-        succ = (index[G.successor(k, 0)], index[G.successor(k, 1)])
-        successors.append(succ)
-        for w in succ:
-            predecessors[w].append(u)
-        q = G._labellings[k]
-        # the top row of the canonical labelling is 0, 1, ..., d-1 and its
-        # bottom row is the key: the winners are their last letters
-        edges.append(((d - 1, operator.itemgetter(*q.rauzy_move(0, -1, check=False)._labels[0])),
-                      (k[-1], operator.itemgetter(*q.rauzy_move(1, -1, check=False)._labels[0]))))
-    return vertices, successors, predecessors, edges
-
-
-def _distances_to(v, predecessors, max_length):
-    r"""
-    Return the list of the lengths of the shortest paths to the vertex ``v``
-    whose vertices but ``v`` are all greater than ``v``.
-
-    The vertices are the integers ``0, ..., n-1`` where ``n`` is the length
-    of ``predecessors``. The entry ``u`` of the list is the length of such a
-    path from ``u``, for the vertices ``u > v`` at distance at most
-    ``max_length``, and ``None`` for the other vertices.
-
-    EXAMPLES::
+    The graph of the diagram of ``a b c / c b a``, with the edges
+    ``0 -> 0, 1 -> 2, 2 -> 1`` of label ``0`` and ``0 -> 2, 1 -> 1, 2 -> 0``
+    of label ``1``::
 
         sage: from surface_dynamics.interval_exchanges.rauzy_walks import _distances_to
-        sage: pred = [[1, 2], [0, 2], [1]]
-        sage: _distances_to(0, pred, 5)
-        [None, 1, 1]
-        sage: _distances_to(1, pred, 5)
+        sage: top_pred = [0, 2, 1]
+        sage: bot_pred = [2, 1, 0]
+        sage: _distances_to(0, top_pred, bot_pred, 5)
+        [None, 2, 1]
+        sage: _distances_to(1, top_pred, bot_pred, 5)
         [None, None, 1]
-        sage: _distances_to(1, [[1], [2], [3], [0]], 5)
-        [None, None, 1, 2]
-        sage: _distances_to(1, [[1], [2], [3], [0]], 1)
-        [None, None, 1, None]
+        sage: _distances_to(0, top_pred, bot_pred, 1)
+        [None, None, 1]
+
+    A graph with a cycle ``0 -> 1 -> 2 -> 3 -> 0`` of label ``0``, the edges
+    of label ``1`` being the loops ``u -> u``::
+
+        sage: _distances_to(0, [3, 0, 1, 2], [0, 1, 2, 3], 5)
+        [None, 3, 2, 1]
+        sage: _distances_to(0, [3, 0, 1, 2], [0, 1, 2, 3], 2)
+        [None, None, 2, 1]
+        sage: _distances_to(1, [3, 0, 1, 2], [0, 1, 2, 3], 5)
+        [None, None, None, None]
     """
-    dist = [None] * len(predecessors)
+    dist = [None] * len(top_predecessors)
     frontier = [v]
     level = 0
     while frontier and level < max_length:
         level += 1
         new = []
         for w in frontier:
-            for u in predecessors[w]:
-                if u > v and dist[u] is None:
-                    dist[u] = level
-                    new.append(u)
+            u = top_predecessors[w]
+            if u > v and dist[u] is None:
+                dist[u] = level
+                new.append(u)
+            u = bot_predecessors[w]
+            if u > v and dist[u] is None:
+                dist[u] = level
+                new.append(u)
         frontier = new
     return dist
 
 
-def _first_return_loops(d, v, successors, edges, dist, max_length, label_maps):
+def _first_return_loops(d, v, top_successors, bot_successors, bot_winners, top_getters, bot_getters, dist, max_length, label_maps):
     r"""
     Return the first-return loops at the vertex ``v`` of length at most
     ``max_length``, with their winners and the relabellings at which they
     end.
 
-    The first-return loops at ``v`` are the words of moves from ``v`` back
-    to ``v`` whose intermediate vertices are all greater than ``v``. ``d``
-    is the number of letters, ``successors`` and ``edges`` are as in
-    :func:`_diagram_data`, and ``dist`` is the output of :func:`_distances_to`.
+    The arguments encode a graph with the vertices ``0, ..., n-1`` and the
+    ``2n`` edges ``u -> top_successors[u]``, labelled by the move ``0``, and
+    ``u -> bot_successors[u]``, labelled by the move ``1``. A path is read
+    as the word of the labels of its edges. The first-return loops at ``v``
+    are the words of the paths from ``v`` back to ``v`` whose intermediate
+    vertices are all greater than ``v`` (``v`` is not met in between).
+    ``max_length`` bounds the number of edges of a loop. ``dist`` is the
+    output of :func:`_distances_to` for ``v`` in this graph and prunes the
+    search: a path is extended only if it can still return to ``v`` within
+    ``max_length`` edges.
+
+    On an edge, a letter is a winner as follows. ``d`` is the number of
+    letters. The canonical labelling of the vertex ``u`` has the letters
+    ``0, ..., d-1``; the winner of the move ``0`` from it is the letter
+    ``d - 1`` and the winner of the move ``1`` the letter ``bot_winners[u]``.
+    The labelling the edge leads to is the canonical labelling of its end
+    vertex with each letter ``b`` replaced by ``m[b]``, for a row ``m`` given
+    by the getter of the edge: if the start is the canonical labelling with
+    each letter ``c`` replaced by ``lab[c]``, ``lab`` a tuple, the end is the
+    canonical labelling of the end vertex relabelled by
+    ``top_getters[u](lab)`` (move ``0``) or ``bot_getters[u](lab)`` (move
+    ``1``), the getters being the :func:`operator.itemgetter` of the rows
+    ``top_maps[d*u:d*u + d]`` and ``bot_maps[d*u:d*u + d]`` of
+    :meth:`LazyReducedRauzyDiagram._diagram_data`. The lists
+    ``top_successors``, ``bot_successors`` and ``bot_winners`` are those of
+    that method too.
 
     The loops are found by a depth-first search, which also accumulates
     along the current prefix its winners and the relabelling at which it
@@ -811,16 +897,19 @@ def _first_return_loops(d, v, successors, edges, dist, max_length, label_maps):
     EXAMPLES::
 
         sage: from surface_dynamics import iet
-        sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram, _diagram_data, _distances_to, _first_return_loops
+        sage: import operator
+        sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram, _distances_to, _first_return_loops
         sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
-        sage: vertices, successors, predecessors, edges = _diagram_data(G)
-        sage: dist = _distances_to(0, predecessors, 4)
-        sage: loops, winner_masks, maps = _first_return_loops(3, 0, successors, edges, dist, 4, True)
+        sage: vertices, top_succ, bot_succ, bot_winners, top_pred, bot_pred, top_maps, bot_maps = G._diagram_data()
+        sage: top_getters = [operator.itemgetter(*top_maps[3*u:3*u + 3]) for u in range(3)]
+        sage: bot_getters = [operator.itemgetter(*bot_maps[3*u:3*u + 3]) for u in range(3)]
+        sage: dist = _distances_to(0, top_pred, bot_pred, 4)
+        sage: loops, winner_masks, maps = _first_return_loops(3, 0, top_succ, bot_succ, bot_winners, top_getters, bot_getters, dist, 4, True)
         sage: loops
         [(0,), (1, 0, 0, 1), (1, 1)]
         sage: winner_masks
         [4, 3, 1]
-        sage: _first_return_loops(3, 0, successors, edges, dist, 4, False)[2] is None
+        sage: _first_return_loops(3, 0, top_succ, bot_succ, bot_winners, top_getters, bot_getters, dist, 4, False)[2] is None
         True
 
     The winners and the relabellings agree with those of the flip sequence
@@ -829,8 +918,12 @@ def _first_return_loops(d, v, successors, edges, dist, max_length, label_maps):
         sage: from surface_dynamics import Stratum
         sage: from surface_dynamics.interval_exchanges.flip_sequence import RauzyFlipSequence
         sage: def replay(G, v, L):
-        ....:     vertices, successors, predecessors, edges = _diagram_data(G)
-        ....:     loops, winner_masks, maps = _first_return_loops(G._d, v, successors, edges, _distances_to(v, predecessors, L), L, True)
+        ....:     d = G._d
+        ....:     vertices, top_succ, bot_succ, bot_winners, top_pred, bot_pred, top_maps, bot_maps = G._diagram_data()
+        ....:     top_getters = [operator.itemgetter(*top_maps[d*u:d*u + d]) for u in range(len(vertices))]
+        ....:     bot_getters = [operator.itemgetter(*bot_maps[d*u:d*u + d]) for u in range(len(vertices))]
+        ....:     dist = _distances_to(v, top_pred, bot_pred, L)
+        ....:     loops, winner_masks, maps = _first_return_loops(d, v, top_succ, bot_succ, bot_winners, top_getters, bot_getters, dist, L, True)
         ....:     flips = [RauzyFlipSequence(G.canonical_labelling(vertices[v]), loop) for loop in loops]
         ....:     return (len(loops), sum(m != tuple(range(G._d)) for m in maps),
         ....:             winner_masks == [sum(1 << list(G._alphabet).index(a) for a in set(f.winners())) for f in flips],
@@ -858,23 +951,31 @@ def _first_return_loops(d, v, successors, edges, dist, max_length, label_maps):
         # with each letter a replaced by lab[a]; the pruning ensures that
         # some path of length at most max_length - length leads from u back
         # to v
-        su = successors[u]
-        eu = edges[u]
-        for move in (0, 1):
-            w = su[move]
-            a, g = eu[move]
-            word.append(move)
-            win = winners | (1 << lab[a])
-            if w == v:
-                loops.append(tuple(word))
-                winner_masks.append(win)
-                if label_maps:
-                    maps.append(g(lab))
-            elif w > v:
-                dw = dist[w]
-                if dw is not None and length + 1 + dw <= max_length:
-                    search(w, length + 1, g(lab), win)
-            word.pop()
+        w = top_successors[u]
+        word.append(0)
+        win = winners | (1 << lab[d - 1])
+        if w == v:
+            loops.append(tuple(word))
+            winner_masks.append(win)
+            if label_maps:
+                maps.append(top_getters[u](lab))
+        elif w > v:
+            dw = dist[w]
+            if dw is not None and length + 1 + dw <= max_length:
+                search(w, length + 1, top_getters[u](lab), win)
+        word[-1] = 1
+        w = bot_successors[u]
+        win = winners | (1 << lab[bot_winners[u]])
+        if w == v:
+            loops.append(tuple(word))
+            winner_masks.append(win)
+            if label_maps:
+                maps.append(bot_getters[u](lab))
+        elif w > v:
+            dw = dist[w]
+            if dw is not None and length + 1 + dw <= max_length:
+                search(w, length + 1, bot_getters[u](lab), win)
+        word.pop()
 
     try:
         if max_length >= 1:
