@@ -12,9 +12,9 @@
 
 **Deprecated:**
 
-* Deprecated ``IETFlipSequence``, now a subclass of ``RauzyFlipSequence``
-  that warns on construction; flip sequences pickled under this name still
-  load.
+* Deprecated ``IETFlipSequence``: building one warns and returns a
+  ``RauzyFlipSequence``; flip sequences pickled under this name load as
+  ``RauzyFlipSequence``.
 
 **Fixed:**
 

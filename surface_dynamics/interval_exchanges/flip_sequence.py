@@ -1302,13 +1302,15 @@ class IETFlipSequence(RauzyFlipSequence):
     r"""
     Deprecated name of :class:`RauzyFlipSequence`.
 
-    The class stays so that the objects pickled under this name still load
-    (unpickling does not call the constructor and does not warn).
+    Building an ``IETFlipSequence`` warns and returns a
+    :class:`RauzyFlipSequence`. The class stays so that the objects pickled
+    under this name still load, as :class:`RauzyFlipSequence` objects
+    (unpickling does not warn).
 
     EXAMPLES::
 
         sage: from surface_dynamics import iet
-        sage: from surface_dynamics.interval_exchanges.flip_sequence import IETFlipSequence
+        sage: from surface_dynamics.interval_exchanges.flip_sequence import IETFlipSequence, RauzyFlipSequence
         sage: p = iet.Permutation('a b c d', 'd c b a')
         sage: f = IETFlipSequence(p, 'ttbtbbtb')
         doctest:warning
@@ -1316,12 +1318,38 @@ class IETFlipSequence(RauzyFlipSequence):
         UserWarning: IETFlipSequence has been deprecated and will be removed in a future version of surface-dynamics; use RauzyFlipSequence
         sage: f
         RauzyFlipSequence('a b c d\nd c b a', 'ttbtbbtb')
+        sage: type(f) is RauzyFlipSequence
+        True
         sage: f.is_complete()
         True
-        sage: loads(dumps(f)) == f
+
+    TESTS:
+
+    A flip sequence pickled under the deprecated name loads as a
+    :class:`RauzyFlipSequence`, which compares with and multiplies by the
+    ones built today::
+
+        sage: import pickle
+        sage: g = RauzyFlipSequence(p, 'ttbtbbtb')
+        sage: s = pickle.dumps(g, protocol=2)
+        sage: old = s.replace(b'\nRauzyFlipSequence\n', b'\nIETFlipSequence\n')
+        sage: b'IETFlipSequence' in old
         True
+        sage: h = pickle.loads(old)
+        sage: type(h) is RauzyFlipSequence
+        True
+        sage: h == g
+        True
+        sage: (h * g)._check()
     """
-    def __init__(self, *args, **kwds):
+    def __new__(cls, *args, **kwds):
+        if not args and not kwds:
+            # Unpickling calls cls.__new__(cls) without arguments, then sets
+            # the attributes: build a RauzyFlipSequence, since __eq__ and
+            # __mul__ refuse operands of different types.
+            return RauzyFlipSequence.__new__(RauzyFlipSequence)
         import warnings
         warnings.warn('IETFlipSequence has been deprecated and will be removed in a future version of surface-dynamics; use RauzyFlipSequence')
-        super().__init__(*args, **kwds)
+        # __new__ returns an object that is not an IETFlipSequence, so Python
+        # does not call __init__ on it again.
+        return RauzyFlipSequence(*args, **kwds)
