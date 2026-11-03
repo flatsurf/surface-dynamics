@@ -12,13 +12,14 @@ moves alone). It is *complete* when every letter is the winner of some move, up
 to the orbits of the relabelling that closes it.
 
 A reduced vertex is represented by its *canonical labelling*: the labelled
-permutation, relabelled so that its top row is `0 1 \dots d-1`. Its *key* is
-the tuple of the bottom row of its canonical labelling, and vertices are
-compared by key.
+permutation, relabelled so that its top row is the alphabet of the input
+permutation in its order (`0 1 \dots d-1` for a component of a stratum). Its
+*key* is the tuple of the positions in the top row of the letters of its
+bottom row, and vertices are compared by key.
 
-The main function in this module is :func:`rauzy_closed_walks` which is
-available via the ``iet`` constructor (see example below). It relies on
-a custom class :class:`LazyReducedRauzyDiagram`.
+This module holds the class :class:`LazyReducedRauzyDiagram`, whose method
+:meth:`~LazyReducedRauzyDiagram.closed_walks` does the work. The entry point
+for the user is ``iet.rauzy_closed_walks`` (see example below).
 
 EXAMPLES::
 
@@ -47,14 +48,12 @@ import operator
 from bisect import bisect_left
 
 from .template import OrientablePermutationIET, FlippedPermutationIET
-from .labelled import LabelledPermutationIET
 from .flip_sequence import RauzyFlipSequence
 
 
 class LazyReducedRauzyDiagram:
     r"""
-    The reduced Rauzy diagram of a labelled Abelian permutation, built on
-    demand.
+    The reduced Rauzy diagram of an Abelian permutation, built on demand.
 
     The diagram holds, for each reduced vertex met so far, its key, its
     canonical labelling and its successors by the right Rauzy moves already
@@ -73,8 +72,10 @@ class LazyReducedRauzyDiagram:
 
     INPUT:
 
-    - ``p`` -- an irreducible labelled permutation of Abelian or quadratic
-      differential
+    - ``p`` -- an irreducible permutation of Abelian differential, labelled
+      or reduced
+
+    The canonical labellings use the alphabet of ``p``, in its order.
 
     EXAMPLES::
 
@@ -88,6 +89,18 @@ class LazyReducedRauzyDiagram:
         (3, 2, 1, 0)
         sage: len(G)
         1
+
+    The alphabet of ``p`` is kept by the canonical labellings::
+
+        sage: G.canonical_labelling(G.start())
+        a b c d
+        d c b a
+
+    A reduced permutation gives the same diagram::
+
+        sage: q = iet.Permutation('a b c d', 'd c b a', reduced=True)
+        sage: LazyReducedRauzyDiagram(q).start()
+        (3, 2, 1, 0)
 
     Calling some methods such as ``vertices()`` will compute the whole Rauzy diagram::
 
@@ -104,10 +117,15 @@ class LazyReducedRauzyDiagram:
 
             sage: from surface_dynamics import iet
             sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
-            sage: LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a', reduced=True))
+            sage: p = iet.Permutation('a b c', 'c b a')
+            sage: G = LazyReducedRauzyDiagram(p)
+            sage: H = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a', reduced=True))
+            sage: G.start() == H.start()
+            True
+            sage: LazyReducedRauzyDiagram(iet.Permutation('a b', 'b a', flips='a'))
             Traceback (most recent call last):
             ...
-            ValueError: p must be a labelled permutation of interval exchange transformation
+            ValueError: p must be a permutation of interval exchange transformation
             sage: LazyReducedRauzyDiagram(iet.Permutation('a b c', 'a c b'))
             Traceback (most recent call last):
             ...
@@ -117,21 +135,23 @@ class LazyReducedRauzyDiagram:
             ...
             ValueError: p must have at least two letters
         """
-        if not isinstance(p, LabelledPermutationIET) or isinstance(p, FlippedPermutationIET):
-            raise ValueError('p must be a labelled permutation of interval exchange transformation')
+        if not isinstance(p, OrientablePermutationIET) or isinstance(p, FlippedPermutationIET):
+            raise ValueError('p must be a permutation of interval exchange transformation')
         if not p.is_irreducible():
             raise ValueError('p must be irreducible')
         if len(p) < 2:
             raise ValueError('p must have at least two letters')
         self._d = len(p)
+        self._alphabet = p.alphabet()
         self._start = self._key(p)
         self.clear()
 
     @staticmethod
     def _key(q):
         r"""
-        Return the key of the labelled permutation ``q``: the bottom row of
-        ``q`` relabelled so that its top row is ``0, 1, ..., d-1``.
+        Return the key of the permutation ``q``: the top position of each
+        letter of its bottom row. It is the bottom row of the canonical
+        labelling of ``q``.
 
         EXAMPLES::
 
@@ -139,17 +159,15 @@ class LazyReducedRauzyDiagram:
             sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
             sage: LazyReducedRauzyDiagram._key(iet.Permutation('a c b d', 'd a b c'))
             (3, 0, 2, 1)
+            sage: LazyReducedRauzyDiagram._key(iet.Permutation('a c b d', 'd a b c', reduced=True))
+            (3, 0, 2, 1)
         """
-        top, bot = q._labels
-        r = [None] * len(top)
-        for i, a in enumerate(top):
-            r[a] = i
-        return tuple(r[b] for b in bot)
+        return tuple(q._twin[1])
 
     def _canonical(self, key):
         r"""
         Return the canonical labelling of the vertex ``key``, as a new
-        permutation.
+        permutation, over the alphabet of the input.
 
         EXAMPLES::
 
@@ -157,11 +175,12 @@ class LazyReducedRauzyDiagram:
             sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
             sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
             sage: G._canonical((2, 0, 1))
-            0 1 2
-            2 0 1
+            a b c
+            c a b
         """
         from .constructors import Permutation
-        return Permutation(list(range(self._d)), list(key), reduced=False)
+        L = list(self._alphabet)
+        return Permutation(L, [L[i] for i in key], alphabet=self._alphabet, reduced=False)
 
     def clear(self):
         r"""
@@ -248,8 +267,20 @@ class LazyReducedRauzyDiagram:
             sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
             sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a'))
             sage: G.canonical_labelling(G.successor(G.start(), 1))
+            a b c d
+            b d c a
+
+        A stratum component keeps the letters ``0, 1, ..., d-1``::
+
+            sage: from surface_dynamics import Stratum
+            sage: C = Stratum([2]).unique_component()
+            sage: G = LazyReducedRauzyDiagram(C.permutation_representative(reduced=False))
+            sage: G.canonical_labelling(G.successor(G.start(), 1))
             0 1 2 3
             1 3 2 0
+
+        An unknown vertex::
+
             sage: G.canonical_labelling((1, 0, 2, 3))
             Traceback (most recent call last):
             ...
@@ -461,203 +492,182 @@ class LazyReducedRauzyDiagram:
         orbits.sort()
         return orbits
 
+    def closed_walks(self, max_length, min_length=1, complete=True, primitive=True):
+        r"""
+        Iterate over the closed walks of the diagram with length between
+        ``min_length`` and ``max_length``.
 
-def _labelled_permutation(x, left_degree):
-    r"""
-    Return the labelled permutation whose reduced Rauzy diagram is the one of
-    ``x``, an Abelian permutation or a component of an Abelian stratum.
+        INPUT:
 
-    EXAMPLES::
+        - ``max_length``, ``min_length`` -- (``min_length`` defaults to ``1``)
+          non-negative integers, the bounds on the length of the walks
 
-        sage: from surface_dynamics import iet, Stratum
-        sage: from surface_dynamics.interval_exchanges.rauzy_walks import _labelled_permutation
-        sage: C = Stratum([2]).unique_component()
-        sage: _labelled_permutation(C, None)
-        0 1 2 3
-        3 2 1 0
-        sage: _labelled_permutation(C.permutation_representative(), None)
-        0 1 2 3
-        3 2 1 0
-        sage: _labelled_permutation(iet.Permutation('a b', 'b a', flips='a'), None)
-        Traceback (most recent call last):
-        ...
-        ValueError: x must be an Abelian permutation or a component of an Abelian stratum
-    """
-    from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratumComponent
-    from .constructors import Permutation
+        - ``complete`` -- (default ``True``) whether to keep only the complete
+          walks, those in which every letter is a winner up to the orbits of
+          the relabelling that closes the walk
 
-    if isinstance(x, AbelianStratumComponent):
-        return x.permutation_representative(left_degree=left_degree, reduced=False)
-    if isinstance(x, OrientablePermutationIET) and not isinstance(x, FlippedPermutationIET):
-        if left_degree is not None:
-            raise ValueError('left_degree must be None when x is a permutation')
-        if not x.is_irreducible():
-            raise ValueError('x must be irreducible')
-        if isinstance(x, LabelledPermutationIET):
-            return x
-        return Permutation(x.list(), reduced=False)
-    raise ValueError('x must be an Abelian permutation or a component of an Abelian stratum')
+        - ``primitive`` -- (default ``True``) whether to keep only the
+          primitive closed walks; if ``False``, the proper powers of closed
+          walks are yielded as well
 
+        The arguments are checked when the method is called, not at the first
+        step of the iteration.
 
-def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=True, left_degree=None):
-    r"""
-    Iterate over the closed walks of the reduced Rauzy diagram of ``x`` with
-    length between ``min_length`` and ``max_length``.
+        OUTPUT:
 
-    INPUT:
+        An iterator over closed :class:`RauzyFlipSequence`, each walk once up
+        to rotation. A walk starts at the canonical labelling of its least
+        vertex (over the alphabet of the input permutation), and its word of
+        moves is the least among the rotations starting there (``t < b``); it
+        is closed, as by :meth:`RauzyFlipSequence.close`: it carries the
+        relabelling that maps its end back to its start. The walks come by
+        increasing least vertex, then by increasing sequence of first-return
+        loops at this vertex.
 
-    - ``x`` -- an irreducible Abelian permutation (labelled or reduced), or a
-      component of an Abelian stratum
+        ALGORITHM:
 
-    - ``max_length``, ``min_length`` -- (``min_length`` defaults to ``1``)
-      non-negative integers, the bounds on the length of the walks
+        For each vertex `v`, the first-return loops at `v` (the words from `v`
+        back to `v` whose intermediate vertices are all greater than `v`) form
+        a prefix code. The walks whose least vertex is `v`, in their canonical
+        rotation, are the sequences of these loops that are necklaces over the
+        loops ordered as words, and the primitive closed walks are the Lyndon
+        words. They are generated by the prenecklace backtracking of
+        Fredricksen, Kessler and Maiorana, with the total length bounded by
+        ``max_length``, each node iterating only over the loops that fit in
+        the length left. The loops themselves are found by a depth-first
+        search pruned by the distance back to `v`, which also accumulates the
+        winners of each loop and the relabelling at which it ends, so that no
+        loop is replayed.
 
-    - ``complete`` -- (default ``True``) whether to keep only the complete
-      walks, those in which every letter is a winner up to the orbits of the
-      relabelling that closes the walk
+        The relabelling that closes a walk is the inverse of the product of
+        the relabellings of its loops, so no flip sequence is replayed either.
+        When the relabelling group at `v` (see
+        :meth:`relabelling_generators`) is trivial, every walk at `v` closes
+        with the identity.
 
-    - ``primitive`` -- (default ``True``) whether to keep only the primitive
-      closed walks; if ``False``, the proper powers of closed walks are
-      yielded as well
+        With ``complete``, completeness is tracked along the backtracking. The
+        relabelling that closes a walk at `v` lies in the relabelling group at
+        `v`, computed once from Schreier generators along a spanning tree. The
+        orbits of this group hit by the winners of a loop do not depend on the
+        labelling the loop is run from, so a subtree is cut when more orbits
+        contain no winner than moves are left. When the group is trivial, this
+        is exact pruning by the letters still missing; otherwise the winners
+        and the relabelling are combined loop by loop and completeness is
+        decided exactly on each walk. A flip sequence is built for the walks
+        yielded only.
 
-    - ``left_degree`` -- (optional) when ``x`` is a stratum component, the
-      left degree of the permutation representative whose diagram is walked
-      (see ``permutation_representative``); must be ``None`` when ``x`` is a
-      permutation
+        EXAMPLES::
 
-    OUTPUT:
+            sage: from surface_dynamics import iet
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
+            sage: for f in G.closed_walks(3, complete=False):
+            ....:     print(f._simplified_flip_sequence())
+            t
+            tbb
+            bb
+            tt
+            ttb
+            b
 
-    An iterator over closed :class:`RauzyFlipSequence`, each walk once up to
-    rotation. A walk starts at the canonical labelling (top row ``0 1 ...
-    d-1``) of its least vertex, and its word of moves is the least among the
-    rotations starting there (``t < b``); it is closed, as by
-    :meth:`RauzyFlipSequence.close`: it carries the relabelling that maps
-    its end back to its start. The walks come by increasing least vertex,
-    then by increasing sequence of first-return loops at this vertex.
+        The walks use the alphabet of the permutation::
 
-    ALGORITHM:
+            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a'))
+            sage: next(G.closed_walks(8))
+            RauzyFlipSequence('a b c d\nb d c a', 'btbttbtb')
 
-    For each vertex `v`, the first-return loops at `v` (the words from `v`
-    back to `v` whose intermediate vertices are all greater than `v`) form a
-    prefix code. The walks whose least vertex is `v`, in their canonical
-    rotation, are the sequences of these loops that are necklaces over the
-    loops ordered as words, and the primitive closed walks are the Lyndon
-    words. They are generated by the prenecklace backtracking of
-    Fredricksen, Kessler and Maiorana, with the total length bounded by
-    ``max_length``, each node iterating only over the loops that fit in the
-    length left. The loops themselves are found by a depth-first search
-    pruned by the distance back to `v`, which also accumulates the winners
-    of each loop and the relabelling at which it ends, so that no loop is
-    replayed.
+        The walks are closed, with the relabelling that :meth:`RauzyFlipSequence.close`
+        gives::
 
-    The relabelling that closes a walk is the inverse of the product of the
-    relabellings of its loops, so no flip sequence is replayed either. When
-    the relabelling group at `v` (below) is trivial, every walk at `v`
-    closes with the identity.
+            sage: from surface_dynamics import Stratum
+            sage: from surface_dynamics.interval_exchanges.flip_sequence import RauzyFlipSequence
+            sage: G = LazyReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
+            sage: walks = list(G.closed_walks(9, complete=False))
+            sage: len(walks), sum(1 for f in walks if f._relabelling != list(range(7)))
+            (1165, 38)
+            sage: def closed(f):
+            ....:     g = RauzyFlipSequence(f.start(), f._simplified_flip_sequence())
+            ....:     g.close()
+            ....:     return g
+            sage: all(f == closed(f) and f.is_closed() for f in walks)
+            True
+            sage: all(f._check() is None for f in walks)
+            True
 
-    With ``complete``, completeness is tracked along the backtracking. The
-    relabelling that closes a walk at `v` lies in the relabelling group at
-    `v` (see :meth:`LazyReducedRauzyDiagram.relabelling_generators`),
-    computed once from Schreier generators along a spanning tree. The
-    orbits of this group hit by the winners of a loop do not depend on the
-    labelling the loop is run from, so a subtree is cut when more orbits
-    contain no winner than moves are left. When the group is trivial, this
-    is exact pruning by the letters still missing; otherwise the winners
-    and the relabelling are combined loop by loop and completeness is
-    decided exactly on each walk. A flip sequence is built for the walks
-    yielded only.
+        TESTS::
 
-    EXAMPLES:
+            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
+            sage: G.closed_walks(-1)
+            Traceback (most recent call last):
+            ...
+            ValueError: max_length and min_length must be non-negative
+            sage: G.closed_walks(3, min_length=-1)
+            Traceback (most recent call last):
+            ...
+            ValueError: max_length and min_length must be non-negative
+        """
+        max_length = operator.index(max_length)
+        min_length = operator.index(min_length)
+        if max_length < 0 or min_length < 0:
+            raise ValueError('max_length and min_length must be non-negative')
+        return self._closed_walks(max_length, max(min_length, 1), bool(complete), bool(primitive))
 
-    The only complete closed walk of length `8` of `H(2)`::
+    def _closed_walks(self, max_length, min_length, complete, primitive):
+        r"""
+        Iterate over the closed walks, the arguments being checked as in
+        :meth:`closed_walks`.
 
-        sage: from surface_dynamics import Stratum, iet
-        sage: from surface_dynamics.interval_exchanges.rauzy_walks import rauzy_closed_walks
-        sage: C = Stratum([2]).unique_component()
-        sage: walks = list(rauzy_closed_walks(C, 8, min_length=8))
-        sage: len(walks)
-        1
-        sage: f = walks[0]
-        sage: f.start()
-        0 1 2 3
-        1 3 2 0
-        sage: f
-        RauzyFlipSequence('0 1 2 3\n1 3 2 0', 'btbttbtb')
-        sage: f.is_complete()
-        True
-        sage: f.matrix().charpoly()
-        x^4 - 7*x^3 + 13*x^2 - 7*x + 1
+        EXAMPLES::
 
-    In genus `3`, complete closed walks are long: the components `H_3(4)^{hyp}`,
-    `H_3(4)^{odd}`, `H_3(2^2)^{hyp}` and `H_3(3, 1)^c` have none of length at
-    most `14`. The odd component of `H(2, 2)` has `8` of length at most `13`::
+            sage: from surface_dynamics import iet
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
+            sage: len(list(G._closed_walks(3, 1, False, True)))
+            6
+        """
+        vertices, successors, predecessors, edges = _diagram_data(self)
+        d = self._d
+        identity = list(range(d))
 
-        sage: C3 = Stratum([2, 2]).odd_component()
-        sage: walks3 = list(rauzy_closed_walks(C3, 13))
-        sage: len(walks3)
-        8
-        sage: sorted(f.matrix().charpoly().number_of_real_roots() for f in walks3)
-        [3, 3, 5, 5, 5, 5, 5, 5]
-
-    All the primitive closed walks of `H(2)` of length at most `3`::
-
-        sage: walks = list(rauzy_closed_walks(C, 3, complete=False))
-        sage: [sum(1 for f in walks if len(f) == n) for n in (1, 2, 3)]
-        [4, 2, 4]
-
-    The same walks from a permutation of the Rauzy class::
-
-        sage: p = iet.Permutation('a b c d', 'd c b a')
-        sage: sorted(str(f) for f in rauzy_closed_walks(p, 3, complete=False)) == sorted(str(f) for f in walks)
-        True
-
-    The left degree only applies to a stratum component::
-
-        sage: p = C.permutation_representative()
-        sage: rauzy_closed_walks(p, 8, left_degree=1)
-        Traceback (most recent call last):
-        ...
-        ValueError: left_degree must be None when x is a permutation
-
-    TESTS:
-
-    With ``primitive=False``, the closed walks of length `n` number
-    `\sum_{e | n} c_e` where `c_e` is the number of primitive closed walks
-    of length `e`::
-
-        sage: walks = list(rauzy_closed_walks(C, 4, complete=False, primitive=False))
-        sage: [sum(1 for f in walks if len(f) == n) for n in (1, 2, 3, 4)]
-        [4, 6, 8, 10]
-        sage: all(f.is_closed() for f in walks)
-        True
-
-    Bounds::
-
-        sage: list(rauzy_closed_walks(C, 0, complete=False))
-        []
-        sage: list(rauzy_closed_walks(C, 3, min_length=4, complete=False))
-        []
-        sage: len(list(rauzy_closed_walks(C, 3, min_length=0, complete=False)))
-        10
-        sage: rauzy_closed_walks(C, -1)
-        Traceback (most recent call last):
-        ...
-        ValueError: max_length and min_length must be non-negative
-        sage: rauzy_closed_walks(iet.Permutation('a b c', 'a c b'), 3)
-        Traceback (most recent call last):
-        ...
-        ValueError: x must be irreducible
-        sage: rauzy_closed_walks(iet.GeneralizedPermutation('a a b', 'b c c'), 3)
-        Traceback (most recent call last):
-        ...
-        ValueError: x must be an Abelian permutation or a component of an Abelian stratum
-    """
-    max_length = operator.index(max_length)
-    min_length = operator.index(min_length)
-    if max_length < 0 or min_length < 0:
-        raise ValueError('max_length and min_length must be non-negative')
-    G = LazyReducedRauzyDiagram(_labelled_permutation(x, left_degree))
-    return _closed_walks(G, max_length, max(min_length, 1), bool(complete), bool(primitive))
+        for v, key in enumerate(vertices):
+            dist = _distances_to(v, predecessors, max_length)
+            orbits = self.relabelling_orbits(key)
+            # the group is trivial exactly when its orbits are singletons; then
+            # every walk at v closes with the identity, and no label map is needed
+            nontrivial = len(orbits) < d
+            loops, winner_masks, label_maps = _first_return_loops(d, v, successors, edges, dist, max_length, nontrivial)
+            lengths = [len(loop) for loop in loops]
+            if complete:
+                orbit_of = [None] * d
+                for i, orbit in enumerate(orbits):
+                    for a in orbit:
+                        orbit_of[a] = i
+                orbit_masks = []
+                for winners in winner_masks:
+                    hit = 0
+                    a = 0
+                    while winners:
+                        if winners & 1:
+                            hit |= 1 << orbit_of[a]
+                        winners >>= 1
+                        a += 1
+                    orbit_masks.append(hit)
+                necklaces = _loop_necklaces(lengths, max_length, min_length, primitive,
+                                            orbit_masks, len(orbits), winner_masks, label_maps)
+            else:
+                necklaces = _loop_necklaces(lengths, max_length, min_length, primitive, label_maps=label_maps)
+            for seq, product in necklaces:
+                # the walk ends at the canonical labelling of v with each letter
+                # a replaced by product[a]: the inverse of product closes it
+                if product is None:
+                    relabelling = identity[:]
+                else:
+                    relabelling = [None] * d
+                    for a, b in enumerate(product):
+                        relabelling[b] = a
+                moves = [(move, -1) for i in seq for move in loops[i]]
+                yield RauzyFlipSequence._from_data(self.canonical_labelling(key), self.canonical_labelling(key),
+                                                 moves, relabelling)
 
 
 def _diagram_data(G):
@@ -823,7 +833,7 @@ def _first_return_loops(d, v, successors, edges, dist, max_length, label_maps):
         ....:     loops, winner_masks, maps = _first_return_loops(G._d, v, successors, edges, _distances_to(v, predecessors, L), L, True)
         ....:     flips = [RauzyFlipSequence(G.canonical_labelling(vertices[v]), loop) for loop in loops]
         ....:     return (len(loops), sum(m != tuple(range(G._d)) for m in maps),
-        ....:             winner_masks == [sum(1 << a for a in set(f.winners())) for f in flips],
+        ....:             winner_masks == [sum(1 << list(G._alphabet).index(a) for a in set(f.winners())) for f in flips],
         ....:             maps == [tuple(f.end()._labels[0]) for f in flips])
         sage: replay(LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a')), 0, 4)
         (3, 0, True, True)
@@ -1077,85 +1087,3 @@ def _loop_necklaces(lengths, max_length, min_length, primitive, orbit_masks=None
         yield from extend(0, 0, 0, 0, identity)
     finally:
         del extend
-
-
-def _closed_walks(G, max_length, min_length, complete, primitive):
-    r"""
-    Iterate over the closed walks of the reduced Rauzy diagram ``G``, as
-    described in :func:`rauzy_closed_walks`.
-
-    EXAMPLES::
-
-        sage: from surface_dynamics import iet
-        sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram, _closed_walks
-        sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
-        sage: for f in _closed_walks(G, 3, 1, False, True):
-        ....:     print(f._simplified_flip_sequence())
-        t
-        tbb
-        bb
-        tt
-        ttb
-        b
-
-    The walks are closed, with the relabelling that :meth:`RauzyFlipSequence.close`
-    gives::
-
-        sage: from surface_dynamics import Stratum
-        sage: from surface_dynamics.interval_exchanges.flip_sequence import RauzyFlipSequence
-        sage: G = LazyReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
-        sage: walks = list(_closed_walks(G, 9, 1, False, True))
-        sage: len(walks), sum(1 for f in walks if f._relabelling != list(range(7)))
-        (1165, 38)
-        sage: def closed(f):
-        ....:     g = RauzyFlipSequence(f.start(), f._simplified_flip_sequence())
-        ....:     g.close()
-        ....:     return g
-        sage: all(f == closed(f) and f.is_closed() for f in walks)
-        True
-        sage: all(f._check() is None for f in walks)
-        True
-    """
-    vertices, successors, predecessors, edges = _diagram_data(G)
-    d = G._d
-    identity = list(range(d))
-
-    for v, key in enumerate(vertices):
-        dist = _distances_to(v, predecessors, max_length)
-        orbits = G.relabelling_orbits(key)
-        # the group is trivial exactly when its orbits are singletons; then
-        # every walk at v closes with the identity, and no label map is needed
-        nontrivial = len(orbits) < d
-        loops, winner_masks, label_maps = _first_return_loops(d, v, successors, edges, dist, max_length, nontrivial)
-        lengths = [len(loop) for loop in loops]
-        if complete:
-            orbit_of = [None] * d
-            for i, orbit in enumerate(orbits):
-                for a in orbit:
-                    orbit_of[a] = i
-            orbit_masks = []
-            for winners in winner_masks:
-                hit = 0
-                a = 0
-                while winners:
-                    if winners & 1:
-                        hit |= 1 << orbit_of[a]
-                    winners >>= 1
-                    a += 1
-                orbit_masks.append(hit)
-            necklaces = _loop_necklaces(lengths, max_length, min_length, primitive,
-                                        orbit_masks, len(orbits), winner_masks, label_maps)
-        else:
-            necklaces = _loop_necklaces(lengths, max_length, min_length, primitive, label_maps=label_maps)
-        for seq, product in necklaces:
-            # the walk ends at the canonical labelling of v with each letter
-            # a replaced by product[a]: the inverse of product closes it
-            if product is None:
-                relabelling = identity[:]
-            else:
-                relabelling = [None] * d
-                for a, b in enumerate(product):
-                    relabelling[b] = a
-            moves = [(move, -1) for i in seq for move in loops[i]]
-            yield RauzyFlipSequence._from_data(G.canonical_labelling(key), G.canonical_labelling(key),
-                                             moves, relabelling)

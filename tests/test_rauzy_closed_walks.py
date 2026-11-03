@@ -14,8 +14,6 @@ from sage.all import QQ, polygen
 
 from surface_dynamics import iet, Stratum
 
-rauzy_walks = pytest.importorskip("surface_dynamics.interval_exchanges.rauzy_walks")
-
 
 def _component(stratum, kind):
     S = Stratum(stratum)
@@ -55,7 +53,7 @@ def test_h2_length_8():
     # the only complete closed walk of length 8 of H(2), the loop ttbtbbtb of
     # the reduced Rauzy diagram, read from its least vertex as btbttbtb
     C = Stratum([2]).unique_component()
-    walks = list(rauzy_walks.rauzy_closed_walks(C, 8, min_length=8))
+    walks = list(iet.rauzy_closed_walks(C, 8, min_length=8))
     assert len(walks) == 1
     f = walks[0]
     assert f.is_closed()
@@ -85,7 +83,7 @@ def test_counts_all_walks(name):
     C, k = diagram(name)
     expected = ALL_COUNTS[name]
     N = len(expected)
-    assert counts(rauzy_walks.rauzy_closed_walks(C, N, complete=False, left_degree=k), N) == expected
+    assert counts(iet.rauzy_closed_walks(C, N, complete=False, left_degree=k), N) == expected
 
 
 # brute force over all words of moves from every reduced vertex, keeping the
@@ -102,7 +100,7 @@ def test_counts_complete(name):
     C, k = diagram(name)
     expected = COMPLETE_COUNTS[name]
     N = len(expected)
-    assert counts(rauzy_walks.rauzy_closed_walks(C, N, left_degree=k), N) == expected
+    assert counts(iet.rauzy_closed_walks(C, N, left_degree=k), N) == expected
 
 
 COMPLETE_COUNTS_SLOW = {
@@ -121,7 +119,7 @@ def test_counts_complete_slow(name):
     C, k = diagram(name)
     expected = COMPLETE_COUNTS_SLOW[name]
     N = len(expected)
-    assert counts(rauzy_walks.rauzy_closed_walks(C, N, left_degree=k), N) == expected
+    assert counts(iet.rauzy_closed_walks(C, N, left_degree=k), N) == expected
 
 
 def _walk_list(walks):
@@ -134,8 +132,8 @@ def _walk_list(walks):
 @pytest.mark.parametrize('name, N', [('H2', 12), ('H4hyp', 16), ('H22odd', 14), ('H31left1', 14)])
 def test_complete_against_filter(name, N):
     C, k = diagram(name)
-    filtered = [f for f in rauzy_walks.rauzy_closed_walks(C, N, complete=False, left_degree=k) if f.is_complete()]
-    assert _walk_list(rauzy_walks.rauzy_closed_walks(C, N, left_degree=k)) == _walk_list(filtered)
+    filtered = [f for f in iet.rauzy_closed_walks(C, N, complete=False, left_degree=k) if f.is_complete()]
+    assert _walk_list(iet.rauzy_closed_walks(C, N, left_degree=k)) == _walk_list(filtered)
 
 
 def test_h2_visits():
@@ -147,7 +145,7 @@ def test_h2_visits():
     visits = []
     for n in range(8, 13):
         total = 0
-        for f in rauzy_walks.rauzy_closed_walks(C, n, min_length=n):
+        for f in iet.rauzy_closed_walks(C, n, min_length=n):
             total += sum(1 for q, winner, side in f if q.reduced() == pr)
         visits.append(total)
     assert visits == [2, 12, 28, 76, 204]
@@ -160,13 +158,13 @@ def _positive_power(M):
 
 def test_walk_properties():
     C = Stratum([2, 2]).odd_component()
-    for f in rauzy_walks.rauzy_closed_walks(C, 13):
+    for f in iet.rauzy_closed_walks(C, 13):
         d = len(f.start())
         assert f.is_closed()
         assert f.is_complete()
         assert f.start()._labels[0] == list(range(d))
         assert _positive_power(f.matrix())
-    for f in rauzy_walks.rauzy_closed_walks(C, 8, complete=False):
+    for f in iet.rauzy_closed_walks(C, 8, complete=False):
         assert f.is_complete() == _positive_power(f.matrix())
 
 
@@ -174,6 +172,21 @@ def test_arguments():
     C = Stratum([2]).unique_component()
     p = C.permutation_representative()
     with pytest.raises(ValueError):
-        list(rauzy_walks.rauzy_closed_walks(p, 8, left_degree=1))
-    assert (sorted(str(f) for f in rauzy_walks.rauzy_closed_walks(p, 8)) ==
-            sorted(str(f) for f in rauzy_walks.rauzy_closed_walks(C, 8)))
+        list(iet.rauzy_closed_walks(p, 8, left_degree=1))
+    assert (sorted(str(f) for f in iet.rauzy_closed_walks(p, 8)) ==
+            sorted(str(f) for f in iet.rauzy_closed_walks(C, 8)))
+
+    # a reduced permutation gives the same walks as the labelled one
+    q = iet.Permutation('a b c d', 'd c b a')
+    r = iet.Permutation('a b c d', 'd c b a', reduced=True)
+    assert (sorted(str(f) for f in iet.rauzy_closed_walks(r, 8)) ==
+            sorted(str(f) for f in iet.rauzy_closed_walks(q, 8)))
+
+    # the walks keep the alphabet of the permutation, and their words of moves
+    # are those of the stratum component
+    walks = list(iet.rauzy_closed_walks(q, 9))
+    assert walks
+    for f in walks:
+        assert list(f.start().alphabet()) == ['a', 'b', 'c', 'd']
+    assert ([f._simplified_flip_sequence() for f in walks] ==
+            [f._simplified_flip_sequence() for f in iet.rauzy_closed_walks(C, 9)])
