@@ -895,7 +895,7 @@ def FlipSequence(*args, **kwds):
 
     A flip sequence is built from an initial permutation (built from :func:`Permutation` or
     :func:`GeneralizedPermutation`) and a sequence of Rauzy inductions that could be of the
-    following form:
+    following form (an induction that is not defined is refused):
 
     - a letter ``'t'`` or ``'b'`` for top right and bottom right induction
       respectively
@@ -903,7 +903,7 @@ def FlipSequence(*args, **kwds):
     - a pair of letters ``'tr'``, ``'br'``, ``'tl'`` or ``'bl'`` for top right,
       bottom right, top left and bottom left induction respectively
 
-    For all available options, see :class:`~surface_dynamics.interval_exchanges.flip_sequence.IETFlipSequence`.
+    For all available options, see :class:`~surface_dynamics.interval_exchanges.flip_sequence.RauzyFlipSequence`.
 
     EXAMPLES::
 
@@ -917,8 +917,8 @@ def FlipSequence(*args, **kwds):
         sage: f.substitution()
         WordMorphism: a->bab, b->b
     """
-    from .flip_sequence import IETFlipSequence
-    return IETFlipSequence(*args, **kwds)
+    from .flip_sequence import RauzyFlipSequence
+    return RauzyFlipSequence(*args, **kwds)
 
 
 def rauzy_closed_walks(*args, **kwds):
@@ -934,7 +934,7 @@ def rauzy_closed_walks(*args, **kwds):
         sage: C = Stratum([2]).unique_component()
         sage: walks = list(iet.rauzy_closed_walks(C, 8, min_length=8))
         sage: walks
-        [FlipSequence('0 1 2 3\n1 3 2 0', 'btbttbtb')]
+        [RauzyFlipSequence('0 1 2 3\n1 3 2 0', 'btbttbtb')]
     """
     from .rauzy_walks import rauzy_closed_walks
     return rauzy_closed_walks(*args, **kwds)

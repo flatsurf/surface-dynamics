@@ -21,13 +21,13 @@ EXAMPLES::
     sage: C = Stratum([2]).unique_component()
     sage: for f in iet.rauzy_closed_walks(C, 9):
     ....:     print(f)
-    IETFlipSequence('0 1 2 3\n1 3 0 2', 'tbtbtttbt')
-    IETFlipSequence('0 1 2 3\n1 3 0 2', 'tbbtttbtb')
-    IETFlipSequence('0 1 2 3\n1 3 2 0', 'bttbttbtb')
-    IETFlipSequence('0 1 2 3\n1 3 2 0', 'btbttbtb')
-    IETFlipSequence('0 1 2 3\n1 3 2 0', 'btbttbbtb')
-    IETFlipSequence('0 1 2 3\n1 3 2 0', 'bbtbtbttb')
-    IETFlipSequence('0 1 2 3\n1 3 2 0', 'bbtbbtbtb')
+    RauzyFlipSequence('0 1 2 3\n1 3 0 2', 'tbtbtttbt')
+    RauzyFlipSequence('0 1 2 3\n1 3 0 2', 'tbbtttbtb')
+    RauzyFlipSequence('0 1 2 3\n1 3 2 0', 'bttbttbtb')
+    RauzyFlipSequence('0 1 2 3\n1 3 2 0', 'btbttbtb')
+    RauzyFlipSequence('0 1 2 3\n1 3 2 0', 'btbttbbtb')
+    RauzyFlipSequence('0 1 2 3\n1 3 2 0', 'bbtbtbttb')
+    RauzyFlipSequence('0 1 2 3\n1 3 2 0', 'bbtbbtbtb')
 """
 # ***************************************************************************
 #       Copyright (C) 2026 Vincent Delecroix <20100.delecroix@gmail.com>
@@ -43,7 +43,7 @@ from bisect import bisect_left
 
 from .template import OrientablePermutationIET, FlippedPermutationIET
 from .labelled import LabelledPermutationIET
-from .flip_sequence import IETFlipSequence
+from .flip_sequence import RauzyFlipSequence
 
 
 class LazyReducedRauzyDiagram:
@@ -378,7 +378,7 @@ class LazyReducedRauzyDiagram:
         relabellings form a group, the *relabelling group* at ``key``. The
         relabellings are tuples ``g`` of the integers ``0, ..., d-1``, the
         letter ``i`` being sent to ``g[i]``, as the relabelling of an
-        :class:`IETFlipSequence`. The groups at two vertices are conjugate.
+        :class:`RauzyFlipSequence`. The groups at two vertices are conjugate.
 
         The generators are the Schreier generators along a spanning tree,
         without the identity and without repetition.
@@ -518,11 +518,11 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
 
     OUTPUT:
 
-    An iterator over closed :class:`IETFlipSequence`, each walk once up to
+    An iterator over closed :class:`RauzyFlipSequence`, each walk once up to
     rotation. A walk starts at the canonical labelling (top row ``0 1 ...
     d-1``) of its least vertex, and its word of moves is the least among the
     rotations starting there (``t < b``); it is closed, as by
-    :meth:`IETFlipSequence.close`: it carries the relabelling that maps
+    :meth:`RauzyFlipSequence.close`: it carries the relabelling that maps
     its end back to its start. The walks come by increasing least vertex,
     then by increasing sequence of first-return loops at this vertex.
 
@@ -573,7 +573,7 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
         0 1 2 3
         1 3 2 0
         sage: f
-        IETFlipSequence('0 1 2 3\n1 3 2 0', 'btbttbtb')
+        RauzyFlipSequence('0 1 2 3\n1 3 2 0', 'btbttbtb')
         sage: f.is_complete()
         True
         sage: f.matrix().charpoly()
@@ -808,11 +808,11 @@ def _first_return_loops(d, v, successors, edges, dist, max_length, label_maps):
     of each loop, including when the relabelling group is nontrivial::
 
         sage: from surface_dynamics import Stratum
-        sage: from surface_dynamics.interval_exchanges.flip_sequence import IETFlipSequence
+        sage: from surface_dynamics.interval_exchanges.flip_sequence import RauzyFlipSequence
         sage: def replay(G, v, L):
         ....:     vertices, successors, predecessors, edges = _diagram_data(G)
         ....:     loops, winner_masks, maps = _first_return_loops(G._d, v, successors, edges, _distances_to(v, predecessors, L), L, True)
-        ....:     flips = [IETFlipSequence(G.canonical_labelling(vertices[v]), loop) for loop in loops]
+        ....:     flips = [RauzyFlipSequence(G.canonical_labelling(vertices[v]), loop) for loop in loops]
         ....:     return (len(loops), sum(m != tuple(range(G._d)) for m in maps),
         ....:             winner_masks == [sum(1 << a for a in set(f.winners())) for f in flips],
         ....:             maps == [tuple(f.end()._labels[0]) for f in flips])
@@ -1089,17 +1089,17 @@ def _closed_walks(G, max_length, min_length, complete, primitive):
         ttb
         b
 
-    The walks are closed, with the relabelling that :meth:`IETFlipSequence.close`
+    The walks are closed, with the relabelling that :meth:`RauzyFlipSequence.close`
     gives::
 
         sage: from surface_dynamics import Stratum
-        sage: from surface_dynamics.interval_exchanges.flip_sequence import IETFlipSequence
+        sage: from surface_dynamics.interval_exchanges.flip_sequence import RauzyFlipSequence
         sage: G = LazyReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
         sage: walks = list(_closed_walks(G, 9, 1, False, True))
         sage: len(walks), sum(1 for f in walks if f._relabelling != list(range(7)))
         (1165, 38)
         sage: def closed(f):
-        ....:     g = IETFlipSequence(f.start(), f._simplified_flip_sequence())
+        ....:     g = RauzyFlipSequence(f.start(), f._simplified_flip_sequence())
         ....:     g.close()
         ....:     return g
         sage: all(f == closed(f) and f.is_closed() for f in walks)
@@ -1148,5 +1148,5 @@ def _closed_walks(G, max_length, min_length, complete, primitive):
                 for a, b in enumerate(product):
                     relabelling[b] = a
             moves = [(move, -1) for i in seq for move in loops[i]]
-            yield IETFlipSequence._from_data(G.canonical_labelling(key), G.canonical_labelling(key),
+            yield RauzyFlipSequence._from_data(G.canonical_labelling(key), G.canonical_labelling(key),
                                              moves, relabelling)
