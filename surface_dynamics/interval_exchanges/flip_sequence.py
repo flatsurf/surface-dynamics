@@ -450,8 +450,11 @@ class RauzyFlipSequence(SageObject):
         Return the flip sequence from ``start`` to ``end`` with the given Rauzy
         moves and final relabelling, without replaying the moves.
 
-        Nothing is checked and nothing is copied: the caller passes objects it
-        owns, consistent with each other (see :meth:`_check`).
+        Nothing is checked and nothing is copied: the arguments must be
+        consistent with each other (see :meth:`_check`). ``start`` may be
+        shared between flip sequences, since no method mutates the start in
+        place; ``end`` must be owned by the new flip sequence, since the end is
+        moved, relabelled and inverted in place.
 
         INPUT:
 
@@ -502,6 +505,32 @@ class RauzyFlipSequence(SageObject):
             sage: f
             RauzyFlipSequence('0 1 2 1 3\n4 3 4 2 0', 'ttbtbtbb', relabelling=(3,4))
             sage: f._check()
+
+        Two flip sequences sharing one start object, each owning its end; the
+        first one is composed, then mutated through its end, which leaves the
+        shared start and the second sequence unchanged::
+
+            sage: p = iet.Permutation('a b c d', 'd c b a')
+            sage: h = iet.FlipSequence(p, 'ttbtbbtb')
+            sage: h.close()
+            sage: rel = h._relabelling
+            sage: start = p.__copy__()
+            sage: moves = [(0, -1), (0, -1), (1, -1), (0, -1), (1, -1), (1, -1), (0, -1), (1, -1)]
+            sage: f1 = RauzyFlipSequence._from_data(start, p.__copy__(), moves[:], rel[:])
+            sage: f2 = RauzyFlipSequence._from_data(start, p.__copy__(), moves[:], rel[:])
+            sage: f1.is_closed() and f2.is_closed()
+            True
+            sage: g = f1 * f2
+            sage: g._check()
+            sage: f1.rauzy_move('t')
+            sage: f1.relabel([1, 0, 2, 3])
+            sage: f1.top_bottom_inverse()
+            sage: f1.left_right_inverse()
+            sage: start == p
+            True
+            sage: f2._check()
+            sage: f2 == h
+            True
         """
         res = cls.__new__(cls)
         res._start = start

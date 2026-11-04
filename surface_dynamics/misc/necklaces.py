@@ -56,7 +56,7 @@ def weighted_necklaces(weights, max_weight, min_weight=1, primitive=False,
       one per letter, read as bitmasks over ``num_bits`` bits (the bits
       above are ignored), and a non-negative integer. A word is then kept
       only when the union of the masks of its letters has all the
-      ``num_bits`` bits set
+      ``num_bits`` bits set. A nonzero ``num_bits`` needs ``masks``
 
     - ``monoid_elements``, ``product`` -- (optional, both or neither) a list
       of elements, one per letter, and an associative binary function on
@@ -184,6 +184,16 @@ def weighted_necklaces(weights, max_weight, min_weight=1, primitive=False,
         Traceback (most recent call last):
         ...
         ValueError: masks must have one entry per letter
+        sage: weighted_necklaces([1, 1], 3, masks=[1, 2], num_bits=-1)
+        Traceback (most recent call last):
+        ...
+        ValueError: num_bits must be non-negative
+        sage: weighted_necklaces([1, 1], 3, num_bits=2)
+        Traceback (most recent call last):
+        ...
+        ValueError: a nonzero num_bits needs masks
+        sage: list(weighted_necklaces([1, 1], 2, masks=[1, 2], num_bits=0))
+        [(0,), (0, 0), (0, 1), (1,), (1, 1)]
         sage: weighted_necklaces([1, 1], 3, monoid_elements=['x'], product=operator.add)
         Traceback (most recent call last):
         ...
@@ -199,12 +209,17 @@ def weighted_necklaces(weights, max_weight, min_weight=1, primitive=False,
     min_weight = operator.index(min_weight)
     if (monoid_elements is None) != (product is None):
         raise ValueError('monoid_elements and product must be given together')
+    num_bits = operator.index(num_bits)
+    if num_bits < 0:
+        raise ValueError('num_bits must be non-negative')
+    if num_bits and masks is None:
+        raise ValueError('a nonzero num_bits needs masks')
     n = len(weights)
     full = None
     if masks is not None:
         if len(masks) != n:
             raise ValueError('masks must have one entry per letter')
-        full = (1 << operator.index(num_bits)) - 1
+        full = (1 << num_bits) - 1
         # Python integers for int.bit_count, whatever the input (Sage Integer)
         masks = [int(h) & full for h in masks]
     if monoid_elements is not None:

@@ -928,8 +928,10 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
 
     INPUT:
 
-    - ``x`` -- an irreducible Abelian permutation (labelled or reduced), or a
-      component of an Abelian stratum
+    - ``x`` -- an irreducible Abelian permutation or an irreducible linear
+      involution without flips (generalized permutation of a quadratic
+      stratum), labelled or reduced, or a component of an Abelian or of a
+      quadratic stratum
 
     - ``max_length``, ``min_length`` -- (``min_length`` defaults to ``1``)
       non-negative integers, the bounds on the length of the walks
@@ -942,17 +944,20 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
       closed walks; if ``False``, the proper powers of closed walks are
       yielded as well
 
-    - ``left_degree`` -- (optional) when ``x`` is a stratum component, the
-      left degree of the permutation representative whose diagram is walked
-      (see ``permutation_representative``); must be ``None`` when ``x`` is a
-      permutation
+    - ``left_degree`` -- (optional) when ``x`` is a component of an Abelian
+      stratum, the left degree of the permutation representative whose
+      diagram is walked (see ``permutation_representative``); not implemented
+      for a component of a quadratic stratum; must be ``None`` when ``x`` is a
+      permutation or a linear involution
 
     OUTPUT:
 
     An iterator over closed :class:`RauzyFlipSequence`, each walk once up to
     rotation. The walks use the alphabet of the input permutation (``0, ...,
     d-1`` for a stratum component). A walk starts at the labelling of its
-    least vertex whose top row is this alphabet, and its word of moves is the
+    least vertex whose letters, read on the top row then on the bottom row,
+    appear for the first time in the order of this alphabet (for an Abelian
+    permutation, the top row is the alphabet), and its word of moves is the
     least among the rotations starting there (``t < b``); it is closed, as by
     :meth:`RauzyFlipSequence.close`: it carries the relabelling that maps its
     end back to its start. The walks come by increasing least vertex, then by
@@ -1026,6 +1031,34 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
         ...
         ValueError: left_degree must be None when x is a permutation
 
+    A component of a quadratic stratum: the `2` complete closed walks of
+    length `8` of `Q_2(2^2)^{hyp}`, whose moves are not all defined::
+
+        sage: Q = Stratum([2, 2], k=2).hyperelliptic_component()
+        sage: walks = list(iet.rauzy_closed_walks(Q, 8))
+        sage: walks
+        [RauzyFlipSequence('0 1 0 2 3\n3 1 4 2 4', 'tbttbbtb', relabelling=(0,1)),
+         RauzyFlipSequence('0 1 2 1\n3 4 3 2 0 4', 'tbtbbttb', relabelling=(3,4))]
+        sage: [f.start() for f in walks]
+        [0 1 0 2 3
+         3 1 4 2 4, 0 1 2 1
+         3 4 3 2 0 4]
+        sage: all(f.is_closed() and f.is_complete() for f in walks)
+        True
+
+    A linear involution over letters keeps its alphabet, and gives the same
+    words of moves as the component of its stratum::
+
+        sage: q = iet.GeneralizedPermutation('a b c b d', 'e d e c a')
+        sage: q.stratum_component() == Q
+        True
+        sage: walks_q = list(iet.rauzy_closed_walks(q, 8))
+        sage: walks_q
+        [RauzyFlipSequence('a b a c d\nd b e c e', 'tbttbbtb', relabelling=(0,1)),
+         RauzyFlipSequence('a b c b\nd e d c a e', 'tbtbbttb', relabelling=(3,4))]
+        sage: [f._simplified_flip_sequence() for f in walks_q] == [f._simplified_flip_sequence() for f in walks]
+        True
+
     TESTS:
 
     With ``primitive=False``, the closed walks of length `n` number
@@ -1054,27 +1087,59 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
         Traceback (most recent call last):
         ...
         ValueError: x must be irreducible
-        sage: iet.rauzy_closed_walks(iet.GeneralizedPermutation('a a b', 'b c c'), 3)
-        Traceback (most recent call last):
-        ...
-        ValueError: x must be an Abelian permutation or a component of an Abelian stratum
         sage: iet.rauzy_closed_walks(iet.Permutation('a b c', 'c b a', flips='a'), 3)
         Traceback (most recent call last):
         ...
-        ValueError: x must be an Abelian permutation or a component of an Abelian stratum
+        ValueError: x must be a permutation or a linear involution without flips, or a component of a stratum
+
+    The linear involution ``a a b / b c c`` is irreducible: its reduced
+    Rauzy class, the only one on three letters, has four vertices::
+
+        sage: q = iet.GeneralizedPermutation('a a b', 'b c c')
+        sage: q.is_irreducible()
+        True
+        sage: for f in iet.rauzy_closed_walks(q, 2, complete=False):
+        ....:     print(f)
+        RauzyFlipSequence('a a b\nb c c', 't')
+        RauzyFlipSequence('a b b\nc c a', 'b')
+
+    The left degree on a quadratic component or a linear involution, and a
+    reducible linear involution::
+
+        sage: iet.rauzy_closed_walks(Q, 8, left_degree=2)
+        Traceback (most recent call last):
+        ...
+        NotImplementedError: left_degree is not implemented for a component of a quadratic stratum
+        sage: iet.rauzy_closed_walks(q, 8, left_degree=1)
+        Traceback (most recent call last):
+        ...
+        ValueError: left_degree must be None when x is a permutation
+        sage: iet.rauzy_closed_walks(iet.GeneralizedPermutation('a b c a', 'b d d c'), 3)
+        Traceback (most recent call last):
+        ...
+        ValueError: x must be irreducible
     """
     from surface_dynamics.flat_surfaces.abelian_strata import AbelianStratumComponent
-    from .template import OrientablePermutationIET, FlippedPermutationIET
+    from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratumComponent
+    from .template import (OrientablePermutationIET, FlippedPermutationIET,
+                           OrientablePermutationLI, FlippedPermutationLI)
     from .rauzy_walks import LazyReducedRauzyDiagram
 
     if isinstance(x, AbelianStratumComponent):
         p = x.permutation_representative(left_degree=left_degree, reduced=False)
-    elif isinstance(x, OrientablePermutationIET) and not isinstance(x, FlippedPermutationIET):
+    elif isinstance(x, QuadraticStratumComponent):
+        if left_degree is not None:
+            # permutation_representative of a quadratic component offers no
+            # choice of the singularity at the left end of the interval
+            raise NotImplementedError('left_degree is not implemented for a component of a quadratic stratum')
+        p = x.permutation_representative(reduced=False)
+    elif ((isinstance(x, OrientablePermutationIET) and not isinstance(x, FlippedPermutationIET)) or
+          (isinstance(x, OrientablePermutationLI) and not isinstance(x, FlippedPermutationLI))):
         if left_degree is not None:
             raise ValueError('left_degree must be None when x is a permutation')
         if not x.is_irreducible():
             raise ValueError('x must be irreducible')
         p = x
     else:
-        raise ValueError('x must be an Abelian permutation or a component of an Abelian stratum')
+        raise ValueError('x must be a permutation or a linear involution without flips, or a component of a stratum')
     return LazyReducedRauzyDiagram(p).closed_walks(max_length, min_length, complete, primitive)

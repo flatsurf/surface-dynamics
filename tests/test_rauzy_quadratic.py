@@ -103,7 +103,6 @@ ALL_COUNTS = {
 }
 
 
-@pytest.mark.xfail(raises=ValueError, strict=True)
 @pytest.mark.parametrize('name', list(ALL_COUNTS))
 def test_counts_all_walks(name):
     C = diagram(name)
@@ -122,7 +121,6 @@ COMPLETE_COUNTS = {
 }
 
 
-@pytest.mark.xfail(raises=ValueError, strict=True)
 @pytest.mark.parametrize('name', list(COMPLETE_COUNTS))
 def test_counts_complete(name):
     C = diagram(name)
@@ -139,10 +137,110 @@ COMPLETE_COUNTS_SLOW = {
 
 
 @pytest.mark.slow
-@pytest.mark.xfail(raises=ValueError, strict=True)
 @pytest.mark.parametrize('name', list(COMPLETE_COUNTS_SLOW))
 def test_counts_complete_slow(name):
     C = diagram(name)
     expected = COMPLETE_COUNTS_SLOW[name]
     N = len(expected)
     assert counts(iet.rauzy_closed_walks(C, N), N) == expected
+
+
+def _walk_list(walks):
+    return [(str(f.start()), f._simplified_flip_sequence()) for f in walks]
+
+
+def test_complete_against_filter():
+    # Q22hyp up to length 13: 450 walks of complete=False (the sum of
+    # ALL_COUNTS up to 13), of which 91 are complete (the sum of
+    # COMPLETE_COUNTS); the relabelling group is transitive on the letters
+    C = diagram('Q22hyp')
+    walks = list(iet.rauzy_closed_walks(C, 13, complete=False))
+    assert len(walks) == sum(ALL_COUNTS['Q22hyp'][:13]) == 450
+    filtered = [f for f in walks if f.is_complete()]
+    assert len(filtered) == sum(COMPLETE_COUNTS['Q22hyp']) == 91
+    assert _walk_list(iet.rauzy_closed_walks(C, 13)) == _walk_list(filtered)
+
+
+def _first_appearance(q):
+    r"""The letters of q (indices in its alphabet) by first appearance, top row then bottom row."""
+    res = []
+    for row in q._labels:
+        for a in row:
+            if a not in res:
+                res.append(a)
+    return res
+
+
+def _is_proper_power(f):
+    r"""
+    Whether the closed walk f is a proper power of a shorter closed walk: its
+    word of moves is a power of a shorter word that returns to the reduced
+    vertex of its start.
+    """
+    from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+    from surface_dynamics.interval_exchanges.flip_sequence import RauzyFlipSequence
+    word = f._simplified_flip_sequence()
+    n = len(word)
+    start = LazyReducedRauzyDiagram._key(f.start())
+    for p in range(1, n):
+        if n % p == 0 and word == word[:p] * (n // p):
+            g = RauzyFlipSequence(f.start(), word[:p])
+            if LazyReducedRauzyDiagram._key(g.end()) == start:
+                return True
+    return False
+
+
+def _check_walks(walks, complete):
+    for f in walks:
+        start = f.start()
+        assert f.is_closed()
+        assert f._check() is None
+        if complete:
+            assert f.is_complete()
+        assert not _is_proper_power(f)
+        assert _first_appearance(start) == list(range(len(start)))
+
+
+def test_walk_properties():
+    _check_walks(iet.rauzy_closed_walks(diagram('Q22hyp'), 13), True)
+
+    C = diagram('Q5m1')
+    N = 8
+    walks = list(iet.rauzy_closed_walks(C, N, complete=False))
+    assert counts(walks, N) == ALL_COUNTS['Q5m1'][:N]
+    _check_walks(walks, False)
+    # with the proper powers, the closed walks of length n number the sum of
+    # the primitive ones of length e over the divisors e of n
+    c = ALL_COUNTS['Q5m1']
+    expected = [sum(c[e - 1] for e in range(1, n + 1) if n % e == 0) for n in range(1, N + 1)]
+    powers = list(iet.rauzy_closed_walks(C, N, complete=False, primitive=False))
+    assert counts(powers, N) == expected
+    assert sum(_is_proper_power(f) for f in powers) == sum(expected) - sum(c[:N])
+
+
+def test_arguments():
+    C = diagram('Q22hyp')
+    with pytest.raises(NotImplementedError):
+        list(iet.rauzy_closed_walks(C, 8, left_degree=2))
+    p = C.permutation_representative(reduced=False)
+    with pytest.raises(ValueError):
+        list(iet.rauzy_closed_walks(p, 8, left_degree=2))
+
+    # the labelled and reduced representatives give the walks of the component
+    r = C.permutation_representative()
+    walks = [str(f) for f in iet.rauzy_closed_walks(C, 10)]
+    assert walks
+    assert [str(f) for f in iet.rauzy_closed_walks(p, 10)] == walks
+    assert [str(f) for f in iet.rauzy_closed_walks(r, 10)] == walks
+
+    # a linear involution over letters keeps its alphabet, and its words of
+    # moves are those of the component
+    L = 'abcde'
+    top, bot = p.list()
+    q = iet.GeneralizedPermutation([L[i] for i in top], [L[i] for i in bot], alphabet=L)
+    walks_q = list(iet.rauzy_closed_walks(q, 10))
+    assert walks_q
+    for f in walks_q:
+        assert list(f.start().alphabet()) == list(L)
+    assert ([f._simplified_flip_sequence() for f in walks_q] ==
+            [f._simplified_flip_sequence() for f in iet.rauzy_closed_walks(C, 10)])
