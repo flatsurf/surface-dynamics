@@ -46,7 +46,7 @@ EXAMPLES::
 
 import operator
 
-from surface_dynamics.misc.necklaces import weighted_necklaces
+from surface_dynamics.misc.necklaces import _weighted_necklaces
 
 from .template import OrientablePermutationIET, FlippedPermutationIET
 from .flip_sequence import RauzyFlipSequence
@@ -749,7 +749,9 @@ class LazyReducedRauzyDiagram:
                 dist, max_length, nontrivial)
             lengths = [len(loop) for loop in loops]
             masks = None
+            full = None
             if complete:
+                full = (1 << len(orbits)) - 1
                 orbit_of = [None] * d
                 for i, orbit in enumerate(orbits):
                     for a in orbit:
@@ -771,8 +773,10 @@ class LazyReducedRauzyDiagram:
                 # the orbits are the letters: with complete, the masks of the
                 # letters hit decide completeness, and every walk closes with
                 # the identity
-                for seq in weighted_necklaces(lengths, max_length, min_length, primitive,
-                                              masks=masks, num_bits=len(orbits)):
+                # seq is the working list of the search: read it before the
+                # next step
+                for seq in _weighted_necklaces(lengths, max_length, min_length, primitive,
+                                               masks, full, None, None):
                     moves = [(move, -1) for i in seq for move in loops[i]]
                     yield RauzyFlipSequence._from_data(canonical_labelling(key), canonical_labelling(key),
                                                      moves, identity[:])
@@ -781,9 +785,9 @@ class LazyReducedRauzyDiagram:
             # the value of a walk is (W, r): the walk run from the canonical
             # labelling of v has the winners of the bitmask W and ends at the
             # canonical labelling of v with each letter a replaced by r[a]
-            for seq, (winners, product) in weighted_necklaces(
-                    lengths, max_length, min_length, primitive, masks=masks, num_bits=len(orbits),
-                    monoid_elements=list(zip(winner_masks, label_maps)), product=_semidirect_product):
+            for seq, (winners, product) in _weighted_necklaces(
+                    lengths, max_length, min_length, primitive, masks, full,
+                    list(zip(winner_masks, label_maps)), _semidirect_product):
                 if complete and not _hits_every_cycle(winners, product):
                     continue
                 # the inverse of r closes the walk

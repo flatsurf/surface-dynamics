@@ -209,7 +209,10 @@ def weighted_necklaces(weights, max_weight, min_weight=1, primitive=False,
         if len(monoid_elements) != n:
             raise ValueError('monoid_elements must have one entry per letter')
         monoid_elements = list(monoid_elements)
-    return _weighted_necklaces(weights, max_weight, min_weight, primitive, masks, full, monoid_elements, product)
+        it = _weighted_necklaces(weights, max_weight, min_weight, primitive, masks, full, monoid_elements, product)
+        return ((tuple(word), value) for word, value in it)
+    # the words yielded are one working list: copy each before the next step
+    return map(tuple, _weighted_necklaces(weights, max_weight, min_weight, primitive, masks, full, None, None))
 
 
 def _weighted_necklaces(weights, max_weight, min_weight, primitive, masks, full, elements, product):
@@ -218,11 +221,25 @@ def _weighted_necklaces(weights, max_weight, min_weight, primitive, masks, full,
     in :func:`weighted_necklaces`, with ``full`` the mask of the
     ``num_bits`` bits (``None`` without masks).
 
+    OUTPUT:
+
+    An iterator over the words as :func:`weighted_necklaces`, except that
+    each word is the working list of the backtracking, not a tuple: the same
+    list object is yielded every time, and the next step of the iterator
+    changes it. A word must be read, or copied, before the iterator is
+    advanced. This saves building a tuple per word when the caller reads
+    each word at once.
+
     EXAMPLES::
 
         sage: from surface_dynamics.misc.necklaces import _weighted_necklaces
-        sage: list(_weighted_necklaces([1, 1], 2, 1, False, None, None, None, None))
+        sage: [tuple(w) for w in _weighted_necklaces([1, 1], 2, 1, False, None, None, None, None)]
         [(0,), (0, 0), (0, 1), (1,), (1, 1)]
+
+    Without a copy, all the words are the same list, emptied at the end::
+
+        sage: list(_weighted_necklaces([1, 1], 2, 1, False, None, None, None, None))
+        [[], [], [], [], []]
     """
     if not weights or max_weight < 1:
         return
@@ -246,7 +263,7 @@ def _weighted_necklaces(weights, max_weight, min_weight, primitive, masks, full,
             def extend(p, total):
                 m = len(seq)
                 if total >= min_weight and (p == m if primitive else m % p == 0):
-                    yield tuple(seq)
+                    yield seq
                 first = seq[m - p]
                 cand = by_budget[max_weight - total]
                 for i in cand[bisect_left(cand, first):]:
@@ -268,7 +285,7 @@ def _weighted_necklaces(weights, max_weight, min_weight, primitive, masks, full,
         def extend(p, total, value):
             m = len(seq)
             if total >= min_weight and (p == m if primitive else m % p == 0):
-                yield tuple(seq), value
+                yield seq, value
             first = seq[m - p]
             cand = by_budget[max_weight - total]
             for i in cand[bisect_left(cand, first):]:
@@ -290,7 +307,7 @@ def _weighted_necklaces(weights, max_weight, min_weight, primitive, masks, full,
         def extend(p, total, hit):
             m = len(seq)
             if hit == full and total >= min_weight and (p == m if primitive else m % p == 0):
-                yield tuple(seq)
+                yield seq
             first = seq[m - p]
             cand = by_budget[max_weight - total]
             for i in cand[bisect_left(cand, first):]:
@@ -319,7 +336,7 @@ def _weighted_necklaces(weights, max_weight, min_weight, primitive, masks, full,
     def extend(p, total, hit, value):
         m = len(seq)
         if hit == full and total >= min_weight and (p == m if primitive else m % p == 0):
-            yield tuple(seq), value
+            yield seq, value
         first = seq[m - p]
         cand = by_budget[max_weight - total]
         for i in cand[bisect_left(cand, first):]:
