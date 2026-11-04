@@ -16,6 +16,7 @@ The misc Package
    misc/latex
    misc/linalg
    misc/multiplicative_multivariate_generating_series
+   misc/necklaces
    misc/permutation
    misc/plane_tree
    misc/ppl_utils
