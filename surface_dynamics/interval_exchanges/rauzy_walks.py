@@ -759,7 +759,9 @@ class LazyReducedRauzyDiagram:
         [CatRusSawSerMie00]_, with the total length bounded by
         ``max_length``, each node iterating only over the loops that fit in
         the length left. The loops themselves are found by a depth-first
-        search pruned by the distance back to `v`, which also accumulates the
+        search pruned by the distance back to `v`, computed by a backward
+        breadth-first search stopped at about half of ``max_length``, the
+        vertices beyond counting as farther; the search also accumulates the
         winners of each loop and the relabelling at which it ends, so that no
         loop is replayed. The undefined moves of a linear involution are no
         edges, so no loop goes through them.
@@ -1036,8 +1038,13 @@ class LazyReducedRauzyDiagram:
         top_getters = [operator.itemgetter(*top_maps[d*u:d*u + d]) for u in range(n)]
         bot_getters = [operator.itemgetter(*bot_maps[d*u:d*u + d]) for u in range(n)]
 
+        # the lower bounds of the distances back to the base, shared by the
+        # bases: each base sets the entries it reaches and resets them after
+        h = _backward_depth(max_length)
+        dist = [h + 1] * n
+
         for v, key in enumerate(vertices):
-            dist = _distances_to(v, top_predecessors, bot_predecessors, max_length)
+            reached = _distances_to(v, top_predecessors, bot_predecessors, h, dist)
             orbits = self.relabelling_orbits(key)
             # the group is trivial exactly when its orbits are singletons; then
             # every walk at v closes with the identity, and no label map is needed
@@ -1045,6 +1052,10 @@ class LazyReducedRauzyDiagram:
             loops, winner_masks, label_maps = _first_return_loops(
                 d, v, top_successors, bot_successors, top_winners, bot_winners,
                 top_getters, bot_getters, dist, max_length, nontrivial)
+            # the next base needs every entry back at h + 1; resetting the
+            # reached entries only costs no O(n) per base
+            for u in reached:
+                dist[u] = h + 1
             lengths = [len(loop) for loop in loops]
             masks = None
             full = None
@@ -1125,10 +1136,49 @@ class LazyReducedRauzyDiagram:
                                                  moves, relabelling)
 
 
-def _distances_to(v, top_predecessors, bot_predecessors, max_length):
+def _backward_depth(max_length):
     r"""
-    Return the distances to the vertex ``v``, in the graph below, along the
-    paths whose vertices but ``v`` are all greater than ``v``.
+    Return the depth at which the search of closed walks of length at most
+    ``max_length`` stops the backward search of the distances to each base.
+
+    A first-return loop of length at most ``max_length`` at the base ``v``
+    is found by a forward search from ``v``, pruned by lower bounds of the
+    distances back to ``v`` (see :func:`_distances_to` and
+    :func:`_first_return_loops`). These bounds are exact up to the depth
+    returned, and the vertices beyond it count as farther: the pruning is
+    exact on the last ``max_length // 2 + 2`` moves of each loop, while the
+    backward search visits about as few vertices as the forward one. A depth
+    above ``max_length`` would bound nothing more.
+
+    EXAMPLES::
+
+        sage: from surface_dynamics.interval_exchanges.rauzy_walks import _backward_depth
+        sage: [_backward_depth(L) for L in range(8)]
+        [0, 1, 2, 3, 4, 4, 5, 5]
+        sage: _backward_depth(14), _backward_depth(24)
+        (9, 14)
+    """
+    # complete walks, cold process, time (s) at the depths L//2 - 1, L//2,
+    # L//2 + 1, L//2 + 2, L:
+    #   H_3(4)^odd 22:      0.81  0.80  0.79  0.81  0.79
+    #   H_3(3,1) 22:        1.96  1.95  1.96  1.90  1.89
+    #   H_4(6)^odd 24:     23.13 22.36 22.07 22.05 22.04
+    #   H_4(5,1) 20:       18.10 16.46 15.71 15.48 18.58
+    #   H_4(3,2,1) 16:     13.86 11.90 11.01 10.70 15.40
+    #   Q_3(7,1) 24:       14.06 13.70 13.72 13.41 16.43
+    #   Q_3(1^8) 14:       68.51 65.64 66.58 63.95 97.91
+    # the largest ratio over the cases to the best time of the case is 1.30,
+    # 1.11, 1.04, 1.03 and 1.53 at these depths: L//2 + 2 is the best; at L
+    # the backward search visits far more vertices than the forward one cuts
+    # (Q_3(1^8) 14 is 53 % slower)
+    return min(max_length, max_length // 2 + 2)
+
+
+def _distances_to(v, top_predecessors, bot_predecessors, depth, dist):
+    r"""
+    Set the distances to the vertex ``v`` up to ``depth``, in the graph
+    below, along the paths whose vertices but ``v`` are all greater than
+    ``v``, and return the vertices set.
 
     The graph has the vertices ``0, ..., n-1``, where ``n`` is the length of
     ``top_predecessors`` and of ``bot_predecessors``, and at most ``2n``
@@ -1145,11 +1195,20 @@ def _distances_to(v, top_predecessors, bot_predecessors, max_length):
     The distance from ``u`` to ``v`` is the least number of edges of a path
     from ``u`` to ``v`` all of whose vertices but the last (``v``) are
     greater than ``v``, found by a breadth-first search from ``v`` along the
-    edges backwards. ``max_length`` bounds the distances sought.
+    edges backwards, stopped after ``depth`` levels.
 
-    OUTPUT: the dict ``dist`` whose keys are the vertices ``u > v`` at
-    distance at most ``max_length`` from ``v``, ``dist[u]`` being that
-    distance; the other vertices (in particular ``u <= v``) are absent.
+    ``dist`` is a list of length ``n`` whose entries are all ``depth + 1``
+    on input. Afterwards, ``dist[u]`` is the distance from ``u`` to ``v`` at
+    the vertices ``u > v`` at distance at most ``depth``, and stays
+    ``depth + 1`` elsewhere: for ``u > v`` this is a lower bound of the
+    distance (``u`` is farther, or cannot reach ``v``). The list is filled
+    in place rather than built per call: one list serves all the bases
+    ``v`` of a search, and the caller resets the returned entries to
+    ``depth + 1``, so that a base costs the vertices it reaches and no
+    allocation of length ``n``.
+
+    OUTPUT: the list of the vertices ``u`` whose entry was set, in the order
+    of the search (by increasing distance).
 
     EXAMPLES:
 
@@ -1160,48 +1219,58 @@ def _distances_to(v, top_predecessors, bot_predecessors, max_length):
         sage: from surface_dynamics.interval_exchanges.rauzy_walks import _distances_to
         sage: top_pred = [0, 2, 1]
         sage: bot_pred = [2, 1, 0]
-        sage: sorted(_distances_to(0, top_pred, bot_pred, 5).items())
-        [(1, 2), (2, 1)]
-        sage: sorted(_distances_to(1, top_pred, bot_pred, 5).items())
-        [(2, 1)]
-        sage: sorted(_distances_to(0, top_pred, bot_pred, 1).items())
-        [(2, 1)]
+        sage: dist = [6] * 3
+        sage: _distances_to(0, top_pred, bot_pred, 5, dist), dist
+        ([2, 1], [6, 2, 1])
+        sage: dist = [6] * 3
+        sage: _distances_to(1, top_pred, bot_pred, 5, dist), dist
+        ([2], [6, 6, 1])
+        sage: dist = [2] * 3
+        sage: _distances_to(0, top_pred, bot_pred, 1, dist), dist
+        ([2], [2, 2, 1])
+        sage: dist = [1] * 3
+        sage: _distances_to(0, top_pred, bot_pred, 0, dist), dist
+        ([], [1, 1, 1])
 
     A graph with a cycle ``0 -> 1 -> 2 -> 3 -> 0`` of label ``0``, the edges
-    of label ``1`` being the loops ``u -> u``::
+    of label ``1`` being the loops ``u -> u``; at depth ``2``, the vertex
+    ``1`` at distance ``3`` keeps the bound ``3``::
 
-        sage: sorted(_distances_to(0, [3, 0, 1, 2], [0, 1, 2, 3], 5).items())
-        [(1, 3), (2, 2), (3, 1)]
-        sage: sorted(_distances_to(0, [3, 0, 1, 2], [0, 1, 2, 3], 2).items())
-        [(2, 2), (3, 1)]
-        sage: sorted(_distances_to(1, [3, 0, 1, 2], [0, 1, 2, 3], 5).items())
-        []
+        sage: dist = [6] * 4
+        sage: _distances_to(0, [3, 0, 1, 2], [0, 1, 2, 3], 5, dist), dist
+        ([3, 2, 1], [6, 3, 2, 1])
+        sage: dist = [3] * 4
+        sage: _distances_to(0, [3, 0, 1, 2], [0, 1, 2, 3], 2, dist), dist
+        ([3, 2], [3, 3, 2, 1])
+        sage: dist = [6] * 4
+        sage: _distances_to(1, [3, 0, 1, 2], [0, 1, 2, 3], 5, dist), dist
+        ([], [6, 6, 6, 6])
 
     The same cycle with no edge of label ``1``::
 
-        sage: sorted(_distances_to(0, [3, 0, 1, 2], [-1, -1, -1, -1], 5).items())
-        [(1, 3), (2, 2), (3, 1)]
+        sage: dist = [6] * 4
+        sage: _distances_to(0, [3, 0, 1, 2], [-1, -1, -1, -1], 5, dist), dist
+        ([3, 2, 1], [6, 3, 2, 1])
     """
-    # a dict rather than a list of length n: the search holds only the
-    # vertices within max_length backward moves of v, while a list would cost
-    # O(n) per base v, so O(n^2) over the whole diagram
-    dist = {}
+    reached = []
     frontier = [v]
     level = 0
-    while frontier and level < max_length:
+    while frontier and level < depth:
         level += 1
         new = []
         for w in frontier:
+            # an entry above depth is unset: the set ones are at most depth
             u = top_predecessors[w]
-            if u > v and u not in dist:
+            if u > v and dist[u] > depth:
                 dist[u] = level
                 new.append(u)
             u = bot_predecessors[w]
-            if u > v and u not in dist:
+            if u > v and dist[u] > depth:
                 dist[u] = level
                 new.append(u)
+        reached.extend(new)
         frontier = new
-    return dist
+    return reached
 
 
 def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_winners, top_getters, bot_getters, dist, max_length, label_maps):
@@ -1219,9 +1288,14 @@ def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_w
     are the words of the paths from ``v`` back to ``v`` whose intermediate
     vertices are all greater than ``v`` (``v`` is not met in between).
     ``max_length`` bounds the number of edges of a loop. ``dist`` is the
-    dict output by :func:`_distances_to` for ``v`` in this graph and prunes
-    the search: a path is extended only to a vertex of ``dist`` and only if
-    it can still return to ``v`` within ``max_length`` edges.
+    list filled by :func:`_distances_to` for ``v`` in this graph, at any
+    depth: at each vertex ``w > v``, a lower bound of the distance from
+    ``w`` back to ``v`` (exact up to the depth). It prunes the search: a
+    path of ``length`` edges is extended to ``w`` only if
+    ``length + 1 + dist[w] <= max_length``. The pruning is sound since the
+    bound never exceeds the distance, so no path that can still return to
+    ``v`` within ``max_length`` edges is cut; a smaller depth cuts fewer
+    paths far from ``v``, at no cost to the result.
 
     On an edge, a letter is a winner as follows. ``d`` is the number of
     letters. The canonical labelling of the vertex ``u`` has the letters
@@ -1272,7 +1346,8 @@ def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_w
         ....:  top_pred, bot_pred, top_maps, bot_maps) = G._diagram_data()
         sage: top_getters = [operator.itemgetter(*top_maps[3*u:3*u + 3]) for u in range(3)]
         sage: bot_getters = [operator.itemgetter(*bot_maps[3*u:3*u + 3]) for u in range(3)]
-        sage: dist = _distances_to(0, top_pred, bot_pred, 4)
+        sage: dist = [5] * 3
+        sage: _ = _distances_to(0, top_pred, bot_pred, 4, dist)
         sage: loops, winner_masks, maps = _first_return_loops(3, 0, top_succ, bot_succ, top_winners, bot_winners,
         ....:                                                 top_getters, bot_getters, dist, 4, True)
         sage: loops
@@ -1294,7 +1369,8 @@ def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_w
         ....:      top_pred, bot_pred, top_maps, bot_maps) = G._diagram_data()
         ....:     top_getters = [operator.itemgetter(*top_maps[d*u:d*u + d]) for u in range(len(vertices))]
         ....:     bot_getters = [operator.itemgetter(*bot_maps[d*u:d*u + d]) for u in range(len(vertices))]
-        ....:     dist = _distances_to(v, top_pred, bot_pred, L)
+        ....:     dist = [L + 1] * len(vertices)
+        ....:     _ = _distances_to(v, top_pred, bot_pred, L, dist)
         ....:     loops, winner_masks, maps = _first_return_loops(d, v, top_succ, bot_succ, top_winners, bot_winners,
         ....:                                                     top_getters, bot_getters, dist, L, True)
         ....:     flips = [RauzyFlipSequence(G.canonical_labelling(vertices[v]), loop) for loop in loops]
@@ -1318,6 +1394,27 @@ def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_w
         sage: G = LazyReducedRauzyDiagram(Stratum([2, 2], k=2).hyperelliptic_component().permutation_representative(reduced=False))
         sage: replay(G, 0, 12)
         (17, 17, True, True)
+
+    The loops, their winners and their relabellings do not depend on the
+    depth of the backward search::
+
+        sage: def by_depth(G, v, L, h):
+        ....:     d = G._d
+        ....:     (vertices, top_succ, bot_succ, top_winners, bot_winners,
+        ....:      top_pred, bot_pred, top_maps, bot_maps) = G._diagram_data()
+        ....:     top_getters = [operator.itemgetter(*top_maps[d*u:d*u + d]) for u in range(len(vertices))]
+        ....:     bot_getters = [operator.itemgetter(*bot_maps[d*u:d*u + d]) for u in range(len(vertices))]
+        ....:     dist = [h + 1] * len(vertices)
+        ....:     _ = _distances_to(v, top_pred, bot_pred, h, dist)
+        ....:     return _first_return_loops(d, v, top_succ, bot_succ, top_winners, bot_winners,
+        ....:                                top_getters, bot_getters, dist, L, True)
+        sage: G1 = LazyReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
+        sage: len(G1.vertices())
+        294
+        sage: all(by_depth(G1, v, 9, h) == by_depth(G1, v, 9, 9) for v in range(20) for h in range(10))
+        True
+        sage: all(by_depth(G, v, 12, h) == by_depth(G, v, 12, 12) for v in range(20) for h in range(13))
+        True
     """
     loops = []
     winner_masks = []
@@ -1329,8 +1426,8 @@ def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_w
         # than v; run from the canonical labelling of v, it has the winners
         # of the bitmask winners and ends at the canonical labelling of u
         # with each letter a replaced by lab[a]; the pruning ensures that
-        # some path of length at most max_length - length leads from u back
-        # to v
+        # the lower bound dist[u] of the distance from u back to v is at most
+        # max_length - length (u != v)
         w = top_successors[u]
         word.append(0)
         win = winners | (1 << lab[top_winners[u]])
@@ -1340,8 +1437,7 @@ def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_w
             if label_maps:
                 maps.append(top_getters[u](lab))
         elif w > v:
-            dw = dist.get(w)
-            if dw is not None and length + 1 + dw <= max_length:
+            if length + 1 + dist[w] <= max_length:
                 search(w, length + 1, top_getters[u](lab), win)
         word[-1] = 1
         w = bot_successors[u]
@@ -1352,8 +1448,7 @@ def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_w
             if label_maps:
                 maps.append(bot_getters[u](lab))
         elif w > v:
-            dw = dist.get(w)
-            if dw is not None and length + 1 + dw <= max_length:
+            if length + 1 + dist[w] <= max_length:
                 search(w, length + 1, bot_getters[u](lab), win)
         word.pop()
 
