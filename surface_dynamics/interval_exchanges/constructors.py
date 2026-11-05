@@ -1029,7 +1029,7 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
         sage: iet.rauzy_closed_walks(p, 8, left_degree=1)
         Traceback (most recent call last):
         ...
-        ValueError: left_degree must be None when x is a permutation
+        ValueError: left_degree must be None when x is a permutation or a linear involution
 
     A component of a quadratic stratum: the `2` complete closed walks of
     length `8` of `Q_2(2^2)^{hyp}`, whose moves are not all defined::
@@ -1113,7 +1113,7 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
         sage: iet.rauzy_closed_walks(q, 8, left_degree=1)
         Traceback (most recent call last):
         ...
-        ValueError: left_degree must be None when x is a permutation
+        ValueError: left_degree must be None when x is a permutation or a linear involution
         sage: iet.rauzy_closed_walks(iet.GeneralizedPermutation('a b c a', 'b d d c'), 3)
         Traceback (most recent call last):
         ...
@@ -1136,7 +1136,7 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
     elif ((isinstance(x, OrientablePermutationIET) and not isinstance(x, FlippedPermutationIET)) or
           (isinstance(x, OrientablePermutationLI) and not isinstance(x, FlippedPermutationLI))):
         if left_degree is not None:
-            raise ValueError('left_degree must be None when x is a permutation')
+            raise ValueError('left_degree must be None when x is a permutation or a linear involution')
         if not x.is_irreducible():
             raise ValueError('x must be irreducible')
         p = x
