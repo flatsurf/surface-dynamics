@@ -168,6 +168,40 @@ def test_walk_properties():
         assert f.is_complete() == _positive_power(f.matrix())
 
 
+# name -> number of vertices of the reduced Rauzy diagram
+KEY_MOVE_VERTICES = {
+    'H2': 7,
+    'H4hyp': 31,
+    'H4odd': 134,
+    'H22hyp': 63,
+    'H22odd': 294,
+    'H31left3': 509,
+    'H31left1': 261,
+}
+
+
+@pytest.mark.parametrize('name', list(KEY_MOVE_VERTICES))
+def test_key_moves(name):
+    # the moves on keys against the moves of the canonical labellings, on
+    # every edge of the diagram
+    from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+    C, k = diagram(name)
+    G = LazyReducedRauzyDiagram(C.permutation_representative(left_degree=k, reduced=False))
+    V = G.vertices()
+    assert len(V) == KEY_MOVE_VERTICES[name]
+    for key in V:
+        q = G._canonical(key)
+        for move in (0, 1):
+            moved = G._key_move(key, move)
+            assert q.has_rauzy_move(move)
+            assert moved is not None
+            successor, winner, m = moved
+            r = q.rauzy_move(move)
+            assert successor == G._key(r)
+            assert winner == q._labels[move][-1]
+            assert m == G._move_map(r)
+
+
 def test_arguments():
     C = Stratum([2]).unique_component()
     p = C.permutation_representative()

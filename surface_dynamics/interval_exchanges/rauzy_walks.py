@@ -74,19 +74,20 @@ class LazyReducedRauzyDiagram:
     The reduced Rauzy diagram of an Abelian permutation or of a linear
     involution, built on demand.
 
-    The diagram holds, for each reduced vertex met so far, its key, its
-    canonical labelling and its successors by the right Rauzy moves already
-    requested. It grows by one entry per reduced vertex visited, up to the
-    size of the reduced Rauzy class (7 vertices for `H(2)`, 509 for the
-    representative of left degree 3 of `H_3(3, 1)`; 73 for the
-    representative of `Q_2(2^2)^{hyp}`, 380 for `Q_2(1^4)^{hyp}` and 440 for
-    `Q_2(5, -1)`). It is the graph a search walks through, not a store of
-    results.
+    The diagram holds, for each reduced vertex met so far, its key and its
+    successors by the right Rauzy moves already requested, as keys. It grows
+    by one entry per reduced vertex visited, up to the size of the reduced
+    Rauzy class (7 vertices for `H(2)`, 509 for the representative of left
+    degree 3 of `H_3(3, 1)`; 73 for the representative of `Q_2(2^2)^{hyp}`,
+    380 for `Q_2(1^4)^{hyp}` and 440 for `Q_2(5, -1)`). It is the graph a
+    search walks through, not a store of results.
 
-    The vertices are represented by their keys and canonical labellings, as
-    described in :mod:`~surface_dynamics.interval_exchanges.rauzy_walks`. For
-    a linear involution, a Rauzy move may be undefined: :meth:`successor`
-    returns ``None`` for it, and it is no edge of the diagram.
+    The vertices are represented by their keys, as described in
+    :mod:`~surface_dynamics.interval_exchanges.rauzy_walks`, and the moves
+    are run on the keys; a canonical labelling is built only when asked for
+    (:meth:`canonical_labelling`), as a new object. For a linear
+    involution, a Rauzy move may be undefined: :meth:`successor` returns
+    ``None`` for it, and it is no edge of the diagram.
 
     Once :meth:`relabelling_generators` or :meth:`relabelling_orbits` has
     been called, the diagram also holds the relabelling group of the class:
@@ -282,6 +283,117 @@ class LazyReducedRauzyDiagram:
                     m.append(a)
         return m
 
+    def _key_move(self, key, move):
+        r"""
+        Return the key reached from the vertex ``key`` by the right Rauzy move
+        ``move``, with the winner and the relabelling of the move, or ``None``
+        if the move is undefined.
+
+        The move is run on the rows of the key, without building the
+        canonical labelling as a permutation object: on `Q_3(1^8)` (13
+        letters, 590874 reduced vertices, no complete walk of length at most
+        14), a search of 133.98 s under cProfile spent 34.9 s building the
+        canonical labellings as permutation objects, 17.2 s in their 3339558
+        moves and 8.1 s reading the relabellings off the moved objects.
+
+        INPUT:
+
+        - ``key`` -- the key of a vertex
+
+        - ``move`` -- ``0`` (top) or ``1`` (bottom)
+
+        OUTPUT:
+
+        ``None`` if the move is undefined (for a linear involution only, as
+        tested by ``has_rauzy_move``), else a tuple ``(successor, winner, m)``:
+
+        - ``successor`` -- the key of the vertex reached
+
+        - ``winner`` -- the winner of the move in the canonical labelling of
+          ``key``, the last letter of its top (bottom) row, as an index in
+          ``0, ..., d-1``
+
+        - ``m`` -- the list such that the labelled permutation reached by the
+          move from the canonical labelling of ``key`` is the canonical
+          labelling of ``successor`` with each letter ``b`` replaced by
+          ``m[b]`` (see :meth:`_move_map`)
+
+        EXAMPLES:
+
+        A permutation::
+
+            sage: from surface_dynamics import iet
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a', alphabet='abcd'))
+            sage: k = G.successor(G.start(), 1)
+            sage: G._key_move(k, 1)
+            ((2, 1, 3, 0), 0, [0, 3, 1, 2])
+            sage: r = G.canonical_labelling(k).rauzy_move(1)
+            sage: G._key(r), G._move_map(r)
+            ((2, 1, 3, 0), [0, 3, 1, 2])
+
+        A linear involution::
+
+            sage: from surface_dynamics import Stratum
+            sage: C = Stratum([2, 2], k=2).hyperelliptic_component()
+            sage: G = LazyReducedRauzyDiagram(C.permutation_representative(reduced=False))
+            sage: V = G.vertices()
+            sage: V[0]
+            ((0, 1, 0), (1, 2, 3, 2, 4, 3, 4))
+            sage: G._key_move(V[0], 0)
+            (((0, 1, 2, 1), (2, 3, 4, 3, 0, 4)), 0, [4, 0, 1, 2, 3])
+            sage: r = G.canonical_labelling(V[0]).rauzy_move(0)
+            sage: G._key(r), G._move_map(r)
+            (((0, 1, 2, 1), (2, 3, 4, 3, 0, 4)), [4, 0, 1, 2, 3])
+
+        An undefined move, the bottom move of the same vertex::
+
+            sage: G.canonical_labelling(V[0]).has_rauzy_move(1)
+            False
+            sage: G._key_move(V[0], 1) is None
+            True
+        """
+        if not self._quadratic:
+            d = self._d
+            if move == 0:
+                # the top winner d - 1 stays; the last letter of the bottom
+                # row goes right after d - 1 there
+                j = key.index(d - 1) + 1
+                return key[:j] + key[-1:] + key[j:-1], d - 1, list(range(d))
+            # the last letter d - 1 of the top row goes right after the
+            # winner w there; the letters after w shift right by one
+            w = key[-1]
+            m = list(range(w + 1))
+            m.append(d - 1)
+            m.extend(range(w + 1, d - 1))
+            s = tuple(a if a <= w else (w + 1 if a == d - 1 else a + 1) for a in key)
+            return s, w, m
+        rows = (list(key[0]), list(key[1]))
+        win = rows[move]
+        lose = rows[1 - move]
+        a = win[-1]
+        b = lose[-1]
+        if a == b:
+            return None
+        if a in lose:
+            lose.pop()
+            lose.insert(lose.index(a) + 1, b)
+        else:
+            # the move is undefined when neither end letter appears in the
+            # other row and exactly one letter is repeated in the loser row
+            if b not in win and len(lose) - len(set(lose)) == 1:
+                return None
+            lose.pop()
+            win.insert(win.index(a), b)
+        rank = [-1] * self._d
+        m = []
+        for row in rows:
+            for c in row:
+                if rank[c] < 0:
+                    rank[c] = len(m)
+                    m.append(c)
+        return ((tuple([rank[c] for c in rows[0]]), tuple([rank[c] for c in rows[1]])), a, m)
+
     def _canonical(self, key):
         r"""
         Return the canonical labelling of the vertex ``key``, as a new
@@ -328,7 +440,6 @@ class LazyReducedRauzyDiagram:
             sage: G._tree_labellings is None
             True
         """
-        self._labellings = {self._start: self._canonical(self._start)}
         self._successors = {self._start: [None, None]}
         self._explored = False
         self._tree_labellings = None
@@ -351,7 +462,7 @@ class LazyReducedRauzyDiagram:
             sage: len(G)
             2
         """
-        return len(self._labellings)
+        return len(self._successors)
 
     def __repr__(self):
         r"""
@@ -384,10 +495,11 @@ class LazyReducedRauzyDiagram:
 
     def canonical_labelling(self, key):
         r"""
-        Return a copy of the canonical labelling of the vertex ``key``.
+        Return the canonical labelling of the vertex ``key``, as a new object.
 
         The vertex must be held, that is, be the start or have been reached by
-        :meth:`successor` or :meth:`vertices`.
+        :meth:`successor` or :meth:`vertices`. The labelling is built at each
+        call: the diagram holds the keys only.
 
         EXAMPLES::
 
@@ -414,7 +526,9 @@ class LazyReducedRauzyDiagram:
             ...
             KeyError: (1, 0, 2, 3)
         """
-        return self._labellings[key].__copy__()
+        if key not in self._successors:
+            raise KeyError(key)
+        return self._canonical(key)
 
     def successor(self, key, move):
         r"""
@@ -455,15 +569,14 @@ class LazyReducedRauzyDiagram:
         succ = self._successors[key]
         s = succ[move]
         if s is None:
-            q = self._labellings[key]
-            if self._quadratic and not q.has_rauzy_move(move):
+            moved = self._key_move(key, move)
+            if moved is None:
                 # False marks a move known to be undefined, None one not
                 # computed yet
                 succ[move] = False
                 return None
-            s = self._key(q.rauzy_move(move, -1, check=False))
-            if s not in self._labellings:
-                self._labellings[s] = self._canonical(s)
+            s = moved[0]
+            if s not in self._successors:
                 self._successors[s] = [None, None]
             succ[move] = s
         elif s is False:
@@ -513,7 +626,7 @@ class LazyReducedRauzyDiagram:
                         seen.add(s)
                         todo.append(s)
             self._explored = True
-        return sorted(self._labellings)
+        return sorted(self._successors)
 
     def _relabelling_group(self):
         r"""
@@ -577,7 +690,7 @@ class LazyReducedRauzyDiagram:
                         continue
                     # the move from the canonical labelling of u ends at the
                     # canonical labelling of w relabelled by mu
-                    mu = self._move_map(self._labellings[u].rauzy_move(move, -1, check=False))
+                    mu = self._key_move(u, move)[2]
                     x = tuple(tu[a] for a in mu)
                     if w not in tree:
                         tree[w] = x
@@ -861,9 +974,9 @@ class LazyReducedRauzyDiagram:
         data of its edges, as flat lists.
 
         The vertex ``u`` is the ``u``-th key of :meth:`vertices`, so that the
-        integers compare as the keys. The canonical labelling of each vertex is
-        moved once per edge here, instead of once per edge of each walk or loop
-        found later. The lists hold Python integers only, which index faster
+        integers compare as the keys. The key of each vertex is moved once per
+        edge here (see :meth:`_key_move`), instead of once per edge of each
+        walk or loop found later. The lists hold Python integers only, which index faster
         than nested containers in the search.
 
         OUTPUT: a tuple ``(vertices, top_successors, bot_successors,
@@ -974,8 +1087,6 @@ class LazyReducedRauzyDiagram:
         """
         vertices = self.vertices()
         index = {k: j for j, k in enumerate(vertices)}
-        # an undefined move has the successor -1
-        index[None] = -1
         n = len(vertices)
         d = self._d
         identity = list(range(d))
@@ -988,12 +1099,8 @@ class LazyReducedRauzyDiagram:
         bot_predecessors = [-1] * n
         top_maps = []
         bot_maps = []
+        key_move = self._key_move
         for u, k in enumerate(vertices):
-            t = index[self.successor(k, 0)]
-            b = index[self.successor(k, 1)]
-            top_successors.append(t)
-            bot_successors.append(b)
-            q = self._labellings[k]
             if quadratic:
                 # the key holds the two rows of the canonical labelling
                 top_winners.append(k[0][-1])
@@ -1003,16 +1110,28 @@ class LazyReducedRauzyDiagram:
                 # its bottom row is the key
                 top_winners.append(d - 1)
                 bot_winners.append(k[-1])
-            if t == -1:
+            # the whole diagram is held: the move gives the successor too. The
+            # moves are run again here rather than stored with the edges by
+            # successor: on Q_3(1^8), storing them saved 3.7 s of 29.5 s for
+            # 276 MiB more peak RSS (1528 MiB instead of 1252 MiB)
+            moved = key_move(k, 0)
+            if moved is None:
+                top_successors.append(-1)
                 top_maps.extend(identity)
             else:
+                t = index[moved[0]]
+                top_successors.append(t)
                 top_predecessors[t] = u
-                top_maps.extend(self._move_map(q.rauzy_move(0, -1, check=False)))
-            if b == -1:
+                top_maps.extend(moved[2])
+            moved = key_move(k, 1)
+            if moved is None:
+                bot_successors.append(-1)
                 bot_maps.extend(identity)
             else:
+                b = index[moved[0]]
+                bot_successors.append(b)
                 bot_predecessors[b] = u
-                bot_maps.extend(self._move_map(q.rauzy_move(1, -1, check=False)))
+                bot_maps.extend(moved[2])
         return (vertices, top_successors, bot_successors, top_winners, bot_winners,
                 top_predecessors, bot_predecessors, top_maps, bot_maps)
 
@@ -1077,9 +1196,10 @@ class LazyReducedRauzyDiagram:
                     masks.append(hit)
             # the walks at v share one start: no method of RauzyFlipSequence
             # mutates its start in place, while the end is moved, relabelled
-            # and inverted in place, so each walk owns its end; the start is
-            # copied at the first walk only, since a vertex may have none (no
-            # vertex of Q_3(1^8) has a complete walk of length at most 14)
+            # and inverted in place, so each walk owns its end, a copy of the
+            # start; the start is built at the first walk only, since a vertex
+            # may have none (no vertex of Q_3(1^8) has a complete walk of
+            # length at most 14)
             start = None
             canonical_labelling = self.canonical_labelling
 
@@ -1094,7 +1214,7 @@ class LazyReducedRauzyDiagram:
                     moves = [(move, -1) for i in seq for move in loops[i]]
                     if start is None:
                         start = canonical_labelling(key)
-                    yield RauzyFlipSequence._from_data(start, canonical_labelling(key),
+                    yield RauzyFlipSequence._from_data(start, start.__copy__(),
                                                      moves, identity[:])
                 continue
 
@@ -1113,7 +1233,7 @@ class LazyReducedRauzyDiagram:
                     moves = [(move, -1) for i in seq for move in loops[i]]
                     if start is None:
                         start = canonical_labelling(key)
-                    yield RauzyFlipSequence._from_data(start, canonical_labelling(key),
+                    yield RauzyFlipSequence._from_data(start, start.__copy__(),
                                                      moves, relabelling)
                 continue
 
@@ -1132,7 +1252,7 @@ class LazyReducedRauzyDiagram:
                 moves = [(move, -1) for i in seq for move in loops[i]]
                 if start is None:
                     start = canonical_labelling(key)
-                yield RauzyFlipSequence._from_data(start, canonical_labelling(key),
+                yield RauzyFlipSequence._from_data(start, start.__copy__(),
                                                  moves, relabelling)
 
 

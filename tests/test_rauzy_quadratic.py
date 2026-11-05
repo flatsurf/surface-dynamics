@@ -93,6 +93,41 @@ def test_reduced_diagrams(name):
     assert m.left() - 2 == left_degree
 
 
+# name -> (vertices of the reduced Rauzy diagram of the labelled
+# representative, undefined moves)
+KEY_MOVE_DIAGRAMS = {
+    'Q1111hyp': (380, 112),
+    'Q22hyp': (73, 26),
+    'Q5m1': (440, 150),
+}
+
+
+@pytest.mark.parametrize('name', list(KEY_MOVE_DIAGRAMS))
+def test_key_moves(name):
+    # the moves on keys against the moves of the canonical labellings, on
+    # every edge of the diagram and every undefined move
+    from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+    n, undefined = KEY_MOVE_DIAGRAMS[name]
+    G = LazyReducedRauzyDiagram(diagram(name).permutation_representative(reduced=False))
+    V = G.vertices()
+    assert len(V) == n
+    seen = 0
+    for key in V:
+        q = G._canonical(key)
+        for move in (0, 1):
+            moved = G._key_move(key, move)
+            assert (moved is None) == (not q.has_rauzy_move(move))
+            if moved is None:
+                seen += 1
+                continue
+            successor, winner, m = moved
+            r = q.rauzy_move(move)
+            assert successor == G._key(r)
+            assert winner == q._labels[move][-1]
+            assert m == G._move_map(r)
+    assert seen == undefined
+
+
 ALL_COUNTS = {
     # brute force over all words of defined moves from every reduced vertex,
     # agreeing with the trace formula (1/n) sum_{e|n} mu(n/e) tr(A^e) on the
