@@ -253,6 +253,23 @@ def test_walk_properties():
     assert sum(_is_proper_power(f) for f in powers) == sum(expected) - sum(c[:N])
 
 
+def test_relabelling_group_from_search():
+    # the group built from the lists of a search against the one built from
+    # the moves, at every vertex
+    from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+    p = diagram('Q5m1').permutation_representative(reduced=False)
+    G = LazyReducedRauzyDiagram(p)
+    for _ in G.closed_walks(8):
+        pass
+    H = LazyReducedRauzyDiagram(p)
+    V = H.vertices()
+    assert len(V) == 440
+    assert G.vertices() == V
+    for key in V:
+        assert G.relabelling_generators(key) == H.relabelling_generators(key)
+        assert G.relabelling_orbits(key) == H.relabelling_orbits(key)
+
+
 def test_arguments():
     C = diagram('Q22hyp')
     with pytest.raises(NotImplementedError):

@@ -60,6 +60,7 @@ walked is the one of its permutation representative::
 #                  https://www.gnu.org/licenses/
 # ***************************************************************************
 
+import bisect
 import operator
 
 from surface_dynamics.misc.necklaces import _weighted_necklaces
@@ -628,11 +629,20 @@ class LazyReducedRauzyDiagram:
             self._explored = True
         return sorted(self._successors)
 
-    def _relabelling_group(self):
+    def _relabelling_group(self, edges=None):
         r"""
         Compute, once for the class, the labelling of each vertex along a
         spanning tree from the start, the generators of the relabelling
         group at the start and its orbits on the letters.
+
+        INPUT:
+
+        - ``edges`` -- (optional) the tuple ``(vertices, top_successors,
+          bot_successors, top_getters, bot_getters)`` of the lists of
+          :meth:`_diagram_data` and of the :func:`operator.itemgetter` of
+          the relabellings of the edges, as a search builds them; the tree
+          is then walked on these lists, with no Rauzy move run. Without it,
+          each edge is moved again (see :meth:`_key_move`)
 
         The tree labelling of a vertex ``u`` is stored as the relabelling
         ``t_u`` of the labelled permutation reached from the canonical
@@ -670,41 +680,83 @@ class LazyReducedRauzyDiagram:
             sage: gens = [[i + 1 for i in g] for g in G._root_generators]
             sage: PermutationGroup(gens).order()
             120
+
+        The same tree and generators from the lists of a search::
+
+            sage: import operator
+            sage: H = LazyReducedRauzyDiagram(C.permutation_representative(reduced=False))
+            sage: vertices, top_succ, bot_succ, _, _, _, _, top_maps, bot_maps = H._diagram_data()
+            sage: d, n = 5, len(vertices)
+            sage: H._relabelling_group((vertices, top_succ, bot_succ,
+            ....:     [operator.itemgetter(*top_maps[d*u:d*u + d]) for u in range(n)],
+            ....:     [operator.itemgetter(*bot_maps[d*u:d*u + d]) for u in range(n)]))
+            sage: H._tree_labellings == G._tree_labellings and H._root_generators == G._root_generators
+            True
         """
         if self._root_generators is not None:
             return
-        self.vertices()
         d = self._d
         identity = tuple(range(d))
-        tree = {self._start: identity}
         generators = []
         seen = {identity}
-        frontier = [self._start]
-        while frontier:
-            new = []
-            for u in frontier:
-                tu = tree[u]
-                for move in (0, 1):
-                    w = self.successor(u, move)
-                    if w is None:
-                        continue
-                    # the move from the canonical labelling of u ends at the
-                    # canonical labelling of w relabelled by mu
-                    mu = self._key_move(u, move)[2]
-                    x = tuple(tu[a] for a in mu)
-                    if w not in tree:
-                        tree[w] = x
-                        new.append(w)
-                        continue
-                    y = tree[w]
-                    g = [None] * d
-                    for a, b in zip(y, x):
-                        g[a] = b
-                    g = tuple(g)
-                    if g not in seen:
-                        seen.add(g)
-                        generators.append(g)
-            frontier = new
+
+        def schreier(y, x):
+            # the generator of an edge whose move leads to the tree labelling
+            # y of its end relabelled
+            g = [None] * d
+            for a, b in zip(y, x):
+                g[a] = b
+            g = tuple(g)
+            if g not in seen:
+                seen.add(g)
+                generators.append(g)
+
+        if edges is None:
+            self.vertices()
+            tree = {self._start: identity}
+            frontier = [self._start]
+            while frontier:
+                new = []
+                for u in frontier:
+                    tu = tree[u]
+                    for move in (0, 1):
+                        w = self.successor(u, move)
+                        if w is None:
+                            continue
+                        # the move from the canonical labelling of u ends at
+                        # the canonical labelling of w relabelled by mu
+                        mu = self._key_move(u, move)[2]
+                        x = tuple(tu[a] for a in mu)
+                        if w not in tree:
+                            tree[w] = x
+                            new.append(w)
+                        else:
+                            schreier(tree[w], x)
+                frontier = new
+        else:
+            # the same tree, in the same order, on the integer vertices: the
+            # getters of the edges give the relabellings with no move run
+            vertices, top_successors, bot_successors, top_getters, bot_getters = edges
+            labels = [None] * len(vertices)
+            s = bisect.bisect_left(vertices, self._start)
+            labels[s] = identity
+            frontier = [s]
+            while frontier:
+                new = []
+                for u in frontier:
+                    tu = labels[u]
+                    for w, getter in ((top_successors[u], top_getters[u]),
+                                      (bot_successors[u], bot_getters[u])):
+                        if w < 0:
+                            continue
+                        x = getter(tu)
+                        if labels[w] is None:
+                            labels[w] = x
+                            new.append(w)
+                        else:
+                            schreier(labels[w], x)
+                frontier = new
+            tree = dict(zip(vertices, labels))
         orbit_of = [None] * d
         orbits = []
         for a in range(d):
@@ -1156,18 +1208,31 @@ class LazyReducedRauzyDiagram:
         # built once for the whole search: the loops of each vertex share them
         top_getters = [operator.itemgetter(*top_maps[d*u:d*u + d]) for u in range(n)]
         bot_getters = [operator.itemgetter(*bot_maps[d*u:d*u + d]) for u in range(n)]
+        self._relabelling_group((vertices, top_successors, bot_successors, top_getters, bot_getters))
 
         # the lower bounds of the distances back to the base, shared by the
         # bases: each base sets the entries it reaches and resets them after
         h = _backward_depth(max_length)
         dist = [h + 1] * n
 
+        # the orbits at v are the images by the inverse of the tree
+        # labelling t of v of those at the start: the letter a lies in the
+        # orbit of the start that holds t[a], whose index serves as the bit
+        # of the orbit (completeness reads the number of bits only)
+        tree = self._tree_labellings
+        num_orbits = len(self._root_orbits)
+        root_index = [None] * d
+        for i, orbit in enumerate(self._root_orbits):
+            for a in orbit:
+                root_index[a] = i
+        # the groups at the vertices are conjugate: the group is trivial at
+        # every vertex exactly when its orbits are singletons; then every
+        # walk closes with the identity, and no label map is needed
+        nontrivial = num_orbits < d
+        full = (1 << num_orbits) - 1 if complete else None
+
         for v, key in enumerate(vertices):
             reached = _distances_to(v, top_predecessors, bot_predecessors, h, dist)
-            orbits = self.relabelling_orbits(key)
-            # the group is trivial exactly when its orbits are singletons; then
-            # every walk at v closes with the identity, and no label map is needed
-            nontrivial = len(orbits) < d
             loops, winner_masks, label_maps = _first_return_loops(
                 d, v, top_successors, bot_successors, top_winners, bot_winners,
                 top_getters, bot_getters, dist, max_length, nontrivial)
@@ -1177,23 +1242,22 @@ class LazyReducedRauzyDiagram:
                 dist[u] = h + 1
             lengths = [len(loop) for loop in loops]
             masks = None
-            full = None
             if complete:
-                full = (1 << len(orbits)) - 1
-                orbit_of = [None] * d
-                for i, orbit in enumerate(orbits):
-                    for a in orbit:
-                        orbit_of[a] = i
-                masks = []
-                for winners in winner_masks:
-                    hit = 0
-                    a = 0
-                    while winners:
-                        if winners & 1:
-                            hit |= 1 << orbit_of[a]
-                        winners >>= 1
-                        a += 1
-                    masks.append(hit)
+                if not nontrivial:
+                    # the orbits are the letters
+                    masks = winner_masks
+                else:
+                    t = tree[key]
+                    orbit_masks = [0] * num_orbits
+                    for a in range(d):
+                        orbit_masks[root_index[t[a]]] |= 1 << a
+                    masks = []
+                    for winners in winner_masks:
+                        hit = 0
+                        for i, orbit_mask in enumerate(orbit_masks):
+                            if winners & orbit_mask:
+                                hit |= 1 << i
+                        masks.append(hit)
             # the walks at v share one start: no method of RauzyFlipSequence
             # mutates its start in place, while the end is moved, relabelled
             # and inverted in place, so each walk owns its end, a copy of the

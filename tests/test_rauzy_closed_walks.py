@@ -122,6 +122,41 @@ def test_counts_complete_slow(name):
     assert counts(iet.rauzy_closed_walks(C, N, left_degree=k), N) == expected
 
 
+# complete walks per length up to 18, from the module before the orbits of a
+# base were read off the tree labellings; the relabelling group has several
+# orbits (order 3 for H22odd, order 2 for H31left1)
+COMPLETE_COUNTS_18 = {
+    'H22odd': [0] * 12 + [8, 28, 82, 206, 512, 1200],
+    'H31left1': [0] * 12 + [8, 16, 58, 132, 326, 716],
+}
+
+
+@pytest.mark.parametrize('name', list(COMPLETE_COUNTS_18))
+def test_counts_complete_18(name):
+    C, k = diagram(name)
+    expected = COMPLETE_COUNTS_18[name]
+    assert sum(expected) == {'H22odd': 2036, 'H31left1': 1256}[name]
+    assert counts(iet.rauzy_closed_walks(C, 18, left_degree=k), 18) == expected
+
+
+def test_relabelling_group_from_search():
+    # the group built from the lists of a search against the one built from
+    # the moves, at every vertex
+    from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+    C, k = diagram('H22odd')
+    p = C.permutation_representative(left_degree=k, reduced=False)
+    G = LazyReducedRauzyDiagram(p)
+    for _ in G.closed_walks(8):
+        pass
+    H = LazyReducedRauzyDiagram(p)
+    V = H.vertices()
+    assert len(V) == 294
+    assert G.vertices() == V
+    for key in V:
+        assert G.relabelling_generators(key) == H.relabelling_generators(key)
+        assert G.relabelling_orbits(key) == H.relabelling_orbits(key)
+
+
 def _walk_list(walks):
     return [(str(f.start()), f._simplified_flip_sequence()) for f in walks]
 
