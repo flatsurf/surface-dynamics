@@ -79,4 +79,6 @@ linkcheck_ignore = [
     r'https://gmplib.org/',
     # repology limits requests by GitHub runners so this URL incorrectly is reported as broken in the CI.
     r'https://repology.org/project/python:surface-dynamics/packages',
+    # bugseng/PPL limits requests by GitHub runners so this URL incorrectly is reported as broken in the CI.
+    r'https://www.bugseng.com/ppl',
 ]
