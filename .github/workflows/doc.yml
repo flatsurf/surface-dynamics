@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: prefix-dev/setup-pixi@v0.9.3
-        with: { pixi-version: v0.41.2 }
+        with: { pixi-version: v0.84.1 }
       - name: build documentation
         run: |
           pixi run -e dev doc-build
