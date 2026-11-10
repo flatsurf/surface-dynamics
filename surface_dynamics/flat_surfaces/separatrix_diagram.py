@@ -1458,13 +1458,13 @@ class SeparatrixDiagram(SageObject):
                     cc.append(c1)
                 s.update(cc)
 
-                if (connected or c.is_connected()) and c.smallest_integer_lengths():
+                if (connected or c.is_connected()) and c.has_positive_lengths():
                     yield min(cc)
 
         else:
             for ctop in itertools.permutations(ctop0):
                 c = CylinderDiagram(zip(cbot,ctop),check=False)
-                if (connected or c.is_connected()) and c.smallest_integer_lengths():
+                if (connected or c.is_connected()) and c.has_positive_lengths():
                     yield c
 
     @rename_keyword(deprecation=666, up_to_isomorphism='up_to_symmetry')
@@ -3366,10 +3366,26 @@ class CylinderDiagram(SeparatrixDiagram):
         else:
             return stratum.odd_component()
 
-    def smallest_integer_lengths(self):
+    def has_positive_lengths(self):
         r"""
-        Check if there is a integer solution that satisfy the cylinder
-        conditions.
+        Return whether this cylinder diagram admits a positive length solution.
+
+        EXAMPLES::
+
+            sage: from surface_dynamics import *
+
+            sage: c = CylinderDiagram('(0,1)-(0,2) (2,3)-(1,3)')
+            sage: c.has_positive_lengths()
+            True
+            sage: c = CylinderDiagram('(0,1,2)-(3) (3)-(0) (4)-(1,2,4)')
+            sage: c.has_positive_lengths()
+            False
+        """
+        return all(cc.is_strongly_connected() for cc in self.cylinder_graph().connected_components_subgraphs())
+
+    def smallest_integer_lengths(self, algorithm="mip"):
+        r"""
+        Return an integral solution to the length equations.
 
         If there is a solution, the function returns a list a pair
         ``(total_length, list_of_lengths)`` that consists of the sum of the
@@ -3394,29 +3410,42 @@ class CylinderDiagram(SeparatrixDiagram):
         if self.ncyls() == 1:
             return (self.nseps(), [1] * self.nseps())
 
-        from sage.numerical.mip import MixedIntegerLinearProgram, MIPSolverException
+        if algorithm == "cycles":
+            # for each edge, we find an oriented cycle in the graph that contains this edge
+            ans = [0] * self.num_edges()
+            from surface_dynamics.misc.cycle_cover import dynamic_cycle_cover
+            G = self.cylinder_graph(multigraph=True)
+            if not G.is_strongly_connected():
+                return False
+            for cycle in dynamic_cycle_cover(G):
+                for u, v, saddle in cycle:
+                    ans[saddle] += 1
+            return sum(ans), ans
 
-        n = self.nseps()
-        bot = self.bot_cycle_tuples()
-        top = [self.top_orbit(self._bot_to_cyl[b[0]][1]) for b in bot]
+        if algorithm == "mip":
+            from sage.numerical.mip import MixedIntegerLinearProgram, MIPSolverException
 
-        p = MixedIntegerLinearProgram(maximization=False)
-        scl = p.new_variable(nonnegative=True)
-        p.set_objective(sum(scl[i] for i in range(n)))
-        for i in range(n):
-            p.add_constraint(scl[i],min=1)
-        for b,t in zip(bot,top):
-            p.add_constraint(
-                    p.sum(scl[i] for i in set(b).difference(t)) ==
-                    p.sum(scl[i] for i in set(t).difference(b))
-                    )
+            n = self.nseps()
+            bot = self.bot_cycle_tuples()
+            top = [self.top_orbit(self._bot_to_cyl[b[0]][1]) for b in bot]
 
-        try:
-            total = Integer(p.solve())
-            lengths = [Integer(p.get_values(scl[i])) for i in range(n)]
-            return total, lengths
-        except MIPSolverException:
-            return False
+            p = MixedIntegerLinearProgram(maximization=False)
+            scl = p.new_variable(nonnegative=True)
+            p.set_objective(sum(scl[i] for i in range(n)))
+            for i in range(n):
+                p.add_constraint(scl[i],min=1)
+            for b,t in zip(bot,top):
+                p.add_constraint(
+                        p.sum(scl[i] for i in set(b).difference(t)) ==
+                        p.sum(scl[i] for i in set(t).difference(b))
+                        )
+
+            try:
+                total = Integer(p.solve())
+                lengths = [Integer(p.get_values(scl[i])) for i in range(n)]
+                return total, lengths
+            except MIPSolverException:
+                return False
 
     #
     # homology
@@ -3995,7 +4024,7 @@ class CylinderDiagram(SeparatrixDiagram):
         # yield the one without twist
         return Origami_dense_pyx(tuple(lx), tuple(ly))
 
-    def cylinder_graph(self):
+    def cylinder_graph(self, multigraph=False):
         """
         Return the cylinder graph.
 
@@ -4016,6 +4045,8 @@ class CylinderDiagram(SeparatrixDiagram):
             sage: c = CylinderDiagram('(0,1,3,5)-(2,5,3) (2,4)-(0,4,1)')
             sage: c.cylinder_graph().edges(sort=True)
             [(0, 0, 2), (0, 1, 1), (1, 0, 2), (1, 1, 1)]
+            sage: c.cylinder_graph(multigraph=True).edges(sort=True)
+            [(0, 0, 3), (0, 0, 5), (0, 1, 2), (1, 0, 0), (1, 0, 1), (1, 1, 4)]
         """
         bot_to_cyl = [None] * self.degree()
         top_to_cyl = [None] * self.degree()
@@ -4025,12 +4056,19 @@ class CylinderDiagram(SeparatrixDiagram):
             for saddle in top:
                 top_to_cyl[saddle] = i
 
-        edges = collections.defaultdict(int)
-        for u, v in zip(top_to_cyl, bot_to_cyl):
-            edges[u, v] += 1
+        if multigraph:
+            G = DiGraph(self.ncyls(), loops=True, multiedges=True, weighted=False)
+            for saddle, (u, v) in enumerate(zip(top_to_cyl, bot_to_cyl)):
+                G.add_edge((u, v, saddle))
 
-        G = DiGraph(self.ncyls(), loops=True, multiedges=False, weighted=True)
-        G.add_edges([(u, v, m) for (u, v), m in edges.items()])
+        else:
+            edges = collections.defaultdict(int)
+            for u, v in zip(top_to_cyl, bot_to_cyl):
+                edges[u, v] += 1
+
+            G = DiGraph(self.ncyls(), loops=True, multiedges=False, weighted=True)
+            G.add_edges([(u, v, m) for (u, v), m in edges.items()])
+
         return G
 
     #TODO
