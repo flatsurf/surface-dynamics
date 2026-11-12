@@ -87,8 +87,9 @@ class LazyReducedRauzyDiagram:
     - for each vertex and each right Rauzy move, top then bottom, the vertex
       reached, the winner of the move and the vertex from which the same
       move leads to it, as lists of integers indexed by the vertices, and
-      the :func:`operator.itemgetter` of the relabelling of the move: one
-      entry per vertex and move, that is per edge or undefined move;
+      the :func:`operator.itemgetter` of the relabelling of the move, or
+      ``None`` when it is the identity: one entry per vertex and move, that
+      is per edge or undefined move;
 
     - the relabelling group of the class: one labelling per reduced vertex,
       along a spanning tree from the start, the generators of the group at
@@ -189,17 +190,30 @@ class LazyReducedRauzyDiagram:
           vertices with an edge of the same label to ``w`` have canonical
           labellings that differ by a relabelling, hence are equal
 
-        - ``_top_getters[u]``, ``_bot_getters[u]`` -- the
-          :func:`operator.itemgetter` of the relabelling ``m`` (see
-          :meth:`_move_map`) of the labelled permutation reached by the top
-          (bottom) move from the canonical labelling of ``u``: this
-          permutation is the canonical labelling of the successor with each
-          letter ``b`` replaced by ``m[b]``. For a permutation, ``m`` is its
-          top row. So from the canonical labelling of ``u`` relabelled by the
-          tuple ``lab`` (each letter ``c`` replaced by ``lab[c]``), the move
-          leads to the canonical labelling of the successor relabelled by the
-          tuple ``_top_getters[u](lab)``. The relabelling of an undefined
-          move is the identity
+        - ``_top_getters[u]``, ``_bot_getters[u]`` -- ``None`` if the
+          relabelling ``m`` (see :meth:`_move_map`) of the labelled
+          permutation reached by the top (bottom) move from the canonical
+          labelling of ``u`` is the identity, else the
+          :func:`operator.itemgetter` of ``m``: this permutation is the
+          canonical labelling of the successor with each letter ``b``
+          replaced by ``m[b]``. For a permutation, ``m`` is its top row. So
+          from the canonical labelling of ``u`` relabelled by the tuple
+          ``lab`` (each letter ``c`` replaced by ``lab[c]``), the move leads
+          to the canonical labelling of the successor relabelled by the tuple
+          ``_top_getters[u](lab)``, or by ``lab`` itself for ``None``, which
+          the search then reuses rather than copies. The relabelling of an
+          undefined move is the identity.
+
+          The canonical labelling numbers the letters in their order of
+          first appearance, reading the top row then the bottom row, and a
+          Rauzy move changes the rank of one letter only in that order: it
+          moves one occurrence of the loser, so the other letters keep their
+          relative order. So ``m`` is the identity or one rotation of an
+          interval of ranks ``i < j``, either ``m[i] = j`` and
+          ``m[k] = k - 1`` for ``i < k <= j``, or ``m[j] = i`` and
+          ``m[k] = k + 1`` for ``i <= k < j``. For a permutation, the top
+          moves are the identity, since the top row, which gives the order,
+          is unchanged
 
         - ``_tree_labellings``, ``_root_generators``, ``_root_orbits`` --
           the relabelling group (see :meth:`_relabelling_group`)
@@ -237,12 +251,16 @@ class LazyReducedRauzyDiagram:
         The winners and the top rows agree with the moves of the canonical
         labellings::
 
+            sage: def relabel(getter, lab):
+            ....:     return lab if getter is None else getter(lab)
             sage: identity = (0, 1, 2)
             sage: all(G._bot_winners[u] == G.canonical_labelling(k)._labels[1][-1]
-            ....:     and list(G._top_getters[u](identity)) == G.canonical_labelling(k).rauzy_move(0)._labels[0]
-            ....:     and list(G._bot_getters[u](identity)) == G.canonical_labelling(k).rauzy_move(1)._labels[0]
+            ....:     and list(relabel(G._top_getters[u], identity)) == G.canonical_labelling(k).rauzy_move(0)._labels[0]
+            ....:     and list(relabel(G._bot_getters[u], identity)) == G.canonical_labelling(k).rauzy_move(1)._labels[0]
             ....:     for u, k in enumerate(G._vertices))
             True
+            sage: G._top_getters, G._bot_getters[1]
+            ([None, None, None], None)
 
         Each vertex is the successor of its predecessors::
 
@@ -263,7 +281,7 @@ class LazyReducedRauzyDiagram:
             (73, 13, 13)
             sage: def agree(u, move, succ, winners, getters):
             ....:     q = G.canonical_labelling(G._vertices[u])
-            ....:     m = getters[u](tuple(range(d)))
+            ....:     m = relabel(getters[u], tuple(range(d)))
             ....:     if not q.has_rauzy_move(move):
             ....:         return succ[u] == -1 and m == tuple(range(d))
             ....:     r = q.rauzy_move(move)
@@ -389,13 +407,18 @@ class LazyReducedRauzyDiagram:
         self._bot_predecessors = bot_predecessors
 
         # the entries of the maps are letters, which the renumbering of the
-        # vertices leaves unchanged
+        # vertices leaves unchanged; an identity map gets no getter, so that
+        # the search reuses the relabelling it holds
         top_getters = [None] * n
         bot_getters = [None] * n
         for u in range(n):
             j = rank[u]
-            top_getters[j] = operator.itemgetter(*top_maps[d*u:d*u + d])
-            bot_getters[j] = operator.itemgetter(*bot_maps[d*u:d*u + d])
+            m = top_maps[d*u:d*u + d]
+            if m != identity:
+                top_getters[j] = operator.itemgetter(*m)
+            m = bot_maps[d*u:d*u + d]
+            if m != identity:
+                bot_getters[j] = operator.itemgetter(*m)
         del top_maps, bot_maps, rank
         self._top_getters = top_getters
         self._bot_getters = bot_getters
@@ -774,8 +797,9 @@ class LazyReducedRauzyDiagram:
         group at the start and its orbits on the letters.
 
         The tree is walked breadth first on the lists of the successors, the
-        relabelling of each edge being given by its getter, with no Rauzy
-        move run (see :meth:`__init__`).
+        relabelling of each edge being given by its getter, or the identity
+        for an edge without one, with no Rauzy move run (see
+        :meth:`__init__`).
 
         The tree labelling of a vertex ``u`` is stored as the relabelling
         ``t_u`` of the labelled permutation reached from the canonical
@@ -849,7 +873,7 @@ class LazyReducedRauzyDiagram:
                     # the move from the canonical labelling of u relabelled
                     # by tu ends at the canonical labelling of w relabelled
                     # by x
-                    x = getter(tu)
+                    x = tu if getter is None else getter(tu)
                     if labels[w] is None:
                         labels[w] = x
                         new.append(w)
@@ -1408,14 +1432,18 @@ def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_w
     ``top_winners[u]`` and the winner of the move ``1`` the letter
     ``bot_winners[u]``. The labelling the edge leads to is the canonical
     labelling of its end vertex with each letter ``b`` replaced by ``m[b]``,
-    for a relabelling ``m`` given
-    by the getter of the edge: if the start is the canonical labelling with
-    each letter ``c`` replaced by ``lab[c]``, ``lab`` a tuple, the end is the
-    canonical labelling of the end vertex relabelled by
-    ``top_getters[u](lab)`` (move ``0``) or ``bot_getters[u](lab)`` (move
-    ``1``). These lists are the attributes of the same names, with a leading
-    underscore, of :class:`LazyReducedRauzyDiagram` (see its
-    ``__init__``).
+    for a relabelling ``m`` given by the getter of the edge: if the start is
+    the canonical labelling with each letter ``c`` replaced by ``lab[c]``,
+    ``lab`` a tuple, the end is the canonical labelling of the end vertex
+    relabelled by ``top_getters[u](lab)`` (move ``0``) or
+    ``bot_getters[u](lab)`` (move ``1``). The getter is ``None`` when ``m``
+    is the identity, and the end is then relabelled by ``lab`` itself, with
+    no new tuple. A Rauzy move changes the rank of one letter only in the
+    order of first appearance that numbers the letters of a canonical
+    labelling, so ``m`` is the identity or one rotation of an interval of
+    ranks; for a permutation, every top move has the identity. These lists
+    are the attributes of the same names, with a leading underscore, of
+    :class:`LazyReducedRauzyDiagram` (see its ``__init__``).
 
     The loops are found by a depth-first search, which also accumulates
     along the current prefix its winners and the relabelling at which it
@@ -1525,10 +1553,12 @@ def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_w
             loops.append(tuple(word))
             winner_masks.append(win)
             if label_maps:
-                maps.append(top_getters[u](lab))
+                getter = top_getters[u]
+                maps.append(lab if getter is None else getter(lab))
         elif w > v:
             if length + 1 + dist[w] <= max_length:
-                search(w, length + 1, top_getters[u](lab), win)
+                getter = top_getters[u]
+                search(w, length + 1, lab if getter is None else getter(lab), win)
         word[-1] = 1
         w = bot_successors[u]
         win = winners | (1 << lab[bot_winners[u]])
@@ -1536,10 +1566,12 @@ def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_w
             loops.append(tuple(word))
             winner_masks.append(win)
             if label_maps:
-                maps.append(bot_getters[u](lab))
+                getter = bot_getters[u]
+                maps.append(lab if getter is None else getter(lab))
         elif w > v:
             if length + 1 + dist[w] <= max_length:
-                search(w, length + 1, bot_getters[u](lab), win)
+                getter = bot_getters[u]
+                search(w, length + 1, lab if getter is None else getter(lab), win)
         word.pop()
 
     try:

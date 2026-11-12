@@ -128,6 +128,41 @@ def test_key_moves(name):
     assert seen == undefined
 
 
+def _rotations(d, i, j):
+    # the two rotations of the ranks i < j: j goes to i, and i goes to j
+    head, tail = list(range(i)), list(range(j + 1, d))
+    return (head + [j] + list(range(i, j)) + tail,
+            head + list(range(i + 1, j + 1)) + [i] + tail)
+
+
+def _edge_relabelling(G, u, move, lab):
+    # the relabelling stored by G for the edge applied to the tuple lab
+    getter = (G._top_getters, G._bot_getters)[move][u]
+    return lab if getter is None else getter(lab)
+
+
+@pytest.mark.parametrize('name', list(KEY_MOVE_DIAGRAMS))
+def test_edge_relabellings(name):
+    # on every edge and every undefined move, the relabelling is the
+    # identity or one rotation of an interval of ranks, and the data stored
+    # for the edge applies it
+    from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+    G = LazyReducedRauzyDiagram(diagram(name).permutation_representative(reduced=False))
+    d = G._d
+    lab = tuple(range(10, 10 + d))
+    rotations = 0
+    for u, key in enumerate(G.vertices()):
+        for move in (0, 1):
+            moved = G._key_move(key, move)
+            m = list(range(d)) if moved is None else moved[2]
+            changed = [b for b in range(d) if m[b] != b]
+            if changed:
+                rotations += 1
+                assert m in _rotations(d, changed[0], changed[-1])
+            assert _edge_relabelling(G, u, move, lab) == tuple(lab[b] for b in m)
+    assert rotations > 0
+
+
 ALL_COUNTS = {
     # brute force over all words of defined moves from every reduced vertex,
     # agreeing with the trace formula (1/n) sum_{e|n} mu(n/e) tr(A^e) on the

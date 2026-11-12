@@ -235,6 +235,39 @@ def test_key_moves(name):
             assert m == G._move_map(r)
 
 
+def _rotations(d, i, j):
+    # the two rotations of the ranks i < j: j goes to i, and i goes to j
+    head, tail = list(range(i)), list(range(j + 1, d))
+    return (head + [j] + list(range(i, j)) + tail,
+            head + list(range(i + 1, j + 1)) + [i] + tail)
+
+
+def _edge_relabelling(G, u, move, lab):
+    # the relabelling stored by G for the edge applied to the tuple lab
+    getter = (G._top_getters, G._bot_getters)[move][u]
+    return lab if getter is None else getter(lab)
+
+
+@pytest.mark.parametrize('name', list(KEY_MOVE_VERTICES))
+def test_edge_relabellings(name):
+    # on every edge, the relabelling is the identity or one rotation of an
+    # interval of ranks, the identity for every top move, and the data
+    # stored for the edge applies it
+    from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+    C, k = diagram(name)
+    G = LazyReducedRauzyDiagram(C.permutation_representative(left_degree=k, reduced=False))
+    d = G._d
+    lab = tuple(range(10, 10 + d))
+    for u, key in enumerate(G.vertices()):
+        for move in (0, 1):
+            m = G._key_move(key, move)[2]
+            moved = [b for b in range(d) if m[b] != b]
+            if moved:
+                assert move == 1
+                assert m in _rotations(d, moved[0], moved[-1])
+            assert _edge_relabelling(G, u, move, lab) == tuple(lab[b] for b in m)
+
+
 def test_arguments():
     C = Stratum([2]).unique_component()
     p = C.permutation_representative()
