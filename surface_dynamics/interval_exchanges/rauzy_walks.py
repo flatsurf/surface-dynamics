@@ -166,7 +166,7 @@ class LazyReducedRauzyDiagram:
         so that the integers compare as the keys. The data of the edges are
         lists of Python integers indexed by the vertices, which index faster
         than nested containers in the search. With ``d`` the number of
-        letters and ``n`` that of vertices:
+        letters:
 
         - ``_vertices`` -- the sorted list of the keys of the vertices, and
           ``_index`` the dict from each key to its vertex, kept for the
@@ -509,6 +509,10 @@ class LazyReducedRauzyDiagram:
         Return the key reached from the vertex ``key`` by the right Rauzy move
         ``move``, with the winner and the relabelling of the move, or ``None``
         if the move is undefined.
+
+        It moves the rows of the key directly, so that the search builds no
+        permutation object per vertex; the Rauzy moves of ``template.py``
+        stay the reference, as the doctests below show.
 
         INPUT:
 
@@ -1319,7 +1323,8 @@ def _distances_to(v, top_predecessors, bot_predecessors, depth, dist):
     the vertex ``u`` with ``top_successors[u] == w`` and
     ``bot_predecessors[w]`` the vertex ``u`` with ``bot_successors[u] == w``
     (each vertex has at most one edge of each label coming in, and ``-1``
-    stands for none: it is below every vertex, so it is never followed).
+    stands for none; see :class:`LazyReducedRauzyDiagram` for why this holds
+    and why ``-1`` is never followed).
 
     The distance from ``u`` to ``v`` is the least number of edges of a path
     from ``u`` to ``v`` all of whose vertices but the last (``v``) are
