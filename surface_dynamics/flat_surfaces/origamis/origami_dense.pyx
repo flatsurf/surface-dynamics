@@ -254,42 +254,28 @@ cdef tuple projectivize_edges(l):
 
     INPUT:
 
-    - ``l`` - a list of dictionaries
+    - ``l`` - a tuple of dictionaries
+
+    OUTPUT: a tuple of dictionaries, one per dictionary in ``l``, keyed by the
+    smallest origami of each pair `\{o, -o\}`
     """
     cdef int i
     cdef Origami_dense_pyx o1, oo1, o2, oo2, ooo
-    cdef dict ll
+    cdef list ll
     cdef set waiting
 
-    o1 = next(iter(l[0]))  # pick a random element in l[0] !!!!
+    o1 = next(iter(l[0]))  # any element of the orbit
     oo1 = o1.inverse()
     oo1._set_standard_form()
 
-    # Case 1 (trivial): -Id preserves o (hence preserves each orbit point)
-    # (remark: this case corresponds to orientation cover orbits)
+    # -Id is central, so if it fixes one origami of the orbit, it fixes all of
+    # them (this happens for orientation covers).
     if o1 == oo1:
         return l
 
-    # Case 2: -Id does not preserve the orbit
-    elif oo1 not in l[0]:
-        ll = [{} for _ in range(len(l))]
-        for o in l[0]:
-            o1 = o
-            o2 = o.inverse()
-            o2._set_standard_form()
-            if o2 < o1:
-                o = o2
-
-            for i in range(len(l)):
-                oo1 = l[i][o1]
-                oo2 = oo1.inverse()
-                oo2._set_standard_form()
-                if oo1 < oo2:
-                    ll[i][o] = oo1
-                else:
-                    ll[i][o] == oo2
-
-    # Case 3: -Id preserves the orbit (but not pointwise)
+    # -Id belongs to SL(2,Z), so it preserves the orbit and acts on it as an
+    # involution without fixed points. Since -Id commutes with the action,
+    # the image of the pair {o, -o} is the pair {g(o), g(-o)}.
     ll = [{} for _ in range(len(l))]
     waiting = set(l[0])
     while waiting:
@@ -310,7 +296,7 @@ cdef tuple projectivize_edges(l):
             else:
                 ll[i][o1] = oo2
 
-    return ll
+    return tuple(ll)
 
 
 def sl_orbit_from_gl_orbit(o, L, I):
@@ -1733,6 +1719,19 @@ cdef class Origami_dense_pyx:
             sage: l, i = o.pgl2z_edges()
             sage: len(l), len(i)
             (3, 3)
+
+        TESTS:
+
+        An origami that is not fixed by `-Id`, whose orbit is halved::
+
+            sage: o = Origami('(1,4,3,2)', '(2,3,5,4)')
+            sage: len(o.gl2z_edges()[0])
+            12
+            sage: l, i = o.pgl2z_edges()
+            sage: len(l), len(i)
+            (6, 6)
+            sage: all(l[x] in l and i[x] in l and i[i[x]] == x for x in l)
+            True
         """
         return projectivize_edges(self.gl2z_edges())
 
@@ -1765,6 +1764,19 @@ cdef class Origami_dense_pyx:
             sage: l, r, s = o.psl2z_edges()
             sage: len(l), len(r), len(s)
             (3, 3, 3)
+
+        TESTS:
+
+        An origami that is not fixed by `-Id`, whose orbit is halved::
+
+            sage: o = Origami('(1,4,3,2)', '(2,3,5,4)')
+            sage: len(o.sl2z_edges()[0])
+            12
+            sage: l, r, s = o.psl2z_edges()
+            sage: len(l), len(r), len(s)
+            (6, 6, 6)
+            sage: all(r[x] in l and s[x] in l and s[s[x]] == x for x in l)
+            True
         """
         return projectivize_edges(self.sl2z_edges())
 
