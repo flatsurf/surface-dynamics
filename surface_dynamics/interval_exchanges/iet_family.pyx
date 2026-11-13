@@ -785,7 +785,7 @@ cdef class IETFamily:
             MINIMAL = [Result.WITHOUT_PERIODIC_TRAJECTORY_BOSHERNITZAN, Result.WITHOUT_PERIODIC_TRAJECTORY_AUTO_SIMILAR]
 
             from .conversion import iet_to_pyintervalxt
-            for i in range(num_exp):
+            for _ in range(num_exp):
                 T = self.random_element(ring, *args, **kwds)
                 U = iet_to_pyintervalxt(T)
                 res = U.induce(int(num_iterations))
@@ -798,7 +798,7 @@ cdef class IETFamily:
                 else:
                     raise RuntimeError("unknown return code from pyintervalxt {}".format(res.result))
         else:
-            for i in range(num_exp):
+            for _ in range(num_exp):
                 T = self.random_element(ring, *args, **kwds)
                 try:
                     T.zorich_move(iterations=num_iterations)
