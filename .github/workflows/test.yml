@@ -13,31 +13,31 @@ jobs:
     strategy:
       matrix:
         include:
-          - { environment: "dev", on: "ubuntu-24.04" }
-          - { environment: "sagemath-93-minimal", on: "ubuntu-24.04" }
-          - { environment: "sagemath-93-sage-flatsurf", on: "ubuntu-24.04" }
-          - { environment: "sagemath-94-minimal", on: "ubuntu-24.04" }
-          - { environment: "sagemath-94-all", on: "ubuntu-24.04" }
-          - { environment: "sagemath-95-minimal", on: "ubuntu-24.04" }
-          - { environment: "sagemath-95-all", on: "ubuntu-24.04" }
-          - { environment: "sagemath-96-minimal", on: "ubuntu-24.04" }
-          - { environment: "sagemath-96-all", on: "ubuntu-24.04" }
-          - { environment: "sagemath-97-minimal", on: "ubuntu-24.04" }
-          - { environment: "sagemath-97-all", on: "ubuntu-24.04" }
-          - { environment: "sagemath-98-minimal", on: "ubuntu-24.04" }
-          - { environment: "sagemath-98-all", on: "ubuntu-24.04" }
-          - { environment: "sagemath-100-minimal", on: "ubuntu-24.04" }
-          - { environment: "sagemath-100-all", on: "ubuntu-24.04" }
-          - { environment: "sagemath-101-minimal", on: "ubuntu-24.04" }
-          - { environment: "sagemath-101-all", on: "ubuntu-24.04" }
-          - { environment: "sagemath-102-minimal", on: "ubuntu-24.04" }
-          - { environment: "sagemath-102-all", on: "ubuntu-24.04" }
-          - { environment: "sagemath-103-minimal", on: "ubuntu-24.04" }
-          - { environment: "sagemath-103-all", on: "ubuntu-24.04" }
-          - { environment: "sagemath-104-minimal", on: "ubuntu-24.04" }
-          - { environment: "sagemath-104-all", on: "ubuntu-24.04" }
-          - { environment: "sagemath-105-minimal", on: "ubuntu-24.04" }
-          - { environment: "sagemath-105-all", on: "ubuntu-24.04" }
+          - { environment: "dev", on: "ubuntu-26.04" }
+          - { environment: "sagemath-98-minimal", on: "ubuntu-26.04" }
+          - { environment: "sagemath-98-all", on: "ubuntu-26.04" }
+          - { environment: "sagemath-100-minimal", on: "ubuntu-26.04" }
+          - { environment: "sagemath-100-all", on: "ubuntu-26.04" }
+          - { environment: "sagemath-101-minimal", on: "ubuntu-26.04" }
+          - { environment: "sagemath-101-all", on: "ubuntu-26.04" }
+          - { environment: "sagemath-102-minimal", on: "ubuntu-26.04" }
+          - { environment: "sagemath-102-all", on: "ubuntu-26.04" }
+          - { environment: "sagemath-103-minimal", on: "ubuntu-26.04" }
+          - { environment: "sagemath-103-all", on: "ubuntu-26.04" }
+          - { environment: "sagemath-104-minimal", on: "ubuntu-26.04" }
+          - { environment: "sagemath-104-all", on: "ubuntu-26.04" }
+          - { environment: "sagemath-105-minimal", on: "ubuntu-26.04" }
+          - { environment: "sagemath-105-all", on: "ubuntu-26.04" }
+          - { environment: "sagemath-106-minimal", on: "ubuntu-26.04" }
+          - { environment: "sagemath-106-all", on: "ubuntu-26.04" }
+          - { environment: "sagemath-107-minimal", on: "ubuntu-26.04" }
+          - { environment: "sagemath-107-all", on: "ubuntu-26.04" }
+          - { environment: "sagemath-108-minimal", on: "ubuntu-26.04" }
+          - { environment: "sagemath-108-all", on: "ubuntu-26.04" }
+          - { environment: "sagemath-109-minimal", on: "ubuntu-26.04" }
+          - { environment: "sagemath-109-all", on: "ubuntu-26.04" }
+          - { environment: "sagemath-1010-minimal", on: "ubuntu-26.04" }
+          - { environment: "sagemath-1010-all", on: "ubuntu-26.04" }
     steps:
       - uses: actions/checkout@v6
         with: { submodules: recursive }
