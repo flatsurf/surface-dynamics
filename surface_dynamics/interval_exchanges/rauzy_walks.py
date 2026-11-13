@@ -949,7 +949,8 @@ class ReducedRauzyDiagram:
         relabellings form a group, the *relabelling group* at ``key``. The
         relabellings are tuples ``g`` of the integers ``0, ..., d-1``, the
         letter ``i`` being sent to ``g[i]``, as the relabelling of an
-        :class:`RauzyFlipSequence`. The groups at two vertices are conjugate.
+        :class:`~surface_dynamics.interval_exchanges.flip_sequence.RauzyFlipSequence`.
+        The groups at two vertices are conjugate.
 
         The generators are the Schreier generators along a spanning tree,
         without the identity and without repetition.
@@ -1063,15 +1064,17 @@ class ReducedRauzyDiagram:
 
         OUTPUT:
 
-        An iterator over closed :class:`RauzyFlipSequence`, each walk once up
-        to rotation. A walk starts at the canonical labelling of its least
-        vertex (over the alphabet of the input permutation), and its word of
-        moves is the least among the rotations starting there (``t < b``); it
-        is closed, as by :meth:`RauzyFlipSequence.close`: it carries the
-        relabelling that maps its end back to its start. The walks come by
-        increasing least vertex, then by increasing sequence of first-return
-        loops at this vertex. The walks at a vertex share one start object;
-        each owns its end.
+        An iterator over closed
+        :class:`~surface_dynamics.interval_exchanges.flip_sequence.RauzyFlipSequence`,
+        each walk once up to rotation. A walk starts at the canonical labelling
+        of its least vertex (over the alphabet of the input permutation), and
+        its word of moves is the least among the rotations starting there
+        (``t < b``); it is closed, as by
+        :meth:`~surface_dynamics.interval_exchanges.flip_sequence.RauzyFlipSequence.close`:
+        it carries the relabelling that maps its end back to its start. The
+        walks come by increasing least vertex, then by increasing sequence of
+        first-return loops at this vertex. The walks at a vertex share one start
+        object; each owns its end.
 
         ALGORITHM:
 
@@ -1133,7 +1136,8 @@ class ReducedRauzyDiagram:
             sage: next(G.closed_walks(8))
             RauzyFlipSequence('a b c d\nb d c a', 'btbttbtb')
 
-        The walks are closed, with the relabelling that :meth:`RauzyFlipSequence.close`
+        The walks are closed, with the relabelling that
+        :meth:`~surface_dynamics.interval_exchanges.flip_sequence.RauzyFlipSequence.close`
         gives::
 
             sage: from surface_dynamics import Stratum

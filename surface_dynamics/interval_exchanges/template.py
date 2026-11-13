@@ -4264,8 +4264,9 @@ class OrientablePermutationIET(PermutationIET):
         - ``check`` - (default ``True``) whether ``winner`` and ``side`` are
           converted and the move is checked to be defined; with ``False``,
           ``winner`` must already be ``0`` (top) or ``1`` (bottom), ``side``
-          must be ``-1`` (right) or ``0`` (left), the move must be defined
-          (see :meth:`has_rauzy_move`), and nothing is checked
+          must be ``-1`` (right) or ``0`` (left), the move must be defined (see
+          :meth:`~surface_dynamics.interval_exchanges.template.PermutationIET.has_rauzy_move`),
+          and nothing is checked
 
         OUTPUT:
 
@@ -5136,8 +5137,9 @@ class OrientablePermutationLI(PermutationLI):
         - ``check`` - (default ``True``) whether ``winner`` and ``side`` are
           converted and the move is checked to be defined; with ``False``,
           ``winner`` must already be ``0`` (top) or ``1`` (bottom), ``side``
-          must be ``-1`` (right) or ``0`` (left), the move must be defined
-          (see :meth:`has_rauzy_move`), and nothing is checked
+          must be ``-1`` (right) or ``0`` (left), the move must be defined (see
+          :meth:`~surface_dynamics.interval_exchanges.template.PermutationLI.has_rauzy_move`),
+          and nothing is checked
 
         EXAMPLES:
 

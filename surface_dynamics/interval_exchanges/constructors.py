@@ -952,16 +952,19 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
 
     OUTPUT:
 
-    An iterator over closed :class:`RauzyFlipSequence`, each walk once up to
-    rotation. The walks use the alphabet of the input permutation (``0, ...,
-    d-1`` for a stratum component). A walk starts at the labelling of its
-    least vertex whose letters, read on the top row then on the bottom row,
-    appear for the first time in the order of this alphabet (for an Abelian
-    permutation, the top row is the alphabet), and its word of moves is the
-    least among the rotations starting there (``t < b``); it is closed, as by
-    :meth:`RauzyFlipSequence.close`: it carries the relabelling that maps its
-    end back to its start. The walks come by increasing least vertex, then by
-    increasing sequence of first-return loops at this vertex.
+    An iterator over closed
+    :class:`~surface_dynamics.interval_exchanges.flip_sequence.RauzyFlipSequence`,
+    each walk once up to rotation. The walks use the alphabet of the input
+    permutation (``0, ..., d-1`` for a stratum component). A walk starts at the
+    labelling of its least vertex whose letters, read on the top row then on the
+    bottom row, appear for the first time in the order of this alphabet (for an
+    Abelian permutation, the top row is the alphabet), and its word of moves is
+    the least among the rotations starting there (``t < b``); it is closed, as
+    by
+    :meth:`~surface_dynamics.interval_exchanges.flip_sequence.RauzyFlipSequence.close`:
+    it carries the relabelling that maps its end back to its start. The walks
+    come by increasing least vertex, then by increasing sequence of first-return
+    loops at this vertex.
 
     .. SEEALSO::
 
