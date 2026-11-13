@@ -705,9 +705,12 @@ def RauzyDiagram(arg1, arg2=None, reduced=False, flips=None, alphabet=None,
         True
 
     We can then create the corresponding interval exchange transformation and
-    comparing the orbit of `0` to the fixed point of the orbit substitution::
+    comparing the orbit of `0` to the fixed point of the orbit substitution.
+    The lengths are taken in an embedded number field rather than in
+    ``QQbar``, so that their arithmetic stays exact::
 
         sage: v = m.eigenvectors_right()[-1][1][0]
+        sage: K, v, _ = number_field_elements_from_algebraics(v, embedded=True)
         sage: T = iet.IntervalExchangeTransformation(p, v).normalize()
         sage: print(T)
         Interval exchange transformation of [0, 1[ with permutation
