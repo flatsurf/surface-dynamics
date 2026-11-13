@@ -24,9 +24,9 @@ tuple of the bottom row (the positions in the top row of the letters of the
 bottom row); for a linear involution, the pair of the tuples of the two rows.
 Vertices are compared by key.
 
-This module holds the class :class:`LazyReducedRauzyDiagram`, which builds the
+This module holds the class :class:`ReducedRauzyDiagram`, which builds the
 whole reduced Rauzy diagram and its relabelling group at construction, and
-whose method :meth:`~LazyReducedRauzyDiagram.closed_walks` does the work. The
+whose method :meth:`~ReducedRauzyDiagram.closed_walks` does the work. The
 entry point for the user is ``iet.rauzy_closed_walks`` (see example below).
 
 EXAMPLES::
@@ -70,7 +70,7 @@ from .template import (OrientablePermutationIET, FlippedPermutationIET,
 from .flip_sequence import RauzyFlipSequence
 
 
-class LazyReducedRauzyDiagram:
+class ReducedRauzyDiagram:
     r"""
     The reduced Rauzy diagram of a permutation or of a generalized
     permutation.
@@ -114,9 +114,9 @@ class LazyReducedRauzyDiagram:
     EXAMPLES::
 
         sage: from surface_dynamics import iet
-        sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+        sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
         sage: p = iet.Permutation('a b c d', 'd c b a')
-        sage: G = LazyReducedRauzyDiagram(p)
+        sage: G = ReducedRauzyDiagram(p)
         sage: G
         Reduced Rauzy diagram on 4 letters with 7 vertices
         sage: G.start()
@@ -133,7 +133,7 @@ class LazyReducedRauzyDiagram:
     A reduced permutation gives the same diagram::
 
         sage: q = iet.Permutation('a b c d', 'd c b a', reduced=True)
-        sage: H = LazyReducedRauzyDiagram(q)
+        sage: H = ReducedRauzyDiagram(q)
         sage: H.start()
         (3, 2, 1, 0)
         sage: H.vertices() == G.vertices()
@@ -143,7 +143,7 @@ class LazyReducedRauzyDiagram:
     labelling, the letters being numbered by first appearance::
 
         sage: q = iet.GeneralizedPermutation('b b a', 'a c c', alphabet='abc')
-        sage: G = LazyReducedRauzyDiagram(q)
+        sage: G = ReducedRauzyDiagram(q)
         sage: G.start()
         ((0, 0, 1), (1, 2, 2))
         sage: G.canonical_labelling(G.start())
@@ -202,7 +202,9 @@ class LazyReducedRauzyDiagram:
           to the canonical labelling of the successor relabelled by the tuple
           ``_top_getters[u](lab)``, or by ``lab`` itself for ``None``, which
           the search then reuses rather than copies. The relabelling of an
-          undefined move is the identity.
+          undefined move is the identity. The getters are shared: there is
+          one per distinct relabelling, the edges with the same relabelling
+          holding the same object.
 
           The canonical labelling numbers the letters in their order of
           first appearance, reading the top row then the bottom row, and a
@@ -226,10 +228,10 @@ class LazyReducedRauzyDiagram:
         TESTS::
 
             sage: from surface_dynamics import iet
-            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
             sage: p = iet.Permutation('a b c', 'c b a')
-            sage: G = LazyReducedRauzyDiagram(p)
-            sage: H = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a', reduced=True))
+            sage: G = ReducedRauzyDiagram(p)
+            sage: H = ReducedRauzyDiagram(iet.Permutation('a b c', 'c b a', reduced=True))
             sage: G.start() == H.start()
             True
 
@@ -265,7 +267,7 @@ class LazyReducedRauzyDiagram:
         Each vertex is the successor of its predecessors::
 
             sage: from surface_dynamics import Stratum
-            sage: G = LazyReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
+            sage: G = ReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
             sage: all(G._top_successors[G._top_predecessors[w]] == w and G._bot_successors[G._bot_predecessors[w]] == w
             ....:     for w in range(len(G)))
             True
@@ -275,7 +277,7 @@ class LazyReducedRauzyDiagram:
         canonical labellings, and each vertex is the successor of its
         predecessors::
 
-            sage: G = LazyReducedRauzyDiagram(Stratum([2, 2], k=2).hyperelliptic_component().permutation_representative(reduced=False))
+            sage: G = ReducedRauzyDiagram(Stratum([2, 2], k=2).hyperelliptic_component().permutation_representative(reduced=False))
             sage: n, d = len(G), 5
             sage: n, G._top_successors.count(-1), G._bot_successors.count(-1)
             (73, 13, 13)
@@ -301,23 +303,23 @@ class LazyReducedRauzyDiagram:
 
         Invalid inputs::
 
-            sage: LazyReducedRauzyDiagram(iet.Permutation('a b', 'b a', flips='a'))
+            sage: ReducedRauzyDiagram(iet.Permutation('a b', 'b a', flips='a'))
             Traceback (most recent call last):
             ...
             ValueError: p must be a permutation of interval exchange transformation or a linear involution, without flips
-            sage: LazyReducedRauzyDiagram(iet.GeneralizedPermutation('a a b', 'b c c', flips='a'))
+            sage: ReducedRauzyDiagram(iet.GeneralizedPermutation('a a b', 'b c c', flips='a'))
             Traceback (most recent call last):
             ...
             ValueError: p must be a permutation of interval exchange transformation or a linear involution, without flips
-            sage: LazyReducedRauzyDiagram(iet.Permutation('a b c', 'a c b'))
+            sage: ReducedRauzyDiagram(iet.Permutation('a b c', 'a c b'))
             Traceback (most recent call last):
             ...
             ValueError: p must be irreducible
-            sage: LazyReducedRauzyDiagram(iet.GeneralizedPermutation('a b c a', 'b d d c'))
+            sage: ReducedRauzyDiagram(iet.GeneralizedPermutation('a b c a', 'b d d c'))
             Traceback (most recent call last):
             ...
             ValueError: p must be irreducible
-            sage: LazyReducedRauzyDiagram(iet.Permutation('a', 'a'))
+            sage: ReducedRauzyDiagram(iet.Permutation('a', 'a'))
             Traceback (most recent call last):
             ...
             ValueError: p must have at least two letters
@@ -337,8 +339,12 @@ class LazyReducedRauzyDiagram:
         self._start = self._key(p)
 
         d = self._d
-        identity = list(range(d))
         key_move = self._key_move
+        # the getter of each distinct relabelling cycle, shared by the edges
+        # with that cycle (at most d - 2 cycles for a permutation, d (d - 1)
+        # for a linear involution); the entries of a getter are letters, which
+        # the renumbering of the vertices leaves unchanged
+        getters = {}
         # discovery order: the vertex u is keys[u] until the renumbering
         index = {self._start: 0}
         keys = [self._start]
@@ -346,22 +352,22 @@ class LazyReducedRauzyDiagram:
         bot_successors = []
         top_winners = []
         bot_winners = []
-        top_maps = []
-        bot_maps = []
+        top_getters = []
+        bot_getters = []
         u = 0
         while u < len(keys):
             k = keys[u]
-            for move, successors, winners, maps in ((0, top_successors, top_winners, top_maps),
-                                                    (1, bot_successors, bot_winners, bot_maps)):
+            for move, successors, winners, edge_getters in ((0, top_successors, top_winners, top_getters),
+                                                            (1, bot_successors, bot_winners, bot_getters)):
                 moved = key_move(k, move)
                 if moved is None:
                     # the winner is read by the search before it checks the
                     # successor: it must be a letter
                     successors.append(-1)
                     winners.append(k[move][-1])
-                    maps.extend(identity)
+                    edge_getters.append(None)
                     continue
-                s, w, m = moved
+                s, w, cycle = moved
                 j = index.get(s)
                 if j is None:
                     j = len(keys)
@@ -369,8 +375,24 @@ class LazyReducedRauzyDiagram:
                     keys.append(s)
                 successors.append(j)
                 winners.append(w)
-                maps.extend(m)
+                if cycle is not None:
+                    getter = getters.get(cycle)
+                    if getter is None:
+                        # the rotation m of the cycle (a, t): m[t] = a, and
+                        # the ranks from a to t shift by one towards t
+                        a, t = cycle
+                        m = list(range(d))
+                        m[t] = a
+                        if t < a:
+                            m[t + 1:a + 1] = range(t, a)
+                        else:
+                            m[a:t] = range(a + 1, t + 1)
+                        getter = getters[cycle] = operator.itemgetter(*m)
+                    edge_getters.append(getter)
+                else:
+                    edge_getters.append(None)
             u += 1
+        del getters
         n = len(keys)
 
         # the sorted keys, the dict rewritten in place to the sorted indices,
@@ -406,22 +428,11 @@ class LazyReducedRauzyDiagram:
         self._top_predecessors = top_predecessors
         self._bot_predecessors = bot_predecessors
 
-        # the entries of the maps are letters, which the renumbering of the
-        # vertices leaves unchanged; an identity map gets no getter, so that
-        # the search reuses the relabelling it holds
-        top_getters = [None] * n
-        bot_getters = [None] * n
-        for u in range(n):
-            j = rank[u]
-            m = top_maps[d*u:d*u + d]
-            if m != identity:
-                top_getters[j] = operator.itemgetter(*m)
-            m = bot_maps[d*u:d*u + d]
-            if m != identity:
-                bot_getters[j] = operator.itemgetter(*m)
-        del top_maps, bot_maps, rank
-        self._top_getters = top_getters
-        self._bot_getters = bot_getters
+        # an identity relabelling has no getter, so that the search reuses the
+        # relabelling it holds
+        self._top_getters = renumbered(top_getters, False)
+        self._bot_getters = renumbered(bot_getters, False)
+        del top_getters, bot_getters, rank
 
         self._relabelling_group()
 
@@ -439,14 +450,14 @@ class LazyReducedRauzyDiagram:
         EXAMPLES::
 
             sage: from surface_dynamics import iet
-            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
-            sage: LazyReducedRauzyDiagram._key(iet.Permutation('a c b d', 'd a b c'))
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
+            sage: ReducedRauzyDiagram._key(iet.Permutation('a c b d', 'd a b c'))
             (3, 0, 2, 1)
-            sage: LazyReducedRauzyDiagram._key(iet.Permutation('a c b d', 'd a b c', reduced=True))
+            sage: ReducedRauzyDiagram._key(iet.Permutation('a c b d', 'd a b c', reduced=True))
             (3, 0, 2, 1)
-            sage: LazyReducedRauzyDiagram._key(iet.GeneralizedPermutation('c a c', 'a d b b d'))
+            sage: ReducedRauzyDiagram._key(iet.GeneralizedPermutation('c a c', 'a d b b d'))
             ((0, 1, 0), (1, 2, 3, 3, 2))
-            sage: LazyReducedRauzyDiagram._key(iet.GeneralizedPermutation('c a c', 'a d b b d', reduced=True))
+            sage: ReducedRauzyDiagram._key(iet.GeneralizedPermutation('c a c', 'a d b b d', reduced=True))
             ((0, 1, 0), (1, 2, 3, 3, 2))
         """
         if not isinstance(q, PermutationLI):
@@ -482,14 +493,14 @@ class LazyReducedRauzyDiagram:
         EXAMPLES::
 
             sage: from surface_dynamics import iet
-            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
-            sage: LazyReducedRauzyDiagram._move_map(iet.Permutation('a c b d', 'd a b c', alphabet='abcd'))
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
+            sage: ReducedRauzyDiagram._move_map(iet.Permutation('a c b d', 'd a b c', alphabet='abcd'))
             [0, 2, 1, 3]
             sage: q = iet.GeneralizedPermutation('a b a', 'b c d d c').rauzy_move(0)
             sage: q
             c a b a
             b c d d
-            sage: LazyReducedRauzyDiagram._move_map(q)
+            sage: ReducedRauzyDiagram._move_map(q)
             [2, 0, 1, 3]
         """
         top, bot = r._labels
@@ -523,7 +534,8 @@ class LazyReducedRauzyDiagram:
         OUTPUT:
 
         ``None`` if the move is undefined (for a linear involution only, as
-        tested by ``has_rauzy_move``), else a tuple ``(successor, winner, m)``:
+        tested by ``has_rauzy_move``), else a tuple
+        ``(successor, winner, cycle)``:
 
         - ``successor`` -- the key of the vertex reached
 
@@ -531,21 +543,38 @@ class LazyReducedRauzyDiagram:
           ``key``, the last letter of its top (bottom) row, as an index in
           ``0, ..., d-1``
 
-        - ``m`` -- the list such that the labelled permutation reached by the
-          move from the canonical labelling of ``key`` is the canonical
-          labelling of ``successor`` with each letter ``b`` replaced by
-          ``m[b]`` (see :meth:`_move_map`)
+        - ``cycle`` -- ``None`` if the relabelling ``m`` such that the
+          labelled permutation reached by the move from the canonical
+          labelling of ``key`` is the canonical labelling of ``successor``
+          with each letter ``b`` replaced by ``m[b]`` (see
+          :meth:`_move_map`) is the identity, else the pair ``(s, t)`` of
+          ranks, ``s != t``, of the rotation that ``m`` is: ``m[t] = s``, and
+          the ranks strictly between ``t`` and ``s``, and ``s`` itself, are
+          shifted by one towards ``t`` (``m[k] = k - 1`` for ``t < k <= s``
+          when ``t < s``, ``m[k] = k + 1`` for ``s <= k < t`` when ``s < t``)
 
         EXAMPLES:
 
         A permutation::
 
             sage: from surface_dynamics import iet
-            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
-            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a', alphabet='abcd'))
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
+            sage: def expand(cycle, d):
+            ....:     m = list(range(d))
+            ....:     if cycle is not None:
+            ....:         s, t = cycle
+            ....:         m[t] = s
+            ....:         if t < s:
+            ....:             m[t+1:s+1] = range(t, s)
+            ....:         else:
+            ....:             m[s:t] = range(s+1, t+1)
+            ....:     return m
+            sage: G = ReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a', alphabet='abcd'))
             sage: k = G.successor(G.start(), 1)
             sage: G._key_move(k, 1)
-            ((2, 1, 3, 0), 0, [0, 3, 1, 2])
+            ((2, 1, 3, 0), 0, (3, 1))
+            sage: expand((3, 1), 4)
+            [0, 3, 1, 2]
             sage: r = G.canonical_labelling(k).rauzy_move(1)
             sage: G._key(r), G._move_map(r)
             ((2, 1, 3, 0), [0, 3, 1, 2])
@@ -554,12 +583,14 @@ class LazyReducedRauzyDiagram:
 
             sage: from surface_dynamics import Stratum
             sage: C = Stratum([2, 2], k=2).hyperelliptic_component()
-            sage: G = LazyReducedRauzyDiagram(C.permutation_representative(reduced=False))
+            sage: G = ReducedRauzyDiagram(C.permutation_representative(reduced=False))
             sage: V = G.vertices()
             sage: V[0]
             ((0, 1, 0), (1, 2, 3, 2, 4, 3, 4))
             sage: G._key_move(V[0], 0)
-            (((0, 1, 2, 1), (2, 3, 4, 3, 0, 4)), 0, [4, 0, 1, 2, 3])
+            (((0, 1, 2, 1), (2, 3, 4, 3, 0, 4)), 0, (4, 0))
+            sage: expand((4, 0), 5)
+            [4, 0, 1, 2, 3]
             sage: r = G.canonical_labelling(V[0]).rauzy_move(0)
             sage: G._key(r), G._move_map(r)
             (((0, 1, 2, 1), (2, 3, 4, 3, 0, 4)), [4, 0, 1, 2, 3])
@@ -577,15 +608,12 @@ class LazyReducedRauzyDiagram:
                 # the top winner d - 1 stays; the last letter of the bottom
                 # row goes right after d - 1 there
                 j = key.index(d - 1) + 1
-                return key[:j] + key[-1:] + key[j:-1], d - 1, list(range(d))
+                return key[:j] + key[-1:] + key[j:-1], d - 1, None
             # the last letter d - 1 of the top row goes right after the
             # winner w there; the letters after w shift right by one
             w = key[-1]
-            m = list(range(w + 1))
-            m.append(d - 1)
-            m.extend(range(w + 1, d - 1))
             s = tuple(a if a <= w else (w + 1 if a == d - 1 else a + 1) for a in key)
-            return s, w, m
+            return s, w, (None if w == d - 2 else (d - 1, w + 1))
         rows = (list(key[0]), list(key[1]))
         win = rows[move]
         lose = rows[1 - move]
@@ -610,7 +638,16 @@ class LazyReducedRauzyDiagram:
                 if rank[c] < 0:
                     rank[c] = len(m)
                     m.append(c)
-        return ((tuple([rank[c] for c in rows[0]]), tuple([rank[c] for c in rows[1]])), a, m)
+        # m is the identity or a rotation of an interval of ranks, from its
+        # first to its last entry that moves
+        moved = [k for k, c in enumerate(m) if c != k]
+        if not moved:
+            cycle = None
+        else:
+            i = moved[0]
+            j = moved[-1]
+            cycle = (j, i) if m[i] == j else (i, j)
+        return ((tuple([rank[c] for c in rows[0]]), tuple([rank[c] for c in rows[1]])), a, cycle)
 
     def _canonical(self, key):
         r"""
@@ -620,12 +657,12 @@ class LazyReducedRauzyDiagram:
         EXAMPLES::
 
             sage: from surface_dynamics import iet
-            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
-            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
+            sage: G = ReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
             sage: G._canonical((2, 0, 1))
             a b c
             c a b
-            sage: G = LazyReducedRauzyDiagram(iet.GeneralizedPermutation('a a b', 'b c c'))
+            sage: G = ReducedRauzyDiagram(iet.GeneralizedPermutation('a a b', 'b c c'))
             sage: G._canonical(((0, 1, 0), (2, 2, 1)))
             a b a
             c c b
@@ -646,11 +683,11 @@ class LazyReducedRauzyDiagram:
         EXAMPLES::
 
             sage: from surface_dynamics import iet
-            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
-            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a'))
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
+            sage: G = ReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a'))
             sage: len(G)
             7
-            sage: len(LazyReducedRauzyDiagram(iet.Permutation('a b', 'b a')))
+            sage: len(ReducedRauzyDiagram(iet.Permutation('a b', 'b a')))
             1
         """
         return len(self._vertices)
@@ -660,10 +697,10 @@ class LazyReducedRauzyDiagram:
         TESTS::
 
             sage: from surface_dynamics import iet
-            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
-            sage: LazyReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a'))
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
+            sage: ReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a'))
             Reduced Rauzy diagram on 4 letters with 7 vertices
-            sage: LazyReducedRauzyDiagram(iet.Permutation('a b', 'b a'))
+            sage: ReducedRauzyDiagram(iet.Permutation('a b', 'b a'))
             Reduced Rauzy diagram on 2 letters with 1 vertex
         """
         n = len(self)
@@ -677,8 +714,8 @@ class LazyReducedRauzyDiagram:
         EXAMPLES::
 
             sage: from surface_dynamics import iet
-            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
-            sage: G = LazyReducedRauzyDiagram(iet.Permutation('b a c', 'c a b'))
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
+            sage: G = ReducedRauzyDiagram(iet.Permutation('b a c', 'c a b'))
             sage: G.start()
             (2, 1, 0)
         """
@@ -694,8 +731,8 @@ class LazyReducedRauzyDiagram:
         EXAMPLES::
 
             sage: from surface_dynamics import iet
-            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
-            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a'))
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
+            sage: G = ReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a'))
             sage: G.canonical_labelling(G.successor(G.start(), 1))
             a b c d
             b d c a
@@ -704,7 +741,7 @@ class LazyReducedRauzyDiagram:
 
             sage: from surface_dynamics import Stratum
             sage: C = Stratum([2]).unique_component()
-            sage: G = LazyReducedRauzyDiagram(C.permutation_representative(reduced=False))
+            sage: G = ReducedRauzyDiagram(C.permutation_representative(reduced=False))
             sage: G.canonical_labelling(G.successor(G.start(), 1))
             0 1 2 3
             1 3 2 0
@@ -729,8 +766,8 @@ class LazyReducedRauzyDiagram:
         EXAMPLES::
 
             sage: from surface_dynamics import iet
-            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
-            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a'))
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
+            sage: G = ReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a'))
             sage: k = G.start()
             sage: G.successor(k, 0)
             (3, 0, 2, 1)
@@ -741,7 +778,7 @@ class LazyReducedRauzyDiagram:
 
         A move of a linear involution may be undefined::
 
-            sage: G = LazyReducedRauzyDiagram(iet.GeneralizedPermutation('a a b', 'b c c'))
+            sage: G = ReducedRauzyDiagram(iet.GeneralizedPermutation('a a b', 'b c c'))
             sage: k = ((0, 0), (1, 1, 2, 2))
             sage: k in G.vertices()
             True
@@ -768,8 +805,8 @@ class LazyReducedRauzyDiagram:
         EXAMPLES::
 
             sage: from surface_dynamics import iet
-            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
-            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a'))
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
+            sage: G = ReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a'))
             sage: G.vertices()
             [(1, 3, 0, 2),
              (1, 3, 2, 0),
@@ -783,7 +820,7 @@ class LazyReducedRauzyDiagram:
 
             sage: from surface_dynamics import Stratum
             sage: C = Stratum([2, 2], k=2).hyperelliptic_component()
-            sage: G = LazyReducedRauzyDiagram(C.permutation_representative(reduced=False))
+            sage: G = ReducedRauzyDiagram(C.permutation_representative(reduced=False))
             sage: V = G.vertices()
             sage: len(V)
             73
@@ -818,8 +855,8 @@ class LazyReducedRauzyDiagram:
         EXAMPLES::
 
             sage: from surface_dynamics import iet
-            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
-            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
+            sage: G = ReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
             sage: G._vertices
             [(1, 2, 0), (2, 0, 1), (2, 1, 0)]
             sage: G._tree_labellings
@@ -835,7 +872,7 @@ class LazyReducedRauzyDiagram:
 
             sage: from surface_dynamics import Stratum
             sage: C = Stratum([2, 2], k=2).hyperelliptic_component()
-            sage: G = LazyReducedRauzyDiagram(C.permutation_representative(reduced=False))
+            sage: G = ReducedRauzyDiagram(C.permutation_representative(reduced=False))
             sage: len(G._tree_labellings)
             73
             sage: gens = [[i + 1 for i in g] for g in G._root_generators]
@@ -924,18 +961,18 @@ class LazyReducedRauzyDiagram:
         degree `1` of `H_3(3, 1)`::
 
             sage: from surface_dynamics import Stratum
-            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
             sage: def order(G, k):
             ....:     return PermutationGroup([[i + 1 for i in g] for g in G.relabelling_generators(k)]).order()
-            sage: G = LazyReducedRauzyDiagram(Stratum([2]).unique_component().permutation_representative(reduced=False))
+            sage: G = ReducedRauzyDiagram(Stratum([2]).unique_component().permutation_representative(reduced=False))
             sage: G.relabelling_generators(G.start())
             []
-            sage: G = LazyReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
+            sage: G = ReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
             sage: k = G.start()
             sage: order(G, k), order(G, G.vertices()[0])
             (3, 3)
             sage: C = Stratum([3, 1]).unique_component()
-            sage: G = LazyReducedRauzyDiagram(C.permutation_representative(left_degree=1, reduced=False))
+            sage: G = ReducedRauzyDiagram(C.permutation_representative(left_degree=1, reduced=False))
             sage: order(G, G.start()), order(G, G.vertices()[0])
             (2, 2)
             sage: all(sorted(g) == list(range(7)) for g in G.relabelling_generators(G.start()))
@@ -959,18 +996,18 @@ class LazyReducedRauzyDiagram:
         EXAMPLES::
 
             sage: from surface_dynamics import Stratum
-            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
-            sage: G = LazyReducedRauzyDiagram(Stratum([2]).unique_component().permutation_representative(reduced=False))
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
+            sage: G = ReducedRauzyDiagram(Stratum([2]).unique_component().permutation_representative(reduced=False))
             sage: G.relabelling_orbits(G.start())
             [(0,), (1,), (2,), (3,)]
-            sage: G = LazyReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
+            sage: G = ReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
             sage: G.relabelling_orbits(G.start())
             [(0,), (1, 5, 6), (2,), (3,), (4,)]
 
         The relabelling group of a linear involution may be transitive on the
         letters, as for `Q_2(2^2)^{hyp}`::
 
-            sage: G = LazyReducedRauzyDiagram(Stratum([2, 2], k=2).hyperelliptic_component().permutation_representative(reduced=False))
+            sage: G = ReducedRauzyDiagram(Stratum([2, 2], k=2).hyperelliptic_component().permutation_representative(reduced=False))
             sage: G.relabelling_orbits(G.start())
             [(0, 1, 2, 3, 4)]
 
@@ -984,12 +1021,12 @@ class LazyReducedRauzyDiagram:
             ....:     gens = [[i + 1 for i in g] for g in G.relabelling_generators(k)]
             ....:     O = PermutationGroup(gens, domain=range(1, G._d + 1)).orbits()
             ....:     return sorted(tuple(sorted(i - 1 for i in o)) for o in O)
-            sage: G = LazyReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
+            sage: G = ReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
             sage: len(G.vertices())
             294
             sage: all(G.relabelling_orbits(k) == orbits(G, k) for k in G.vertices())
             True
-            sage: G = LazyReducedRauzyDiagram(Stratum([5, -1], k=2).unique_component().permutation_representative(reduced=False))
+            sage: G = ReducedRauzyDiagram(Stratum([5, -1], k=2).unique_component().permutation_representative(reduced=False))
             sage: len(G.vertices())
             440
             sage: all(G.relabelling_orbits(k) == orbits(G, k) for k in G.vertices())
@@ -1079,8 +1116,8 @@ class LazyReducedRauzyDiagram:
         EXAMPLES::
 
             sage: from surface_dynamics import iet
-            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
-            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
+            sage: G = ReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
             sage: for f in G.closed_walks(3, complete=False):
             ....:     print(f._simplified_flip_sequence())
             t
@@ -1092,7 +1129,7 @@ class LazyReducedRauzyDiagram:
 
         The walks use the alphabet of the permutation::
 
-            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a'))
+            sage: G = ReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a'))
             sage: next(G.closed_walks(8))
             RauzyFlipSequence('a b c d\nb d c a', 'btbttbtb')
 
@@ -1101,7 +1138,7 @@ class LazyReducedRauzyDiagram:
 
             sage: from surface_dynamics import Stratum
             sage: from surface_dynamics.interval_exchanges.flip_sequence import RauzyFlipSequence
-            sage: G = LazyReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
+            sage: G = ReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
             sage: walks = list(G.closed_walks(9, complete=False))
             sage: len(walks), sum(1 for f in walks if f._relabelling != list(range(7)))
             (1165, 38)
@@ -1117,7 +1154,7 @@ class LazyReducedRauzyDiagram:
         The same on a linear involution, whose relabelling group is never
         trivial; the walks of `Q_2(2^2)^{hyp}`::
 
-            sage: G = LazyReducedRauzyDiagram(Stratum([2, 2], k=2).hyperelliptic_component().permutation_representative(reduced=False))
+            sage: G = ReducedRauzyDiagram(Stratum([2, 2], k=2).hyperelliptic_component().permutation_representative(reduced=False))
             sage: walks = list(G.closed_walks(10, complete=False))
             sage: len(walks)
             145
@@ -1129,7 +1166,7 @@ class LazyReducedRauzyDiagram:
 
         TESTS::
 
-            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
+            sage: G = ReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
             sage: G.closed_walks(-1)
             Traceback (most recent call last):
             ...
@@ -1153,8 +1190,8 @@ class LazyReducedRauzyDiagram:
         EXAMPLES::
 
             sage: from surface_dynamics import iet
-            sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
-            sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
+            sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
+            sage: G = ReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
             sage: len(list(G._closed_walks(3, 1, False, True)))
             6
         """
@@ -1172,8 +1209,14 @@ class LazyReducedRauzyDiagram:
         identity = list(range(d))
 
         # the lower bounds of the distances back to the base, shared by the
-        # bases: each base sets the entries it reaches and resets them after
-        h = _backward_depth(max_length)
+        # bases: each base sets the entries it reaches and resets them after.
+        # The bounds (see _distances_to and _first_return_loops) are exact
+        # up to the depth h and the vertices beyond count as farther, so the
+        # pruning is exact on the last max_length // 2 + 2 moves of each
+        # loop, while the backward search visits about as few vertices as
+        # the forward one. Deeper, it visits more vertices than the pruning
+        # saves; a depth above max_length bounds nothing more.
+        h = min(max_length, max_length // 2 + 2)
         dist = [h + 1] * n
 
         # the orbits at v are the images by the inverse of the tree
@@ -1280,33 +1323,6 @@ class LazyReducedRauzyDiagram:
                                                  moves, relabelling)
 
 
-def _backward_depth(max_length):
-    r"""
-    Return the depth at which the search of closed walks of length at most
-    ``max_length`` stops the backward search of the distances to each base.
-
-    A first-return loop of length at most ``max_length`` at the base ``v``
-    is found by a forward search from ``v``, pruned by lower bounds of the
-    distances back to ``v`` (see :func:`_distances_to` and
-    :func:`_first_return_loops`). These bounds are exact up to the depth
-    returned, and the vertices beyond it count as farther: the pruning is
-    exact on the last ``max_length // 2 + 2`` moves of each loop, while the
-    backward search visits about as few vertices as the forward one. A depth
-    above ``max_length`` would bound nothing more.
-
-    EXAMPLES::
-
-        sage: from surface_dynamics.interval_exchanges.rauzy_walks import _backward_depth
-        sage: [_backward_depth(L) for L in range(8)]
-        [0, 1, 2, 3, 4, 4, 5, 5]
-        sage: _backward_depth(14), _backward_depth(24)
-        (9, 14)
-    """
-    # deeper, the backward search visits more vertices than the pruning saves
-    # to the forward one; shallower, the pruning cuts fewer paths
-    return min(max_length, max_length // 2 + 2)
-
-
 def _distances_to(v, top_predecessors, bot_predecessors, depth, dist):
     r"""
     Set the distances to the vertex ``v`` up to ``depth``, in the graph
@@ -1323,7 +1339,7 @@ def _distances_to(v, top_predecessors, bot_predecessors, depth, dist):
     the vertex ``u`` with ``top_successors[u] == w`` and
     ``bot_predecessors[w]`` the vertex ``u`` with ``bot_successors[u] == w``
     (each vertex has at most one edge of each label coming in, and ``-1``
-    stands for none; see :class:`LazyReducedRauzyDiagram` for why this holds
+    stands for none; see :class:`ReducedRauzyDiagram` for why this holds
     and why ``-1`` is never followed).
 
     The distance from ``u`` to ``v`` is the least number of edges of a path
@@ -1448,7 +1464,7 @@ def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_w
     labelling, so ``m`` is the identity or one rotation of an interval of
     ranks; for a permutation, every top move has the identity. These lists
     are the attributes of the same names, with a leading underscore, of
-    :class:`LazyReducedRauzyDiagram` (see its ``__init__``).
+    :class:`ReducedRauzyDiagram` (see its ``__init__``).
 
     The loops are found by a depth-first search, which also accumulates
     along the current prefix its winners and the relabelling at which it
@@ -1462,7 +1478,7 @@ def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_w
     - ``winner_masks[j]`` -- the bitmask of the letters of the canonical
       labelling of ``v`` that are winners of the loop ``j`` run from it.
       They are always computed, but only a search of complete walks reads
-      them: :meth:`LazyReducedRauzyDiagram._closed_walks` with
+      them: :meth:`ReducedRauzyDiagram._closed_walks` with
       ``complete=False`` drops them, the winner bit of each edge being
       computed for nothing there
 
@@ -1475,8 +1491,8 @@ def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_w
     EXAMPLES::
 
         sage: from surface_dynamics import iet
-        sage: from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram, _distances_to, _first_return_loops
-        sage: G = LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
+        sage: from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram, _distances_to, _first_return_loops
+        sage: G = ReducedRauzyDiagram(iet.Permutation('a b c', 'c b a'))
         sage: dist = [5] * 3
         sage: _ = _distances_to(0, G._top_predecessors, G._bot_predecessors, 4, dist)
         sage: edges = (G._top_successors, G._bot_successors, G._top_winners, G._bot_winners,
@@ -1504,11 +1520,11 @@ def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_w
         ....:     return (len(loops), sum(m != tuple(range(G._d)) for m in maps),
         ....:             winner_masks == [sum(1 << list(G._alphabet).index(a) for a in set(f.winners())) for f in flips],
         ....:             maps == [tuple(G._move_map(f.end())) for f in flips])
-        sage: replay(LazyReducedRauzyDiagram(iet.Permutation('a b c', 'c b a')), 0, 4)
+        sage: replay(ReducedRauzyDiagram(iet.Permutation('a b c', 'c b a')), 0, 4)
         (3, 0, True, True)
-        sage: replay(LazyReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a')), 0, 8)
+        sage: replay(ReducedRauzyDiagram(iet.Permutation('a b c d', 'd c b a')), 0, 8)
         (8, 0, True, True)
-        sage: G = LazyReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
+        sage: G = ReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
         sage: v = G.vertices().index((2, 0, 3, 5, 4, 6, 1))
         sage: G.relabelling_orbits(G.vertices()[v])
         [(0,), (1,), (2,), (3,), (4, 5, 6)]
@@ -1518,7 +1534,7 @@ def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_w
     On a linear involution, whose top winner is not always the last letter
     and whose moves may be undefined::
 
-        sage: G = LazyReducedRauzyDiagram(Stratum([2, 2], k=2).hyperelliptic_component().permutation_representative(reduced=False))
+        sage: G = ReducedRauzyDiagram(Stratum([2, 2], k=2).hyperelliptic_component().permutation_representative(reduced=False))
         sage: replay(G, 0, 12)
         (17, 17, True, True)
 
@@ -1531,7 +1547,7 @@ def _first_return_loops(d, v, top_successors, bot_successors, top_winners, bot_w
         ....:     return _first_return_loops(
         ....:         G._d, v, G._top_successors, G._bot_successors, G._top_winners, G._bot_winners,
         ....:         G._top_getters, G._bot_getters, dist, L, True)
-        sage: G1 = LazyReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
+        sage: G1 = ReducedRauzyDiagram(Stratum([2, 2]).odd_component().permutation_representative(reduced=False))
         sage: len(G1.vertices())
         294
         sage: all(by_depth(G1, v, 9, h) == by_depth(G1, v, 9, 9) for v in range(20) for h in range(10))

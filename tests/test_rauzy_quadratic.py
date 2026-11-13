@@ -106,9 +106,9 @@ KEY_MOVE_DIAGRAMS = {
 def test_key_moves(name):
     # the moves on keys against the moves of the canonical labellings, on
     # every edge of the diagram and every undefined move
-    from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+    from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
     n, undefined = KEY_MOVE_DIAGRAMS[name]
-    G = LazyReducedRauzyDiagram(diagram(name).permutation_representative(reduced=False))
+    G = ReducedRauzyDiagram(diagram(name).permutation_representative(reduced=False))
     V = G.vertices()
     assert len(V) == n
     seen = 0
@@ -120,12 +120,27 @@ def test_key_moves(name):
             if moved is None:
                 seen += 1
                 continue
-            successor, winner, m = moved
+            successor, winner, cycle = moved
             r = q.rauzy_move(move)
             assert successor == G._key(r)
             assert winner == q._labels[move][-1]
-            assert m == G._move_map(r)
+            assert _expand(cycle, G._d) == G._move_map(r)
     assert seen == undefined
+
+
+def _expand(cycle, d):
+    # the relabelling list of a cycle (s, t): m[t] = s, and the ranks from s
+    # to t shift by one towards t; None is the identity
+    m = list(range(d))
+    if cycle is not None:
+        s, t = cycle
+        assert s != t
+        m[t] = s
+        if t < s:
+            m[t + 1:s + 1] = range(t, s)
+        else:
+            m[s:t] = range(s + 1, t + 1)
+    return m
 
 
 def _rotations(d, i, j):
@@ -145,22 +160,27 @@ def _edge_relabelling(G, u, move, lab):
 def test_edge_relabellings(name):
     # on every edge and every undefined move, the relabelling is the
     # identity or one rotation of an interval of ranks, and the data stored
-    # for the edge applies it
-    from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
-    G = LazyReducedRauzyDiagram(diagram(name).permutation_representative(reduced=False))
+    # for the edge applies it; the getters are shared, one per distinct cycle
+    from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
+    G = ReducedRauzyDiagram(diagram(name).permutation_representative(reduced=False))
     d = G._d
     lab = tuple(range(10, 10 + d))
     rotations = 0
+    cycles = set()
     for u, key in enumerate(G.vertices()):
         for move in (0, 1):
             moved = G._key_move(key, move)
-            m = list(range(d)) if moved is None else moved[2]
+            cycle = None if moved is None else moved[2]
+            m = _expand(cycle, d)
             changed = [b for b in range(d) if m[b] != b]
             if changed:
                 rotations += 1
                 assert m in _rotations(d, changed[0], changed[-1])
+                cycles.add(cycle)
             assert _edge_relabelling(G, u, move, lab) == tuple(lab[b] for b in m)
     assert rotations > 0
+    getters = {id(g) for g in G._top_getters + G._bot_getters if g is not None}
+    assert len(getters) == len(cycles)
 
 
 ALL_COUNTS = {
@@ -247,15 +267,15 @@ def _is_proper_power(f):
     word of moves is a power of a shorter word that returns to the reduced
     vertex of its start.
     """
-    from surface_dynamics.interval_exchanges.rauzy_walks import LazyReducedRauzyDiagram
+    from surface_dynamics.interval_exchanges.rauzy_walks import ReducedRauzyDiagram
     from surface_dynamics.interval_exchanges.flip_sequence import RauzyFlipSequence
     word = f._simplified_flip_sequence()
     n = len(word)
-    start = LazyReducedRauzyDiagram._key(f.start())
+    start = ReducedRauzyDiagram._key(f.start())
     for p in range(1, n):
         if n % p == 0 and word == word[:p] * (n // p):
             g = RauzyFlipSequence(f.start(), word[:p])
-            if LazyReducedRauzyDiagram._key(g.end()) == start:
+            if ReducedRauzyDiagram._key(g.end()) == start:
                 return True
     return False
 

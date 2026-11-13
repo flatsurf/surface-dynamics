@@ -6,7 +6,7 @@
   component of an Abelian or of a quadratic stratum, as closed flip sequences.
   The walks keep the alphabet of the permutation. The search is
   also available as the method ``closed_walks`` of
-  ``LazyReducedRauzyDiagram``.
+  ``ReducedRauzyDiagram``.
 
 * Added ``weighted_necklaces`` in ``surface_dynamics.misc.necklaces`` to
   iterate over the necklaces or Lyndon words of bounded weight over an

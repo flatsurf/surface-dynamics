@@ -966,7 +966,7 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
     .. SEEALSO::
 
         For the algorithm, see
-        :meth:`~surface_dynamics.interval_exchanges.rauzy_walks.LazyReducedRauzyDiagram.closed_walks`.
+        :meth:`~surface_dynamics.interval_exchanges.rauzy_walks.ReducedRauzyDiagram.closed_walks`.
 
     EXAMPLES:
 
@@ -1123,7 +1123,7 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
     from surface_dynamics.flat_surfaces.quadratic_strata import QuadraticStratumComponent
     from .template import (OrientablePermutationIET, FlippedPermutationIET,
                            OrientablePermutationLI, FlippedPermutationLI)
-    from .rauzy_walks import LazyReducedRauzyDiagram
+    from .rauzy_walks import ReducedRauzyDiagram
 
     if isinstance(x, AbelianStratumComponent):
         p = x.permutation_representative(left_degree=left_degree, reduced=False)
@@ -1142,4 +1142,4 @@ def rauzy_closed_walks(x, max_length, min_length=1, complete=True, primitive=Tru
         p = x
     else:
         raise ValueError('x must be a permutation or a linear involution without flips, or a component of a stratum')
-    return LazyReducedRauzyDiagram(p).closed_walks(max_length, min_length, complete, primitive)
+    return ReducedRauzyDiagram(p).closed_walks(max_length, min_length, complete, primitive)
