@@ -545,7 +545,7 @@ class QuadraticStratumComponent(StratumComponent):
         if zeros == [1,1] and nb_poles == 2:
             return astratum.hyperelliptic_component()
 
-        # 3) composant with spin
+        # 3) component with spin
         spin = stratum.spin()
         if spin == 0:
             return astratum.even_component()

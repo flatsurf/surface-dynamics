@@ -514,7 +514,7 @@ def interval_exchange_statistics_sample(top, bot, uint64_t L, uint64_t sample_si
     cdef int k = len(top)
     cdef int n = (len(top) + len(bot)) // 2
     cdef int i
-    cdef uint64_t count
+    cdef uint64_t _count
     cdef int_iet_t t
 
     if flat:
@@ -537,7 +537,7 @@ def interval_exchange_statistics_sample(top, bot, uint64_t L, uint64_t sample_si
         twin[i] = python_twin[i]
     int_iet_init(t, n)
 
-    for count in range(sample_size):
+    for _count in range(sample_size):
         int_iet_set_labels_and_twin(t, labels, twin, k)
         int_iet_set_random_lengths(t, L)
         get_stat(statistics, flat, t, widths, heights, kind)

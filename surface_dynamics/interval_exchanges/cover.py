@@ -918,9 +918,9 @@ class PermutationCover:
             sage: np.allclose(X[0], Y[0])
             True
 
-            sage: X[1]
-            [1, 0, 0, 0, 2]
-            sage: sum(X[1]) == pp.genus()
+            sage: X[1] == [1, 0, 0, 0, 2]
+            True
+            sage: bool(sum(X[1]) == pp.genus())
             True
 
         TESTS::
@@ -1304,8 +1304,8 @@ class RegularCover(PermutationCover):
         Regular cover of degree 64 with group <pc group of size 64 with 6 generators> of the permutation:
         a b
         b a
-        sage: pp.isotypic_projectors()[1]
-        [1, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+        sage: pp.isotypic_projectors()[1] == [1, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+        True
         sage: pp.lyapunov_exponents_H_plus(isotypic_decomposition=True)  # not tested (too long)
         [[1.000],
          [],

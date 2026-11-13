@@ -197,14 +197,14 @@ def lattice(vectors):
         raise ValueError("all input vectors are collinear")
 
     # Now proceed through a simple reduction algorithm
-    w = sorted(set((h, t % a) if h >= 0 else (-h, (-t) % a) for t, h in w))
+    w = sorted({(h, t % a) if h >= 0 else (-h, (-t) % a) for t, h in w})
     while len(w) > 1:
         while w[0][0] == zero:
             a = a.gcd(w[0][1])
             del w[0]
             w[0] = (w[0][0], w[0][1] % a)
         if a == one:
-            return (one, zero, GCD_list([x for x, y in w]))
+            return (one, zero, GCD_list([x for x, _ in w]))
         for i in range(1, len(w)):
             w[i] = ((w[i][0] % w[0][0],
                     (w[i][1]-(w[i][0]//w[0][0])*w[0][1]) % a))
@@ -1958,7 +1958,7 @@ cdef class Origami_dense_pyx:
         cdef size_t i, n
         n = max(2, nb_vectors)
 
-        res = [[] for i in range(n)]
+        res = [[] for _ in range(n)]
         theta = <double *> malloc((n+1)*sizeof(double))
 
         o = new_origami_data(
@@ -2981,7 +2981,7 @@ cdef class Origami_dense_pyx:
             k = 0
             for cyl in cyls:
                 _, _, w, h, _, _ = cyl
-                for j in range(h):
+                for _ in range(h):
                     for i in range(w):
                         pos[rel[k]] = (i, H)
                         k += 1
@@ -3308,7 +3308,7 @@ cdef class Origami_dense_pyx:
         edges.sort()   # index to edge
         e2i = dict((edges[i], i) for i in range(len(edges)))  # edge to index
         cyl_ren.sort()
-        cyl_ren = dict((j[0], i) for i, j in enumerate(cyl_ren))
+        cyl_ren = {j[0]: i for i, j in enumerate(cyl_ren)}
 
         # now build a cylinder diagram with lengths, twists and heights
         cyls = []
