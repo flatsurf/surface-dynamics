@@ -64,6 +64,7 @@ html_theme_options = {
 }
 
 intersphinx_mapping = {
+    "python": ("https://docs.python.org/3", None),
     "sage": ("https://doc.sagemath.org/html/en/reference", None),
     "sage-flatsurf": ("https://flatsurf.github.io/sage-flatsurf/", None),
 }

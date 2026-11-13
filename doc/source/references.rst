@@ -21,6 +21,11 @@ References
    induction for quadratic differentials"
    Ergodic Theory Dyn. Syst. 29, No. 3, 767-816 (2009).
 
+.. [CatRusSawSerMie00] K. Cattell, F. Ruskey, J. Sawada, M. Serra,
+   C. R. Miers "Fast algorithms to generate necklaces, unlabeled necklaces,
+   and irreducible polynomials over GF(2)"
+   J. Algorithms 37, No. 2, 267-282 (2000).
+
 .. [CheMoeSauZag20] D. Chen, M. Möller, A. Sauvaget, D. Zagier "Masur–Veech
    volumes and intersection theory on moduli spaces of Abelian differentials"
    Invent. Math. 222, No. 1, 283-373 (2020).
@@ -40,6 +45,14 @@ References
    differentials: the principal boundary, counting problems, and the
    Siegel-Veech constants"
    Publ. Math., Inst. Hautes Étud. Sci. 97, 61-179 (2003).
+
+.. [FreKes86] H. Fredricksen, I. J. Kessler "An algorithm for generating
+   necklaces of beads in two colors"
+   Discrete Math. 61, No. 2-3, 181-188 (1986).
+
+.. [FreMai78] H. Fredricksen, J. Maiorana "Necklaces of beads in k colors and
+   k-ary de Bruijn sequences"
+   Discrete Math. 23, No. 3, 207-210 (1978).
 
 .. [Jef19] L. Jeffreys "Single-cylinder square-tiled surfaces and the ubiquity
    of ratio-optimising pseudo-Anosovs", Preprint (2019),

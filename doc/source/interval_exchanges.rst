@@ -16,5 +16,6 @@ The interval_exchanges Package
    interval_exchanges/labelled
    interval_exchanges/marked_partition
    interval_exchanges/rauzy_class_cardinality
+   interval_exchanges/rauzy_walks
    interval_exchanges/reduced
    interval_exchanges/template
