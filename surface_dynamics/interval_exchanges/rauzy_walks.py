@@ -1630,9 +1630,9 @@ def _semidirect_product(x, y):
     EXAMPLES::
 
         sage: from surface_dynamics.interval_exchanges.rauzy_walks import _semidirect_product
-        sage: _semidirect_product((0b001, (1, 0, 2)), (0b101, (0, 2, 1)))
+        sage: _semidirect_product((0b001r, (1r, 0r, 2r)), (0b101r, (0r, 2r, 1r)))
         (7, (1, 2, 0))
-        sage: _semidirect_product((0b001, (0, 2, 1)), (0b010, (1, 0, 2)))
+        sage: _semidirect_product((0b001r, (0r, 2r, 1r)), (0b010r, (1r, 0r, 2r)))
         (5, (2, 0, 1))
 
     With two letters exchanged by the first loop, which has the winner
@@ -1640,8 +1640,8 @@ def _semidirect_product(x, y):
     walk ``(0, 0)`` has the winners ``1`` then ``0``, while ``(1, 1)``
     misses the letter ``1``::
 
-        sage: a = (0b10, (1, 0))
-        sage: b = (0b01, (0, 1))
+        sage: a = (0b10r, (1r, 0r))
+        sage: b = (0b01r, (0r, 1r))
         sage: _semidirect_product(a, a)
         (3, (0, 1))
         sage: _semidirect_product(b, b)
