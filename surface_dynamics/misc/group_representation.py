@@ -27,7 +27,8 @@ def real_characters(G):
 
     - table of characters - a list of characters. Each character is represented
       as the list of its values on conjugacy classes. The order of conjugacy
-      classes is the same as the one returned by GAP.
+      classes is the same as the one returned by GAP. The characters come in
+      the order GAP lists them, which may differ between GAP versions.
 
     - degrees - the list of degrees of the characters
 
@@ -35,7 +36,7 @@ def real_characters(G):
 
         sage: from surface_dynamics.misc.group_representation import real_characters
         sage: T, deg = real_characters(AlternatingGroup(5))
-        sage: T
+        sage: sorted(T, key=str)
         [(1, 1, 1, 1, 1),
          (3, -1, 0, -E(5) - E(5)^4, -E(5)^2 - E(5)^3),
          (3, -1, 0, -E(5)^2 - E(5)^3, -E(5) - E(5)^4),
@@ -43,7 +44,7 @@ def real_characters(G):
          (5, 1, -1, 0, 0)]
         sage: set(parent(x) for chi in T for x in chi)
         {Universal Cyclotomic Field}
-        sage: deg
+        sage: sorted(deg)
         [1, 3, 3, 4, 5]
 
         sage: T, deg = real_characters(CyclicPermutationGroup(6))
@@ -191,44 +192,31 @@ def isotypic_projection_matrix(G, d, chi, deg, conj_mats=None, floating_point=Fa
         sage: from surface_dynamics.misc.group_representation import real_characters, isotypic_projection_matrix
         sage: G = AlternatingGroup(5)
         sage: T,deg = real_characters(G)
-        sage: isotypic_projection_matrix(G, 5, T[0], deg[0])
+        sage: i = T.index((1, 1, 1, 1, 1))
+        sage: isotypic_projection_matrix(G, 5, T[i], deg[i])
         [1/5 1/5 1/5 1/5 1/5]
         [1/5 1/5 1/5 1/5 1/5]
         [1/5 1/5 1/5 1/5 1/5]
         [1/5 1/5 1/5 1/5 1/5]
         [1/5 1/5 1/5 1/5 1/5]
-        sage: isotypic_projection_matrix(G, 5, T[1], deg[1])
-        [0 0 0 0 0]
-        [0 0 0 0 0]
-        [0 0 0 0 0]
-        [0 0 0 0 0]
-        [0 0 0 0 0]
-        sage: isotypic_projection_matrix(G, 5, T[2], deg[2])
-        [0 0 0 0 0]
-        [0 0 0 0 0]
-        [0 0 0 0 0]
-        [0 0 0 0 0]
-        [0 0 0 0 0]
-        sage: isotypic_projection_matrix(G, 5, T[3], deg[3])
+        sage: j = T.index((4, 0, 1, -1, -1))
+        sage: isotypic_projection_matrix(G, 5, T[j], deg[j])
         [ 4/5 -1/5 -1/5 -1/5 -1/5]
         [-1/5  4/5 -1/5 -1/5 -1/5]
         [-1/5 -1/5  4/5 -1/5 -1/5]
         [-1/5 -1/5 -1/5  4/5 -1/5]
         [-1/5 -1/5 -1/5 -1/5  4/5]
-        sage: isotypic_projection_matrix(G, 5, T[3], deg[3], floating_point=True)
+        sage: isotypic_projection_matrix(G, 5, T[j], deg[j], floating_point=True)
         array([[ 0.8, -0.2, -0.2, -0.2, -0.2],
                [-0.2,  0.8, -0.2, -0.2, -0.2],
                [-0.2, -0.2,  0.8, -0.2, -0.2],
                [-0.2, -0.2, -0.2,  0.8, -0.2],
                [-0.2, -0.2, -0.2, -0.2,  0.8]])
-        sage: isotypic_projection_matrix(G, 5, T[4], deg[4])
-        [0 0 0 0 0]
-        [0 0 0 0 0]
-        [0 0 0 0 0]
-        [0 0 0 0 0]
-        [0 0 0 0 0]
+        sage: all(isotypic_projection_matrix(G, 5, T[k], deg[k]).is_zero()
+        ....:     for k in range(len(T)) if k not in (i, j))
+        True
 
-        sage: sum(isotypic_projection_matrix(G, 5, T[i], deg[i]) for i in range(5)).is_one()
+        sage: sum(isotypic_projection_matrix(G, 5, T[k], deg[k]) for k in range(len(T))).is_one()
         True
     """
     from sage.matrix.special import zero_matrix

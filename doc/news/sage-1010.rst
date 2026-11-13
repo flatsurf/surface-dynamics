@@ -1,0 +1,8 @@
+**Added:**
+
+* Added SageMath 10.6, 10.7, 10.8, 10.9 and 10.10 to the tested versions.
+
+**Removed:**
+
+* Removed support for Python older than 3.11, and with it for SageMath 9.3,
+  9.4, 9.5, 9.6 and 9.7.

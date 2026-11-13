@@ -7,6 +7,7 @@ name = "surface-dynamics"
 version = "0.6.0"
 description = "Dynamics on surfaces"
 readme = "README.md"
+requires-python = ">=3.11"
 license = "GPL-2.0-or-later"
 license-files = ["COPYING"]
 authors = [
@@ -19,6 +20,10 @@ classifiers = [
     "Programming Language :: C",
     "Programming Language :: C++",
     "Programming Language :: Python",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Programming Language :: Cython",
     "Topic :: Scientific/Engineering :: Mathematics",
 ]
@@ -53,16 +58,6 @@ channels = ["conda-forge"]
 platforms = ["linux-64", "osx-64"]
 
 [tool.pixi.environments]
-sagemath-93-minimal = ["sagemath-93", "pplpy"]
-sagemath-93-sage-flatsurf = ["sagemath-93", "pplpy", "sage-flatsurf"]
-sagemath-94-minimal = ["sagemath-94", "pplpy"]
-sagemath-94-all = ["sagemath-94", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
-sagemath-95-minimal = ["sagemath-95", "pplpy"]
-sagemath-95-all = ["sagemath-95", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
-sagemath-96-minimal = ["sagemath-96", "pplpy"]
-sagemath-96-all = ["sagemath-96", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
-sagemath-97-minimal = ["sagemath-97", "pplpy"]
-sagemath-97-all = ["sagemath-97", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
 sagemath-98-minimal = ["sagemath-98", "pplpy"]
 sagemath-98-all = ["sagemath-98", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
 sagemath-100-minimal = ["sagemath-100", "pplpy"]
@@ -77,7 +72,17 @@ sagemath-104-minimal = ["sagemath-104", "pplpy"]
 sagemath-104-all = ["sagemath-104", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
 sagemath-105-minimal = ["sagemath-105", "pplpy"]
 sagemath-105-all = ["sagemath-105", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
-dev = ["dev", "lint", "doc", "sagemath-105", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-106-minimal = ["sagemath-106", "pplpy"]
+sagemath-106-all = ["sagemath-106", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-107-minimal = ["sagemath-107", "pplpy"]
+sagemath-107-all = ["sagemath-107", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-108-minimal = ["sagemath-108", "pplpy"]
+sagemath-108-all = ["sagemath-108", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-109-minimal = ["sagemath-109", "pplpy"]
+sagemath-109-all = ["sagemath-109", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+sagemath-1010-minimal = ["sagemath-1010", "pplpy"]
+sagemath-1010-all = ["sagemath-1010", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
+dev = ["dev", "lint", "doc", "sagemath-1010", "pplpy", "gmpxxyy", "pyeantic", "pyintervalxt", "sage-flatsurf"]
 
 ##############
 # ACTIVATION #
@@ -86,6 +91,16 @@ dev = ["dev", "lint", "doc", "sagemath-105", "pplpy", "gmpxxyy", "pyeantic", "py
 SURFACE_DYNAMICS_OPTIONALS="sage$SURFACE_DYNAMICS_OPTIONAL_PPLPY$SURFACE_DYNAMICS_OPTIONAL_GMPXXYY$SURFACE_DYNAMICS_OPTIONAL_PYEANTIC$SURFACE_DYNAMICS_OPTIONAL_PYINTERVALXT$SURFACE_DYNAMICS_OPTIONAL_SAGE_FLATSURF"
 SAGE_NUM_THREADS="$(nproc)"
 MAKEFLAGS="-j$(nproc)"
+
+# cppyy (used by gmpxxyy, pyeantic and pyintervalxt) runs cling, which reads
+# CXX to locate the C++ standard headers and CONDA_BUILD_SYSROOT to locate
+# the C library headers. With CXX unset it dereferences a null pointer and
+# crashes while building its precompiled header. The conda-forge compilers
+# set neither variable since they configure the sysroot through
+# conda-gcc-specs.
+[tool.pixi.target.linux-64.activation.env]
+CXX="$CONDA_PREFIX/bin/x86_64-conda-linux-gnu-c++"
+CONDA_BUILD_SYSROOT="$CONDA_PREFIX/x86_64-conda-linux-gnu/sysroot"
 
 [tool.pixi.feature.pplpy.activation.env]
 SURFACE_DYNAMICS_OPTIONAL_PPLPY=",pplpy"
@@ -143,11 +158,11 @@ test = { cmd = "pixi run dev-test" }
 dev-test = { depends-on = ["test-doctest-long", "test-pytest"] }
 
 [tool.pixi.tasks.test-doctest]
-cmd = "PYTHONPATH=$(pwd)/.github/workflows/disable-pytest sage -tp --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
+cmd = "sh .github/workflows/sage-doctest.sh -p --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
 depends-on = ["build"]
 
 [tool.pixi.tasks.test-doctest-long]
-cmd = "PYTHONPATH=$(pwd)/.github/workflows/disable-pytest sage -tp --force-lib --initial --long --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
+cmd = "sh .github/workflows/sage-doctest.sh -p --force-lib --initial --long --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
 depends-on = ["build"]
 
 [tool.pixi.tasks.test-pytest]
@@ -201,11 +216,11 @@ depends-on = ["doc-build"]
 cwd = "doc"
 
 [tool.pixi.feature.sage-flatsurf.tasks.test-doctest]
-cmd = "PYTHONPATH=$(pwd)/.github/workflows/disable-pytest sage -tp --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
+cmd = "sh .github/workflows/sage-doctest.sh -p --force-lib --initial --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
 depends-on = ["build", "install-sage-flatsurf"]
 
 [tool.pixi.feature.sage-flatsurf.tasks.test-doctest-long]
-cmd = "PYTHONPATH=$(pwd)/.github/workflows/disable-pytest sage -tp --force-lib --initial --long --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
+cmd = "sh .github/workflows/sage-doctest.sh -p --force-lib --initial --long --optional=$SURFACE_DYNAMICS_OPTIONALS surface_dynamics doc"
 depends-on = ["build", "install-sage-flatsurf"]
 
 [tool.pixi.feature.sage-flatsurf.tasks.install-sage-flatsurf]
@@ -225,7 +240,9 @@ numpy = "*"
 cypari2 = "*"
 pytest-xdist = "*"
 
-sagelib = "*"
+# Releases after the newest one the package was checked against are
+# excluded.
+sagelib = "<10.11"
 pytest = "*"
 # ipywidgets is needed by SageMath doctesting
 ipywidgets = "*"
@@ -270,38 +287,59 @@ bidict = "*"
 matplotlib-base = "*"
 more-itertools = "*"
 
-[tool.pixi.feature.sagemath-93.dependencies]
-sagelib = "==9.3"
-
-[tool.pixi.feature.sagemath-94.dependencies]
-sagelib = "==9.4"
-
-[tool.pixi.feature.sagemath-95.dependencies]
-sagelib = "==9.5"
-
-[tool.pixi.feature.sagemath-96.dependencies]
-sagelib = "==9.6"
-
-[tool.pixi.feature.sagemath-97.dependencies]
-sagelib = "==9.7"
-
+# Each SageMath is paired with the Cython its conda-forge sagelib was built
+# with. Cython changed between versions the way it spells the signatures of
+# exported C variables (int [0x1F4] before 3.2, int [500] after), and these
+# signatures are compared as strings when cimporting sage.rings.integer.
 [tool.pixi.feature.sagemath-98.dependencies]
 sagelib = "==9.8"
+cython = "==0.29.34"
 
 [tool.pixi.feature.sagemath-100.dependencies]
 sagelib = "==10.0"
+cython = "==0.29.36"
 
 [tool.pixi.feature.sagemath-101.dependencies]
 sagelib = "==10.1"
+cython = "==0.29.36"
 
 [tool.pixi.feature.sagemath-102.dependencies]
 sagelib = "==10.2"
+cython = "==3.0.8"
 
 [tool.pixi.feature.sagemath-103.dependencies]
 sagelib = "==10.3"
+cython = "==3.0.10"
 
 [tool.pixi.feature.sagemath-104.dependencies]
 sagelib = "==10.4"
+cython = "==3.0.10"
 
 [tool.pixi.feature.sagemath-105.dependencies]
 sagelib = "==10.5"
+cython = "==3.0.12"
+
+[tool.pixi.feature.sagemath-106.dependencies]
+sagelib = "==10.6"
+cython = "==3.0.12"
+
+[tool.pixi.feature.sagemath-107.dependencies]
+sagelib = "==10.7"
+cython = "==3.0.12"
+
+[tool.pixi.feature.sagemath-108.dependencies]
+sagelib = "==10.8"
+# The conda-forge build of this sagelib was compiled with Cython 3.2 (int
+# [500]), although its metadata only requires cython >=3.1.8.
+cython = "==3.2.4"
+# Under Python 3.14, this sagelib segfaults in sage.cpython.atexit, which
+# reads internals of CPython's atexit module.
+python = "<3.14"
+
+[tool.pixi.feature.sagemath-109.dependencies]
+sagelib = "==10.9"
+cython = "==3.2.5"
+
+[tool.pixi.feature.sagemath-1010.dependencies]
+sagelib = "==10.10"
+cython = "==3.2.9"
